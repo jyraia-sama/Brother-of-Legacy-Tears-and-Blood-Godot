@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://b1nmgwv2ooq1x"]
+
+[ext_resource type="Script" uid="uid://c4ognpixbfjr1" path="res://scripts/aventure.gd" id="1_amxbq"]
+
+[node name="Aventure" type="Control" unique_id=1975252917]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_amxbq")
