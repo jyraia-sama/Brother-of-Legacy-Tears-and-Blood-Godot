@@ -14,9 +14,9 @@ const REF := Vector2(1024, 576)
 const CARTES := [
 	{"id": "aventure",   "titre": "AVENTURE",           "rect": Rect2(252, 124, 164, 146)},
 	{"id": "deck",       "titre": "DECK",               "rect": Rect2(434, 124, 152, 146)},
-	{"id": "echos",      "titre": "ÉCHOS SANGUINS",     "rect": Rect2(604, 124, 154, 146)},
-	{"id": "invocation", "titre": "AUTEL D'INVOCATION", "rect": Rect2(252, 294, 164, 146)},
-	{"id": "fusion",     "titre": "AUTEL DE FUSION",    "rect": Rect2(434, 294, 152, 146)},
+	{"id": "invocation", "titre": "AUTEL D'INVOCATION", "rect": Rect2(604, 124, 154, 146)},
+	{"id": "fusion",     "titre": "AUTEL DE FUSION",    "rect": Rect2(252, 294, 164, 146)},
+	{"id": "echos",      "titre": "ÉCHOS SANGUINS",     "rect": Rect2(434, 294, 152, 146)},
 	{"id": "reliquaire", "titre": "LE RELIQUAIRE",      "rect": Rect2(604, 294, 154, 146)},
 ]
 
@@ -26,7 +26,7 @@ const BAS := [
 	{"id": "boutique",  "titre": "Boutique",    "rect": Rect2(374, 472, 72, 70)},
 	{"id": "succes",    "titre": "Succès",      "rect": Rect2(474, 466, 72, 76)},
 	{"id": "social",    "titre": "Social",      "rect": Rect2(574, 472, 72, 70)},
-	{"id": "explorer",  "titre": "Exploration", "rect": Rect2(672, 472, 72, 70)},
+	{"id": "bestiaire", "titre": "Bestiaire",   "rect": Rect2(672, 472, 72, 70)},
 ]
 
 # Boutons divers
@@ -36,18 +36,24 @@ const AUTRES := [
 	{"id": "heros",      "titre": "Mon héros",  "rect": Rect2(68, 110, 122, 120)},
 ]
 
-# Données de test du joueur (plus tard : chargées depuis la sauvegarde)
-var joueur := {
-	"stamina": 30, "stamina_max": 30,
-	"or": 1250, "gemmes": 50, "niveau": 1,
-	"atk": 120, "def": 85, "pv": 950,
-}
+
+# Textes de la barre de ressources (mis à jour depuis la sauvegarde)
+var _lbl_stamina: Label
+var _lbl_or: Label
+var _lbl_niveau: Label
+var _lbl_gemmes: Label
+var _lbl_recharge: Label
+var _lbl_xp: Label
 
 var _zones: Array[Button] = []
 var _debug := false
 
 
 func _ready() -> void:
+	# Tout premier lancement (ou après "Nouvelle partie") : choix du héros de départ
+	if not Sauvegarde.a_choisi_heros_depart():
+		get_tree().change_scene_to_file.call_deferred(EcranChoixHeros.SCENE)
+		return
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_creer_fond()
 
@@ -62,16 +68,61 @@ func _ready() -> void:
 	for c in AUTRES:
 		_creer_zone(c.rect, c.id, c.titre)
 
-	# Barre de ressources en haut
-	_creer_texte("%d/%d" % [joueur.stamina, joueur.stamina_max], Rect2(276, 20, 80, 20), 22)
-	_creer_texte(str(joueur["or"]), Rect2(404, 20, 68, 20), 22)
-	_creer_texte("Niv. %d" % joueur.niveau, Rect2(540, 20, 110, 20), 22)
-	_creer_texte(str(joueur.gemmes), Rect2(702, 20, 68, 20), 22)
+	# Barre de ressources en haut (valeurs réelles de la sauvegarde)
+	_lbl_stamina = _creer_texte("", Rect2(276, 20, 80, 20), 22)
+	_lbl_or = _creer_texte("", Rect2(404, 20, 68, 20), 22)
+	_lbl_niveau = _creer_texte("", Rect2(540, 20, 110, 20), 22)
+	_lbl_gemmes = _creer_texte("", Rect2(702, 20, 68, 20), 22)
+	# Petites lignes sous la barre : recharge de la stamina et XP du compte
+	_lbl_recharge = _creer_texte("", Rect2(256, 40, 120, 12), 13)
+	_lbl_xp = _creer_texte("", Rect2(520, 40, 150, 12), 13)
+	# Numéro de version (clic = journal des mises à jour)
+	var v := Button.new()
+	v.text = "%s  ·  Nouveautés" % Version.texte()
+	v.flat = true
+	v.focus_mode = Control.FOCUS_NONE
+	v.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	v.add_theme_font_size_override("font_size", 14)
+	v.add_theme_color_override("font_color", Color(1.0, 0.9, 0.7, 0.75))
+	v.tooltip_text = "Journal des mises à jour"
+	v.pressed.connect(func(): FenetreChangelog.ouvrir(self))
+	add_child(v)
+	_placer(v, Rect2(880, 552, 140, 20))
+	_maj_ressources()
+	# La stamina se recharge avec le temps : on rafraîchit l'affichage chaque seconde
+	var minuterie := Timer.new()
+	minuterie.wait_time = 1.0
+	minuterie.autostart = true
+	minuterie.timeout.connect(_maj_ressources)
+	add_child(minuterie)
 
-	# Stats du héros (panneau de gauche)
-	_creer_texte("ATK %d" % joueur.atk, Rect2(100, 256, 82, 16), 18)
-	_creer_texte("DEF %d" % joueur.def, Rect2(100, 277, 82, 16), 18)
-	_creer_texte("PV %d" % joueur.pv, Rect2(100, 297, 82, 16), 18)
+	# Stats du héros de départ (panneau de gauche)
+	var h := Sauvegarde.get_heros_depart()
+	var s := Sauvegarde.stats_heros(int(h.get("uid", -1)))
+	if not s.is_empty():
+		var u := UnitesData.get_unite(h["id"])
+		_creer_texte("%s  Niv. %d" % [u["nom"], int(h["niveau"])], Rect2(60, 232, 140, 16), 15)
+		_creer_texte("ATK %d" % s["atk"], Rect2(100, 256, 82, 16), 18)
+		_creer_texte("DEF %d" % s["def"], Rect2(100, 277, 82, 16), 18)
+		_creer_texte("PV %d" % s["pv"], Rect2(100, 297, 82, 16), 18)
+
+	# Le jeu vient d'être mis à jour : on montre les nouveautés
+	FenetreChangelog.verifier_mise_a_jour(self)
+
+
+func _maj_ressources() -> void:
+	var st := Sauvegarde.get_stamina()
+	var mx := Sauvegarde.get_stamina_max()
+	_lbl_stamina.text = "%d/%d" % [st, mx]
+	_lbl_recharge.text = "" if st >= mx else "+1 dans %s" % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
+	_lbl_or.text = str(Sauvegarde.get_or())
+	var niv := Sauvegarde.get_niveau_compte()
+	_lbl_niveau.text = "Niv. %d" % niv
+	_lbl_gemmes.text = str(Sauvegarde.get_gemmes())
+	if Sauvegarde.niveau_compte_max_atteint():
+		_lbl_xp.text = "Niveau MAX"
+	else:
+		_lbl_xp.text = "XP %d / %d" % [Sauvegarde.get_xp_compte(), Sauvegarde.xp_pour_niveau(niv)]
 
 
 # ---------- Construction ----------
@@ -151,7 +202,30 @@ func _on_bouton(id: String, titre: String) -> void:
 	print("Clic : ", id)
 	match id:
 		"aventure":
+			# L'écran Aventure reviendra toujours ici (et pas à l'écran des Actes)
+			ActesData.scene_menu = scene_file_path
+			ActesData.scene_precedente = scene_file_path
 			get_tree().change_scene_to_file("res://scenes/aventure.tscn")
+		"fusion":
+			EcranFusion.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranFusion.SCENE)
+		"parametres":
+			FenetreSauvegarde.ouvrir(self)
+		"deck":
+			EcranDeck.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranDeck.SCENE)
+		"echos":
+			EcranEchos.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranEchos.SCENE)
+		"invocation":
+			EcranInvocation.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranInvocation.SCENE)
+		"reliquaire":
+			EcranReliquaire.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranReliquaire.SCENE)
+		"bestiaire":
+			EcranBestiaire.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranBestiaire.SCENE)
 		_:
 			_message("« %s » : écran pas encore créé." % titre)
 

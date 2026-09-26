@@ -46,13 +46,22 @@ func _on_bouton(id: String, titre: String) -> void:
 			_retour_menu()
 		"histoire":
 			get_tree().change_scene_to_file("res://scenes/histoire.tscn")
+		"tour":
+			EcranTours.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranTours.SCENE)
+		"boss_monde":
+			EcranBossMonde.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranBossMonde.SCENE)
 		_:
 			_message("« %s » : mode pas encore créé." % titre)
 
 
 func _retour_menu() -> void:
-	# Revient à la scène principale du projet (ton menu), quel que soit son nom
-	var menu: String = ProjectSettings.get_setting("application/run/main_scene")
+	# Revient au menu principal (mémorisé quand on a ouvert l'Aventure),
+	# sinon à la scène principale du projet.
+	var menu: String = ActesData.scene_menu
+	if menu == "":
+		menu = ProjectSettings.get_setting("application/run/main_scene")
 	get_tree().change_scene_to_file(menu)
 
 
@@ -100,15 +109,15 @@ func _creer_zone(r: Rect2, id: String, titre: String) -> void:
 	b.tooltip_text = titre
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
-	# Survol violet pour coller à l'ambiance de cet écran
+	# Survol rouge sang pour coller à l'ambiance de cet écran
 	var survol := StyleBoxFlat.new()
-	survol.bg_color = Color(0.6, 0.45, 1.0, 0.12)
-	survol.border_color = Color(0.75, 0.6, 1.0, 0.95)
+	survol.bg_color = Color(1.0, 0.3, 0.2, 0.12)
+	survol.border_color = Color(1.0, 0.45, 0.3, 0.95)
 	survol.set_border_width_all(3)
 	survol.set_corner_radius_all(8)
 
 	var appui := survol.duplicate() as StyleBoxFlat
-	appui.bg_color = Color(0.5, 0.2, 1.0, 0.3)
+	appui.bg_color = Color(0.8, 0.1, 0.05, 0.3)
 
 	b.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
 	b.add_theme_stylebox_override("hover", survol)
@@ -129,7 +138,7 @@ func _creer_texte(texte: String, r: Rect2, taille: int) -> Label:
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	l.add_theme_font_size_override("font_size", taille)
-	l.add_theme_color_override("font_color", Color(0.9, 0.85, 1.0))
+	l.add_theme_color_override("font_color", Color(1.0, 0.88, 0.8))
 	l.add_theme_color_override("font_outline_color", Color.BLACK)
 	l.add_theme_constant_override("outline_size", 8)
 	add_child(l)

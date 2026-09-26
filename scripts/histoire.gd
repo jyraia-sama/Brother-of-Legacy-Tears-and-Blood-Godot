@@ -44,8 +44,11 @@ const ACTES := [
 const RETOUR_RECT := Rect2(22, 8, 98, 94)
 const PARAM_RECT := Rect2(1565, 10, 82, 85)
 
-# Données de test (plus tard : une sauvegarde partagée entre tous les écrans)
-var joueur := {"stamina": 30, "stamina_max": 30, "or": 1250, "gemmes": 50, "niveau": 1}
+# Textes de la barre de ressources (mis à jour depuis la sauvegarde)
+var _lbl_stamina: Label
+var _lbl_or: Label
+var _lbl_niveau: Label
+var _lbl_gemmes: Label
 
 var _zones: Array[Button] = []
 var _debug := false
@@ -58,11 +61,16 @@ var _info_texte: Label
 
 
 func _ready() -> void:
+	ActesData.charger()
+	# Mémorise cet écran : la flèche retour de l'écran d'Acte y ramènera toujours
+	ActesData.scene_precedente = scene_file_path
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_creer_fond()
 
 	for i in ACTES.size():
 		var acte: Dictionary = ACTES[i]
+		if not ActesData.acte_debloque(i + 1):
+			_voile_verrouille(_rect_acte(i))
 		var b := _creer_zone(_rect_acte(i), "acte_%d" % (i + 1), "Acte %s" % acte["num"])
 		b.mouse_entered.connect(_montrer_info.bind(i))
 		b.mouse_exited.connect(_cacher_info)
@@ -71,12 +79,46 @@ func _ready() -> void:
 	_creer_zone(PARAM_RECT, "parametres", "Paramètres")
 
 	# Barre de ressources (même ordre que le menu principal)
-	_creer_texte("%d/%d" % [joueur["stamina"], joueur["stamina_max"]], Rect2(452, 30, 100, 30), 22)
-	_creer_texte(str(joueur["or"]), Rect2(645, 30, 108, 30), 22)
-	_creer_texte("Niv. %d" % joueur["niveau"], Rect2(880, 30, 190, 30), 22)
-	_creer_texte(str(joueur["gemmes"]), Rect2(1142, 30, 100, 30), 22)
+	_lbl_stamina = _creer_texte("", Rect2(452, 30, 100, 30), 22)
+	_lbl_or = _creer_texte("", Rect2(645, 30, 108, 30), 22)
+	_lbl_niveau = _creer_texte("", Rect2(880, 30, 190, 30), 22)
+	_lbl_gemmes = _creer_texte("", Rect2(1142, 30, 100, 30), 22)
+	_maj_ressources()
+	# La stamina se recharge avec le temps : on rafraîchit l'affichage chaque seconde
+	var minuterie := Timer.new()
+	minuterie.wait_time = 1.0
+	minuterie.autostart = true
+	minuterie.timeout.connect(_maj_ressources)
+	add_child(minuterie)
 
 	_creer_panneau_info()
+
+
+# Voile sombre + mention "VERROUILLÉ" sur un Acte pas encore accessible
+func _voile_verrouille(r: Rect2) -> void:
+	var voile := ColorRect.new()
+	voile.color = Color(0, 0, 0, 0.6)
+	voile.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(voile)
+	_placer(voile, r.grow(-8))
+	var l := Label.new()
+	l.text = "VERROUILLÉ"
+	l.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	l.add_theme_font_size_override("font_size", 24)
+	l.add_theme_color_override("font_color", Color(0.85, 0.75, 0.6))
+	l.add_theme_color_override("font_outline_color", Color.BLACK)
+	l.add_theme_constant_override("outline_size", 8)
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	voile.add_child(l)
+
+
+func _maj_ressources() -> void:
+	_lbl_stamina.text = "%d/%d" % [Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max()]
+	_lbl_or.text = str(Sauvegarde.get_or())
+	_lbl_niveau.text = "Niv. %d" % Sauvegarde.get_niveau_compte()
+	_lbl_gemmes.text = str(Sauvegarde.get_gemmes())
 
 
 func _rect_acte(i: int) -> Rect2:
@@ -90,20 +132,34 @@ func _rect_acte(i: int) -> Rect2:
 func _on_bouton(id: String, titre: String) -> void:
 	print("Clic : ", id)
 	if id == "retour":
-		get_tree().change_scene_to_file(SCENE_RETOUR)
+		_retour()
 	elif id.begins_with("acte_"):
 		var n := int(id.trim_prefix("acte_"))
-		var acte: Dictionary = ACTES[n - 1]
-		# Plus tard : ouvrir la carte des chapitres de cet acte
-		_message("Acte %s : %s\n\nLes chapitres arrivent bientôt." % [acte["num"], acte["titre"]])
+		if not ActesData.acte_debloque(n):
+			_message("Acte %s verrouillé.\n\nTermine le chapitre 6 de l'Acte %s pour l'ouvrir." % [ACTES[n - 1]["num"], ACTES[n - 2]["num"]])
+			return
+		# Ouvre l'écran des 6 chapitres de cet acte
+		ActesData.acte_courant = n
+		ActesData.scene_precedente = scene_file_path
+		get_tree().change_scene_to_file("res://scenes/ecran_acte.tscn")
+	elif id == "parametres":
+		FenetreSauvegarde.ouvrir(self)
 	else:
 		_message("« %s » : pas encore créé." % titre)
+
+
+## Retour à l'écran Aventure. On oublie l'écran des Actes pour que le bouton
+## retour de l'Aventure ramène bien au menu principal.
+func _retour() -> void:
+	ActesData.scene_precedente = ActesData.scene_menu if ActesData.scene_menu != "" \
+		else ProjectSettings.get_setting("application/run/main_scene", "")
+	get_tree().change_scene_to_file(SCENE_RETOUR)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE:
-			get_tree().change_scene_to_file(SCENE_RETOUR)
+			_retour()
 		elif event.keycode == KEY_F1:
 			_debug = not _debug
 			for b in _zones:
@@ -154,6 +210,10 @@ func _montrer_info(i: int) -> void:
 	_info_partie.text = String(acte["partie"]).to_upper()
 	_info_titre.text = "Acte %s : %s" % [acte["num"], acte["titre"]]
 	_info_texte.text = acte["ambiance"]
+	_info_texte.text += "\n\n" + Echos.description_set(Echos.SET_PAR_ACTE[i + 1]) \
+		+ "\n(le chapitre N donne l'emplacement N)"
+	if not ActesData.acte_debloque(i + 1):
+		_info_texte.text += "\n\nVERROUILLÉ : termine d'abord l'Acte précédent."
 
 	# À droite de la carte, sauf pour la dernière colonne (à gauche)
 	var r := _rect_acte(i)

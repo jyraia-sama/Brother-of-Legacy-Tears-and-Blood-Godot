@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdwnsokysnjcg"
-path="res://.godot/imported/aventure_bg.png-5ea546c31a70352cd1a81f670f9fa5df.ctex"
+uid="uid://dw7jkpqrsevu6"
+path="res://.godot/imported/acte_04.png-d097644de8f07fbe37ddac21a1806993.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/aventure_bg.png"
-dest_files=["res://.godot/imported/aventure_bg.png-5ea546c31a70352cd1a81f670f9fa5df.ctex"]
+source_file="res://assets/actes/acte_04.png"
+dest_files=["res://.godot/imported/acte_04.png-d097644de8f07fbe37ddac21a1806993.ctex"]
 
 [params]
 
