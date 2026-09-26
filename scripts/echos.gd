@@ -182,6 +182,8 @@ static func cout_amelioration(e: Dictionary) -> int:
 
 
 static func chance_amelioration(e: Dictionary) -> float:
+	if Sauvegarde.admin("echos_garantis"):
+		return 1.0
 	var n := int(e["niveau"]) + 1
 	return CHANCES_AMELIORATION[mini(n, CHANCES_AMELIORATION.size() - 1)]
 

@@ -4,8 +4,10 @@ extends Control
 ##   Pacte Doré      : x1 / x10 avec de l'or           -> N, R, SR
 ##   Pacte Supérieur : x1 / x10 avec des Éclats de Pacte Supérieur (lâchés par les boss)
 ##                     -> SR, SSR, UR, et très rarement un Héros de Légende
-## Les taux et la garantie sont affichés. Les résultats se révèlent un par un ;
+## Les taux et la garantie sont affichés. Les résultats se révèlent avec un effet
+## d'invocation (plus impressionnant selon la rareté, voir effet_invocation.gd) ;
 ## clique une carte pour voir la fiche de l'unité.
+## BANDEAU DU BAS : invocation spéciale d'un événement ponctuel (voir evenements.gd).
 
 const SCENE := "res://scenes/invocation.tscn"
 const FOND := "res://assets/ui/menu_bg.png"
@@ -18,6 +20,8 @@ var _lbl_garantie: Label
 var _boutons := {}              # "pacte-nombre" -> Button
 var _calque: Control
 var _occupe := false
+var _lbl_evenement: Label
+var _voile_evenement: Control
 
 
 func _ready() -> void:
@@ -70,6 +74,8 @@ func _ready() -> void:
 		"Invocation avec des Éclats de Pacte Supérieur,\nlâchés par les boss des chapitres.",
 		"Éclat", ""))
 
+	col.add_child(_creer_banniere())
+
 	_calque = Control.new()
 	_calque.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_calque.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -78,7 +84,7 @@ func _ready() -> void:
 
 
 func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: String, note: String) -> PanelContainer:
-	var info: Dictionary = Invocation.PACTES[pacte]
+	var info: Dictionary = Invocation.infos(pacte)
 	var p := PanelContainer.new()
 	p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	p.add_theme_stylebox_override("panel", UiCommun.style_panneau(couleur))
@@ -106,6 +112,16 @@ func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: Strin
 		vb.add_child(ligne)
 	if note != "":
 		vb.add_child(UiCommun.label(note, 15, UiCommun.C_DOUX))
+	if pacte == "evenement":
+		var ev := Evenements.actif()
+		var noms: Array = []
+		for id in ev.get("vedettes", []):
+			noms.append("%s (%s)" % [UnitesData.get_unite(id)["nom"], UiCommun.texte_rarete(id)])
+		var v := UiCommun.label("VEDETTES : " + ", ".join(noms), 15, UiCommun.C_OR)
+		v.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		vb.add_child(v)
+		vb.add_child(UiCommun.label("Quand tu obtiens la rareté d'une vedette : %d %% de chance que ce soit elle." % int(float(ev["chance_vedette"]) * 100), 14, UiCommun.C_DOUX))
+		vb.add_child(UiCommun.label("La garantie SSR est partagée avec le Pacte Supérieur.", 14, UiCommun.C_DOUX))
 	if pacte == "superieur":
 		_lbl_garantie = UiCommun.label("", 15, Color("c8a0ff"))
 		_lbl_garantie.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -138,9 +154,13 @@ func _maj() -> void:
 	_lbl_or.text = "Or : %d" % Sauvegarde.get_or()
 	_lbl_eclats.text = "Éclats : %d" % Sauvegarde.get_objet(Sauvegarde.ECLAT)
 	_lbl_garantie.text = "Garantie : un SSR (ou mieux) au plus tard dans %d invocation(s)." % Invocation.avant_garantie()
-	for cle in _boutons:
+	for cle in _boutons.keys():
+		if not is_instance_valid(_boutons[cle]):
+			_boutons.erase(cle)
+			continue
 		var parts: PackedStringArray = cle.split("-")
 		_boutons[cle].disabled = not Invocation.peut_payer(parts[0], int(parts[1]))
+	_maj_banniere()
 
 
 # =====================================================================
@@ -160,65 +180,12 @@ func _invoquer(pacte: String, nombre: int) -> void:
 
 
 func _reveler(res: Array) -> void:
-	var voile := ColorRect.new()
-	voile.color = Color(0, 0, 0, 0.8)
-	voile.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	voile.mouse_filter = Control.MOUSE_FILTER_STOP
-	_calque.add_child(voile)
-	var centre := CenterContainer.new()
-	centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	voile.add_child(centre)
-	var vb := VBoxContainer.new()
-	vb.add_theme_constant_override("separation", 18)
-	centre.add_child(vb)
-	var titre := UiCommun.label("INVOCATION", 30, UiCommun.C_OR)
-	titre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vb.add_child(titre)
-	var grille := GridContainer.new()
-	grille.columns = mini(5, res.size())
-	grille.add_theme_constant_override("h_separation", 12)
-	grille.add_theme_constant_override("v_separation", 12)
-	vb.add_child(grille)
-
-	var cartes: Array = []
-	for r in res:
-		var h := Sauvegarde.get_heros(int(r["uid"]))
-		var c := UiCommun.carte_heros(h, 150, 190)
-		var couleur: Color = UiCommun.COULEURS_RARETE[r["rarete"]]
-		c.add_theme_stylebox_override("normal", UiCommun.style_carte(couleur, 0.0, 3))
-		if r["nouveau"]:
-			UiCommun.badge(c, "NOUVEAU", Color("8aff9a"))
-		c.pressed.connect(_fiche_unite.bind(r["id"]))
-		c.pivot_offset = Vector2(75, 95)
-		c.scale = Vector2(0.0, 1.0)
-		c.modulate.a = 0.0
-		grille.add_child(c)
-		cartes.append([c, r["rarete"]])
-
-	var fermer := UiCommun.bouton("Continuer", 18)
-	fermer.custom_minimum_size = Vector2(220, 46)
-	fermer.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	fermer.disabled = true
-	fermer.pressed.connect(func():
-		voile.queue_free()
-		_maj())
-	vb.add_child(fermer)
-
-	# Révélation une par une (les plus rares avec un éclat lumineux)
-	for x in cartes:
-		var c: Button = x[0]
-		var rare: bool = x[1] in ["SSR", "UR", "LEG"]
-		var tw := create_tween()
-		tw.set_parallel(true)
-		tw.tween_property(c, "scale", Vector2(1.12 if rare else 1.0, 1.0), 0.22)
-		tw.tween_property(c, "modulate:a", 1.0, 0.18)
-		if rare:
-			tw.chain().tween_property(c, "scale", Vector2.ONE, 0.15)
-			var eclat := create_tween()
-			c.modulate = Color(2.2, 2.0, 1.6, 1.0)
-			eclat.tween_property(c, "modulate", Color.WHITE, 0.6)
-		await get_tree().create_timer(0.32 if rare else 0.14).timeout
-	fermer.disabled = false
+	var effet := EffetInvocation.new()
+	effet.resultats = res
+	effet.voir_fiche.connect(_fiche_unite)
+	_calque.add_child(effet)
+	await effet.termine
+	_maj()
 
 
 func _fiche_unite(id: String) -> void:
@@ -237,6 +204,143 @@ func _fiche_unite(id: String) -> void:
 	d.canceled.connect(d.queue_free)
 	add_child(d)
 	d.popup_centered(Vector2i(560, 0))
+
+
+# =====================================================================
+# Bandeau d'événement (en bas de l'écran)
+# =====================================================================
+
+func _creer_banniere() -> Button:
+	var ev := Evenements.actif()
+	var couleur := Color("#" + str(ev.get("couleur", "5a4a4a")))
+	var b := Button.new()
+	b.custom_minimum_size = Vector2(0, 150)
+	b.focus_mode = Control.FOCUS_NONE
+	b.clip_contents = true
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if not ev.is_empty() else Control.CURSOR_ARROW
+	for etat in ["normal", "hover", "pressed", "disabled"]:
+		var st := StyleBoxFlat.new()
+		st.bg_color = couleur.darkened(0.8) if etat != "hover" else couleur.darkened(0.7)
+		st.border_color = couleur if etat == "hover" else couleur.darkened(0.2)
+		st.set_border_width_all(3)
+		st.set_corner_radius_all(10)
+		b.add_theme_stylebox_override(etat, st)
+	if not ev.is_empty():
+		var fond := Control.new()
+		fond.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		fond.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.add_child(fond)
+		if not UiCommun.fond_image(fond, "res://assets/invocation/evenements/%s.png" % ev["id"], Color.WHITE):
+			var g := Gradient.new()
+			g.set_color(0, couleur.darkened(0.3))
+			g.set_color(1, Color(0.05, 0.0, 0.02))
+			var tex := GradientTexture2D.new()
+			tex.gradient = g
+			tex.width = 256
+			tex.height = 8
+			var r := TextureRect.new()
+			r.texture = tex
+			r.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			r.stretch_mode = TextureRect.STRETCH_SCALE
+			r.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			fond.add_child(r)
+			var p := UiCommun.particules(fond, couleur.lightened(0.3), true, 25)
+			p.position = Vector2(800, 170)
+			p.emission_rect_extents = Vector2(800, 5)
+	var h := HBoxContainer.new()
+	h.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	h.offset_left = 24
+	h.offset_right = -24
+	h.add_theme_constant_override("separation", 20)
+	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(h)
+	var textes := VBoxContainer.new()
+	textes.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	textes.alignment = BoxContainer.ALIGNMENT_CENTER
+	textes.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	h.add_child(textes)
+	if ev.is_empty():
+		textes.add_child(UiCommun.label("INVOCATION SPÉCIALE", 16, UiCommun.C_DOUX))
+		textes.add_child(UiCommun.label("Aucun événement en ce moment", 26, UiCommun.C_DOUX))
+		_lbl_evenement = UiCommun.label("", 16, UiCommun.C_DOUX)
+		textes.add_child(_lbl_evenement)
+		return b
+	textes.add_child(UiCommun.label("ÉVÉNEMENT · INVOCATION SPÉCIALE", 15, couleur.lightened(0.4)))
+	var t := UiCommun.label(ev["titre"], 36, couleur.lightened(0.25))
+	t.add_theme_color_override("font_outline_color", Color.BLACK)
+	t.add_theme_constant_override("outline_size", 8)
+	textes.add_child(t)
+	var st2 := UiCommun.label(ev["sous_titre"], 15, UiCommun.C_TEXTE)
+	st2.add_theme_color_override("font_outline_color", Color.BLACK)
+	st2.add_theme_constant_override("outline_size", 4)
+	textes.add_child(st2)
+	_lbl_evenement = UiCommun.label("", 16, Color("ffb070"))
+	_lbl_evenement.add_theme_color_override("font_outline_color", Color.BLACK)
+	_lbl_evenement.add_theme_constant_override("outline_size", 4)
+	textes.add_child(_lbl_evenement)
+	for id in ev["vedettes"]:
+		var v := VBoxContainer.new()
+		v.alignment = BoxContainer.ALIGNMENT_CENTER
+		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		v.add_child(UiCommun.portrait(id, 70))
+		var n := UiCommun.label(UnitesData.get_unite(id)["nom"], 13, UiCommun.couleur_rarete(id))
+		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		n.add_theme_color_override("font_outline_color", Color.BLACK)
+		n.add_theme_constant_override("outline_size", 4)
+		v.add_child(n)
+		h.add_child(v)
+	var go := UiCommun.label("▶  INVOQUER", 24, couleur.lightened(0.4))
+	go.add_theme_color_override("font_outline_color", Color.BLACK)
+	go.add_theme_constant_override("outline_size", 6)
+	go.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	h.add_child(go)
+	b.pressed.connect(_ouvrir_evenement)
+	var minuterie := Timer.new()
+	minuterie.wait_time = 1.0
+	minuterie.autostart = true
+	minuterie.timeout.connect(_maj_banniere)
+	b.add_child(minuterie)
+	return b
+
+
+func _maj_banniere() -> void:
+	if _lbl_evenement == null:
+		return
+	var ev := Evenements.actif()
+	if not ev.is_empty():
+		_lbl_evenement.text = "Se termine dans %s" % Calendrier.texte_duree(Evenements.secondes_restantes(ev))
+	else:
+		var pr := Evenements.prochain()
+		_lbl_evenement.text = "" if pr.is_empty() else "Prochain : %s dans %s" % [pr["titre"], Calendrier.texte_duree(Evenements.secondes_avant_debut(pr))]
+
+
+func _ouvrir_evenement() -> void:
+	var ev := Evenements.actif()
+	if ev.is_empty() or _occupe:
+		return
+	_voile_evenement = ColorRect.new()
+	(_voile_evenement as ColorRect).color = Color(0, 0, 0, 0.75)
+	_voile_evenement.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_voile_evenement)
+	move_child(_voile_evenement, _calque.get_index())
+	var centre := CenterContainer.new()
+	centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_voile_evenement.add_child(centre)
+	var vb := VBoxContainer.new()
+	vb.add_theme_constant_override("separation", 10)
+	centre.add_child(vb)
+	var panneau := _panneau_pacte("evenement", Color("#" + str(ev["couleur"])).lightened(0.2), ev["sous_titre"], "Éclat", "")
+	panneau.custom_minimum_size = Vector2(760, 560)
+	vb.add_child(panneau)
+	var fermer := UiCommun.bouton("Fermer", 17)
+	fermer.custom_minimum_size = Vector2(200, 44)
+	fermer.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	fermer.pressed.connect(func():
+		_voile_evenement.queue_free()
+		_voile_evenement = null)
+	vb.add_child(fermer)
+	_maj()
 
 
 func _retour() -> void:

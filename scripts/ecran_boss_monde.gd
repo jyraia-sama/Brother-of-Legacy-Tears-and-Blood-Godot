@@ -85,7 +85,7 @@ func _remplir_cartes() -> void:
 	for i in BossMonde.BOSS.size():
 		var b: Dictionary = BossMonde.BOSS[i]
 		var u := UnitesData.get_unite(b["id"])
-		var dispo := i == aujourdhui
+		var dispo := BossMonde.est_disponible(i)
 		var carte := Button.new()
 		carte.custom_minimum_size = Vector2(222, 300)
 		carte.focus_mode = Control.FOCUS_NONE
@@ -149,7 +149,7 @@ func _maj_fiche() -> void:
 		e.queue_free()
 	var b: Dictionary = BossMonde.BOSS[_selection]
 	var u := UnitesData.get_unite(b["id"])
-	var dispo := _selection == BossMonde.boss_du_jour()
+	var dispo := BossMonde.est_disponible(_selection)
 	var s := UnitesData.stats(b["id"], BossMonde.NIVEAU_BOSS)
 	var m: Dictionary = b["mult"]
 

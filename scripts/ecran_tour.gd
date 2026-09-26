@@ -317,7 +317,7 @@ func _maj_fiche() -> void:
 	if deja:
 		go.disabled = true
 		go.text = "Étage déjà vaincu cette semaine"
-	elif n > atteint + 1:
+	elif n > atteint + 1 and not Sauvegarde.admin("tours_libres"):
 		go.disabled = true
 		go.text = "Termine d'abord l'étage %d" % (atteint + 1)
 	_styler(go, true)

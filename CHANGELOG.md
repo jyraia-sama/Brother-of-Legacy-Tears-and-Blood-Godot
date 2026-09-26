@@ -1,6 +1,21 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.11.1** (2026-09-26)
+Version actuelle : **0.13.0** (2026-09-26)
+
+## v0.13.0 — Menu Admin (tests)  (2026-09-26)
+
+- Menu Admin dans les Paramètres (visible seulement quand le jeu est lancé depuis Godot).
+- Options à cocher : or, gemmes, stamina, Éclats et objets du Reliquaire infinis ; Bestiaire complet ; tous les chapitres débloqués ; tous les étages des Tours ; Boss de Monde tous disponibles et illimités ; héros invincibles ; ennemis affaiblis ; XP x10 ; amélioration d'Échos garantie.
+- Décocher une option remet exactement la situation d'avant : la vraie progression n'est jamais modifiée.
+- « MODE ADMIN ACTIF » s'affiche sur le menu principal quand une option est cochée.
+
+## v0.12.0 — Effets d'invocation et événements  (2026-09-26)
+
+- Nouvel effet d'invocation : cercle magique, cartes face cachée qui se retournent une à une.
+- Plus la carte est rare, plus l'effet est impressionnant : lueur (R), aura (SR), rayons dorés et tremblement (SSR), éclairs et onde de choc (UR), halo divin (Légende).
+- Le cercle change de couleur avant la révélation quand une carte rare arrive ; bouton « Tout révéler » pour aller plus vite.
+- Bandeau d'événement en bas de l'Autel d'Invocation : invocations spéciales à durée limitée avec unités vedettes et compte à rebours.
+- Premier événement : « Lune de Sang » (Empereur Déchu, Dragon d'Ombre, Archange Noir), puis « Aube Céleste ».
 
 ## v0.11.1 — Équilibrage de la stamina  (2026-09-26)
 

@@ -14,11 +14,26 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.11.1"
+const NUMERO := "0.13.0"
 const DATE := "2026-09-26"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.13.0", "date": "2026-09-26", "titre": "Menu Admin (tests)",
+	"changements": [
+		"Menu Admin dans les Paramètres (visible seulement quand le jeu est lancé depuis Godot).",
+		"Options à cocher : or, gemmes, stamina, Éclats et objets du Reliquaire infinis ; Bestiaire complet ; tous les chapitres débloqués ; tous les étages des Tours ; Boss de Monde tous disponibles et illimités ; héros invincibles ; ennemis affaiblis ; XP x10 ; amélioration d'Échos garantie.",
+		"Décocher une option remet exactement la situation d'avant : la vraie progression n'est jamais modifiée.",
+		"« MODE ADMIN ACTIF » s'affiche sur le menu principal quand une option est cochée.",
+	]},
+	{"version": "0.12.0", "date": "2026-09-26", "titre": "Effets d'invocation et événements",
+	"changements": [
+		"Nouvel effet d'invocation : cercle magique, cartes face cachée qui se retournent une à une.",
+		"Plus la carte est rare, plus l'effet est impressionnant : lueur (R), aura (SR), rayons dorés et tremblement (SSR), éclairs et onde de choc (UR), halo divin (Légende).",
+		"Le cercle change de couleur avant la révélation quand une carte rare arrive ; bouton « Tout révéler » pour aller plus vite.",
+		"Bandeau d'événement en bas de l'Autel d'Invocation : invocations spéciales à durée limitée avec unités vedettes et compte à rebours.",
+		"Premier événement : « Lune de Sang » (Empereur Déchu, Dragon d'Ombre, Archange Noir), puis « Aube Céleste ».",
+	]},
 	{"version": "0.11.1", "date": "2026-09-26", "titre": "Équilibrage de la stamina",
 	"changements": [
 		"Stamina max : +2 par niveau de compte (30 au niveau 1, 88 au niveau 30).",

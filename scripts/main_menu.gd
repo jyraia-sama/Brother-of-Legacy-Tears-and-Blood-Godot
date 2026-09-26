@@ -88,6 +88,9 @@ func _ready() -> void:
 	v.pressed.connect(func(): FenetreChangelog.ouvrir(self))
 	add_child(v)
 	_placer(v, Rect2(880, 552, 140, 20))
+	if Sauvegarde.admin_actif():
+		var adm := _creer_texte("MODE ADMIN ACTIF", Rect2(880, 536, 140, 14), 14)
+		adm.add_theme_color_override("font_color", Color("ff5a4a"))
 	_maj_ressources()
 	# La stamina se recharge avec le temps : on rafraîchit l'affichage chaque seconde
 	var minuterie := Timer.new()

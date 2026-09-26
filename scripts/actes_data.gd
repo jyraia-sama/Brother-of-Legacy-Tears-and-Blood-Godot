@@ -39,7 +39,7 @@ static func est_termine(acte: int, chapitre: int) -> bool:
 ## Un chapitre s'ouvre quand le précédent est terminé (en partant de l'Acte I, chapitre 1).
 ## Le chapitre 1 d'un Acte s'ouvre quand le chapitre 6 de l'Acte précédent est terminé.
 static func chapitre_debloque(acte: int, chapitre: int) -> bool:
-	if TOUT_DEBLOQUER or (acte == 1 and chapitre == 1):
+	if TOUT_DEBLOQUER or Sauvegarde.admin("tout_debloque") or (acte == 1 and chapitre == 1):
 		return true
 	if chapitre > 1:
 		return est_termine(acte, chapitre - 1)

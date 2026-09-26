@@ -90,6 +90,8 @@ static func _defaut() -> Dictionary:
 			"jour": -1, "essais": 0, "records": {}, "records_jour": {},
 			"escouades": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
 		},
+		# Options du menu Admin (tests) : id -> true/false
+		"admin": {},
 		# Dernière version du jeu dont le joueur a vu les nouveautés
 		"version_vue": "",
 		"version_jeu": "",
@@ -228,12 +230,14 @@ static func importer_code(code: String) -> bool:
 
 static func get_or() -> int:
 	charger()
+	if admin("or_infini"):
+		return VALEUR_INFINIE
 	return int(donnees["ressources"]["or"])
 
 
 static func ajouter_or(montant: int) -> void:
 	charger()
-	donnees["ressources"]["or"] = get_or() + montant
+	donnees["ressources"]["or"] = int(donnees["ressources"]["or"]) + montant
 	if montant > 0:
 		_stat("or_total_gagne", montant)
 	sauvegarder()
@@ -243,26 +247,32 @@ static func ajouter_or(montant: int) -> void:
 static func depenser_or(montant: int) -> bool:
 	if get_or() < montant:
 		return false
-	donnees["ressources"]["or"] = get_or() - montant
+	if admin("or_infini"):
+		return true
+	donnees["ressources"]["or"] = int(donnees["ressources"]["or"]) - montant
 	sauvegarder()
 	return true
 
 
 static func get_gemmes() -> int:
 	charger()
+	if admin("gemmes_infinies"):
+		return VALEUR_INFINIE
 	return int(donnees["ressources"]["gemmes"])
 
 
 static func ajouter_gemmes(montant: int) -> void:
 	charger()
-	donnees["ressources"]["gemmes"] = get_gemmes() + montant
+	donnees["ressources"]["gemmes"] = int(donnees["ressources"]["gemmes"]) + montant
 	sauvegarder()
 
 
 static func depenser_gemmes(montant: int) -> bool:
 	if get_gemmes() < montant:
 		return false
-	donnees["ressources"]["gemmes"] = get_gemmes() - montant
+	if admin("gemmes_infinies"):
+		return true
+	donnees["ressources"]["gemmes"] = int(donnees["ressources"]["gemmes"]) - montant
 	sauvegarder()
 	return true
 
@@ -282,6 +292,8 @@ static func stamina_max_niveau(niveau: int) -> int:
 static func get_stamina() -> int:
 	charger()
 	_recharger_stamina()
+	if admin("stamina_infinie"):
+		return 999
 	return int(donnees["ressources"]["stamina"])
 
 
@@ -298,6 +310,8 @@ static func secondes_avant_stamina() -> int:
 static func depenser_stamina(montant: int) -> bool:
 	if get_stamina() < montant:
 		return false
+	if admin("stamina_infinie"):
+		return true
 	var r: Dictionary = donnees["ressources"]
 	if int(r["stamina"]) >= get_stamina_max():
 		r["stamina_maj"] = int(Time.get_unix_time_from_system())   # la recharge démarre maintenant
@@ -309,7 +323,8 @@ static func depenser_stamina(montant: int) -> bool:
 ## Ajoute de la stamina (élixir, montée de niveau...). Peut dépasser le maximum.
 static func ajouter_stamina(montant: int) -> void:
 	charger()
-	donnees["ressources"]["stamina"] = get_stamina() + montant
+	_recharger_stamina()
+	donnees["ressources"]["stamina"] = int(donnees["ressources"]["stamina"]) + montant
 	sauvegarder()
 
 
@@ -360,7 +375,7 @@ static func ajouter_xp_compte(montant: int) -> int:
 		c["niveau"] = NIVEAU_COMPTE_MAX
 		c["xp"] = 0
 		return 0
-	c["xp"] = int(c["xp"]) + montant
+	c["xp"] = int(c["xp"]) + montant * (10 if admin("xp_x10") else 1)
 	var gagnes := 0
 	while int(c["niveau"]) < NIVEAU_COMPTE_MAX and int(c["xp"]) >= xp_pour_niveau(int(c["niveau"])):
 		c["xp"] = int(c["xp"]) - xp_pour_niveau(int(c["niveau"]))
@@ -467,7 +482,7 @@ static func ajouter_xp_heros(uid: int, xp: int) -> int:
 	if h.is_empty():
 		return 0
 	var gagnes := 0
-	h["xp"] = int(h["xp"]) + xp
+	h["xp"] = int(h["xp"]) + xp * (10 if admin("xp_x10") else 1)
 	while int(h["niveau"]) < UnitesData.NIVEAU_MAX and int(h["xp"]) >= xp_heros_pour_niveau(int(h["niveau"])):
 		h["xp"] = int(h["xp"]) - xp_heros_pour_niveau(int(h["niveau"]))
 		h["niveau"] = int(h["niveau"]) + 1
@@ -568,6 +583,59 @@ static func _liste_vers_slots(uids: Array) -> Array:
 
 
 # ------------------------------------------------------------------
+# Menu Admin (options de test)
+# ------------------------------------------------------------------
+## Les options ne modifient PAS les vraies valeurs de la sauvegarde : tant qu'une option
+## est cochée, le jeu fait « comme si ». Décocher remet exactement la situation d'avant.
+
+const VALEUR_INFINIE := 9999999
+const ADMIN_OPTIONS := [
+	["or_infini", "Or infini", "Or illimité : les achats ne coûtent rien."],
+	["gemmes_infinies", "Gemmes infinies", "Gemmes illimitées."],
+	["stamina_infinie", "Stamina infinie", "Les combats ne consomment plus de stamina."],
+	["eclats_infinis", "Éclats infinis", "Éclats de Pacte Supérieur illimités (invocations et événements)."],
+	["objets_infinis", "Objets du Reliquaire infinis", "Braises, Plumes, Fragments, Poussière, coffres, élixirs, tomes, Pierres d'Éveil…"],
+	["bestiaire_complet", "Bestiaire entièrement débloqué", "Toutes les unités sont visibles dans le Bestiaire."],
+	["tout_debloque", "Tous les Actes et chapitres débloqués", "Accès à tous les chapitres sans terminer les précédents."],
+	["tours_libres", "Tous les étages des Tours accessibles", "Combattre n'importe quel étage, même sans avoir fini le précédent."],
+	["boss_monde_libre", "Boss de Monde : tous disponibles", "Les 7 boss jouables tous les jours, essais illimités, sans condition de déblocage."],
+	["heros_invincibles", "Héros invincibles", "Tes unités ne subissent aucun dégât en combat."],
+	["ennemis_affaiblis", "Ennemis affaiblis", "Les ennemis n'ont que 10 % de leurs PV."],
+	["xp_x10", "XP x10", "XP des unités et du compte multipliée par 10."],
+	["echos_garantis", "Amélioration d'Échos toujours réussie", "Chaque amélioration d'Écho réussit (le coût en or reste dû, sauf avec Or infini)."],
+]
+
+## Le menu Admin est visible quand le jeu est lancé depuis Godot (version de débogage),
+## et caché dans la version publiée. Mets true pour le forcer partout.
+const ADMIN_TOUJOURS_VISIBLE := false
+
+
+static func admin_visible() -> bool:
+	return ADMIN_TOUJOURS_VISIBLE or OS.is_debug_build()
+
+
+static func admin(id: String) -> bool:
+	charger()
+	return bool(donnees.get("admin", {}).get(id, false))
+
+
+static func definir_admin(id: String, actif: bool) -> void:
+	charger()
+	if not donnees.has("admin"):
+		donnees["admin"] = {}
+	donnees["admin"][id] = actif
+	sauvegarder()
+
+
+static func admin_actif() -> bool:
+	charger()
+	for o in ADMIN_OPTIONS:
+		if admin(o[0]):
+			return true
+	return false
+
+
+# ------------------------------------------------------------------
 # Boss de Monde : 4 escouades de 5 (20 places)
 # ------------------------------------------------------------------
 
@@ -632,7 +700,7 @@ static func vendre(uids: Array) -> int:
 		total += prix_vente(int(uid))
 		_retirer_heros(int(uid))
 	if total > 0:
-		donnees["ressources"]["or"] = get_or() + total
+		donnees["ressources"]["or"] = int(donnees["ressources"]["or"]) + total
 		_stat("unites_vendues", uids.size())
 	sauvegarder()
 	return total
@@ -748,7 +816,7 @@ static func vendre_echos(uids: Array) -> int:
 					total += Echos.prix_vente(e)
 					liste.remove_at(i)
 				break
-	donnees["ressources"]["or"] = get_or() + total
+	donnees["ressources"]["or"] = int(donnees["ressources"]["or"]) + total
 	sauvegarder()
 	return total
 
@@ -789,19 +857,28 @@ const ECLAT := "eclat_superieur"
 
 static func get_objet(nom: String) -> int:
 	charger()
+	if objet_infini(nom):
+		return 9999
 	return int(donnees["collection"]["objets"].get(nom, 0))
+
+
+## Objet rendu infini par le menu Admin ?
+static func objet_infini(nom: String) -> bool:
+	return admin("eclats_infinis") if nom == ECLAT else admin("objets_infinis")
 
 
 static func ajouter_objet(nom: String, n: int) -> void:
 	charger()
-	donnees["collection"]["objets"][nom] = get_objet(nom) + n
+	donnees["collection"]["objets"][nom] = int(donnees["collection"]["objets"].get(nom, 0)) + n
 	sauvegarder()
 
 
 static func retirer_objet(nom: String, n: int) -> bool:
 	if get_objet(nom) < n:
 		return false
-	donnees["collection"]["objets"][nom] = get_objet(nom) - n
+	if objet_infini(nom):
+		return true
+	donnees["collection"]["objets"][nom] = int(donnees["collection"]["objets"].get(nom, 0)) - n
 	sauvegarder()
 	return true
 
@@ -830,11 +907,13 @@ static func decouvrir(id_unite: String) -> bool:
 
 static func est_decouvert(id_unite: String) -> bool:
 	charger()
-	return id_unite in donnees["bestiaire"]
+	return admin("bestiaire_complet") or id_unite in donnees["bestiaire"]
 
 
 static func nombre_decouverts() -> int:
 	charger()
+	if admin("bestiaire_complet"):
+		return UnitesData.UNITES.size()
 	return donnees["bestiaire"].size()
 
 

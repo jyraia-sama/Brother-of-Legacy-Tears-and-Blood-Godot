@@ -44,12 +44,19 @@ var journal: Array = []
 var unites: Array = []               # tous les combattants (joueur puis ennemis)
 var tour := 0
 var tours_max := TOURS_MAX
+var _invincibles := false       # menu Admin : Héros invincibles
 var _rng := RandomNumberGenerator.new()
 
 
 ## `tours` : durée maximale du combat (Boss de Monde : plus court).
 func _init(equipe_joueur: Array, equipe_ennemie: Array, graine := 0, tours := TOURS_MAX) -> void:
 	tours_max = tours
+	_invincibles = Sauvegarde.admin("heros_invincibles")
+	var affaiblis := Sauvegarde.admin("ennemis_affaiblis")
+	if affaiblis:
+		for i in equipe_ennemie.size():
+			equipe_ennemie[i] = equipe_ennemie[i].duplicate()
+			equipe_ennemie[i]["pv_ratio"] = 0.1
 	_rng.seed = graine if graine != 0 else randi()
 	for i in equipe_joueur.size():
 		unites.append(_creer(equipe_joueur[i], 0, int(equipe_joueur[i].get("place", i))))
@@ -540,6 +547,8 @@ func _tenter_affliction(src: Dictionary, cible: Dictionary, nom: String, chance:
 ## Applique des dégâts (bouclier d'abord). Renvoie les dégâts réellement infligés.
 func _infliger(att: Dictionary, cible: Dictionary, dmg: float, crit: bool, physique: bool) -> float:
 	dmg = maxf(1.0, dmg)
+	if _invincibles and cible["camp"] == 0:
+		dmg = 0.0
 	var absorbe := minf(cible["bouclier"], dmg)
 	cible["bouclier"] -= absorbe
 	var reste := dmg - absorbe
@@ -576,6 +585,8 @@ func _apres_coup(att: Dictionary, cible: Dictionary, inflige: float, physique: b
 
 func _perdre_pv(c: Dictionary, montant: float, source: String) -> void:
 	if not c["vivant"]:
+		return
+	if _invincibles and c["camp"] == 0:
 		return
 	c["pv"] -= montant
 	_log({"t": "perte", "c": c["idx"], "v": int(montant), "source": source, "pv": int(maxf(0.0, c["pv"]))})

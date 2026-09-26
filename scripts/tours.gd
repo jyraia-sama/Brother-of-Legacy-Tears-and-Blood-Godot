@@ -236,7 +236,7 @@ static func butin(tour: String, n: int) -> Dictionary:
 static func valider_victoire(tour: String, n: int) -> Array:
 	var e := etat(tour)
 	var lignes: Array = []
-	if n != int(e["etage"]) + 1:
+	if n != int(e["etage"]) + 1 and not (Sauvegarde.admin("tours_libres") and n > int(e["etage"])):
 		return lignes
 	e["etage"] = n
 	var nouveau_record := n > int(e["record"])

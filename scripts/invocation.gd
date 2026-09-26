@@ -4,6 +4,8 @@ extends RefCounted
 ##
 ##   Pacte Doré      : payé en or           -> N, R, SR
 ##   Pacte Supérieur : payé en Éclats de Pacte Supérieur (lâchés par les boss) -> SR, SSR, UR, Légende
+##   Événement       : invocation spéciale à durée limitée (voir evenements.gd), payée en Éclats,
+##                     avec des unités « vedettes » plus faciles à obtenir.
 ##
 ## Taux, prix et garanties modifiables ci-dessous.
 
@@ -28,13 +30,28 @@ const GARANTIE_SUPERIEUR := 20
 const NOMS_RARETE := {"N": "N", "R": "R", "SR": "SR", "SSR": "SSR", "UR": "UR", "LEG": "Légende"}
 
 
+## Infos d'un pacte ("dore", "superieur" ou "evenement" = l'événement en cours).
+static func infos(pacte: String) -> Dictionary:
+	if pacte == "evenement":
+		var e := Evenements.actif()
+		if e.is_empty():
+			return {}
+		return {"nom": e["titre"], "monnaie": "eclat", "prix_x1": e["prix_x1"], "prix_x10": e["prix_x10"], "taux": e["taux"]}
+	return PACTES[pacte]
+
+
 static func prix(pacte: String, nombre: int) -> int:
-	return PACTES[pacte]["prix_x10"] if nombre >= 10 else PACTES[pacte]["prix_x1"] * nombre
+	var i := infos(pacte)
+	if i.is_empty():
+		return 999999
+	return int(i["prix_x10"]) if nombre >= 10 else int(i["prix_x1"]) * nombre
 
 
 static func peut_payer(pacte: String, nombre: int) -> bool:
+	if infos(pacte).is_empty():
+		return false
 	var p := prix(pacte, nombre)
-	if PACTES[pacte]["monnaie"] == "or":
+	if infos(pacte)["monnaie"] == "or":
 		return Sauvegarde.get_or() >= p
 	return Sauvegarde.get_objet(Sauvegarde.ECLAT) >= p
 
@@ -54,7 +71,7 @@ static func invoquer(pacte: String, nombre: int, rng: RandomNumberGenerator = nu
 	if not peut_payer(pacte, nombre):
 		return []
 	var p := prix(pacte, nombre)
-	if PACTES[pacte]["monnaie"] == "or":
+	if infos(pacte)["monnaie"] == "or":
 		Sauvegarde.depenser_or(p)
 	else:
 		Sauvegarde.retirer_objet(Sauvegarde.ECLAT, p)
@@ -63,7 +80,7 @@ static func invoquer(pacte: String, nombre: int, rng: RandomNumberGenerator = nu
 	var inv: Dictionary = Sauvegarde.donnees["invocation"]
 	for i in nombre:
 		var r := _tirer_rarete(pacte, rng)
-		if pacte == "superieur":
+		if pacte != "dore":           # Pacte Supérieur et Événement partagent la garantie
 			if r == "SR":
 				inv["pity_superieur"] = int(inv["pity_superieur"]) + 1
 				if int(inv["pity_superieur"]) >= GARANTIE_SUPERIEUR:
@@ -76,9 +93,14 @@ static func invoquer(pacte: String, nombre: int, rng: RandomNumberGenerator = nu
 		raretes[rng.randi_range(0, raretes.size() - 1)] = "SR"
 	inv["total_" + pacte] = int(inv.get("total_" + pacte, 0)) + nombre
 
+	var ev := Evenements.actif() if pacte == "evenement" else {}
 	var resultat: Array = []
 	for r in raretes:
 		var id := _tirer_unite(r, rng)
+		if not ev.is_empty():
+			var vedettes := Evenements.vedettes_de(ev, r)
+			if not vedettes.is_empty() and rng.randf() < float(ev["chance_vedette"]):
+				id = vedettes[rng.randi_range(0, vedettes.size() - 1)]
 		var nouveau := _nb_possedes(id) == 0
 		var uid := Sauvegarde.ajouter_heros(id)
 		resultat.append({"uid": uid, "id": id, "rarete": r, "nouveau": nouveau})
@@ -89,11 +111,12 @@ static func invoquer(pacte: String, nombre: int, rng: RandomNumberGenerator = nu
 static func _tirer_rarete(pacte: String, rng: RandomNumberGenerator) -> String:
 	var x := rng.randf()
 	var cumul := 0.0
-	for t in PACTES[pacte]["taux"]:
+	var taux: Array = infos(pacte)["taux"]
+	for t in taux:
 		cumul += t[1]
 		if x < cumul:
 			return t[0]
-	return PACTES[pacte]["taux"][0][0]
+	return taux[0][0]
 
 
 ## Tous les héros invocables d'une rareté ("LEG" = Héros de Légende).

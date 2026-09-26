@@ -53,7 +53,12 @@ static var mult_test := {}
 
 
 static func est_debloque() -> bool:
-	return ActesData.est_termine(DEBLOCAGE.x, DEBLOCAGE.y)
+	return Sauvegarde.admin("boss_monde_libre") or ActesData.est_termine(DEBLOCAGE.x, DEBLOCAGE.y)
+
+
+## Ce boss peut-il être affronté aujourd'hui ?
+static func est_disponible(index: int) -> bool:
+	return Sauvegarde.admin("boss_monde_libre") or index == boss_du_jour()
 
 
 static func boss_du_jour() -> int:
@@ -72,6 +77,8 @@ static func etat() -> Dictionary:
 
 
 static func essais_restants() -> int:
+	if Sauvegarde.admin("boss_monde_libre"):
+		return ESSAIS_PAR_JOUR
 	return maxi(0, ESSAIS_PAR_JOUR - int(etat()["essais"]))
 
 
@@ -112,6 +119,8 @@ static func armee() -> Array:
 
 
 static func consommer_essai() -> bool:
+	if Sauvegarde.admin("boss_monde_libre"):
+		return true
 	var e := etat()
 	if int(e["essais"]) >= ESSAIS_PAR_JOUR:
 		return false
