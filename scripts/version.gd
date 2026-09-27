@@ -14,11 +14,21 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.14.0"
+const NUMERO := "0.15.0"
 const DATE := "2026-09-27"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.15.0", "date": "2026-09-27", "titre": "Comptes, amis et guildes",
+	"changements": [
+		"Comptes joueurs : création et connexion avec un pseudo et un mot de passe (serveur Supabase). « Jouer hors ligne » reste possible.",
+		"Sauvegarde en ligne automatique : la partie est envoyée sur le compte toutes les 15 secondes quand elle change, et récupérée sur un autre appareil.",
+		"Si la partie du compte et celle de l'appareil sont différentes à la connexion, le joueur choisit laquelle garder.",
+		"Pseudo affiché sur le menu principal (vert = connecté) ; gestion du compte dans les Paramètres.",
+		"Onglet Social : liste d'amis (en ligne / vu il y a…), demandes reçues et envoyées, ajout par pseudo, profil d'un joueur.",
+		"Onglet Guilde (bouclier à droite du menu) : fonder une guilde (10 000 or), rechercher, rejoindre ou postuler ; membres, rôles Chef / Officier / Membre, candidatures, exclusion, réglages, quitter.",
+		"Menu « Guerre de guildes » préparé (bientôt disponible).",
+	]},
 	{"version": "0.14.0", "date": "2026-09-27", "titre": "Musique et bruitages",
 	"changements": [
 		"Musique pour chaque écran avec fondu enchaîné : menus, Aventure, combats, boss, Autel d'Invocation, Tour de l'Enfer, Tour du Paradis, Boss de Monde, victoire et défaite.",
