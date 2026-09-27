@@ -58,6 +58,8 @@ var _cache := {}                       # chemin -> AudioStream (ou null si absen
 var _derniere_fois := {}               # nom du son -> ticks ms
 var _tweens: Array[Tween] = [null, null]
 var _musique_en_attente := "-"
+var _web := OS.has_feature("web")
+var _geste_recu := false               # web : le navigateur n'autorise le son qu'après un clic
 
 
 # =====================================================================
@@ -157,10 +159,13 @@ func _ready() -> void:
 		_scene_changee()
 
 
+## Les bus viennent normalement de res://default_bus_layout.tres (chargé par Godot au démarrage).
+## Secours s'il manque : on agrandit la liste avec bus_count (AudioServer.add_bus() casse
+## le son sur la version web : bug connu de Godot).
 static func _creer_bus() -> void:
 	for nom in [BUS_MUSIQUE, BUS_SONS]:
 		if AudioServer.get_bus_index(nom) == -1:
-			AudioServer.add_bus()
+			AudioServer.bus_count = AudioServer.bus_count + 1
 			var i := AudioServer.bus_count - 1
 			AudioServer.set_bus_name(i, nom)
 			AudioServer.set_bus_send(i, "Master")
@@ -227,7 +232,7 @@ func _jouer_musique(nom: String) -> void:
 	_actif = 1 - _actif
 	var p := _lecteurs_musique[_actif]
 	p.stream = flux
-	p.volume_db = SILENCE_DB
+	p.volume_db = 0.0 if _web else SILENCE_DB
 	p.play()
 	_fondu(_actif, 0.0, false)
 
@@ -237,6 +242,12 @@ func _fondu(index: int, cible_db: float, arreter: bool) -> void:
 		_tweens[index].kill()
 	var p := _lecteurs_musique[index]
 	if not p.playing:
+		return
+	if _web:
+		# Version web : pas de fondu (le volume d'un son déjà lancé ne suit pas toujours)
+		if arreter:
+			p.stop()
+		p.volume_db = cible_db
 		return
 	var tw := create_tween()
 	# fondu plus rapide à la sortie, plus doux à l'entrée
@@ -279,6 +290,22 @@ func _lecteur_libre(prioritaire: bool) -> AudioStreamPlayer:
 			p.stop()
 			return p
 	return null
+
+
+# ---------------------------------------------------------------- Web
+
+## Version web : le navigateur bloque le son tant que le joueur n'a pas cliqué.
+## Au premier clic ou touche, on relance la musique en cours pour être sûr qu'on l'entende.
+func _input(event: InputEvent) -> void:
+	if not _web or _geste_recu:
+		return
+	if (event is InputEventMouseButton or event is InputEventKey or event is InputEventScreenTouch) and event.is_pressed():
+		_geste_recu = true
+		set_process_input(false)
+		var p := _lecteurs_musique[_actif]
+		if _musique_actuelle != "" and p.stream != null:
+			p.volume_db = 0.0
+			p.play(p.get_playback_position() if p.playing else 0.0)
 
 
 # ---------------------------------------------------------------- Boutons

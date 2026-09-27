@@ -14,43 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.16.1"
+const NUMERO := "0.14.1"
 const DATE := "2026-09-27"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
-	{"version": "0.16.1", "date": "2026-09-27", "titre": "Menu Admin avec code",
+	{"version": "0.14.1", "date": "2026-09-27", "titre": "Correction du son sur la version web",
 	"changements": [
-		"Le bouton « Menu Admin » est de retour dans les Paramètres, aussi dans la version web.",
-		"Hors de Godot, il demande un code Admin (une seule fois par session de jeu).",
-	]},
-	{"version": "0.16.0", "date": "2026-09-27", "titre": "Arène JcJ",
-	"changements": [
-		"Arène JcJ (Aventure > Arène) : prépare une équipe de défense, puis attaque celle des autres joueurs en combat automatique.",
-		"3 adversaires proposés selon ton classement (un plus faible, un proche, un plus fort), et le Gardien de l'Arène pour s'entraîner quand il n'y a pas assez de joueurs.",
-		"Points de classement et paliers : Bronze, Argent, Or, Platine, Diamant, Légende (top 10). Le défenseur gagne ou perd aussi des points.",
-		"5 combats gratuits par jour, puis jusqu'à 10 de plus à 20 gemmes. Maximum 3 attaques par jour contre le même joueur.",
-		"Insignes d'Arène à chaque combat, et boutique de l'Arène (élixirs, coffres, tomes, Éclats, Pierre d'Éveil) avec limites par saison.",
-		"Saisons de 2 semaines : récompenses selon le palier (Insignes et gemmes), puis remise à zéro partielle des points.",
-		"Classement de la saison (top 100) et historique des combats, avec bouton Revanche contre ceux qui ont attaqué ta défense.",
-		"Contrôlé par le serveur : points, essais, Insignes, achats et récompenses. Les options du menu Admin sont désactivées en Arène.",
-	]},
-	{"version": "0.15.1", "date": "2026-09-27", "titre": "Comptes par e-mail",
-	"changements": [
-		"Les comptes se créent maintenant avec un pseudo, une vraie adresse e-mail et un mot de passe ; la connexion se fait avec l'e-mail.",
-		"Bouton « Mot de passe oublié ? » : le lien reçu par e-mail ouvre le jeu web, qui demande le nouveau mot de passe.",
-		"Si la confirmation par e-mail est activée sur le serveur, le jeu l'indique et le lien de confirmation connecte directement au jeu web.",
-		"Correction : le jeu accepte l'adresse du serveur même collée avec « /rest/v1/ » à la fin.",
-	]},
-	{"version": "0.15.0", "date": "2026-09-27", "titre": "Comptes, amis et guildes",
-	"changements": [
-		"Comptes joueurs : création et connexion avec un pseudo et un mot de passe (serveur Supabase). « Jouer hors ligne » reste possible.",
-		"Sauvegarde en ligne automatique : la partie est envoyée sur le compte toutes les 15 secondes quand elle change, et récupérée sur un autre appareil.",
-		"Si la partie du compte et celle de l'appareil sont différentes à la connexion, le joueur choisit laquelle garder.",
-		"Pseudo affiché sur le menu principal (vert = connecté) ; gestion du compte dans les Paramètres.",
-		"Onglet Social : liste d'amis (en ligne / vu il y a…), demandes reçues et envoyées, ajout par pseudo, profil d'un joueur.",
-		"Onglet Guilde (bouclier à droite du menu) : fonder une guilde (10 000 or), rechercher, rejoindre ou postuler ; membres, rôles Chef / Officier / Membre, candidatures, exclusion, réglages, quitter.",
-		"Menu « Guerre de guildes » préparé (bientôt disponible).",
+		"Correction : la musique et les bruitages fonctionnent maintenant sur la version web (navigateur).",
+		"Sur navigateur, le son démarre au premier clic (règle des navigateurs).",
 	]},
 	{"version": "0.14.0", "date": "2026-09-27", "titre": "Musique et bruitages",
 	"changements": [
