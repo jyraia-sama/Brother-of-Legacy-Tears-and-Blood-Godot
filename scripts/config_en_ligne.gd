@@ -17,10 +17,7 @@ const URL := "https://ukfzjhcuiuppatwskiyt.supabase.co"
 const CLE := "sb_publishable_WWaLehXAvm04gmggZqdZLA_moALZuNd"
 
 
-## Les comptes se font avec un pseudo + mot de passe. Supabase exige une adresse e-mail :
-## le jeu en fabrique une à partir du pseudo (ex. neo@jyraia-sama.github.io).
-## Aucun e-mail n'est jamais envoyé à cette adresse (« Confirm email » doit être désactivé).
-## Supabase vérifie que ce domaine existe vraiment sur internet : on utilise donc l'adresse
-## du site du jeu (GitHub Pages), qui existe. Aucun e-mail n'y est envoyé.
-## Ne change plus ce nom une fois que des joueurs ont créé un compte !
-const DOMAINE_COMPTES := "jyraia-sama.github.io"
+## Adresse du jeu web : les liens des e-mails (confirmation du compte, mot de passe oublié)
+## ramènent ici. Dans Supabase, mets la même adresse dans
+## Authentication > URL Configuration > Site URL (et Redirect URLs).
+const ADRESSE_JEU_WEB := "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/"

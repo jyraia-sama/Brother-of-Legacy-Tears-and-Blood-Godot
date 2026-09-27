@@ -1,10 +1,17 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.15.0** (2026-09-27)
+Version actuelle : **0.15.1** (2026-09-27)
+
+## v0.15.1 — Comptes par e-mail  (2026-09-27)
+
+- Les comptes se créent maintenant avec un pseudo, une vraie adresse e-mail et un mot de passe ; la connexion se fait avec l'e-mail.
+- Bouton « Mot de passe oublié ? » : le lien reçu par e-mail ouvre le jeu web, qui demande le nouveau mot de passe.
+- Si la confirmation par e-mail est activée sur le serveur, le jeu l'indique et le lien de confirmation connecte directement au jeu web.
+- Correction : le jeu accepte l'adresse du serveur même collée avec « /rest/v1/ » à la fin.
 
 ## v0.15.0 — Comptes, amis et guildes  (2026-09-27)
 
-- Comptes joueurs : création et connexion avec un pseudo et un mot de passe (serveur Supabase). « Jouer hors ligne » reste possible.
+- Comptes joueurs : création et connexion (pseudo, mot de passe) (serveur Supabase). « Jouer hors ligne » reste possible.
 - Sauvegarde en ligne automatique : la partie est envoyée sur le compte toutes les 15 secondes quand elle change, et récupérée sur un autre appareil.
 - Si la partie du compte et celle de l'appareil sont différentes à la connexion, le joueur choisit laquelle garder.
 - Pseudo affiché sur le menu principal (vert = connecté) ; gestion du compte dans les Paramètres.

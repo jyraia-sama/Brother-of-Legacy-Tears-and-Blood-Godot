@@ -17,12 +17,23 @@ Le jeu, lui, reste sur GitHub Pages. La formule gratuite suffit largement pour c
 3. Clique sur **Run**. Tu dois voir « Success. No rows returned ».
    (Tu peux le relancer sans danger : il ne supprime aucune donnée.)
 
-## 3. Autoriser les comptes « pseudo + mot de passe »
-Le jeu fabrique une adresse e-mail à partir du pseudo (personne ne la voit, aucun e-mail n'est envoyé).
-Il faut donc dire à Supabase de ne pas demander de confirmation par e-mail :
-1. Menu de gauche : **Authentication** → **Sign In / Providers** → **Email**.
-2. **Décoche « Confirm email »** → **Save**.
-3. Vérifie que **« Allow new users to sign up »** est bien activé.
+## 3. Comptes par e-mail
+Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
+
+**a) Adresse du jeu** (pour que les liens des e-mails ramènent sur le jeu)
+1. **Authentication** → **URL Configuration**.
+2. **Site URL** : `https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/` → **Save**.
+3. **Redirect URLs** → **Add URL** : la même adresse → **Save**.
+
+**b) Confirmation de l'e-mail : à toi de choisir**
+Dans **Authentication** → **Sign In / Providers** → **Email** :
+- **« Confirm email » décoché (conseillé pour l'instant)** : le compte marche tout de suite.
+- **« Confirm email » coché** : le joueur reçoit un e-mail et doit cliquer sur le lien avant de se connecter.
+  ⚠ Le service d'e-mails gratuit de Supabase n'envoie qu'aux **membres de ton équipe Supabase** (donc toi) et seulement **2 e-mails par heure**.
+  Pour les autres joueurs, il faudra brancher un service d'e-mails (ex. Resend, gratuit) dans **Project Settings** → **Authentication** → **SMTP Settings**.
+  Ça vaut aussi pour « Mot de passe oublié ».
+
+Vérifie enfin que **« Allow new users to sign up »** est activé.
 
 ## 4. Relier le jeu au serveur
 1. En haut de la page du projet, clique sur **Connect** (ou **Project Settings** → **API Keys**).
@@ -42,18 +53,19 @@ La clé publishable, elle, est faite pour être dans le jeu (la sécurité est a
 2. Sur le menu principal, ton pseudo s'affiche en vert en haut à gauche.
 3. Dans Supabase → **Table Editor** → `profils` : ton pseudo apparaît. Dans `sauvegardes` : ta partie.
 4. Pour tester les amis, crée un 2e compte : dans le jeu, Paramètres → Gérer le compte → Se déconnecter,
-   puis crée-en un autre (ou utilise la version web sur un autre navigateur).
+   puis crée-en un autre avec une autre adresse e-mail (ou utilise la version web sur un autre navigateur).
 
 ## En cas de problème
 | Message | Solution |
 |---|---|
 | « Compte créé, mais Supabase attend une confirmation par e-mail » | Étape 3 : décoche « Confirm email ». Puis dans Authentication → Users, supprime le compte bloqué. |
-| « Le serveur refuse les adresses du jeu » | Dans `config_en_ligne.gd`, remplace `DOMAINE_COMPTES` par un autre nom (un domaine qui existe vraiment, ex. `jyraia-sama.github.io`), **avant** que des joueurs aient créé des comptes. |
+| « Adresse e-mail pas encore confirmée » | Clique sur le lien de l'e-mail reçu (regarde les spams), ou décoche « Confirm email » (étape 3b). |
+| L'e-mail n'arrive jamais | Service gratuit : seulement pour les membres de ton équipe, 2 par heure. Décoche « Confirm email » ou branche un SMTP (étape 3b). Dans Authentication → Users, tu peux aussi confirmer un compte à la main. |
 | « Erreur du serveur (404) … rpc/… » | Le script SQL n'a pas été lancé (étape 2), ou pas en entier. |
 | « Erreur du serveur (401) » | URL ou clé mal copiée (espace en trop, mauvaise clé). |
 | Le pseudo reste « Se connecter » en jaune | Le serveur ne répond pas : vérifie ta connexion. La partie sera envoyée dès le retour du réseau. |
 
 ## Bon à savoir
 - **Projet gratuit en pause** : sur la formule gratuite, Supabase met le projet en pause après ~1 semaine sans aucune connexion. Il suffit de cliquer « Restore » dans le tableau de bord.
-- **Mot de passe oublié** : pas encore possible (il faudra l'e-mail, prévu plus tard). En attendant, tu peux supprimer le compte dans Authentication → Users, et le joueur en recrée un.
+- **Mot de passe oublié** : bouton dans la fenêtre de connexion. Le lien reçu par e-mail ouvre le jeu web, qui demande le nouveau mot de passe (nécessite que les e-mails partent : voir étape 3b).
 - **Triche** : la partie est encore calculée sur l'appareil du joueur. Le menu Admin n'existe que quand le jeu est lancé depuis Godot, mais un joueur très motivé pourrait modifier sa sauvegarde. Pour l'Arène classée, les résultats importants devront être vérifiés par le serveur (prévu à l'étape Arène).

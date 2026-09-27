@@ -14,11 +14,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.15.0"
+const NUMERO := "0.15.1"
 const DATE := "2026-09-27"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.15.1", "date": "2026-09-27", "titre": "Comptes par e-mail",
+	"changements": [
+		"Les comptes se créent maintenant avec un pseudo, une vraie adresse e-mail et un mot de passe ; la connexion se fait avec l'e-mail.",
+		"Bouton « Mot de passe oublié ? » : le lien reçu par e-mail ouvre le jeu web, qui demande le nouveau mot de passe.",
+		"Si la confirmation par e-mail est activée sur le serveur, le jeu l'indique et le lien de confirmation connecte directement au jeu web.",
+		"Correction : le jeu accepte l'adresse du serveur même collée avec « /rest/v1/ » à la fin.",
+	]},
 	{"version": "0.15.0", "date": "2026-09-27", "titre": "Comptes, amis et guildes",
 	"changements": [
 		"Comptes joueurs : création et connexion avec un pseudo et un mot de passe (serveur Supabase). « Jouer hors ligne » reste possible.",

@@ -26,6 +26,8 @@ var url_serveur: String = ConfigEnLigne.URL
 var cle_serveur: String = ConfigEnLigne.CLE
 ## Session ouverte : access_token, refresh_token, expire_le, id, pseudo
 var session: Dictionary = {}
+## Le joueur arrive par le lien « mot de passe oublié » : le menu lui demande le nouveau.
+var lien_mot_de_passe := false
 ## Le joueur a choisi « Jouer hors ligne » : on ne lui redemande pas avant le prochain lancement.
 var hors_ligne_choisi := false
 ## Dernière synchronisation : compte, maj (heure serveur), signature de la partie envoyée
@@ -88,6 +90,9 @@ func _ready() -> void:
 	presence.timeout.connect(_signaler_presence)
 	add_child(presence)
 
+	var lien := _lire_lien_email() if configure() else ""
+	if lien == "recovery":
+		lien_mot_de_passe = true
 	if configure() and est_connecte():
 		_reprendre_session()
 
@@ -109,8 +114,10 @@ func _reprendre_session() -> void:
 # Compte : inscription, connexion, déconnexion
 # ------------------------------------------------------------------
 
-func email_de(p: String) -> String:
-	return p.strip_edges().to_lower() + "@" + ConfigEnLigne.DOMAINE_COMPTES
+func email_valide(e: String) -> bool:
+	var re := RegEx.new()
+	re.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]{2,}$")
+	return re.search(e.strip_edges()) != null
 
 
 func pseudo_valide(p: String) -> bool:
@@ -119,41 +126,98 @@ func pseudo_valide(p: String) -> bool:
 	return re.search(p.strip_edges()) != null
 
 
-## Crée un compte puis l'ouvre. Renvoie {ok, erreur}.
-func inscrire(p: String, mot_de_passe: String) -> Dictionary:
+## Crée un compte (pseudo + e-mail + mot de passe).
+## Renvoie {ok, erreur, confirmation} : confirmation = true si Supabase a envoyé
+## un e-mail à valider avant de pouvoir se connecter.
+func inscrire(p: String, email: String, mot_de_passe: String) -> Dictionary:
 	p = p.strip_edges()
+	email = email.strip_edges().to_lower()
 	if not configure():
 		return _echec("Le jeu en ligne n'est pas configuré.")
 	if not pseudo_valide(p):
 		return _echec("Pseudo : 3 à 16 caractères, lettres sans accent, chiffres, _ ou -.")
+	if not email_valide(email):
+		return _echec("Adresse e-mail invalide.")
 	if mot_de_passe.length() < 6:
 		return _echec("Le mot de passe doit faire au moins 6 caractères.")
 	var dispo := await _http(HTTPClient.METHOD_POST, "/rest/v1/rpc/pseudo_disponible", {"p_pseudo": p}, false)
 	if dispo.ok and dispo.data == false:
 		return _echec("Ce pseudo est déjà pris.")
-	var r := await _http(HTTPClient.METHOD_POST, "/auth/v1/signup",
-		{"email": email_de(p), "password": mot_de_passe, "data": {"pseudo": p}}, false)
+	var r := await _http(HTTPClient.METHOD_POST, "/auth/v1/signup" + _redirection(),
+		{"email": email, "password": mot_de_passe, "data": {"pseudo": p}}, false)
 	if not r.ok:
 		return _echec(_erreur_auth(r))
 	if not (r.data is Dictionary and r.data.has("access_token")):
-		return _echec("Compte créé, mais Supabase attend une confirmation par e-mail.\nDans Supabase : Authentication > Sign In / Providers > Email, décoche « Confirm email ».")
+		# « Confirm email » activé : le joueur doit cliquer sur le lien reçu par e-mail.
+		return {"ok": true, "erreur": "", "confirmation": true}
 	await _ouvrir_session(r.data)
-	return {"ok": true, "erreur": ""}
+	return {"ok": true, "erreur": "", "confirmation": false}
 
 
-## Ouvre un compte existant. Renvoie {ok, erreur}.
-func connecter(p: String, mot_de_passe: String) -> Dictionary:
-	p = p.strip_edges()
+## Ouvre un compte existant avec son e-mail. Renvoie {ok, erreur}.
+func connecter(email: String, mot_de_passe: String) -> Dictionary:
+	email = email.strip_edges().to_lower()
 	if not configure():
 		return _echec("Le jeu en ligne n'est pas configuré.")
-	if p == "" or mot_de_passe == "":
-		return _echec("Entre ton pseudo et ton mot de passe.")
+	if email == "" or mot_de_passe == "":
+		return _echec("Entre ton adresse e-mail et ton mot de passe.")
+	if not email_valide(email):
+		return _echec("Connecte-toi avec ton adresse e-mail (pas ton pseudo).")
 	var r := await _http(HTTPClient.METHOD_POST, "/auth/v1/token?grant_type=password",
-		{"email": email_de(p), "password": mot_de_passe}, false)
+		{"email": email, "password": mot_de_passe}, false)
 	if not r.ok:
 		return _echec(_erreur_auth(r))
 	await _ouvrir_session(r.data)
 	return {"ok": true, "erreur": ""}
+
+
+## Envoie l'e-mail « mot de passe oublié ». Le lien ramène sur le jeu web,
+## qui demande alors le nouveau mot de passe. Renvoie {ok, erreur}.
+func mot_de_passe_oublie(email: String) -> Dictionary:
+	email = email.strip_edges().to_lower()
+	if not email_valide(email):
+		return _echec("Entre d'abord ton adresse e-mail.")
+	var r := await _http(HTTPClient.METHOD_POST, "/auth/v1/recover" + _redirection(), {"email": email}, false)
+	return {"ok": r.ok, "erreur": "" if r.ok else _erreur_auth(r)}
+
+
+## Change le mot de passe du compte connecté. Renvoie {ok, erreur}.
+func changer_mot_de_passe(mot_de_passe: String) -> Dictionary:
+	if mot_de_passe.length() < 6:
+		return _echec("Le mot de passe doit faire au moins 6 caractères.")
+	var r := await api(HTTPClient.METHOD_PUT, "/auth/v1/user", {"password": mot_de_passe})
+	return {"ok": r.ok, "erreur": "" if r.ok else _erreur_auth(r)}
+
+
+## Adresse du jeu web où ramènent les liens des e-mails (confirmation, mot de passe).
+func _redirection() -> String:
+	var adresse := ConfigEnLigne.ADRESSE_JEU_WEB
+	if OS.has_feature("web"):
+		var ici = JavaScriptBridge.eval("window.location.origin + window.location.pathname", true)
+		if ici is String and ici != "":
+			adresse = ici
+	return "" if adresse == "" else "?redirect_to=" + adresse.uri_encode()
+
+
+## Version web : le joueur arrive depuis un lien reçu par e-mail
+## (…/#access_token=…&refresh_token=…&type=signup ou type=recovery).
+## Renvoie le type de lien ("signup", "recovery"...) ou "" s'il n'y en a pas.
+func _lire_lien_email() -> String:
+	if not OS.has_feature("web"):
+		return ""
+	var hash = JavaScriptBridge.eval("window.location.hash", true)
+	if not (hash is String) or not hash.contains("access_token="):
+		return ""
+	JavaScriptBridge.eval("history.replaceState(null, '', window.location.pathname)", true)
+	var p := {}
+	for morceau in hash.trim_prefix("#").split("&"):
+		var kv: PackedStringArray = morceau.split("=", true, 1)
+		if kv.size() == 2:
+			p[kv[0]] = kv[1].uri_decode()
+	if not p.has("refresh_token"):
+		return ""
+	session = {"refresh_token": p["refresh_token"], "access_token": p.get("access_token", ""), "expire_le": 0}
+	return str(p.get("type", "signup"))
 
 
 ## Ferme le compte sur cet appareil (la partie reste sur l'appareil ET sur le compte).
@@ -302,14 +366,20 @@ func _erreur_auth(r: Dictionary) -> String:
 	var code := str(d.get("error_code", d.get("code", ""))).to_lower()
 	var msg := str(d.get("msg", d.get("message", d.get("error_description", "")))).to_lower()
 	if code == "invalid_credentials" or msg.contains("invalid login"):
-		return "Pseudo ou mot de passe incorrect."
-	if code in ["user_already_exists", "email_exists"] or msg.contains("already registered") or msg.contains("database error saving new user"):
+		return "E-mail ou mot de passe incorrect."
+	if code == "email_not_confirmed" or msg.contains("not confirmed"):
+		return "Adresse e-mail pas encore confirmée : clique sur le lien reçu par e-mail (regarde aussi les spams)."
+	if code in ["user_already_exists", "email_exists"] or msg.contains("already registered"):
+		return "Un compte existe déjà avec cette adresse e-mail."
+	if msg.contains("database error saving new user"):
 		return "Ce pseudo est déjà pris."
 	if code == "weak_password" or msg.contains("password should"):
 		return "Mot de passe trop faible (au moins 6 caractères)."
 	if code == "email_address_invalid" or msg.contains("email address") and msg.contains("invalid"):
-		return "Le serveur refuse les adresses du jeu : change DOMAINE_COMPTES dans config_en_ligne.gd (voir SUPABASE.md)."
-	if code == "over_request_rate_limit" or code == "over_email_send_rate_limit" or r.code == 429:
+		return "Adresse e-mail refusée par le serveur. Vérifie-la."
+	if code == "over_email_send_rate_limit":
+		return "Le serveur a envoyé trop d'e-mails pour l'instant. Réessaie dans une heure."
+	if code == "over_request_rate_limit" or r.code == 429:
 		return "Trop de tentatives. Réessaie dans quelques minutes."
 	if code == "signup_disabled":
 		return "Les inscriptions sont désactivées sur le serveur."

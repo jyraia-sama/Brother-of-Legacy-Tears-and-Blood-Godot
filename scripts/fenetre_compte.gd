@@ -12,6 +12,7 @@ var quand_fermee: Callable
 var _mode_creation := false
 var _vb: VBoxContainer
 var _pseudo: LineEdit
+var _email: LineEdit
 var _mdp: LineEdit
 var _mdp2: LineEdit
 var _etat: Label
@@ -63,6 +64,8 @@ func _construire() -> void:
 	if not EnLigne.configure():
 		_texte("Le jeu en ligne n'est pas encore configuré.\nRemplis URL et CLE dans scripts/config_en_ligne.gd (voir SUPABASE.md).", UiCommun.C_DOUX)
 		_ligne_boutons([["Fermer", _fermer]])
+	elif EnLigne.est_connecte() and EnLigne.lien_mot_de_passe:
+		_construire_nouveau_mdp()
 	elif EnLigne.est_connecte():
 		_construire_connecte()
 	else:
@@ -84,20 +87,33 @@ func _construire_formulaire() -> void:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		onglets.add_child(b)
 
-	_vb.add_child(UiCommun.label("Pseudo", 16, UiCommun.C_OR))
+	var lp := UiCommun.label("Pseudo (visible par les autres joueurs)", 16, UiCommun.C_OR)
+	lp.name = "LabelPseudo"
+	_vb.add_child(lp)
 	_pseudo = LineEdit.new()
 	_pseudo.max_length = 16
 	_pseudo.placeholder_text = "3 à 16 caractères (lettres, chiffres, _ ou -)"
 	_pseudo.custom_minimum_size = Vector2(0, 42)
-	_pseudo.text_submitted.connect(func(_t): _mdp.grab_focus())
+	_pseudo.text_submitted.connect(func(_t): _email.grab_focus())
 	_vb.add_child(_pseudo)
+
+	_vb.add_child(UiCommun.label("Adresse e-mail", 16, UiCommun.C_OR))
+	_email = LineEdit.new()
+	_email.placeholder_text = "ton.adresse@exemple.fr"
+	_email.custom_minimum_size = Vector2(0, 42)
+	_email.text_submitted.connect(func(_t): _mdp.grab_focus())
+	_vb.add_child(_email)
 
 	_vb.add_child(UiCommun.label("Mot de passe", 16, UiCommun.C_OR))
 	_mdp = LineEdit.new()
 	_mdp.secret = true
 	_mdp.placeholder_text = "Au moins 6 caractères"
 	_mdp.custom_minimum_size = Vector2(0, 42)
-	_mdp.text_submitted.connect(func(_t): _valider())
+	_mdp.text_submitted.connect(func(_t):
+		if _mode_creation:
+			_mdp2.grab_focus()
+		else:
+			_valider())
 	_vb.add_child(_mdp)
 
 	var l2 := UiCommun.label("Confirme le mot de passe", 16, UiCommun.C_OR)
@@ -108,10 +124,6 @@ func _construire_formulaire() -> void:
 	_mdp2.custom_minimum_size = Vector2(0, 42)
 	_mdp2.text_submitted.connect(func(_t): _valider())
 	_vb.add_child(_mdp2)
-
-	var avertissement := UiCommun.label("Note bien ton mot de passe : pour l'instant, il ne peut pas être récupéré.", 14, UiCommun.C_DOUX)
-	avertissement.name = "Avertissement"
-	_vb.add_child(avertissement)
 
 	_etat = UiCommun.label("", 16, Color(1.0, 0.75, 0.5))
 	_etat.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -124,18 +136,27 @@ func _construire_formulaire() -> void:
 	_vb.add_child(valider)
 	_boutons.append(valider)
 
+	var oubli := _bouton("Mot de passe oublié ?", _oubli)
+	oubli.name = "Oubli"
+	oubli.flat = true
+	oubli.add_theme_font_size_override("font_size", 15)
+	_vb.add_child(oubli)
+	_boutons.append(oubli)
+
 	_ligne_boutons([["Jouer hors ligne" if au_demarrage else "Fermer", _hors_ligne if au_demarrage else _fermer]])
 	_changer_mode(_mode_creation)
-	_pseudo.grab_focus.call_deferred()
+	_email.grab_focus.call_deferred()
 
 
 func _changer_mode(creation: bool) -> void:
 	_mode_creation = creation
 	_onglet_connexion.button_pressed = not creation
 	_onglet_creation.button_pressed = creation
+	_pseudo.visible = creation
+	_vb.get_node("LabelPseudo").visible = creation
 	_mdp2.visible = creation
 	_vb.get_node("LabelConfirmation").visible = creation
-	_vb.get_node("Avertissement").visible = creation
+	_vb.get_node("Oubli").visible = not creation
 	(_vb.get_node("Valider") as Button).text = "Créer mon compte" if creation else "Se connecter"
 	_etat.text = ""
 
@@ -149,16 +170,72 @@ func _valider() -> void:
 	_occuper(true, "Création du compte…" if _mode_creation else "Connexion…")
 	var r: Dictionary
 	if _mode_creation:
-		r = await EnLigne.inscrire(_pseudo.text, _mdp.text)
+		r = await EnLigne.inscrire(_pseudo.text, _email.text, _mdp.text)
 	else:
-		r = await EnLigne.connecter(_pseudo.text, _mdp.text)
+		r = await EnLigne.connecter(_email.text, _mdp.text)
 	if not is_instance_valid(self):
 		return
 	_occuper(false, "")
-	if r.ok:
+	if r.ok and r.get("confirmation", false):
+		# Compte créé, en attente de la confirmation par e-mail
+		_changer_mode(false)
+		_mdp.text = ""
+		_etat.text = "Compte créé ! Un e-mail de confirmation a été envoyé à %s.\nClique sur le lien qu'il contient (regarde aussi les spams), puis connecte-toi ici." % _email.text.strip_edges()
+	elif r.ok:
 		_fermer()
 	else:
 		_etat.text = r.erreur
+
+
+func _oubli() -> void:
+	if _occupe:
+		return
+	_occuper(true, "Envoi de l'e-mail…")
+	var r := await EnLigne.mot_de_passe_oublie(_email.text)
+	if not is_instance_valid(self):
+		return
+	_occuper(false, "E-mail envoyé à %s : clique sur le lien qu'il contient pour choisir un nouveau mot de passe (regarde aussi les spams)." % _email.text.strip_edges() if r.ok else r.erreur)
+
+
+# ---------- Arrivée par le lien « mot de passe oublié » ----------
+
+func _construire_nouveau_mdp() -> void:
+	_texte("Choisis ton nouveau mot de passe.", UiCommun.C_TEXTE)
+	_mdp = LineEdit.new()
+	_mdp.secret = true
+	_mdp.placeholder_text = "Nouveau mot de passe (au moins 6 caractères)"
+	_mdp.custom_minimum_size = Vector2(0, 42)
+	_vb.add_child(_mdp)
+	_mdp2 = LineEdit.new()
+	_mdp2.secret = true
+	_mdp2.placeholder_text = "Confirme le nouveau mot de passe"
+	_mdp2.custom_minimum_size = Vector2(0, 42)
+	_vb.add_child(_mdp2)
+	_etat = UiCommun.label("", 16, Color(1.0, 0.75, 0.5))
+	_etat.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_etat.custom_minimum_size = Vector2(500, 0)
+	_vb.add_child(_etat)
+	_ligne_boutons([["Enregistrer", _enregistrer_mdp], ["Plus tard", func():
+		EnLigne.lien_mot_de_passe = false
+		_fermer()]])
+	_mdp.grab_focus.call_deferred()
+
+
+func _enregistrer_mdp() -> void:
+	if _mdp.text != _mdp2.text:
+		_etat.text = "Les deux mots de passe ne sont pas identiques."
+		return
+	_occuper(true, "Enregistrement…")
+	var r := await EnLigne.changer_mot_de_passe(_mdp.text)
+	if not is_instance_valid(self):
+		return
+	if r.ok:
+		EnLigne.lien_mot_de_passe = false
+		_occuper(false, "")
+		_construire()
+		_etat.text = "Mot de passe changé !"
+	else:
+		_occuper(false, r.erreur)
 
 
 # ---------- Connecté ----------

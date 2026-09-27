@@ -128,6 +128,7 @@ func _ready() -> void:
 	# Le jeu vient d'être mis à jour : on montre les nouveautés
 	FenetreChangelog.verifier_mise_a_jour(self)
 	EnLigne.etat_change.connect(_sur_etat_compte)
+	_sur_etat_compte()
 
 
 func _apres_connexion_demarrage() -> void:
@@ -178,6 +179,10 @@ func _sur_etat_compte() -> void:
 	# Session perdue au lancement (mot de passe changé, compte supprimé...) : on redemande.
 	if EnLigne.doit_proposer_connexion() and not is_instance_valid(_fenetre_compte):
 		_fenetre_compte = FenetreCompte.ouvrir(self, true)
+	# Arrivée par le lien « mot de passe oublié » : on demande le nouveau mot de passe.
+	elif EnLigne.lien_mot_de_passe and EnLigne.est_connecte() and not EnLigne.connexion_en_cours() \
+			and not is_instance_valid(_fenetre_compte):
+		_fenetre_compte = FenetreCompte.ouvrir(self)
 
 
 func _maj_ressources() -> void:
