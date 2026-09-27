@@ -14,12 +14,12 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.14.1"
+const NUMERO := "0.16.2"
 const DATE := "2026-09-27"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
-	{"version": "0.14.1", "date": "2026-09-27", "titre": "Correction du son sur la version web",
+	{"version": "0.16.2", "date": "2026-09-27", "titre": "Correction du son sur la version web",
 	"changements": [
 		"Correction : la musique et les bruitages fonctionnent maintenant sur la version web (navigateur).",
 		"Sur navigateur, le son démarre au premier clic (règle des navigateurs).",

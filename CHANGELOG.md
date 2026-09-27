@@ -1,8 +1,8 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.14.1** (2026-09-27)
+Version actuelle : **0.16.2** (2026-09-27)
 
-## v0.14.1 — Correction du son sur la version web  (2026-09-27)
+## v0.16.2 — Correction du son sur la version web  (2026-09-27)
 
 - Correction : la musique et les bruitages fonctionnent maintenant sur la version web (navigateur).
 - Sur navigateur, le son démarre au premier clic (règle des navigateurs).
