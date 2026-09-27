@@ -18,7 +18,9 @@ const CLE := "sb_publishable_WWaLehXAvm04gmggZqdZLA_moALZuNd"
 
 
 ## Les comptes se font avec un pseudo + mot de passe. Supabase exige une adresse e-mail :
-## le jeu en fabrique une à partir du pseudo (ex. neo@joueurs.brothers-of-legacy.fr).
+## le jeu en fabrique une à partir du pseudo (ex. neo@jyraia-sama.github.io).
 ## Aucun e-mail n'est jamais envoyé à cette adresse (« Confirm email » doit être désactivé).
+## Supabase vérifie que ce domaine existe vraiment sur internet : on utilise donc l'adresse
+## du site du jeu (GitHub Pages), qui existe. Aucun e-mail n'y est envoyé.
 ## Ne change plus ce nom une fois que des joueurs ont créé un compte !
-const DOMAINE_COMPTES := "joueurs.brothers-of-legacy.fr"
+const DOMAINE_COMPTES := "jyraia-sama.github.io"

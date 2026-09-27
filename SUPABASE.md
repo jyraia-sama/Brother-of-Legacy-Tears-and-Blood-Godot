@@ -48,7 +48,7 @@ La clé publishable, elle, est faite pour être dans le jeu (la sécurité est a
 | Message | Solution |
 |---|---|
 | « Compte créé, mais Supabase attend une confirmation par e-mail » | Étape 3 : décoche « Confirm email ». Puis dans Authentication → Users, supprime le compte bloqué. |
-| « Le serveur refuse les adresses du jeu » | Dans `config_en_ligne.gd`, remplace `DOMAINE_COMPTES` par un autre nom (ex. `joueurs-bol.fr`), **avant** que des joueurs aient créé des comptes. |
+| « Le serveur refuse les adresses du jeu » | Dans `config_en_ligne.gd`, remplace `DOMAINE_COMPTES` par un autre nom (un domaine qui existe vraiment, ex. `jyraia-sama.github.io`), **avant** que des joueurs aient créé des comptes. |
 | « Erreur du serveur (404) … rpc/… » | Le script SQL n'a pas été lancé (étape 2), ou pas en entier. |
 | « Erreur du serveur (401) » | URL ou clé mal copiée (espace en trop, mauvaise clé). |
 | Le pseudo reste « Se connecter » en jaune | Le serveur ne répond pas : vérifie ta connexion. La partie sera envoyée dès le retour du réseau. |
