@@ -12,8 +12,10 @@ extends RefCounted
 ##
 ## Laisse URL vide pour jouer sans le mode en ligne (le jeu marche comme avant).
 
+
 const URL := "https://ukfzjhcuiuppatwskiyt.supabase.co"
 const CLE := "sb_publishable_WWaLehXAvm04gmggZqdZLA_moALZuNd"
+
 
 ## Les comptes se font avec un pseudo + mot de passe. Supabase exige une adresse e-mail :
 ## le jeu en fabrique une à partir du pseudo (ex. neo@joueurs.brothers-of-legacy.fr).
