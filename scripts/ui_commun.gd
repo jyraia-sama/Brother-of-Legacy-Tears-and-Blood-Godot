@@ -257,7 +257,9 @@ static func aller(arbre: SceneTree, cible: String) -> void:
 ## Avatar d'un joueur : portrait de son héros vitrine, sinon cercle gris avec l'initiale du pseudo.
 static func avatar(id_unite: String, pseudo: String, diametre: float) -> Panel:
 	if id_unite != "" and UnitesData.UNITES.has(id_unite):
-		return portrait(id_unite, diametre)
+		var pt := portrait(id_unite, diametre)
+		pt.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		return pt
 	var p := Panel.new()
 	p.custom_minimum_size = Vector2(diametre, diametre)
 	p.size_flags_horizontal = Control.SIZE_SHRINK_CENTER

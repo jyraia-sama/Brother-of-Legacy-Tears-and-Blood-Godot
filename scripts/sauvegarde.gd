@@ -35,7 +35,7 @@ const NIVEAU_COMPTE_MAX := 30
 const COUT_STAMINA_AVENTURE := {"combat": 1, "elite": 2, "gardien": 2, "boss_chapitre": 3, "boss_acte": 3}
 ## XP de compte gagnée à chaque combat gagné (Aventure, Tours, Boss de Monde).
 const XP_COMPTE_VICTOIRE := {"combat": 10, "elite": 15, "gardien": 15, "boss_chapitre": 25, "boss_acte": 40,
-	"boss": 25, "super": 40, "boss_monde": 30}
+	"boss": 25, "super": 40, "boss_monde": 30, "arene": 20}
 
 static var donnees: Dictionary = {}
 static var _charge := false
@@ -90,6 +90,8 @@ static func _defaut() -> Dictionary:
 			"jour": -1, "essais": 0, "records": {}, "records_jour": {},
 			"escouades": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
 		},
+		# Arène : équipe de défense (5 places, uid du héros ou -1)
+		"arene": {"defense": [-1, -1, -1, -1, -1]},
 		# Options du menu Admin (tests) : id -> true/false
 		"admin": {},
 		# Dernière version du jeu dont le joueur a vu les nouveautés

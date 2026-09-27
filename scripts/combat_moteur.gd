@@ -46,13 +46,15 @@ var tour := 0
 var tours_max := TOURS_MAX
 var _invincibles := false       # menu Admin : Héros invincibles
 var _rng := RandomNumberGenerator.new()
+## Arène : les options du menu Admin (héros invincibles, ennemis affaiblis) sont ignorées.
+static var ignorer_admin := false
 
 
 ## `tours` : durée maximale du combat (Boss de Monde : plus court).
 func _init(equipe_joueur: Array, equipe_ennemie: Array, graine := 0, tours := TOURS_MAX) -> void:
 	tours_max = tours
-	_invincibles = Sauvegarde.admin("heros_invincibles")
-	var affaiblis := Sauvegarde.admin("ennemis_affaiblis")
+	_invincibles = Sauvegarde.admin("heros_invincibles") and not ignorer_admin
+	var affaiblis := Sauvegarde.admin("ennemis_affaiblis") and not ignorer_admin
 	if affaiblis:
 		for i in equipe_ennemie.size():
 			equipe_ennemie[i] = equipe_ennemie[i].duplicate()
@@ -61,7 +63,7 @@ func _init(equipe_joueur: Array, equipe_ennemie: Array, graine := 0, tours := TO
 	for i in equipe_joueur.size():
 		unites.append(_creer(equipe_joueur[i], 0, int(equipe_joueur[i].get("place", i))))
 	for i in equipe_ennemie.size():
-		unites.append(_creer(equipe_ennemie[i], 1, i))
+		unites.append(_creer(equipe_ennemie[i], 1, int(equipe_ennemie[i].get("place", i))))
 	_appliquer_passifs_depart()
 
 

@@ -1,6 +1,17 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.15.1** (2026-09-27)
+Version actuelle : **0.16.0** (2026-09-27)
+
+## v0.16.0 — Arène JcJ  (2026-09-27)
+
+- Arène JcJ (Aventure > Arène) : prépare une équipe de défense, puis attaque celle des autres joueurs en combat automatique.
+- 3 adversaires proposés selon ton classement (un plus faible, un proche, un plus fort), et le Gardien de l'Arène pour s'entraîner quand il n'y a pas assez de joueurs.
+- Points de classement et paliers : Bronze, Argent, Or, Platine, Diamant, Légende (top 10). Le défenseur gagne ou perd aussi des points.
+- 5 combats gratuits par jour, puis jusqu'à 10 de plus à 20 gemmes. Maximum 3 attaques par jour contre le même joueur.
+- Insignes d'Arène à chaque combat, et boutique de l'Arène (élixirs, coffres, tomes, Éclats, Pierre d'Éveil) avec limites par saison.
+- Saisons de 2 semaines : récompenses selon le palier (Insignes et gemmes), puis remise à zéro partielle des points.
+- Classement de la saison (top 100) et historique des combats, avec bouton Revanche contre ceux qui ont attaqué ta défense.
+- Contrôlé par le serveur : points, essais, Insignes, achats et récompenses. Les options du menu Admin sont désactivées en Arène.
 
 ## v0.15.1 — Comptes par e-mail  (2026-09-27)
 

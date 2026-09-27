@@ -14,11 +14,22 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.15.1"
+const NUMERO := "0.16.0"
 const DATE := "2026-09-27"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.16.0", "date": "2026-09-27", "titre": "Arène JcJ",
+	"changements": [
+		"Arène JcJ (Aventure > Arène) : prépare une équipe de défense, puis attaque celle des autres joueurs en combat automatique.",
+		"3 adversaires proposés selon ton classement (un plus faible, un proche, un plus fort), et le Gardien de l'Arène pour s'entraîner quand il n'y a pas assez de joueurs.",
+		"Points de classement et paliers : Bronze, Argent, Or, Platine, Diamant, Légende (top 10). Le défenseur gagne ou perd aussi des points.",
+		"5 combats gratuits par jour, puis jusqu'à 10 de plus à 20 gemmes. Maximum 3 attaques par jour contre le même joueur.",
+		"Insignes d'Arène à chaque combat, et boutique de l'Arène (élixirs, coffres, tomes, Éclats, Pierre d'Éveil) avec limites par saison.",
+		"Saisons de 2 semaines : récompenses selon le palier (Insignes et gemmes), puis remise à zéro partielle des points.",
+		"Classement de la saison (top 100) et historique des combats, avec bouton Revanche contre ceux qui ont attaqué ta défense.",
+		"Contrôlé par le serveur : points, essais, Insignes, achats et récompenses. Les options du menu Admin sont désactivées en Arène.",
+	]},
 	{"version": "0.15.1", "date": "2026-09-27", "titre": "Comptes par e-mail",
 	"changements": [
 		"Les comptes se créent maintenant avec un pseudo, une vraie adresse e-mail et un mot de passe ; la connexion se fait avec l'e-mail.",

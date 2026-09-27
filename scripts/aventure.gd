@@ -52,6 +52,9 @@ func _on_bouton(id: String, titre: String) -> void:
 		"boss_monde":
 			EcranBossMonde.scene_retour = scene_file_path
 			get_tree().change_scene_to_file(EcranBossMonde.SCENE)
+		"arene":
+			EcranArene.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranArene.SCENE)
 		_:
 			_message("« %s » : mode pas encore créé." % titre)
 

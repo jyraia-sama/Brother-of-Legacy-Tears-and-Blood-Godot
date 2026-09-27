@@ -17,6 +17,10 @@ Le jeu, lui, reste sur GitHub Pages. La formule gratuite suffit largement pour c
 3. Clique sur **Run**. Tu dois voir « Success. No rows returned ».
    (Tu peux le relancer sans danger : il ne supprime aucune donnée.)
 
+### 2 bis. Tables de l'Arène
+Même chose avec le fichier `supabase/02_arene.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après le fichier 01. Pour changer un réglage de l'Arène — essais par jour, durée des saisons, prix de la boutique — modifie le début du fichier et relance-le.)
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

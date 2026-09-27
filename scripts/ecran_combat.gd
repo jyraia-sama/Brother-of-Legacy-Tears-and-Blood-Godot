@@ -10,6 +10,7 @@ extends Control
 ## Autres modes (clé "mode" de la demande) :
 ##   "tour"       : Tours de l'Enfer / du Paradis   ("tour", "etage", "retour")
 ##   "boss_monde" : Boss de Monde, 20 unités contre un géant   ("boss_index", "retour")
+##   "arene"      : Arène JcJ contre la défense d'un joueur   ("combat", "graine", "adversaire", "retour")
 ##
 ## Boutons : vitesse x1 / x2 / x4, "Passer" (affiche directement le résultat).
 
@@ -53,7 +54,10 @@ func _ready() -> void:
 	_creer_fond()
 	_creer_interface()
 
-	var moteur := CombatMoteur.new(demande["equipe"], demande["ennemis"], 0, int(demande.get("tours_max", CombatMoteur.TOURS_MAX)))
+	CombatMoteur.ignorer_admin = _mode == "arene"
+	var moteur := CombatMoteur.new(demande["equipe"], demande["ennemis"], int(demande.get("graine", 0)),
+		int(demande.get("tours_max", CombatMoteur.TOURS_MAX)))
+	CombatMoteur.ignorer_admin = false
 	_infos = moteur.descriptif()
 	_res = moteur.combattre()
 	await get_tree().process_frame
@@ -614,6 +618,9 @@ func _fin() -> void:
 	if _mode == "boss_monde":
 		_fin_boss_monde()
 		return
+	if _mode == "arene":
+		_fin_arene()
+		return
 	var victoire: bool = _res["victoire"]
 	var lignes: Array = []
 	var equipe: Array = demande["equipe"]
@@ -708,6 +715,29 @@ func _fin_boss_monde() -> void:
 	_decouvrir(lignes)
 	resultat = {"mode": "boss_monde", "victoire": tue, "pct": pct}
 	_afficher_resultat(true, lignes, "BOSS ABATTU !" if tue else "FIN DE L'ASSAUT")
+
+
+## Arène : le résultat est envoyé au serveur, qui calcule les points et les Insignes.
+func _fin_arene() -> void:
+	var victoire: bool = _res["victoire"]
+	var lignes: Array = ["Envoi du résultat…"]
+	var r := await EnLigne.appeler("arene_terminer", {"p_combat": demande["combat"], "p_victoire": victoire})
+	lignes.clear()
+	var adv: String = demande.get("adversaire", "")
+	if adv != "":
+		lignes.append(("Tu as vaincu la défense de %s." if victoire else "La défense de %s t'a repoussé.") % adv)
+	if r.ok and r.data is Dictionary and r.data.get("ok", false):
+		var d: Dictionary = r.data
+		var pts := int(d["points"])
+		lignes.append("Points d'Arène : %s%d  (total %d, rang %d)" % ["+" if pts >= 0 else "", pts, int(d["points_total"]), int(d["rang"])])
+		lignes.append("Insignes d'Arène : +%d" % int(d["insignes"]))
+		if victoire:
+			Sauvegarde.ajouter_stat("combats_gagnes")
+			_xp_compte(lignes, "arene")
+	else:
+		lignes.append("Le résultat n'a pas pu être envoyé : %s" % (r.erreur if not r.ok else str(r.data.get("erreur", "?"))))
+	resultat = {"mode": "arene", "victoire": victoire}
+	_afficher_resultat(victoire, lignes)
 
 
 ## XP de compte d'un combat gagné (+ message si le niveau monte).
