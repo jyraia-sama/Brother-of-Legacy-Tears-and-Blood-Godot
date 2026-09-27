@@ -28,6 +28,7 @@ func _ready() -> void:
 	Sauvegarde.charger()
 	_tour = tour_courante
 	_enfer = _tour == "enfer"
+	Audio.musique("tour_" + _tour)
 	_accent = Color("ff5a3a") if _enfer else Color("c89a20")
 	_c_texte = Color("f0e0d8") if _enfer else Color("2a2440")
 	_selection = Tours.prochain_etage(_tour)

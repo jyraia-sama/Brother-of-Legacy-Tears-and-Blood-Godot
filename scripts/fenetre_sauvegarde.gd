@@ -46,6 +46,12 @@ func _ready() -> void:
 	vb.add_child(_label(_resume(), 18, Color(0.92, 0.88, 0.85)))
 	vb.add_child(HSeparator.new())
 
+	# Volumes (enregistrés dans la sauvegarde)
+	vb.add_child(_label("SON", 20, Color(1.0, 0.85, 0.55)))
+	vb.add_child(_curseur_volume("Musique", "musique"))
+	vb.add_child(_curseur_volume("Bruitages", "sons"))
+	vb.add_child(HSeparator.new())
+
 	vb.add_child(_label("Code de sauvegarde (pour transférer ta partie ou la garder de côté) :", 16, Color(0.85, 0.7, 0.6)))
 	_zone_code = TextEdit.new()
 	_zone_code.custom_minimum_size = Vector2(0, 90)
@@ -67,12 +73,12 @@ func _ready() -> void:
 	var lv := HBoxContainer.new()
 	lv.add_theme_constant_override("separation", 10)
 	vb.add_child(lv)
-	var t_version := _label("Version du jeu : %s  (%s)" % [Version.texte(), Version.DATE], 16, Color(0.85, 0.7, 0.6))
+	var t_version := _label("Version %s\n(%s)" % [Version.texte(), Version.DATE], 16, Color(0.85, 0.7, 0.6))
 	t_version.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	lv.add_child(t_version)
 	var journal := _bouton("Journal des mises à jour", func(): FenetreChangelog.ouvrir(get_parent()))
 	journal.size_flags_horizontal = Control.SIZE_SHRINK_END
-	journal.custom_minimum_size = Vector2(240, 40)
+	journal.custom_minimum_size = Vector2(230, 40)
 	lv.add_child(journal)
 	# Menu Admin : visible seulement en test (jeu lancé depuis Godot)
 	if Sauvegarde.admin_visible():
@@ -85,6 +91,46 @@ func _ready() -> void:
 	var fermer := _bouton("Fermer", queue_free)
 	fermer.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	vb.add_child(fermer)
+
+
+## Ligne « Musique ━━━━●━━ 80 % » : le volume change en direct.
+func _curseur_volume(titre: String, type: String) -> HBoxContainer:
+	var ligne := HBoxContainer.new()
+	ligne.add_theme_constant_override("separation", 12)
+	var t := _label(titre, 17, Color(0.92, 0.88, 0.85))
+	t.custom_minimum_size = Vector2(120, 0)
+	ligne.add_child(t)
+	var c := HSlider.new()
+	c.min_value = 0.0
+	c.max_value = 1.0
+	c.step = 0.05
+	c.value = Audio.get_volume(type)
+	c.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	c.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	c.focus_mode = Control.FOCUS_NONE
+	var rail := StyleBoxFlat.new()
+	rail.bg_color = Color(0.25, 0.12, 0.12)
+	rail.set_corner_radius_all(4)
+	rail.content_margin_top = 4
+	rail.content_margin_bottom = 4
+	var rempli := rail.duplicate() as StyleBoxFlat
+	rempli.bg_color = Color(0.85, 0.65, 0.3)
+	c.add_theme_stylebox_override("slider", rail)
+	c.add_theme_stylebox_override("grabber_area", rempli)
+	c.add_theme_stylebox_override("grabber_area_highlight", rempli)
+	ligne.add_child(c)
+	var pct := _label("%d %%" % roundi(c.value * 100), 17, Color(0.92, 0.88, 0.85))
+	pct.custom_minimum_size = Vector2(60, 0)
+	pct.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	ligne.add_child(pct)
+	c.value_changed.connect(func(v: float):
+		pct.text = "Muet" if v <= 0.001 else "%d %%" % roundi(v * 100)
+		Audio.regler_volume(type, v))
+	if type == "sons":
+		c.drag_ended.connect(func(_change: bool): Audio.son("or"))   # pour entendre le nouveau volume
+	if c.value <= 0.001:
+		pct.text = "Muet"
+	return ligne
 
 
 func _resume() -> String:

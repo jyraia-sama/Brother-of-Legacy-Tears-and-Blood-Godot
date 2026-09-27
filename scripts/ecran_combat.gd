@@ -49,6 +49,7 @@ func _ready() -> void:
 		push_warning("EcranCombat ouvert sans demande : combat de test.")
 		demande = _demande_test()
 	_mode = str(demande.get("mode", "aventure"))
+	Audio.musique(_musique_combat())
 	_creer_fond()
 	_creer_interface()
 
@@ -357,7 +358,22 @@ func _attendre(s: float) -> void:
 	await get_tree().create_timer(s / _vitesse).timeout
 
 
+## Musique selon le combat : boss de monde, boss (Aventure / Tours) ou combat normal.
+func _musique_combat() -> String:
+	if _mode == "boss_monde":
+		return "boss_monde"
+	var type: String = demande.get("type", "combat")
+	if _mode == "tour":
+		type = Tours.type_etage(int(demande.get("etage", 1)))
+	if type in ["boss_chapitre", "boss_acte", "boss", "super"]:
+		return "boss"
+	if _mode == "tour":
+		return "tour_" + str(demande.get("tour", "enfer"))   # la musique de la tour continue
+	return "combat"
+
+
 func _jouer(ev: Dictionary) -> void:
+	_bruitage(ev)
 	match ev["t"]:
 		"tour":
 			_lbl_tour.text = "Tour %d" % ev["n"]
@@ -425,6 +441,26 @@ func _jouer(ev: Dictionary) -> void:
 		"temps_ecoule":
 			_texte_centre("Le temps est écoulé…", Color("ffb070"))
 			await _attendre(1.0)
+
+
+## Bruitage de chaque action du combat (voir audio.gd).
+func _bruitage(ev: Dictionary) -> void:
+	match ev["t"]:
+		"degats":
+			Audio.son("coup_critique" if ev["crit"] else "coup")
+		"skill":
+			if ev["a"] == _idx_geant:
+				Audio.son("boss_rugit")
+			else:
+				Audio.son("magie")
+		"soin", "reanimation", "renaissance":
+			Audio.son("soin")
+		"bouclier":
+			Audio.son("bouclier")
+		"ko":
+			Audio.son("ko")
+		"phase":
+			Audio.son("boss_rugit")
 
 
 func _appliquer_sans_animation(ev: Dictionary) -> void:
@@ -731,6 +767,7 @@ func _eclats_boss(type: String, acte: int, chapitre: int) -> int:
 
 
 func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "") -> void:
+	Audio.musique("victoire" if victoire else "defaite")
 	var voile := ColorRect.new()
 	voile.color = Color(0, 0, 0, 0.55)
 	voile.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

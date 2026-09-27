@@ -30,6 +30,8 @@ const TEX_ETINCELLE := DOSSIER + "etincelle.png"
 
 const NIVEAU := {"N": 0, "R": 1, "SR": 2, "SSR": 3, "UR": 4, "LEG": 5}
 const CRI := {"SSR": "SSR !", "UR": "ULTRA RARE !!", "LEG": "HÉROS DE LÉGENDE !!!"}
+## Bruitage de révélation selon la rareté (voir audio.gd).
+const SON_RARETE := {"SR": "rare_sr", "SSR": "rare_ssr", "UR": "rare_ur", "LEG": "legende"}
 const GRANDE := Vector2(236, 360)
 const PETITE := Vector2(140, 214)
 
@@ -73,6 +75,7 @@ func _lancer() -> void:
 	for r in resultats:
 		max_niveau = maxi(max_niveau, int(NIVEAU[r["rarete"]]))
 	var centre := size / 2.0
+	Audio.son("cercle")
 
 	# 1) Cercle d'invocation : il tourne, grandit, et « annonce » la meilleure rareté
 	_cercle = _creer_cercle(centre + Vector2(0, 30), 520.0)
@@ -106,6 +109,8 @@ func _lancer() -> void:
 			_scene.add_child(d)
 			dos_liste.append(d)
 			_distribuer(d, centre, positions[i], i)
+		Audio.son("carte")
+		Audio.son_apres("carte", 0.06 * resultats.size() * 0.5)
 		await _attendre(0.25 + 0.06 * resultats.size())
 		for i in resultats.size():
 			await _reveler(resultats[i], dos_liste[i], positions[i], PETITE, false)
@@ -177,6 +182,8 @@ func _reveler(r: Dictionary, dos: Control, pos: Vector2, taille: Vector2, solo: 
 	var c := _couleur(rarete)
 	var facteur := 1.0 if solo else 0.55
 	var effets: Array = []        # nœuds à retirer ensuite
+	if SON_RARETE.has(rarete) and (not _passer or n >= 3):
+		Audio.son(SON_RARETE[rarete])
 
 	if n >= 1:
 		var lueur := _lueur(pos, taille.y * (0.9 + 0.2 * n), c)
@@ -224,6 +231,7 @@ func _reveler(r: Dictionary, dos: Control, pos: Vector2, taille: Vector2, solo: 
 		await _attendre(0.5 * facteur)
 
 	# Retournement
+	Audio.son("carte")
 	dos.pivot_offset = dos.size / 2.0
 	var tf := create_tween()
 	tf.tween_property(dos, "scale", Vector2(0.0, 1.05), 0.14 if not _passer else 0.05)

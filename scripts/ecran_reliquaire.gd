@@ -188,6 +188,7 @@ func _boire(elixir: String) -> void:
 	var gain := Reliquaire.utiliser_elixir(elixir)
 	_rafraichir()
 	if gain > 0:
+		Audio.son("soin")
 		_message("Élixir", "+%d stamina (%d / %d)" % [gain, Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max()])
 
 

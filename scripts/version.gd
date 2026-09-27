@@ -14,11 +14,19 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.13.0"
-const DATE := "2026-09-26"
+const NUMERO := "0.14.0"
+const DATE := "2026-09-27"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.14.0", "date": "2026-09-27", "titre": "Musique et bruitages",
+	"changements": [
+		"Musique pour chaque écran avec fondu enchaîné : menus, Aventure, combats, boss, Autel d'Invocation, Tour de l'Enfer, Tour du Paradis, Boss de Monde, victoire et défaite.",
+		"Bruitages en combat : coups, coups critiques, magie, soins, boucliers, K.O. et rugissement des boss (géants et changement de phase).",
+		"Invocation sonore : cercle magique, cartes qui se retournent, et un son de plus en plus impressionnant selon la rareté (SR, SSR, UR, Légende).",
+		"Sons du quotidien : clic des boutons, retour, erreur (pas assez d'or ou de stamina), or gagné, coffres, montée de niveau.",
+		"Réglage du volume de la musique et des bruitages dans les Paramètres (enregistré avec la partie, conservé après une nouvelle partie).",
+	]},
 	{"version": "0.13.0", "date": "2026-09-26", "titre": "Menu Admin (tests)",
 	"changements": [
 		"Menu Admin dans les Paramètres (visible seulement quand le jeu est lancé depuis Godot).",

@@ -116,6 +116,7 @@ static func charger() -> void:
 	if _charge:
 		return
 	_charge = true
+	Audio.demarrer()        # musique et bruitages (voir audio.gd)
 	var lu = _lire(FICHIER)
 	if lu == null:
 		lu = _lire(SECOURS)
@@ -155,8 +156,23 @@ static func sauvegarder() -> void:
 	_ecrire(SECOURS, texte)
 
 
+## Paramètres du joueur (volumes...). Voir "parametres" dans _defaut().
+static func get_parametre(cle: String, defaut = null):
+	charger()
+	return donnees["parametres"].get(cle, defaut)
+
+
+static func definir_parametre(cle: String, valeur) -> void:
+	charger()
+	donnees["parametres"][cle] = valeur
+	sauvegarder()
+
+
 static func reinitialiser() -> void:
+	charger()
+	var parametres: Dictionary = donnees.get("parametres", {}).duplicate()   # on garde les volumes
 	donnees = _defaut()
+	donnees["parametres"].merge(parametres, true)
 	_charge = true
 	sauvegarder()
 
@@ -218,7 +234,9 @@ static func importer_code(code: String) -> bool:
 	var lu = JSON.parse_string(texte)
 	if not (lu is Dictionary) or not lu.has("ressources") or not lu.has("progression"):
 		return false
+	var parametres: Dictionary = donnees.get("parametres", {}).duplicate()   # on garde les volumes
 	donnees = _fusionner(_defaut(), lu)
+	donnees["parametres"].merge(parametres, true)
 	_charge = true
 	sauvegarder()
 	return true
@@ -240,12 +258,14 @@ static func ajouter_or(montant: int) -> void:
 	donnees["ressources"]["or"] = int(donnees["ressources"]["or"]) + montant
 	if montant > 0:
 		_stat("or_total_gagne", montant)
+		Audio.son("or")
 	sauvegarder()
 
 
 ## Retire de l'or si le joueur en a assez. Renvoie false sinon (rien n'est retiré).
 static func depenser_or(montant: int) -> bool:
 	if get_or() < montant:
+		Audio.son("erreur")
 		return false
 	if admin("or_infini"):
 		return true
@@ -269,6 +289,7 @@ static func ajouter_gemmes(montant: int) -> void:
 
 static func depenser_gemmes(montant: int) -> bool:
 	if get_gemmes() < montant:
+		Audio.son("erreur")
 		return false
 	if admin("gemmes_infinies"):
 		return true
@@ -309,6 +330,7 @@ static func secondes_avant_stamina() -> int:
 
 static func depenser_stamina(montant: int) -> bool:
 	if get_stamina() < montant:
+		Audio.son("erreur")
 		return false
 	if admin("stamina_infinie"):
 		return true
@@ -388,6 +410,7 @@ static func ajouter_xp_compte(montant: int) -> int:
 		r["stamina"] = maxi(int(r["stamina"]), get_stamina_max())
 		r["stamina_maj"] = int(Time.get_unix_time_from_system())
 		_stat("niveaux_compte", gagnes)
+		Audio.son("niveau")
 	sauvegarder()
 	return gagnes
 
@@ -489,6 +512,8 @@ static func ajouter_xp_heros(uid: int, xp: int) -> int:
 		gagnes += 1
 	if int(h["niveau"]) >= UnitesData.NIVEAU_MAX:
 		h["xp"] = 0
+	if gagnes > 0:
+		Audio.son("niveau")
 	sauvegarder()
 	return gagnes
 

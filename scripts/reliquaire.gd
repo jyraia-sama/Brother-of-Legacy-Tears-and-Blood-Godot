@@ -155,6 +155,7 @@ static func ouvrir_coffre(coffre: String) -> Dictionary:
 		butin[bonus] = 20 if bonus == "poussiere_echo" else 1
 	donner(butin)
 	Sauvegarde.ajouter_stat("coffres_ouverts")
+	Audio.son("coffre")
 	return butin
 
 

@@ -392,11 +392,13 @@ func _evenement(id: int) -> void:
 			var gain := 40 + int(n["niveau"]) * 15 + randi_range(0, 30)
 			if n["cul_de_sac"]:
 				gain = int(gain * 1.8)
+			Audio.son("coffre")
 			_gagner_or(gain)
 			Sauvegarde.ajouter_stat("coffres_ouverts")
 			_terminer(id)
 			_message("Coffre d'or", "Tu ouvres le coffre : +%d or." % gain, _verifier_impasse)
 		T.SOIN:
+			Audio.son("soin")
 			pv_equipe.clear()
 			_terminer(id)
 			_maj_equipe_hud()
