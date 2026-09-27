@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.16.0** (2026-09-27)
+Version actuelle : **0.16.1** (2026-09-27)
+
+## v0.16.1 — Menu Admin avec code  (2026-09-27)
+
+- Le bouton « Menu Admin » est de retour dans les Paramètres, aussi dans la version web.
+- Hors de Godot, il demande un code Admin (une seule fois par session de jeu).
 
 ## v0.16.0 — Arène JcJ  (2026-09-27)
 

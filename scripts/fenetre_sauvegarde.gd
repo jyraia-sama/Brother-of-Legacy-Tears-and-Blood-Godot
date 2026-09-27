@@ -97,7 +97,7 @@ func _ready() -> void:
 	journal.size_flags_horizontal = Control.SIZE_SHRINK_END
 	journal.custom_minimum_size = Vector2(230, 40)
 	lv.add_child(journal)
-	# Menu Admin : visible seulement en test (jeu lancé depuis Godot)
+	# Menu Admin : toujours visible ; demande le code Admin hors de Godot
 	if Sauvegarde.admin_visible():
 		var adm := _bouton("Menu Admin" + ("  (actif)" if Sauvegarde.admin_actif() else ""), func(): FenetreAdmin.ouvrir(get_parent()))
 		adm.size_flags_horizontal = Control.SIZE_SHRINK_END

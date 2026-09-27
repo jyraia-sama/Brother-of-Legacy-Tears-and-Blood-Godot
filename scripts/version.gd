@@ -14,11 +14,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.16.0"
+const NUMERO := "0.16.1"
 const DATE := "2026-09-27"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.16.1", "date": "2026-09-27", "titre": "Menu Admin avec code",
+	"changements": [
+		"Le bouton « Menu Admin » est de retour dans les Paramètres, aussi dans la version web.",
+		"Hors de Godot, il demande un code Admin (une seule fois par session de jeu).",
+	]},
 	{"version": "0.16.0", "date": "2026-09-27", "titre": "Arène JcJ",
 	"changements": [
 		"Arène JcJ (Aventure > Arène) : prépare une équipe de défense, puis attaque celle des autres joueurs en combat automatique.",

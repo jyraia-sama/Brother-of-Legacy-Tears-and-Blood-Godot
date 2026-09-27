@@ -655,13 +655,29 @@ const ADMIN_OPTIONS := [
 	["echos_garantis", "Amélioration d'Échos toujours réussie", "Chaque amélioration d'Écho réussit (le coût en or reste dû, sauf avec Or infini)."],
 ]
 
-## Le menu Admin est visible quand le jeu est lancé depuis Godot (version de débogage),
-## et caché dans la version publiée. Mets true pour le forcer partout.
-const ADMIN_TOUJOURS_VISIBLE := false
+## Le bouton « Menu Admin » est visible partout (Paramètres).
+## Depuis Godot (version de débogage), il s'ouvre directement ; dans la version publiée
+## (web), il demande le code Admin. Le code n'est demandé qu'une fois par session.
+## Code actuel : admin123. Pour le changer, remplace l'empreinte ci-dessous par
+## l'empreinte SHA-256 du nouveau code (ex. site « sha256 online »).
+const ADMIN_CODE_SHA256 := "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9"
+static var _admin_deverrouille := false
 
 
 static func admin_visible() -> bool:
-	return ADMIN_TOUJOURS_VISIBLE or OS.is_debug_build()
+	return true
+
+
+## Menu Admin utilisable sans code ? (lancé depuis Godot, ou code déjà saisi)
+static func admin_deverrouille() -> bool:
+	return _admin_deverrouille or OS.is_debug_build()
+
+
+## Vérifie le code Admin ; s'il est bon, le menu reste ouvert jusqu'à la fermeture du jeu.
+static func verifier_code_admin(code: String) -> bool:
+	if code.strip_edges().sha256_text() == ADMIN_CODE_SHA256:
+		_admin_deverrouille = true
+	return _admin_deverrouille
 
 
 static func admin(id: String) -> bool:

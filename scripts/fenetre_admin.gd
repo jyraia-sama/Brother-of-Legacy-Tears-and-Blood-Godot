@@ -13,7 +13,88 @@ var _change := false
 
 
 static func ouvrir(parent: Node) -> void:
-	parent.add_child(FenetreAdmin.new())
+	if Sauvegarde.admin_deverrouille():
+		parent.add_child(FenetreAdmin.new())
+	else:
+		_demander_code(parent)
+
+
+## Petite fenêtre qui demande le code Admin avant d'ouvrir le menu.
+static func _demander_code(parent: Node) -> void:
+	var calque := CanvasLayer.new()
+	calque.layer = 71
+	parent.add_child(calque)
+	var voile := ColorRect.new()
+	voile.color = Color(0, 0, 0, 0.7)
+	voile.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	voile.mouse_filter = Control.MOUSE_FILTER_STOP
+	calque.add_child(voile)
+	var centre := CenterContainer.new()
+	centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	calque.add_child(centre)
+	var panneau := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.06, 0.02, 0.02, 0.97)
+	style.border_color = C_ADMIN
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(8)
+	style.set_content_margin_all(22)
+	panneau.add_theme_stylebox_override("panel", style)
+	panneau.custom_minimum_size = Vector2(460, 0)
+	centre.add_child(panneau)
+	var vb := VBoxContainer.new()
+	vb.add_theme_constant_override("separation", 12)
+	panneau.add_child(vb)
+
+	var titre := Label.new()
+	titre.text = "MENU ADMIN"
+	titre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	titre.add_theme_font_size_override("font_size", 26)
+	titre.add_theme_color_override("font_color", C_ADMIN)
+	vb.add_child(titre)
+	var info := Label.new()
+	info.text = "Entre le code Admin :"
+	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	info.add_theme_font_size_override("font_size", 17)
+	info.add_theme_color_override("font_color", Color(0.85, 0.7, 0.6))
+	vb.add_child(info)
+
+	var champ := LineEdit.new()
+	champ.secret = true
+	champ.placeholder_text = "Code"
+	champ.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	champ.custom_minimum_size = Vector2(0, 44)
+	champ.add_theme_font_size_override("font_size", 20)
+	vb.add_child(champ)
+
+	var erreur := Label.new()
+	erreur.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	erreur.add_theme_font_size_override("font_size", 15)
+	erreur.add_theme_color_override("font_color", Color(1.0, 0.45, 0.4))
+	vb.add_child(erreur)
+
+	var valider := func():
+		if Sauvegarde.verifier_code_admin(champ.text):
+			calque.queue_free()
+			parent.add_child(FenetreAdmin.new())
+		else:
+			erreur.text = "Code incorrect."
+			champ.text = ""
+			champ.grab_focus()
+
+	var bas := HBoxContainer.new()
+	bas.alignment = BoxContainer.ALIGNMENT_CENTER
+	bas.add_theme_constant_override("separation", 10)
+	vb.add_child(bas)
+	for t in [["Valider", valider], ["Annuler", calque.queue_free]]:
+		var b := Button.new()
+		b.text = t[0]
+		b.focus_mode = Control.FOCUS_NONE
+		b.custom_minimum_size = Vector2(160, 42)
+		b.pressed.connect(t[1])
+		bas.add_child(b)
+	champ.text_submitted.connect(func(_t: String): valider.call())
+	champ.call_deferred("grab_focus")
 
 
 func _ready() -> void:
