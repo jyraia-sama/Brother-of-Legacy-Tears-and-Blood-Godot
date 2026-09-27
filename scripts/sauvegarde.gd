@@ -242,6 +242,29 @@ static func importer_code(code: String) -> bool:
 	return true
 
 
+## Remplace toute la partie (utilisé par la sauvegarde en ligne, voir en_ligne.gd).
+static func remplacer_par(d: Dictionary) -> void:
+	donnees = _fusionner(_defaut(), d.duplicate(true))
+	donnees["version"] = VERSION
+	_charge = true
+	sauvegarder()
+
+
+## Résumé lisible d'une partie quelconque (pour choisir entre deux parties).
+static func resume_partie(d: Dictionary) -> String:
+	var compte: Dictionary = d.get("compte", {})
+	var res: Dictionary = d.get("ressources", {})
+	var prog: Dictionary = d.get("progression", {})
+	var coll: Dictionary = d.get("collection", {})
+	var heros := str(d.get("heros_depart", ""))
+	var nom_heros := "—"
+	if heros != "" and UnitesData.UNITES.has(heros):
+		nom_heros = str(UnitesData.UNITES[heros]["nom"])
+	return "Niveau de compte : %d\nHéros de départ : %s\nChapitres terminés : %d / 72\nUnités : %d\nOr : %d     Gemmes : %d" % [
+		int(compte.get("niveau", 1)), nom_heros, (prog.get("termines", []) as Array).size(),
+		(coll.get("heros", []) as Array).size(), int(res.get("or", 0)), int(res.get("gemmes", 0))]
+
+
 # ------------------------------------------------------------------
 # Ressources
 # ------------------------------------------------------------------

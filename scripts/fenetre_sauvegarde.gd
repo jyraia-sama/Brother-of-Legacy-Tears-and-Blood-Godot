@@ -52,6 +52,23 @@ func _ready() -> void:
 	vb.add_child(_curseur_volume("Bruitages", "sons"))
 	vb.add_child(HSeparator.new())
 
+	# Compte en ligne
+	if EnLigne.configure():
+		var lc := HBoxContainer.new()
+		lc.add_theme_constant_override("separation", 10)
+		vb.add_child(lc)
+		var t_compte := _label("Compte : " + (EnLigne.pseudo() + " (sauvegarde en ligne active)" if EnLigne.est_connecte() else "hors ligne"), 17, Color(0.85, 0.7, 0.6))
+		t_compte.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		lc.add_child(t_compte)
+		var gerer := _bouton("Gérer le compte" if EnLigne.est_connecte() else "Se connecter", func():
+			var parent := get_parent()
+			queue_free()
+			FenetreCompte.ouvrir(parent))
+		gerer.size_flags_horizontal = Control.SIZE_SHRINK_END
+		gerer.custom_minimum_size = Vector2(200, 40)
+		lc.add_child(gerer)
+		vb.add_child(HSeparator.new())
+
 	vb.add_child(_label("Code de sauvegarde (pour transférer ta partie ou la garder de côté) :", 16, Color(0.85, 0.7, 0.6)))
 	_zone_code = TextEdit.new()
 	_zone_code.custom_minimum_size = Vector2(0, 90)

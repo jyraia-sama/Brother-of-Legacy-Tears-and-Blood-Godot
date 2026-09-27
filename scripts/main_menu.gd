@@ -34,7 +34,12 @@ const AUTRES := [
 	{"id": "aide",       "titre": "Aide",       "rect": Rect2(10, 12, 50, 50)},
 	{"id": "parametres", "titre": "Paramètres", "rect": Rect2(966, 12, 50, 50)},
 	{"id": "heros",      "titre": "Mon héros",  "rect": Rect2(68, 110, 122, 120)},
+	# Le bouclier sur la statue de droite
+	{"id": "guilde",     "titre": "Guilde",     "rect": Rect2(956, 380, 56, 100)},
 ]
+
+# Bouton du compte (pseudo), au-dessus du panneau du héros
+const RECT_COMPTE := Rect2(64, 64, 130, 26)
 
 
 # Textes de la barre de ressources (mis à jour depuis la sauvegarde)
@@ -47,9 +52,18 @@ var _lbl_xp: Label
 
 var _zones: Array[Button] = []
 var _debug := false
+var _bouton_compte: Button
+var _fenetre_compte: FenetreCompte
 
 
 func _ready() -> void:
+	# Jeu en ligne configuré et pas encore de compte ouvert : on propose de se connecter
+	# (ou de jouer hors ligne) avant tout le reste, y compris le choix du héros.
+	if EnLigne.doit_proposer_connexion():
+		set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_creer_fond()
+		FenetreCompte.ouvrir(self, true, _apres_connexion_demarrage)
+		return
 	# Tout premier lancement (ou après "Nouvelle partie") : choix du héros de départ
 	if not Sauvegarde.a_choisi_heros_depart():
 		get_tree().change_scene_to_file.call_deferred(EcranChoixHeros.SCENE)
@@ -67,6 +81,8 @@ func _ready() -> void:
 		_creer_zone(c.rect, c.id, c.titre)
 	for c in AUTRES:
 		_creer_zone(c.rect, c.id, c.titre)
+	_creer_texte("GUILDE", Rect2(940, 478, 88, 16), 15)
+	_creer_bouton_compte()
 
 	# Barre de ressources en haut (valeurs réelles de la sauvegarde)
 	_lbl_stamina = _creer_texte("", Rect2(276, 20, 80, 20), 22)
@@ -111,6 +127,57 @@ func _ready() -> void:
 
 	# Le jeu vient d'être mis à jour : on montre les nouveautés
 	FenetreChangelog.verifier_mise_a_jour(self)
+	EnLigne.etat_change.connect(_sur_etat_compte)
+
+
+func _apres_connexion_demarrage() -> void:
+	get_tree().reload_current_scene()
+
+
+# ---------- Compte ----------
+
+func _creer_bouton_compte() -> void:
+	_bouton_compte = Button.new()
+	_bouton_compte.flat = true
+	_bouton_compte.focus_mode = Control.FOCUS_NONE
+	_bouton_compte.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_bouton_compte.add_theme_font_size_override("font_size", 16)
+	_bouton_compte.add_theme_color_override("font_outline_color", Color.BLACK)
+	_bouton_compte.add_theme_constant_override("outline_size", 6)
+	_bouton_compte.pressed.connect(_ouvrir_compte)
+	add_child(_bouton_compte)
+	_placer(_bouton_compte, RECT_COMPTE)
+	_maj_bouton_compte()
+
+
+func _maj_bouton_compte() -> void:
+	if _bouton_compte == null:
+		return
+	_bouton_compte.visible = EnLigne.configure()
+	if EnLigne.est_connecte():
+		_bouton_compte.text = "● " + EnLigne.pseudo()
+		_bouton_compte.tooltip_text = "Mon compte"
+		_bouton_compte.add_theme_color_override("font_color", Color("8fe07a") if EnLigne.reseau_ok else Color("e0b35a"))
+	elif EnLigne.connexion_en_cours():
+		_bouton_compte.text = "Connexion…"
+		_bouton_compte.add_theme_color_override("font_color", Color(1.0, 0.9, 0.7, 0.7))
+	else:
+		_bouton_compte.text = "Se connecter"
+		_bouton_compte.tooltip_text = "Hors ligne : clique pour te connecter"
+		_bouton_compte.add_theme_color_override("font_color", Color(1.0, 0.9, 0.7))
+
+
+func _ouvrir_compte() -> void:
+	if is_instance_valid(_fenetre_compte):
+		return
+	_fenetre_compte = FenetreCompte.ouvrir(self)
+
+
+func _sur_etat_compte() -> void:
+	_maj_bouton_compte()
+	# Session perdue au lancement (mot de passe changé, compte supprimé...) : on redemande.
+	if EnLigne.doit_proposer_connexion() and not is_instance_valid(_fenetre_compte):
+		_fenetre_compte = FenetreCompte.ouvrir(self, true)
 
 
 func _maj_ressources() -> void:
@@ -229,6 +296,12 @@ func _on_bouton(id: String, titre: String) -> void:
 		"bestiaire":
 			EcranBestiaire.scene_retour = scene_file_path
 			get_tree().change_scene_to_file(EcranBestiaire.SCENE)
+		"social":
+			EcranSocial.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranSocial.SCENE)
+		"guilde":
+			EcranGuilde.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranGuilde.SCENE)
 		_:
 			_message("« %s » : écran pas encore créé." % titre)
 

@@ -252,3 +252,26 @@ static func aller(arbre: SceneTree, cible: String) -> void:
 		cible = ProjectSettings.get_setting("application/run/main_scene", "")
 	if cible != "":
 		arbre.change_scene_to_file(cible)
+
+
+## Avatar d'un joueur : portrait de son héros vitrine, sinon cercle gris avec l'initiale du pseudo.
+static func avatar(id_unite: String, pseudo: String, diametre: float) -> Panel:
+	if id_unite != "" and UnitesData.UNITES.has(id_unite):
+		return portrait(id_unite, diametre)
+	var p := Panel.new()
+	p.custom_minimum_size = Vector2(diametre, diametre)
+	p.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sp := StyleBoxFlat.new()
+	sp.set_corner_radius_all(int(diametre / 2))
+	sp.bg_color = Color(0.22, 0.18, 0.2)
+	sp.border_color = C_OR
+	sp.set_border_width_all(2)
+	p.add_theme_stylebox_override("panel", sp)
+	var ini := label(pseudo.substr(0, 1).to_upper(), int(diametre * 0.42), Color.WHITE)
+	ini.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	ini.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ini.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	p.add_child(ini)
+	return p

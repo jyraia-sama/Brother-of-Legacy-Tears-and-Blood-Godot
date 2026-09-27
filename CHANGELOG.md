@@ -1,6 +1,16 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.14.0** (2026-09-27)
+Version actuelle : **0.15.0** (2026-09-27)
+
+## v0.15.0 — Comptes, amis et guildes  (2026-09-27)
+
+- Comptes joueurs : création et connexion avec un pseudo et un mot de passe (serveur Supabase). « Jouer hors ligne » reste possible.
+- Sauvegarde en ligne automatique : la partie est envoyée sur le compte toutes les 15 secondes quand elle change, et récupérée sur un autre appareil.
+- Si la partie du compte et celle de l'appareil sont différentes à la connexion, le joueur choisit laquelle garder.
+- Pseudo affiché sur le menu principal (vert = connecté) ; gestion du compte dans les Paramètres.
+- Onglet Social : liste d'amis (en ligne / vu il y a…), demandes reçues et envoyées, ajout par pseudo, profil d'un joueur.
+- Onglet Guilde (bouclier à droite du menu) : fonder une guilde (10 000 or), rechercher, rejoindre ou postuler ; membres, rôles Chef / Officier / Membre, candidatures, exclusion, réglages, quitter.
+- Menu « Guerre de guildes » préparé (bientôt disponible).
 
 ## v0.14.0 — Musique et bruitages  (2026-09-27)
 
