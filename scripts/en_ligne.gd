@@ -249,6 +249,17 @@ func api(methode: int, chemin: String, corps = null, entetes: PackedStringArray 
 	return r
 
 
+## Adresse de base du serveur, même si on a collé une URL avec un chemin
+## (ex. « https://xxx.supabase.co/rest/v1/ » -> « https://xxx.supabase.co »).
+func adresse_serveur() -> String:
+	var u := url_serveur.strip_edges()
+	var debut := u.find("://")
+	if debut == -1:
+		return u.trim_suffix("/")
+	var fin := u.find("/", debut + 3)
+	return u if fin == -1 else u.left(fin)
+
+
 func _http(methode: int, chemin: String, corps = null, avec_jeton := true, entetes_sup: PackedStringArray = PackedStringArray()) -> Dictionary:
 	var h := HTTPRequest.new()
 	h.timeout = 20.0
@@ -258,7 +269,7 @@ func _http(methode: int, chemin: String, corps = null, avec_jeton := true, entet
 		entetes.append("Authorization: Bearer " + str(session["access_token"]))
 	entetes.append_array(entetes_sup)
 	var texte := "" if corps == null else JSON.stringify(corps)
-	var url := url_serveur.strip_edges().trim_suffix("/") + chemin
+	var url := adresse_serveur() + chemin
 	if h.request(url, entetes, methode, texte) != OK:
 		h.queue_free()
 		reseau_ok = false
