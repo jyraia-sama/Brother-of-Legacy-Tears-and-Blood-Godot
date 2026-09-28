@@ -14,11 +14,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.20.3"
+const NUMERO := "0.20.4"
 const DATE := "2026-09-28"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.20.4", "date": "2026-09-28", "titre": "Jeu en ligne réparé sur la version web",
+	"changements": [
+		"Correction : sur la version web, l'Arène, le Social, le Compte et la sauvegarde en ligne affichaient « Connexion au serveur impossible ». Le navigateur décompressait déjà les réponses du serveur et le jeu essayait de le refaire, ce qui faisait échouer les requêtes.",
+		"Le message d'erreur réseau indique maintenant un numéro d'erreur, pour faciliter le diagnostic.",
+	]},
 	{"version": "0.20.3", "date": "2026-09-28", "titre": "Récapitulatif des améliorations d'Échos",
 	"changements": [
 		"Fenêtre d'amélioration des Échos : le bouton « +1 » affiche son coût en or.",

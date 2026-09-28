@@ -327,6 +327,10 @@ func adresse_serveur() -> String:
 func _http(methode: int, chemin: String, corps = null, avec_jeton := true, entetes_sup: PackedStringArray = PackedStringArray()) -> Dictionary:
 	var h := HTTPRequest.new()
 	h.timeout = 20.0
+	# Version web : le navigateur décompresse déjà les réponses du serveur. Si Godot le refait,
+	# la requête échoue (RESULT_BODY_DECOMPRESS_FAILED) dès que la réponse est compressée,
+	# ce qui donnait « Connexion au serveur impossible » dans l'Arène, le Social et le Compte.
+	h.accept_gzip = not OS.has_feature("web")
 	add_child(h)
 	var entetes := PackedStringArray(["apikey: " + cle_serveur, "Content-Type: application/json"])
 	if avec_jeton and session.has("access_token"):
@@ -345,7 +349,9 @@ func _http(methode: int, chemin: String, corps = null, avec_jeton := true, entet
 	var data = JSON.parse_string(brut) if brut.strip_edges() != "" else null
 	if res[0] != HTTPRequest.RESULT_SUCCESS:
 		reseau_ok = false
-		return {"ok": false, "code": 0, "data": null, "erreur": "Connexion au serveur impossible. Vérifie ta connexion internet."}
+		push_warning("EnLigne %s : échec de la requête (résultat %d, code %d)" % [chemin, res[0], code])
+		return {"ok": false, "code": 0, "data": null,
+			"erreur": "Connexion au serveur impossible (erreur %d). Vérifie ta connexion internet." % res[0]}
 	reseau_ok = true
 	var ok := code >= 200 and code < 300
 	var erreur := ""

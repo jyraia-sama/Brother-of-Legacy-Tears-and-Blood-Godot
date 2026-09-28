@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.20.3** (2026-09-28)
+Version actuelle : **0.20.4** (2026-09-28)
+
+## v0.20.4 — Jeu en ligne réparé sur la version web  (2026-09-28)
+
+- Correction : sur la version web, l'Arène, le Social, le Compte et la sauvegarde en ligne affichaient « Connexion au serveur impossible ». Le navigateur décompressait déjà les réponses du serveur et le jeu essayait de le refaire, ce qui faisait échouer les requêtes.
+- Le message d'erreur réseau indique maintenant un numéro d'erreur, pour faciliter le diagnostic.
 
 ## v0.20.3 — Récapitulatif des améliorations d'Échos  (2026-09-28)
 
