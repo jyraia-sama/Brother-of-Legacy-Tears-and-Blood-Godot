@@ -1,6 +1,19 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.19.0** (2026-09-28)
+Version actuelle : **0.20.0** (2026-09-28)
+
+## v0.20.0 — Expéditions : la Marche Maudite et la Compagnie  (2026-09-28)
+
+- Nouveau menu Expéditions (Aventure → Expédition) avec deux modes et une boutique.
+- La Marche Maudite : une expédition roguelike par jour, la même pour tous. On choisit jusqu'à 5 unités et on traverse 3 régions (tirées des Actes) sur une carte à embranchements : combats, élites, événements, feux de camp, marchands, trésors, autels de sang et boss.
+- Les PV et les K.O. sont conservés toute la marche. Après chaque victoire, on choisit 1 Bénédiction parmi 3 (29 bénédictions communes, rares et épiques).
+- Pactes de Sang : aux autels, accepter une malédiction contre une grosse récompense et +15 % de score. 12 événements écrits avec des choix, un marchand ambulant et des élites qui proposent parfois de rejoindre la marche.
+- Score final → Sceaux de Marche, record personnel et classement du jour en ligne (fichier supabase/03_marche.sql à lancer une fois dans Supabase).
+- La Compagnie : chaque jour, 6 missions de 1 h à 12 h (dont une épique). 3 escouades en même temps, conditions à remplir (rôle, élément, niveau, rareté) et objectif bonus (+50 % de butin). Le temps passe même jeu fermé.
+- Les unités en mission sont occupées : elles quittent l'équipe et l'armée, et ne peuvent pas être vendues, sacrifiées ou évoluées avant leur retour (carte grisée « En mission »).
+- Boutique des Expéditions : Poussière d'Écho, élixirs, tomes, ressources de Sang, coffres, Éclats et Pierre d'Éveil contre des Sceaux de Marche (limites par semaine).
+- Menu Admin : missions de la Compagnie instantanées, Marche illimitée (non classée).
+- Difficulté de la Marche réglée par simulation (outils/calibrer_marche.gd).
 
 ## v0.19.0 — Donjons et évolutions  (2026-09-28)
 

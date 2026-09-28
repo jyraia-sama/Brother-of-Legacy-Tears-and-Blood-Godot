@@ -8,6 +8,8 @@ extends RefCounted
 ##   var resultat := m.combattre()     # {victoire, tours, journal, pv_final}
 ##
 ## Équipes : tableaux de { "id", "niveau", ... } dans l'ordre des places.
+##   Clés facultatives : "pv_ratio" (PV de départ), "mult" / "mult_stats" (renfort),
+##   "passifs_sup" ({vol_vie, epines, regen, survie, execution, double, contre_chance...}).
 ##   Places 1 et 2 = AVANT, places 3 à 5 = ARRIÈRE (Boss de Monde : 4 escouades de 5,
 ##   places 0-19 ; dans chaque escouade les 2 premières sont à l'Avant).
 ##
@@ -111,6 +113,19 @@ func _creer(e: Dictionary, camp: int, place: int) -> Dictionary:
 		else:
 			_ajouter_passif(c, sk)
 	c["actifs"].sort_custom(func(a, b): return a["niveau"] > b["niveau"])
+	# Passifs ajoutés par un mode de jeu (Marche Maudite : bénédictions)
+	var sup: Dictionary = e.get("passifs_sup", {})
+	for k in sup:
+		if not c["p"].has(k):
+			continue
+		if k == "survie":
+			c["p"]["survie"] += int(sup[k])
+		elif k == "contre_chance":
+			if c["p"]["contre_chance"] <= 0.0:
+				c["p"]["contre_mult"] = 1.0
+			c["p"]["contre_chance"] += float(sup[k])
+		else:
+			c["p"][k] += float(sup[k])
 	c["pv"] = c["pv_max"] * clampf(float(e.get("pv_ratio", 1.0)), 0.0, 1.0)
 	if c["pv"] <= 0.0:
 		c["vivant"] = false

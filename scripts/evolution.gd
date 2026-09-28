@@ -80,6 +80,8 @@ static func raison_impossible(uid: int) -> String:
 		return "Cette unité a déjà évolué."
 	if not peut_evoluer(h["id"]):
 		return "Cette unité n'a pas d'évolution."
+	if Sauvegarde.est_occupe(uid):
+		return "Cette unité est partie en mission (Compagnie)."
 	if int(h["niveau"]) < NIVEAU_REQUIS:
 		return "Niveau %d requis (actuellement Nv %d)." % [NIVEAU_REQUIS, int(h["niveau"])]
 	var c := cout(h["id"])

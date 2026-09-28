@@ -21,6 +21,10 @@ Le jeu, lui, reste sur GitHub Pages. La formule gratuite suffit largement pour c
 Même chose avec le fichier `supabase/02_arene.sql` : **New query** → colle tout → **Run** → « Success ».
 (À faire une fois, après le fichier 01. Pour changer un réglage de l'Arène — essais par jour, durée des saisons, prix de la boutique — modifie le début du fichier et relance-le.)
 
+### 2 ter. Classement de la Marche Maudite
+Même chose avec le fichier `supabase/03_marche.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après les fichiers 01 et 02. Sans ce fichier, la Marche marche quand même, mais n'est pas classée.)
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

@@ -12,6 +12,7 @@ extends Control
 ##   "boss_monde" : Boss de Monde, 20 unités contre un géant   ("boss_index", "retour")
 ##   "arene"      : Arène JcJ contre la défense d'un joueur   ("combat", "graine", "adversaire", "retour")
 ##   "donjon"     : un des 4 combats d'une expédition de Donjon   ("donjon", "niveau", "vague", "retour")
+##   "marche"     : un combat de la Marche Maudite   ("type", "region", "retour")
 ##
 ## Boutons : vitesse x1 / x2 / x4, "Passer" (affiche directement le résultat).
 
@@ -82,6 +83,8 @@ func _creer_fond() -> void:
 	elif _mode == "boss_monde":
 		chemin = "res://assets/boss_monde/%s.png" % str(demande["ennemis"][0]["id"])
 		noir.color = Color("120608")
+	elif _mode == "marche":
+		chemin = "res://assets/plateaux/fond_%02d.png" % int(Marche.actes_du_jour()[int(demande.get("region", 0))])
 	elif _mode == "donjon":
 		chemin = "res://assets/donjons/%s.png" % str(demande.get("donjon", "feu"))
 		noir.color = Color("#" + str(Donjons.DONJONS[demande.get("donjon", "feu")]["couleur"])).darkened(0.88)
@@ -157,6 +160,9 @@ func _creer_interface() -> void:
 			{"combat": "Combat", "elite": "Élite", "boss": "BOSS", "super": "SUPER BOSS"}[Tours.type_etage(n)]]
 	elif _mode == "boss_monde":
 		texte_titre = "BOSS DE MONDE — " + str(BossMonde.BOSS[int(demande.get("boss_index", 0))]["titre"]).to_upper()
+	elif _mode == "marche":
+		texte_titre = "LA MARCHE MAUDITE · %s — %s" % [Marche.nom_region(int(demande.get("region", 0))).to_upper(),
+			Marche.TYPES[demande.get("type", "combat")]["nom"].to_upper()]
 	elif _mode == "donjon":
 		var v := int(demande.get("vague", 0))
 		texte_titre = "%s · NIVEAU %d — COMBAT %d / %d : %s" % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),
@@ -633,6 +639,9 @@ func _fin() -> void:
 	if _mode == "donjon":
 		_fin_donjon()
 		return
+	if _mode == "marche":
+		_fin_marche()
+		return
 	var victoire: bool = _res["victoire"]
 	var lignes: Array = []
 	var equipe: Array = demande["equipe"]
@@ -750,6 +759,21 @@ func _fin_arene() -> void:
 		lignes.append("Le résultat n'a pas pu être envoyé : %s" % (r.erreur if not r.ok else str(r.data.get("erreur", "?"))))
 	resultat = {"mode": "arene", "victoire": victoire}
 	_afficher_resultat(victoire, lignes)
+
+
+## Marche Maudite : le résultat est appliqué à la marche, puis retour à la carte.
+func _fin_marche() -> void:
+	var victoire: bool = _res["victoire"]
+	var lignes: Array = []
+	_decouvrir(lignes)
+	var l2 := Marche.apres_combat(_res)
+	lignes = l2 + lignes
+	Sauvegarde.ajouter_stat("combats_gagnes" if victoire else "combats_perdus")
+	if victoire:
+		_xp_compte(lignes, "combat" if demande.get("type", "combat") == "combat" else "elite")
+	resultat = {"mode": "marche", "victoire": victoire}
+	var fin := not Marche.en_cours()
+	_afficher_resultat(victoire, lignes, ("MARCHE ACCOMPLIE !" if victoire else "LA MARCHE S'ACHÈVE") if fin else "")
 
 
 ## Donjon : 4 combats d'affilée, les PV restants passent au combat suivant.

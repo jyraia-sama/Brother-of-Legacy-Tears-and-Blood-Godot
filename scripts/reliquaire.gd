@@ -43,6 +43,8 @@ const OBJETS := {
 		"desc": "À l'Autel de Fusion, remplace un doublon pour faire gagner une étoile."},
 	"eclat_superieur": {"nom": "Éclat de Pacte Supérieur", "cat": "pierre", "couleur": "b08aff",
 		"desc": "Sert au Pacte Supérieur de l'Autel d'Invocation (SR / SSR / UR)."},
+	"sceau_marche": {"nom": "Sceau de Marche", "cat": "marche", "couleur": "c0303a",
+		"desc": "Gagné dans la Marche Maudite (selon le score). Se dépense à la boutique des Expéditions."},
 	# Ressources des Donjons (évolution des unités, voir evolution.gd)
 	"goutte_braise": {"nom": "Goutte de Braise", "cat": "donjon", "couleur": "ff6a2a",
 		"desc": "Ressource simple. Tombe dans le Brasier Éternel (donjon de Feu). Sert à l'évolution des unités de cet élément."},
@@ -84,7 +86,7 @@ const OBJETS := {
 
 const ORDRE := ["braise_infernale", "plume_celeste", "fragment_colossal", "poussiere_echo",
 	"coffre_bronze", "coffre_argent", "coffre_or", "coffre_royal", "elixir_petit", "elixir_grand",
-	"tome_petit", "tome_grand", "tome_ancien", "pierre_eveil", "eclat_superieur"]
+	"tome_petit", "tome_grand", "tome_ancien", "pierre_eveil", "eclat_superieur", "sceau_marche"]
 
 const STAMINA := {"elixir_petit": 10, "elixir_grand": 30}
 const XP_TOME := {"tome_petit": 500, "tome_grand": 2000, "tome_ancien": 6000}

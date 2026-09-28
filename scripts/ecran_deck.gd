@@ -311,6 +311,9 @@ func _clic_reserve(uid: int) -> void:
 
 func _clic_place(place: int) -> void:
 	var slots := Sauvegarde.get_slots()
+	if _selection >= 0 and Sauvegarde.est_occupe(_selection):
+		_message("En mission", "Cette unité est partie en mission avec la Compagnie : elle reviendra à la fin de la mission.")
+		return
 	if _selection >= 0 and slots[place] != _selection:
 		Sauvegarde.placer(_selection, place)
 		_selection = -1

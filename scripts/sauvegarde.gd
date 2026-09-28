@@ -90,6 +90,10 @@ static func _defaut() -> Dictionary:
 			"jour": -1, "essais": 0, "records": {}, "records_jour": {},
 			"escouades": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
 		},
+		# Expéditions de la Compagnie : missions lancées aujourd'hui et escouades parties (voir compagnie.gd)
+		"compagnie": {"jour": -1, "lancees": [], "en_cours": []},
+		# Marche Maudite : partie en cours ou terminée du jour, records, achats de la boutique (voir marche.gd)
+		"marche": {},
 		# Donjons : plus haut niveau terminé et nombre de victoires, par donjon (voir donjons.gd)
 		"donjons": {},
 		# Arène : équipe de défense (5 places, uid du héros ou -1)
@@ -587,8 +591,13 @@ static func get_slots() -> Array:
 	var s: Array = []
 	for i in TAILLE_EQUIPE_MAX:
 		var uid := int(brut[i]) if i < brut.size() else -1
-		s.append(uid if (uid >= 0 and not get_heros(uid).is_empty() and not uid in s) else -1)
+		s.append(uid if (uid >= 0 and not get_heros(uid).is_empty() and not uid in s and not est_occupe(uid)) else -1)
 	return s
+
+
+## L'unité est-elle partie en mission (Expéditions de la Compagnie) ?
+static func est_occupe(uid: int) -> bool:
+	return Compagnie.unite_en_mission(uid)
 
 
 ## Place d'un héros dans l'équipe (0 à 4), ou -1 s'il est en réserve.
@@ -607,6 +616,8 @@ static func definir_slots(slots: Array) -> void:
 
 ## Met un héros à une place. S'il était déjà dans l'équipe, il échange sa place.
 static func placer(uid: int, place: int) -> void:
+	if est_occupe(uid):
+		return
 	var s := get_slots()
 	var ancienne := s.find(uid)
 	if ancienne >= 0:
@@ -654,6 +665,8 @@ const ADMIN_OPTIONS := [
 	["heros_invincibles", "Héros invincibles", "Tes unités ne subissent aucun dégât en combat."],
 	["ennemis_affaiblis", "Ennemis affaiblis", "Les ennemis n'ont que 10 % de leurs PV."],
 	["xp_x10", "XP x10", "XP des unités et du compte multipliée par 10."],
+	["compagnie_instantanee", "Missions de la Compagnie instantanées", "Les missions se terminent tout de suite (butin normal)."],
+	["marche_illimitee", "Marche Maudite illimitée", "Rejouer la Marche du jour autant de fois qu'on veut (score non envoyé au classement)."],
 	["echos_garantis", "Amélioration d'Échos toujours réussie", "Chaque amélioration d'Écho réussit (le coût en or reste dû, sauf avec Or infini)."],
 ]
 
@@ -715,7 +728,7 @@ static func get_escouades() -> Array:
 	var s: Array = []
 	for i in TAILLE_ARMEE:
 		var uid := int(brut[i]) if i < brut.size() else -1
-		s.append(uid if (uid >= 0 and not get_heros(uid).is_empty() and not uid in s) else -1)
+		s.append(uid if (uid >= 0 and not get_heros(uid).is_empty() and not uid in s and not est_occupe(uid)) else -1)
 	return s
 
 
@@ -757,6 +770,8 @@ static func raison_invendable(uid: int) -> String:
 		return "Ce héros est verrouillé."
 	if place_de(uid) >= 0:
 		return "Retire-le d'abord de l'équipe."
+	if est_occupe(uid):
+		return "Cette unité est partie en mission."
 	return ""
 
 

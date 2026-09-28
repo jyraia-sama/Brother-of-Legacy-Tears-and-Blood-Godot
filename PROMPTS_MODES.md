@@ -22,6 +22,9 @@ Format conseillé : **1672 x 941** (16:9), PNG, style dark fantasy peint, **sans
 | `assets/boss_monde/solgard.png` | Vendredi | A living sun with a terrifying radiant face, solar flares, blinding gold light over a burned land, dark fantasy, no text |
 | `assets/boss_monde/nidhogr.png` | Samedi | Titanic void dragon devouring stars, scales like a night sky, purple and black, dark fantasy, no text |
 | `assets/boss_monde/avatar_sang.png` | Dimanche | A god made of flowing blood, crimson crown, rivers of blood rising around it, apocalyptic sky, dark fantasy, no text |
+| `assets/expedition/expedition_bg.png` | Menu des Expéditions | 16:9 dark fantasy painting: a war camp at dusk on a cliff, a tattered banner, a table covered with maps and candles, distant cursed lands under a red sky, empty center for UI, no text |
+| `assets/expedition/marche_bg.png` | Grande carte « La Marche Maudite » | Wide dark fantasy painting: a lone winding road through three cursed lands (burning ruins, black swamp, blood-red mountains) under a blood moon, hooded travelers seen from behind, no text |
+| `assets/expedition/compagnie_bg.png` | Carte « La Compagnie » et écran des missions | Wide dark fantasy painting: a mercenary guild hall with a large notice board of contracts, candles, weapons racks, adventurers preparing, warm light, no text |
 | `assets/ui/reliquaire_bg.png` | Le Reliquaire | 16:9 dark fantasy treasure vault: shelves of relics, glowing chests, potions, ancient tomes, purple candle light, empty center for UI, no text |
 
 Les portraits de boss de monde sont aussi affichés en fond du combat contre ce boss.

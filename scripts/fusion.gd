@@ -105,6 +105,8 @@ static func raison_non_sacrifiable(uid: int, uid_principal: int) -> String:
 		return "Cette unité est verrouillée."
 	if Sauvegarde.place_de(uid) >= 0:
 		return "Une unité de l'équipe ne peut pas être sacrifiée."
+	if Sauvegarde.est_occupe(uid):
+		return "Cette unité est partie en mission."
 	return ""
 
 

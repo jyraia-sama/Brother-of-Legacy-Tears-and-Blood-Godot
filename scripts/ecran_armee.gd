@@ -155,6 +155,8 @@ func _force(uid: int) -> float:
 
 
 func _clic_collection(uid: int) -> void:
+	if Sauvegarde.est_occupe(uid):
+		return
 	_selection = -1 if _selection == uid else uid
 	_rafraichir()
 

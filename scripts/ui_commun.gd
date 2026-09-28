@@ -162,6 +162,15 @@ static func portrait(id: String, diametre: float) -> Panel:
 ## Carte d'une unité possédée (bouton) : illustration pleine carte, nom, niveau,
 ## étoiles et barre d'XP. Sans image, on garde l'ancienne carte (portrait rond).
 static func carte_heros(h: Dictionary, largeur := 132.0, hauteur := 168.0) -> Button:
+	var b := _carte_heros(h, largeur, hauteur)
+	# Unité partie en mission (Compagnie) : carte grisée avec un bandeau
+	if Sauvegarde.est_occupe(int(h.get("uid", -1))):
+		b.modulate = Color(0.75, 0.75, 0.8, 0.8)
+		badge(b, "En mission", Color("7ab8ff"), false)
+	return b
+
+
+static func _carte_heros(h: Dictionary, largeur: float, hauteur: float) -> Button:
 	var id: String = h["id"]
 	if chemin_portrait(id) == "":
 		return _carte_heros_simple(h, largeur, hauteur)
