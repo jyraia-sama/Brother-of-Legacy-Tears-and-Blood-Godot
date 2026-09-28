@@ -263,6 +263,7 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 	ini.add_theme_color_override("font_outline_color", Color.BLACK)
 	ini.add_theme_constant_override("outline_size", 6)
 	portrait.add_child(ini)
+	UiCommun.habiller_portrait(portrait, info["id"], ini)
 
 	var barre := _barre(Color("c0392b") if info["camp"] == 1 else Color("3fae5a"), 88.0 if petit else (300.0 if geant else 150.0), 7.0 if petit else 12.0)
 	barre.max_value = info["pv_max"]

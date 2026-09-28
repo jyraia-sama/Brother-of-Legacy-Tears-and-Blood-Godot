@@ -14,11 +14,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.16.2"
-const DATE := "2026-09-27"
+const NUMERO := "0.17.0"
+const DATE := "2026-09-28"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.17.0", "date": "2026-09-28", "titre": "Portraits des unités",
+	"changements": [
+		"Les cartes affichent maintenant le portrait illustré de l'unité (découpé en cercle, contour de la couleur de l'élément), partout : Deck, combat, Bestiaire, choix du héros, invocation, Échos, Reliquaire, Tours, Boss de Monde.",
+		"Premiers portraits : les 8 héros de légende et le Seigneur Démon.",
+		"Les unités sans portrait gardent leur initiale en attendant leur image ; les unités non découvertes du Bestiaire restent cachées (« ? »).",
+		"Nouvel outil outils/decouper_planche.py : découpe une planche ChatGPT 3×3 en un portrait par unité dans assets/unites/.",
+	]},
 	{"version": "0.16.2", "date": "2026-09-27", "titre": "Correction du son sur la version web",
 	"changements": [
 		"Correction : la musique et les bruitages fonctionnent maintenant sur la version web (navigateur).",

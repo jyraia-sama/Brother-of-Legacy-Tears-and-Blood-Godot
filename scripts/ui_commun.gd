@@ -82,6 +82,53 @@ static func barre(couleur: Color, largeur: float, hauteur: float) -> ProgressBar
 
 
 ## Portrait provisoire : cercle à la couleur de l'unité avec son initiale.
+## Dossier des portraits d'unités (un PNG par identifiant : assets/unites/<id>.png).
+const DOSSIER_PORTRAITS := "res://assets/unites/"
+## Zone de l'image montrée dans les portraits ronds (en fraction de l'image) :
+## on zoome sur le haut du corps pour que le visage reste lisible en petit.
+const CADRAGE_PORTRAIT := Rect2(0.13, 0.0, 0.74, 0.74)
+
+
+## Chemin du portrait d'une unité, ou "" si l'image n'existe pas encore.
+static func chemin_portrait(id: String) -> String:
+	var chemin := DOSSIER_PORTRAITS + id + ".png"
+	return chemin if ResourceLoader.exists(chemin) else ""
+
+
+## Met l'image de l'unité dans un portrait rond (Panel), si elle existe.
+## L'image est découpée en cercle par le Panel, l'initiale est cachée et le
+## contour coloré (élément) est redessiné par-dessus l'image.
+## Renvoie false (et ne change rien) quand l'image n'existe pas encore.
+static func habiller_portrait(p: Panel, id: String, initiale: Control = null) -> bool:
+	var chemin := chemin_portrait(id)
+	if chemin == "":
+		return false
+	var style := p.get_theme_stylebox("panel") as StyleBoxFlat
+	p.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
+	var img := TextureRect.new()
+	var tex: Texture2D = load(chemin)
+	var zone := AtlasTexture.new()
+	zone.atlas = tex
+	zone.region = Rect2(CADRAGE_PORTRAIT.position * tex.get_size(), CADRAGE_PORTRAIT.size * tex.get_size())
+	img.texture = zone
+	img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	img.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	p.add_child(img)
+	if style != null:
+		var contour := Panel.new()
+		contour.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		contour.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		var sc := style.duplicate() as StyleBoxFlat
+		sc.draw_center = false
+		contour.add_theme_stylebox_override("panel", sc)
+		p.add_child(contour)
+	if initiale != null:
+		initiale.visible = false
+	return true
+
+
 static func portrait(id: String, diametre: float) -> Panel:
 	var u := UnitesData.get_unite(id)
 	var p := Panel.new()
@@ -102,6 +149,7 @@ static func portrait(id: String, diametre: float) -> Panel:
 	ini.add_theme_color_override("font_outline_color", Color.BLACK)
 	ini.add_theme_constant_override("outline_size", 6)
 	p.add_child(ini)
+	habiller_portrait(p, id, ini)
 	return p
 
 

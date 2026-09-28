@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.16.2** (2026-09-27)
+Version actuelle : **0.17.0** (2026-09-28)
+
+## v0.17.0 — Portraits des unités  (2026-09-28)
+
+- Les cartes affichent maintenant le portrait illustré de l'unité (découpé en cercle, contour de la couleur de l'élément), partout : Deck, combat, Bestiaire, choix du héros, invocation, Échos, Reliquaire, Tours, Boss de Monde.
+- Premiers portraits : les 8 héros de légende et le Seigneur Démon.
+- Les unités sans portrait gardent leur initiale en attendant leur image ; les unités non découvertes du Bestiaire restent cachées (« ? »).
+- Nouvel outil outils/decouper_planche.py : découpe une planche ChatGPT 3×3 en un portrait par unité dans assets/unites/.
 
 ## v0.16.2 — Correction du son sur la version web  (2026-09-27)
 

@@ -196,6 +196,8 @@ func _carte(id: String, u: Dictionary) -> Button:
 	initiale.add_theme_color_override("font_outline_color", Color.BLACK)
 	initiale.add_theme_constant_override("outline_size", 6)
 	portrait.add_child(initiale)
+	if connu:
+		UiCommun.habiller_portrait(portrait, id, initiale)
 
 	var nom := _label(u["nom"] if connu else "???", 15, C_TEXTE if connu else C_DOUX)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

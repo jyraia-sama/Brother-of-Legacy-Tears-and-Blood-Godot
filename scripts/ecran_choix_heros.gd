@@ -104,6 +104,7 @@ func _carte(id: String) -> Button:
 	ini.add_theme_color_override("font_outline_color", Color.BLACK)
 	ini.add_theme_constant_override("outline_size", 6)
 	portrait.add_child(ini)
+	UiCommun.habiller_portrait(portrait, id, ini)
 
 	vb.add_child(_centre(_label(u["nom"], 21, C_OR)))
 	vb.add_child(_centre(_label("%s · %s · %s" % [u["race"], UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]]], 14, C_DOUX)))
