@@ -14,11 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.20.1"
+const NUMERO := "0.20.2"
 const DATE := "2026-09-28"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.20.2", "date": "2026-09-28", "titre": "Amélioration des Échos jusqu'au +9",
+	"changements": [
+		"Échos Sanguins : nouveau bouton « Jusqu'à +9 » dans la fenêtre d'amélioration (avec +3, +6, +12 et +15).",
+	]},
 	{"version": "0.20.1", "date": "2026-09-28", "titre": "Symboles corrigés et fenêtre d'amélioration des Échos",
 	"changements": [
 		"Correction : les symboles (★ ⚔ ☠ ✦ ← → ✔…) s'affichaient en petits carrés sur certains ordinateurs et sur la version web, dans beaucoup de menus. Le jeu embarque maintenant une police de symboles (DejaVu Sans).",

@@ -4,13 +4,13 @@ extends Control
 ##  - infos : niveau, stat principale actuelle -> au prochain niveau, stats secondaires,
 ##    prochain palier (+3, +6, +9, +12, +15), chance de réussite et coût de la tentative ;
 ##  - bouton « +1 » : une seule tentative ;
-##  - boutons « Jusqu'à +3 / +6 / +12 / +15 » : tentatives en boucle (l'or est payé à chaque
+##  - boutons « Jusqu'à +3 / +6 / +9 / +12 / +15 » : tentatives en boucle (l'or est payé à chaque
 ##    tentative) jusqu'à atteindre le niveau visé, manquer d'or, ou appuyer sur « Arrêter » ;
 ##  - une barre de chargement se remplit à chaque tentative avant d'annoncer le résultat.
 ##
 ##   FenetreAmeliorationEcho.ouvrir(parent, uid_echo, rng, quand_fermee)
 
-const CIBLES := [3, 6, 12, 15]
+const CIBLES := [3, 6, 9, 12, 15]
 const DUREE_NORMALE := 0.9      # secondes de chargement par tentative
 const DUREE_RAPIDE := 0.25
 const C_OK := Color("8aff9a")

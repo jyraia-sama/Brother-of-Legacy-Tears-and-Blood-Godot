@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.20.1** (2026-09-28)
+Version actuelle : **0.20.2** (2026-09-28)
+
+## v0.20.2 — Amélioration des Échos jusqu'au +9  (2026-09-28)
+
+- Échos Sanguins : nouveau bouton « Jusqu'à +9 » dans la fenêtre d'amélioration (avec +3, +6, +12 et +15).
 
 ## v0.20.1 — Symboles corrigés et fenêtre d'amélioration des Échos  (2026-09-28)
 
