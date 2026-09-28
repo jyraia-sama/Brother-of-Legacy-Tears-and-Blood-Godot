@@ -14,11 +14,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.20.2"
+const NUMERO := "0.20.3"
 const DATE := "2026-09-28"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.20.3", "date": "2026-09-28", "titre": "Récapitulatif des améliorations d'Échos",
+	"changements": [
+		"Fenêtre d'amélioration des Échos : le bouton « +1 » affiche son coût en or.",
+		"Récapitulatif après chaque amélioration : niveaux gagnés, tentatives et or dépensé, stat principale avant → après, stats secondaires nouvelles ou renforcées (avec le gain).",
+		"Écran des Échos : le bouton s'appelle simplement « Améliorer ».",
+	]},
 	{"version": "0.20.2", "date": "2026-09-28", "titre": "Amélioration des Échos jusqu'au +9",
 	"changements": [
 		"Échos Sanguins : nouveau bouton « Jusqu'à +9 » dans la fenêtre d'amélioration (avec +3, +6, +12 et +15).",

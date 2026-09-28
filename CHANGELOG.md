@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.20.2** (2026-09-28)
+Version actuelle : **0.20.3** (2026-09-28)
+
+## v0.20.3 — Récapitulatif des améliorations d'Échos  (2026-09-28)
+
+- Fenêtre d'amélioration des Échos : le bouton « +1 » affiche son coût en or.
+- Récapitulatif après chaque amélioration : niveaux gagnés, tentatives et or dépensé, stat principale avant → après, stats secondaires nouvelles ou renforcées (avec le gain).
+- Écran des Échos : le bouton s'appelle simplement « Améliorer ».
 
 ## v0.20.2 — Amélioration des Échos jusqu'au +9  (2026-09-28)
 

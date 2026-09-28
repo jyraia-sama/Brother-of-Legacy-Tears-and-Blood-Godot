@@ -406,7 +406,7 @@ func _remplir_fiche() -> void:
 			_tout())
 		boutons.add_child(eq)
 	if int(e["niveau"]) < Echos.NIVEAU_MAX:
-		var am := UiCommun.bouton("Améliorer…  (%d %%, %d or)" % [int(Echos.chance_amelioration(e) * 100), Echos.cout_amelioration(e)], 14)
+		var am := UiCommun.bouton("Améliorer", 14)
 		am.pressed.connect(_ameliorer)
 		boutons.add_child(am)
 	var b2 := HBoxContainer.new()
