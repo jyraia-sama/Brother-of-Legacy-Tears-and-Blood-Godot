@@ -95,7 +95,7 @@ static func nettoyer(equipe) -> Array:
 	var res: Array = []
 	if equipe is Array:
 		for u in equipe:
-			if u is Dictionary and UnitesData.UNITES.has(str(u.get("id", ""))):
+			if u is Dictionary and UnitesData.existe(str(u.get("id", ""))):
 				res.append(u)
 	return res
 

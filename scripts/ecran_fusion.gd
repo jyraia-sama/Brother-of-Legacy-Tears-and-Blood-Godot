@@ -68,6 +68,13 @@ func _ready() -> void:
 		b.pressed.connect(_changer_mode.bind(o[0]))
 		tete.add_child(b)
 		_onglets[o[0]] = b
+	var evo := UiCommun.bouton("✦ Évolution", 17)
+	evo.custom_minimum_size = Vector2(170, 40)
+	evo.tooltip_text = "Autel d'Évolution : transforme une unité niveau 30 en sa version évoluée."
+	evo.pressed.connect(func():
+		EcranEvolution.scene_retour = SCENE
+		get_tree().change_scene_to_file(EcranEvolution.SCENE))
+	tete.add_child(evo)
 	var pousse := Control.new()
 	pousse.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(pousse)
@@ -209,7 +216,7 @@ func _remplir_principal() -> void:
 		carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color.WHITE, 0.08, 3))
 		carte.tooltip_text = "Clique pour retirer ce héros de l'autel"
 		var u := UnitesData.get_unite(h["id"])
-		var t := "%s\n%s · Nv %d / %d\n%s" % [u["nom"], UiCommun.texte_rarete(h["id"]), int(h["niveau"]), UnitesData.NIVEAU_MAX,
+		var t := "%s\n%s · Nv %d / %d\n%s" % [u["nom"], UiCommun.texte_rarete(h["id"]), int(h["niveau"]), UnitesData.niveau_max(h["id"]),
 			Fusion.texte_etoiles(Fusion.etoiles(h)) + ("  ÉVEILLÉ" if Fusion.est_eveille(h) else "")]
 		if Sauvegarde.place_de(_principal) >= 0:
 			t += "\nDans l'équipe (place %d)" % (Sauvegarde.place_de(_principal) + 1)
@@ -301,14 +308,14 @@ func _remplir_apercu() -> void:
 			apres = Fusion.appliquer_etoiles(UnitesData.stats(h["id"], int(h["niveau"])), et + 1)
 	else:
 		raison = Fusion.raison_absorption_impossible(_principal, _sacrifices)
-		if int(h["niveau"]) >= UnitesData.NIVEAU_MAX:
+		if int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
 			_apercu.add_child(UiCommun.label("Niveau maximum atteint : l'absorption n'est plus utile.", 16, Color("ff9a5a")))
 		else:
 			var xp := Fusion.xp_totale(_principal, _sacrifices)
 			var ap := Fusion.apercu_xp(_principal, xp)
 			_apercu.add_child(UiCommun.label("XP gagnée : +%d" % xp, 20, Color("7ab8ff")))
 			_apercu.add_child(UiCommun.label("Niveau %d   →   %d%s" % [int(h["niveau"]), int(ap["niveau"]),
-				"" if int(ap["niveau"]) >= UnitesData.NIVEAU_MAX else "   (XP %d / %d)" % [int(ap["xp"]), Sauvegarde.xp_heros_pour_niveau(int(ap["niveau"]))]],
+				"" if int(ap["niveau"]) >= UnitesData.niveau_max(h["id"]) else "   (XP %d / %d)" % [int(ap["xp"]), Sauvegarde.xp_heros_pour_niveau(int(ap["niveau"]))]],
 				18, UiCommun.C_TEXTE))
 			if int(ap["perdue"]) > 0:
 				_apercu.add_child(UiCommun.label("Attention : %d XP seront perdus (niveau max atteint)." % int(ap["perdue"]), 14, Color("ff8a7a")))
@@ -356,7 +363,7 @@ func _candidats() -> Array:
 		if h.is_empty():
 			liste.append(x)
 		elif uid != _principal:
-			if _mode == "eveil" and x["id"] != h["id"]:
+			if _mode == "eveil" and UnitesData.lignee(x["id"]) != UnitesData.lignee(h["id"]):
 				continue
 			liste.append(x)
 	return liste

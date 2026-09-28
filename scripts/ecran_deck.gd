@@ -422,10 +422,10 @@ func _maj_fiche() -> void:
 
 	# Niveau et XP
 	var besoin := Sauvegarde.xp_heros_pour_niveau(niv)
-	_fiche.add_child(UiCommun.label("Niveau %d / %d" % [niv, UnitesData.NIVEAU_MAX] + ("" if niv >= UnitesData.NIVEAU_MAX else "   ·   XP %d / %d" % [int(h["xp"]), besoin]), 17))
+	_fiche.add_child(UiCommun.label("Niveau %d / %d" % [niv, UnitesData.niveau_max(h["id"])] + ("" if niv >= UnitesData.niveau_max(h["id"]) else "   ·   XP %d / %d" % [int(h["xp"]), besoin]), 17))
 	var xp := UiCommun.barre(Color("7ab8ff"), 400, 8)
 	xp.max_value = besoin
-	xp.value = besoin if niv >= UnitesData.NIVEAU_MAX else int(h["xp"])
+	xp.value = besoin if niv >= UnitesData.niveau_max(h["id"]) else int(h["xp"])
 	_fiche.add_child(xp)
 
 	var grille := GridContainer.new()
@@ -466,6 +466,14 @@ func _maj_fiche() -> void:
 		var ver := UiCommun.bouton("Déverrouiller" if h.get("verrou", false) else "Verrouiller", 15)
 		ver.pressed.connect(_basculer_verrou)
 		actions.add_child(ver)
+	if Evolution.peut_evoluer(h["id"]) or UnitesData.est_evolue(h["id"]):
+		var ev := UiCommun.bouton("✦ Évolution", 15)
+		ev.tooltip_text = "Voir l'évolution de cette unité à l'Autel d'Évolution."
+		ev.pressed.connect(func():
+			EcranEvolution.scene_retour = SCENE
+			EcranEvolution.selection_initiale = _selection
+			get_tree().change_scene_to_file(EcranEvolution.SCENE))
+		actions.add_child(ev)
 	if place >= 0:
 		_fiche.add_child(UiCommun.label("Dans l'équipe : place %d (%s)" % [place + 1, "Avant" if place < 2 else "Arrière"], 14, UiCommun.C_OR))
 

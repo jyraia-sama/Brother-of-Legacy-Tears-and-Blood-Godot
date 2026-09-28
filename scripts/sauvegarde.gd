@@ -35,7 +35,7 @@ const NIVEAU_COMPTE_MAX := 30
 const COUT_STAMINA_AVENTURE := {"combat": 1, "elite": 2, "gardien": 2, "boss_chapitre": 3, "boss_acte": 3}
 ## XP de compte gagnée à chaque combat gagné (Aventure, Tours, Boss de Monde).
 const XP_COMPTE_VICTOIRE := {"combat": 10, "elite": 15, "gardien": 15, "boss_chapitre": 25, "boss_acte": 40,
-	"boss": 25, "super": 40, "boss_monde": 30, "arene": 20}
+	"boss": 25, "super": 40, "boss_monde": 30, "arene": 20, "donjon": 30}
 
 static var donnees: Dictionary = {}
 static var _charge := false
@@ -90,6 +90,8 @@ static func _defaut() -> Dictionary:
 			"jour": -1, "essais": 0, "records": {}, "records_jour": {},
 			"escouades": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
 		},
+		# Donjons : plus haut niveau terminé et nombre de victoires, par donjon (voir donjons.gd)
+		"donjons": {},
 		# Arène : équipe de défense (5 places, uid du héros ou -1)
 		"arene": {"defense": [-1, -1, -1, -1, -1]},
 		# Options du menu Admin (tests) : id -> true/false
@@ -260,8 +262,8 @@ static func resume_partie(d: Dictionary) -> String:
 	var coll: Dictionary = d.get("collection", {})
 	var heros := str(d.get("heros_depart", ""))
 	var nom_heros := "—"
-	if heros != "" and UnitesData.UNITES.has(heros):
-		nom_heros = str(UnitesData.UNITES[heros]["nom"])
+	if heros != "" and UnitesData.existe(heros):
+		nom_heros = str(UnitesData.get_unite(heros)["nom"])
 	return "Niveau de compte : %d\nHéros de départ : %s\nChapitres terminés : %d / 72\nUnités : %d\nOr : %d     Gemmes : %d" % [
 		int(compte.get("niveau", 1)), nom_heros, (prog.get("termines", []) as Array).size(),
 		(coll.get("heros", []) as Array).size(), int(res.get("or", 0)), int(res.get("gemmes", 0))]
@@ -531,11 +533,11 @@ static func ajouter_xp_heros(uid: int, xp: int) -> int:
 		return 0
 	var gagnes := 0
 	h["xp"] = int(h["xp"]) + xp * (10 if admin("xp_x10") else 1)
-	while int(h["niveau"]) < UnitesData.NIVEAU_MAX and int(h["xp"]) >= xp_heros_pour_niveau(int(h["niveau"])):
+	while int(h["niveau"]) < UnitesData.niveau_max(h["id"]) and int(h["xp"]) >= xp_heros_pour_niveau(int(h["niveau"])):
 		h["xp"] = int(h["xp"]) - xp_heros_pour_niveau(int(h["niveau"]))
 		h["niveau"] = int(h["niveau"]) + 1
 		gagnes += 1
-	if int(h["niveau"]) >= UnitesData.NIVEAU_MAX:
+	if int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
 		h["xp"] = 0
 	if gagnes > 0:
 		Audio.son("niveau")
@@ -644,9 +646,9 @@ const ADMIN_OPTIONS := [
 	["gemmes_infinies", "Gemmes infinies", "Gemmes illimitées."],
 	["stamina_infinie", "Stamina infinie", "Les combats ne consomment plus de stamina."],
 	["eclats_infinis", "Éclats infinis", "Éclats de Pacte Supérieur illimités (invocations et événements)."],
-	["objets_infinis", "Objets du Reliquaire infinis", "Braises, Plumes, Fragments, Poussière, coffres, élixirs, tomes, Pierres d'Éveil…"],
+	["objets_infinis", "Objets du Reliquaire infinis", "Braises, Plumes, Fragments, Poussière, coffres, élixirs, tomes, Pierres d'Éveil, ressources des Donjons…"],
 	["bestiaire_complet", "Bestiaire entièrement débloqué", "Toutes les unités sont visibles dans le Bestiaire."],
-	["tout_debloque", "Tous les Actes et chapitres débloqués", "Accès à tous les chapitres sans terminer les précédents."],
+	["tout_debloque", "Tous les Actes, chapitres et niveaux de Donjon débloqués", "Accès à tous les chapitres et à tous les niveaux des Donjons sans terminer les précédents."],
 	["tours_libres", "Tous les étages des Tours accessibles", "Combattre n'importe quel étage, même sans avoir fini le précédent."],
 	["boss_monde_libre", "Boss de Monde : tous disponibles", "Les 7 boss jouables tous les jours, essais illimités, sans condition de déblocage."],
 	["heros_invincibles", "Héros invincibles", "Tes unités ne subissent aucun dégât en combat."],
@@ -739,6 +741,8 @@ static func prix_vente(uid: int) -> int:
 		return 0
 	var u := UnitesData.get_unite(h["id"])
 	var base: int = PRIX_VENTE_LEGENDE if u.get("legende", false) else PRIX_VENTE[u["rarete"]]
+	if UnitesData.est_evolue(h["id"]):
+		base *= 3      # une unité évoluée vaut bien plus (ressources dépensées)
 	return int(base * (1.0 + (int(h["niveau"]) - 1) * 0.05) * (1.0 + (Fusion.etoiles(h) - 1) * 0.5))
 
 
@@ -979,7 +983,7 @@ static func est_decouvert(id_unite: String) -> bool:
 static func nombre_decouverts() -> int:
 	charger()
 	if admin("bestiaire_complet"):
-		return UnitesData.UNITES.size()
+		return UnitesData.toutes().size()
 	return donnees["bestiaire"].size()
 
 

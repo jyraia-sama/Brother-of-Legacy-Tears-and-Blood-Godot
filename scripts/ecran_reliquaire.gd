@@ -233,7 +233,7 @@ func _choisir_heros(tome: String) -> void:
 	liste.sort_custom(func(a, b): return int(a["niveau"]) > int(b["niveau"]))
 	for hh in liste:
 		var carte := UiCommun.carte_heros(hh)
-		if int(hh["niveau"]) >= UnitesData.NIVEAU_MAX:
+		if int(hh["niveau"]) >= UnitesData.niveau_max(hh["id"]):
 			carte.disabled = true
 			carte.modulate = Color(1, 1, 1, 0.35)
 		elif Sauvegarde.place_de(int(hh["uid"])) >= 0:

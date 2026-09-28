@@ -1,6 +1,18 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.18.2** (2026-09-28)
+Version actuelle : **0.19.0** (2026-09-28)
+
+## v0.19.0 — Donjons et évolutions  (2026-09-28)
+
+- Nouveau mode Donjon (Aventure → Donjon) : 6 donjons de 10 niveaux — le Brasier Éternel (Feu), la Sylve Putride (Nature), les Fosses Englouties (Eau), la Crypte sans Lune (Ténèbres), le Sanctuaire Profané (Sacré) et le Puits de Sang (neutre).
+- Une expédition = 4 combats d'affilée sans soin entre deux : vague de 5 monstres, mini-boss et ses 2 gardes, vague de 5 monstres, puis le boss du donjon. Stamina payée au départ (4 à 10), abandon possible entre deux combats.
+- 12 nouveaux ennemis : un mini-boss et un boss (avec phase 2) par donjon. Nouvel élément Neutre pour le Puits de Sang.
+- 18 ressources d'évolution : Goutte, Larme et Cœur de Braise, de Sève, d'Abysse, d'Ombre, d'Aube et de Sang ; les Larmes arrivent au niveau 4, les Cœurs au niveau 8. Le niveau suivant s'ouvre en terminant le précédent.
+- Nouvel Autel d'Évolution (depuis les Donjons, l'Autel de Fusion ou la fiche d'une unité du Deck) : les 64 unités invocables ont une version évoluée, jamais invocable.
+- Évolution : unité niveau 30 + ressources de son élément + Sang (plus l'unité est rare, plus les ressources sont grosses). Elle garde ses étoiles et ses Échos, repart au niveau 1 et monte jusqu'au niveau 40.
+- Chaque évolution : nouveau nom, stats +25 à +40 % selon la rareté, un sort amélioré et parfois un nouveau sort au niveau 40. L'apparence évoluée viendra plus tard (en attendant, le portrait de base est utilisé).
+- Bestiaire : filtre « Évolutions ». Autel de Fusion : une unité et son évolution comptent comme doublons pour l'Éveil.
+- Difficulté des donjons réglée par simulation (réussite ~70 % avec l'équipe conseillée, plus dur aux niveaux 9 et 10).
 
 ## v0.18.2 — Bestiaire illustré  (2026-09-28)
 

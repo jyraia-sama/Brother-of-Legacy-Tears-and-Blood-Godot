@@ -268,8 +268,8 @@ static func ouvrir_profil(parent: Node, id_joueur: String) -> void:
 	contenu.add_child(infos)
 	infos.add_child(UiCommun.label("Niveau de compte %d" % int(p.niveau), 19))
 	var heros := str(p.heros_vitrine)
-	if heros != "" and UnitesData.UNITES.has(heros):
-		infos.add_child(UiCommun.label("Héros : " + str(UnitesData.UNITES[heros]["nom"]), 17, UiCommun.C_DOUX))
+	if heros != "" and UnitesData.existe(heros):
+		infos.add_child(UiCommun.label("Héros : " + str(UnitesData.get_unite(heros)["nom"]), 17, UiCommun.C_DOUX))
 	var guilde := str(p.guilde)
 	infos.add_child(UiCommun.label("Guilde : " + (guilde + " (" + _nom_role(str(p.role)) + ")" if guilde != "" else "aucune"), 17, UiCommun.C_DOUX))
 	var pres := EnLigne.texte_presence(str(p.vu_le))

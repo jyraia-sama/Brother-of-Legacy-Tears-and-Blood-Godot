@@ -43,6 +43,43 @@ const OBJETS := {
 		"desc": "À l'Autel de Fusion, remplace un doublon pour faire gagner une étoile."},
 	"eclat_superieur": {"nom": "Éclat de Pacte Supérieur", "cat": "pierre", "couleur": "b08aff",
 		"desc": "Sert au Pacte Supérieur de l'Autel d'Invocation (SR / SSR / UR)."},
+	# Ressources des Donjons (évolution des unités, voir evolution.gd)
+	"goutte_braise": {"nom": "Goutte de Braise", "cat": "donjon", "couleur": "ff6a2a",
+		"desc": "Ressource simple. Tombe dans le Brasier Éternel (donjon de Feu). Sert à l'évolution des unités de cet élément."},
+	"larme_braise": {"nom": "Larme de Braise", "cat": "donjon", "couleur": "ff6a2a",
+		"desc": "Ressource moyenne. Tombe dans le Brasier Éternel (donjon de Feu). Sert à l'évolution des unités de cet élément."},
+	"coeur_braise": {"nom": "Cœur de Braise", "cat": "donjon", "couleur": "ff6a2a",
+		"desc": "Grosse ressource. Tombe dans le Brasier Éternel (donjon de Feu). Sert à l'évolution des unités de cet élément."},
+	"goutte_seve": {"nom": "Goutte de Sève", "cat": "donjon", "couleur": "6ad04a",
+		"desc": "Ressource simple. Tombe dans la Sylve Putride (donjon de Nature). Sert à l'évolution des unités de cet élément."},
+	"larme_seve": {"nom": "Larme de Sève", "cat": "donjon", "couleur": "6ad04a",
+		"desc": "Ressource moyenne. Tombe dans la Sylve Putride (donjon de Nature). Sert à l'évolution des unités de cet élément."},
+	"coeur_seve": {"nom": "Cœur de Sève", "cat": "donjon", "couleur": "6ad04a",
+		"desc": "Grosse ressource. Tombe dans la Sylve Putride (donjon de Nature). Sert à l'évolution des unités de cet élément."},
+	"goutte_abysse": {"nom": "Goutte d'Abysse", "cat": "donjon", "couleur": "4aa8ff",
+		"desc": "Ressource simple. Tombe dans les Fosses Englouties (donjon d'Eau). Sert à l'évolution des unités de cet élément."},
+	"larme_abysse": {"nom": "Larme d'Abysse", "cat": "donjon", "couleur": "4aa8ff",
+		"desc": "Ressource moyenne. Tombe dans les Fosses Englouties (donjon d'Eau). Sert à l'évolution des unités de cet élément."},
+	"coeur_abysse": {"nom": "Cœur d'Abysse", "cat": "donjon", "couleur": "4aa8ff",
+		"desc": "Grosse ressource. Tombe dans les Fosses Englouties (donjon d'Eau). Sert à l'évolution des unités de cet élément."},
+	"goutte_ombre": {"nom": "Goutte d'Ombre", "cat": "donjon", "couleur": "a06ae0",
+		"desc": "Ressource simple. Tombe dans la Crypte sans Lune (donjon de Ténèbres). Sert à l'évolution des unités de cet élément."},
+	"larme_ombre": {"nom": "Larme d'Ombre", "cat": "donjon", "couleur": "a06ae0",
+		"desc": "Ressource moyenne. Tombe dans la Crypte sans Lune (donjon de Ténèbres). Sert à l'évolution des unités de cet élément."},
+	"coeur_ombre": {"nom": "Cœur d'Ombre", "cat": "donjon", "couleur": "a06ae0",
+		"desc": "Grosse ressource. Tombe dans la Crypte sans Lune (donjon de Ténèbres). Sert à l'évolution des unités de cet élément."},
+	"goutte_aube": {"nom": "Goutte d'Aube", "cat": "donjon", "couleur": "ffe070",
+		"desc": "Ressource simple. Tombe dans le Sanctuaire Profané (donjon Sacré). Sert à l'évolution des unités de cet élément."},
+	"larme_aube": {"nom": "Larme d'Aube", "cat": "donjon", "couleur": "ffe070",
+		"desc": "Ressource moyenne. Tombe dans le Sanctuaire Profané (donjon Sacré). Sert à l'évolution des unités de cet élément."},
+	"coeur_aube": {"nom": "Cœur d'Aube", "cat": "donjon", "couleur": "ffe070",
+		"desc": "Grosse ressource. Tombe dans le Sanctuaire Profané (donjon Sacré). Sert à l'évolution des unités de cet élément."},
+	"goutte_sang": {"nom": "Goutte de Sang", "cat": "donjon", "couleur": "d02a2a",
+		"desc": "Ressource simple. Tombe dans le Puits de Sang (donjon neutre). Sert à toutes les évolutions."},
+	"larme_sang": {"nom": "Larme de Sang", "cat": "donjon", "couleur": "d02a2a",
+		"desc": "Ressource moyenne. Tombe dans le Puits de Sang (donjon neutre). Sert à toutes les évolutions."},
+	"coeur_sang": {"nom": "Cœur de Sang", "cat": "donjon", "couleur": "d02a2a",
+		"desc": "Grosse ressource. Tombe dans le Puits de Sang (donjon neutre). Sert à toutes les évolutions."},
 }
 
 const ORDRE := ["braise_infernale", "plume_celeste", "fragment_colossal", "poussiere_echo",
@@ -169,7 +206,7 @@ static func utiliser_elixir(elixir: String) -> int:
 ## Utilise un tome sur un héros. Renvoie les niveaux gagnés (-1 si impossible).
 static func utiliser_tome(tome: String, uid: int) -> int:
 	var h := Sauvegarde.get_heros(uid)
-	if h.is_empty() or not XP_TOME.has(tome) or int(h["niveau"]) >= UnitesData.NIVEAU_MAX:
+	if h.is_empty() or not XP_TOME.has(tome) or int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
 		return -1
 	if not Sauvegarde.retirer_objet(tome, 1):
 		return -1

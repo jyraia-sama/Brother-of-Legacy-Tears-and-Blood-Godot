@@ -125,7 +125,7 @@ static func raison_eveil_impossible(uid_principal: int, sacrifices: Array, pierr
 		return "Il faut %d doublon(s) de %s ou Pierre(s) d'Éveil (sélectionnés : %d)." % [besoin, UnitesData.get_unite(h["id"])["nom"], sacrifices.size() + pierres]
 	for uid in sacrifices:
 		var s := Sauvegarde.get_heros(int(uid))
-		if s.is_empty() or s["id"] != h["id"]:
+		if s.is_empty() or UnitesData.lignee(s["id"]) != UnitesData.lignee(h["id"]):
 			return "Seuls des doublons de la même unité peuvent servir à l'Éveil."
 		var r := raison_non_sacrifiable(int(uid), uid_principal)
 		if r != "":
@@ -164,7 +164,7 @@ static func xp_sacrifice(uid: int, uid_principal: int) -> int:
 	var xp := float(XP_SACRIFICE[cle_rarete(s["id"])])
 	xp *= 1.0 + (int(s["niveau"]) - 1) * 0.10
 	xp *= 1.0 + (etoiles(s) - 1) * 0.25
-	if not p.is_empty() and s["id"] == p["id"]:
+	if not p.is_empty() and UnitesData.lignee(s["id"]) == UnitesData.lignee(p["id"]):
 		xp *= BONUS_MEME_UNITE
 	return int(round(xp))
 
@@ -185,11 +185,11 @@ static func apercu_xp(uid_principal: int, xp_gagnee: int) -> Dictionary:
 	var h := Sauvegarde.get_heros(uid_principal)
 	var niv := int(h.get("niveau", 1))
 	var xp := int(h.get("xp", 0)) + xp_gagnee
-	while niv < UnitesData.NIVEAU_MAX and xp >= Sauvegarde.xp_heros_pour_niveau(niv):
+	while niv < UnitesData.niveau_max(h["id"]) and xp >= Sauvegarde.xp_heros_pour_niveau(niv):
 		xp -= Sauvegarde.xp_heros_pour_niveau(niv)
 		niv += 1
 	var perdue := 0
-	if niv >= UnitesData.NIVEAU_MAX:
+	if niv >= UnitesData.niveau_max(h["id"]):
 		perdue = xp
 		xp = 0
 	return {"niveau": niv, "xp": xp, "perdue": perdue}
@@ -199,8 +199,8 @@ static func raison_absorption_impossible(uid_principal: int, sacrifices: Array) 
 	var h := Sauvegarde.get_heros(uid_principal)
 	if h.is_empty():
 		return "Choisis d'abord un héros principal."
-	if int(h["niveau"]) >= UnitesData.NIVEAU_MAX:
-		return "Ce héros est déjà au niveau maximum (%d)." % UnitesData.NIVEAU_MAX
+	if int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
+		return "Ce héros est déjà au niveau maximum (%d)." % UnitesData.niveau_max(h["id"])
 	if sacrifices.is_empty():
 		return "Choisis au moins une unité à sacrifier."
 	if sacrifices.size() > MAX_SACRIFICES:

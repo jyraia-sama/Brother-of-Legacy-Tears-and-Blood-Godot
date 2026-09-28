@@ -29,9 +29,9 @@ const COULEURS_RARETE := {
 }
 const COULEURS_ELEMENT := {
 	"feu": Color("e0743a"), "eau": Color("4f9fd6"), "nature": Color("62ad4f"),
-	"tenebres": Color("a276d6"), "sacre": Color("e6c85a"),
+	"tenebres": Color("a276d6"), "sacre": Color("e6c85a"), "neutre": Color("c8b8b0"),
 }
-const FILTRES := [["tous", "Tous"], ["legende", "Légendes"], ["heros", "Héros"], ["ennemi", "Ennemis"], ["boss", "Boss"], ["boss_monde", "Boss de Monde"]]
+const FILTRES := [["tous", "Tous"], ["legende", "Légendes"], ["heros", "Héros"], ["evolution", "Évolutions"], ["ennemi", "Ennemis"], ["boss", "Boss"], ["boss_monde", "Boss de Monde"]]
 const C_LEGENDE := Color("ffd27a")
 
 var _filtre := "tous"
@@ -137,12 +137,17 @@ func _remplir_grille() -> void:
 		enfant.queue_free()
 	var total := 0
 	var decouverts := 0
-	for id in UnitesData.UNITES:
-		var u: Dictionary = UnitesData.UNITES[id]
+	var toutes := UnitesData.toutes()
+	for id in toutes:
+		var u: Dictionary = toutes[id]
+		var evolue := UnitesData.est_evolue(id)
 		if _filtre == "legende":
-			if not u.get("legende", false):
+			if not u.get("legende", false) or evolue:
 				continue
-		elif _filtre != "tous" and u["categorie"] != _filtre:
+		elif _filtre == "evolution":
+			if not evolue:
+				continue
+		elif _filtre != "tous" and (u["categorie"] != _filtre or evolue):
 			continue
 		total += 1
 		if _visible(id):
@@ -313,6 +318,10 @@ func _creer_fiche() -> PanelContainer:
 
 func _selectionner(id: String) -> void:
 	_selection = id
+	_f_curseur.max_value = UnitesData.niveau_max(id)
+	if _niveau > UnitesData.niveau_max(id):
+		_niveau = UnitesData.niveau_max(id)
+		_f_curseur.value = _niveau
 	_maj_fiche()
 
 
@@ -341,6 +350,8 @@ func _maj_fiche() -> void:
 	_f_nom.text = u["nom"]
 	_f_nom.add_theme_color_override("font_color", COULEURS_RARETE[u["rarete"]])
 	var type_txt: String = "Héros de Légende" if u.get("legende", false) else ("Héros de Forge (Reliquaire)" if u.get("forge", false) else cat[u["categorie"]])
+	if UnitesData.est_evolue(_selection):
+		type_txt = "Évolution de « %s » (Autel d'Évolution, non invocable)" % UnitesData.get_unite(UnitesData.lignee(_selection))["nom"]
 	if u.get("race", "") != "":
 		type_txt += "  ·  Race : " + u["race"]
 	_f_infos.text = "%s  ·  %s  ·  %s  ·  %s\n%s" % [
@@ -371,7 +382,7 @@ func _maj_fiche() -> void:
 		var debloque: bool = sk["niveau"] <= _niveau
 		var bloc := VBoxContainer.new()
 		bloc.add_theme_constant_override("separation", 2)
-		var entete := _label("Niv. %d  ·  %s  (%s)" % [sk["niveau"], sk["nom"], sk["type"]], 17,
+		var entete := _label("Niv. %d  ·  %s  (%s)%s" % [sk["niveau"], sk["nom"], sk["type"], "   ✦ Évolution" if sk.get("evolue", false) else ""], 17,
 			C_OR if debloque else C_DOUX)
 		bloc.add_child(entete)
 		var d := _label(sk["description"], 15, C_TEXTE if debloque else C_DOUX)

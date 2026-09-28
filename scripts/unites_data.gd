@@ -24,11 +24,15 @@ extends RefCounted
 ##   UnitesData.stats("chevalier", 15)                 -> stats au niveau 15
 ##   UnitesData.skills_debloques("chevalier", 15)      -> skills des niveaux 1 et 10
 ##   UnitesData.liste_invocables("SSR")                -> héros SSR invocables
+##   UnitesData.toutes()                               -> toutes les unités, évolutions comprises
+##   UnitesData.id_evolution("rat_geant")              -> "rat_geant_evo"
 ##
 ## POUR MODIFIER UNE UNITÉ : change ses valeurs ci-dessous (les descriptions
 ## des skills sont du texte simple, pense à les ajuster si tu changes un chiffre).
 
 const NIVEAU_MAX := 30
+## Niveau maximum d'une unité ÉVOLUÉE (voir evolutions_data.gd).
+const NIVEAU_MAX_EVOLUE := 40
 ## Gain de stats par niveau : +4 % des stats de base (niveau 30 = x2,16)
 const CROISSANCE_PAR_NIVEAU := 0.04
 const NIVEAUX_SKILLS := [1, 10, 20, 30]
@@ -36,6 +40,7 @@ const NIVEAUX_SKILLS := [1, 10, 20, 30]
 const RARETES := ["N", "R", "SR", "SSR", "UR"]
 const ELEMENTS := {
 	"feu": "Feu", "nature": "Nature", "eau": "Eau", "tenebres": "Ténèbres", "sacre": "Sacré",
+	"neutre": "Neutre",   # Donjon du Sang : ni fort ni faible contre aucun élément
 }
 const ROLES := {
 	"guerrier": "Guerrier", "tank": "Tank", "assassin": "Assassin",
@@ -54,10 +59,50 @@ const AFFLICTIONS := {
 
 
 static func get_unite(id: String) -> Dictionary:
-	if not UNITES.has(id):
-		push_warning("Unité inconnue : " + id)
-		return {}
-	return UNITES[id]
+	if UNITES.has(id):
+		return UNITES[id]
+	if EvolutionsData.UNITES.has(id):
+		return EvolutionsData.UNITES[id]
+	push_warning("Unité inconnue : " + id)
+	return {}
+
+
+static var _toutes: Dictionary = {}
+
+## TOUTES les unités du jeu : celles de ce fichier + les évolutions (evolutions_data.gd).
+static func toutes() -> Dictionary:
+	if _toutes.is_empty():
+		_toutes = UNITES.duplicate()
+		_toutes.merge(EvolutionsData.UNITES)
+	return _toutes
+
+
+static func existe(id: String) -> bool:
+	return UNITES.has(id) or EvolutionsData.UNITES.has(id)
+
+
+# ------------------------------------------------------------------
+# Évolutions
+# ------------------------------------------------------------------
+
+## L'unité est-elle une version évoluée ?
+static func est_evolue(id: String) -> bool:
+	return EvolutionsData.UNITES.has(id)
+
+
+## Identifiant de l'évolution de cette unité ("" si elle n'en a pas).
+static func id_evolution(id: String) -> String:
+	return id + "_evo" if EvolutionsData.UNITES.has(id + "_evo") else ""
+
+
+## Unité de base d'une évolution (ou l'unité elle-même) : sert à reconnaître les doublons.
+static func lignee(id: String) -> String:
+	return str(EvolutionsData.UNITES[id]["evolution_de"]) if EvolutionsData.UNITES.has(id) else id
+
+
+## Niveau maximum de cette unité : 30, ou 40 pour une évolution.
+static func niveau_max(id: String) -> int:
+	return NIVEAU_MAX_EVOLUE if est_evolue(id) else NIVEAU_MAX
 
 
 ## Stats principales + secondaires d'une unité à un niveau donné.
@@ -65,7 +110,7 @@ static func stats(id: String, niveau: int) -> Dictionary:
 	var u := get_unite(id)
 	if u.is_empty():
 		return {}
-	var n := clampi(niveau, 1, NIVEAU_MAX)
+	var n := clampi(niveau, 1, niveau_max(id))
 	var facteur := 1.0 + CROISSANCE_PAR_NIVEAU * (n - 1)
 	var s := {}
 	for cle in u["stats"]:
@@ -98,7 +143,7 @@ static func liste_invocables(rarete := "") -> Array:
 	return l
 
 
-## Liste des id par catégorie : "heros", "ennemi" ou "boss".
+## Liste des id par catégorie : "heros", "ennemi" ou "boss" (sans les évolutions).
 static func liste_categorie(categorie: String) -> Array:
 	var l: Array = []
 	for id in UNITES:
@@ -2608,6 +2653,166 @@ const UNITES := {
 			{"nom": "Instinct du Prédateur", "type": "passif", "effets": [{"effet": "stat", "stat": "crit", "valeur": 13}, {"effet": "stat", "stat": "degats_crit", "valeur": 24}], "niveau": 10, "description": "Crit +13 ; Dégâts crit +24 %."},
 			{"nom": "Lacération", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.85}, {"effet": "affliction", "nom": "saignement", "chance": 0.85, "duree": 3}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 185 % de puissance de skill à un ennemi ; 85 % de chance d'infliger Saignement (3 tours)."},
 			{"nom": "Faim du Vide", "type": "passif", "effets": [{"effet": "accumulation", "stat": "atk", "valeur": 0.15, "max": 4}, {"effet": "bonus_arriere", "valeur": 0.25}], "niveau": 30, "description": "Chaque ennemi vaincu : ATK +15 % (max 4 fois) ; +25 % de dégâts contre les ennemis de l'Arrière."},
+		],
+	},
+
+	# ============================================================
+	# DONJONS : mini-boss (SR) et boss (SSR), un par donjon (voir donjons.gd)
+	# ============================================================
+	"gardien_brasier": {
+		"nom": "Gardien du Brasier", "rarete": "SR", "element": "feu", "role": "tank", "position": "avant",
+		"invocable": false, "categorie": "boss", "couleur": "8a2a0a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1350, "atk": 230, "def": 170, "agi": 95, "mag": 110},
+		"secondaires": {"crit": 8, "degats_crit": 165, "res": 24, "preci": 95},
+		"skills": [
+			{"nom": "Marteau Ardent", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.6}, {"effet": "affliction", "nom": "brulure", "chance": 0.35, "duree": 2}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 160 % de puissance de skill à un ennemi ; 35 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Peau de Fer", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.15}, {"effet": "epines", "valeur": 0.1}], "niveau": 10, "description": "DEF +15 % ; renvoie 10 % des dégâts physiques reçus."},
+			{"nom": "Rempart de Lave", "type": "actif", "chance": 0.25, "cible": "soi", "effets": [{"effet": "bouclier", "valeur": 0.2}, {"effet": "provocation", "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Bouclier de 20 % des PV max sur lui-même ; attire les attaques ennemies (2 tours)."},
+			{"nom": "Cœur Ardent", "type": "passif", "effets": [{"effet": "stat", "stat": "atk", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["brulure"]}], "niveau": 30, "description": "ATK +12 % ; immunisé à Brûlure."},
+		],
+	},
+	"ignaar": {
+		"nom": "Ignaar, Cœur du Brasier", "rarete": "SSR", "element": "feu", "role": "mage", "position": "arriere",
+		"invocable": false, "categorie": "boss", "couleur": "ff5a00",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {"nom": "Éruption", "texte": "Le Brasier explose : Ignaar se nourrit des flammes !"},
+		"stats": {"pv": 2150, "atk": 320, "def": 200, "agi": 165, "mag": 200},
+		"secondaires": {"crit": 11, "degats_crit": 175, "res": 30, "preci": 97},
+		"skills": [
+			{"nom": "Torrent de Magma", "type": "actif", "chance": 0.35, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.15}, {"effet": "affliction", "nom": "brulure", "chance": 0.4, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 115 % de puissance de skill à tous les ennemis ; 40 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Flux Arcanique", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.17}], "niveau": 10, "description": "MAG +17 %."},
+			{"nom": "Pluie de Lave", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "brulure", "chance": 0.6, "duree": 3}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 60 % de chance d'infliger Brûlure (3 tours)."},
+			{"nom": "Supernova", "type": "actif", "chance": 0.2, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.6, "ignore_res": 0.25}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 260 % de puissance de skill à un ennemi, en ignorant 25 % de la RES."},
+		],
+	},
+	"chasseuse_sylve": {
+		"nom": "Chasseuse de la Sylve", "rarete": "SR", "element": "nature", "role": "tireur", "position": "arriere",
+		"invocable": false, "categorie": "boss", "couleur": "3a6a1a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1050, "atk": 260, "def": 120, "agi": 170, "mag": 100},
+		"secondaires": {"crit": 12, "degats_crit": 175, "res": 20, "preci": 99},
+		"skills": [
+			{"nom": "Flèche Vénéneuse", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.7}, {"effet": "affliction", "nom": "poison", "chance": 0.5, "duree": 3}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 170 % de puissance de skill à un ennemi ; 50 % de chance d'infliger Poison (3 tours)."},
+			{"nom": "Œil de Faucon", "type": "passif", "effets": [{"effet": "stat", "stat": "preci", "valeur": 5}, {"effet": "stat", "stat": "crit", "valeur": 8}], "niveau": 10, "description": "Précision +5 ; Crit +8."},
+			{"nom": "Volée d'Épines", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.8}, {"effet": "affliction", "nom": "poison", "chance": 0.3, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 80 % de puissance de skill à tous les ennemis ; 30 % de chance d'infliger Poison (2 tours)."},
+			{"nom": "Chasse Sauvage", "type": "passif", "effets": [{"effet": "bonus_arriere", "valeur": 0.25}], "niveau": 30, "description": "+25 % de dégâts contre les ennemis de l'Arrière."},
+		],
+	},
+	"mere_racine": {
+		"nom": "La Mère-Racine Putride", "rarete": "SSR", "element": "nature", "role": "soutien", "position": "arriere",
+		"invocable": false, "categorie": "boss", "couleur": "4a3a1a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {"nom": "Floraison Morbide", "texte": "Des fleurs noires s'ouvrent partout : la Mère-Racine se régénère !"},
+		"stats": {"pv": 2300, "atk": 290, "def": 220, "agi": 130, "mag": 190},
+		"secondaires": {"crit": 9, "degats_crit": 165, "res": 32, "preci": 96},
+		"skills": [
+			{"nom": "Sève Noire", "type": "actif", "chance": 0.35, "cible": "allies", "effets": [{"effet": "soin", "mult": 1.0}], "niveau": 1, "description": "(35 % de chance par tour) Soigne toute l'équipe de 100 % de puissance de skill."},
+			{"nom": "Écorce Vivante", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.15}, {"effet": "regen", "valeur": 0.04}], "niveau": 10, "description": "DEF +15 % ; régénère 4 % de ses PV max à chaque tour."},
+			{"nom": "Pluie de Spores", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "poison", "chance": 0.6, "duree": 3}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 60 % de chance d'infliger Poison (3 tours)."},
+			{"nom": "Étreinte des Racines", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.0}, {"effet": "affliction", "nom": "etourdi", "chance": 0.4, "duree": 1}], "niveau": 30, "description": "(25 % de chance par tour) Inflige 200 % de puissance de skill à un ennemi ; 40 % de chance d'infliger Étourdissement (1 tour)."},
+		],
+	},
+	"sentinelle_corail": {
+		"nom": "Sentinelle de Corail", "rarete": "SR", "element": "eau", "role": "tank", "position": "avant",
+		"invocable": false, "categorie": "boss", "couleur": "2a6a8a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1400, "atk": 220, "def": 175, "agi": 100, "mag": 110},
+		"secondaires": {"crit": 8, "degats_crit": 165, "res": 26, "preci": 95},
+		"skills": [
+			{"nom": "Trident de Corail", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.6}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 160 % de puissance de skill à un ennemi."},
+			{"nom": "Peau de Fer", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.16}, {"effet": "epines", "valeur": 0.08}], "niveau": 10, "description": "DEF +16 % ; renvoie 8 % des dégâts physiques reçus."},
+			{"nom": "Carapace des Marées", "type": "actif", "chance": 0.25, "cible": "soi", "effets": [{"effet": "bouclier", "valeur": 0.2}, {"effet": "provocation", "duree": 2}, {"effet": "buff", "stat": "res", "valeur": 0.2, "duree": 3}], "niveau": 20, "description": "(25 % de chance par tour) Bouclier de 20 % des PV max sur lui-même ; attire les attaques ennemies (2 tours) ; RES +20 % pour lui-même (3 tours)."},
+			{"nom": "Flux Vital", "type": "passif", "effets": [{"effet": "regen", "valeur": 0.05}, {"effet": "immunite", "afflictions": ["gel"]}], "niveau": 30, "description": "Régénère 5 % de ses PV max à chaque tour ; immunisé à Gel."},
+		],
+	},
+	"kraken_fosses": {
+		"nom": "Le Kraken des Fosses", "rarete": "SSR", "element": "eau", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "boss", "couleur": "0a3a5a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {"nom": "Colère des Profondeurs", "texte": "L'eau se met à bouillonner : le Kraken déploie tous ses tentacules !"},
+		"stats": {"pv": 2400, "atk": 330, "def": 210, "agi": 140, "mag": 150},
+		"secondaires": {"crit": 11, "degats_crit": 175, "res": 26, "preci": 97},
+		"skills": [
+			{"nom": "Tentacules", "type": "actif", "chance": 0.35, "cible": "aleatoire", "effets": [{"effet": "degats", "mult": 0.8, "coups": 4}], "niveau": 1, "description": "(35 % de chance par tour) Frappe 4 fois des ennemis au hasard (80 % de puissance de skill par coup)."},
+			{"nom": "Maîtrise des Armes", "type": "passif", "effets": [{"effet": "stat", "stat": "atk", "valeur": 0.14}], "niveau": 10, "description": "ATK +14 %."},
+			{"nom": "Étreinte Glacée", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.0}, {"effet": "affliction", "nom": "gel", "chance": 0.45, "duree": 1}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 200 % de puissance de skill à un ennemi ; 45 % de chance d'infliger Gel (1 tour)."},
+			{"nom": "Maelström", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "debuff", "stat": "agi", "valeur": 0.2, "duree": 2}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 120 % de puissance de skill à tous les ennemis ; AGI -20 % pour tous les ennemis (2 tours)."},
+		],
+	},
+	"geolier_crypte": {
+		"nom": "Geôlier de la Crypte", "rarete": "SR", "element": "tenebres", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "boss", "couleur": "2a1a2a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1250, "atk": 250, "def": 150, "agi": 120, "mag": 90},
+		"secondaires": {"crit": 10, "degats_crit": 170, "res": 22, "preci": 96},
+		"skills": [
+			{"nom": "Chaînes de la Crypte", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.7}, {"effet": "affliction", "nom": "etourdi", "chance": 0.25, "duree": 1}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 170 % de puissance de skill à un ennemi ; 25 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Maîtrise des Armes", "type": "passif", "effets": [{"effet": "stat", "stat": "atk", "valeur": 0.12}], "niveau": 10, "description": "ATK +12 %."},
+			{"nom": "Lame du Néant", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.8}, {"effet": "drain", "valeur": 0.35}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 180 % de puissance de skill à un ennemi ; rend au lanceur 35 % des dégâts infligés."},
+			{"nom": "Soif de Sang", "type": "passif", "effets": [{"effet": "vol_vie", "valeur": 0.14}, {"effet": "immunite", "afflictions": ["malediction"]}], "niveau": 30, "description": "Vol de vie de 14 % sur ses attaques ; immunisé à Malédiction."},
+		],
+	},
+	"morvena": {
+		"nom": "Morvena, Liche sans Lune", "rarete": "SSR", "element": "tenebres", "role": "mage", "position": "arriere",
+		"invocable": false, "categorie": "boss", "couleur": "1a0a2a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {"nom": "Nuit Éternelle", "texte": "La dernière lueur s'éteint : Morvena appelle les âmes de la crypte !"},
+		"stats": {"pv": 2100, "atk": 310, "def": 190, "agi": 160, "mag": 210},
+		"secondaires": {"crit": 11, "degats_crit": 175, "res": 32, "preci": 97},
+		"skills": [
+			{"nom": "Voile de Mort", "type": "actif", "chance": 0.35, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.1}, {"effet": "affliction", "nom": "malediction", "chance": 0.35, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 110 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Malédiction (2 tours)."},
+			{"nom": "Flux Arcanique", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.17}], "niveau": 10, "description": "MAG +17 %."},
+			{"nom": "Drain d'Âmes", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.2}, {"effet": "drain", "valeur": 0.4}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 220 % de puissance de skill à un ennemi ; rend au lanceur 40 % des dégâts infligés."},
+			{"nom": "Ténèbres Absolues", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "affliction", "nom": "silence", "chance": 0.4, "duree": 2}, {"effet": "affliction", "nom": "aveugle", "chance": 0.3, "duree": 2}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 130 % de puissance de skill à tous les ennemis ; 40 % de chance d'infliger Silence (2 tours) ; 30 % de chance d'infliger Aveuglement (2 tours)."},
+		],
+	},
+	"templier_profane": {
+		"nom": "Templier Profané", "rarete": "SR", "element": "sacre", "role": "tank", "position": "avant",
+		"invocable": false, "categorie": "boss", "couleur": "c8b060",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1380, "atk": 225, "def": 175, "agi": 95, "mag": 120},
+		"secondaires": {"crit": 8, "degats_crit": 165, "res": 28, "preci": 95},
+		"skills": [
+			{"nom": "Châtiment Terni", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.6}, {"effet": "affliction", "nom": "aveugle", "chance": 0.3, "duree": 2}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 160 % de puissance de skill à un ennemi ; 30 % de chance d'infliger Aveuglement (2 tours)."},
+			{"nom": "Serment Brisé", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.15}, {"effet": "immunite", "afflictions": ["malediction", "silence"]}], "niveau": 10, "description": "DEF +15 % ; immunisé à Malédiction, Silence."},
+			{"nom": "Égide Souillée", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.1}, {"effet": "provocation", "duree": 1, "cible": "soi"}], "niveau": 20, "description": "(25 % de chance par tour) Bouclier de 10 % des PV max sur toute l'équipe ; attire les attaques ennemies (1 tour)."},
+			{"nom": "Lumière Tenace", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "stat", "stat": "def", "valeur": 0.1}], "niveau": 30, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; DEF +10 %."},
+		],
+	},
+	"oracle_profane": {
+		"nom": "L'Oracle Profané", "rarete": "SSR", "element": "sacre", "role": "mage", "position": "arriere",
+		"invocable": false, "categorie": "boss", "couleur": "fff0c0",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {"nom": "Révélation Aveuglante", "texte": "Les vitraux se brisent : l'Oracle rayonne d'une lumière corrompue !"},
+		"stats": {"pv": 2050, "atk": 300, "def": 200, "agi": 170, "mag": 215},
+		"secondaires": {"crit": 11, "degats_crit": 175, "res": 34, "preci": 98},
+		"skills": [
+			{"nom": "Rayon Sacré", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.0}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 200 % de puissance de skill à un ennemi."},
+			{"nom": "Grâce Corrompue", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.2}, {"effet": "stat", "stat": "res", "valeur": 0.15}], "niveau": 10, "description": "Soins prodigués +20 % ; RES +15 %."},
+			{"nom": "Jugement", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.0}, {"effet": "affliction", "nom": "aveugle", "chance": 0.45, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 100 % de puissance de skill à tous les ennemis ; 45 % de chance d'infliger Aveuglement (2 tours)."},
+			{"nom": "Lumière Profanée", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.8}, {"effet": "purification"}], "niveau": 30, "description": "(20 % de chance par tour) Soigne toute l'équipe de 80 % de puissance de skill ; retire les afflictions."},
+		],
+	},
+	"boucher_puits": {
+		"nom": "Le Boucher du Puits", "rarete": "SR", "element": "neutre", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "boss", "couleur": "6a0a0a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1300, "atk": 265, "def": 140, "agi": 110, "mag": 80},
+		"secondaires": {"crit": 12, "degats_crit": 180, "res": 20, "preci": 96},
+		"skills": [
+			{"nom": "Couperet", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.8}, {"effet": "affliction", "nom": "saignement", "chance": 0.5, "duree": 3}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 180 % de puissance de skill à un ennemi ; 50 % de chance d'infliger Saignement (3 tours)."},
+			{"nom": "Maîtrise des Armes", "type": "passif", "effets": [{"effet": "stat", "stat": "atk", "valeur": 0.12}], "niveau": 10, "description": "ATK +12 %."},
+			{"nom": "Frénésie", "type": "actif", "chance": 0.25, "cible": "soi", "effets": [{"effet": "buff", "stat": "atk", "valeur": 0.3, "duree": 2}, {"effet": "buff", "stat": "agi", "valeur": 0.15, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) ATK +30 % pour lui-même (2 tours) ; AGI +15 % pour lui-même (2 tours)."},
+			{"nom": "Soif de Sang", "type": "passif", "effets": [{"effet": "vol_vie", "valeur": 0.15}], "niveau": 30, "description": "Vol de vie de 15 % sur ses attaques."},
+		],
+	},
+	"hemoragos": {
+		"nom": "Hémoragos, le Puits Vivant", "rarete": "SSR", "element": "neutre", "role": "tank", "position": "avant",
+		"invocable": false, "categorie": "boss", "couleur": "8a0000",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {"nom": "Cœur Battant", "texte": "Le Puits se met à battre comme un cœur : Hémoragos boit le sang versé !"},
+		"stats": {"pv": 2600, "atk": 300, "def": 230, "agi": 120, "mag": 170},
+		"secondaires": {"crit": 10, "degats_crit": 170, "res": 30, "preci": 96},
+		"skills": [
+			{"nom": "Marée Sanglante", "type": "actif", "chance": 0.35, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.1}, {"effet": "affliction", "nom": "saignement", "chance": 0.4, "duree": 3}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 110 % de puissance de skill à tous les ennemis ; 40 % de chance d'infliger Saignement (3 tours)."},
+			{"nom": "Chair de Sang", "type": "passif", "effets": [{"effet": "stat", "stat": "pv", "valeur": 0.15}, {"effet": "regen", "valeur": 0.04}], "niveau": 10, "description": "PV +15 % ; régénère 4 % de ses PV max à chaque tour."},
+			{"nom": "Transfusion", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.0}, {"effet": "drain", "valeur": 0.5}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 200 % de puissance de skill à un ennemi ; rend au lanceur 50 % des dégâts infligés."},
+			{"nom": "Hémorragie", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "debuff", "stat": "def", "valeur": 0.2, "duree": 2}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 130 % de puissance de skill à tous les ennemis ; DEF -20 % pour tous les ennemis (2 tours)."},
 		],
 	},
 }

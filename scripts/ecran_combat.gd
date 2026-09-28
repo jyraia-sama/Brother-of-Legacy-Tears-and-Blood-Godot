@@ -11,6 +11,7 @@ extends Control
 ##   "tour"       : Tours de l'Enfer / du Paradis   ("tour", "etage", "retour")
 ##   "boss_monde" : Boss de Monde, 20 unités contre un géant   ("boss_index", "retour")
 ##   "arene"      : Arène JcJ contre la défense d'un joueur   ("combat", "graine", "adversaire", "retour")
+##   "donjon"     : un des 4 combats d'une expédition de Donjon   ("donjon", "niveau", "vague", "retour")
 ##
 ## Boutons : vitesse x1 / x2 / x4, "Passer" (affiche directement le résultat).
 
@@ -81,6 +82,9 @@ func _creer_fond() -> void:
 	elif _mode == "boss_monde":
 		chemin = "res://assets/boss_monde/%s.png" % str(demande["ennemis"][0]["id"])
 		noir.color = Color("120608")
+	elif _mode == "donjon":
+		chemin = "res://assets/donjons/%s.png" % str(demande.get("donjon", "feu"))
+		noir.color = Color("#" + str(Donjons.DONJONS[demande.get("donjon", "feu")]["couleur"])).darkened(0.88)
 	if ResourceLoader.exists(chemin):
 		var img := TextureRect.new()
 		img.texture = load(chemin)
@@ -153,6 +157,10 @@ func _creer_interface() -> void:
 			{"combat": "Combat", "elite": "Élite", "boss": "BOSS", "super": "SUPER BOSS"}[Tours.type_etage(n)]]
 	elif _mode == "boss_monde":
 		texte_titre = "BOSS DE MONDE — " + str(BossMonde.BOSS[int(demande.get("boss_index", 0))]["titre"]).to_upper()
+	elif _mode == "donjon":
+		var v := int(demande.get("vague", 0))
+		texte_titre = "%s · NIVEAU %d — COMBAT %d / %d : %s" % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),
+			int(demande.get("niveau", 1)), v + 1, Donjons.VAGUES.size(), Donjons.NOMS_VAGUE[Donjons.VAGUES[v]]]
 	var titre := _label(texte_titre, 22, C_OR)
 	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(titre)
@@ -370,7 +378,7 @@ func _musique_combat() -> String:
 	var type: String = demande.get("type", "combat")
 	if _mode == "tour":
 		type = Tours.type_etage(int(demande.get("etage", 1)))
-	if type in ["boss_chapitre", "boss_acte", "boss", "super"]:
+	if type in ["boss_chapitre", "boss_acte", "boss", "super", "mini_boss"]:
 		return "boss"
 	if _mode == "tour":
 		return "tour_" + str(demande.get("tour", "enfer"))   # la musique de la tour continue
@@ -622,6 +630,9 @@ func _fin() -> void:
 	if _mode == "arene":
 		_fin_arene()
 		return
+	if _mode == "donjon":
+		_fin_donjon()
+		return
 	var victoire: bool = _res["victoire"]
 	var lignes: Array = []
 	var equipe: Array = demande["equipe"]
@@ -741,6 +752,41 @@ func _fin_arene() -> void:
 	_afficher_resultat(victoire, lignes)
 
 
+## Donjon : 4 combats d'affilée, les PV restants passent au combat suivant.
+func _fin_donjon() -> void:
+	var victoire: bool = _res["victoire"]
+	var d: String = demande["donjon"]
+	var n := int(demande["niveau"])
+	var lignes: Array = []
+	_decouvrir(lignes)
+	if not victoire:
+		Sauvegarde.ajouter_stat("combats_perdus")
+		lignes.push_front("L'expédition échoue au combat %d / %d. Renforce-toi et retente ta chance." % [
+			int(demande.get("vague", 0)) + 1, Donjons.VAGUES.size()])
+		Donjons.terminer()
+		resultat = {"mode": "donjon", "victoire": false}
+		_afficher_resultat(false, lignes, "EXPÉDITION ÉCHOUÉE")
+		return
+	Sauvegarde.ajouter_stat("combats_gagnes")
+	if not Donjons.derniere_vague():
+		Donjons.vague_suivante(_res["pv_final"])
+		var suivant: String = Donjons.NOMS_VAGUE[Donjons.VAGUES[int(Donjons.expedition["vague"])]]
+		lignes.push_front("Combat %d / %d gagné ! Prochain : %s." % [int(demande["vague"]) + 1, Donjons.VAGUES.size(), suivant])
+		lignes.insert(1, "Pas de soin entre les combats : tes unités gardent leurs PV.")
+		resultat = {"mode": "donjon", "victoire": true}
+		_afficher_resultat(true, lignes, "COMBAT GAGNÉ", "Combat suivant ▶", func():
+			EcranCombat.demande = Donjons.demande_combat()
+			get_tree().change_scene_to_file(SCENE))
+		return
+	lignes.push_front("%s — niveau %d terminé !" % [Donjons.DONJONS[d]["nom"], n])
+	lignes.append_array(Donjons.valider_victoire(d, n))
+	_xp_compte(lignes, "donjon")
+	_donner_xp(lignes, func(niv: int) -> int: return Donjons.xp(n, niv))
+	Donjons.terminer()
+	resultat = {"mode": "donjon", "victoire": true}
+	_afficher_resultat(true, lignes, "DONJON TERMINÉ !")
+
+
 ## XP de compte d'un combat gagné (+ message si le niveau monte).
 func _xp_compte(lignes: Array, cle: String) -> void:
 	if Sauvegarde.niveau_compte_max_atteint():
@@ -797,8 +843,11 @@ func _eclats_boss(type: String, acte: int, chapitre: int) -> int:
 	return int(r["rejoue"]) if randf() < float(r["chance"]) else 0
 
 
-func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "") -> void:
-	Audio.musique("victoire" if victoire else "defaite")
+func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "", texte_bouton := "Continuer", action := Callable()) -> void:
+	if action.is_valid():
+		Audio.son("or")
+	else:
+		Audio.musique("victoire" if victoire else "defaite")
 	var voile := ColorRect.new()
 	voile.color = Color(0, 0, 0, 0.55)
 	voile.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -821,12 +870,23 @@ func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "") -> voi
 		var lab := _label(l, 18, C_TEXTE)
 		lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(lab)
-	var b := _bouton("Continuer")
+	var b := _bouton(texte_bouton)
 	b.custom_minimum_size = Vector2(200, 44)
 	b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	var retour: String = demande.get("retour", SCENE_PLATEAU)
-	b.pressed.connect(func(): get_tree().change_scene_to_file(retour))
+	if action.is_valid():
+		b.pressed.connect(action)
+	else:
+		b.pressed.connect(func(): get_tree().change_scene_to_file(retour))
 	vb.add_child(b)
+	# Donjon : on peut abandonner l'expédition entre deux combats (la stamina est perdue)
+	if action.is_valid() and _mode == "donjon":
+		var abandon := _bouton("Abandonner l'expédition")
+		abandon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		abandon.pressed.connect(func():
+			Donjons.terminer()
+			get_tree().change_scene_to_file(retour))
+		vb.add_child(abandon)
 
 
 # =====================================================================

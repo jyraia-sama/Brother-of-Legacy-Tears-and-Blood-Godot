@@ -13,7 +13,7 @@ const COULEURS_RARETE := {
 }
 const COULEURS_ELEMENT := {
 	"feu": Color("e0743a"), "eau": Color("4f9fd6"), "nature": Color("62ad4f"),
-	"tenebres": Color("a276d6"), "sacre": Color("e6c85a"),
+	"tenebres": Color("a276d6"), "sacre": Color("e6c85a"), "neutre": Color("c8b8b0"),
 }
 
 
@@ -24,7 +24,8 @@ static func couleur_rarete(id: String) -> Color:
 
 static func texte_rarete(id: String) -> String:
 	var u := UnitesData.get_unite(id)
-	return "%s · Légende" % u["rarete"] if u.get("legende", false) else u["rarete"]
+	var t: String = "%s · Légende" % u["rarete"] if u.get("legende", false) else u["rarete"]
+	return t + (" · Évolué" if UnitesData.est_evolue(id) else "")
 
 
 static func style_panneau(bord := C_OR, fond := Color(0.08, 0.02, 0.03, 0.94)) -> StyleBoxFlat:
@@ -90,9 +91,14 @@ const CADRAGE_PORTRAIT := Rect2(0.13, 0.0, 0.74, 0.74)
 
 
 ## Chemin du portrait d'une unité, ou "" si l'image n'existe pas encore.
+## Une évolution sans image propre montre celle de son unité de base (en attendant son skin).
 static func chemin_portrait(id: String) -> String:
 	var chemin := DOSSIER_PORTRAITS + id + ".png"
-	return chemin if ResourceLoader.exists(chemin) else ""
+	if ResourceLoader.exists(chemin):
+		return chemin
+	if UnitesData.est_evolue(id):
+		return chemin_portrait(UnitesData.lignee(id))
+	return ""
 
 
 ## Met l'image de l'unité dans un portrait rond (Panel), si elle existe.
@@ -185,7 +191,7 @@ static func carte_heros(h: Dictionary, largeur := 132.0, hauteur := 168.0) -> Bu
 	ligne.add_theme_constant_override("outline_size", 4)
 	vb.add_child(ligne)
 	var nb_et := Fusion.etoiles(h)
-	var et := label(Fusion.texte_etoiles(nb_et, false) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else ""), 11,
+	var et := label(("✦ " if UnitesData.est_evolue(id) else "") + Fusion.texte_etoiles(nb_et, false) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else ""), 11,
 		Color("ff9a5a") if nb_et >= Fusion.ETOILES_MAX else Color("ffd060"))
 	et.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	et.add_theme_color_override("font_outline_color", Color.BLACK)
@@ -194,7 +200,7 @@ static func carte_heros(h: Dictionary, largeur := 132.0, hauteur := 168.0) -> Bu
 	var xp := barre(Color("7ab8ff"), largeur - 30, 5)
 	xp.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	xp.max_value = Sauvegarde.xp_heros_pour_niveau(niv)
-	xp.value = int(h["xp"]) if niv < UnitesData.NIVEAU_MAX else xp.max_value
+	xp.value = int(h["xp"]) if niv < UnitesData.niveau_max(id) else xp.max_value
 	vb.add_child(xp)
 	return b
 
@@ -329,14 +335,14 @@ static func _carte_heros_simple(h: Dictionary, largeur: float, hauteur: float) -
 	ligne.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(ligne)
 	var nb_et := Fusion.etoiles(h)
-	var et := label(Fusion.texte_etoiles(nb_et, false) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else ""), 11,
+	var et := label(("✦ " if UnitesData.est_evolue(id) else "") + Fusion.texte_etoiles(nb_et, false) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else ""), 11,
 		Color("ff9a5a") if nb_et >= Fusion.ETOILES_MAX else Color("ffd060"))
 	et.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(et)
 	var xp := barre(Color("7ab8ff"), largeur - 30, 5)
 	xp.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	xp.max_value = Sauvegarde.xp_heros_pour_niveau(niv)
-	xp.value = int(h["xp"]) if niv < UnitesData.NIVEAU_MAX else xp.max_value
+	xp.value = int(h["xp"]) if niv < UnitesData.niveau_max(id) else xp.max_value
 	vb.add_child(xp)
 	return b
 
@@ -448,7 +454,7 @@ static func aller(arbre: SceneTree, cible: String) -> void:
 
 ## Avatar d'un joueur : portrait de son héros vitrine, sinon cercle gris avec l'initiale du pseudo.
 static func avatar(id_unite: String, pseudo: String, diametre: float) -> Panel:
-	if id_unite != "" and UnitesData.UNITES.has(id_unite):
+	if id_unite != "" and UnitesData.existe(id_unite):
 		var pt := portrait(id_unite, diametre)
 		pt.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		return pt
