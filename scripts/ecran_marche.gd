@@ -61,7 +61,7 @@ func _ready() -> void:
 		ab.pressed.connect(_confirmer_abandon)
 		tete.add_child(ab)
 
-	_contenu = Control.new()
+	_contenu = MarginContainer.new()
 	_contenu.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	col.add_child(_contenu)
 

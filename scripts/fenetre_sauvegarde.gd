@@ -38,9 +38,15 @@ func _ready() -> void:
 	panneau.custom_minimum_size = Vector2(620, 0)
 	centre.add_child(panneau)
 
+	# Défilement si l'écran est petit (téléphone)
+	var defil := ScrollContainer.new()
+	defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	defil.custom_minimum_size = Vector2(640, minf(900.0, get_viewport().get_visible_rect().size.y - 90.0))
+	panneau.add_child(defil)
 	var vb := VBoxContainer.new()
+	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vb.add_theme_constant_override("separation", 12)
-	panneau.add_child(vb)
+	defil.add_child(vb)
 
 	vb.add_child(_label("SAUVEGARDE", 28, Color(1.0, 0.85, 0.55), true))
 	vb.add_child(_label(_resume(), 18, Color(0.92, 0.88, 0.85)))
@@ -50,6 +56,30 @@ func _ready() -> void:
 	vb.add_child(_label("SON", 20, Color(1.0, 0.85, 0.55)))
 	vb.add_child(_curseur_volume("Musique", "musique"))
 	vb.add_child(_curseur_volume("Bruitages", "sons"))
+	vb.add_child(HSeparator.new())
+
+	# Affichage : taille de l'interface (grande sur téléphone) et plein écran
+	vb.add_child(_label("AFFICHAGE", 20, Color(1.0, 0.85, 0.55)))
+	vb.add_child(_label("Taille de l'interface (« Très grande » conseillée sur téléphone) :", 16, Color(0.85, 0.7, 0.6)))
+	var tailles := HBoxContainer.new()
+	tailles.add_theme_constant_override("separation", 8)
+	vb.add_child(tailles)
+	var groupe := ButtonGroup.new()
+	for t in ["auto", "normale", "grande", "tres_grande"]:
+		var b := _bouton(Ecran.NOMS_TAILLES[t], func(): Ecran.changer_taille(t))
+		b.toggle_mode = true
+		b.button_group = groupe
+		b.button_pressed = Ecran.reglage_taille() == t
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		tailles.add_child(b)
+	if Ecran.est_mobile() and OS.has_feature("web"):
+		var pe := CheckBox.new()
+		pe.text = "Plein écran automatique au premier appui"
+		pe.focus_mode = Control.FOCUS_NONE
+		pe.add_theme_font_size_override("font_size", 17)
+		pe.button_pressed = bool(Sauvegarde.get_parametre("plein_ecran_auto", true))
+		pe.toggled.connect(func(v: bool): Sauvegarde.definir_parametre("plein_ecran_auto", v))
+		vb.add_child(pe)
 	vb.add_child(HSeparator.new())
 
 	# Compte en ligne

@@ -14,11 +14,20 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.20.4"
+const NUMERO := "0.21.0"
 const DATE := "2026-09-28"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.21.0", "date": "2026-09-28", "titre": "Version mobile",
+	"changements": [
+		"Jeu jouable sur téléphone et tablette : l'interface est agrandie automatiquement sur mobile (+50 %). Nouveau réglage « Taille de l'interface » dans les Paramètres (Automatique, Normale, Grande, Très grande).",
+		"Défilement au doigt dans toutes les listes (Deck, Bestiaire, Échos, Reliquaire…), avec de l'élan. Un glissement n'appuie plus sur la carte ou le bouton de départ.",
+		"Les écrans trop larges pour la taille choisie se réduisent juste assez pour tenir entièrement (rien n'est coupé sur les bords).",
+		"Le jeu s'installe comme une appli (Android et iPhone, écran d'accueil) : icône, plein écran et paysage. Sur navigateur mobile, plein écran automatique au premier appui (désactivable).",
+		"En portrait, un message demande de tourner le téléphone. Clavier virtuel activé pour les champs de texte (compte, sauvegarde).",
+		"Guide : MOBILE.md.",
+	]},
 	{"version": "0.20.4", "date": "2026-09-28", "titre": "Jeu en ligne réparé sur la version web",
 	"changements": [
 		"Correction : sur la version web, l'Arène, le Social, le Compte et la sauvegarde en ligne affichaient « Connexion au serveur impossible ». Le navigateur décompressait déjà les réponses du serveur et le jeu essayait de le refaire, ce qui faisait échouer les requêtes.",
