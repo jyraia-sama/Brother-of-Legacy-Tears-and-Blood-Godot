@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Polices="*res://scripts/polices.gd"
 EnLigne="*res://scripts/en_ligne.gd"
 
 [display]

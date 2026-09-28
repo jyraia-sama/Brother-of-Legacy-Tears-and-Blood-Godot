@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.20.0** (2026-09-28)
+Version actuelle : **0.20.1** (2026-09-28)
+
+## v0.20.1 — Symboles corrigés et fenêtre d'amélioration des Échos  (2026-09-28)
+
+- Correction : les symboles (★ ⚔ ☠ ✦ ← → ✔…) s'affichaient en petits carrés sur certains ordinateurs et sur la version web, dans beaucoup de menus. Le jeu embarque maintenant une police de symboles (DejaVu Sans).
+- Échos Sanguins : le bouton « Améliorer » ouvre une fenêtre d'amélioration : stat principale actuelle → au niveau suivant, prochain palier, chance de réussite et coût.
+- Bouton « +1 » pour une tentative, et « Jusqu'à +3 / +6 / +12 / +15 » pour enchaîner les tentatives jusqu'à réussir (arrêt possible à tout moment, ou quand l'or manque), avec le coût moyen estimé.
+- Une barre de chargement se remplit avant chaque résultat (option « Rapide ») et l'historique des tentatives s'affiche dans la fenêtre.
 
 ## v0.20.0 — Expéditions : la Marche Maudite et la Compagnie  (2026-09-28)
 

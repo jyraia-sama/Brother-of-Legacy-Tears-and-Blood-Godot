@@ -541,7 +541,7 @@ func _afficher_historique() -> void:
 		var ligne := HBoxContainer.new()
 		ligne.add_theme_constant_override("separation", 16)
 		m.add_child(ligne)
-		var icone := UiCommun.label("⚔" if attaque else "⛨", 28, UiCommun.C_OR)
+		var icone := UiCommun.label("⚔" if attaque else "◆", 28, UiCommun.C_OR)
 		icone.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		ligne.add_child(icone)
 		var infos := VBoxContainer.new()

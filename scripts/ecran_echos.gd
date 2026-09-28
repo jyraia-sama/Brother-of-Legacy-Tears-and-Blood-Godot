@@ -406,8 +406,7 @@ func _remplir_fiche() -> void:
 			_tout())
 		boutons.add_child(eq)
 	if int(e["niveau"]) < Echos.NIVEAU_MAX:
-		var am := UiCommun.bouton("Améliorer : %d or (%d %%)" % [Echos.cout_amelioration(e), int(Echos.chance_amelioration(e) * 100)], 14)
-		am.disabled = Sauvegarde.get_or() < Echos.cout_amelioration(e)
+		var am := UiCommun.bouton("Améliorer…  (%d %%, %d or)" % [int(Echos.chance_amelioration(e) * 100), Echos.cout_amelioration(e)], 14)
 		am.pressed.connect(_ameliorer)
 		boutons.add_child(am)
 	var b2 := HBoxContainer.new()
@@ -436,15 +435,11 @@ func _clic_emplacement(i: int, uid_echo: int) -> void:
 	_tout()
 
 
+## Ouvre la fenêtre d'amélioration (+1, ou en boucle jusqu'à +3 / +6 / +12 / +15).
 func _ameliorer() -> void:
-	var e := Sauvegarde.get_echo(_echo)
-	var cout := Echos.cout_amelioration(e)
-	if not Sauvegarde.depenser_or(cout):
+	if Sauvegarde.get_echo(_echo).is_empty():
 		return
-	var r := Echos.ameliorer(e, _rng)
-	Sauvegarde.sauvegarder()
-	_tout()
-	_flash(r["texte"], Color("8aff9a") if r["reussi"] else Color("ff7a6a"))
+	FenetreAmeliorationEcho.ouvrir(self, _echo, _rng, _tout)
 
 
 func _vente_rapide() -> void:
