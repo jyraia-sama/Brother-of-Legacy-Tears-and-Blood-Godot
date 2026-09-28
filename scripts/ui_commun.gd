@@ -153,8 +153,152 @@ static func portrait(id: String, diametre: float) -> Panel:
 	return p
 
 
-## Carte d'une unité possédée (bouton) : portrait, nom, niveau, barre d'XP.
+## Carte d'une unité possédée (bouton) : illustration pleine carte, nom, niveau,
+## étoiles et barre d'XP. Sans image, on garde l'ancienne carte (portrait rond).
 static func carte_heros(h: Dictionary, largeur := 132.0, hauteur := 168.0) -> Button:
+	var id: String = h["id"]
+	if chemin_portrait(id) == "":
+		return _carte_heros_simple(h, largeur, hauteur)
+	var u := UnitesData.get_unite(id)
+	var b := Button.new()
+	b.custom_minimum_size = Vector2(largeur, hauteur)
+	b.focus_mode = Control.FOCUS_NONE
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var bord := couleur_rarete(id)
+	b.add_theme_stylebox_override("normal", style_carte(bord))
+	b.add_theme_stylebox_override("hover", style_carte(C_OR, 0.06))
+	b.add_theme_stylebox_override("pressed", style_carte(C_OR, 0.12))
+
+	var vb := habiller_carte(b, id, largeur)
+	var petit := largeur < 120
+	var nom := label(u["nom"], 12 if petit else 14)
+	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	nom.custom_minimum_size = Vector2(largeur - 12, 0)
+	nom.add_theme_color_override("font_outline_color", Color.BLACK)
+	nom.add_theme_constant_override("outline_size", 5)
+	vb.add_child(nom)
+	var niv := int(h["niveau"])
+	var ligne := label("Nv %d  ·  %s" % [niv, "Légende" if u.get("legende", false) else u["rarete"]], 11 if petit else 12, bord)
+	ligne.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ligne.add_theme_color_override("font_outline_color", Color.BLACK)
+	ligne.add_theme_constant_override("outline_size", 4)
+	vb.add_child(ligne)
+	var nb_et := Fusion.etoiles(h)
+	var et := label(Fusion.texte_etoiles(nb_et, false) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else ""), 11,
+		Color("ff9a5a") if nb_et >= Fusion.ETOILES_MAX else Color("ffd060"))
+	et.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	et.add_theme_color_override("font_outline_color", Color.BLACK)
+	et.add_theme_constant_override("outline_size", 4)
+	vb.add_child(et)
+	var xp := barre(Color("7ab8ff"), largeur - 30, 5)
+	xp.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	xp.max_value = Sauvegarde.xp_heros_pour_niveau(niv)
+	xp.value = int(h["xp"]) if niv < UnitesData.NIVEAU_MAX else xp.max_value
+	vb.add_child(xp)
+	return b
+
+
+## Habille un bouton-carte avec l'illustration de l'unité (pleine carte), un voile
+## sombre en bas et la pastille d'élément. Renvoie la colonne du bas où ajouter
+## les textes (nom, niveau...). À n'appeler que si chemin_portrait(id) != "".
+static func habiller_carte(b: Button, id: String, largeur: float) -> VBoxContainer:
+	var u := UnitesData.get_unite(id)
+	# Illustration qui remplit la carte (à l'intérieur du contour de rareté)
+	var ill := illustration(id, Vector2.ZERO, 6)
+	ill.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	ill.offset_left = 3
+	ill.offset_top = 4
+	ill.offset_right = -3
+	ill.offset_bottom = -3
+	b.add_child(ill)
+	# Voile sombre en bas pour lire le texte
+	var voile := fond_degrade(ill, Color(0, 0, 0, 0), Color(0, 0, 0, 0.92))
+	voile.anchor_top = 0.52
+	voile.offset_top = 0
+	# Pastille d'élément en haut à droite
+	var pastille := Panel.new()
+	pastille.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pastille.size = Vector2(14, 14)
+	pastille.position = Vector2(largeur - 22, 9)
+	var sp := StyleBoxFlat.new()
+	sp.bg_color = COULEURS_ELEMENT[u["element"]]
+	sp.set_corner_radius_all(7)
+	sp.border_color = Color.BLACK
+	sp.set_border_width_all(2)
+	pastille.add_theme_stylebox_override("panel", sp)
+	pastille.tooltip_text = UnitesData.ELEMENTS[u["element"]]
+	b.add_child(pastille)
+
+	var vb := VBoxContainer.new()
+	vb.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	vb.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	vb.offset_left = 5
+	vb.offset_right = -5
+	vb.offset_bottom = -7
+	vb.alignment = BoxContainer.ALIGNMENT_END
+	vb.add_theme_constant_override("separation", 1)
+	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(vb)
+	return vb
+
+
+## Illustration rectangulaire d'une unité (coins arrondis), l'image couvre toute
+## la zone. taille = Vector2.ZERO : la taille est donnée par le parent (ancres).
+## Renvoie un Panel vide si l'image n'existe pas.
+static func _caler_en_haut(zone: AtlasTexture, s: Vector2, cible: Vector2) -> void:
+	if cible.x <= 0 or cible.y <= 0:
+		return
+	var ratio := cible.x / cible.y
+	if ratio >= s.x / s.y:
+		zone.region = Rect2(0, 0, s.x, s.x / ratio)
+	else:
+		var l := s.y * ratio
+		zone.region = Rect2((s.x - l) / 2.0, 0, l, s.y)
+
+
+static func illustration(id: String, taille: Vector2, arrondi := 10, bord := Color(0, 0, 0, 0), epais := 0) -> Panel:
+	var p := Panel.new()
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	p.custom_minimum_size = taille
+	var st := StyleBoxFlat.new()
+	st.bg_color = Color(0.05, 0.03, 0.04)
+	st.set_corner_radius_all(arrondi)
+	st.border_color = bord
+	st.set_border_width_all(epais)
+	p.add_theme_stylebox_override("panel", st)
+	var chemin := chemin_portrait(id)
+	if chemin == "":
+		return p
+	p.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
+	var tex: Texture2D = load(chemin)
+	var zone := AtlasTexture.new()
+	zone.atlas = tex
+	zone.region = Rect2(Vector2.ZERO, tex.get_size())
+	var img := TextureRect.new()
+	img.texture = zone
+	img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	img.stretch_mode = TextureRect.STRETCH_SCALE
+	img.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	p.add_child(img)
+	# L'image couvre la zone en restant calée EN HAUT (la tête n'est jamais coupée) :
+	# si la zone est plus large que l'image, on ne coupe que le bas ;
+	# si elle est plus haute, on coupe à gauche et à droite.
+	p.resized.connect(func(): _caler_en_haut(zone, tex.get_size(), p.size))
+	if epais > 0:
+		var contour := Panel.new()
+		contour.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		contour.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		var sc := st.duplicate() as StyleBoxFlat
+		sc.draw_center = false
+		contour.add_theme_stylebox_override("panel", sc)
+		p.add_child(contour)
+	return p
+
+
+## Ancienne carte (portrait rond + initiale), gardée pour les unités sans image.
+static func _carte_heros_simple(h: Dictionary, largeur: float, hauteur: float) -> Button:
 	var id: String = h["id"]
 	var u := UnitesData.get_unite(id)
 	var b := Button.new()

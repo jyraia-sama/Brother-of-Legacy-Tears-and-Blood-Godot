@@ -12,6 +12,7 @@ const FOND := "res://assets/ui/menu_bg.png"
 
 ## Pour tester : true = toutes les unités sont visibles même non découvertes.
 const TOUT_REVELER := false
+const TAILLE_CARTE := Vector2(150, 200)
 
 ## Écran à rouvrir avec le bouton Retour (rempli par l'écran qui ouvre le Bestiaire).
 static var scene_retour := ""
@@ -42,6 +43,7 @@ var _niveau := 1
 
 # Fiche détaillée
 var _fiche: VBoxContainer
+var _f_image: Control
 var _f_nom: Label
 var _f_infos: Label
 var _f_niveau: Label
@@ -152,7 +154,7 @@ func _remplir_grille() -> void:
 func _carte(id: String, u: Dictionary) -> Button:
 	var connu := _visible(id)
 	var b := Button.new()
-	b.custom_minimum_size = Vector2(150, 176)
+	b.custom_minimum_size = TAILLE_CARTE
 	b.focus_mode = Control.FOCUS_NONE
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	var bord: Color = COULEURS_RARETE[u["rarete"]] if connu else Color(0.3, 0.25, 0.25)
@@ -162,6 +164,23 @@ func _carte(id: String, u: Dictionary) -> Button:
 	b.add_theme_stylebox_override("hover", _style_carte(C_OR, 0.06))
 	b.add_theme_stylebox_override("pressed", _style_carte(C_OR, 0.12))
 	b.pressed.connect(_selectionner.bind(id))
+
+	# Unité découverte avec illustration : carte illustrée (comme dans le Deck)
+	if connu and UiCommun.chemin_portrait(id) != "":
+		var bas := UiCommun.habiller_carte(b, id, TAILLE_CARTE.x)
+		var n := _label(u["nom"], 14, C_TEXTE)
+		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		n.custom_minimum_size = Vector2(TAILLE_CARTE.x - 12, 0)
+		n.add_theme_color_override("font_outline_color", Color.BLACK)
+		n.add_theme_constant_override("outline_size", 5)
+		bas.add_child(n)
+		var r := _label("%s · Légende" % u["rarete"] if u.get("legende", false) else u["rarete"], 12, bord)
+		r.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		r.add_theme_color_override("font_outline_color", Color.BLACK)
+		r.add_theme_constant_override("outline_size", 4)
+		bas.add_child(r)
+		return b
 
 	var vb := VBoxContainer.new()
 	vb.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -214,7 +233,7 @@ func _ajuster_colonnes() -> void:
 	if _grille == null:
 		return
 	var largeur := size.x - 40 - 460 - 16
-	_grille.columns = maxi(1, int(largeur / 160.0))
+	_grille.columns = maxi(1, int(largeur / (TAILLE_CARTE.x + 10.0)))
 
 
 # ---------------------------------------------------------------
@@ -249,6 +268,9 @@ func _creer_fiche() -> PanelContainer:
 	_fiche.visible = false
 	vb.add_child(_fiche)
 
+	_f_image = Control.new()
+	_f_image.custom_minimum_size = Vector2(0, 424)
+	_fiche.add_child(_f_image)
 	_f_nom = _label("", 28, C_OR)
 	_f_nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_fiche.add_child(_f_nom)
@@ -304,6 +326,16 @@ func _maj_fiche() -> void:
 	if not connu:
 		_f_vide.text = "???\n\nUnité encore inconnue.\nRencontre-la en combat, obtiens-la à l'Autel d'Invocation ou forge-la au Reliquaire pour la découvrir."
 		return
+
+	# Grande illustration en haut de la fiche (si l'image existe)
+	for e in _f_image.get_children():
+		e.queue_free()
+	_f_image.visible = UiCommun.chemin_portrait(_selection) != ""
+	if _f_image.visible:
+		var bord_ill: Color = C_LEGENDE if u.get("legende", false) else COULEURS_RARETE[u["rarete"]]
+		var ill := UiCommun.illustration(_selection, Vector2.ZERO, 12, bord_ill, 3)
+		ill.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_f_image.add_child(ill)
 
 	var cat := {"heros": "Héros invocable", "ennemi": "Ennemi", "boss": "Boss", "boss_monde": "Boss de Monde"}
 	_f_nom.text = u["nom"]

@@ -11,6 +11,7 @@ extends Control
 const SCENE := "res://scenes/deck.tscn"
 const FOND := "res://assets/ui/menu_bg.png"
 const TRIS := [["rarete", "Rareté"], ["niveau", "Niveau"], ["nom", "Nom"], ["element", "Élément"]]
+const TAILLE_CARTE := Vector2(150, 200)
 const ORDRE_RARETE := {"UR": 0, "SSR": 1, "SR": 2, "R": 3, "N": 4}
 
 static var scene_retour := ""
@@ -124,7 +125,7 @@ func _creer_panneau_equipe() -> PanelContainer:
 		g.add_child(places)
 		for i in groupe[1]:
 			var boite := Control.new()
-			boite.custom_minimum_size = Vector2(132, 168)
+			boite.custom_minimum_size = TAILLE_CARTE
 			places.add_child(boite)
 			_slots_box.append(boite)
 		ligne.add_child(g)
@@ -190,7 +191,7 @@ func _creer_panneau_reserve() -> PanelContainer:
 
 func _ajuster_colonnes() -> void:
 	if _grille:
-		_grille.columns = maxi(2, int((size.x - 36 - 440 - 14 - 40) / 140.0))
+		_grille.columns = maxi(2, int((size.x - 36 - 440 - 14 - 40) / (TAILLE_CARTE.x + 8.0)))
 
 
 # =====================================================================
@@ -222,12 +223,12 @@ func _remplir_equipe() -> void:
 		var uid: int = slots[i]
 		var carte: Button
 		if uid >= 0:
-			carte = UiCommun.carte_heros(Sauvegarde.get_heros(uid))
+			carte = UiCommun.carte_heros(Sauvegarde.get_heros(uid), TAILLE_CARTE.x, TAILLE_CARTE.y)
 			if uid == _selection:
 				carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color.WHITE, 0.08, 3))
 		else:
 			carte = Button.new()
-			carte.custom_minimum_size = Vector2(132, 168)
+			carte.custom_minimum_size = TAILLE_CARTE
 			carte.focus_mode = Control.FOCUS_NONE
 			carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color(1, 1, 1, 0.15)))
 			carte.add_theme_stylebox_override("hover", UiCommun.style_carte(UiCommun.C_OR, 0.05))
@@ -248,7 +249,7 @@ func _remplir_reserve() -> void:
 	_lbl_collection.text = "COLLECTION  (%d unités)" % liste.size()
 	for h in liste:
 		var uid := int(h["uid"])
-		var carte := UiCommun.carte_heros(h)
+		var carte := UiCommun.carte_heros(h, TAILLE_CARTE.x, TAILLE_CARTE.y)
 		if uid == _selection:
 			carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color.WHITE, 0.08, 3))
 		if _a_vendre.has(uid):
@@ -394,9 +395,16 @@ func _maj_fiche() -> void:
 	var niv := int(h["niveau"])
 	var s := Sauvegarde.stats_heros(_selection)      # niveau + étoiles + Échos Sanguins
 
+	# Grande illustration de l'unité en haut de la fiche
+	var avec_image := UiCommun.chemin_portrait(id) != ""
+	if avec_image:
+		var grande := UiCommun.illustration(id, Vector2(0, 400), 12, UiCommun.couleur_rarete(id), 3)
+		grande.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_fiche.add_child(grande)
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 12)
-	tete.add_child(UiCommun.portrait(id, 72))
+	if not avec_image:
+		tete.add_child(UiCommun.portrait(id, 72))
 	var infos := VBoxContainer.new()
 	infos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var nom := UiCommun.label(u["nom"], 24, UiCommun.couleur_rarete(id))

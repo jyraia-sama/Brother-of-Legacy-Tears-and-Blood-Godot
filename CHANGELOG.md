@@ -1,6 +1,25 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.17.0** (2026-09-28)
+Version actuelle : **0.18.2** (2026-09-28)
+
+## v0.18.2 — Bestiaire illustré  (2026-09-28)
+
+- Bestiaire : les unités découvertes qui ont un portrait s'affichent en cartes illustrées (comme dans le Deck), en 150×200.
+- Bestiaire : grande illustration carrée en haut de la fiche de l'unité, calée en haut pour ne pas couper la tête.
+- Les unités non découvertes restent cachées (« ? ») ; les unités sans portrait gardent l'ancienne carte.
+
+## v0.18.1 — Illustrations sans têtes coupées  (2026-09-28)
+
+- Correction : les illustrations restent calées en haut de l'image, la tête des unités n'est plus coupée (fiche du Deck et cartes).
+- Fiche du Deck : l'illustration est maintenant carrée et montre l'image en entier.
+
+## v0.18.0 — Cartes illustrées  (2026-09-28)
+
+- Nouvelles cartes illustrées : l'image de l'unité remplit toute la carte, avec le nom, le niveau, les étoiles et l'XP sur un voile sombre en bas, et une pastille de couleur pour l'élément.
+- Deck : cartes plus grandes (150×200) pour mieux voir les illustrations.
+- Fiche d'une unité dans le Deck : grande illustration en haut de la fiche.
+- Les cartes illustrées apparaissent aussi dans l'Autel de Fusion, l'Armée, l'Arène, le Reliquaire et la révélation des invocations.
+- 18 nouveaux portraits : Chevalier Noir, Elf Sylvestre, Sorcier Sombre, Clerc Sacré, Guerrier Squelette, Gardiens d'Ombre, Rat Géant, Gobelin Pillard, Loup Gris, Zombie Errant, Bandit des Routes, Araignée Venimeuse, Chauve-Souris Nocturne, Limace Acide, Corbeau Maudit, Sanglier Sauvage, Brigand Ivre, Slime Gélatineux.
 
 ## v0.17.0 — Portraits des unités  (2026-09-28)
 
