@@ -130,6 +130,10 @@ func _terminer(id: int) -> void:
 
 func _enregistrer_etat() -> void:
 	var types_modifies := {}
+	var mimics := {}          # coffres déjà tirés : id -> Mimic ou non
+	for n in noeuds:
+		if n.has("mimic"):
+			mimics[str(n["id"])] = n["mimic"]
 	var d_origine: Array = PlateauGenerateur.generer(acte, chapitre)["noeuds"]
 	for n in noeuds:
 		if n["type"] != d_origine[n["id"]]["type"]:
@@ -144,6 +148,7 @@ func _enregistrer_etat() -> void:
 		"chemin": chemin,
 		"or_gagne": or_gagne,
 		"types_modifies": types_modifies,
+		"mimics": mimics,
 		"pv_equipe": pv_equipe,
 		"benediction": benediction,
 	})
@@ -169,6 +174,9 @@ func _restaurer_etat() -> bool:
 	var tm: Dictionary = e.get("types_modifies", {})
 	for cle in tm:
 		noeuds[int(cle)]["type"] = int(tm[cle])
+	var mi: Dictionary = e.get("mimics", {})
+	for cle in mi:
+		noeuds[int(cle)]["mimic"] = bool(mi[cle])
 	return courant != plateau["depart"] or termines.size() > 1
 
 
@@ -390,9 +398,16 @@ func _evenement(id: int) -> void:
 		return
 	match type:
 		T.COFFRE:
-			var gain := 40 + int(n["niveau"]) * 15 + randi_range(0, 30)
-			if n["cul_de_sac"]:
-				gain = int(gain * 1.8)
+			# 25 % des coffres sont des MIMICS (le tirage est gardé : un Mimic reste un Mimic)
+			if not n.has("mimic"):
+				n["mimic"] = randf() < Rencontres.CHANCE_MIMIC
+				_enregistrer_etat()
+			if n["mimic"]:
+				Audio.son("coffre")
+				_message("C'est un MIMIC !", "Le coffre s'ouvre... sur une gueule pleine de crocs !\nUn Mimic, bien plus coriace qu'un monstre ordinaire, t'attaque.\n\nBats-le pour récupérer son trésor. (Ce combat ne coûte pas de stamina.)",
+					_lancer_combat.bind(id, true))
+				return
+			var gain := _or_coffre(n)
 			Audio.son("coffre")
 			_gagner_or(gain)
 			Sauvegarde.ajouter_stat("coffres_ouverts")
@@ -514,8 +529,22 @@ func _victoire(id: int) -> void:
 		if niveaux > 0:
 			texte += "\n\nNIVEAU DE COMPTE %d ! Stamina max : %d — stamina rechargée !" % [Sauvegarde.get_niveau_compte(), Sauvegarde.get_stamina_max()]
 		_message("Chapitre terminé !", texte, _retour)
+	elif n.get("mimic", false):
+		# Le trésor du Mimic : le double d'un coffre normal
+		var gain := _or_coffre(n) * 2
+		_gagner_or(gain)
+		Sauvegarde.ajouter_stat("coffres_ouverts")
+		Sauvegarde.ajouter_stat("mimics_vaincus")
+		_message("Mimic vaincu !", "Dans la carcasse du Mimic, tu trouves son trésor : +%d or." % gain, _verifier_impasse)
 	else:
 		_verifier_impasse()
+
+
+func _or_coffre(n: Dictionary) -> int:
+	var gain := 40 + int(n["niveau"]) * 15 + randi_range(0, 30)
+	if n["cul_de_sac"]:
+		gain = int(gain * 1.8)
+	return gain
 
 
 func _defaite(_id: int) -> void:
@@ -601,6 +630,8 @@ func _maj_survol(p: Vector2) -> void:
 		sous += ("  ·  " if sous != "" else "") + "Voie risquée"
 	if n["cul_de_sac"]:
 		sous += ("  ·  " if sous != "" else "") + "Cul-de-sac"
+	if n.get("mimic", false) and not termines.has(id):
+		sous += ("  ·  " if sous != "" else "") + "MIMIC ! (niveau %d)" % Rencontres.niveau_ennemis(acte, chapitre, n)
 	if termines.has(id) and type != T.DEPART:
 		sous += ("  ·  " if sous != "" else "") + "Terminé"
 	info_sous.text = sous

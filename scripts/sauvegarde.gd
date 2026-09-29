@@ -32,9 +32,9 @@ const STAMINA_PAR_NIVEAU := 2
 ## NIVEAU DE COMPTE : plafond (à relever quand de nouveaux contenus arriveront).
 const NIVEAU_COMPTE_MAX := 30
 ## Coût en stamina d'un combat de l'Aventure (les autres cases sont gratuites).
-const COUT_STAMINA_AVENTURE := {"combat": 1, "elite": 2, "gardien": 2, "boss_chapitre": 3, "boss_acte": 3}
+const COUT_STAMINA_AVENTURE := {"combat": 1, "elite": 2, "gardien": 2, "boss_chapitre": 3, "boss_acte": 3, "mimic": 0}
 ## XP de compte gagnée à chaque combat gagné (Aventure, Tours, Boss de Monde).
-const XP_COMPTE_VICTOIRE := {"combat": 10, "elite": 15, "gardien": 15, "boss_chapitre": 25, "boss_acte": 40,
+const XP_COMPTE_VICTOIRE := {"combat": 10, "elite": 15, "mimic": 20, "gardien": 15, "boss_chapitre": 25, "boss_acte": 40,
 	"boss": 25, "super": 40, "boss_monde": 30, "arene": 20, "donjon": 30}
 
 static var donnees: Dictionary = {}
@@ -105,7 +105,6 @@ static func _defaut() -> Dictionary:
 		# Arène : équipe de défense (5 places, uid du héros ou -1)
 		"arene": {"defense": [-1, -1, -1, -1, -1]},
 		# Options du menu Admin (tests) : id -> true/false
-		"admin": {},
 		# Dernière version du jeu dont le joueur a vu les nouveautés
 		"version_vue": "",
 		"version_jeu": "",
@@ -143,6 +142,7 @@ static func charger() -> void:
 		return
 	donnees = _fusionner(_defaut(), lu)
 	donnees["version"] = VERSION
+	donnees.erase("admin")      # ancienne triche enregistrée : jamais conservée d'une session à l'autre
 	# Niveau de compte plafonné (anciennes parties)
 	if int(donnees["compte"]["niveau"]) > NIVEAU_COMPTE_MAX:
 		donnees["compte"]["niveau"] = NIVEAU_COMPTE_MAX
@@ -250,6 +250,7 @@ static func importer_code(code: String) -> bool:
 		return false
 	var parametres: Dictionary = donnees.get("parametres", {}).duplicate()   # on garde les volumes
 	donnees = _fusionner(_defaut(), lu)
+	donnees.erase("admin")
 	donnees["parametres"].merge(parametres, true)
 	_charge = true
 	sauvegarder()
@@ -259,6 +260,7 @@ static func importer_code(code: String) -> bool:
 ## Remplace toute la partie (utilisé par la sauvegarde en ligne, voir en_ligne.gd).
 static func remplacer_par(d: Dictionary) -> void:
 	donnees = _fusionner(_defaut(), d.duplicate(true))
+	donnees.erase("admin")
 	donnees["version"] = VERSION
 	_charge = true
 	sauvegarder()
@@ -703,21 +705,20 @@ static func verifier_code_admin(code: String) -> bool:
 	return _admin_deverrouille
 
 
+## Options de triche : gardées en mémoire SEULEMENT (jamais dans la sauvegarde ni en ligne),
+## donc toutes désactivées à chaque relance du jeu.
+static var _admin_session := {}
+
+
 static func admin(id: String) -> bool:
-	charger()
-	return bool(donnees.get("admin", {}).get(id, false))
+	return bool(_admin_session.get(id, false))
 
 
 static func definir_admin(id: String, actif: bool) -> void:
-	charger()
-	if not donnees.has("admin"):
-		donnees["admin"] = {}
-	donnees["admin"][id] = actif
-	sauvegarder()
+	_admin_session[id] = actif
 
 
 static func admin_actif() -> bool:
-	charger()
 	for o in ADMIN_OPTIONS:
 		if admin(o[0]):
 			return true

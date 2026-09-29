@@ -21,6 +21,7 @@ const RATIOS := {
 	"gardien": 0.90,
 	"boss_chapitre": 0.94,
 	"boss_acte": 0.73,
+	"mimic": 0.90,
 }
 ## Renfort des ennemis pour tenir compte des Échos Sanguins que le joueur est censé porter
 ## à chaque Acte (réglé par simulation : sans Échos ~10 points de victoire en moins que la cible,
@@ -45,12 +46,16 @@ const CALIBRAGE := {
 	12: {"combat": 0.73, "elite": 0.79, "gardien": 0.95, "boss_chapitre": 0.85, "boss_acte": 0.85},
 }
 
+## MIMIC (coffre piégé du plateau, 25 % des coffres) : réglage par Acte, réussite visée ~72 %.
+const CHANCE_MIMIC := 0.25
+const CALIBRAGE_MIMIC := {1: 1.15, 2: 0.99, 3: 0.88, 4: 0.86, 5: 0.89, 6: 0.89, 7: 0.87, 8: 0.74, 9: 0.85, 10: 0.84, 11: 0.83, 12: 0.73}
+
 ## Force relative des unités spéciales dans leur groupe
 const POIDS_ELITE := 1.4
 const POIDS_GARDIEN := 1.6
 const POIDS_BOSS_CHAPITRE := 2.1
 const POIDS_BOSS_ACTE := 2.5
-const BONUS_NIVEAU := {"combat": 0, "elite": 1, "gardien": 1, "boss_chapitre": 2, "boss_acte": 2}
+const BONUS_NIVEAU := {"combat": 0, "elite": 1, "gardien": 1, "boss_chapitre": 2, "boss_acte": 2, "mimic": 2}
 
 const POOLS := {
 	1: {"monstres": ["gobelin_maraudeur", "loup_affame", "rat_corrompu", "bandit", "vautour_charognard", "pillard_incendiaire", "patrouilleur_vautour", "profanateur_tombes", "rat_geant", "brigand"], "gardiens": ["pillard_incendiaire", "profanateur_tombes", "brigand"], "boss": "seigneur_des_cendres"},
@@ -90,8 +95,8 @@ static var calibrage_test := {}
 
 
 ## Récompenses d'une victoire : or pour le joueur, XP de base pour chaque héros.
-const MULT_RECOMPENSE := {"combat": 1.0, "elite": 1.8, "gardien": 2.5, "boss_chapitre": 4.0, "boss_acte": 6.0}
-const MULT_OR := {"combat": 1.0, "elite": 2.2, "gardien": 3.0, "boss_chapitre": 5.0, "boss_acte": 7.0}
+const MULT_RECOMPENSE := {"combat": 1.0, "elite": 1.8, "gardien": 2.5, "boss_chapitre": 4.0, "boss_acte": 6.0, "mimic": 3.0}
+const MULT_OR := {"combat": 1.0, "elite": 2.2, "gardien": 3.0, "boss_chapitre": 5.0, "boss_acte": 7.0, "mimic": 4.0}
 
 static func or_victoire(type: String, niveau_ennemi: int) -> int:
 	return int((20 + niveau_ennemi * 6) * MULT_OR[type])
@@ -136,6 +141,8 @@ static func niveau_ennemis(acte: int, chapitre: int, noeud: Dictionary) -> int:
 
 ## Type de rencontre d'une case du plateau.
 static func type_rencontre(noeud: Dictionary, chapitre: int) -> String:
+	if noeud.get("mimic", false):
+		return "mimic"
 	match int(noeud["type"]):
 		T.ELITE: return "elite"
 		T.GARDIEN: return "gardien"
@@ -179,13 +186,17 @@ static func generer(acte: int, chapitre: int, noeud: Dictionary) -> Array:
 			membres.append([b, POIDS_BOSS_CHAPITRE, "Chef : " + UnitesData.get_unite(b)["nom"], true, false])
 			for i in 2:
 				membres.append([_tirer(rng, pool["monstres"]), 1.0, "", false, false])
+		"mimic":
+			# Le Mimic combat seul : un coffre vivant plus fort qu'une élite
+			membres.append(["mimic", 1.0, "", false, true])
 		"boss_acte":
 			membres.append([pool["boss"], POIDS_BOSS_ACTE, "", true, false])
 			for i in 2:
 				membres.append([_tirer(rng, pool["gardiens"] if i == 0 else pool["monstres"]), 1.0, "", false, false])
 
 	# Force visée = équipe de référence x ratio du type de case
-	var calib: float = calibrage_test.get("%d-%s" % [acte, type], (CALIBRAGE.get(acte, {}) as Dictionary).get(type, 1.0))
+	var calib_defaut: float = CALIBRAGE_MIMIC.get(acte, 1.0) if type == "mimic" else (CALIBRAGE.get(acte, {}) as Dictionary).get(type, 1.0)
+	var calib: float = calibrage_test.get("%d-%s" % [acte, type], calib_defaut)
 	var cible: float = puissance_reference(acte, chapitre) * RATIOS[type] * calib * DIFFICULTE * pente(acte, chapitre) \
 		* ECHOS_ATTENDUS[acte - 1] * accueil(acte, chapitre)
 	var brut := 0.0

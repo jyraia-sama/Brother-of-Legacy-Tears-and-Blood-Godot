@@ -26,7 +26,7 @@ const C_OR := Color(0.85, 0.65, 0.3)
 const C_TEXTE := Color(0.93, 0.88, 0.83)
 const C_DOUX := Color(0.66, 0.59, 0.55)
 const NOMS_TYPE := {"combat": "Combat", "elite": "Combat d'Élite", "gardien": "Gardien",
-	"boss_chapitre": "Boss", "boss_acte": "Boss de l'Acte"}
+	"boss_chapitre": "Boss", "boss_acte": "Boss de l'Acte", "mimic": "MIMIC !"}
 const NOMS_AFFL := {"brulure": "Brûlure", "gel": "Gel", "poison": "Poison", "saignement": "Saignement",
 	"etourdi": "Étourdi", "silence": "Silence", "aveugle": "Aveuglé", "malediction": "Maudit"}
 

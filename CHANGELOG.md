@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.24.0** (2026-09-29)
+Version actuelle : **0.25.0** (2026-09-29)
+
+## v0.25.0 — Mimics, Échos 1-3-5 en % et triche remise à zéro  (2026-09-29)
+
+- MENU ADMIN : les options de triche ne sont plus jamais enregistrées (ni dans la sauvegarde, ni en ligne). Elles sont toutes désactivées à chaque lancement du jeu, et les anciennes triches restées dans une sauvegarde sont effacées.
+- MIMICS : dans l'Aventure principale (tous les Actes et chapitres), chaque coffre a 25 % de chance d'être un Mimic ! Un coffre vivant, seul mais bien plus coriace qu'un monstre ordinaire. Le combat ne coûte pas de stamina ; une fois vaincu, il rend le double du trésor d'un coffre, plus d'or et d'XP, et 90 % de chance de lâcher un Écho. Un coffre reste Mimic tant qu'il n'est pas vaincu.
+- Le Mimic est un monstre non invocable, qu'on ne rencontre que dans les coffres (visible au Bestiaire une fois affronté).
+- ÉCHOS SANGUINS : la stat principale des emplacements 1 (Crâne), 3 (Plaie) et 5 (Âme) peut maintenant être en valeur fixe OU en % (ATK / ATK %, DEF / DEF %, PV / PV %), tirée au hasard. Les Échos déjà obtenus ne changent pas. L'Atelier du Reliquaire permet aussi de choisir la version %.
 
 ## v0.24.0 — Un secret  (2026-09-29)
 

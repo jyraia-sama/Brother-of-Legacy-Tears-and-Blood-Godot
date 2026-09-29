@@ -14,11 +14,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.24.0"
+const NUMERO := "0.25.0"
 const DATE := "2026-09-29"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.25.0", "date": "2026-09-29", "titre": "Mimics, Échos 1-3-5 en % et triche remise à zéro",
+	"changements": [
+		"MENU ADMIN : les options de triche ne sont plus jamais enregistrées (ni dans la sauvegarde, ni en ligne). Elles sont toutes désactivées à chaque lancement du jeu, et les anciennes triches restées dans une sauvegarde sont effacées.",
+		"MIMICS : dans l'Aventure principale (tous les Actes et chapitres), chaque coffre a 25 % de chance d'être un Mimic ! Un coffre vivant, seul mais bien plus coriace qu'un monstre ordinaire. Le combat ne coûte pas de stamina ; une fois vaincu, il rend le double du trésor d'un coffre, plus d'or et d'XP, et 90 % de chance de lâcher un Écho. Un coffre reste Mimic tant qu'il n'est pas vaincu.",
+		"Le Mimic est un monstre non invocable, qu'on ne rencontre que dans les coffres (visible au Bestiaire une fois affronté).",
+		"ÉCHOS SANGUINS : la stat principale des emplacements 1 (Crâne), 3 (Plaie) et 5 (Âme) peut maintenant être en valeur fixe OU en % (ATK / ATK %, DEF / DEF %, PV / PV %), tirée au hasard. Les Échos déjà obtenus ne changent pas. L'Atelier du Reliquaire permet aussi de choisir la version %.",
+	]},
 	{"version": "0.24.0", "date": "2026-09-29", "titre": "Un secret",
 	"changements": [
 		"Un secret se cache désormais dans le menu principal… Un petit hommage à celui qui a donné l'envie de créer ce jeu. À toi de le trouver !",

@@ -2815,4 +2815,17 @@ const UNITES := {
 			{"nom": "Hémorragie", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "debuff", "stat": "def", "valeur": 0.2, "duree": 2}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 130 % de puissance de skill à tous les ennemis ; DEF -20 % pour tous les ennemis (2 tours)."},
 		],
 	},
+	"mimic": {
+		"nom": "Mimic", "rarete": "SR", "element": "neutre", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "ennemi", "couleur": "8a5a1a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1250, "atk": 250, "def": 170, "agi": 100, "mag": 140},
+		"secondaires": {"crit": 14, "degats_crit": 180, "res": 25, "preci": 96},
+		"skills": [
+			{"nom": "Morsure Vorace", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.8}, {"effet": "affliction", "nom": "saignement", "chance": 0.45, "duree": 3}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 180 % de puissance de skill à un ennemi ; 45 % de chance d'infliger Saignement (3 tours)."},
+			{"nom": "Faux Trésor", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.2}, {"effet": "stat", "stat": "res", "valeur": 0.1}], "niveau": 10, "description": "DEF +20 % ; RES +10 %."},
+			{"nom": "Pluie de Pièces", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.0}, {"effet": "affliction", "nom": "aveugle", "chance": 0.3, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Crache son or maudit : inflige 100 % de puissance de skill à tous les ennemis ; 30 % de chance d'infliger Aveuglement (2 tours)."},
+			{"nom": "Gueule Insatiable", "type": "passif", "effets": [{"effet": "vol_vie", "valeur": 0.15}], "niveau": 30, "description": "Vol de vie de 15 % sur ses attaques."},
+		],
+	},
 }

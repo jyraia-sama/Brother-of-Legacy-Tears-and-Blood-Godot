@@ -24,11 +24,11 @@ const STATS_EN_POURCENT := ["pv%", "atk%", "def%", "mag%", "crit", "degats_crit"
 # Les 6 emplacements (EchoSlotRules). La MAG n'existe qu'en stat secondaire.
 # ---------------------------------------------------------------------
 const EMPLACEMENTS := {
-	1: {"nom": "Écho du Crâne", "principales": ["atk"]},
+	1: {"nom": "Écho du Crâne", "principales": ["atk", "atk%"]},
 	2: {"nom": "Écho de l'Artère", "principales": ["pv", "pv%", "def", "def%", "atk", "atk%", "agi"]},
-	3: {"nom": "Écho de la Plaie", "principales": ["def"]},
+	3: {"nom": "Écho de la Plaie", "principales": ["def", "def%"]},
 	4: {"nom": "Écho du Sacrifice", "principales": ["pv", "pv%", "def", "def%", "atk", "atk%", "crit", "degats_crit"]},
-	5: {"nom": "Écho de l'Âme", "principales": ["pv"]},
+	5: {"nom": "Écho de l'Âme", "principales": ["pv", "pv%"]},
 	6: {"nom": "Écho du Serment", "principales": ["pv", "pv%", "def", "def%", "atk", "atk%", "preci", "res"]},
 }
 const SECONDAIRES_POSSIBLES := ["pv", "pv%", "atk", "atk%", "def", "def%", "mag", "mag%", "agi", "crit", "degats_crit", "preci", "res"]
@@ -283,15 +283,16 @@ static func appliquer(stats: Dictionary, b: Dictionary) -> Dictionary:
 # Drops : quel Écho tombe d'un combat gagné ?
 # ---------------------------------------------------------------------
 ## Chance qu'un Écho tombe après une victoire, selon le type de combat.
-const CHANCE_DROP := {"combat": 0.35, "elite": 0.55, "gardien": 0.70, "boss_chapitre": 1.0, "boss_acte": 1.0}
+const CHANCE_DROP := {"combat": 0.35, "elite": 0.55, "gardien": 0.70, "boss_chapitre": 1.0, "boss_acte": 1.0, "mimic": 0.9}
 ## Poids des raretés (Normal, Magique, Rare, Héroïque, Légendaire) selon le type de combat :
 ## les monstres normaux donnent surtout des Échos de mauvaise qualité, les boss les meilleurs.
 const POIDS_RARETE := {
 	"combat": [70, 25, 5, 0, 0], "elite": [35, 40, 20, 5, 0], "gardien": [20, 40, 30, 9, 1],
 	"boss_chapitre": [5, 25, 40, 25, 5], "boss_acte": [0, 15, 40, 33, 12],
+	"mimic": [10, 30, 40, 17, 3],
 }
 ## Étoiles en plus (ou en moins) selon le type de combat
-const BONUS_ETOILES := {"combat": -1, "elite": 0, "gardien": 0, "boss_chapitre": 1, "boss_acte": 1}
+const BONUS_ETOILES := {"combat": -1, "elite": 0, "gardien": 0, "boss_chapitre": 1, "boss_acte": 1, "mimic": 0}
 
 
 ## Ce qu'on peut trouver dans un chapitre (texte pour l'interface).
