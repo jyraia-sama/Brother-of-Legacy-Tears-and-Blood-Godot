@@ -90,6 +90,10 @@ static func _defaut() -> Dictionary:
 			"jour": -1, "essais": 0, "records": {}, "records_jour": {},
 			"escouades": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
 		},
+		# Quêtes (progression du jour / de la semaine, connexion), Succès réclamés, titre, Boutique
+		"quetes": {},
+		"succes": {"reclames": {}, "titre": ""},
+		"boutique": {},
 		# Expéditions de la Compagnie : missions lancées aujourd'hui et escouades parties (voir compagnie.gd)
 		"compagnie": {"jour": -1, "lancees": [], "en_cours": []},
 		# Marche Maudite : partie en cours ou terminée du jour, records, achats de la boutique (voir marche.gd)
@@ -369,6 +373,7 @@ static func depenser_stamina(montant: int) -> bool:
 	if int(r["stamina"]) >= get_stamina_max():
 		r["stamina_maj"] = int(Time.get_unix_time_from_system())   # la recharge démarre maintenant
 	r["stamina"] = int(r["stamina"]) - montant
+	_stat("stamina_depensee", montant)
 	sauvegarder()
 	return true
 
@@ -460,6 +465,7 @@ static func marquer_termine(acte: int, chapitre: int) -> void:
 	var cle := "%d-%d" % [acte, chapitre]
 	if not cle in donnees["progression"]["termines"]:
 		donnees["progression"]["termines"].append(cle)
+		_stat("chapitres_termines")
 	sauvegarder()
 
 
@@ -1009,6 +1015,13 @@ static func nombre_decouverts() -> int:
 static func _stat(nom: String, montant := 1) -> void:
 	var s: Dictionary = donnees["statistiques"]
 	s[nom] = int(s.get(nom, 0)) + montant
+	Quetes.noter(nom, montant)      # quêtes du jour et de la semaine
+
+
+## Valeur d'une statistique (totaux depuis le début de la partie).
+static func get_stat(nom: String) -> int:
+	charger()
+	return int(donnees["statistiques"].get(nom, 0))
 
 
 static func ajouter_stat(nom: String, montant := 1) -> void:

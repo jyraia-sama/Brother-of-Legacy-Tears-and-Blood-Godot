@@ -33,7 +33,7 @@ const MUSIQUE_PAR_SCENE := {
 	"invocation.tscn": "invocation",
 	"boss_monde.tscn": "boss_monde",
 	"combat.tscn": "", "tour.tscn": "",
-	"donjon.tscn": "aventure", "expedition.tscn": "aventure", "compagnie.tscn": "aventure", "marche.tscn": "aventure",
+	"donjon.tscn": "aventure", "quetes.tscn": "menu", "succes.tscn": "menu", "boutique.tscn": "menu", "heros.tscn": "menu", "expedition.tscn": "aventure", "compagnie.tscn": "aventure", "marche.tscn": "aventure",
 }
 const MUSIQUE_PAR_DEFAUT := "menu"
 

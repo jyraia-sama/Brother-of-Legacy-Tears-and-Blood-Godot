@@ -92,6 +92,7 @@ static func invoquer(pacte: String, nombre: int, rng: RandomNumberGenerator = nu
 	if pacte == "dore" and nombre >= 10 and X10_DORE_SR_GARANTI and not "SR" in raretes:
 		raretes[rng.randi_range(0, raretes.size() - 1)] = "SR"
 	inv["total_" + pacte] = int(inv.get("total_" + pacte, 0)) + nombre
+	Sauvegarde._stat("invocations", nombre)
 
 	var ev := Evenements.actif() if pacte == "evenement" else {}
 	var resultat: Array = []

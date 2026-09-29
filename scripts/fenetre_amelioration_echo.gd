@@ -244,6 +244,9 @@ func _lancer(cible: int) -> void:
 		if not is_inside_tree():
 			return
 		var r := Echos.ameliorer(e, _rng)
+		Sauvegarde._stat("ameliorations_echo")
+		if r["reussi"] and int(e["niveau"]) >= Echos.NIVEAU_MAX:
+			Sauvegarde._stat("echos_max")
 		Sauvegarde.sauvegarder()
 		(_barre.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = C_OK if r["reussi"] else C_ECHEC
 		_annoncer(r["texte"], C_OK if r["reussi"] else C_ECHEC)

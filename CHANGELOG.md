@@ -1,6 +1,15 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.21.2** (2026-09-29)
+Version actuelle : **0.22.0** (2026-09-29)
+
+## v0.22.0 — Quêtes, Succès, Boutique, Mon héros et Aide  (2026-09-29)
+
+- QUÊTES (icône en bas du menu) : récompense de connexion quotidienne (cycle de 7 jours, jusqu'à 100 gemmes et un Éclat), 5 quêtes du jour et 5 quêtes de la semaine (les mêmes pour tous) avec or, gemmes et objets, et un coffre bonus quand toutes sont terminées. La progression se note toute seule en jouant.
+- SUCCÈS : 15 objectifs à long terme à 4 paliers (combats, chapitres, Bestiaire, invocations, Tours, Donjons, Boss de Monde, Marche, Échos +15…). Chaque palier donne des gemmes ; le dernier débloque un titre.
+- BOUTIQUE : Marché du jour (6 offres en or qui changent chaque jour), Comptoir des gemmes (recharge de stamina, élixirs, Éclats, coffres, tomes, Cœurs de Sang, Pierre d'Éveil, avec limites par jour ou par semaine) et onglet des packs de gemmes (argent réel : bientôt).
+- MON HÉROS (portrait du menu) : fiche complète du héros de départ, profil (niveau de compte, titre à afficher), statistiques de la partie et résumé de la collection.
+- AIDE (bouton « ? ») : guide du jeu en 8 sections (premiers pas, ressources, combat, unités, Échos, modes, en ligne, téléphone).
+- Pastilles sur les icônes Quêtes et Succès quand une récompense attend.
 
 ## v0.21.2 — Vitesse de combat, e-mail mémorisé, Arène  (2026-09-29)
 

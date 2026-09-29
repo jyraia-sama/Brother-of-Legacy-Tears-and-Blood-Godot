@@ -125,10 +125,31 @@ func _ready() -> void:
 		_creer_texte("DEF %d" % s["def"], Rect2(100, 277, 82, 16), 18)
 		_creer_texte("PV %d" % s["pv"], Rect2(100, 297, 82, 16), 18)
 
+	# Pastilles : quêtes et succès à réclamer
+	_pastille("quetes", Quetes.a_reclamer())
+	_pastille("succes", Succes.a_reclamer())
+
 	# Le jeu vient d'être mis à jour : on montre les nouveautés
 	FenetreChangelog.verifier_mise_a_jour(self)
 	EnLigne.etat_change.connect(_sur_etat_compte)
 	_sur_etat_compte()
+
+
+## Petite pastille rouge avec un nombre sur une icône de la barre du bas.
+func _pastille(id: String, n: int) -> void:
+	if n <= 0:
+		return
+	for c in BAS:
+		if c.id == id:
+			var r: Rect2 = c.rect
+			var l := _creer_texte(str(n), Rect2(r.end.x - 20, r.position.y - 2, 22, 18), 15)
+			var st := StyleBoxFlat.new()
+			st.bg_color = Color("d0202a")
+			st.set_corner_radius_all(10)
+			st.border_color = Color(1, 0.85, 0.6)
+			st.set_border_width_all(2)
+			l.add_theme_stylebox_override("normal", st)
+			l.add_theme_color_override("font_color", Color.WHITE)
 
 
 func _apres_connexion_demarrage() -> void:
@@ -307,6 +328,20 @@ func _on_bouton(id: String, titre: String) -> void:
 		"guilde":
 			EcranGuilde.scene_retour = scene_file_path
 			get_tree().change_scene_to_file(EcranGuilde.SCENE)
+		"quetes":
+			EcranBase.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranQuetes.SCENE)
+		"succes":
+			EcranBase.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranSucces.SCENE)
+		"boutique":
+			EcranBase.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranBoutique.SCENE)
+		"heros":
+			EcranBase.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranHeros.SCENE)
+		"aide":
+			FenetreAide.ouvrir(self)
 		_:
 			_message("« %s » : écran pas encore créé." % titre)
 

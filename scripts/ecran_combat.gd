@@ -764,6 +764,7 @@ func _fin_arene() -> void:
 		if victoire:
 			Sauvegarde.ajouter_stat("combats_gagnes")
 			_xp_compte(lignes, "arene")
+		Sauvegarde.ajouter_stat("combats_arene")
 	else:
 		lignes.append("Le résultat n'a pas pu être envoyé : %s" % (r.erreur if not r.ok else str(r.data.get("erreur", "?"))))
 	resultat = {"mode": "arene", "victoire": victoire}
