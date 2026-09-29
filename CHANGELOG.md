@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.21.0** (2026-09-28)
+Version actuelle : **0.21.1** (2026-09-29)
+
+## v0.21.1 — Portraits évolués : planche 22  (2026-09-29)
+
+- 9 premiers portraits des unités évoluées : La Brute Primordiale, Barbe-Abysse, La Lance Solaire, La Dryade Éternelle, L'Archimage Cendré, La Dague Crépusculaire, Le Shogun Écarlate, Le Paladin Immaculé, Le Chevalier du Néant.
 
 ## v0.21.0 — Version mobile  (2026-09-28)
 

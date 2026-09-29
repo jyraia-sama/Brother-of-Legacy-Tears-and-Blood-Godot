@@ -14,11 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.21.0"
-const DATE := "2026-09-28"
+const NUMERO := "0.21.1"
+const DATE := "2026-09-29"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.21.1", "date": "2026-09-29", "titre": "Portraits évolués : planche 22",
+	"changements": [
+		"9 premiers portraits des unités évoluées : La Brute Primordiale, Barbe-Abysse, La Lance Solaire, La Dryade Éternelle, L'Archimage Cendré, La Dague Crépusculaire, Le Shogun Écarlate, Le Paladin Immaculé, Le Chevalier du Néant.",
+	]},
 	{"version": "0.21.0", "date": "2026-09-28", "titre": "Version mobile",
 	"changements": [
 		"Jeu jouable sur téléphone et tablette : l'interface est agrandie automatiquement sur mobile (+50 %). Nouveau réglage « Taille de l'interface » dans les Paramètres (Automatique, Normale, Grande, Très grande).",
