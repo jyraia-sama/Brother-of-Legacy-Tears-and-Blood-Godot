@@ -145,7 +145,12 @@ func _construire_formulaire() -> void:
 
 	_ligne_boutons([["Jouer hors ligne" if au_demarrage else "Fermer", _hors_ligne if au_demarrage else _fermer]])
 	_changer_mode(_mode_creation)
-	_email.grab_focus.call_deferred()
+	# Adresse de la dernière connexion déjà remplie : il ne reste que le mot de passe
+	if EnLigne.dernier_email != "" and _email.text == "":
+		_email.text = EnLigne.dernier_email
+		_mdp.grab_focus.call_deferred()
+	else:
+		_email.grab_focus.call_deferred()
 
 
 func _changer_mode(creation: bool) -> void:

@@ -33,6 +33,8 @@ var hors_ligne_choisi := false
 ## Dernière synchronisation : compte, maj (heure serveur), signature de la partie envoyée
 var _sync: Dictionary = {"compte": "", "maj": "", "signature": ""}
 var derniere_synchro := 0          # heure (unix) du dernier envoi réussi
+## Dernière adresse e-mail utilisée (gardée après la déconnexion pour ne pas la retaper)
+var dernier_email := ""
 var reseau_ok := true              # false quand le serveur ne répond pas
 
 var _connexion_en_cours := false
@@ -147,6 +149,8 @@ func inscrire(p: String, email: String, mot_de_passe: String) -> Dictionary:
 		{"email": email, "password": mot_de_passe, "data": {"pseudo": p}}, false)
 	if not r.ok:
 		return _echec(_erreur_auth(r))
+	dernier_email = email.strip_edges().to_lower()
+	_ecrire_fichier_compte()
 	if not (r.data is Dictionary and r.data.has("access_token")):
 		# « Confirm email » activé : le joueur doit cliquer sur le lien reçu par e-mail.
 		return {"ok": true, "erreur": "", "confirmation": true}
@@ -167,6 +171,7 @@ func connecter(email: String, mot_de_passe: String) -> Dictionary:
 		{"email": email, "password": mot_de_passe}, false)
 	if not r.ok:
 		return _echec(_erreur_auth(r))
+	dernier_email = email
 	await _ouvrir_session(r.data)
 	return {"ok": true, "erreur": ""}
 
@@ -556,13 +561,14 @@ func _lire_fichier_compte() -> void:
 	if d.get("sync") is Dictionary:
 		_sync = d["sync"]
 	derniere_synchro = int(d.get("derniere_synchro", 0))
+	dernier_email = str(d.get("dernier_email", ""))
 
 
 func _ecrire_fichier_compte() -> void:
 	var f := FileAccess.open(FICHIER_COMPTE, FileAccess.WRITE)
 	if f == null:
 		return
-	f.store_string(JSON.stringify({"session": session, "sync": _sync, "derniere_synchro": derniere_synchro}))
+	f.store_string(JSON.stringify({"session": session, "sync": _sync, "derniere_synchro": derniere_synchro, "dernier_email": dernier_email}))
 	f.close()
 
 

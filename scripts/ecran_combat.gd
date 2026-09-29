@@ -181,7 +181,8 @@ func _creer_interface() -> void:
 	var passer := _bouton("Passer ▶▶")
 	passer.pressed.connect(func(): _passer = true)
 	h.add_child(passer)
-	_changer_vitesse(2.0 if _mode == "boss_monde" else 1.0)
+	# Vitesse mémorisée d'un combat à l'autre (le Boss de Monde garde la sienne, x2 par défaut)
+	_changer_vitesse(float(Sauvegarde.get_parametre(_cle_vitesse(), 2.0 if _mode == "boss_monde" else 1.0)), false)
 
 	_calque = Control.new()
 	_calque.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -189,8 +190,16 @@ func _creer_interface() -> void:
 	add_child(_calque)
 
 
-func _changer_vitesse(v: float) -> void:
+func _cle_vitesse() -> String:
+	return "vitesse_boss_monde" if _mode == "boss_monde" else "vitesse_combat"
+
+
+func _changer_vitesse(v: float, memoriser := true) -> void:
+	if not v in _boutons_vitesse:
+		v = 1.0
 	_vitesse = v
+	if memoriser:
+		Sauvegarde.definir_parametre(_cle_vitesse(), v)
 	for cle in _boutons_vitesse:
 		_boutons_vitesse[cle].button_pressed = (cle == v)
 

@@ -157,11 +157,35 @@ func _charger(adversaires_aussi := false) -> void:
 		return
 	_etat = r.data
 	_message.text = ""
+	# Pas encore de défense sur le serveur : on enregistre automatiquement celle du joueur
+	# (ou son équipe du Deck), sinon les autres joueurs ne le trouvent jamais comme adversaire.
+	if (_etat.get("equipe", []) as Array).is_empty() and await _defense_automatique():
+		return
 	_maj_bandeau()
 	if adversaires_aussi:
 		await _charger_adversaires()
 	_changer_onglet(_onglet)
 	_proposer_recompenses()
+
+
+## Envoie la défense locale (ou l'équipe du Deck) au serveur. Renvoie true si l'Arène a été rechargée.
+func _defense_automatique() -> bool:
+	var slots := Arene.slots_defense()
+	if Arene.equipe_depuis_slots(slots).is_empty():
+		slots = Sauvegarde.get_slots()
+	var equipe := Arene.equipe_depuis_slots(slots)
+	if equipe.is_empty():
+		return false
+	var r := await EnLigne.appeler("arene_definir_defense", {"p_equipe": equipe, "p_puissance": Arene.puissance(equipe)})
+	if not is_inside_tree() or not (r.ok and str(r.data) == "ok"):
+		if is_inside_tree() and r.ok:
+			_message.text = "Défense automatique refusée : " + Arene.texte_erreur(str(r.data))
+		return false
+	Arene.definir_slots_defense(slots)
+	await _charger(true)
+	if is_inside_tree():
+		_message.text = "Ta défense a été enregistrée automatiquement avec ton équipe (modifiable dans l'onglet Défense)."
+	return true
 
 
 func _charger_adversaires() -> void:

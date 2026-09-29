@@ -262,7 +262,7 @@ begin
 	for u in select * from jsonb_array_elements(p_equipe) loop
 		-- Contrôles de vraisemblance : niveau, étoiles, place
 		if coalesce(u ->> 'id', '') !~ '^[a-z0-9_]{1,40}$'
-			or coalesce((u ->> 'niveau')::int, 0) not between 1 and 30
+			or coalesce((u ->> 'niveau')::int, 0) not between 1 and 40   -- 40 : unités évoluées
 			or coalesce((u ->> 'etoiles')::int, 0) not between 0 and 6
 			or coalesce((u ->> 'place')::int, -1) not between 0 and 4
 			or (u ->> 'place')::int = any(places) then

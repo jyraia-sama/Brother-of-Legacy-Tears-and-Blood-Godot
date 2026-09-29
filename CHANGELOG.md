@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.21.1** (2026-09-29)
+Version actuelle : **0.21.2** (2026-09-29)
+
+## v0.21.2 — Vitesse de combat, e-mail mémorisé, Arène  (2026-09-29)
+
+- Combat : la vitesse choisie (x1, x2, x4) est gardée pour les combats suivants (le Boss de Monde garde la sienne).
+- Compte : l'adresse e-mail de la dernière connexion reste remplie après une déconnexion ; il ne reste que le mot de passe à taper.
+- Arène : un joueur sans équipe de défense n'apparaissait jamais comme adversaire. En ouvrant l'Arène, la défense est maintenant enregistrée automatiquement (défense préparée, sinon l'équipe du Deck).
+- Arène : les unités évoluées (niveau jusqu'à 40) sont acceptées dans la défense (relancer supabase/02_arene.sql dans Supabase).
 
 ## v0.21.1 — Portraits évolués : planche 22  (2026-09-29)
 

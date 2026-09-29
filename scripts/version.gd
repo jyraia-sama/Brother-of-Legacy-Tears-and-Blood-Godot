@@ -14,11 +14,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.21.1"
+const NUMERO := "0.21.2"
 const DATE := "2026-09-29"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.21.2", "date": "2026-09-29", "titre": "Vitesse de combat, e-mail mémorisé, Arène",
+	"changements": [
+		"Combat : la vitesse choisie (x1, x2, x4) est gardée pour les combats suivants (le Boss de Monde garde la sienne).",
+		"Compte : l'adresse e-mail de la dernière connexion reste remplie après une déconnexion ; il ne reste que le mot de passe à taper.",
+		"Arène : un joueur sans équipe de défense n'apparaissait jamais comme adversaire. En ouvrant l'Arène, la défense est maintenant enregistrée automatiquement (défense préparée, sinon l'équipe du Deck).",
+		"Arène : les unités évoluées (niveau jusqu'à 40) sont acceptées dans la défense (relancer supabase/02_arene.sql dans Supabase).",
+	]},
 	{"version": "0.21.1", "date": "2026-09-29", "titre": "Portraits évolués : planche 22",
 	"changements": [
 		"9 premiers portraits des unités évoluées : La Brute Primordiale, Barbe-Abysse, La Lance Solaire, La Dryade Éternelle, L'Archimage Cendré, La Dague Crépusculaire, Le Shogun Écarlate, Le Paladin Immaculé, Le Chevalier du Néant.",
