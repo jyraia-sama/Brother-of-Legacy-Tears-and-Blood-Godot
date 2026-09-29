@@ -59,7 +59,7 @@ const BONUS := {
 
 ## Récompenses de connexion (cycle de 7 jours)
 const CONNEXION := [
-	{"or": 2000}, {"gemmes": 20}, {"elixir_petit": 2}, {"or": 5000, "tome_petit": 2},
+	{"or": 2000}, {"gemmes": 20}, {"elixir_petit": 2, "sceau_sauvage": 2}, {"or": 5000, "tome_petit": 2},
 	{"gemmes": 40}, {"tome_grand": 1, "poussiere_echo": 30}, {"gemmes": 100, "eclat_superieur": 1},
 ]
 

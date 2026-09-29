@@ -25,7 +25,8 @@ const SECTIONS := [
 • AUTEL D'INVOCATION : Pacte Doré (or : N, R, SR) et Pacte Supérieur (Éclats : SR, SSR, UR), avec une garantie SSR.
 • AUTEL DE FUSION : ÉVEIL (sacrifie des doublons pour gagner des étoiles, jusqu'à ★6) et ABSORPTION (sacrifie des unités pour de l'XP).
 • ÉVOLUTION : une unité niveau 30 peut devenir sa version évoluée (plus forte, sorts améliorés, niveau max 40) avec les ressources des Donjons.
-• BESTIAIRE : toutes les unités rencontrées ou obtenues."""],
+• BESTIAIRE : toutes les unités rencontrées ou obtenues, et les familiers.
+• FAMILIERS : 40 compagnons non combattants (N à UR), obtenus au PACTE SAUVAGE de l'Autel d'Invocation avec des Sceaux Sauvages (coffres et Mimics de l'Aventure, Nids Sauvages, Marché du jour). Un doublon permet l'Éveil (+1 étoile)."""],
 	["Échos Sanguins", """• Chaque unité porte jusqu'à 6 ÉCHOS (un par emplacement : Crâne, Artère, Plaie, Sacrifice, Âme, Serment).
 • Chaque Écho a une stat principale, des stats secondaires, une rareté et des étoiles.
 • AMÉLIORATION de +1 à +15 : les chances baissent avec le niveau ; en cas d'échec seul l'or est perdu. Aux paliers +3, +6, +9, +12 et +15, une stat secondaire apparaît ou se renforce.
@@ -36,7 +37,8 @@ const SECTIONS := [
 • DONJONS : 6 donjons de 10 niveaux ; 4 combats d'affilée sans soin ; ressources d'évolution.
 • EXPÉDITIONS : la MARCHE MAUDITE (roguelike du jour avec classement) et la COMPAGNIE (missions en temps réel pour les unités hors équipe).
 • BOSS DE MONDE : un géant par jour de la semaine, affronté avec 20 unités.
-• ARÈNE : combats contre les défenses des autres joueurs, saisons et boutique d'Insignes."""],
+• ARÈNE : combats contre les défenses des autres joueurs, saisons et boutique d'Insignes.
+• MÉNAGERIE (bouton en bas de l'Aventure) : un héros N ou R + un familier partent en chasse sur un terrain (or, tomes, élixirs, Poussière d'Écho, ressources d'évolution, Sceaux). Le butin s'accumule même jeu fermé, jusqu'à 12 h. Récolte, Célérité, Fortune, terrain préféré et talent du familier ; rôle favori, rareté R, niveau et étoiles du héros augmentent le butin."""],
 	["En ligne", """• Crée un COMPTE (Paramètres → Gérer le compte) : ta partie est sauvegardée en ligne automatiquement.
 • SOCIAL : ajoute des amis. GUILDE : crée ou rejoins une guilde.
 • ARÈNE : ta défense est enregistrée automatiquement à ta première visite ; modifie-la dans l'onglet Défense.

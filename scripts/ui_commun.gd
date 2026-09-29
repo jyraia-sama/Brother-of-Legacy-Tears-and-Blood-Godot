@@ -166,7 +166,10 @@ static func carte_heros(h: Dictionary, largeur := 132.0, hauteur := 168.0) -> Bu
 	# Unité partie en mission (Compagnie) : carte grisée avec un bandeau
 	if Sauvegarde.est_occupe(int(h.get("uid", -1))):
 		b.modulate = Color(0.75, 0.75, 0.8, 0.8)
-		badge(b, "En mission", Color("7ab8ff"), false)
+		if Menagerie.heros_en_chasse(int(h.get("uid", -1))):
+			badge(b, "En chasse", Color("8ad05a"), false)
+		else:
+			badge(b, "En mission", Color("7ab8ff"), false)
 	return b
 
 

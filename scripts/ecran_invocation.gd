@@ -22,6 +22,9 @@ var _calque: Control
 var _occupe := false
 var _lbl_evenement: Label
 var _voile_evenement: Control
+var _boutons_sauvage := {}
+var _lbl_sceaux: Label
+var _lbl_garantie_sauvage: Label
 
 
 func _ready() -> void:
@@ -74,6 +77,7 @@ func _ready() -> void:
 	pactes.add_child(_panneau_pacte("superieur", Color("b07ae0"),
 		"Invocation avec des Éclats de Pacte Supérieur,\nlâchés par les boss des chapitres.",
 		"Éclat", ""))
+	pactes.add_child(_panneau_sauvage())
 
 	col.add_child(_creer_banniere())
 
@@ -162,6 +166,105 @@ func _maj() -> void:
 		var parts: PackedStringArray = cle.split("-")
 		_boutons[cle].disabled = not Invocation.peut_payer(parts[0], int(parts[1]))
 	_maj_banniere()
+	_lbl_sceaux.text = "Sceaux Sauvages : %d" % Sauvegarde.get_objet(Menagerie.SCEAU)
+	_lbl_garantie_sauvage.text = "Garantie : un SSR (ou mieux) au plus tard dans %d invocation(s)." % Menagerie.avant_garantie()
+	for n in _boutons_sauvage:
+		_boutons_sauvage[n].disabled = not Menagerie.peut_invoquer(n)
+
+
+# =====================================================================
+# Pacte Sauvage (familiers de la Ménagerie)
+# =====================================================================
+
+func _panneau_sauvage() -> PanelContainer:
+	var couleur := Color("8ad05a")
+	var p := PanelContainer.new()
+	p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	p.add_theme_stylebox_override("panel", UiCommun.style_panneau(couleur))
+	var vb := VBoxContainer.new()
+	vb.add_theme_constant_override("separation", 12)
+	p.add_child(vb)
+	var t := UiCommun.label(str(Menagerie.PACTE["nom"]).to_upper(), 28, couleur)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vb.add_child(t)
+	var d := UiCommun.label("Invocation de FAMILIERS avec des Sceaux Sauvages.\nIls partent en chasse avec tes héros N et R (Ménagerie).", 16, UiCommun.C_DOUX)
+	d.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vb.add_child(d)
+	vb.add_child(HSeparator.new())
+	vb.add_child(UiCommun.label("TAUX D'OBTENTION", 15, UiCommun.C_OR))
+	for tx in Menagerie.PACTE["taux"]:
+		var ligne := HBoxContainer.new()
+		var nom := UiCommun.label(tx[0], 18, UiCommun.COULEURS_RARETE[tx[0]])
+		nom.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		ligne.add_child(nom)
+		ligne.add_child(UiCommun.label("%s %%   (%d familiers)" % [_pourcent(tx[1]), FamiliersData.ids(tx[0]).size()], 18))
+		vb.add_child(ligne)
+	vb.add_child(UiCommun.label("x10 : au moins un SR garanti.", 15, UiCommun.C_DOUX))
+	_lbl_garantie_sauvage = UiCommun.label("", 15, couleur)
+	_lbl_garantie_sauvage.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vb.add_child(_lbl_garantie_sauvage)
+	_lbl_sceaux = UiCommun.label("", 16, couleur)
+	vb.add_child(_lbl_sceaux)
+	var espace := Control.new()
+	espace.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vb.add_child(espace)
+	var boutons := HBoxContainer.new()
+	boutons.add_theme_constant_override("separation", 12)
+	vb.add_child(boutons)
+	for n in [1, 10]:
+		var cout := Menagerie.prix(n)
+		var b := UiCommun.bouton("Invoquer x%d\n%d Sceau%s" % [n, cout, "x" if cout > 1 else ""], 18)
+		b.custom_minimum_size = Vector2(0, 70)
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b.pressed.connect(_invoquer_familiers.bind(n))
+		boutons.add_child(b)
+		_boutons_sauvage[n] = b
+	return p
+
+
+func _invoquer_familiers(nombre: int) -> void:
+	if _occupe:
+		return
+	var res := Menagerie.invoquer(nombre)
+	if res.is_empty():
+		return
+	Audio.son("coffre")
+	_maj()
+	var g := GridContainer.new()
+	g.columns = mini(5, res.size())
+	g.add_theme_constant_override("h_separation", 12)
+	g.add_theme_constant_override("v_separation", 12)
+	var i := 0
+	for r in res:
+		var d := FamiliersData.get_familier(r["id"])
+		var v := VBoxContainer.new()
+		v.custom_minimum_size = Vector2(140, 0)
+		v.add_theme_constant_override("separation", 2)
+		var m := EcranMenagerie.medaillon(r["id"], 96)
+		m.pivot_offset = Vector2(48, 48)
+		m.scale = Vector2.ZERO
+		v.add_child(m)
+		var tw := m.create_tween()
+		tw.tween_interval(0.12 * i)
+		tw.tween_property(m, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		var n := UiCommun.label(d["nom"], 14, UiCommun.COULEURS_RARETE[d["rarete"]])
+		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		v.add_child(n)
+		var ra := UiCommun.label(d["rarete"] + ("  · NOUVEAU" if r["nouveau"] else ""), 13, Color("ffd060") if r["nouveau"] else UiCommun.C_DOUX)
+		ra.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		v.add_child(ra)
+		g.add_child(v)
+		i += 1
+	var f := FenetreSimple.new()
+	f.largeur = 780.0 if res.size() > 1 else 420.0
+	f.titre = "Pacte Sauvage"
+	f.contenu = g
+	f.boutons = [["Fermer", null], ["Voir la Ménagerie", func():
+		EcranBase.scene_retour = SCENE
+		get_tree().change_scene_to_file(EcranMenagerie.SCENE)]]
+	add_child(f)
 
 
 # =====================================================================

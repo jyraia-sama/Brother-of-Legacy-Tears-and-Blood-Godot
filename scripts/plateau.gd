@@ -38,6 +38,9 @@ const COULEURS := {
 	T.PIEGE: Color("5a4a3a"),
 }
 
+## Chance qu'un coffre (non Mimic) contienne aussi un Sceau Sauvage (familiers)
+const CHANCE_SCEAU_COFFRE := 0.35
+
 var acte := 1
 var chapitre := 1
 var plateau: Dictionary
@@ -412,7 +415,11 @@ func _evenement(id: int) -> void:
 			_gagner_or(gain)
 			Sauvegarde.ajouter_stat("coffres_ouverts")
 			_terminer(id)
-			_message("Coffre d'or", "Tu ouvres le coffre : +%d or." % gain, _verifier_impasse)
+			var txt := "Tu ouvres le coffre : +%d or." % gain
+			if randf() < CHANCE_SCEAU_COFFRE:
+				Sauvegarde.ajouter_objet(Menagerie.SCEAU, 1)
+				txt += "\nTu trouves aussi un Sceau Sauvage !"
+			_message("Coffre d'or", txt, _verifier_impasse)
 		T.SOIN:
 			Audio.son("soin")
 			pv_equipe.clear()
@@ -535,7 +542,8 @@ func _victoire(id: int) -> void:
 		_gagner_or(gain)
 		Sauvegarde.ajouter_stat("coffres_ouverts")
 		Sauvegarde.ajouter_stat("mimics_vaincus")
-		_message("Mimic vaincu !", "Dans la carcasse du Mimic, tu trouves son trésor : +%d or." % gain, _verifier_impasse)
+		Sauvegarde.ajouter_objet(Menagerie.SCEAU, 2)
+		_message("Mimic vaincu !", "Dans la carcasse du Mimic, tu trouves son trésor : +%d or et 2 Sceaux Sauvages." % gain, _verifier_impasse)
 	else:
 		_verifier_impasse()
 

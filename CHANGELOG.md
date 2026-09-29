@@ -1,6 +1,17 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.25.0** (2026-09-29)
+Version actuelle : **0.26.0** (2026-09-29)
+
+## v0.26.0 — La Ménagerie : familiers et terrains de chasse  (2026-09-29)
+
+- LA MÉNAGERIE (bouton en bas de l'écran Aventure) : les héros N et R ont enfin un vrai rôle ! Une équipe de chasse = un héros N ou R (hors équipe de combat) + un familier, envoyés sur un terrain de chasse. Le butin s'accumule en temps réel, même jeu fermé, jusqu'à 12 h de stock : viens le récolter.
+- 6 TERRAINS DE CHASSE débloqués avec le niveau de compte : Plaines Cendrées (or et coffres), Bibliothèque Engloutie (tomes d'XP), Sources Vives (élixirs de stamina), Cimetière des Échos (Poussière d'Écho), Veines Élémentaires (ressources d'évolution de l'élément du familier), Nids Sauvages (Sceaux Sauvages et parfois un Éclat). Butin commun, rare ou épique.
+- 2 équipes de chasse au départ, puis une de plus aux niveaux de compte 10, 20 et 30 (5 au maximum). Le héros part en chasse et gagne de l'XP ; il est « En chasse » (hors équipe) jusqu'à son rappel.
+- 40 FAMILIERS (12 N, 11 R, 9 SR, 5 SSR, 3 UR) avec leurs stats de farming : Récolte (quantité), Célérité (temps entre deux butins), Fortune (butins rares et épiques), terrain préféré (+25 %) et un talent (Double prise, Flair sauvage, Pie voleuse, Porte-bonheur, Pas léger, Mentor, Nomade). Ils gagnent des niveaux en chassant et s'éveillent jusqu'à 5 étoiles avec un doublon ; un familier inutile peut être libéré contre de l'or.
+- Le héros compte aussi : rareté R (+10 %), niveau, étoiles et rôle favori de la zone (+20 %). Avant de partir, la fenêtre « Nouvelle chasse » montre une estimation du butin en 12 h.
+- PACTE SAUVAGE à l'Autel d'Invocation : invocation de familiers avec des Sceaux Sauvages (x1 / x10 avec un SR garanti, SSR garanti au plus tard toutes les 40 invocations). Les Sceaux Sauvages se trouvent dans les coffres (35 %) et sur les Mimics (2) de l'Aventure, aux Nids Sauvages, au Marché du jour et dans la récompense de connexion du 3e jour. Premier passage à la Ménagerie : un familier et 5 Sceaux offerts.
+- BESTIAIRE : nouvel onglet « Familiers » (40 fiches, découvertes en les obtenant). L'Aide et une astuce de première visite expliquent la Ménagerie.
+- Prompts ChatGPT des 40 portraits de familiers : PROMPTS_FAMILIERS.md (planches 31 à 35). En attendant, un médaillon coloré avec l'initiale s'affiche.
 
 ## v0.25.0 — Mimics, Échos 1-3-5 en % et triche remise à zéro  (2026-09-29)
 

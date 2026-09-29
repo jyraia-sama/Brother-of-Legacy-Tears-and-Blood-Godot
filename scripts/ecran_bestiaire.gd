@@ -31,7 +31,7 @@ const COULEURS_ELEMENT := {
 	"feu": Color("e0743a"), "eau": Color("4f9fd6"), "nature": Color("62ad4f"),
 	"tenebres": Color("a276d6"), "sacre": Color("e6c85a"), "neutre": Color("c8b8b0"),
 }
-const FILTRES := [["tous", "Tous"], ["legende", "Légendes"], ["heros", "Héros"], ["evolution", "Évolutions"], ["ennemi", "Ennemis"], ["boss", "Boss"], ["boss_monde", "Boss de Monde"]]
+const FILTRES := [["tous", "Tous"], ["legende", "Légendes"], ["heros", "Héros"], ["evolution", "Évolutions"], ["ennemi", "Ennemis"], ["boss", "Boss"], ["boss_monde", "Boss de Monde"], ["familiers", "Familiers"]]
 const C_LEGENDE := Color("ffd27a")
 
 var _filtre := "tous"
@@ -137,6 +137,14 @@ func _remplir_grille() -> void:
 		enfant.queue_free()
 	var total := 0
 	var decouverts := 0
+	if _filtre == "familiers":
+		for fid in FamiliersData.ids():
+			total += 1
+			if TOUT_REVELER or Menagerie.est_decouvert(fid):
+				decouverts += 1
+			_grille.add_child(_carte_familier(fid))
+		_compteur.text = "Familiers découverts : %d / %d" % [decouverts, total]
+		return
 	var toutes := UnitesData.toutes()
 	for id in toutes:
 		var u: Dictionary = toutes[id]
@@ -232,6 +240,70 @@ func _carte(id: String, u: Dictionary) -> Button:
 	rar.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(rar)
 	return b
+
+
+## Carte d'un familier (Ménagerie) : découvert dès qu'on l'a obtenu une fois.
+func _carte_familier(fid: String) -> Button:
+	var d := FamiliersData.get_familier(fid)
+	var connu := TOUT_REVELER or Menagerie.est_decouvert(fid)
+	var b := Button.new()
+	b.custom_minimum_size = TAILLE_CARTE
+	b.focus_mode = Control.FOCUS_NONE
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var bord: Color = COULEURS_RARETE[d["rarete"]] if connu else Color(0.3, 0.25, 0.25)
+	b.add_theme_stylebox_override("normal", _style_carte(bord, 0.0))
+	b.add_theme_stylebox_override("hover", _style_carte(C_OR, 0.06))
+	b.add_theme_stylebox_override("pressed", _style_carte(C_OR, 0.12))
+	b.pressed.connect(_selectionner_familier.bind(fid))
+	var vb := VBoxContainer.new()
+	vb.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	vb.offset_top = 12
+	vb.offset_bottom = -10
+	vb.alignment = BoxContainer.ALIGNMENT_CENTER
+	vb.add_theme_constant_override("separation", 6)
+	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(vb)
+	vb.add_child(EcranMenagerie.medaillon(fid, 76, connu))
+	var nom := _label(d["nom"] if connu else "???", 15, C_TEXTE if connu else C_DOUX)
+	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	nom.custom_minimum_size = Vector2(130, 0)
+	vb.add_child(nom)
+	var rar := _label(d["rarete"] if connu else "", 13, bord)
+	rar.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vb.add_child(rar)
+	return b
+
+
+func _selectionner_familier(fid: String) -> void:
+	_selection = ""
+	var d := FamiliersData.get_familier(fid)
+	var connu := TOUT_REVELER or Menagerie.est_decouvert(fid)
+	_f_vide.visible = not connu
+	_fiche.visible = connu
+	if not connu:
+		_f_vide.text = "???\n\nFamilier encore inconnu.\nObtiens-le au Pacte Sauvage de l'Autel d'Invocation (avec des Sceaux Sauvages) pour le découvrir."
+		return
+	for e in _f_image.get_children():
+		e.queue_free()
+	_f_image.visible = true
+	var centre := CenterContainer.new()
+	centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	centre.add_child(EcranMenagerie.medaillon(fid, 260))
+	_f_image.add_child(centre)
+	_f_nom.text = d["nom"]
+	_f_nom.add_theme_color_override("font_color", COULEURS_RARETE[d["rarete"]])
+	_f_infos.text = "%s  ·  %s  ·  Familier (Ménagerie)\nNon combattant · s'obtient au Pacte Sauvage de l'Autel d'Invocation" % [d["rarete"], UnitesData.ELEMENTS[d["element"]]]
+	_f_niveau.get_parent().visible = false
+	_f_stats.visible = false
+	var base := {"id": fid, "niveau": 1, "etoiles": 1}
+	_f_secondaires.text = "STATS DE CHASSE (niveau 1, 1 étoile)\n" + "\n".join(EcranMenagerie._lignes_stats(base)) \
+		+ "\nNiveau maximum : %d  ·  Éveil jusqu'à %d étoiles avec des doublons" % [int(d["niveau_max"]), FamiliersData.ETOILES_MAX]
+	for enfant in _f_skills.get_children():
+		enfant.queue_free()
+	var desc := _label(d["description"], 15, C_TEXTE)
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_f_skills.add_child(desc)
 
 
 func _ajuster_colonnes() -> void:
@@ -330,6 +402,8 @@ func _maj_fiche() -> void:
 		return
 	var u := UnitesData.get_unite(_selection)
 	var connu := _visible(_selection)
+	_f_niveau.get_parent().visible = true
+	_f_stats.visible = true
 	_f_vide.visible = not connu
 	_fiche.visible = connu
 	if not connu:

@@ -605,9 +605,9 @@ static func get_slots() -> Array:
 	return s
 
 
-## L'unité est-elle partie en mission (Expéditions de la Compagnie) ?
+## L'unité est-elle occupée (mission de la Compagnie, ou chasse à la Ménagerie) ?
 static func est_occupe(uid: int) -> bool:
-	return Compagnie.unite_en_mission(uid)
+	return Compagnie.unite_en_mission(uid) or Menagerie.heros_en_chasse(uid)
 
 
 ## Place d'un héros dans l'équipe (0 à 4), ou -1 s'il est en réserve.
@@ -780,7 +780,7 @@ static func raison_invendable(uid: int) -> String:
 	if place_de(uid) >= 0:
 		return "Retire-le d'abord de l'équipe."
 	if est_occupe(uid):
-		return "Cette unité est partie en mission."
+		return "Cette unité est occupée (mission ou chasse)."
 	return ""
 
 

@@ -43,6 +43,8 @@ const OBJETS := {
 		"desc": "À l'Autel de Fusion, remplace un doublon pour faire gagner une étoile."},
 	"eclat_superieur": {"nom": "Éclat de Pacte Supérieur", "cat": "pierre", "couleur": "b08aff",
 		"desc": "Sert au Pacte Supérieur de l'Autel d'Invocation (SR / SSR / UR)."},
+	"sceau_sauvage": {"nom": "Sceau Sauvage", "cat": "pierre", "couleur": "8ad05a",
+		"desc": "Sert au Pacte Sauvage de l'Autel d'Invocation (familiers). Trouvé dans les coffres et sur les Mimics de l'Aventure, aux Nids Sauvages de la Ménagerie et au Marché du jour."},
 	"sceau_marche": {"nom": "Sceau de Marche", "cat": "marche", "couleur": "c0303a",
 		"desc": "Gagné dans la Marche Maudite (selon le score). Se dépense à la boutique des Expéditions."},
 	# Ressources des Donjons (évolution des unités, voir evolution.gd)
@@ -86,7 +88,7 @@ const OBJETS := {
 
 const ORDRE := ["braise_infernale", "plume_celeste", "fragment_colossal", "poussiere_echo",
 	"coffre_bronze", "coffre_argent", "coffre_or", "coffre_royal", "elixir_petit", "elixir_grand",
-	"tome_petit", "tome_grand", "tome_ancien", "pierre_eveil", "eclat_superieur", "sceau_marche"]
+	"tome_petit", "tome_grand", "tome_ancien", "pierre_eveil", "eclat_superieur", "sceau_sauvage", "sceau_marche"]
 
 const STAMINA := {"elixir_petit": 10, "elixir_grand": 30}
 const XP_TOME := {"tome_petit": 500, "tome_grand": 2000, "tome_ancien": 6000}

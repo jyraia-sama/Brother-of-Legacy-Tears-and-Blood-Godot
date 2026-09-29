@@ -36,6 +36,34 @@ func _ready() -> void:
 		_creer_texte(m.titre, Rect2(r.position.x + 40, r.end.y - 58, r.size.x - 80, 36), 24)
 
 	_creer_zone(RETOUR_RECT, "retour", "Retour")
+	_creer_bouton_menagerie()
+
+
+## Bouton de la Ménagerie (familiers et terrains de chasse), en bas au centre.
+func _creer_bouton_menagerie() -> void:
+	var b := Button.new()
+	b.focus_mode = Control.FOCUS_NONE
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	b.text = "LA MÉNAGERIE  ·  familiers et chasse"
+	var n := Menagerie.a_recolter()
+	if n > 0:
+		b.text += "   (%d à récolter)" % n
+	b.add_theme_font_size_override("font_size", 24)
+	b.add_theme_color_override("font_color", Color("c8f0a0"))
+	b.add_theme_color_override("font_hover_color", Color.WHITE)
+	b.add_theme_color_override("font_outline_color", Color.BLACK)
+	b.add_theme_constant_override("outline_size", 6)
+	for etat in ["normal", "hover", "pressed"]:
+		var st := StyleBoxFlat.new()
+		st.bg_color = Color(0.08, 0.1, 0.04, 0.88) if etat == "normal" else Color(0.14, 0.2, 0.06, 0.92)
+		st.border_color = Color("8ad05a") if etat != "normal" else Color("5a8a3a")
+		st.set_border_width_all(3)
+		st.set_corner_radius_all(10)
+		b.add_theme_stylebox_override(etat, st)
+	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	add_child(b)
+	_placer(b, Rect2(724, 1072, 600, 66))
+	b.pressed.connect(_on_bouton.bind("menagerie", "Ménagerie"))
 
 
 # ---------- Actions ----------
@@ -59,6 +87,9 @@ func _on_bouton(id: String, titre: String) -> void:
 		"donjon":
 			EcranDonjon.scene_retour = scene_file_path
 			get_tree().change_scene_to_file(EcranDonjon.SCENE)
+		"menagerie":
+			EcranBase.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranMenagerie.SCENE)
 		"arene":
 			EcranArene.scene_retour = scene_file_path
 			get_tree().change_scene_to_file(EcranArene.SCENE)

@@ -3,6 +3,7 @@ en un fichier PNG par unité dans assets/unites/.
 
 Usage :  python outils/decouper_planche.py planche_01.png brute_noire barbe_bleue ...
 (les identifiants dans l'ordre des cases : gauche -> droite, haut -> bas)
+Familiers : ajouter --familiers pour ranger les images dans assets/familiers/.
 """
 import sys
 import numpy as np
@@ -27,7 +28,9 @@ def bandes(profil, seuil):
 
 
 def main():
-    chemin, ids = sys.argv[1], sys.argv[2:]
+    args = [a for a in sys.argv[1:] if a != "--familiers"]
+    dossier = "assets/familiers" if "--familiers" in sys.argv else "assets/unites"
+    chemin, ids = args[0], args[1:]
     img = Image.open(chemin).convert("RGB")
     gris = np.asarray(img.convert("L")).astype(float)
     cols = bandes(gris.mean(axis=0), SEUIL)
@@ -41,7 +44,7 @@ def main():
         c = min(x1 - x0, y1 - y0)                      # carré centré
         cx, cy = (x0 + x1) // 2, (y0 + y1) // 2
         boite = (cx - c // 2, cy - c // 2, cx - c // 2 + c, cy - c // 2 + c)
-        img.crop(boite).resize((TAILLE, TAILLE), Image.LANCZOS).save(f"assets/unites/{uid}.png", optimize=True)
+        img.crop(boite).resize((TAILLE, TAILLE), Image.LANCZOS).save(f"{dossier}/{uid}.png", optimize=True)
         print(f"  {uid}.png")
 
 

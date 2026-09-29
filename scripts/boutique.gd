@@ -12,6 +12,7 @@ const SCENE := "res://scenes/boutique.tscn"
 ## Offres possibles du Marché du jour (prix en or). Chaque jour, 6 sont tirées au hasard.
 const MARCHE := [
 	{"id": "poussiere_echo", "quantite": 25, "prix": 3000},
+	{"id": "sceau_sauvage", "quantite": 3, "prix": 4000},
 	{"id": "elixir_petit", "quantite": 2, "prix": 2500},
 	{"id": "tome_petit", "quantite": 3, "prix": 3500},
 	{"id": "tome_grand", "quantite": 1, "prix": 6000},
