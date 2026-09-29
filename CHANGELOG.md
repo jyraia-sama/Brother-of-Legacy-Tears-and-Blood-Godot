@@ -1,6 +1,14 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.22.0** (2026-09-29)
+Version actuelle : **0.23.0** (2026-09-29)
+
+## v0.23.0 — Guide des premiers pas  (2026-09-29)
+
+- PREMIERS PAS : un guide de 9 étapes pour les nouveaux joueurs, affiché à gauche du menu principal (découvrir le Deck, premier combat, chapitre 1, première invocation, équipe complète, équiper un Écho, l'améliorer, réclamer une quête, terminer l'Acte I).
+- Le bouton du menu concerné par l'étape brille, « Y aller » y mène directement, et chaque étape rapporte une récompense (or, gemmes, tome, Éclats…). Un Écho est offert pour l'étape « Équipe un Écho ».
+- Les étapes se valident toutes seules d'après la partie : un joueur déjà avancé n'a plus qu'à réclamer.
+- ASTUCES : une courte explication s'affiche à la première visite du Deck, de l'Invocation, des Échos, de la Fusion, du Reliquaire, de l'Aventure et du plateau.
+- Message d'accueil au tout premier passage sur le menu. Le guide peut être masqué (×) ; Paramètres → « Réafficher » remet le guide et les astuces.
 
 ## v0.22.0 — Quêtes, Succès, Boutique, Mon héros et Aide  (2026-09-29)
 

@@ -99,6 +99,20 @@ func _ready() -> void:
 		lc.add_child(gerer)
 		vb.add_child(HSeparator.new())
 
+	var ltu := HBoxContainer.new()
+	ltu.add_theme_constant_override("separation", 10)
+	vb.add_child(ltu)
+	var t_tuto := _label("Guide des premiers pas et astuces des écrans", 16, Color(0.85, 0.7, 0.6))
+	t_tuto.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	ltu.add_child(t_tuto)
+	var b_tuto := _bouton("Réafficher", func():
+		Tutoriel.reinitialiser_astuces()
+		_etat.text = "Le guide et les astuces s'afficheront à nouveau.")
+	b_tuto.size_flags_horizontal = Control.SIZE_SHRINK_END
+	b_tuto.custom_minimum_size = Vector2(200, 40)
+	ltu.add_child(b_tuto)
+	vb.add_child(HSeparator.new())
+
 	vb.add_child(_label("Code de sauvegarde (pour transférer ta partie ou la garder de côté) :", 16, Color(0.85, 0.7, 0.6)))
 	_zone_code = TextEdit.new()
 	_zone_code.custom_minimum_size = Vector2(0, 90)

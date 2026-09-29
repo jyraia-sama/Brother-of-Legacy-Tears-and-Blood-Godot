@@ -157,6 +157,7 @@ static func reclamer(periode: String, id: String) -> Array:
 			return []
 		r = trouve["recompense"]
 	deja.append(id)
+	Sauvegarde._stat("quetes_reclamees")
 	var lignes := donner(r)
 	Sauvegarde.sauvegarder()
 	return lignes
@@ -182,6 +183,7 @@ static func reclamer_connexion() -> Array:
 	var i := connexion_index()
 	q["connexion_jour"] = Calendrier.jour_absolu()
 	q["connexion_index"] = i + 1
+	Sauvegarde._stat("quetes_reclamees")
 	var lignes := donner(CONNEXION[i])
 	Sauvegarde.sauvegarder()
 	return lignes

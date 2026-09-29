@@ -25,6 +25,7 @@ var _voile_evenement: Control
 
 
 func _ready() -> void:
+	Tutoriel.astuce("invocation", self)      # astuce à la première visite
 	Sauvegarde.charger()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var noir := ColorRect.new()

@@ -129,6 +129,10 @@ func _ready() -> void:
 	_pastille("quetes", Quetes.a_reclamer())
 	_pastille("succes", Succes.a_reclamer())
 
+	# Guide des premiers pas (nouveau joueur)
+	Tutoriel.preparer_etape()
+	_creer_guide()
+
 	# Le jeu vient d'être mis à jour : on montre les nouveautés
 	FenetreChangelog.verifier_mise_a_jour(self)
 	EnLigne.etat_change.connect(_sur_etat_compte)
@@ -150,6 +154,100 @@ func _pastille(id: String, n: int) -> void:
 			st.set_border_width_all(2)
 			l.add_theme_stylebox_override("normal", st)
 			l.add_theme_color_override("font_color", Color.WHITE)
+
+
+# ---------- Guide des premiers pas ----------
+
+func _creer_guide() -> void:
+	if not Tutoriel.visible():
+		return
+	var i := Tutoriel.etape_courante()
+	var e: Dictionary = Tutoriel.ETAPES[i]
+	var fait := Tutoriel.faite(e["id"])
+	var p := PanelContainer.new()
+	var st := UiCommun.style_panneau(UiCommun.C_OR if fait else Color("c89a50"), Color(0.06, 0.02, 0.03, 0.9))
+	st.set_content_margin_all(10)
+	p.add_theme_stylebox_override("panel", st)
+	add_child(p)
+	_placer(p, Rect2(8, 318, 238, 146))
+	var vb := VBoxContainer.new()
+	vb.add_theme_constant_override("separation", 3)
+	p.add_child(vb)
+	var tete := HBoxContainer.new()
+	vb.add_child(tete)
+	var t := UiCommun.label("PREMIERS PAS  %d/%d" % [i + 1, Tutoriel.ETAPES.size()], 15, UiCommun.C_DOUX)
+	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tete.add_child(t)
+	var x := Button.new()
+	x.text = "×"
+	x.flat = true
+	x.focus_mode = Control.FOCUS_NONE
+	x.tooltip_text = "Masquer le guide (réaffichable dans les Paramètres)"
+	x.add_theme_font_size_override("font_size", 22)
+	x.pressed.connect(func():
+		FenetreSimple.confirmer(self, "Masquer le guide ?", "Tu pourras le réafficher dans les Paramètres.", "Masquer", func():
+			Tutoriel.masquer(true)
+			get_tree().reload_current_scene()))
+	tete.add_child(x)
+	vb.add_child(UiCommun.label(str(e["titre"]) + ("  — fait !" if fait else ""), 19, UiCommun.C_OR))
+	var d := UiCommun.label(e["texte"], 14, UiCommun.C_TEXTE)
+	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	d.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vb.add_child(d)
+	var bas := HBoxContainer.new()
+	bas.add_theme_constant_override("separation", 8)
+	vb.add_child(bas)
+	var r := UiCommun.label("Récompense : " + Quetes.texte_recompense(e["recompense"]), 13, Color("ffb070"))
+	r.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	r.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	bas.add_child(r)
+	var b := UiCommun.bouton("Réclamer" if fait else "Y aller", 16)
+	b.custom_minimum_size = Vector2(120, 40)
+	if fait:
+		b.pressed.connect(_reclamer_guide)
+	else:
+		var zone: String = e["zone"]
+		b.pressed.connect(_on_bouton.bind(zone, zone))
+	bas.add_child(b)
+	if not fait:
+		_mettre_en_avant(e["zone"])
+	# Tout premier passage : mot d'accueil
+	if i == 0 and not Tutoriel.faite("deck") and not "bienvenue" in Tutoriel._etat()["vus"]:
+		Tutoriel._etat()["vus"].append("bienvenue")
+		Sauvegarde.sauvegarder()
+		FenetreSimple.ouvrir.call_deferred(self, "Bienvenue, héros !",
+			"Le guide PREMIERS PAS (à gauche) t'accompagne pour tes débuts : suis ses étapes, le bouton concerné brille dans le menu, et chaque étape rapporte une récompense.\n\nLe bouton « ? » en haut à gauche explique tout le jeu. N'oublie pas ta récompense de connexion dans les Quêtes !",
+			[["C'est parti !", null]])
+
+
+## Fait briller (contour doré pulsé) le bouton du menu vers lequel le guide envoie.
+func _mettre_en_avant(zone: String) -> void:
+	for liste in [CARTES, BAS, AUTRES]:
+		for c in liste:
+			if c.id != zone:
+				continue
+			var cadre := Panel.new()
+			cadre.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var st := StyleBoxFlat.new()
+			st.bg_color = Color(1.0, 0.8, 0.3, 0.08)
+			st.border_color = Color(1.0, 0.82, 0.35)
+			st.set_border_width_all(4)
+			st.set_corner_radius_all(8)
+			cadre.add_theme_stylebox_override("panel", st)
+			add_child(cadre)
+			_placer(cadre, c.rect)
+			var tw := create_tween().set_loops()
+			tw.tween_property(cadre, "modulate:a", 0.25, 0.7).set_trans(Tween.TRANS_SINE)
+			tw.tween_property(cadre, "modulate:a", 1.0, 0.7).set_trans(Tween.TRANS_SINE)
+			return
+
+
+func _reclamer_guide() -> void:
+	var l := Tutoriel.reclamer()
+	if l.is_empty():
+		return
+	Audio.son("coffre")
+	FenetreSimple.ouvrir(self, "Étape réussie !", "\n".join(l), [["Suite", get_tree().reload_current_scene]])
 
 
 func _apres_connexion_demarrage() -> void:

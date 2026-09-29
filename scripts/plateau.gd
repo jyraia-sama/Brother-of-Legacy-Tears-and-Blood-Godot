@@ -83,6 +83,7 @@ var info_texte: Label
 
 
 func _ready() -> void:
+	Tutoriel.astuce("plateau", self)      # astuce à la première visite
 	ActesData.charger()
 	acte = ActesData.acte_courant
 	chapitre = ActesData.chapitre_courant

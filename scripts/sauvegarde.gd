@@ -92,6 +92,8 @@ static func _defaut() -> Dictionary:
 		},
 		# Quêtes (progression du jour / de la semaine, connexion), Succès réclamés, titre, Boutique
 		"quetes": {},
+		# Guide des premiers pas : étapes réclamées, astuces déjà vues, guide masqué
+		"tutoriel": {},
 		"succes": {"reclames": {}, "titre": ""},
 		"boutique": {},
 		# Expéditions de la Compagnie : missions lancées aujourd'hui et escouades parties (voir compagnie.gd)

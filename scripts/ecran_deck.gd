@@ -35,6 +35,7 @@ var _fiche: VBoxContainer
 
 
 func _ready() -> void:
+	Tutoriel.astuce("deck", self)      # astuce à la première visite
 	Sauvegarde.charger()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_creer_fond()

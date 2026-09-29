@@ -25,6 +25,7 @@ var _debug := false
 
 
 func _ready() -> void:
+	Tutoriel.astuce("aventure", self)      # astuce à la première visite
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_creer_fond()
 

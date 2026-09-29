@@ -31,6 +31,7 @@ var _lbl_inventaire: Label
 
 
 func _ready() -> void:
+	Tutoriel.astuce("echos", self)      # astuce à la première visite
 	Sauvegarde.charger()
 	_rng.randomize()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

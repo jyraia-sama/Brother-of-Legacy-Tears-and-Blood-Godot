@@ -14,11 +14,19 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.22.0"
+const NUMERO := "0.23.0"
 const DATE := "2026-09-29"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.23.0", "date": "2026-09-29", "titre": "Guide des premiers pas",
+	"changements": [
+		"PREMIERS PAS : un guide de 9 étapes pour les nouveaux joueurs, affiché à gauche du menu principal (découvrir le Deck, premier combat, chapitre 1, première invocation, équipe complète, équiper un Écho, l'améliorer, réclamer une quête, terminer l'Acte I).",
+		"Le bouton du menu concerné par l'étape brille, « Y aller » y mène directement, et chaque étape rapporte une récompense (or, gemmes, tome, Éclats…). Un Écho est offert pour l'étape « Équipe un Écho ».",
+		"Les étapes se valident toutes seules d'après la partie : un joueur déjà avancé n'a plus qu'à réclamer.",
+		"ASTUCES : une courte explication s'affiche à la première visite du Deck, de l'Invocation, des Échos, de la Fusion, du Reliquaire, de l'Aventure et du plateau.",
+		"Message d'accueil au tout premier passage sur le menu. Le guide peut être masqué (×) ; Paramètres → « Réafficher » remet le guide et les astuces.",
+	]},
 	{"version": "0.22.0", "date": "2026-09-29", "titre": "Quêtes, Succès, Boutique, Mon héros et Aide",
 	"changements": [
 		"QUÊTES (icône en bas du menu) : récompense de connexion quotidienne (cycle de 7 jours, jusqu'à 100 gemmes et un Éclat), 5 quêtes du jour et 5 quêtes de la semaine (les mêmes pour tous) avec or, gemmes et objets, et un coffre bonus quand toutes sont terminées. La progression se note toute seule en jouant.",
