@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.23.0** (2026-09-29)
+Version actuelle : **0.24.0** (2026-09-29)
+
+## v0.24.0 — Un secret  (2026-09-29)
+
+- Un secret se cache désormais dans le menu principal… Un petit hommage à celui qui a donné l'envie de créer ce jeu. À toi de le trouver !
 
 ## v0.23.0 — Guide des premiers pas  (2026-09-29)
 

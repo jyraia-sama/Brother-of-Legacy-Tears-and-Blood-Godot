@@ -14,11 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.23.0"
+const NUMERO := "0.24.0"
 const DATE := "2026-09-29"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.24.0", "date": "2026-09-29", "titre": "Un secret",
+	"changements": [
+		"Un secret se cache désormais dans le menu principal… Un petit hommage à celui qui a donné l'envie de créer ce jeu. À toi de le trouver !",
+	]},
 	{"version": "0.23.0", "date": "2026-09-29", "titre": "Guide des premiers pas",
 	"changements": [
 		"PREMIERS PAS : un guide de 9 étapes pour les nouveaux joueurs, affiché à gauche du menu principal (découvrir le Deck, premier combat, chapitre 1, première invocation, équipe complète, équiper un Écho, l'améliorer, réclamer une quête, terminer l'Acte I).",

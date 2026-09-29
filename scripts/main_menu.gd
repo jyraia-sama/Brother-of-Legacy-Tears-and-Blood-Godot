@@ -129,6 +129,16 @@ func _ready() -> void:
 	_pastille("quetes", Quetes.a_reclamer())
 	_pastille("succes", Succes.a_reclamer())
 
+	# Secret : 5 touches rapides sur la lune rouge (ou taper ARNAUD) -> Donjon d'Arnaud
+	var lune := Button.new()
+	lune.flat = true
+	lune.focus_mode = Control.FOCUS_NONE
+	for etat in ["normal", "hover", "pressed", "focus"]:
+		lune.add_theme_stylebox_override(etat, StyleBoxEmpty.new())
+	lune.pressed.connect(_toucher_lune)
+	add_child(lune)
+	_placer(lune, Rect2(160, 12, 80, 50))
+
 	# Guide des premiers pas (nouveau joueur)
 	Tutoriel.preparer_etape()
 	_creer_guide()
@@ -248,6 +258,26 @@ func _reclamer_guide() -> void:
 		return
 	Audio.son("coffre")
 	FenetreSimple.ouvrir(self, "Étape réussie !", "\n".join(l), [["Suite", get_tree().reload_current_scene]])
+
+
+# ---------- Secret ----------
+
+var _touches_lune := 0
+var _derniere_touche := 0
+var _saisie := ""
+
+
+func _toucher_lune() -> void:
+	var t := Time.get_ticks_msec()
+	_touches_lune = _touches_lune + 1 if t - _derniere_touche < 1500 else 1
+	_derniere_touche = t
+	if _touches_lune >= 5:
+		_ouvrir_donjon_arnaud()
+
+
+func _ouvrir_donjon_arnaud() -> void:
+	Audio.son("coffre")
+	get_tree().change_scene_to_file(DonjonArnaud.SCENE)
 
 
 func _apres_connexion_demarrage() -> void:
@@ -456,6 +486,11 @@ func _message(texte: String) -> void:
 
 # F1 : affiche / masque toutes les zones cliquables (pour les recaler)
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.unicode > 0:
+		_saisie = (_saisie + char(event.unicode).to_lower()).right(6)
+		if _saisie == "arnaud":
+			_ouvrir_donjon_arnaud()
+			return
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F1:
 		_debug = not _debug
 		for b in _zones:
