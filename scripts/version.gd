@@ -14,11 +14,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.26.0"
+const NUMERO := "0.26.1"
 const DATE := "2026-09-29"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.26.1", "date": "2026-09-29", "titre": "Portraits des familiers (1/2)",
+	"changements": [
+		"Portraits des 18 premiers familiers (planches 31 et 32 : du Rat des Cryptes au Blaireau Fouisseur), avec un anneau à la couleur de leur rareté. Les autres gardent leur médaillon en attendant leurs planches.",
+		"Les portraits des familiers sont compressés (environ 35 Ko chacun) pour ne pas alourdir la version web.",
+	]},
 	{"version": "0.26.0", "date": "2026-09-29", "titre": "La Ménagerie : familiers et terrains de chasse",
 	"changements": [
 		"LA MÉNAGERIE (bouton en bas de l'écran Aventure) : les héros N et R ont enfin un vrai rôle ! Une équipe de chasse = un héros N ou R (hors équipe de combat) + un familier, envoyés sur un terrain de chasse. Le butin s'accumule en temps réel, même jeu fermé, jusqu'à 12 h de stock : viens le récolter.",

@@ -435,6 +435,15 @@ static func medaillon(id: String, taille: float, connu := true) -> Panel:
 		img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		img.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		p.add_child(img)
+		# Anneau de la couleur de rareté par-dessus l'image
+		var anneau := Panel.new()
+		var sa := st.duplicate() as StyleBoxFlat
+		sa.draw_center = false
+		sa.set_border_width_all(maxi(3, int(taille / 22)))
+		anneau.add_theme_stylebox_override("panel", sa)
+		anneau.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		anneau.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		p.add_child(anneau)
 		return p
 	var nom: String = str(d["nom"])
 	var l := UiCommun.label(nom.substr(0, 1) if connu else "?", int(taille * 0.42), Color.WHITE if connu else UiCommun.C_DOUX)

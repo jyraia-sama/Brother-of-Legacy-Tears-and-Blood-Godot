@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.26.0** (2026-09-29)
+Version actuelle : **0.26.1** (2026-09-29)
+
+## v0.26.1 — Portraits des familiers (1/2)  (2026-09-29)
+
+- Portraits des 18 premiers familiers (planches 31 et 32 : du Rat des Cryptes au Blaireau Fouisseur), avec un anneau à la couleur de leur rareté. Les autres gardent leur médaillon en attendant leurs planches.
+- Les portraits des familiers sont compressés (environ 35 Ko chacun) pour ne pas alourdir la version web.
 
 ## v0.26.0 — La Ménagerie : familiers et terrains de chasse  (2026-09-29)
 
