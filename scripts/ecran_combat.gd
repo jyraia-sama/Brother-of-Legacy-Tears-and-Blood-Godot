@@ -189,8 +189,8 @@ func _creer_interface() -> void:
 		var m: Dictionary = demande["match"]
 		var moi: Dictionary = m["j1"] if mon_camp() == 0 else m["j2"]
 		var lui: Dictionary = m["j2"] if mon_camp() == 0 else m["j1"]
-		texte_titre = "ARÈNE CLASSÉE — %s (%d)  contre  %s (%d)" % [moi.get("pseudo", "?"), int(moi.get("points", 0)),
-			lui.get("pseudo", "?"), int(lui.get("points", 0))]
+		texte_titre = "ARÈNE CLASSÉE — %s (%d)  contre  %s (%d)" % [EnLigne.nom_complet(str(moi.get("pseudo", "?"))), int(moi.get("points", 0)),
+			EnLigne.nom_complet(str(lui.get("pseudo", "?"))), int(lui.get("points", 0))]
 	elif _mode == "donjon":
 		var v := int(demande.get("vague", 0))
 		texte_titre = "%s · NIVEAU %d — COMBAT %d / %d : %s" % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),

@@ -364,11 +364,11 @@ func _afficher_membres() -> void:
 				elif role == "officier":
 					actions.append(["Rétrograder", func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "retrograder"})])
 				actions.append(["Nommer chef", func(): FenetreSimple.confirmer(self, "Nommer chef",
-					"Donner la direction de la guilde à %s ?\nTu deviendras officier." % m.pseudo, "Nommer chef",
+					"Donner la direction de la guilde à %s ?\nTu deviendras officier." % EnLigne.nom_complet(str(m.pseudo)), "Nommer chef",
 					func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "nommer_chef"}))])
 			if mon_role == "chef" or (mon_role == "officier" and role == "membre"):
 				actions.append(["Exclure", func(): FenetreSimple.confirmer(self, "Exclure",
-					"Exclure %s de la guilde ?" % m.pseudo, "Exclure",
+					"Exclure %s de la guilde ?" % EnLigne.nom_complet(str(m.pseudo)), "Exclure",
 					func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "exclure"}))])
 		_contenu.add_child(_ligne_membre(m, EcranSocial._nom_role(role), COULEURS_ROLE.get(role, UiCommun.C_DOUX), actions))
 
@@ -465,7 +465,7 @@ func _ligne_membre(m: Dictionary, texte_role: String, couleur_role: Color, actio
 	var infos := VBoxContainer.new()
 	infos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ligne.add_child(infos)
-	var nom := str(m.pseudo) + ("  (toi)" if str(m.id) == EnLigne.id_joueur() else "")
+	var nom := EnLigne.nom_complet(str(m.pseudo)) + ("  (toi)" if str(m.id) == EnLigne.id_joueur() else "")
 	infos.add_child(UiCommun.label(nom, 20))
 	var bas := HBoxContainer.new()
 	bas.add_theme_constant_override("separation", 12)

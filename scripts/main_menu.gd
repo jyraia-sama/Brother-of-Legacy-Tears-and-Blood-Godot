@@ -305,7 +305,7 @@ func _maj_bouton_compte() -> void:
 		return
 	_bouton_compte.visible = EnLigne.configure()
 	if EnLigne.est_connecte():
-		_bouton_compte.text = "● " + EnLigne.pseudo()
+		_bouton_compte.text = "● " + EnLigne.nom_complet()
 		_bouton_compte.tooltip_text = "Mon compte"
 		_bouton_compte.add_theme_color_override("font_color", Color("8fe07a") if EnLigne.reseau_ok else Color("e0b35a"))
 	elif EnLigne.connexion_en_cours():

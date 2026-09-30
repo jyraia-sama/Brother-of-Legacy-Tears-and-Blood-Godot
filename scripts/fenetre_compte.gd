@@ -253,7 +253,7 @@ func _construire_connecte() -> void:
 	ligne.add_child(UiCommun.avatar(str(h.get("id", "")), EnLigne.pseudo(), 64))
 	var infos := VBoxContainer.new()
 	ligne.add_child(infos)
-	infos.add_child(UiCommun.label(EnLigne.pseudo(), 26, UiCommun.C_LEGENDE))
+	infos.add_child(UiCommun.label(EnLigne.nom_complet(), 26, UiCommun.C_LEGENDE))
 	infos.add_child(UiCommun.label("Niveau de compte %d" % Sauvegarde.get_niveau_compte(), 16, UiCommun.C_DOUX))
 
 	var synchro := "jamais"

@@ -742,7 +742,7 @@ func _remplir_classement(zone: VBoxContainer, decalage: int) -> void:
 		rang.custom_minimum_size = Vector2(46, 0)
 		ligne.add_child(rang)
 		ligne.add_child(UiCommun.avatar(str(e.get("heros_vitrine", "")), str(e["pseudo"]), 34))
-		var n := UiCommun.label("%s  (Nv %d)" % [e["pseudo"], int(e.get("niveau", 1))], 16,
+		var n := UiCommun.label("%s  (Nv %d)" % [EnLigne.nom_complet(str(e["pseudo"])), int(e.get("niveau", 1))], 16,
 			C_OK if str(e["id"]) == EnLigne.id_joueur() else UiCommun.C_TEXTE)
 		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ligne.add_child(n)

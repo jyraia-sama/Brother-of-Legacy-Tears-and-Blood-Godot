@@ -321,7 +321,7 @@ func _carte_adversaire(a: Dictionary) -> Control:
 		infos.add_child(UiCommun.label("Le reflet de ta défense (entraînement)", 15, UiCommun.C_DOUX))
 		infos.add_child(UiCommun.label("Victoire : 10 points max", 15, UiCommun.C_DOUX))
 	else:
-		infos.add_child(UiCommun.label(str(a.get("pseudo", "?")), 22, UiCommun.C_TEXTE))
+		infos.add_child(UiCommun.label(EnLigne.nom_complet(str(a.get("pseudo", "?"))), 22, UiCommun.C_TEXTE))
 		infos.add_child(UiCommun.label("%s · %d points · Niv. %d" % [Arene.nom_palier(palier), int(a.get("points", 0)), int(a.get("niveau", 1))], 15, Arene.couleur_palier(palier)))
 		if str(a.get("guilde", "")) != "":
 			infos.add_child(UiCommun.label("Guilde : " + str(a.get("guilde")), 15, UiCommun.C_DOUX))
@@ -384,7 +384,7 @@ func _lancer(a: Dictionary, payant: bool) -> void:
 	var nom := "Gardien de l'Arène"
 	if d.get("adversaire") is Dictionary:
 		ennemis = Arene.nettoyer(d["adversaire"].get("equipe", []))
-		nom = str(d["adversaire"].get("pseudo", "?"))
+		nom = EnLigne.nom_complet(str(d["adversaire"].get("pseudo", "?")))
 	else:
 		ennemis = Arene.equipe_gardien()
 	EcranCombat.demande = {"mode": "arene", "type": "arene", "combat": d["combat"], "graine": int(d["graine"]),
@@ -520,7 +520,7 @@ func _afficher_classement() -> void:
 		var av := UiCommun.avatar(str(l.heros_vitrine), str(l.pseudo), 46)
 		av.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		ligne.add_child(av)
-		var nom := UiCommun.label(str(l.pseudo) + ("  (toi)" if moi else ""), 20)
+		var nom := UiCommun.label(EnLigne.nom_complet(str(l.pseudo)) + ("  (toi)" if moi else ""), 20)
 		nom.custom_minimum_size = Vector2(260, 0)
 		nom.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		ligne.add_child(nom)

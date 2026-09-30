@@ -59,6 +59,15 @@ func pseudo() -> String:
 	return str(session.get("pseudo", ""))
 
 
+## Nom affiché d'un joueur : le pseudo est son prénom, et tous portent le nom de la lignée
+## (« Neo » -> « Neo Valcendre »). Le pseudo seul reste utilisé pour se connecter et chercher un ami.
+const NOM_DE_FAMILLE := "Valcendre"
+
+func nom_complet(p: String = "") -> String:
+	var prenom := p if p != "" else pseudo()
+	return "" if prenom == "" else "%s %s" % [prenom, NOM_DE_FAMILLE]
+
+
 func id_joueur() -> String:
 	return str(session.get("id", ""))
 

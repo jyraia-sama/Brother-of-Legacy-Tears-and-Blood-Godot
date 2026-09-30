@@ -14,11 +14,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.28.0"
+const NUMERO := "0.29.0"
 const DATE := "2026-09-30"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.29.0", "date": "2026-09-30", "titre": "Les dialogues de l'histoire et le nom Valcendre",
+	"changements": [
+		"DIALOGUES DE L'HISTOIRE : une scène s'affiche au début de chaque chapitre (et à la fin des chapitres importants), pour les 13 Actes, selon le scénario : la séparation des frères, le Frère Masqué, la réunion, le duel, la vraie fin… Portrait, nom et texte qui s'écrit lettre par lettre ; clic ou Espace pour continuer, « Passer » pour sauter la scène. Chaque scène ne s'affiche qu'une fois.",
+		"NOM DE FAMILLE : chaque joueur appartient à la lignée des Valcendre. Le pseudo devient le prénom : « Neo » s'affiche « Neo Valcendre » (menu, Mon héros, Social, Guilde, Arène, Arène classée, Marche). Le pseudo seul sert toujours pour se connecter et ajouter un ami.",
+		"Prompts ChatGPT des portraits des personnages (Kaël, Kaël corrompu, Kaël libéré, Aldric, Othmar, Corvin, Morvaël, le Frère Masqué, le blason des Valcendre…) et des images définitives de l'Acte XIII : PROMPTS_PERSONNAGES.md.",
+	]},
 	{"version": "0.28.0", "date": "2026-09-30", "titre": "L'Acte caché et la vraie fin",
 	"changements": [
 		"ACTE XIII CACHÉ — « Le Sang et la Larme » : il apparaît (bouton rouge et bleu en bas de l'Histoire principale) une fois l'Acte XII terminé. 6 chapitres, plus difficiles que l'Acte XII, dans le Sceau des Frères, contre les souvenirs des Héritiers dévorés. Boss final : Morvaël, la Soif Première (UR, deux phases).",

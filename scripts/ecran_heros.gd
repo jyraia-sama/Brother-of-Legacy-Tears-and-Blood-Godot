@@ -97,7 +97,7 @@ func _aller(ou: String, uid: int) -> void:
 
 
 func _profil(d: VBoxContainer) -> void:
-	var pseudo := EnLigne.pseudo() if EnLigne.est_connecte() else "Joueur hors ligne"
+	var pseudo := EnLigne.nom_complet() if EnLigne.est_connecte() else "L'aîné des Valcendre (hors ligne)"
 	var titre := Succes.titre_actuel()
 	d.add_child(UiCommun.label(pseudo, 28, UiCommun.C_LEGENDE))
 	if titre != "":

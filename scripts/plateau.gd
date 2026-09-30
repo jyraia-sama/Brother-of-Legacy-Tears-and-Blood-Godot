@@ -116,7 +116,13 @@ func _ready() -> void:
 	_creer_hud()
 	if revient_de_combat:
 		_apres_combat(retour_combat)
-	elif reprise:
+		return
+	# Scène d'histoire du début du chapitre (première visite seulement)
+	if DialoguesData.a_dialogue(acte, chapitre, "debut") and not DialoguesData.vu(acte, chapitre, "debut"):
+		bloque = true
+		await FenetreDialogue.jouer(self, acte, chapitre, "debut")
+		bloque = false
+	if reprise:
 		_message("Reprise", "Tu reprends l'exploration là où tu l'avais laissée.", _reprendre_case)
 	else:
 		_enregistrer_etat()
@@ -526,6 +532,11 @@ func _victoire(id: int) -> void:
 		var premiere_fois := not ActesData.est_termine(acte, chapitre)
 		ActesData.marquer_termine(acte, chapitre)
 		Sauvegarde.effacer_plateau()
+		# Scène d'histoire de fin de chapitre (première victoire seulement)
+		if not DialoguesData.vu(acte, chapitre, "fin"):
+			bloque = true
+			await FenetreDialogue.jouer(self, acte, chapitre, "fin")
+			bloque = false
 		# Bonus d'XP de compte au premier passage (en plus de l'XP de chaque combat)
 		var p := (acte - 1) * 6 + chapitre
 		var xp := (20 + p * 3) if premiere_fois and not Sauvegarde.niveau_compte_max_atteint() else 0

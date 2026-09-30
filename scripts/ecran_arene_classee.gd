@@ -145,7 +145,7 @@ func _remplir() -> void:
 	if m is Dictionary:
 		var h2 := _ligne(Color("ff7a5a"))
 		var adv: Dictionary = m["j2"] if int(m["mon_camp"]) == 0 else m["j1"]
-		var t2 := UiCommun.label("Combat en cours contre %s !" % adv.get("pseudo", "?"), 18, Color("ffb070"))
+		var t2 := UiCommun.label("Combat en cours contre %s !" % EnLigne.nom_complet(str(adv.get("pseudo", "?"))), 18, Color("ffb070"))
 		t2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h2.add_child(t2)
 		var b2 := UiCommun.bouton("Reprendre le combat", 17)
@@ -216,7 +216,7 @@ func _zone_recherche() -> void:
 func _zone_defis() -> void:
 	for d in _etat.get("defis_recus", []):
 		var h := _ligne(Color("ff7a5a"))
-		var t := UiCommun.label("%s (%s, %d points) te défie !" % [d["de"].get("pseudo", "?"), _nom_palier(str(d["de"].get("palier", "bronze"))), int(d["de"].get("points", 0))], 18, Color("ffb070"))
+		var t := UiCommun.label("%s (%s, %d points) te défie !" % [EnLigne.nom_complet(str(d["de"].get("pseudo", "?"))), _nom_palier(str(d["de"].get("palier", "bronze"))), int(d["de"].get("points", 0))], 18, Color("ffb070"))
 		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h.add_child(t)
 		var ok := UiCommun.bouton("Accepter", 17)
@@ -228,7 +228,7 @@ func _zone_defis() -> void:
 	var env = _etat.get("defi_envoye")
 	if env is Dictionary and str(env.get("etat", "")) == "attente":
 		var h2 := _ligne(Color("ffd060"))
-		var t2 := UiCommun.label("Défi envoyé à %s… en attente de sa réponse (2 min)." % env["a"].get("pseudo", "?"), 17, Color("ffd060"))
+		var t2 := UiCommun.label("Défi envoyé à %s… en attente de sa réponse (2 min)." % EnLigne.nom_complet(str(env["a"].get("pseudo", "?"))), 17, Color("ffd060"))
 		t2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h2.add_child(t2)
 		var an := UiCommun.bouton("Annuler", 15)
@@ -237,7 +237,7 @@ func _zone_defis() -> void:
 			_charger_etat())
 		h2.add_child(an)
 	elif env is Dictionary and str(env.get("etat", "")) == "refusee":
-		_texte("%s a refusé ton défi." % env["a"].get("pseudo", "?"), 15, Color("ff7a6a"))
+		_texte("%s a refusé ton défi." % EnLigne.nom_complet(str(env["a"].get("pseudo", "?"))), 15, Color("ff7a6a"))
 	# Amis
 	_titre("DÉFIER UN AMI (compte pour le classement)", UiCommun.C_OR)
 	if _amis.is_empty():
@@ -261,7 +261,7 @@ func _zone_defis() -> void:
 		var hh := HBoxContainer.new()
 		hh.add_theme_constant_override("separation", 8)
 		p.add_child(hh)
-		var t := UiCommun.label("%s\n%s" % [a.get("pseudo", "?"), EnLigne.texte_presence(str(a.get("vu_le", "")))], 15,
+		var t := UiCommun.label("%s\n%s" % [EnLigne.nom_complet(str(a.get("pseudo", "?"))), EnLigne.texte_presence(str(a.get("vu_le", "")))], 15,
 			Color("8fe07a") if en_ligne else UiCommun.C_DOUX)
 		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		hh.add_child(t)
@@ -282,7 +282,7 @@ func _zone_classement() -> Control:
 	for i in _classement.size():
 		var x: Dictionary = _classement[i]
 		var moi := str(x.get("pseudo", "")) == EnLigne.pseudo()
-		vb.add_child(UiCommun.label("%d.  %s — %d pts (%s)  ·  %dV / %dD" % [i + 1, x.get("pseudo", "?"), int(x.get("points", 0)),
+		vb.add_child(UiCommun.label("%d.  %s — %d pts (%s)  ·  %dV / %dD" % [i + 1, EnLigne.nom_complet(str(x.get("pseudo", "?"))), int(x.get("points", 0)),
 			_nom_palier(str(x.get("palier", "bronze"))), int(x.get("victoires", 0)), int(x.get("defaites", 0))], 15,
 			Color("ffd060") if moi else PALIERS.get(str(x.get("palier", "bronze")), PALIERS["bronze"])["couleur"]))
 	if not _historique.is_empty():
@@ -292,7 +292,7 @@ func _zone_classement() -> Control:
 			var res := str(x.get("resultat", ""))
 			var dl = x.get("delta")
 			vb.add_child(UiCommun.label("%s contre %s  (%s)%s" % [{"victoire": "Victoire", "defaite": "Défaite", "egalite": "Égalité"}.get(res, res),
-				x.get("adversaire", "?"), ("+" if dl != null and int(dl) >= 0 else "") + str(dl if dl != null else "?"),
+				EnLigne.nom_complet(str(x.get("adversaire", "?"))), ("+" if dl != null and int(dl) >= 0 else "") + str(dl if dl != null else "?"),
 				"  · forfait" if x.get("forfait", false) else ""], 14,
 				Color("8fe07a") if res == "victoire" else (Color("ff7a6a") if res == "defaite" else UiCommun.C_DOUX)))
 	return vb
@@ -376,7 +376,7 @@ func _quitter_file() -> void:
 func _defier(id_ami: String, pseudo: String) -> void:
 	var r := await EnLigne.appeler("ac_defier", {"p_ami": id_ami, "p_equipe": _equipe(), "p_version": Version.NUMERO})
 	if r.ok and str(r.data) == "ok":
-		_annoncer(["Défi envoyé à %s !" % pseudo])
+		_annoncer(["Défi envoyé à %s !" % EnLigne.nom_complet(pseudo)])
 		_charger_etat()
 	else:
 		_erreur(ERREURS.get(str(r.data), r.erreur if not r.ok else str(r.data)))

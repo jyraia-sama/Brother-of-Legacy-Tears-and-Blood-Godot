@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.28.0** (2026-09-30)
+Version actuelle : **0.29.0** (2026-09-30)
+
+## v0.29.0 — Les dialogues de l'histoire et le nom Valcendre  (2026-09-30)
+
+- DIALOGUES DE L'HISTOIRE : une scène s'affiche au début de chaque chapitre (et à la fin des chapitres importants), pour les 13 Actes, selon le scénario : la séparation des frères, le Frère Masqué, la réunion, le duel, la vraie fin… Portrait, nom et texte qui s'écrit lettre par lettre ; clic ou Espace pour continuer, « Passer » pour sauter la scène. Chaque scène ne s'affiche qu'une fois.
+- NOM DE FAMILLE : chaque joueur appartient à la lignée des Valcendre. Le pseudo devient le prénom : « Neo » s'affiche « Neo Valcendre » (menu, Mon héros, Social, Guilde, Arène, Arène classée, Marche). Le pseudo seul sert toujours pour se connecter et ajouter un ami.
+- Prompts ChatGPT des portraits des personnages (Kaël, Kaël corrompu, Kaël libéré, Aldric, Othmar, Corvin, Morvaël, le Frère Masqué, le blason des Valcendre…) et des images définitives de l'Acte XIII : PROMPTS_PERSONNAGES.md.
 
 ## v0.28.0 — L'Acte caché et la vraie fin  (2026-09-30)
 

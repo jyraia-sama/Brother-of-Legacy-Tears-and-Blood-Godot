@@ -61,7 +61,7 @@ func _ready() -> void:
 	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	entete.add_child(titre)
 	if EnLigne.est_connecte():
-		entete.add_child(UiCommun.label("Ton pseudo : " + EnLigne.pseudo(), 20, UiCommun.C_LEGENDE))
+		entete.add_child(UiCommun.label("%s  (pseudo : %s)" % [EnLigne.nom_complet(), EnLigne.pseudo()], 20, UiCommun.C_LEGENDE))
 		var rafraichir := UiCommun.bouton("↻ Actualiser")
 		rafraichir.pressed.connect(_charger)
 		entete.add_child(rafraichir)
@@ -241,10 +241,10 @@ func _annuler(d: Dictionary) -> void:
 
 
 func _retirer(d: Dictionary) -> void:
-	FenetreSimple.confirmer(self, "Retirer un ami", "Retirer %s de ta liste d'amis ?" % d.pseudo, "Retirer", func():
+	FenetreSimple.confirmer(self, "Retirer un ami", "Retirer %s de ta liste d'amis ?" % EnLigne.nom_complet(str(d.pseudo)), "Retirer", func():
 		var r := await EnLigne.appeler("retirer_ami", {"p_joueur": d.id})
 		if is_inside_tree():
-			_etat.text = "%s a été retiré de tes amis." % d.pseudo if r.ok else r.erreur
+			_etat.text = "%s a été retiré de tes amis." % EnLigne.nom_complet(str(d.pseudo)) if r.ok else r.erreur
 			_charger())
 
 
@@ -275,7 +275,7 @@ static func ouvrir_profil(parent: Node, id_joueur: String) -> void:
 	var pres := EnLigne.texte_presence(str(p.vu_le))
 	infos.add_child(UiCommun.label(pres, 17, Color("8fe07a") if pres == "En ligne" else UiCommun.C_DOUX))
 	infos.add_child(UiCommun.label("Joueur depuis le " + str(p.cree_le).left(10), 15, UiCommun.C_DOUX))
-	FenetreSimple.ouvrir(parent, str(p.pseudo), "", [], contenu)
+	FenetreSimple.ouvrir(parent, EnLigne.nom_complet(str(p.pseudo)), "", [], contenu)
 
 
 static func _nom_role(role: String) -> String:
@@ -300,7 +300,7 @@ func _ligne_joueur(d: Dictionary, actions: Array) -> Control:
 	var infos := VBoxContainer.new()
 	infos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ligne.add_child(infos)
-	infos.add_child(UiCommun.label(str(d.pseudo), 22, UiCommun.C_TEXTE))
+	infos.add_child(UiCommun.label(EnLigne.nom_complet(str(d.pseudo)), 22, UiCommun.C_TEXTE))
 	var details := "Niv. %d" % int(d.niveau)
 	if str(d.get("guilde", "")) != "":
 		details += "  ·  Guilde : " + str(d.guilde)

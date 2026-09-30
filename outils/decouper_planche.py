@@ -4,6 +4,9 @@ en un fichier PNG par unité dans assets/unites/.
 Usage :  python outils/decouper_planche.py planche_01.png brute_noire barbe_bleue ...
 (les identifiants dans l'ordre des cases : gauche -> droite, haut -> bas)
 Familiers : ajouter --familiers pour ranger les images dans assets/familiers/.
+Personnages de l'histoire : ajouter --personnages (assets/personnages/). Un identifiant de la forme
+« a+b » enregistre la même image sous deux noms (ex. morvael+unite:morvael -> personnages/morvael.png
+et unites/morvael.png).
 """
 import sys
 import numpy as np
@@ -28,8 +31,8 @@ def bandes(profil, seuil):
 
 
 def main():
-    args = [a for a in sys.argv[1:] if a != "--familiers"]
-    dossier = "assets/familiers" if "--familiers" in sys.argv else "assets/unites"
+    args = [a for a in sys.argv[1:] if a not in ("--familiers", "--personnages")]
+    dossier = "assets/familiers" if "--familiers" in sys.argv else ("assets/personnages" if "--personnages" in sys.argv else "assets/unites")
     chemin, ids = args[0], args[1:]
     img = Image.open(chemin).convert("RGB")
     gris = np.asarray(img.convert("L")).astype(float)
@@ -44,8 +47,11 @@ def main():
         c = min(x1 - x0, y1 - y0)                      # carré centré
         cx, cy = (x0 + x1) // 2, (y0 + y1) // 2
         boite = (cx - c // 2, cy - c // 2, cx - c // 2 + c, cy - c // 2 + c)
-        img.crop(boite).resize((TAILLE, TAILLE), Image.LANCZOS).save(f"{dossier}/{uid}.png", optimize=True)
-        print(f"  {uid}.png")
+        portrait = img.crop(boite).resize((TAILLE, TAILLE), Image.LANCZOS)
+        for nom in uid.split("+"):
+            cible = f"assets/unites/{nom[6:]}.png" if nom.startswith("unite:") else f"{dossier}/{nom}.png"
+            portrait.save(cible, optimize=True)
+            print(f"  {cible}")
 
 
 if __name__ == "__main__":
