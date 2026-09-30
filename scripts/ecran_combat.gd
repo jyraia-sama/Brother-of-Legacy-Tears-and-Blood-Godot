@@ -245,6 +245,9 @@ func _position(camp: int, place: int) -> Vector2:
 		return Vector2(xs[slot] + 0.02, 0.29 + esc * 0.185)
 	if mon_camp() == 1:
 		camp = 1 - camp          # chaque joueur voit son équipe à gauche
+	if place == 5:
+		# 6e place : unité invitée de l'histoire (Kaël), entre l'Avant et l'Arrière
+		return Vector2(0.25 if camp == 0 else 0.75, 0.47)
 	var avant := place < 2
 	var x := 0.36 if avant else 0.14
 	var ys := [0.40, 0.66] if avant else [0.33, 0.56, 0.79]

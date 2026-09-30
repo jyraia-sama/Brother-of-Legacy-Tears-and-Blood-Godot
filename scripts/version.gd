@@ -14,11 +14,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.29.0"
+const NUMERO := "0.30.0"
 const DATE := "2026-09-30"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.30.0", "date": "2026-09-30", "titre": "Portraits de l'histoire, Kaël invité et Journal",
+	"changements": [
+		"PORTRAITS DE L'HISTOIRE (planches 36 et 37) : Kaël (jeune, corrompu, libéré), Aldric, Othmar, Corvin, Morvaël, le Frère Masqué, le blason des Valcendre (ton portrait dans les dialogues), l'Ermite, le moine, la veuve, le commandant, la résistante. Ils apparaissent dans les dialogues.",
+		"Nouveaux portraits d'unités : Kaël Valcendre (Légende), les boss Morvaël, le Frère Masqué, le Seigneur des Cendres, l'Héritier Maudit et l'Empereur Déchu.",
+		"KAËL À TES CÔTÉS : dans les chapitres où il est avec toi (tout l'Acte I, la fin de l'Acte X, l'Acte XII après le duel, la fin de l'Acte XIII), Kaël combat en unité invitée, en plus de ton équipe (6e place, entre l'Avant et l'Arrière). Jeune et impulsif dans l'Acte I (Flamme Noire Incontrôlée), puis libéré à la fin de l'histoire.",
+		"JOURNAL DE L'HISTOIRE (bouton en bas à gauche de l'Histoire principale) : revois toutes les scènes déjà vues, Acte par Acte.",
+	]},
 	{"version": "0.29.0", "date": "2026-09-30", "titre": "Les dialogues de l'histoire et le nom Valcendre",
 	"changements": [
 		"DIALOGUES DE L'HISTOIRE : une scène s'affiche au début de chaque chapitre (et à la fin des chapitres importants), pour les 13 Actes, selon le scénario : la séparation des frères, le Frère Masqué, la réunion, le duel, la vraie fin… Portrait, nom et texte qui s'écrit lettre par lettre ; clic ou Espace pour continuer, « Passer » pour sauter la scène. Chaque scène ne s'affiche qu'une fois.",

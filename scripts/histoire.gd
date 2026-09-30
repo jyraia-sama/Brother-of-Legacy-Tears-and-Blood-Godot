@@ -79,6 +79,7 @@ func _ready() -> void:
 	_creer_zone(PARAM_RECT, "parametres", "Paramètres")
 	# Acte caché : n'apparaît qu'une fois l'Acte XII terminé
 	FinHistoire.verifier_rattrapage()
+	_creer_bouton_journal()
 	if ActesData.acte_debloque(13):
 		_creer_acte_cache()
 
@@ -96,6 +97,15 @@ func _ready() -> void:
 	add_child(minuterie)
 
 	_creer_panneau_info()
+
+
+## Journal de l'histoire : revoir les scènes déjà vues.
+func _creer_bouton_journal() -> void:
+	var b := UiCommun.bouton("JOURNAL DE L'HISTOIRE", 18)
+	b.tooltip_text = "Revoir les scènes de l'histoire déjà vues"
+	add_child(b)
+	_placer(b, Rect2(22, 884, 300, 50))
+	b.pressed.connect(func(): FenetreJournal.ouvrir(self))
 
 
 ## Bouton de l'Acte XIII caché, en bas de l'écran (rouge et bleu, pulsant).

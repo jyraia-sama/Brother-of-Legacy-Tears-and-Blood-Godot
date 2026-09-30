@@ -2844,6 +2844,18 @@ const UNITES := {
 			{"nom": "Le Rire Retrouvé", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "immunite", "afflictions": ["malediction", "silence"]}, {"effet": "aura", "stat": "atk", "valeur": 0.08}], "niveau": 30, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; immunisé à Malédiction et Silence ; toute l'équipe : ATK +8 %."},
 		],
 	},
+	"kael_jeune": {
+		"nom": "Kaël (invité)", "rarete": "SR", "element": "tenebres", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "heros", "couleur": "8a1020",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": ["atk"], "phase2": {},
+		"stats": {"pv": 900, "atk": 190, "def": 70, "agi": 105, "mag": 70},
+		"secondaires": {"crit": 12, "degats_crit": 170, "res": 12, "preci": 96},
+		"skills": [
+			{"nom": "Fougue du Cadet", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.6}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 160 % de puissance de skill à un ennemi."},
+			{"nom": "Flamme Noire Incontrôlée", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "brulure", "chance": 0.35, "duree": 2}, {"effet": "cout_pv", "valeur": 0.08}], "niveau": 1, "description": "(20 % de chance par tour) Inflige 120 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Brûlure ; Kaël perd 8 % de ses PV."},
+			{"nom": "Ensemble, jusqu'à la fin", "type": "passif", "effets": [{"effet": "aura", "stat": "atk", "valeur": 0.05}], "niveau": 1, "description": "Toute l'équipe : ATK +5 %."},
+		],
+	},
 	"morvael": {
 		"nom": "Morvaël, la Soif Première", "rarete": "UR", "element": "tenebres", "role": "mage", "position": "arriere",
 		"invocable": false, "categorie": "boss", "couleur": "3a0010",

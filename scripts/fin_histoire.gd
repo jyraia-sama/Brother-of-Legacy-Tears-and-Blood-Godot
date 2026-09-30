@@ -81,6 +81,22 @@ static func fin_acte_13() -> Array:
 	return l
 
 
+## Kaël, unité INVITÉE (hors collection) : Acte I (avant la séparation), fin de l'Acte X (la réunion),
+## Acte XII après le duel, et fin de l'Acte XIII. Renvoie {} s'il n'est pas là.
+const CHAPITRES_INVITE := {
+	1: [1, 2, 3, 4, 5, 6], 10: [6], 12: [2, 3, 4, 5, 6], 13: [5, 6],
+}
+
+static func invite(acte: int, chapitre: int) -> Dictionary:
+	if not chapitre in CHAPITRES_INVITE.get(acte, []):
+		return {}
+	var id := "kael_jeune" if acte == 1 else HEROS_KAEL
+	Sauvegarde.decouvrir(id)
+	var niveau := Rencontres.niveau_attendu(acte, chapitre)
+	return {"id": id, "niveau": niveau, "place": 5, "nom": "Kaël (invité)", "etoiles": 1 if acte == 1 else 3,
+		"invite": true}
+
+
 ## Rattrapage : un joueur qui avait déjà fini l'Acte XII avant cette version reçoit son titre.
 static func verifier_rattrapage() -> void:
 	if ActesData.est_termine(12, 6) and not _drapeaux().get("acte12", false):

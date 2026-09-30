@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.29.0** (2026-09-30)
+Version actuelle : **0.30.0** (2026-09-30)
+
+## v0.30.0 — Portraits de l'histoire, Kaël invité et Journal  (2026-09-30)
+
+- PORTRAITS DE L'HISTOIRE (planches 36 et 37) : Kaël (jeune, corrompu, libéré), Aldric, Othmar, Corvin, Morvaël, le Frère Masqué, le blason des Valcendre (ton portrait dans les dialogues), l'Ermite, le moine, la veuve, le commandant, la résistante. Ils apparaissent dans les dialogues.
+- Nouveaux portraits d'unités : Kaël Valcendre (Légende), les boss Morvaël, le Frère Masqué, le Seigneur des Cendres, l'Héritier Maudit et l'Empereur Déchu.
+- KAËL À TES CÔTÉS : dans les chapitres où il est avec toi (tout l'Acte I, la fin de l'Acte X, l'Acte XII après le duel, la fin de l'Acte XIII), Kaël combat en unité invitée, en plus de ton équipe (6e place, entre l'Avant et l'Arrière). Jeune et impulsif dans l'Acte I (Flamme Noire Incontrôlée), puis libéré à la fin de l'histoire.
+- JOURNAL DE L'HISTOIRE (bouton en bas à gauche de l'Histoire principale) : revois toutes les scènes déjà vues, Acte par Acte.
 
 ## v0.29.0 — Les dialogues de l'histoire et le nom Valcendre  (2026-09-30)
 

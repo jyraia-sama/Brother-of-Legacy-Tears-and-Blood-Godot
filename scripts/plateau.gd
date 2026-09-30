@@ -488,6 +488,10 @@ func _lancer_combat(id: int, gratuit := false) -> void:
 	if equipe.is_empty():
 		_message("Aucune équipe", "Ton équipe est vide : ajoute des héros dans le Deck avant de combattre.")
 		return
+	# Kaël combat à tes côtés dans certains chapitres de l'histoire (unité invitée, 6e place)
+	var invite := FinHistoire.invite(acte, chapitre)
+	if not invite.is_empty():
+		equipe.append(invite)
 	if not gratuit:
 		if not _assez_de_stamina(id):
 			return
