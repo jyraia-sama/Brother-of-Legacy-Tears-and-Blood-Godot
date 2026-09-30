@@ -255,6 +255,22 @@ func _carte_familier(fid: String) -> Button:
 	b.add_theme_stylebox_override("hover", _style_carte(C_OR, 0.06))
 	b.add_theme_stylebox_override("pressed", _style_carte(C_OR, 0.12))
 	b.pressed.connect(_selectionner_familier.bind(fid))
+	# Familier découvert avec illustration : carte illustrée, comme les héros
+	if connu and FamiliersData.chemin_image(fid) != "":
+		var bas := UiCommun.habiller_carte(b, fid, TAILLE_CARTE.x)
+		var n := _label(d["nom"], 14, C_TEXTE)
+		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		n.custom_minimum_size = Vector2(TAILLE_CARTE.x - 12, 0)
+		n.add_theme_color_override("font_outline_color", Color.BLACK)
+		n.add_theme_constant_override("outline_size", 5)
+		bas.add_child(n)
+		var r := _label(d["rarete"] + " · Familier", 12, bord)
+		r.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		r.add_theme_color_override("font_outline_color", Color.BLACK)
+		r.add_theme_constant_override("outline_size", 4)
+		bas.add_child(r)
+		return b
 	var vb := VBoxContainer.new()
 	vb.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	vb.offset_top = 12
@@ -292,10 +308,16 @@ func _selectionner_familier(fid: String) -> void:
 	for e in _f_image.get_children():
 		e.queue_free()
 	_f_image.visible = true
-	var centre := CenterContainer.new()
-	centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	centre.add_child(EcranMenagerie.medaillon(fid, 260))
-	_f_image.add_child(centre)
+	if FamiliersData.chemin_image(fid) != "":
+		# Grande illustration, comme pour les héros
+		var ill := UiCommun.illustration(fid, Vector2.ZERO, 12, COULEURS_RARETE[d["rarete"]], 3)
+		ill.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_f_image.add_child(ill)
+	else:
+		var centre := CenterContainer.new()
+		centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		centre.add_child(EcranMenagerie.medaillon(fid, 260))
+		_f_image.add_child(centre)
 	_f_nom.text = d["nom"]
 	_f_nom.add_theme_color_override("font_color", COULEURS_RARETE[d["rarete"]])
 	_f_infos.text = "%s  ·  %s  ·  Familier (Ménagerie)\nNon combattant · s'obtient au Pacte Sauvage de l'Autel d'Invocation" % [d["rarete"], UnitesData.ELEMENTS[d["element"]]]

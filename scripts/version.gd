@@ -14,11 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.26.2"
+const NUMERO := "0.26.3"
 const DATE := "2026-09-30"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.26.3", "date": "2026-09-30", "titre": "Familiers illustrés au Bestiaire",
+	"changements": [
+		"BESTIAIRE : les familiers qui ont un portrait s'affichent comme les héros : illustration sur toute la carte (nom et rareté en bas, pastille d'élément) et grande illustration dans la fiche. Les autres gardent leur médaillon en attendant leur portrait.",
+	]},
 	{"version": "0.26.2", "date": "2026-09-30", "titre": "Corrections Bestiaire et Invocation",
 	"changements": [
 		"MENU ADMIN : l'option « Bestiaire entièrement débloqué » révèle aussi les 40 familiers dans l'onglet Familiers du Bestiaire.",

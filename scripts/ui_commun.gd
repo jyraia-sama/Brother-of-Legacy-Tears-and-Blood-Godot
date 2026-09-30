@@ -93,6 +93,8 @@ const CADRAGE_PORTRAIT := Rect2(0.13, 0.0, 0.74, 0.74)
 ## Chemin du portrait d'une unité, ou "" si l'image n'existe pas encore.
 ## Une évolution sans image propre montre celle de son unité de base (en attendant son skin).
 static func chemin_portrait(id: String) -> String:
+	if FamiliersData.existe(id):              # familier de la Ménagerie
+		return FamiliersData.chemin_image(id)
 	var chemin := DOSSIER_PORTRAITS + id + ".png"
 	if ResourceLoader.exists(chemin):
 		return chemin
@@ -221,7 +223,7 @@ static func _carte_heros(h: Dictionary, largeur: float, hauteur: float) -> Butto
 ## sombre en bas et la pastille d'élément. Renvoie la colonne du bas où ajouter
 ## les textes (nom, niveau...). À n'appeler que si chemin_portrait(id) != "".
 static func habiller_carte(b: Button, id: String, largeur: float) -> VBoxContainer:
-	var u := UnitesData.get_unite(id)
+	var u := FamiliersData.get_familier(id) if FamiliersData.existe(id) else UnitesData.get_unite(id)
 	# Illustration qui remplit la carte (à l'intérieur du contour de rareté)
 	var ill := illustration(id, Vector2.ZERO, 6)
 	ill.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.26.2** (2026-09-30)
+Version actuelle : **0.26.3** (2026-09-30)
+
+## v0.26.3 — Familiers illustrés au Bestiaire  (2026-09-30)
+
+- BESTIAIRE : les familiers qui ont un portrait s'affichent comme les héros : illustration sur toute la carte (nom et rareté en bas, pastille d'élément) et grande illustration dans la fiche. Les autres gardent leur médaillon en attendant leur portrait.
 
 ## v0.26.2 — Corrections Bestiaire et Invocation  (2026-09-30)
 
