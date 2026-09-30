@@ -135,7 +135,22 @@ static func titres() -> Array:
 	for d in LISTE:
 		if reclames(d["id"]) >= d["paliers"].size():
 			t.append(d["titre"])
+	# Titres gagnés ailleurs (saisons de l'Arène classée...)
+	for x in Sauvegarde.donnees.get("titres_bonus", []):
+		if not str(x) in t:
+			t.append(str(x))
 	return t
+
+
+## Ajoute un titre gagné hors Succès (ex. fin de saison de l'Arène classée).
+static func ajouter_titre(titre: String) -> void:
+	if titre == "":
+		return
+	if not Sauvegarde.donnees.get("titres_bonus") is Array:
+		Sauvegarde.donnees["titres_bonus"] = []
+	if not titre in Sauvegarde.donnees["titres_bonus"]:
+		Sauvegarde.donnees["titres_bonus"].append(titre)
+	Sauvegarde.sauvegarder()
 
 
 static func titre_actuel() -> String:

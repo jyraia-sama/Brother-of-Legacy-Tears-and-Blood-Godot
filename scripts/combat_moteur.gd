@@ -357,8 +357,8 @@ func _skill_utile(c: Dictionary, sk: Dictionary) -> bool:
 # Attaque normale
 # =====================================================================
 
-func _attaque_normale(c: Dictionary) -> void:
-	var cible := _cible_attaque(c)
+func _attaque_normale(c: Dictionary, forcee: Dictionary = {}) -> void:
+	var cible := forcee if (not forcee.is_empty() and forcee["vivant"]) else _cible_attaque(c)
 	if cible.is_empty():
 		return
 	_log({"t": "attaque", "a": c["idx"], "c": cible["idx"]})
@@ -423,8 +423,10 @@ func _modifier_degats(att: Dictionary, cible: Dictionary, valeur: float, corps_a
 # Skills
 # =====================================================================
 
-func _lancer_skill(c: Dictionary, sk: Dictionary) -> void:
+func _lancer_skill(c: Dictionary, sk: Dictionary, forcee: Dictionary = {}) -> void:
 	var cibles := _cibles_skill(c, sk["cible"])
+	if sk["cible"] == "ennemi" and not forcee.is_empty() and forcee["vivant"] and forcee["camp"] != c["camp"]:
+		cibles = [forcee]
 	_log({"t": "skill", "a": c["idx"], "nom": sk["nom"], "cibles": cibles.map(func(x): return x["idx"])})
 	var total_degats := 0.0
 	for e in sk["effets"]:
@@ -700,4 +702,195 @@ func descriptif() -> Array:
 		l.append({"idx": c["idx"], "camp": c["camp"], "place": c["place"], "id": c["id"], "nom": c["nom"],
 			"niveau": c["niveau"], "pv": int(c["pv"]), "pv_max": int(c["pv_max"]), "element": c["element"],
 			"avant": c["avant"], "boss": c["boss"], "elite": c["elite"], "vivant": c["vivant"], "geant": c["geant"]})
+	return l
+
+
+# =====================================================================
+# MODE MANUEL (Arène classée) : le combat avance action par action.
+#   m.demarrer_manuel()
+#   var c := m.prochain_acteur()          # {} = combat fini
+#   m.actions_possibles(c)                # attaque + sorts (avec recharges) et cibles permises
+#   m.jouer_action(c, {"type": "attaque", "cible": idx})   # ou "skill" (+ "skill": nom) ou "auto"
+#   m.resultat_classe()                   # camp gagnant (0, 1) ou -1 (égalité)
+# Tout est déterministe : deux appareils qui jouent les mêmes actions avec la même graine
+# obtiennent exactement le même combat.
+# En mode manuel, un sort n'est plus lancé au hasard : il se choisit, puis se recharge
+# pendant quelques tours (voir recharge_sort).
+# =====================================================================
+
+var _file: Array = []
+var _recharges := {}          # idx -> {nom du sort: tours restants}
+var journal_lu := 0           # position de lecture du journal (pour l'écran)
+
+
+func demarrer_manuel() -> void:
+	_log({"t": "debut"})
+
+
+## Tours de recharge d'un sort selon sa chance d'origine (35 % -> 2 tours, 25 % -> 3, 20 % -> 4).
+static func recharge_sort(sk: Dictionary) -> int:
+	return clampi(int(round(1.0 / maxf(0.05, float(sk.get("chance", 0.3))))) - 1, 1, 5)
+
+
+## Prochaine unité qui doit choisir une action ({} si le combat est fini).
+## Les effets de début de tour (poisons, étourdissements...) sont joués au passage.
+func prochain_acteur() -> Dictionary:
+	while true:
+		if _fini():
+			return {}
+		if _file.is_empty():
+			if tour >= tours_max:
+				_log({"t": "temps_ecoule"})
+				return {}
+			tour += 1
+			_log({"t": "tour", "n": tour})
+			_file = _ordre_du_tour()
+		var c: Dictionary = _file.pop_front()
+		if not c["vivant"]:
+			continue
+		if int(c.get("dernier_tour", -1)) != tour:
+			c["dernier_tour"] = tour
+			_debut_de_tour(c)
+		if not c["vivant"] or _fini():
+			continue
+		var aff: Dictionary = c["afflictions"]
+		if aff.has("etourdi"):
+			aff.erase("etourdi")
+			_log({"t": "passe", "a": c["idx"], "raison": "Étourdi"})
+			continue
+		if aff.has("gel") and _rng.randf() < GEL_PERTE_TOUR:
+			_log({"t": "passe", "a": c["idx"], "raison": "Gelé"})
+			continue
+		return c
+	return {}
+
+
+func _cibles_attaque_permises(c: Dictionary) -> Array:
+	var ennemis := _vivants(1 - c["camp"])
+	var provoc := ennemis.filter(func(x): return x["provocation"] > 0)
+	if not provoc.is_empty():
+		return provoc
+	if c["melee"]:
+		var devant := ennemis.filter(func(x): return x["avant"])
+		if not devant.is_empty():
+			return devant
+	return ennemis
+
+
+func _cibles_skill_permises(c: Dictionary) -> Array:
+	var ennemis := _vivants(1 - c["camp"])
+	var provoc := ennemis.filter(func(x): return x["provocation"] > 0)
+	return provoc if not provoc.is_empty() else ennemis
+
+
+## Actions possibles : [{type, nom, description, cibles: [idx] (vide = automatique), recharge, dispo}]
+func actions_possibles(c: Dictionary) -> Array:
+	var l: Array = [{"type": "attaque", "nom": "Attaque", "description": "Attaque normale (dégâts physiques).",
+		"cibles": _cibles_attaque_permises(c).map(func(x): return x["idx"]), "recharge": 0, "dispo": true}]
+	var silence: bool = c["afflictions"].has("silence")
+	var rec: Dictionary = _recharges.get(c["idx"], {})
+	for sk in c["actifs"]:
+		var r := int(rec.get(sk["nom"], 0))
+		var cibles: Array = []
+		if sk["cible"] == "ennemi":
+			cibles = _cibles_skill_permises(c).map(func(x): return x["idx"])
+		l.append({"type": "skill", "nom": sk["nom"], "description": sk.get("description", ""), "cibles": cibles,
+			"recharge": r, "dispo": r <= 0 and not silence and _skill_utile(c, sk), "silence": silence})
+	return l
+
+
+func _sort(c: Dictionary, nom: String) -> Dictionary:
+	for sk in c["actifs"]:
+		if sk["nom"] == nom:
+			return sk
+	return {}
+
+
+## Choix de l'IA (minuteur écoulé ou joueur absent) : le meilleur sort disponible, sinon attaque.
+func choix_auto(c: Dictionary) -> Dictionary:
+	for a in actions_possibles(c):
+		if a["type"] == "skill" and a["dispo"]:
+			return {"type": "skill", "skill": a["nom"], "cible": -1}
+	return {"type": "attaque", "cible": -1}
+
+
+## Joue l'action de l'unité c. Une action invalide est remplacée par le choix de l'IA.
+func jouer_action(c: Dictionary, action: Dictionary) -> void:
+	_executer(c, action)
+	# Les recharges baissent d'un tour après chaque action de l'unité
+	var rec: Dictionary = _recharges.get(c["idx"], {})
+	for nom in rec.keys():
+		rec[nom] = int(rec[nom]) - 1
+		if int(rec[nom]) <= 0:
+			rec.erase(nom)
+	var utilise := str(c.get("_sort_utilise", ""))
+	if utilise != "":
+		rec[utilise] = recharge_sort(_sort(c, utilise))
+		c.erase("_sort_utilise")
+	_recharges[c["idx"]] = rec
+
+
+func _executer(c: Dictionary, action: Dictionary) -> void:
+	var a := action
+	if str(a.get("type", "auto")) == "auto":
+		a = choix_auto(c)
+	var cible: Dictionary = {}
+	var ci := int(a.get("cible", -1))
+	if ci >= 0 and ci < unites.size():
+		cible = unites[ci]
+	if a.get("type") == "skill":
+		var sk := _sort(c, str(a.get("skill", "")))
+		var ok := false
+		for p in actions_possibles(c):
+			if p["type"] == "skill" and p["nom"] == str(a.get("skill", "")) and p["dispo"]:
+				ok = true
+		if not ok or sk.is_empty():
+			a = choix_auto(c)
+			if a["type"] == "skill":
+				sk = _sort(c, a["skill"])
+			cible = {}
+		if a["type"] == "skill":
+			if not cible.is_empty() and not cible["idx"] in _cibles_skill_permises(c).map(func(x): return x["idx"]):
+				cible = {}
+			_lancer_skill(c, sk, cible)
+			c["_sort_utilise"] = sk["nom"]
+			return
+	# Attaque normale (cible permise seulement)
+	if not cible.is_empty() and not cible["idx"] in _cibles_attaque_permises(c).map(func(x): return x["idx"]):
+		cible = {}
+	_attaque_normale(c, cible)
+	if c["vivant"] and _rng.randf() < c["p"]["double"] and not _fini():
+		_log({"t": "info", "a": c["idx"], "texte": "Double attaque !"})
+		_attaque_normale(c, cible if (not cible.is_empty() and cible["vivant"]) else {})
+
+
+func est_fini() -> bool:
+	return _fini() or (tour >= tours_max and _file.is_empty())
+
+
+## Gagnant d'un combat classé : camp survivant ; au temps écoulé, le plus de PV restants (en %).
+func resultat_classe() -> int:
+	var v0 := _vivants(0).size()
+	var v1 := _vivants(1).size()
+	if v0 > 0 and v1 == 0:
+		return 0
+	if v1 > 0 and v0 == 0:
+		return 1
+	var r := [0.0, 0.0]
+	for camp in [0, 1]:
+		var tot := 0.0
+		var pv := 0.0
+		for x in _equipe(camp):
+			tot += x["pv_max"]
+			pv += maxf(0.0, x["pv"]) if x["vivant"] else 0.0
+		r[camp] = pv / maxf(1.0, tot)
+	if absf(r[0] - r[1]) < 0.001:
+		return -1
+	return 0 if r[0] > r[1] else 1
+
+
+## Événements du journal pas encore lus par l'écran.
+func nouveaux_evenements() -> Array:
+	var l := journal.slice(journal_lu)
+	journal_lu = journal.size()
 	return l

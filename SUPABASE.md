@@ -25,6 +25,11 @@ Même chose avec le fichier `supabase/02_arene.sql` : **New query** → colle to
 Même chose avec le fichier `supabase/03_marche.sql` : **New query** → colle tout → **Run** → « Success ».
 (À faire une fois, après les fichiers 01 et 02. Sans ce fichier, la Marche marche quand même, mais n'est pas classée.)
 
+### 2 quater. Arène classée en temps réel
+Même chose avec le fichier `supabase/04_arene_classee.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après les fichiers 01 et 02. Sans ce fichier, l'écran « Arène classée » affiche une erreur.
+Réglages — points de départ, force de l'Elo, durée des saisons, délais d'absence — au début du fichier.)
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

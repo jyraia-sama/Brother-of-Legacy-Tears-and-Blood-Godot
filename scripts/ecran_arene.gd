@@ -95,6 +95,14 @@ func _ready() -> void:
 		b.pressed.connect(_changer_onglet.bind(o[0]))
 		onglets.add_child(b)
 		_boutons_onglet[o[0]] = b
+	# Arène classée en temps réel (combat manuel contre un joueur connecté)
+	var classee := UiCommun.bouton("ARÈNE CLASSÉE (temps réel)", 19)
+	classee.custom_minimum_size = Vector2(300, 46)
+	classee.add_theme_color_override("font_color", Color("ffd060"))
+	classee.pressed.connect(func():
+		EcranArenaClassee.scene_retour_classee = scene_file_path
+		get_tree().change_scene_to_file(EcranArenaClassee.SCENE))
+	onglets.add_child(classee)
 
 	_message = UiCommun.label("", 18, Color(1.0, 0.8, 0.5))
 	_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

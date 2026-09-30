@@ -38,6 +38,7 @@ const SECTIONS := [
 • EXPÉDITIONS : la MARCHE MAUDITE (roguelike du jour avec classement) et la COMPAGNIE (missions en temps réel pour les unités hors équipe).
 • BOSS DE MONDE : un géant par jour de la semaine, affronté avec 20 unités.
 • ARÈNE : combats contre les défenses des autres joueurs, saisons et boutique d'Insignes.
+• ARÈNE CLASSÉE (bouton dans l'Arène) : combat MANUEL en temps réel contre un joueur connecté (file d'attente ou défi d'un ami). À chaque tour d'une de tes unités, choisis Attaque ou un sort et la cible (15 s). Rangs Bronze → Légende, saisons de 4 semaines avec gemmes et titres.
 • MÉNAGERIE (bouton en bas de l'Aventure) : un héros N ou R + un familier partent en chasse sur un terrain (or, tomes, élixirs, Poussière d'Écho, ressources d'évolution, Sceaux). Le butin s'accumule même jeu fermé, jusqu'à 12 h. Récolte, Célérité, Fortune, terrain préféré et talent du familier ; rôle favori, rareté R, niveau et étoiles du héros augmentent le butin."""],
 	["En ligne", """• Crée un COMPTE (Paramètres → Gérer le compte) : ta partie est sauvegardée en ligne automatiquement.
 • SOCIAL : ajoute des amis. GUILDE : crée ou rejoins une guilde.

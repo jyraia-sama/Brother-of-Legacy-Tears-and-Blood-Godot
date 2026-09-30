@@ -13,6 +13,8 @@ extends Control
 ##   "arene"      : Arène JcJ contre la défense d'un joueur   ("combat", "graine", "adversaire", "retour")
 ##   "donjon"     : un des 4 combats d'une expédition de Donjon   ("donjon", "niveau", "vague", "retour")
 ##   "marche"     : un combat de la Marche Maudite   ("type", "region", "retour")
+##   "classee"    : Arène classée en temps réel, combat MANUEL à deux joueurs ("match", "mon_camp", "retour")
+##                  -> le déroulement est géré par combat_classe.gd
 ##
 ## Boutons : vitesse x1 / x2 / x4, "Passer" (affiche directement le résultat).
 
@@ -44,6 +46,16 @@ var _mode := "aventure"
 var _barre_geant: ProgressBar
 var _lbl_geant: Label
 var _idx_geant := -1
+var barre_haut: HBoxContainer   # barre du haut (le combat classé y ajoute « Abandonner »)
+
+
+## Camp du joueur (Arène classée : le 2e joueur est le camp 1, affiché à gauche quand même).
+func mon_camp() -> int:
+	return _mon_camp
+
+
+var _mon_camp := 0
+var demande_combat: Dictionary = {}     # copie de la demande de CE combat
 
 
 func _ready() -> void:
@@ -52,15 +64,25 @@ func _ready() -> void:
 		push_warning("EcranCombat ouvert sans demande : combat de test.")
 		demande = _demande_test()
 	_mode = str(demande.get("mode", "aventure"))
+	demande_combat = demande
+	_mon_camp = int(demande.get("mon_camp", 0)) if _mode == "classee" else 0
 	Audio.musique(_musique_combat())
 	_creer_fond()
 	_creer_interface()
 
-	CombatMoteur.ignorer_admin = _mode == "arene"
+	CombatMoteur.ignorer_admin = _mode in ["arene", "classee"]
 	var moteur := CombatMoteur.new(demande["equipe"], demande["ennemis"], int(demande.get("graine", 0)),
 		int(demande.get("tours_max", CombatMoteur.TOURS_MAX)))
 	CombatMoteur.ignorer_admin = false
 	_infos = moteur.descriptif()
+	if _mode == "classee":
+		await get_tree().process_frame
+		_placer_unites()
+		var cc := CombatClasse.new()
+		cc.ecran = self
+		cc.moteur = moteur
+		add_child(cc)
+		return
 	_res = moteur.combattre()
 	await get_tree().process_frame
 	_placer_unites()
@@ -163,6 +185,12 @@ func _creer_interface() -> void:
 	elif _mode == "marche":
 		texte_titre = "LA MARCHE MAUDITE · %s — %s" % [Marche.nom_region(int(demande.get("region", 0))).to_upper(),
 			Marche.TYPES[demande.get("type", "combat")]["nom"].to_upper()]
+	elif _mode == "classee":
+		var m: Dictionary = demande["match"]
+		var moi: Dictionary = m["j1"] if mon_camp() == 0 else m["j2"]
+		var lui: Dictionary = m["j2"] if mon_camp() == 0 else m["j1"]
+		texte_titre = "ARÈNE CLASSÉE — %s (%d)  contre  %s (%d)" % [moi.get("pseudo", "?"), int(moi.get("points", 0)),
+			lui.get("pseudo", "?"), int(lui.get("points", 0))]
 	elif _mode == "donjon":
 		var v := int(demande.get("vague", 0))
 		texte_titre = "%s · NIVEAU %d — COMBAT %d / %d : %s" % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),
@@ -181,6 +209,8 @@ func _creer_interface() -> void:
 	var passer := _bouton("Passer ▶▶")
 	passer.pressed.connect(func(): _passer = true)
 	h.add_child(passer)
+	passer.visible = _mode != "classee"      # combat manuel : on ne saute pas le combat
+	barre_haut = h
 	# Vitesse mémorisée d'un combat à l'autre (le Boss de Monde garde la sienne, x2 par défaut)
 	_changer_vitesse(float(Sauvegarde.get_parametre(_cle_vitesse(), 2.0 if _mode == "boss_monde" else 1.0)), false)
 
@@ -213,6 +243,8 @@ func _position(camp: int, place: int) -> Vector2:
 		var slot := place % 5
 		var xs := [0.32, 0.40, 0.05, 0.13, 0.21]
 		return Vector2(xs[slot] + 0.02, 0.29 + esc * 0.185)
+	if mon_camp() == 1:
+		camp = 1 - camp          # chaque joueur voit son équipe à gauche
 	var avant := place < 2
 	var x := 0.36 if avant else 0.14
 	var ys := [0.40, 0.66] if avant else [0.33, 0.56, 0.79]
@@ -288,7 +320,7 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 	portrait.add_child(ini)
 	UiCommun.habiller_portrait(portrait, info["id"], ini)
 
-	var barre := _barre(Color("c0392b") if info["camp"] == 1 else Color("3fae5a"), 88.0 if petit else (300.0 if geant else 150.0), 7.0 if petit else 12.0)
+	var barre := _barre(Color("c0392b") if info["camp"] != mon_camp() else Color("3fae5a"), 88.0 if petit else (300.0 if geant else 150.0), 7.0 if petit else 12.0)
 	barre.max_value = info["pv_max"]
 	barre.value = info["pv"]
 	barre.size_flags_horizontal = Control.SIZE_SHRINK_CENTER

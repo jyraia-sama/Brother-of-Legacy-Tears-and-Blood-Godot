@@ -1,6 +1,15 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.26.3** (2026-09-30)
+Version actuelle : **0.27.0** (2026-09-30)
+
+## v0.27.0 — Arène classée en temps réel  (2026-09-30)
+
+- ARÈNE CLASSÉE EN TEMPS RÉEL (bouton « Arène classée » dans l'Arène) : combats MANUELS contre un autre joueur connecté, avec ton équipe du Deck (niveaux, étoiles et Échos réels).
+- Combat unité par unité, dans l'ordre de Vitesse : quand c'est au tour d'une de tes unités, choisis Attaque ou un sort, puis la cible (les corps à corps visent l'Avant, la Provocation force la cible). Minuteur de 15 s : sinon l'unité agit toute seule. Les sorts se rechargent quelques tours après usage. 20 tours maximum, puis victoire au pourcentage de PV restants.
+- Trouver un adversaire : file d'attente (même rang d'abord, puis élargie avec l'attente) ou défi direct d'un ami connecté (compte aussi pour le classement). Les deux joueurs doivent avoir la même version du jeu.
+- Classement Elo (1000 points au départ), rangs Bronze, Argent (1100), Or (1250), Platine (1400), Diamant (1550) et Légende (1700). Saisons de 4 semaines : récompense de 40 à 600 gemmes, et un titre à partir de l'Or (Gladiateur d'Or / de Platine / de Diamant, Légende de l'Arène).
+- Joueur absent : l'IA joue à sa place au bout de 40 s, et s'il a quitté le jeu depuis 1 minute, victoire par forfait. On peut aussi abandonner (défaite). Un combat interrompu (jeu fermé) peut être repris.
+- À FAIRE UNE FOIS : lancer supabase/04_arene_classee.sql dans Supabase (voir SUPABASE.md).
 
 ## v0.26.3 — Familiers illustrés au Bestiaire  (2026-09-30)
 
