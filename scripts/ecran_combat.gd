@@ -836,13 +836,14 @@ func _fin_donjon() -> void:
 	Sauvegarde.ajouter_stat("combats_gagnes")
 	if not Donjons.derniere_vague():
 		Donjons.vague_suivante(_res["pv_final"])
+		# Enchaînement automatique : pas de fenêtre entre les vagues, le combat suivant démarre seul
 		var suivant: String = Donjons.NOMS_VAGUE[Donjons.VAGUES[int(Donjons.expedition["vague"])]]
-		lignes.push_front("Combat %d / %d gagné ! Prochain : %s." % [int(demande["vague"]) + 1, Donjons.VAGUES.size(), suivant])
-		lignes.insert(1, "Pas de soin entre les combats : tes unités gardent leurs PV.")
 		resultat = {"mode": "donjon", "victoire": true}
-		_afficher_resultat(true, lignes, "COMBAT GAGNÉ", "Combat suivant ▶", func():
-			EcranCombat.demande = Donjons.demande_combat()
-			get_tree().change_scene_to_file(SCENE))
+		Audio.son("or")
+		_texte_centre("Combat %d / %d gagné !  Prochain : %s" % [int(demande["vague"]) + 1, Donjons.VAGUES.size(), suivant], Color("ffd27a"))
+		await get_tree().create_timer(1.6).timeout
+		EcranCombat.demande = Donjons.demande_combat()
+		get_tree().change_scene_to_file(SCENE)
 		return
 	lignes.push_front("%s — niveau %d terminé !" % [Donjons.DONJONS[d]["nom"], n])
 	lignes.append_array(Donjons.valider_victoire(d, n))

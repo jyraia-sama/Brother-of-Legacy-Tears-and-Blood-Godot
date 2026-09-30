@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.27.0** (2026-09-30)
+Version actuelle : **0.27.1** (2026-09-30)
+
+## v0.27.1 — Donjons en continu  (2026-09-30)
+
+- DONJONS : les 4 combats s'enchaînent maintenant sans interruption. Entre deux vagues, un court message « Combat 1 / 4 gagné ! Prochain : … » s'affiche puis le combat suivant démarre tout seul (les PV restants sont toujours conservés). Le bilan ne s'affiche qu'à la fin de l'expédition (ou en cas d'échec).
 
 ## v0.27.0 — Arène classée en temps réel  (2026-09-30)
 

@@ -14,11 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.27.0"
+const NUMERO := "0.27.1"
 const DATE := "2026-09-30"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.27.1", "date": "2026-09-30", "titre": "Donjons en continu",
+	"changements": [
+		"DONJONS : les 4 combats s'enchaînent maintenant sans interruption. Entre deux vagues, un court message « Combat 1 / 4 gagné ! Prochain : … » s'affiche puis le combat suivant démarre tout seul (les PV restants sont toujours conservés). Le bilan ne s'affiche qu'à la fin de l'expédition (ou en cas d'échec).",
+	]},
 	{"version": "0.27.0", "date": "2026-09-30", "titre": "Arène classée en temps réel",
 	"changements": [
 		"ARÈNE CLASSÉE EN TEMPS RÉEL (bouton « Arène classée » dans l'Arène) : combats MANUELS contre un autre joueur connecté, avec ton équipe du Deck (niveaux, étoiles et Échos réels).",
