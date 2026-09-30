@@ -66,6 +66,8 @@ func _ready() -> void:
 	tete.add_child(_lbl_or)
 	_lbl_eclats = UiCommun.label("", 20, Color("c8a0ff"))
 	tete.add_child(_lbl_eclats)
+	_lbl_sceaux = UiCommun.label("", 20, Color("8ad05a"))
+	tete.add_child(_lbl_sceaux)
 
 	var pactes := HBoxContainer.new()
 	pactes.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -204,8 +206,6 @@ func _panneau_sauvage() -> PanelContainer:
 	_lbl_garantie_sauvage = UiCommun.label("", 15, couleur)
 	_lbl_garantie_sauvage.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(_lbl_garantie_sauvage)
-	_lbl_sceaux = UiCommun.label("", 16, couleur)
-	vb.add_child(_lbl_sceaux)
 	var espace := Control.new()
 	espace.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vb.add_child(espace)

@@ -140,7 +140,7 @@ func _remplir_grille() -> void:
 	if _filtre == "familiers":
 		for fid in FamiliersData.ids():
 			total += 1
-			if TOUT_REVELER or Menagerie.est_decouvert(fid):
+			if _familier_visible(fid):
 				decouverts += 1
 			_grille.add_child(_carte_familier(fid))
 		_compteur.text = "Familiers découverts : %d / %d" % [decouverts, total]
@@ -245,7 +245,7 @@ func _carte(id: String, u: Dictionary) -> Button:
 ## Carte d'un familier (Ménagerie) : découvert dès qu'on l'a obtenu une fois.
 func _carte_familier(fid: String) -> Button:
 	var d := FamiliersData.get_familier(fid)
-	var connu := TOUT_REVELER or Menagerie.est_decouvert(fid)
+	var connu := _familier_visible(fid)
 	var b := Button.new()
 	b.custom_minimum_size = TAILLE_CARTE
 	b.focus_mode = Control.FOCUS_NONE
@@ -275,10 +275,15 @@ func _carte_familier(fid: String) -> Button:
 	return b
 
 
+## Familier visible au Bestiaire : obtenu au moins une fois, ou option Admin « Bestiaire débloqué ».
+func _familier_visible(fid: String) -> bool:
+	return TOUT_REVELER or Sauvegarde.admin("bestiaire_complet") or Menagerie.est_decouvert(fid)
+
+
 func _selectionner_familier(fid: String) -> void:
 	_selection = ""
 	var d := FamiliersData.get_familier(fid)
-	var connu := TOUT_REVELER or Menagerie.est_decouvert(fid)
+	var connu := _familier_visible(fid)
 	_f_vide.visible = not connu
 	_fiche.visible = connu
 	if not connu:

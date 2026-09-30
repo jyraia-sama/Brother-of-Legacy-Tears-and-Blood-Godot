@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.26.1** (2026-09-29)
+Version actuelle : **0.26.2** (2026-09-30)
+
+## v0.26.2 — Corrections Bestiaire et Invocation  (2026-09-30)
+
+- MENU ADMIN : l'option « Bestiaire entièrement débloqué » révèle aussi les 40 familiers dans l'onglet Familiers du Bestiaire.
+- AUTEL D'INVOCATION : le nombre de Sceaux Sauvages s'affiche maintenant en haut à droite, à côté de l'or et des Éclats (et plus dans le panneau du Pacte Sauvage).
 
 ## v0.26.1 — Portraits des familiers (1/2)  (2026-09-29)
 

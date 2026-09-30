@@ -668,7 +668,7 @@ const ADMIN_OPTIONS := [
 	["stamina_infinie", "Stamina infinie", "Les combats ne consomment plus de stamina."],
 	["eclats_infinis", "Éclats infinis", "Éclats de Pacte Supérieur illimités (invocations et événements)."],
 	["objets_infinis", "Objets du Reliquaire infinis", "Braises, Plumes, Fragments, Poussière, coffres, élixirs, tomes, Pierres d'Éveil, ressources des Donjons…"],
-	["bestiaire_complet", "Bestiaire entièrement débloqué", "Toutes les unités sont visibles dans le Bestiaire."],
+	["bestiaire_complet", "Bestiaire entièrement débloqué", "Toutes les unités et tous les familiers sont visibles dans le Bestiaire."],
 	["tout_debloque", "Tous les Actes, chapitres et niveaux de Donjon débloqués", "Accès à tous les chapitres et à tous les niveaux des Donjons sans terminer les précédents."],
 	["tours_libres", "Tous les étages des Tours accessibles", "Combattre n'importe quel étage, même sans avoir fini le précédent."],
 	["boss_monde_libre", "Boss de Monde : tous disponibles", "Les 7 boss jouables tous les jours, essais illimités, sans condition de déblocage."],

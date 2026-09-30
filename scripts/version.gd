@@ -14,11 +14,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.26.1"
-const DATE := "2026-09-29"
+const NUMERO := "0.26.2"
+const DATE := "2026-09-30"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.26.2", "date": "2026-09-30", "titre": "Corrections Bestiaire et Invocation",
+	"changements": [
+		"MENU ADMIN : l'option « Bestiaire entièrement débloqué » révèle aussi les 40 familiers dans l'onglet Familiers du Bestiaire.",
+		"AUTEL D'INVOCATION : le nombre de Sceaux Sauvages s'affiche maintenant en haut à droite, à côté de l'or et des Éclats (et plus dans le panneau du Pacte Sauvage).",
+	]},
 	{"version": "0.26.1", "date": "2026-09-29", "titre": "Portraits des familiers (1/2)",
 	"changements": [
 		"Portraits des 18 premiers familiers (planches 31 et 32 : du Rat des Cryptes au Blaireau Fouisseur), avec un anneau à la couleur de leur rareté. Les autres gardent leur médaillon en attendant leurs planches.",
