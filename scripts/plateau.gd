@@ -71,6 +71,15 @@ var _poussiere: Array = []     # nuages de poussière : {pos, vel, vie, vie_max,
 const PORTEE_LUMIERE := 260.0  # rayon du halo bleu de la Larme
 const COULEUR_LARME := Color(0.45, 0.65, 1.0)
 var _halo: GradientTexture2D = null
+
+# Miniatures des cases (planche 38) : assets/plateaux/cases/<nom>.png
+const DOSSIER_MINIATURES := "res://assets/plateaux/cases/"
+const MINIATURES := {
+	T.DEPART: "depart", T.COMBAT: "combat", T.ELITE: "elite", T.GARDIEN: "gardien", T.BOSS: "boss",
+	T.COFFRE: "coffre", T.SOIN: "soin", T.MYSTERE: "mystere", T.PIEGE: "piege",
+}
+const HAUTEUR_MINIATURE := 2.3     # hauteur de la miniature, en multiple du rayon de la case
+var _miniatures := {}
 var saut := 0.0
 var en_mouvement := false
 var bloque := false     # une fenêtre est ouverte
@@ -892,8 +901,13 @@ func _dessiner_case(n: Dictionary, p: Vector2) -> void:
 	draw_circle(p + Vector2(-ri * 0.25, -ri * 0.3), ri * 0.55, Color(1, 1, 1, 0.07))
 	draw_arc(p, ri, 0, TAU, 48, Color("c9a060") if not fait else Color("6a5a40"), 2.5, true)
 	draw_arc(p, ri - 3.5, 0, TAU, 48, Color(0, 0, 0, 0.35), 2.0, true)
-	var ic := Color(1, 0.93, 0.8) if not fait else Color(1, 1, 1, 0.35)
-	_dessiner_icone(type, p, ri * 0.62, ic)
+	# Miniature posée sur le socle (assets/plateaux/cases/<type>.png), sinon icône.
+	# Sur la case du grand frère, on garde l'icône : la figurine est déjà dessus.
+	var mini := _miniature(type)
+	var avec_mini: bool = mini != null and n["id"] != courant
+	if not avec_mini:
+		var ic := Color(1, 0.93, 0.8) if not fait else Color(1, 1, 1, 0.35)
+		_dessiner_icone(type, p, ri * 0.62, ic)
 
 	# Lumière : sombre au loin, reflet bleu tout près de la Larme
 	if lum < 1.0:
@@ -902,8 +916,29 @@ func _dessiner_case(n: Dictionary, p: Vector2) -> void:
 	if reflet > 0.0:
 		draw_circle(p, r + 3.0, Color(COULEUR_LARME, reflet * 0.1))
 
+	if avec_mini:
+		var ts := mini.get_size()
+		var h := r * HAUTEUR_MINIATURE
+		var w := h * ts.x / ts.y
+		if w > r * 3.2:          # miniature très large (porte, coffre) : on limite la largeur
+			w = r * 3.2
+			h = w * ts.y / ts.x
+		var teinte := Color(lum, lum, lum).lerp(COULEUR_LARME, reflet * 0.2)
+		if fait:
+			teinte = teinte.darkened(0.5)
+			teinte.a = 0.8
+		draw_texture_rect(mini, Rect2(p + Vector2(-w / 2.0, r * 0.35 - h), Vector2(w, h)), false, teinte)
+
 	if PlateauGenerateur.est_combat(type) and not fait:
 		_texte(p + Vector2(0, r + 26.0), "Nv %d" % Rencontres.niveau_ennemis(acte, chapitre, n), 14, Color(1, 0.9, 0.75, 0.35 + 0.55 * lum))
+
+
+## Image de la miniature d'un type de case (chargée une seule fois), ou null.
+func _miniature(type: int) -> Texture2D:
+	if not _miniatures.has(type):
+		var chemin := DOSSIER_MINIATURES + str(MINIATURES.get(type, "")) + ".png"
+		_miniatures[type] = load(chemin) if MINIATURES.has(type) and ResourceLoader.exists(chemin) else null
+	return _miniatures[type]
 
 
 ## Case encore cachée par le brouillard, à côté d'une case connue.

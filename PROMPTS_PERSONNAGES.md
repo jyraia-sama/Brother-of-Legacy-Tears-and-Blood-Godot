@@ -140,3 +140,44 @@ STYLE : même style que les portraits du jeu, peinture numérique dark fantasy t
 
 Variante « figurine peinte » (façon miniature de jeu de société) : remplace la ligne STYLE par
 `STYLE : miniature de jeu de société en résine peinte à la main, rendu 3D réaliste, lumière douce de studio, couleurs sombres et or.`
+
+---
+
+## Planche 38 : les miniatures des cases du plateau → `planche_38.png`
+
+Les 9 types de cases deviennent de petites miniatures posées sur les socles de pierre, dans le style de la figurine du
+grand frère. **Joins l'image de la figurine (`pion_aine.png`)** pour que ChatGPT garde exactement le même rendu.
+Le fond VERT sert à détourer : je le rends transparent automatiquement.
+
+Tant qu'une miniature manque, la case garde son icône actuelle.
+
+```
+Crée une planche de 9 miniatures de jeu de plateau pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que la figurine jointe (même rendu peint, même éclairage dramatique venant du haut à gauche, mêmes matières : pierre sombre, métal bruni, touches d'or).
+
+FORMAT, À RESPECTER STRICTEMENT :
+- image carrée 1024x1024 ;
+- grille parfaitement régulière de 3 colonnes et 3 rangées : 9 cases carrées identiques, séparées par un fin trait NOIR droit ;
+- le fond de CHAQUE case est un VERT UNI très vif (#00FF00, fond d'incrustation), sans dégradé, sans ombre portée, sans décor ;
+- dans chaque case : un seul objet, vu de trois quarts légèrement en plongée, entier, centré, qui ne touche pas les bords ;
+- chaque objet est posé sur un petit socle rond en pierre sombre (comme celui de la figurine), sans aucune bordure verte sur l'objet ;
+- aucun vert dans les objets eux-mêmes (pas de feuillage, pas de flamme verte) ;
+- aucun texte, aucun chiffre, aucun cadre ;
+- ordre : case 1 en haut à gauche, lecture de gauche à droite, rangée par rangée.
+
+Contenu des cases, dans l'ordre :
+1. le point de départ : un étendard planté, tissu bleu nuit déchiré brodé d'un phénix de cendres argenté, hampe en bois noir
+2. un combat : deux épées rouillées croisées plantées dans la terre, un casque cabossé posé devant, petites taches de sang
+3. un combat d'élite : un trophée de guerre, un casque à cornes noir planté sur une pique, une couronne de pointes dorées, braises rougeoyantes
+4. un gardien : une statue de chevalier gardien en pierre fissurée, grand bouclier et épée plantée devant lui, yeux bleus luisants
+5. le boss : une porte monumentale en fer noir cloutée dans une arche de pierre, ornée d'un crâne à cornes, lueur rouge sang qui filtre sous la porte
+6. un coffre : un coffre au trésor ancien en bois sombre cerclé de fer et d'or, serrure dorée, quelques pièces d'or autour
+7. un soin : un feu de camp chaleureux entouré de pierres, flammes orange, une petite marmite fumante et une gourde posée à côté
+8. un événement mystère : un petit autel de pierre ancien avec une bougie et un orbe violet flottant qui brille, runes gravées
+9. un piège : un piège à mâchoires d'acier ouvert, entouré de pieux de bois pointus et d'une chaîne rouillée
+```
+
+Si ChatGPT refuse ou rate le fond vert : demande chaque miniature séparément sur **fond transparent**
+(même texte, une case à la fois) et nomme-les `depart.png`, `combat.png`, `elite.png`, `gardien.png`, `boss.png`,
+`coffre.png`, `soin.png`, `mystere.png`, `piege.png`.
+
+Commande : `python3 outils/decouper_miniatures.py planche_38.png`
