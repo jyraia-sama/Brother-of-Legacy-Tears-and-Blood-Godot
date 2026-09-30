@@ -14,11 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.30.0"
+const NUMERO := "0.30.1"
 const DATE := "2026-09-30"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.30.1", "date": "2026-09-30", "titre": "La figurine du grand frère",
+	"changements": [
+		"Le PION DU PLATEAU devient une figurine du grand frère Valcendre (armure sombre, manteau bleu au phénix, médaillon de la Larme) : il saute de case en case et se tourne dans le sens de la marche.",
+	]},
 	{"version": "0.30.0", "date": "2026-09-30", "titre": "Portraits de l'histoire, Kaël invité et Journal",
 	"changements": [
 		"PORTRAITS DE L'HISTOIRE (planches 36 et 37) : Kaël (jeune, corrompu, libéré), Aldric, Othmar, Corvin, Morvaël, le Frère Masqué, le blason des Valcendre (ton portrait dans les dialogues), l'Ermite, le moine, la veuve, le commandant, la résistante. Ils apparaissent dans les dialogues.",

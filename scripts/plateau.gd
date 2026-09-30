@@ -60,7 +60,7 @@ var boite_equipe: VBoxContainer
 
 var pion_pos := Vector2.ZERO
 const IMAGE_PION := "res://assets/plateaux/pion_aine.png"
-const HAUTEUR_PION := 96.0     # hauteur de la figurine à l'écran
+const HAUTEUR_PION := 120.0    # hauteur de la figurine à l'écran
 var _pion_tex: Texture2D = null
 var _pion_charge := false
 var _pion_gauche := false      # la figurine regarde vers la gauche
@@ -818,7 +818,7 @@ func _epee(c: Vector2, s: float, sens: float, col: Color) -> void:
 
 
 func _dessiner_pion(p: Vector2) -> void:
-	# Pion d'échecs (sera remplacé plus tard par le héros)
+	# Pion d'échecs (secours si pion_aine.png est absent)
 	var ombre := 1.0 - saut / 60.0
 	draw_set_transform(pion_pos + Vector2(0, 4), 0, Vector2(1.0, 0.35))
 	draw_circle(Vector2.ZERO, 26.0 * ombre, Color(0, 0, 0, 0.45))

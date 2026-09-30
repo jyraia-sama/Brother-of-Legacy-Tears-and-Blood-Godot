@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.30.0** (2026-09-30)
+Version actuelle : **0.30.1** (2026-09-30)
+
+## v0.30.1 — La figurine du grand frère  (2026-09-30)
+
+- Le PION DU PLATEAU devient une figurine du grand frère Valcendre (armure sombre, manteau bleu au phénix, médaillon de la Larme) : il saute de case en case et se tourne dans le sens de la marche.
 
 ## v0.30.0 — Portraits de l'histoire, Kaël invité et Journal  (2026-09-30)
 
