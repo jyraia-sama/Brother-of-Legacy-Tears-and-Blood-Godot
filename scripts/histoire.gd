@@ -77,6 +77,10 @@ func _ready() -> void:
 
 	_creer_zone(RETOUR_RECT, "retour", "Retour")
 	_creer_zone(PARAM_RECT, "parametres", "Paramètres")
+	# Acte caché : n'apparaît qu'une fois l'Acte XII terminé
+	FinHistoire.verifier_rattrapage()
+	if ActesData.acte_debloque(13):
+		_creer_acte_cache()
 
 	# Barre de ressources (même ordre que le menu principal)
 	_lbl_stamina = _creer_texte("", Rect2(452, 30, 100, 30), 22)
@@ -92,6 +96,47 @@ func _ready() -> void:
 	add_child(minuterie)
 
 	_creer_panneau_info()
+
+
+## Bouton de l'Acte XIII caché, en bas de l'écran (rouge et bleu, pulsant).
+func _creer_acte_cache() -> void:
+	var b := Button.new()
+	b.focus_mode = Control.FOCUS_NONE
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var termine := ActesData.est_termine(13, 6)
+	b.text = "ACTE XIII — LE SANG ET LA LARME" + ("   (vraie fin atteinte)" if termine else "")
+	b.add_theme_font_size_override("font_size", 22)
+	b.add_theme_color_override("font_color", Color("ffe6f0"))
+	b.add_theme_color_override("font_hover_color", Color.WHITE)
+	b.add_theme_color_override("font_outline_color", Color.BLACK)
+	b.add_theme_constant_override("outline_size", 6)
+	for etat in ["normal", "hover", "pressed"]:
+		var st := StyleBoxFlat.new()
+		st.bg_color = Color(0.25, 0.02, 0.08, 0.92) if etat == "normal" else Color(0.18, 0.05, 0.3, 0.95)
+		st.border_color = Color("ff4a5a") if etat == "normal" else Color("6ab0ff")
+		st.set_border_width_all(3)
+		st.set_corner_radius_all(10)
+		st.shadow_color = Color(0.9, 0.1, 0.2, 0.5)
+		st.shadow_size = 10
+		b.add_theme_stylebox_override(etat, st)
+	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	add_child(b)
+	_placer(b, Rect2(536, 884, 600, 50))
+	b.pressed.connect(_on_bouton.bind("acte_13", "Acte XIII"))
+	b.mouse_entered.connect(_montrer_info_cache.bind(b))
+	b.mouse_exited.connect(_cacher_info)
+	var tw := b.create_tween().set_loops()
+	tw.tween_property(b, "modulate", Color(1.25, 1.1, 1.3), 0.9).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(b, "modulate", Color.WHITE, 0.9).set_trans(Tween.TRANS_SINE)
+
+
+func _montrer_info_cache(_b: Control) -> void:
+	var a := ActesData.get_acte(13)
+	_info_partie.text = str(a.get("partie", "")).to_upper()
+	_info_titre.text = "Acte XIII : %s" % a.get("titre", "")
+	_info_texte.text = "La pierre rouge du médaillon s'est fendue. Il existe peut-être un moyen de sauver Kaël…\n\nPlus difficile que l'Acte XII. La vraie fin t'attend au bout."
+	_placer(_info, Rect2(636, 500, 400, 300))
+	_info.visible = true
 
 
 # Voile sombre + mention "VERROUILLÉ" sur un Acte pas encore accessible

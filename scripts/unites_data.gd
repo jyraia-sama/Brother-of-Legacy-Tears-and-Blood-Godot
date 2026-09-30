@@ -2828,4 +2828,33 @@ const UNITES := {
 			{"nom": "Gueule Insatiable", "type": "passif", "effets": [{"effet": "vol_vie", "valeur": 0.15}], "niveau": 30, "description": "Vol de vie de 15 % sur ses attaques."},
 		],
 	},
+	# ============================================================
+	# ACTE CACHÉ (XIII) : Kaël (récompense de la vraie fin) et Morvaël (boss final)
+	# ============================================================
+	"kael_valcendre": {
+		"nom": "Kaël Valcendre", "rarete": "UR", "element": "tenebres", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "heros", "couleur": "8a1020",
+		"legende": true, "forge": false, "race": "Humain", "dominantes": ["atk", "agi"], "phase2": {},
+		"stats": {"pv": 1500, "atk": 345, "def": 120, "agi": 125, "mag": 95},
+		"secondaires": {"crit": 15, "degats_crit": 190, "res": 25, "preci": 98},
+		"skills": [
+			{"nom": "Flamme Noire Maîtrisée", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.1}, {"effet": "affliction", "nom": "brulure", "chance": 0.4, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 210 % de puissance de skill à un ennemi ; 40 % de chance d'infliger Brûlure (2 tours). La flamme qui le dévorait lui obéit désormais."},
+			{"nom": "Sang Valcendre", "type": "passif", "effets": [{"effet": "stat", "stat": "atk", "valeur": 0.15}, {"effet": "vol_vie", "valeur": 0.12}], "niveau": 10, "description": "ATK +15 % ; vol de vie de 12 % sur ses attaques."},
+			{"nom": "Lames Jumelles", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "debuff", "stat": "def", "valeur": 0.2, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 130 % de puissance de skill à tous les ennemis ; DEF -20 % pour tous les ennemis (2 tours)."},
+			{"nom": "Le Rire Retrouvé", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "immunite", "afflictions": ["malediction", "silence"]}, {"effet": "aura", "stat": "atk", "valeur": 0.08}], "niveau": 30, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; immunisé à Malédiction et Silence ; toute l'équipe : ATK +8 %."},
+		],
+	},
+	"morvael": {
+		"nom": "Morvaël, la Soif Première", "rarete": "UR", "element": "tenebres", "role": "mage", "position": "arriere",
+		"invocable": false, "categorie": "boss", "couleur": "3a0010",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {"nom": "La Soif Sans Fond", "texte": "Morvaël ouvre la gueule de tous les Héritiers qu'elle a dévorés !"},
+		"stats": {"pv": 2600, "atk": 420, "def": 260, "agi": 250, "mag": 200},
+		"secondaires": {"crit": 12, "degats_crit": 185, "res": 35, "preci": 98},
+		"skills": [
+			{"nom": "Soif Première", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.4}, {"effet": "drain", "valeur": 0.5}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 240 % de puissance de skill à un ennemi ; rend 50 % des dégâts infligés."},
+			{"nom": "Mille Héritiers", "type": "passif", "effets": [{"effet": "stat", "stat": "pv", "valeur": 0.2}, {"effet": "regen", "valeur": 0.03}], "niveau": 10, "description": "PV +20 % ; régénère 3 % de ses PV max à chaque tour."},
+			{"nom": "Deuil Éternel", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.4}, {"effet": "affliction", "nom": "malediction", "chance": 0.5, "duree": 2}, {"effet": "debuff", "stat": "atk", "valeur": 0.15, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 140 % de puissance de skill à tous les ennemis ; 50 % de chance d'infliger Malédiction (2 tours) ; ATK -15 % pour tous les ennemis (2 tours)."},
+			{"nom": "Faim du Sang", "type": "passif", "effets": [{"effet": "execution", "valeur": 0.3}, {"effet": "immunite", "afflictions": ["etourdi", "silence"]}], "niveau": 30, "description": "+30 % de dégâts contre les cibles sous 50 % de PV ; immunisée à Étourdissement et Silence."},
+		],
+	},
 }

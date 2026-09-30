@@ -60,7 +60,11 @@ const SETS := {
 	"fatal": {"nom": "Fatal", "pieces": 4},
 	"rage": {"nom": "Rage", "pieces": 4},
 	"despair": {"nom": "Despair", "pieces": 4},
+	# Set UNIQUE (vraie fin de l'Acte XIII) : jamais lâché ni fabriqué
+	"freres": {"nom": "des Frères", "pieces": 2},
 }
+## Sets qu'on ne peut ni obtenir en combat ni fabriquer à l'Atelier
+const SETS_UNIQUES := ["freres"]
 
 
 ## Description d'un set avec ses valeurs actuelles.
@@ -79,6 +83,7 @@ static func description_set(set_id: String) -> String:
 		"fatal": "ATK +%s %%." % _n(35 * f),
 		"rage": "Dégâts critiques +%s %%." % _n(40 * f),
 		"despair": "%s %% de chance d'étourdir la cible quand un skill inflige des dégâts." % _n(25 * f),
+		"freres": "La Larme et le Sang réunis : ATK +%s %% et PV max +%s %%." % [_n(30 * f), _n(30 * f)],
 	}
 	return "%s (%d pièces) : %s" % [SETS[set_id]["nom"], SETS[set_id]["pieces"], t[set_id]]
 
@@ -90,7 +95,7 @@ static func _n(x: float) -> String:
 ## Set obtenu dans chaque Acte (le chapitre N donne toujours l'emplacement N).
 const SET_PAR_ACTE := {
 	1: "energy", 2: "endure", 3: "fatal", 4: "guard", 5: "revenge", 6: "focus",
-	7: "despair", 8: "vampire", 9: "blade", 10: "rage", 11: "swift", 12: "will",
+	7: "despair", 8: "vampire", 9: "blade", 10: "rage", 11: "swift", 12: "will", 13: "fatal",
 }
 
 # ---------------------------------------------------------------------
@@ -135,6 +140,8 @@ static func valeur_principale(e: Dictionary) -> float:
 
 
 static func nom(e: Dictionary) -> String:
+	if e.has("unique"):
+		return "%s — Sceau des Frères" % e["unique"]
 	return "%s %s" % [EMPLACEMENTS[int(e["emplacement"])]["nom"], SETS[e["set"]]["nom"]]
 
 
@@ -255,6 +262,9 @@ static func bonus(echos_portes: Array) -> Dictionary:
 			"despair": b["etourdir_skill"] += 0.25 * n * facteur_sets
 			"revenge": b["contre_chance"] += 0.15 * n * facteur_sets
 			"will": b["immunite_debut"] = true
+			"freres":
+				_ajouter(b, "atk%", 30.0 * n * facteur_sets)
+				_ajouter(b, "pv%", 30.0 * n * facteur_sets)
 	return b
 
 

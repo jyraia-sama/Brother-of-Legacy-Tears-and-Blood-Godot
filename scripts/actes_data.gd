@@ -229,7 +229,32 @@ const ACTES: Array = [
 			{ "titre": "Les Larmes et le Nouveau Monde", "description": "L'épilogue montrant les conséquences de la victoire, le nouveau visage des terres et le legs laissé aux générations futures." },
 		],
 	},
+	# ACTE CACHÉ : n'apparaît qu'une fois l'Acte XII terminé (vraie fin : sauver Kaël). Voir HISTOIRE.md.
+	{
+		"numero": 13,
+		"romain": "XIII",
+		"titre": "Le Sang et la Larme",
+		"partie": "L'Acte Caché",
+		"cache": true,
+		"image": "res://assets/actes/acte_13.png",
+		"chapitres": [
+			{ "titre": "La Rosée sur la Pierre", "description": "Un an plus tard, la pierre bleue du médaillon pleure. L'ermite de pierre révèle la dernière ligne effacée du Sceau : la serrure peut être n'importe qui du sang qui la choisit." },
+			{ "titre": "Le Rire Volé", "description": "Retour aux marais : dans les roses mortes de la Dame des Ronciers dort le rire de Kaël. C'est la clé pour entrer dans le Sceau." },
+			{ "titre": "Dans le Sceau", "description": "Un monde de verre rouge et bleu fait des souvenirs de tous les Héritiers dévorés, déformés par la Soif." },
+			{ "titre": "Les Héritiers Oubliés", "description": "Libérer les Héritiers d'autrefois, dont le grand-oncle pétrifié : ils deviennent des chaînes de lumière contre la Soif." },
+			{ "titre": "Le Cœur de la Soif", "description": "Kaël enchaîné, presque éteint. Rends-lui son rire : ses chaînes se brisent, et les deux frères affrontent ensemble la vraie forme du Mal." },
+			{ "titre": "La Dette d'Othmar", "description": "Combat final contre Morvaël, la Soif Première. Le Premier Roi prendra-t-il enfin sa part du fardeau ?" },
+		],
+	},
 ]
+
+## Nombre d'Actes « normaux » (l'Acte XIII est caché).
+const NB_ACTES_NORMAUX := 12
+
+
+## Nombre total de chapitres visibles (72, ou 78 quand l'Acte caché est ouvert).
+static func nb_chapitres_visibles() -> int:
+	return NB_ACTES_NORMAUX * 6 + (6 if acte_debloque(13) else 0)
 
 ## Renvoie le dictionnaire d'un Acte (numéro de 1 à 12).
 static func get_acte(numero: int) -> Dictionary:

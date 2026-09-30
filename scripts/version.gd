@@ -14,11 +14,19 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.27.1"
+const NUMERO := "0.28.0"
 const DATE := "2026-09-30"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.28.0", "date": "2026-09-30", "titre": "L'Acte caché et la vraie fin",
+	"changements": [
+		"ACTE XIII CACHÉ — « Le Sang et la Larme » : il apparaît (bouton rouge et bleu en bas de l'Histoire principale) une fois l'Acte XII terminé. 6 chapitres, plus difficiles que l'Acte XII, dans le Sceau des Frères, contre les souvenirs des Héritiers dévorés. Boss final : Morvaël, la Soif Première (UR, deux phases).",
+		"FIN DE L'ACTE XII : épilogue de la fin douce-amère et titre « Gardien du Sceau » (donné aussi aux joueurs qui avaient déjà terminé l'Acte XII).",
+		"VRAIE FIN (Acte XIII terminé) : épilogue « Les Frères Réunis » et toutes les récompenses : Kaël Valcendre, Héros de Légende UR jouable et unique (Flamme Noire Maîtrisée, Lames Jumelles, Le Rire Retrouvé…) ; le titre « Les Frères Réunis » ; les deux Échos uniques du Sceau des Frères (la Larme et le Sang, Légendaires 6★, set à 2 pièces : ATK +15 % et PV +15 %) ; 1 000 gemmes et 3 Coffres Royaux.",
+		"Le set des Frères ne s'obtient qu'avec la vraie fin (ni en combat, ni à l'Atelier). Scénario complet : HISTOIRE.md.",
+		"Images provisoires de l'Acte XIII (écran des chapitres et plateau), à remplacer par des versions ChatGPT.",
+	]},
 	{"version": "0.27.1", "date": "2026-09-30", "titre": "Donjons en continu",
 	"changements": [
 		"DONJONS : les 4 combats s'enchaînent maintenant sans interruption. Entre deux vagues, un court message « Combat 1 / 4 gagné ! Prochain : … » s'affiche puis le combat suivant démarre tout seul (les PV restants sont toujours conservés). Le bilan ne s'affiche qu'à la fin de l'expédition (ou en cas d'échec).",

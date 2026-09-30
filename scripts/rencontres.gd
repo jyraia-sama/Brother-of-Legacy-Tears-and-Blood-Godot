@@ -26,7 +26,7 @@ const RATIOS := {
 ## Renfort des ennemis pour tenir compte des Échos Sanguins que le joueur est censé porter
 ## à chaque Acte (réglé par simulation : sans Échos ~10 points de victoire en moins que la cible,
 ## avec un équipement typique ~20 points de plus : bien s'équiper est un vrai avantage).
-const ECHOS_ATTENDUS := [1.02, 1.03, 1.05, 1.06, 1.06, 1.07, 1.08, 1.09, 1.10, 1.11, 1.12, 1.12]
+const ECHOS_ATTENDUS := [1.02, 1.03, 1.05, 1.06, 1.06, 1.07, 1.08, 1.09, 1.10, 1.11, 1.12, 1.12, 1.14]
 
 ## Taux de victoire visés (équipe de référence, PV pleins) :
 ##   combat 93 %  ·  élite 78 %  ·  gardien 68 %  ·  boss de chapitre 60 %  ·  boss d'Acte 50 %
@@ -44,11 +44,13 @@ const CALIBRAGE := {
 	10: {"combat": 1.04, "elite": 0.98, "gardien": 1.12, "boss_chapitre": 1.15, "boss_acte": 0.98},
 	11: {"combat": 0.78, "elite": 0.89, "gardien": 0.91, "boss_chapitre": 1.01, "boss_acte": 1.22},
 	12: {"combat": 0.73, "elite": 0.79, "gardien": 0.95, "boss_chapitre": 0.85, "boss_acte": 0.85},
+	# Acte caché : environ 15 % au-dessus de l'Acte XII (réglé ensuite par simulation)
+	13: {"combat": 0.84, "elite": 0.91, "gardien": 1.0, "boss_chapitre": 0.74, "boss_acte": 0.92},
 }
 
 ## MIMIC (coffre piégé du plateau, 25 % des coffres) : réglage par Acte, réussite visée ~72 %.
 const CHANCE_MIMIC := 0.25
-const CALIBRAGE_MIMIC := {1: 1.15, 2: 0.99, 3: 0.88, 4: 0.86, 5: 0.89, 6: 0.89, 7: 0.87, 8: 0.74, 9: 0.85, 10: 0.84, 11: 0.83, 12: 0.73}
+const CALIBRAGE_MIMIC := {1: 1.15, 2: 0.99, 3: 0.88, 4: 0.86, 5: 0.89, 6: 0.89, 7: 0.87, 8: 0.74, 9: 0.85, 10: 0.84, 11: 0.83, 12: 0.73, 13: 0.84}
 
 ## Force relative des unités spéciales dans leur groupe
 const POIDS_ELITE := 1.4
@@ -70,6 +72,8 @@ const POOLS := {
 	10: {"monstres": ["troll_cavernes", "hydre_bicephale", "demon_mineur", "tortionnaire", "abomination", "cyclope_furieux", "wyverne"], "gardiens": ["hydre_bicephale", "abomination", "tortionnaire"], "boss": "maitre_supplices"},
 	11: {"monstres": ["chevalier_dechu", "garde_fratricide", "compagnon_traitre", "assassin_ombre", "archange_noir", "dragon_ombre"], "gardiens": ["archange_noir", "garde_fratricide", "dragon_ombre"], "boss": "frere_masque"},
 	12: {"monstres": ["garde_cendres", "heraut_apocalypse", "reine_liches", "demon_mineur", "rodeur_eclipse", "tortionnaire"], "gardiens": ["boss", "empereur_dechu", "garde_cendres"], "boss": "heritier_maudit"},
+	# Acte caché : les souvenirs déformés des Héritiers, dans le Sceau
+	13: {"monstres": ["reine_liches", "heraut_apocalypse", "archange_noir", "dragon_ombre", "garde_fratricide", "seraphin_dechu", "champion_dechu", "abomination"], "gardiens": ["empereur_dechu", "archange_noir", "heritier_maudit"], "boss": "morvael"},
 }
 
 ## Équipe de référence du joueur à chaque Acte (raretés), utilisée pour doser la difficulté.
@@ -87,6 +91,7 @@ const EQUIPE_REFERENCE := {
 	10: ["LEG", "SSR", "SSR", "SSR", "SR"],
 	11: ["LEG", "SSR", "SSR", "SSR", "SR"],
 	12: ["LEG", "SSR", "SSR", "SSR", "SSR"],
+	13: ["LEG", "SSR", "SSR", "SSR", "SSR"],
 }
 
 static var _cache_puissance := {}

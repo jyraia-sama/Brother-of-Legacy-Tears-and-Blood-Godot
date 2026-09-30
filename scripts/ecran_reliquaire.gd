@@ -360,7 +360,7 @@ func _atelier() -> void:
 	_contenu.add_child(choix)
 	choix.add_child(UiCommun.label("Set :", 16, UiCommun.C_TEXTE))
 	var o_set := OptionButton.new()
-	var ids_sets: Array = Echos.SETS.keys()
+	var ids_sets: Array = Echos.SETS.keys().filter(func(k): return not k in Echos.SETS_UNIQUES)
 	for i in ids_sets.size():
 		o_set.add_item("%s (%d pièces)" % [Echos.SETS[ids_sets[i]]["nom"], int(Echos.SETS[ids_sets[i]]["pieces"])], i)
 	o_set.selected = ids_sets.find(_set)

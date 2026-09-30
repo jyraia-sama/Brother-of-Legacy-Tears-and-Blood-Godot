@@ -67,7 +67,7 @@ static func est_combat(type: int) -> bool:
 func _parametres(acte: int, chapitre: int) -> Dictionary:
 	var p := (acte - 1) * 6 + (chapitre - 1)      # 0 (I-1) à 71 (XII-6)
 	var t := p / 71.0                             # 0.0 -> 1.0
-	var voies := [2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4]
+	var voies := [2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4]
 	return {
 		"acte": acte,
 		"chapitre": chapitre,

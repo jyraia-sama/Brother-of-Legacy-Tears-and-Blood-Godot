@@ -241,6 +241,8 @@ static func echanger(echange: Dictionary) -> bool:
 # ---------------------------------------------------------------------
 
 static func fabriquer_echo(type: String, set_id: String, emplacement: int, principale: String) -> Dictionary:
+	if set_id in Echos.SETS_UNIQUES:
+		return {}
 	var a: Dictionary = ATELIER[type]
 	if not payer({"poussiere_echo": int(a["poussiere"])}, int(a["or"])):
 		return {}

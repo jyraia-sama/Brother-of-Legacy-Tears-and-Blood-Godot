@@ -141,7 +141,7 @@ func _profil(d: VBoxContainer) -> void:
 	d.add_child(g)
 	var total_bestiaire := UnitesData.toutes().size()
 	var lignes := [
-		["Chapitres terminés", "%d / 72" % Sauvegarde.nombre_chapitres_termines()],
+		["Chapitres terminés", "%d / %d" % [Sauvegarde.nombre_chapitres_termines(), ActesData.nb_chapitres_visibles()]],
 		["Combats gagnés / perdus", "%s / %s" % [_nombre(Sauvegarde.get_stat("combats_gagnes")), _nombre(Sauvegarde.get_stat("combats_perdus"))]],
 		["Bestiaire", "%d / %d" % [Sauvegarde.donnees["bestiaire"].size(), total_bestiaire]],
 		["Invocations", _nombre(Succes.valeur("invocations"))],

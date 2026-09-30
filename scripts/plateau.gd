@@ -531,6 +531,18 @@ func _victoire(id: int) -> void:
 		var xp := (20 + p * 3) if premiere_fois and not Sauvegarde.niveau_compte_max_atteint() else 0
 		var niveaux := Sauvegarde.ajouter_xp_compte(xp) if xp > 0 else 0
 		var texte := "Le boss est vaincu.\n\nOr gagné dans ce chapitre : %d" % or_gagne
+		# Fins de l'histoire (Acte XII : fin douce-amère ; Acte XIII caché : vraie fin)
+		var fin_lignes: Array = []
+		if chapitre == 6 and acte == 12:
+			fin_lignes = FinHistoire.fin_acte_12()
+			if premiere_fois:
+				texte = FinHistoire.EPILOGUE_12 + "\n\n" + texte
+		elif chapitre == 6 and acte == 13:
+			fin_lignes = FinHistoire.fin_acte_13()
+			if premiere_fois or not fin_lignes.is_empty():
+				texte = FinHistoire.EPILOGUE_13 + "\n\n" + texte
+		if not fin_lignes.is_empty():
+			texte += "\n\n" + "\n".join(fin_lignes)
 		if xp > 0:
 			texte += "\nBonus de premier passage : +%d XP de compte" % xp
 		if niveaux > 0:
@@ -591,7 +603,11 @@ func _message(titre: String, texte: String, ensuite := Callable()) -> void:
 	d.confirmed.connect(fermer)
 	d.canceled.connect(fermer)
 	hud.add_child(d)
-	d.popup_centered(Vector2i(420, 0))
+	if texte.length() > 300:          # textes longs (épilogues) : retour à la ligne automatique
+		d.dialog_autowrap = true
+		d.popup_centered(Vector2i(760, 0))
+	else:
+		d.popup_centered(Vector2i(420, 0))
 
 
 func _retour() -> void:
