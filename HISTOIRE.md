@@ -1,9 +1,9 @@
-# Brothers of Legacy : Tears and Blood — Le scénario (proposition v1)
+# Brothers of Legacy : Tears and Blood — Le scénario (v2, validé + Acte caché)
 
 > Deux frères, un seul sang. L'un porte la Larme, l'autre porte le Sang.
 > Le Mal les sépare, le Mal les réunit, et c'est ensemble qu'ils devront le sceller… à un prix.
 
-Ce document est le **scénario de référence** des 12 Actes de l'Histoire principale. Il suit les titres des 72 chapitres
+Ce document est le **scénario de référence** des 12 Actes de l'Histoire principale, plus un **13e Acte caché** (vraie fin). Il suit les titres des 72 chapitres
 et les boss déjà présents dans le jeu. Une fois validé, il servira à écrire les **dialogues** (début et fin des chapitres).
 
 ---
@@ -171,6 +171,34 @@ l'Héritier** peut le libérer. Aldric connaissait la malédiction ; il a fait f
 
 **→ FIN DOUCE-AMÈRE**
 
+*Dernière image, après le générique : un an plus tard, tu poses la main sur le médaillon… et tu entends, très loin, la voix de Kaël : « Il fait froid, ici. » La pierre rouge se fend d'un fil de lumière. Un nouvel Acte apparaît sur la carte.*
+
+---
+
+## Acte caché
+
+### Acte XIII — Le Sang et la Larme · boss : Morvaël, la Soif Première
+*Débloqué après avoir terminé l'Acte XII. L'Acte n'apparaît qu'après la dernière image du générique ; sa carte est voilée de rouge et de bleu.*
+*Difficulté : au-delà de l'Acte XII (unités évoluées niveau 35-40 conseillées).*
+
+**L'idée :** le Sceau n'exige pas qu'un **frère** devienne la serrure. Il exige **quelqu'un du sang Valcendre qui le choisit librement**. Kaël l'a fait par amour… mais quelqu'un d'autre porte cette dette depuis des siècles : **Othmar**, celui qui a signé le pacte.
+Et la Soif a une faiblesse que personne n'avait vue : elle se nourrit de peur, de deuil et de colère. **La joie** lui est insupportable.
+
+1. **La Rosée sur la Pierre** — Un an après la fin. La pierre bleue du médaillon pleure. L'ermite de pierre de l'Acte VI te retrouve et te lit la dernière ligne du Sceau, effacée par le temps : *« …et la serrure sera celui du sang qui la choisit. »* Il y a donc un autre moyen.
+2. **Le Rire Volé** — Retour aux marais de l'Acte VII. Dans les roses mortes de la Dame des Ronciers dort encore le souvenir que tu lui as donné : **le rire de Kaël**. Tu le reprends. C'est la clé pour entrer dans le Sceau : la Soif ne peut pas retenir un souvenir heureux.
+3. **Dans le Sceau** — Tu entres dans le médaillon : un monde de verre rouge et bleu fait des souvenirs de tous les Héritiers dévorés. Les souvenirs t'attaquent, déformés par la Soif.
+4. **Les Héritiers Oubliés** — Tu libères les Héritiers d'autrefois, dont ton grand-oncle pétrifié de l'Acte VI. Libérés, ils deviennent des chaînes de lumière qui affaiblissent la Soif.
+5. **Le Cœur de la Soif** — Au cœur du Sceau, Kaël est enchaîné, presque éteint. Tu lui rends son rire. Il rit, faiblement, puis pour de vrai… et ses chaînes se brisent. **Les frères, enfin libres tous les deux, affrontent ensemble la vraie forme du Mal.**
+6. **La Dette d'Othmar** — Combat final contre **Morvaël, la Soif Première**, avec les frères côte à côte et les Héritiers libérés. Vaincue, la Soif doit encore être enfermée. L'ombre d'Othmar apparaît : *« C'est ma dette. Elle n'aurait jamais dû être la vôtre. »* Le Premier Roi prend la place de Kaël et devient la serrure, enfin en paix d'avoir réparé sa faute.
+
+**VRAIE FIN — « Les Frères Réunis »**
+Les deux frères sortent du Sceau au lever du soleil. La pierre rouge et la pierre bleue sont redevenues claires. Le domaine Valcendre renaît, avec deux seigneurs. La dernière image : Kaël qui te nargue à l'entraînement, exactement comme au tout premier chapitre… et cette fois, tu ris avec lui.
+
+**Récompenses de la vraie fin (proposition)**
+- **Kaël Valcendre** rejoint ta collection : un **Héros de Légende** jouable (Sang + flamme noire maîtrisée), unique.
+- Le titre **« Les Frères Réunis »**.
+- **Le Sceau des Frères** : un Écho Sanguin unique (set spécial à 2 pièces, la Larme + le Sang) ou un gros coffre de gemmes (à choisir).
+
 ---
 
 ## Fils rouges (pour les dialogues)
@@ -186,6 +214,7 @@ l'Héritier** peut le libérer. Aldric connaissait la malédiction ; il a fait f
 1. **Dialogues** : une petite scène au début de chaque chapitre (2 à 6 répliques) et une à la fin des chapitres importants (fins d'Acte, séparation, réunion, duel, fin). Affichées avec les portraits (Kaël, Aldric, Othmar, le Compagnon…).
 2. **Kaël en unité invitée** : il combat à tes côtés dans l'Acte I (chapitres 1 à 5) et dans l'Acte XII (chapitres 2 à 6), sans prendre de place dans ta collection.
 3. **Écran de fin** avec l'épilogue, et un titre « Gardien du Sceau » à la fin de l'Acte XII.
-4. **Portraits à créer** (prompts ChatGPT) : Kaël jeune, Kaël corrompu, Aldric, Othmar, le Compagnon, Morvaël.
+3 bis. **Acte XIII caché** : 13e Acte ajouté à l'Histoire principale, invisible tant que l'Acte XII n'est pas terminé ; nouveau boss **Morvaël, la Soif Première** (UR, deux phases) ; Kaël et les Héritiers libérés en unités invitées ; vraie fin et récompenses ci-dessus.
+4. **Portraits à créer** (prompts ChatGPT) : Kaël jeune, Kaël corrompu, Kaël libéré (Héros de Légende), Aldric, Othmar, le Compagnon, Morvaël (vraie forme), et une image pour l'Acte XIII.
 
 *Tout est modifiable : noms, rebondissements, place de la réunion, fin. Dis-moi ce que tu gardes et ce que tu changes.*
