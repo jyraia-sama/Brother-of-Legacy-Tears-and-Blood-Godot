@@ -106,3 +106,37 @@ l'intérieur d'un immense médaillon de verre, un paysage de cristal où la moit
 des îles de verre flottantes reliées par des ponts de lumière, des silhouettes enchaînées figées dans le cristal à l'horizon,
 ciel noir étoilé, lumière mystérieuse. Style peinture numérique dark fantasy très détaillée, assez sombre au centre pour que des icônes restent lisibles.
 ```
+
+---
+
+## Pion du plateau : le grand frère → `pion_aine.png`
+
+La figurine qui avance de case en case sur le plateau de l'Aventure. Enregistre-la en `pion_aine.png`
+et envoie-la-moi : je détoure le fond si besoin et je la range dans `assets/plateaux/`.
+Tant qu'elle n'existe pas, le jeu garde l'ancien pion d'échecs.
+
+Conseils : joins l'image de Kaël (planche 36, case 1) pour la ressemblance de famille, demande **fond transparent**,
+et génère 3-4 essais pour garder le meilleur. Le personnage doit **regarder vers la droite** (le jeu le retourne tout seul
+quand il marche vers la gauche).
+
+```
+Crée une figurine de jeu de plateau pour un jeu mobile dark fantasy : le héros vu en pied, de trois quarts, debout sur un petit socle rond en pierre sombre gravé d'un phénix.
+
+Le personnage : l'aîné de la maison Valcendre, homme d'environ 25 ans, grand frère protecteur de Kaël (même famille : cheveux noirs, mais plus courts et coiffés en arrière, courte barbe, regard grave et déterminé, une fine cicatrice sur la joue).
+Armure de chevalier noble sombre (acier bruni et cuir noir), épaulières ornées, long manteau bleu nuit déchiré aux armoiries d'un phénix de cendres argenté.
+Autour du cou, un médaillon avec une pierre BLEUE lumineuse (la Larme) qui brille doucement.
+Une épée longue tenue basse dans la main droite, pose héroïque et stable, le corps tourné vers la DROITE de l'image.
+
+FORMAT, À RESPECTER STRICTEMENT :
+- image verticale 1024x1536 (portrait) ;
+- FOND TRANSPARENT (PNG), sinon fond uni noir sans aucun décor ;
+- la figurine entière est visible de la tête au socle, centrée, avec un peu de marge, rien n'est coupé ;
+- proportions légèrement stylisées (tête un peu plus grande, silhouette très lisible même en tout petit) ;
+- contour net et lumineux, légère lueur bleue autour du médaillon ;
+- aucun texte, aucun chiffre, aucune ombre au sol en dehors du socle.
+
+STYLE : même style que les portraits du jeu, peinture numérique dark fantasy très détaillée, éclairage dramatique venant du haut à gauche.
+```
+
+Variante « figurine peinte » (façon miniature de jeu de société) : remplace la ligne STYLE par
+`STYLE : miniature de jeu de société en résine peinte à la main, rendu 3D réaliste, lumière douce de studio, couleurs sombres et or.`

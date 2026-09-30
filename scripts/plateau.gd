@@ -59,6 +59,11 @@ const RECUPERATION_APRES_VICTOIRE := 0.30
 var boite_equipe: VBoxContainer
 
 var pion_pos := Vector2.ZERO
+const IMAGE_PION := "res://assets/plateaux/pion_aine.png"
+const HAUTEUR_PION := 96.0     # hauteur de la figurine à l'écran
+var _pion_tex: Texture2D = null
+var _pion_charge := false
+var _pion_gauche := false      # la figurine regarde vers la gauche
 var saut := 0.0
 var en_mouvement := false
 var bloque := false     # une fenêtre est ouverte
@@ -353,6 +358,8 @@ func _deplacer(id: int, apres_defaite := false) -> void:
 
 
 func _anim_pion(t: float, a: Vector2, b: Vector2) -> void:
+	if absf(b.x - a.x) > 1.0:
+		_pion_gauche = b.x < a.x
 	pion_pos = a.lerp(b, t)
 	saut = sin(t * PI) * 28.0
 
@@ -816,6 +823,22 @@ func _dessiner_pion(p: Vector2) -> void:
 	draw_set_transform(pion_pos + Vector2(0, 4), 0, Vector2(1.0, 0.35))
 	draw_circle(Vector2.ZERO, 26.0 * ombre, Color(0, 0, 0, 0.45))
 	draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+
+	# Figurine du grand frère (assets/plateaux/pion_aine.png) si elle existe
+	if not _pion_charge:
+		_pion_charge = true
+		if ResourceLoader.exists(IMAGE_PION):
+			_pion_tex = load(IMAGE_PION)
+	if _pion_tex:
+		var ts := _pion_tex.get_size()
+		var h := HAUTEUR_PION
+		var w := h * ts.x / ts.y
+		# Les pieds (bas de l'image) sont posés sur la case
+		var r := Rect2(-w / 2.0, -h + 6.0, w, h)
+		draw_set_transform(p, 0, Vector2(-1.0 if _pion_gauche else 1.0, 1.0))
+		draw_texture_rect(_pion_tex, r, false)
+		draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+		return
 
 	var corps := Color("f2e6cc")
 	var bord := Color("3a2a1a")
