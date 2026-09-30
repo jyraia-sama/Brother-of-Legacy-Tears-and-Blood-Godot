@@ -14,11 +14,19 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.30.1"
+const NUMERO := "0.31.0"
 const DATE := "2026-09-30"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.31.0", "date": "2026-09-30", "titre": "Le plateau aux couleurs de la figurine",
+	"changements": [
+		"CASES EN SOCLES DE PIERRE : chaque case du plateau est un socle de pierre en relief (tranche, biseau, fissures) avec le médaillon coloré incrusté, dans le style du socle de la figurine.",
+		"CHEMINS PAVÉS : les chemins sont faits de pierres plates sur un sentier de terre ; ceux déjà parcourus sont clairs et teintés de la couleur de l'Acte, les autres restent dans la pénombre.",
+		"LA LUMIÈRE DE LA LARME : un halo bleu suit le grand frère et éclaire les cases proches ; les cases lointaines s'assombrissent.",
+		"MARCHE PLUS VIVANTE : la figurine se penche pendant le saut, se tasse à la réception et soulève un petit nuage de poussière.",
+		"Correction : le plateau de l'Acte XIII pouvait planter (couleur d'ambiance manquante).",
+	]},
 	{"version": "0.30.1", "date": "2026-09-30", "titre": "La figurine du grand frère",
 	"changements": [
 		"Le PION DU PLATEAU devient une figurine du grand frère Valcendre (armure sombre, manteau bleu au phénix, médaillon de la Larme) : il saute de case en case et se tourne dans le sens de la marche.",

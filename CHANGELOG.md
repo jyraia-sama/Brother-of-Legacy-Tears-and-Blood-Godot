@@ -1,6 +1,14 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.30.1** (2026-09-30)
+Version actuelle : **0.31.0** (2026-09-30)
+
+## v0.31.0 — Le plateau aux couleurs de la figurine  (2026-09-30)
+
+- CASES EN SOCLES DE PIERRE : chaque case du plateau est un socle de pierre en relief (tranche, biseau, fissures) avec le médaillon coloré incrusté, dans le style du socle de la figurine.
+- CHEMINS PAVÉS : les chemins sont faits de pierres plates sur un sentier de terre ; ceux déjà parcourus sont clairs et teintés de la couleur de l'Acte, les autres restent dans la pénombre.
+- LA LUMIÈRE DE LA LARME : un halo bleu suit le grand frère et éclaire les cases proches ; les cases lointaines s'assombrissent.
+- MARCHE PLUS VIVANTE : la figurine se penche pendant le saut, se tasse à la réception et soulève un petit nuage de poussière.
+- Correction : le plateau de l'Acte XIII pouvait planter (couleur d'ambiance manquante).
 
 ## v0.30.1 — La figurine du grand frère  (2026-09-30)
 
