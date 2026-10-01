@@ -14,11 +14,21 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.31.0"
-const DATE := "2026-09-30"
+const NUMERO := "0.32.0"
+const DATE := "2026-10-01"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.32.0", "date": "2026-10-01", "titre": "Équilibrage de l'Aventure",
+	"changements": [
+		"L'AVENTURE RÉSISTE ENFIN : des joueurs virtuels ont rejoué toute l'histoire (Actes I à XIII) avec les vraies règles. Résultat : le jeu était beaucoup trop facile (aucune défaite de tout le jeu pour un joueur qui s'équipe), car les Éclats des boss donnent ~3 SSR dès l'Acte II alors que la difficulté était réglée pour une équipe de SR.",
+		"Nouvelle difficulté réglée sur des équipes réalistes : environ 1 défaite par chapitre si tu améliores tes Échos, 2 si tu les poses sans les améliorer, surtout sur les boss. L'Acte I reste très doux, l'Acte XIII plus exigeant.",
+		"Chaque chef de chapitre est réglé un par un (certains étaient bien plus coriaces que les autres) et il n'y a plus de pic de difficulté au premier chapitre de chaque Acte.",
+		"KAËL INVITÉ : les ennemis sont un peu plus forts dans ses chapitres. Il aide toujours, mais ne gagne plus le combat à ta place (il faisait passer le boss final de l'Acte XII de 35 % à 78 % de victoires).",
+		"Mimics réglés sur la même base (environ 3 victoires sur 4).",
+		"Conseil après deux défaites sur une même case : le jeu signale si ton équipe porte peu d'Échos Sanguins (le moyen le plus rapide de devenir plus fort), sinon il propose d'améliorer les Échos ou l'Absorption.",
+		"Outils d'équilibrage pour Godot : simuler_progression.gd, calibrer_aventure.gd, effet_echos.gd. Bilan complet : EQUILIBRAGE.md.",
+	]},
 	{"version": "0.31.0", "date": "2026-09-30", "titre": "Le plateau aux couleurs de la figurine",
 	"changements": [
 		"CASES EN SOCLES DE PIERRE : chaque case du plateau est un socle de pierre en relief (tranche, biseau, fissures) avec le médaillon coloré incrusté, dans le style du socle de la figurine.",

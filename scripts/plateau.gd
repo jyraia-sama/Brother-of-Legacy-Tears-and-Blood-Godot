@@ -49,6 +49,7 @@ var noeuds: Array
 
 var courant := 0
 var precedent := 0
+var defaites_case := {}       # défaites sur chaque case (pour les conseils)
 var termines := {}      # cases déjà résolues (combat gagné, coffre ouvert...)
 var chemin: Array = []  # cases parcourues, dans l'ordre (pour rebrousser chemin d'un cul-de-sac)
 var visites := {}       # cases où le pion est passé
@@ -631,12 +632,32 @@ func _or_coffre(n: Dictionary) -> int:
 	return gain
 
 
-func _defaite(_id: int) -> void:
+func _defaite(id: int) -> void:
 	# L'équipe se replie d'une case et récupère toutes ses forces : on peut retenter.
 	pv_equipe.clear()
 	_maj_equipe_hud()
-	_message("Défaite", "L'équipe est repoussée et recule d'une case.\nElle reprend des forces : tu peux retenter ce combat.",
-		_deplacer.bind(precedent, true))
+	defaites_case[id] = int(defaites_case.get(id, 0)) + 1
+	var texte := "L'équipe est repoussée et recule d'une case.\nElle reprend des forces : tu peux retenter ce combat."
+	var astuce := _astuce_defaite(int(defaites_case[id]))
+	if astuce != "":
+		texte += "\n\n" + astuce
+	_message("Défaite", texte, _deplacer.bind(precedent, true))
+
+
+## Conseil après des défaites répétées : les Échos Sanguins font une grosse différence
+## (réglage de la difficulté : une équipe sans Échos gagne 20 à 30 % de combats en moins).
+func _astuce_defaite(nb: int) -> String:
+	if nb < 2:
+		return ""
+	var portes := 0
+	var equipe := Sauvegarde.get_equipe()
+	for uid in equipe:
+		portes += Sauvegarde.echos_de(int(uid)).size()
+	if portes < equipe.size() * 3:
+		return "Astuce : ton équipe porte peu d'Échos Sanguins (%d sur %d emplacements). Équipe ceux que tu as gagnés (menu Échos Sanguins) : c'est le moyen le plus rapide de devenir plus fort." % [portes, equipe.size() * 6]
+	if nb >= 3:
+		return "Astuce : améliore tes meilleurs Échos (+3, +6…), monte le niveau de tes nouvelles unités à l'Autel de Fusion (Absorption), ou retente : chaque combat a sa part de hasard."
+	return ""
 
 
 func _gagner_or(montant: int) -> void:

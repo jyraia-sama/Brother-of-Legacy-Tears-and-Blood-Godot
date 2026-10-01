@@ -12,7 +12,9 @@ extends RefCounted
 const T := PlateauGenerateur.Type
 
 ## DIFFICULTÉ GLOBALE : 1.0 = normal, 0.9 = plus facile, 1.1 = plus difficile.
-const DIFFICULTE := 1.0
+## 0,94 : un cran plus doux que le calibrage brut, car les PV conservés sur le plateau rendent
+## chaque chapitre plus dur que ses combats pris un par un (vérifié avec outils/simuler_progression.gd).
+const DIFFICULTE := 0.94
 
 ## Force des ennemis par rapport à l'équipe de référence du joueur (réglée par simulation).
 const RATIOS := {
@@ -23,34 +25,58 @@ const RATIOS := {
 	"boss_acte": 0.73,
 	"mimic": 0.90,
 }
-## Renfort des ennemis pour tenir compte des Échos Sanguins que le joueur est censé porter
-## à chaque Acte (réglé par simulation : sans Échos ~10 points de victoire en moins que la cible,
-## avec un équipement typique ~20 points de plus : bien s'équiper est un vrai avantage).
+## Renfort des ennemis pour tenir compte des Échos Sanguins que le joueur est censé porter à chaque Acte.
 const ECHOS_ATTENDUS := [1.02, 1.03, 1.05, 1.06, 1.06, 1.07, 1.08, 1.09, 1.10, 1.11, 1.12, 1.12, 1.14]
 
-## Taux de victoire visés (équipe de référence, PV pleins) :
-##   combat 93 %  ·  élite 78 %  ·  gardien 68 %  ·  boss de chapitre 60 %  ·  boss d'Acte 50 %
+## Taux de victoire visés (PV pleins) pour un JOUEUR OCCASIONNEL : équipe tirée de ses vraies invocations,
+## Échos posés mais pas améliorés, pas de Fusion (voir outils/simuler_progression.gd et outils/calibrer_aventure.gd) :
+##   combat 97 %  ·  élite 88 %  ·  gardien 82 %  ·  boss de chapitre 72 %  ·  boss d'Acte 60 %  ·  Mimic 78 %
+##   (Acte I et II plus doux, Acte XIII plus exigeant). Un joueur qui améliore ses Échos gagne plus souvent.
+## Sur le plateau (PV conservés), cela donne ~1 à 3 défaites par chapitre, surtout sur les boss.
 ## Réglage fin par Acte et par type, calculé par simulation (1.0 = neutre).
 const CALIBRAGE := {
-	1: {"combat": 1.51, "elite": 1.52, "gardien": 1.68, "boss_chapitre": 1.58, "boss_acte": 0.78},
-	2: {"combat": 1.27, "elite": 1.45, "gardien": 1.36, "boss_chapitre": 1.32, "boss_acte": 1.29},
-	3: {"combat": 1.3, "elite": 1.24, "gardien": 1.39, "boss_chapitre": 1.31, "boss_acte": 1.26},
-	4: {"combat": 1.22, "elite": 1.3, "gardien": 1.31, "boss_chapitre": 1.26, "boss_acte": 1.2},
-	5: {"combat": 1.06, "elite": 1.13, "gardien": 0.95, "boss_chapitre": 0.99, "boss_acte": 1.16},
-	6: {"combat": 1.18, "elite": 1.17, "gardien": 1.24, "boss_chapitre": 1.25, "boss_acte": 1.44},
-	7: {"combat": 0.98, "elite": 1.28, "gardien": 1.13, "boss_chapitre": 1.09, "boss_acte": 1.03},
-	8: {"combat": 0.87, "elite": 0.85, "gardien": 0.95, "boss_chapitre": 0.99, "boss_acte": 1.0},
-	9: {"combat": 0.9, "elite": 1.03, "gardien": 1.09, "boss_chapitre": 1.13, "boss_acte": 1.64},
-	10: {"combat": 1.04, "elite": 0.98, "gardien": 1.12, "boss_chapitre": 1.15, "boss_acte": 0.98},
-	11: {"combat": 0.78, "elite": 0.89, "gardien": 0.91, "boss_chapitre": 1.01, "boss_acte": 1.22},
-	12: {"combat": 0.73, "elite": 0.79, "gardien": 0.95, "boss_chapitre": 0.85, "boss_acte": 0.85},
-	# Acte caché : environ 15 % au-dessus de l'Acte XII (réglé ensuite par simulation)
-	13: {"combat": 0.84, "elite": 0.91, "gardien": 1.0, "boss_chapitre": 0.74, "boss_acte": 0.92},
+	1: {"combat": 3.4,"elite": 3.49,"gardien": 3.44,"boss_chapitre": 3.36,"boss_acte": 2.39},
+	2: {"combat": 2.48,"elite": 2.64,"gardien": 2.67,"boss_chapitre": 2.62,"boss_acte": 2.67},
+	3: {"combat": 2.12,"elite": 2.23,"gardien": 2.56,"boss_chapitre": 2.59,"boss_acte": 2.62},
+	4: {"combat": 2.3,"elite": 2.4,"gardien": 2.57,"boss_chapitre": 2.62,"boss_acte": 2.31},
+	5: {"combat": 1.93,"elite": 1.99,"gardien": 1.99,"boss_chapitre": 1.99,"boss_acte": 2.19},
+	6: {"combat": 1.89,"elite": 1.92,"gardien": 2.12,"boss_chapitre": 2.04,"boss_acte": 1.92},
+	7: {"combat": 1.68,"elite": 1.82,"gardien": 1.65,"boss_chapitre": 1.62,"boss_acte": 1.49},
+	8: {"combat": 1.43,"elite": 1.49,"gardien": 1.5,"boss_chapitre": 1.44,"boss_acte": 1.58},
+	9: {"combat": 1.35,"elite": 1.43,"gardien": 1.43,"boss_chapitre": 1.49,"boss_acte": 2.3},
+	10: {"combat": 1.28,"elite": 1.47,"gardien": 1.45,"boss_chapitre": 1.42,"boss_acte": 1.32},
+	11: {"combat": 1.02,"elite": 1.17,"gardien": 1.21,"boss_chapitre": 1.32,"boss_acte": 1.56},
+	12: {"combat": 1.0,"elite": 0.98,"gardien": 1.03,"boss_chapitre": 1.0,"boss_acte": 1.44},
+	13: {"combat": 0.92,"elite": 1.07,"gardien": 1.1,"boss_chapitre": 1.27,"boss_acte": 1.12},
 }
 
-## MIMIC (coffre piégé du plateau, 25 % des coffres) : réglage par Acte, réussite visée ~72 %.
+## CHEFS (boss de chapitre) : chaque chapitre a son propre chef, plus ou moins coriace selon ses sorts.
+## Correction par chapitre (1.0 = la valeur « boss_chapitre » de l'Acte), réglée par simulation.
+const CALIBRAGE_CHEFS := {
+	1: {1: 0.89, 2: 0.96, 3: 1.21, 4: 1.18, 5: 1.1},
+	2: {1: 1.13, 2: 1.03, 3: 1.05, 4: 0.98, 5: 0.93},
+	3: {1: 0.94, 2: 1.02, 3: 1.02, 4: 0.92, 5: 1.01},
+	4: {1: 0.97, 2: 1.11, 3: 0.92, 4: 0.93, 5: 1.01},
+	5: {1: 1.03, 2: 1.03, 3: 1.07, 4: 0.94, 5: 0.99},
+	6: {1: 1.05, 2: 0.97, 3: 1.1, 4: 1.05, 5: 0.96},
+	7: {1: 0.95, 2: 1.0, 3: 1.35, 4: 0.93, 5: 0.93},
+	8: {1: 0.98, 2: 1.06, 3: 0.93, 4: 0.98, 5: 1.09},
+	9: {1: 1.0, 2: 1.05, 3: 0.97, 4: 1.0, 5: 0.95},
+	10: {1: 1.04, 2: 1.0, 3: 0.98, 4: 1.0, 5: 1.0},
+	11: {1: 0.97, 2: 1.18, 3: 0.87, 4: 0.89, 5: 1.23},
+	12: {1: 1.13, 2: 1.01, 3: 1.15, 4: 0.98, 5: 0.86},
+	13: {1: 0.95, 2: 1.03, 3: 0.85, 4: 0.94, 5: 0.96},
+}
+
+## MIMIC (coffre piégé du plateau, 25 % des coffres) : réglage par Acte, réussite visée ~78 %.
 const CHANCE_MIMIC := 0.25
-const CALIBRAGE_MIMIC := {1: 1.15, 2: 0.99, 3: 0.88, 4: 0.86, 5: 0.89, 6: 0.89, 7: 0.87, 8: 0.74, 9: 0.85, 10: 0.84, 11: 0.83, 12: 0.73, 13: 0.84}
+const CALIBRAGE_MIMIC := {1: 2.24, 2: 1.94, 3: 1.71, 4: 1.68, 5: 1.57, 6: 1.42, 7: 1.36, 8: 1.19, 9: 1.21, 10: 1.16, 11: 1.12, 12: 1.02, 13: 1.15}
+
+## KAËL INVITÉ : renfort des ennemis dans les chapitres où Kaël combat à tes côtés (voir FinHistoire),
+## pour qu'il aide sans rendre le combat trop facile (réglé par simulation : environ +8 points de victoire ;
+## sans ce renfort, il faisait passer le boss final de l'Acte XII de 35 % à 78 % de victoires).
+## L'Acte I n'en a pas besoin : Kaël y est présent partout, il est déjà compris dans le CALIBRAGE.
+const RENFORT_INVITE := {1: 1.0, 10: 1.17, 12: 1.14, 13: 1.25}
 
 ## Force relative des unités spéciales dans leur groupe
 const POIDS_ELITE := 1.4
@@ -120,11 +146,12 @@ const XP_DIVISEUR := 16.0
 const XP_PENTE := 0.35
 
 
-## Accueil : les premiers chapitres sont nettement plus doux (x0,72 au tout début),
-## puis la difficulté rejoint la courbe normale à la fin de l'Acte II.
+## Accueil : les premiers chapitres sont nettement plus doux (x0,55 au tout début : l'équipe n'a encore
+## que 4 héros), puis la difficulté rejoint la courbe normale à la fin de l'Acte II.
 static func accueil(acte: int, chapitre: int) -> float:
 	var p := (acte - 1) * 6 + (chapitre - 1)
-	return 0.72 + 0.28 * minf(1.0, p / 12.0)
+	var premiers := [0.80, 0.88, 0.95]        # tout premiers chapitres : apprendre sans se faire battre
+	return (0.55 + 0.45 * minf(1.0, p / 12.0)) * (premiers[p] if p < premiers.size() else 1.0)
 
 
 ## Pente de difficulté : l'Acte I est plus clément (x0,88), l'Acte XII plus exigeant (x1,02).
@@ -202,8 +229,12 @@ static func generer(acte: int, chapitre: int, noeud: Dictionary) -> Array:
 	# Force visée = équipe de référence x ratio du type de case
 	var calib_defaut: float = CALIBRAGE_MIMIC.get(acte, 1.0) if type == "mimic" else (CALIBRAGE.get(acte, {}) as Dictionary).get(type, 1.0)
 	var calib: float = calibrage_test.get("%d-%s" % [acte, type], calib_defaut)
+	if type == "boss_chapitre":
+		calib *= float(calibrage_test.get("%d-chef%d" % [acte, chapitre], (CALIBRAGE_CHEFS.get(acte, {}) as Dictionary).get(chapitre, 1.0)))
 	var cible: float = puissance_reference(acte, chapitre) * RATIOS[type] * calib * DIFFICULTE * pente(acte, chapitre) \
 		* ECHOS_ATTENDUS[acte - 1] * accueil(acte, chapitre)
+	if chapitre in FinHistoire.CHAPITRES_INVITE.get(acte, []) and not calibrage_test.get("sans_invite", false):
+		cible *= float(calibrage_test.get("invite-%d" % acte, RENFORT_INVITE.get(acte, 1.0)))
 	var brut := 0.0
 	for m in membres:
 		brut += UnitesData.puissance(m[0], niveau) * m[1]
@@ -229,9 +260,17 @@ static func _ordre_place(id: String) -> int:
 	return {"tank": 0, "guerrier": 1, "assassin": 2, "tireur": 3, "mage": 4, "soutien": 5}.get(role, 3)
 
 
-## Puissance totale de l'équipe de référence du joueur à ce chapitre.
+## Puissance totale de l'équipe de référence du joueur à ce chapitre. Elle glisse d'un Acte à l'autre
+## au fil des chapitres (l'équipe d'un vrai joueur se renforce peu à peu, pas d'un coup au début d'un Acte).
 static func puissance_reference(acte: int, chapitre: int) -> float:
 	var niveau := niveau_attendu(acte, chapitre)
+	var a := _puissance_equipe(acte, niveau)
+	if not EQUIPE_REFERENCE.has(acte + 1):
+		return a
+	return lerpf(a, _puissance_equipe(acte + 1, niveau), (chapitre - 1) / 6.0)
+
+
+static func _puissance_equipe(acte: int, niveau: int) -> float:
 	var total := 0.0
 	for r in EQUIPE_REFERENCE[acte]:
 		total += _puissance_moyenne(r, niveau)

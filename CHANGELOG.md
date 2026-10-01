@@ -1,6 +1,16 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.31.0** (2026-09-30)
+Version actuelle : **0.32.0** (2026-10-01)
+
+## v0.32.0 — Équilibrage de l'Aventure  (2026-10-01)
+
+- L'AVENTURE RÉSISTE ENFIN : des joueurs virtuels ont rejoué toute l'histoire (Actes I à XIII) avec les vraies règles. Résultat : le jeu était beaucoup trop facile (aucune défaite de tout le jeu pour un joueur qui s'équipe), car les Éclats des boss donnent ~3 SSR dès l'Acte II alors que la difficulté était réglée pour une équipe de SR.
+- Nouvelle difficulté réglée sur des équipes réalistes : environ 1 défaite par chapitre si tu améliores tes Échos, 2 si tu les poses sans les améliorer, surtout sur les boss. L'Acte I reste très doux, l'Acte XIII plus exigeant.
+- Chaque chef de chapitre est réglé un par un (certains étaient bien plus coriaces que les autres) et il n'y a plus de pic de difficulté au premier chapitre de chaque Acte.
+- KAËL INVITÉ : les ennemis sont un peu plus forts dans ses chapitres. Il aide toujours, mais ne gagne plus le combat à ta place (il faisait passer le boss final de l'Acte XII de 35 % à 78 % de victoires).
+- Mimics réglés sur la même base (environ 3 victoires sur 4).
+- Conseil après deux défaites sur une même case : le jeu signale si ton équipe porte peu d'Échos Sanguins (le moyen le plus rapide de devenir plus fort), sinon il propose d'améliorer les Échos ou l'Absorption.
+- Outils d'équilibrage pour Godot : simuler_progression.gd, calibrer_aventure.gd, effet_echos.gd. Bilan complet : EQUILIBRAGE.md.
 
 ## v0.31.0 — Le plateau aux couleurs de la figurine  (2026-09-30)
 
