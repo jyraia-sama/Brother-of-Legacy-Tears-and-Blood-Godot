@@ -157,17 +157,51 @@ static func charger() -> void:
 		sauvegarder()
 
 
+## ÉCRITURE GROUPÉE : un combat gagné appelle sauvegarder() une quinzaine de fois (or, XP de chaque
+## héros, Écho, objets, statistiques...). Réécrire tout le fichier à chaque fois faisait ramer la version
+## web. Maintenant, sauvegarder() note seulement qu'il faut écrire, et le fichier est écrit UNE fois,
+## au plus tard DELAI_ECRITURE secondes après (et tout de suite quand le jeu passe en arrière-plan).
+const DELAI_ECRITURE := 0.6
+## La copie de secours n'est réécrite qu'une écriture sur ECRITURES_PAR_SECOURS.
+const ECRITURES_PAR_SECOURS := 5
+static var _ecriture_prevue := false
+static var _nb_ecritures := 0
+## Augmente à chaque modification : la synchronisation en ligne s'en sert pour ne rien recalculer
+## tant que la partie n'a pas changé.
+static var revision := 0
+
+
 static func sauvegarder() -> void:
 	charger()
+	revision += 1
+	if _ecriture_prevue:
+		return
+	var arbre := Engine.get_main_loop() as SceneTree
+	if arbre == null or arbre.root == null:
+		ecrire_maintenant()
+		return
+	_ecriture_prevue = true
+	arbre.create_timer(DELAI_ECRITURE, true).timeout.connect(ecrire_maintenant)
+
+
+## Écrit tout de suite la sauvegarde si une écriture est en attente (ou si `forcer`).
+static func ecrire_maintenant(forcer := false) -> void:
+	if not _ecriture_prevue and not forcer:
+		return
+	_ecriture_prevue = false
+	if not _charge:
+		return
 	donnees["sauvegarde_le"] = int(Time.get_unix_time_from_system())
 	donnees["version_jeu"] = Version.NUMERO
-	var texte := JSON.stringify(donnees, "\t")
-	# On écrit le fichier principal, puis la copie de secours (identique).
+	var texte := JSON.stringify(donnees)
+	# On écrit le fichier principal, puis (de temps en temps) la copie de secours.
 	# Si le jeu plante pendant l'écriture de l'un, l'autre reste intact.
 	if not _ecrire(FICHIER, texte):
 		push_error("Impossible d'écrire la sauvegarde : " + FICHIER)
 		return
-	_ecrire(SECOURS, texte)
+	_nb_ecritures += 1
+	if _nb_ecritures % ECRITURES_PAR_SECOURS == 1:
+		_ecrire(SECOURS, texte)
 
 
 ## Paramètres du joueur (volumes...). Voir "parametres" dans _defaut().

@@ -511,9 +511,23 @@ func _noter_synchro(maj: String, signature: String) -> void:
 	_ecrire_fichier_compte()
 
 
+var _revision_envoyee := -1
+
 func _envoyer_si_change() -> void:
+	# Rien n'a bougé depuis le dernier envoi : on ne recalcule pas l'empreinte (coûteux sur le web)
+	if Sauvegarde.revision == _revision_envoyee:
+		return
 	if est_connecte() and not _connexion_en_cours:
-		envoyer_sauvegarde()
+		var rev := Sauvegarde.revision
+		if await envoyer_sauvegarde():
+			_revision_envoyee = rev
+
+
+## Le jeu passe en arrière-plan ou se ferme : on écrit la sauvegarde en attente tout de suite.
+func _notification(what: int) -> void:
+	if what in [NOTIFICATION_WM_CLOSE_REQUEST, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_APPLICATION_PAUSED,
+			NOTIFICATION_WM_WINDOW_FOCUS_OUT, NOTIFICATION_PREDELETE]:
+		Sauvegarde.ecrire_maintenant()
 
 
 ## Envoie la partie sur le compte (seulement si elle a changé, sauf forcer = true).

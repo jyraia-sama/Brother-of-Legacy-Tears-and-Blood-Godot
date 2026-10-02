@@ -14,11 +14,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.33.1"
+const NUMERO := "0.33.2"
 const DATE := "2026-10-02"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.33.2", "date": "2026-10-02", "titre": "Version web plus fluide et plus légère",
+	"changements": [
+		"VERSION WEB PLUS FLUIDE : la sauvegarde n'est plus réécrite à chaque gain (or, XP de chaque héros, Écho, objet...). Elle est écrite une seule fois, une demi-seconde après, et tout de suite quand le jeu passe en arrière-plan. Une fin de combat réécrivait une quinzaine de fois un fichier de ~190 Ko : c'était la principale cause des saccades.",
+		"Synchronisation en ligne : le jeu ne recalcule plus toutes les 15 secondes l'empreinte complète de la partie quand rien n'a changé (petit gel régulier sur téléphone).",
+		"Téléchargement presque deux fois plus léger (66 Mo -> 36 Mo) : les grandes illustrations (fonds, Actes, cercle d'invocation...) sont compressées en WebP et les musiques réencodées, sans différence visible.",
+	]},
 	{"version": "0.33.1", "date": "2026-10-02", "titre": "Portraits, figurines et miniatures du plateau",
 	"changements": [
 		"Images des 8 héros hommages : portraits (planche 39) et figurines de combat (planche 40). Les héros apparaissent désormais en pied sur leur socle pendant les combats.",

@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.33.1** (2026-10-02)
+Version actuelle : **0.33.2** (2026-10-02)
+
+## v0.33.2 — Version web plus fluide et plus légère  (2026-10-02)
+
+- VERSION WEB PLUS FLUIDE : la sauvegarde n'est plus réécrite à chaque gain (or, XP de chaque héros, Écho, objet...). Elle est écrite une seule fois, une demi-seconde après, et tout de suite quand le jeu passe en arrière-plan. Une fin de combat réécrivait une quinzaine de fois un fichier de ~190 Ko : c'était la principale cause des saccades.
+- Synchronisation en ligne : le jeu ne recalcule plus toutes les 15 secondes l'empreinte complète de la partie quand rien n'a changé (petit gel régulier sur téléphone).
+- Téléchargement presque deux fois plus léger (66 Mo -> 36 Mo) : les grandes illustrations (fonds, Actes, cercle d'invocation...) sont compressées en WebP et les musiques réencodées, sans différence visible.
 
 ## v0.33.1 — Portraits, figurines et miniatures du plateau  (2026-10-02)
 
