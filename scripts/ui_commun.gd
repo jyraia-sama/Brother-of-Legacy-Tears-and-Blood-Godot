@@ -103,6 +103,20 @@ static func chemin_portrait(id: String) -> String:
 	return ""
 
 
+## FIGURINES (pions de combat) : une figurine en pied, fond transparent, tournée vers la DROITE,
+## dans assets/figurines/<id>.png. Quand elle existe, elle remplace le portrait rond en combat
+## (héros comme ennemis). Une évolution sans figurine reprend celle de son unité de base.
+const DOSSIER_FIGURINES := "res://assets/figurines/"
+
+static func chemin_figurine(id: String) -> String:
+	var chemin := DOSSIER_FIGURINES + id + ".png"
+	if ResourceLoader.exists(chemin):
+		return chemin
+	if UnitesData.est_evolue(id):
+		return chemin_figurine(UnitesData.lignee(id))
+	return ""
+
+
 ## Met l'image de l'unité dans un portrait rond (Panel), si elle existe.
 ## L'image est découpée en cercle par le Panel, l'initiale est cachée et le
 ## contour coloré (élément) est redessiné par-dessus l'image.

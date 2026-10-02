@@ -1022,6 +1022,112 @@ const UNITES := {
 			{"nom": "Galop Céleste", "type": "passif", "effets": [{"effet": "premier"}, {"effet": "stat", "stat": "agi", "valeur": 0.2}], "niveau": 30, "description": "Agit toujours en premier au 1er tour ; AGI +20 %."},
 		],
 	},
+	# --- Héros inspirés (hommages), ajoutés en v0.33.0 ---
+	"axolotl_sources": {
+		"nom": "Axolotl des Sources", "rarete": "SSR", "element": "eau", "role": "soutien", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "e88aa8",
+		"legende": false, "forge": false, "race": "Axolotl", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1400, "atk": 270, "def": 215, "agi": 180, "mag": 215},
+		"secondaires": {"crit": 8, "degats_crit": 165, "res": 31, "preci": 98},
+		"skills": [
+			{"nom": "Bulle Apaisante", "type": "actif", "chance": 0.4, "cible": "allie_faible", "effets": [{"effet": "soin", "mult": 1.4}, {"effet": "regen_temp", "valeur": 0.04, "duree": 2}], "niveau": 1, "description": "(40 % de chance par tour) Soigne l'allié le plus blessé de 140 % de puissance de skill ; il régénère 4 % de ses PV par tour (2 tours)."},
+			{"nom": "Régénération", "type": "passif", "effets": [{"effet": "regen", "valeur": 0.05}, {"effet": "soin_bonus", "valeur": 0.2}], "niveau": 10, "description": "Régénère 5 % de ses PV max à chaque tour ; soins prodigués +20 %."},
+			{"nom": "Source Vive", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.85}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Soigne toute l'équipe de 85 % de puissance de skill ; retire les afflictions."},
+			{"nom": "Repousse Miraculeuse", "type": "passif", "effets": [{"effet": "renaissance", "valeur": 0.4}, {"effet": "aura", "stat": "def", "valeur": 0.08}], "niveau": 30, "description": "Renaît une fois par combat avec 40 % de ses PV ; toute l'équipe : DEF +8 %."},
+		],
+	},
+	"errant_silencieux": {
+		"nom": "L'Errant Silencieux", "rarete": "SSR", "element": "tenebres", "role": "guerrier", "position": "avant",
+		"invocable": true, "categorie": "heros", "couleur": "3a3f55",
+		"legende": false, "forge": false, "race": "Insecte", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1250, "atk": 315, "def": 190, "agi": 240, "mag": 170},
+		"secondaires": {"crit": 13, "degats_crit": 180, "res": 16, "preci": 96},
+		"skills": [
+			{"nom": "Coup d'Aiguillon", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.9}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 190 % de puissance de skill à un ennemi."},
+			{"nom": "Âme Recueillie", "type": "passif", "effets": [{"effet": "vol_vie", "valeur": 0.12}, {"effet": "stat", "stat": "agi", "valeur": 0.1}], "niveau": 10, "description": "Vol de vie de 12 % sur ses attaques ; AGI +10 %."},
+			{"nom": "Ruée de Cristal", "type": "actif", "chance": 0.25, "cible": "arriere", "effets": [{"effet": "degats", "mult": 1.4}, {"effet": "affliction", "nom": "etourdi", "chance": 0.25, "duree": 1}], "niveau": 20, "description": "(25 % de chance par tour) Fonce à travers les lignes : inflige 140 % de puissance de skill aux ennemis de l'Arrière ; 25 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Le Vide Intérieur", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "rage", "stat": "atk", "valeur": 0.3}], "niveau": 30, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; sous 50 % de PV : ATK +30 %."},
+		],
+	},
+	"chasseresse_soie": {
+		"nom": "La Chasseresse de Soie", "rarete": "UR", "element": "tenebres", "role": "assassin", "position": "avant",
+		"invocable": true, "categorie": "heros", "couleur": "4a2440",
+		"legende": false, "forge": false, "race": "Insecte", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1650, "atk": 395, "def": 220, "agi": 300, "mag": 220},
+		"secondaires": {"crit": 22, "degats_crit": 205, "res": 14, "preci": 100},
+		"skills": [
+			{"nom": "Aiguille Lancée", "type": "actif", "chance": 0.4, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.4, "ignore_res": 0.15}], "niveau": 1, "description": "(40 % de chance par tour) Lance son aiguille au bout d'un fil : inflige 240 % de puissance de skill à un ennemi, en ignorant 15 % de la RES."},
+			{"nom": "Fils Tendus", "type": "passif", "effets": [{"effet": "contre", "chance": 0.25, "mult": 1.0}, {"effet": "stat", "stat": "crit", "valeur": 10}], "niveau": 10, "description": "25 % de chance de contre-attaquer (100 % d'ATK) ; Crit +10."},
+			{"nom": "Chant de Soie", "type": "actif", "chance": 0.25, "cible": "aleatoire", "effets": [{"effet": "degats", "mult": 0.8, "coups": 4}, {"effet": "affliction", "nom": "saignement", "chance": 0.35, "duree": 3}], "niveau": 20, "description": "(25 % de chance par tour) Frappe 4 fois des ennemis au hasard (80 % de puissance de skill par coup) ; 35 % de chance d'infliger Saignement (3 tours)."},
+			{"nom": "Toile Mortelle", "type": "passif", "effets": [{"effet": "double_attaque", "chance": 0.2}, {"effet": "execution", "valeur": 0.35}], "niveau": 30, "description": "20 % de chance d'attaquer deux fois ; +35 % de dégâts contre les cibles sous 50 % de PV."},
+		],
+	},
+	"princesse_sceaux": {
+		"nom": "La Princesse des Sceaux", "rarete": "SSR", "element": "sacre", "role": "soutien", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "c9b27a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1300, "atk": 260, "def": 210, "agi": 190, "mag": 250},
+		"secondaires": {"crit": 8, "degats_crit": 165, "res": 33, "preci": 98},
+		"skills": [
+			{"nom": "Prière Ancienne", "type": "actif", "chance": 0.4, "cible": "allies", "effets": [{"effet": "soin", "mult": 1.0}], "niveau": 1, "description": "(40 % de chance par tour) Soigne toute l'équipe de 100 % de puissance de skill."},
+			{"nom": "Sagesse Royale", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.2}, {"effet": "aura", "stat": "mag", "valeur": 0.12}], "niveau": 10, "description": "Soins prodigués +20 % ; toute l'équipe : MAG +12 %."},
+			{"nom": "Trait de Lumière", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.0}, {"effet": "affliction", "nom": "aveugle", "chance": 0.4, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 200 % de puissance de skill à un ennemi ; 40 % de chance d'infliger Aveuglement (2 tours)."},
+			{"nom": "Sceau Sacré", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.15}, {"effet": "debuff", "stat": "atk", "valeur": 0.15, "duree": 2, "cible": "ennemis"}], "niveau": 30, "description": "(20 % de chance par tour) Bouclier de 15 % des PV max sur toute l'équipe ; ATK -15 % pour tous les ennemis (2 tours)."},
+		],
+	},
+	"elu_lame": {
+		"nom": "L'Élu de la Lame", "rarete": "SSR", "element": "sacre", "role": "tank", "position": "avant",
+		"invocable": true, "categorie": "heros", "couleur": "4f7a5a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1550, "atk": 285, "def": 230, "agi": 170, "mag": 130},
+		"secondaires": {"crit": 8, "degats_crit": 170, "res": 24, "preci": 94},
+		"skills": [
+			{"nom": "Coup Tournoyant", "type": "actif", "chance": 0.3, "cible": "avant", "effets": [{"effet": "degats", "mult": 1.4}], "niveau": 1, "description": "(30 % de chance par tour) Tourne sur lui-même, lame tendue : inflige 140 % de puissance de skill aux ennemis de l'Avant."},
+			{"nom": "Parade Parfaite", "type": "passif", "effets": [{"effet": "contre", "chance": 0.3, "mult": 1.2}, {"effet": "stat", "stat": "def", "valeur": 0.12}], "niveau": 10, "description": "30 % de chance de contre-attaquer (120 % d'ATK) ; DEF +12 %."},
+			{"nom": "Rempart du Bouclier", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.12}, {"effet": "provocation", "duree": 2, "cible": "soi"}], "niveau": 20, "description": "(25 % de chance par tour) Bouclier de 12 % des PV max sur toute l'équipe ; attire les attaques ennemies (2 tours)."},
+			{"nom": "Courage de l'Élu", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "immunite", "afflictions": ["malediction", "aveugle"]}], "niveau": 30, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; immunisé à Malédiction, Aveuglement."},
+		],
+	},
+	"mercenaire_sans_nom": {
+		"nom": "Le Mercenaire Sans Nom", "rarete": "UR", "element": "sacre", "role": "guerrier", "position": "avant",
+		"invocable": true, "categorie": "heros", "couleur": "5a6470",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1850, "atk": 420, "def": 245, "agi": 210, "mag": 190},
+		"secondaires": {"crit": 13, "degats_crit": 185, "res": 18, "preci": 96},
+		"skills": [
+			{"nom": "Taille Démesurée", "type": "actif", "chance": 0.4, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.5}], "niveau": 1, "description": "(40 % de chance par tour) Abat son épée démesurée : inflige 250 % de puissance de skill à un ennemi."},
+			{"nom": "Ancien Soldat d'Élite", "type": "passif", "effets": [{"effet": "stat", "stat": "atk", "valeur": 0.15}, {"effet": "stat", "stat": "crit", "valeur": 8}], "niveau": 10, "description": "ATK +15 % ; Crit +8."},
+			{"nom": "Frappe Céleste", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.2}, {"effet": "affliction", "nom": "etourdi", "chance": 0.3, "duree": 1}], "niveau": 20, "description": "(25 % de chance par tour) Bondit et retombe lame la première : inflige 220 % de puissance de skill à un ennemi ; 30 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Au-delà des Limites", "type": "passif", "effets": [{"effet": "accumulation", "stat": "atk", "valeur": 0.12, "max": 3}, {"effet": "double_attaque", "chance": 0.15}], "niveau": 30, "description": "Chaque ennemi vaincu : ATK +12 % (max 3 fois) ; 15 % de chance d'attaquer deux fois."},
+		],
+	},
+	"combattante_ardente": {
+		"nom": "La Combattante Ardente", "rarete": "UR", "element": "feu", "role": "guerrier", "position": "avant",
+		"invocable": true, "categorie": "heros", "couleur": "8a3a2a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1750, "atk": 415, "def": 225, "agi": 290, "mag": 180},
+		"secondaires": {"crit": 15, "degats_crit": 190, "res": 18, "preci": 98},
+		"skills": [
+			{"nom": "Rafale de Poings", "type": "actif", "chance": 0.4, "cible": "aleatoire", "effets": [{"effet": "degats", "mult": 0.85, "coups": 3}], "niveau": 1, "description": "(40 % de chance par tour) Frappe 3 fois des ennemis au hasard (85 % de puissance de skill par coup)."},
+			{"nom": "Discipline du Dojo", "type": "passif", "effets": [{"effet": "stat", "stat": "agi", "valeur": 0.12}, {"effet": "contre", "chance": 0.2, "mult": 1.0}], "niveau": 10, "description": "AGI +12 % ; 20 % de chance de contre-attaquer (100 % d'ATK)."},
+			{"nom": "Uppercut Ardent", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.2}, {"effet": "affliction", "nom": "brulure", "chance": 0.5, "duree": 2}, {"effet": "affliction", "nom": "etourdi", "chance": 0.2, "duree": 1}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 220 % de puissance de skill à un ennemi ; 50 % de chance d'infliger Brûlure (2 tours) ; 20 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Ciel de Braise", "type": "passif", "effets": [{"effet": "double_attaque", "chance": 0.25}, {"effet": "vol_vie", "valeur": 0.1}], "niveau": 30, "description": "25 % de chance d'attaquer deux fois ; vol de vie de 10 % sur ses attaques."},
+		],
+	},
+	"fleuriste_ruines": {
+		"nom": "La Fleuriste des Ruines", "rarete": "UR", "element": "nature", "role": "soutien", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "b06a7a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1800, "atk": 340, "def": 240, "agi": 250, "mag": 290},
+		"secondaires": {"crit": 9, "degats_crit": 170, "res": 34, "preci": 99},
+		"skills": [
+			{"nom": "Brise Guérisseuse", "type": "actif", "chance": 0.4, "cible": "allies", "effets": [{"effet": "soin", "mult": 1.1}], "niveau": 1, "description": "(40 % de chance par tour) Soigne toute l'équipe de 110 % de puissance de skill."},
+			{"nom": "Jardin des Ruines", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.25}, {"effet": "aura", "stat": "pv", "valeur": 0.1}], "niveau": 10, "description": "Soins prodigués +25 % ; toute l'équipe : PV +10 %."},
+			{"nom": "Pluie de Pétales", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "regen_temp", "valeur": 0.06, "duree": 3}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Toute l'équipe régénère 6 % des PV par tour (3 tours) ; retire les afflictions."},
+			{"nom": "Prière de la Terre", "type": "actif", "chance": 0.15, "cible": "allies", "effets": [{"effet": "ressusciter", "valeur": 0.6}, {"effet": "bouclier", "valeur": 0.2}], "niveau": 30, "description": "(15 % de chance par tour) Ranime un allié K.O. avec 60 % de ses PV ; bouclier de 20 % des PV max sur toute l'équipe."},
+		],
+	},
+
 
 	# ============================================================
 	# ENNEMIS (non invocables)

@@ -302,6 +302,30 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 	nom.add_theme_constant_override("outline_size", 5)
 	racine.add_child(nom)
 
+	# Figurine (pion) de l'unité si elle existe : elle remplace le portrait rond
+	var fig := "" if (geant or petit) else UiCommun.chemin_figurine(info["id"])
+	if fig != "":
+		var h_fig := HAUTEUR_FIGURINE_BOSS if grand else HAUTEUR_FIGURINE
+		racine.custom_minimum_size = Vector2(largeur, h_fig + 64)
+		racine.size = racine.custom_minimum_size
+		var socle_fig := _creer_figurine(fig, u, h_fig, largeur, info["camp"] != mon_camp())
+		racine.add_child(socle_fig["zone"])
+		var barre_f := _barre(Color("c0392b") if info["camp"] != mon_camp() else Color("3fae5a"), 150.0, 12.0)
+		barre_f.max_value = info["pv_max"]
+		barre_f.value = info["pv"]
+		barre_f.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		racine.add_child(barre_f)
+		var bouclier_f := _barre(Color("6ab0ff"), 150.0, 5.0)
+		bouclier_f.max_value = info["pv_max"]
+		bouclier_f.value = 0
+		bouclier_f.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		racine.add_child(bouclier_f)
+		var pv_f := _label("%d / %d" % [info["pv"], info["pv_max"]], 12, C_DOUX)
+		pv_f.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		racine.add_child(pv_f)
+		return {"racine": racine, "portrait": socle_fig["zone"], "figurine": socle_fig["image"], "barre": barre_f,
+			"bouclier": bouclier_f, "pv_label": pv_f, "pv_max": info["pv_max"], "base_pos": Vector2.ZERO}
+
 	var portrait := Panel.new()
 	portrait.custom_minimum_size = Vector2(diam, diam)
 	portrait.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -350,6 +374,51 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 		tw.tween_property(portrait, "scale", Vector2.ONE, 1.2)
 	return {"racine": racine, "portrait": portrait, "barre": barre, "bouclier": bouclier,
 		"pv_label": pv, "pv_max": info["pv_max"], "base_pos": Vector2.ZERO}
+
+
+const HAUTEUR_FIGURINE := 165.0
+const HAUTEUR_FIGURINE_BOSS := 200.0
+
+## Figurine debout sur un petit socle (ombre + liseré de la couleur de l'élément).
+## `vers_gauche` : les ennemis regardent vers la gauche (les figurines sont dessinées tournées vers la droite).
+func _creer_figurine(chemin: String, u: Dictionary, h: float, largeur: float, vers_gauche: bool) -> Dictionary:
+	var zone := Control.new()
+	zone.custom_minimum_size = Vector2(largeur, h)
+	zone.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	zone.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var socle := Panel.new()
+	socle.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var ss := StyleBoxFlat.new()
+	ss.bg_color = Color(0, 0, 0, 0.5)
+	ss.border_color = Color(EcranBestiaire.COULEURS_ELEMENT[u["element"]], 0.85)
+	ss.set_border_width_all(2)
+	ss.set_corner_radius_all(40)
+	socle.add_theme_stylebox_override("panel", ss)
+	var sw := largeur * 0.62
+	socle.size = Vector2(sw, 20)
+	socle.position = Vector2((largeur - sw) / 2.0, h - 16)
+	zone.add_child(socle)
+	var tex: Texture2D = load(chemin)
+	var ts := tex.get_size()
+	var hi := h - 6.0
+	var wi := minf(largeur, hi * ts.x / maxf(1.0, ts.y))
+	hi = wi * ts.y / maxf(1.0, ts.x)
+	var img := TextureRect.new()
+	img.texture = tex
+	img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	img.stretch_mode = TextureRect.STRETCH_SCALE
+	img.flip_h = vers_gauche
+	img.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	img.size = Vector2(wi, hi)
+	img.position = Vector2((largeur - wi) / 2.0, h - 8.0 - hi)       # les pieds posés sur le socle
+	img.pivot_offset = Vector2(wi / 2.0, hi)
+	zone.add_child(img)
+	# Respiration : la figurine se dresse doucement (décalage au hasard pour ne pas bouger en rythme)
+	var tw := create_tween().set_loops()
+	tw.tween_interval(randf() * 1.2)
+	tw.tween_property(img, "scale", Vector2(1.0, 1.025), 1.3).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(img, "scale", Vector2.ONE, 1.3).set_trans(Tween.TRANS_SINE)
+	return {"zone": zone, "image": img}
 
 
 ## Grande barre de vie du Boss de Monde, en haut de l'écran.
@@ -596,11 +665,18 @@ func _ko(idx: int) -> void:
 	c["pv_label"].text = "K.O."
 	var tw := create_tween()
 	tw.tween_property(c["racine"], "modulate", Color(0.4, 0.4, 0.4, 0.45), 0.3 / _vitesse)
+	# Une figurine K.O. bascule en arrière
+	if c.has("figurine"):
+		var img: TextureRect = c["figurine"]
+		var tf := create_tween()
+		tf.tween_property(img, "rotation", (1.25 if img.flip_h else -1.25), 0.35 / _vitesse).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 
 func _revivre(idx: int, pv: int) -> void:
 	var c: Dictionary = _cartes[idx]
 	c["racine"].modulate = Color.WHITE
+	if c.has("figurine"):
+		c["figurine"].rotation = 0.0
 	_maj_pv(idx, pv, 0)
 
 

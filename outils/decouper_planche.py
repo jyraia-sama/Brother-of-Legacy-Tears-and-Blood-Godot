@@ -47,6 +47,10 @@ def main():
         c = min(x1 - x0, y1 - y0)                      # carré centré
         cx, cy = (x0 + x1) // 2, (y0 + y1) // 2
         boite = (cx - c // 2, cy - c // 2, cx - c // 2 + c, cy - c // 2 + c)
+        if (y1 - y0) > (x1 - x0) * 1.15:
+            # Case verticale (planche 4 x 2) : on garde le haut (tête et buste), pas le centre
+            haut = y0 + int((y1 - y0 - c) * 0.12)
+            boite = (x0, haut, x0 + c, haut + c)
         portrait = img.crop(boite).resize((TAILLE, TAILLE), Image.LANCZOS)
         for nom in uid.split("+"):
             cible = f"assets/unites/{nom[6:]}.png" if nom.startswith("unite:") else f"{dossier}/{nom}.png"

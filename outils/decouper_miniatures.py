@@ -6,6 +6,10 @@ Usage :  python3 outils/decouper_miniatures.py planche_38.png
          (ordre par défaut : depart combat elite gardien boss coffre soin mystere piege)
          python3 outils/decouper_miniatures.py planche.png coffre soin   (autres noms / autre ordre)
 Si la planche a un fond transparent au lieu de vert, ça marche aussi.
+
+Figurines de combat (pions) : une planche de figurines sur fond vert, rangées dans assets/figurines/ :
+         python3 outils/decouper_miniatures.py planche_40.png --figurines axolotl_sources errant_silencieux ...
+Options : --dossier=chemin  --hauteur=px  (--figurines = --dossier=assets/figurines --hauteur=420)
 """
 import os
 import sys
@@ -50,7 +54,17 @@ def detourer(case):
 
 
 def main():
-    args = sys.argv[1:]
+    global DOSSIER, HAUTEUR
+    args = []
+    for a in sys.argv[1:]:
+        if a == "--figurines":
+            DOSSIER, HAUTEUR = "assets/figurines", 420
+        elif a.startswith("--dossier="):
+            DOSSIER = a.split("=", 1)[1]
+        elif a.startswith("--hauteur="):
+            HAUTEUR = int(a.split("=", 1)[1])
+        else:
+            args.append(a)
     if not args:
         sys.exit(__doc__)
     chemin, noms = args[0], (args[1:] or ORDRE)

@@ -1,6 +1,14 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.32.0** (2026-10-01)
+Version actuelle : **0.33.0** (2026-10-02)
+
+## v0.33.0 — Huit héros hommages et figurines de combat  (2026-10-02)
+
+- 8 NOUVEAUX HÉROS INVOCABLES, inspirés de personnages de jeux vidéo sans les copier (noms, apparences et sorts originaux) : l'Axolotl des Sources (SSR Eau, soutien qui se régénère), l'Errant Silencieux (SSR Ténèbres, guerrier), la Chasseresse de Soie (UR Ténèbres, assassin), la Princesse des Sceaux (SSR Sacré, soutien), l'Élu de la Lame (SSR Sacré, tank), le Mercenaire Sans Nom (UR Sacré, guerrier), la Combattante Ardente (UR Feu, guerrier) et la Fleuriste des Ruines (UR Nature, soutien).
+- Chacun a 4 sorts (niveaux 1, 10, 20, 30) et sa version évoluée à l'Autel d'Évolution (niveau max 40, un sort amélioré et un sort de niveau 40) : 72 évolutions au total.
+- Équilibrés sur les héros de même rareté. Le Pacte Supérieur compte désormais 10 SSR et 8 UR.
+- FIGURINES DE COMBAT : une unité qui a sa figurine (assets/figurines/<identifiant>.png) apparaît en pied sur un socle à la place de son portrait rond. Elle respire doucement, s'élance pour frapper et bascule quand elle est K.O. ; les ennemis regardent vers la gauche. Marche pour tous les héros et ennemis dès qu'on ajoute leur image.
+- Prompts ChatGPT : PROMPTS_HEROS_HOMMAGES.md (planche 39 : portraits, planche 40 : figurines, planche 41 : évolutions). Les outils de découpe gèrent les planches 4 x 2 et les figurines sur fond vert.
 
 ## v0.32.0 — Équilibrage de l'Aventure  (2026-10-01)
 
