@@ -14,11 +14,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.33.0"
+const NUMERO := "0.33.1"
 const DATE := "2026-10-02"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.33.1", "date": "2026-10-02", "titre": "Portraits, figurines et miniatures du plateau",
+	"changements": [
+		"Images des 8 héros hommages : portraits (planche 39) et figurines de combat (planche 40). Les héros apparaissent désormais en pied sur leur socle pendant les combats.",
+		"Miniatures des cases du plateau (planche 38) : départ, combat, élite, gardien, boss, coffre, soin, mystère et piège sont posés sur des socles de pierre.",
+	]},
 	{"version": "0.33.0", "date": "2026-10-02", "titre": "Huit héros hommages et figurines de combat",
 	"changements": [
 		"8 NOUVEAUX HÉROS INVOCABLES, inspirés de personnages de jeux vidéo sans les copier (noms, apparences et sorts originaux) : l'Axolotl des Sources (SSR Eau, soutien qui se régénère), l'Errant Silencieux (SSR Ténèbres, guerrier), la Chasseresse de Soie (UR Ténèbres, assassin), la Princesse des Sceaux (SSR Sacré, soutien), l'Élu de la Lame (SSR Sacré, tank), le Mercenaire Sans Nom (UR Sacré, guerrier), la Combattante Ardente (UR Feu, guerrier) et la Fleuriste des Ruines (UR Nature, soutien).",

@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.33.0** (2026-10-02)
+Version actuelle : **0.33.1** (2026-10-02)
+
+## v0.33.1 — Portraits, figurines et miniatures du plateau  (2026-10-02)
+
+- Images des 8 héros hommages : portraits (planche 39) et figurines de combat (planche 40). Les héros apparaissent désormais en pied sur leur socle pendant les combats.
+- Miniatures des cases du plateau (planche 38) : départ, combat, élite, gardien, boss, coffre, soin, mystère et piège sont posés sur des socles de pierre.
 
 ## v0.33.0 — Huit héros hommages et figurines de combat  (2026-10-02)
 
