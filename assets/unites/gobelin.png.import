@@ -15,9 +15,9 @@ dest_files=["res://.godot/imported/gobelin.png-7123716297d00f0f9d375643bb4e8374.
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.85
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

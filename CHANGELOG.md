@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.33.2** (2026-10-02)
+Version actuelle : **0.33.3** (2026-10-03)
+
+## v0.33.3 — Plateau fluide et chargement allégé  (2026-10-03)
+
+- PLATEAU FLUIDE : le décor du plateau (chemins pavés, socles, cases, miniatures) n'est plus redessiné à chaque image. Il est dessiné une fois, puis seulement quand il change (case atteinte, brouillard levé). Pendant que le pion avance, seuls la figurine, le halo de la Larme, la pénombre et les anneaux bougent : environ 3 fois moins de calcul par image.
+- La pénombre autour du grand frère est maintenant un seul voile sombre qui le suit, au lieu d'assombrir chaque case et chaque pavé un par un (rendu quasi identique).
+- Chargement du jeu web encore allégé : 66 Mo -> 25 Mo (portraits, familiers, personnages et figurines aussi compressés en WebP).
 
 ## v0.33.2 — Version web plus fluide et plus légère  (2026-10-02)
 

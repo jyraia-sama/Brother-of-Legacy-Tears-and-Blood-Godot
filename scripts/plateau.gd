@@ -64,6 +64,14 @@ var pion_pos := Vector2.ZERO
 const IMAGE_PION := "res://assets/plateaux/pion_aine.png"
 const HAUTEUR_PION := 120.0    # hauteur de la figurine à l'écran
 var _pion_tex: Texture2D = null
+## CALQUES DE DESSIN (performances, surtout sur le web) : le décor (chemins, socles, cases) ne change
+## que quand on avance ; il est dessiné UNE fois sur ce nœud et redessiné seulement s'il change.
+## Ce qui bouge à chaque image est sur deux petits calques : _sous (halo de la Larme, lueur des boss)
+## et _dessus (pénombre autour du grand frère, anneaux, survol, figurine, poussière).
+var _sous: Node2D
+var _dessus: Node2D
+var _etat_decor := ""
+var _ombre: GradientTexture2D
 var _pion_charge := false
 var _pion_gauche := false      # la figurine regarde vers la gauche
 var _inclinaison := 0.0        # la figurine se penche pendant le saut
@@ -130,6 +138,7 @@ func _ready() -> void:
 	_maj_brouillard()
 
 	_creer_fond()
+	_creer_calques()
 	camera = Camera2D.new()
 	add_child(camera)
 	camera.make_current()
@@ -236,7 +245,13 @@ func _process(delta: float) -> void:
 		var cible := pion_pos + Vector2(250, 0) / camera.zoom.x
 		camera.position = camera.position.lerp(cible, 1.0 - exp(-4.0 * delta))
 	_limiter_camera()
-	queue_redraw()
+	# Le décor n'est redessiné que s'il a changé (case atteinte, brouillard levé, case terminée)
+	var etat := "%d|%d|%d|%d" % [courant, reveles.size(), visites.size(), termines.size()]
+	if etat != _etat_decor:
+		_etat_decor = etat
+		queue_redraw()
+	_sous.queue_redraw()
+	_dessus.queue_redraw()
 
 
 func _limiter_camera() -> void:
@@ -754,13 +769,7 @@ func _maj_survol(p: Vector2) -> void:
 # ---------------------------------------------------------------
 
 func _draw() -> void:
-	# Halo bleu de la Larme, au sol, autour du grand frère
-	if _halo == null:
-		_halo = _texture_halo()
-	var rayon := PORTEE_LUMIERE * (0.92 + 0.08 * sin(temps * 1.6))
-	draw_texture_rect(_halo, Rect2(pion_pos - Vector2(rayon, rayon), Vector2(rayon, rayon) * 2.0), false, Color(COULEUR_LARME, 0.42))
-
-	# Chemins pavés
+	# DÉCOR FIXE : chemins pavés et cases (redessiné seulement quand il change, voir _process)
 	for n in noeuds:
 		var a: int = n["id"]
 		for b in n["voisins"]:
@@ -775,7 +784,6 @@ func _draw() -> void:
 				etat = 0 if (visites.has(a) and visites.has(b)) else 1
 			_dessiner_chemin(_pos(a), _pos(b), a * 131 + b, etat)
 
-	# Cases
 	for n in noeuds:
 		var id: int = n["id"]
 		var p := _pos(id)
@@ -784,16 +792,68 @@ func _draw() -> void:
 		elif _voisin_revele(id):
 			_dessiner_case_cachee(id, p)
 
-	# Cases accessibles : anneau qui pulse
+
+func _creer_calques() -> void:
+	_sous = Node2D.new()
+	_sous.z_index = -1
+	_sous.draw.connect(_dessiner_sous)
+	add_child(_sous)
+	_dessus = Node2D.new()
+	_dessus.z_index = 1
+	_dessus.draw.connect(_dessiner_dessus)
+	add_child(_dessus)
+	# Pénombre : transparente près du grand frère, sombre au loin (remplace l'ancien éclairage case par case)
+	var g := Gradient.new()
+	var noir := Color(0.01, 0.01, 0.02)
+	g.set_color(0, Color(noir, 0.0))
+	g.set_color(1, Color(noir, OMBRE_MAX))
+	g.add_point(0.4, Color(noir, 0.0))
+	_ombre = GradientTexture2D.new()
+	_ombre.gradient = g
+	_ombre.fill = GradientTexture2D.FILL_RADIAL
+	_ombre.fill_from = Vector2(0.5, 0.5)
+	_ombre.fill_to = Vector2(1.0, 0.5)
+	_ombre.width = 256
+	_ombre.height = 256
+
+
+const OMBRE_MAX := 0.36
+const PORTEE_OMBRE := 1020.0
+
+
+## Sous le décor : halo bleu de la Larme et lueur rouge qui pulse sous le boss.
+func _dessiner_sous() -> void:
+	if _halo == null:
+		_halo = _texture_halo()
+	var rayon := PORTEE_LUMIERE * (0.92 + 0.08 * sin(temps * 1.6))
+	_sous.draw_texture_rect(_halo, Rect2(pion_pos - Vector2(rayon, rayon), Vector2(rayon, rayon) * 2.0), false, Color(COULEUR_LARME, 0.42))
+	var boss: int = plateau["boss"]
+	if reveles.has(boss):
+		var lueur := 0.5 + 0.5 * sin(temps * 2.0)
+		var rb := RAYON * 1.45 + 16.0 + lueur * 6.0
+		_sous.draw_texture_rect(_halo, Rect2(_pos(boss) - Vector2(rb, rb) * 1.6, Vector2(rb, rb) * 3.2), false, Color(1, 0.1, 0.05, 0.35))
+
+
+## Au-dessus du décor : pénombre, anneaux des cases accessibles, survol, figurine, poussière.
+func _dessiner_dessus() -> void:
+	var c := _dessus
+	var R := PORTEE_OMBRE
+	c.draw_texture_rect(_ombre, Rect2(pion_pos - Vector2(R, R), Vector2(R, R) * 2.0), false)
+	var loin := 6000.0
+	var noir := Color(0.01, 0.01, 0.02, OMBRE_MAX)
+	c.draw_rect(Rect2(pion_pos.x - loin, pion_pos.y - loin, loin * 2.0, loin - R), noir)
+	c.draw_rect(Rect2(pion_pos.x - loin, pion_pos.y + R, loin * 2.0, loin - R), noir)
+	c.draw_rect(Rect2(pion_pos.x - loin, pion_pos.y - R, loin - R, R * 2.0), noir)
+	c.draw_rect(Rect2(pion_pos.x + R, pion_pos.y - R, loin - R, R * 2.0), noir)
+
 	if not en_mouvement and not bloque:
 		var pulse := 0.5 + 0.5 * sin(temps * 5.0)
 		for v in noeuds[courant]["voisins"]:
 			if _accessible(v):
 				var r := RAYON + 9.0 + pulse * 5.0
-				draw_arc(_pos(v), r, 0, TAU, 40, Color(1.0, 0.85, 0.45, 0.5 + 0.5 * pulse), 3.0, true)
-
+				c.draw_arc(_pos(v), r, 0, TAU, 40, Color(1.0, 0.85, 0.45, 0.5 + 0.5 * pulse), 3.0, true)
 	if survol >= 0:
-		draw_arc(_pos(survol), RAYON + 7.0, 0, TAU, 40, Color.WHITE, 2.0, true)
+		c.draw_arc(_pos(survol), RAYON + 7.0, 0, TAU, 40, Color.WHITE, 2.0, true)
 
 	_dessiner_pion(pion_pos + Vector2(0, -saut))
 	_dessiner_poussiere()
@@ -838,9 +898,9 @@ func _reflet(p: Vector2) -> float:
 	return clampf(1.0 - p.distance_to(pion_pos) / PORTEE_LUMIERE, 0.0, 1.0)
 
 
-func _eclairer(c: Color, p: Vector2) -> Color:
-	var r := c.lerp(Color(0.02, 0.015, 0.02, c.a), 1.0 - _lumiere(p))
-	return r.lerp(Color(COULEUR_LARME, c.a), _reflet(p) * 0.22)
+## (L'éclairage est maintenant fait par la pénombre du calque _dessus : le décor reste fixe.)
+func _eclairer(c: Color, _p: Vector2) -> Color:
+	return c
 
 
 ## Chemin de pavés entre deux cases. etat : 0 = parcouru, 1 = visible, 2 = entrevu.
@@ -908,11 +968,6 @@ func _dessiner_case(n: Dictionary, p: Vector2) -> void:
 	var fond: Color = COULEURS[type]
 	if fait:
 		fond = fond.darkened(0.55)
-	var lum := _lumiere(p)
-
-	if type == T.BOSS:
-		var lueur := 0.5 + 0.5 * sin(temps * 2.0)
-		draw_circle(p, r + 16.0 + lueur * 6.0, Color(1, 0.1, 0.05, 0.14))
 	var pierre := Color("4a443e") if not fait else Color("35312d")
 	_dessiner_socle(p, r, pierre, n["id"] * 7 + 3)
 
@@ -930,12 +985,6 @@ func _dessiner_case(n: Dictionary, p: Vector2) -> void:
 		var ic := Color(1, 0.93, 0.8) if not fait else Color(1, 1, 1, 0.35)
 		_dessiner_icone(type, p, ri * 0.62, ic)
 
-	# Lumière : sombre au loin, reflet bleu tout près de la Larme
-	if lum < 1.0:
-		draw_circle(p + Vector2(0, 3.5), r + 7.0, Color(0.01, 0.01, 0.02, (1.0 - lum) * 0.95))
-	var reflet := _reflet(p)
-	if reflet > 0.0:
-		draw_circle(p, r + 3.0, Color(COULEUR_LARME, reflet * 0.1))
 
 	if avec_mini:
 		var ts := mini.get_size()
@@ -944,14 +993,14 @@ func _dessiner_case(n: Dictionary, p: Vector2) -> void:
 		if w > r * 3.2:          # miniature très large (porte, coffre) : on limite la largeur
 			w = r * 3.2
 			h = w * ts.y / ts.x
-		var teinte := Color(lum, lum, lum).lerp(COULEUR_LARME, reflet * 0.2)
+		var teinte := Color.WHITE
 		if fait:
 			teinte = teinte.darkened(0.5)
 			teinte.a = 0.8
 		draw_texture_rect(mini, Rect2(p + Vector2(-w / 2.0, r * 0.35 - h), Vector2(w, h)), false, teinte)
 
 	if PlateauGenerateur.est_combat(type) and not fait:
-		_texte(p + Vector2(0, r + 26.0), "Nv %d" % Rencontres.niveau_ennemis(acte, chapitre, n), 14, Color(1, 0.9, 0.75, 0.35 + 0.55 * lum))
+		_texte(p + Vector2(0, r + 26.0), "Nv %d" % Rencontres.niveau_ennemis(acte, chapitre, n), 14, Color(1, 0.9, 0.75, 0.85))
 
 
 ## Image de la miniature d'un type de case (chargée une seule fois), ou null.
@@ -975,9 +1024,9 @@ func _dessiner_poussiere() -> void:
 	for d in _poussiere:
 		var t: float = d["vie"] / d["vie_max"]
 		var taille: float = d["taille"] * (1.0 + (1.0 - t) * 1.2)
-		draw_set_transform(d["pos"], 0, Vector2(1.4, 0.8))
-		draw_circle(Vector2.ZERO, taille, Color(0.78, 0.7, 0.6, 0.6 * t))
-	draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+		_dessus.draw_set_transform(d["pos"], 0, Vector2(1.4, 0.8))
+		_dessus.draw_circle(Vector2.ZERO, taille, Color(0.78, 0.7, 0.6, 0.6 * t))
+	_dessus.draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
 
 func _dessiner_icone(type: int, c: Vector2, s: float, col: Color) -> void:
@@ -1034,9 +1083,9 @@ func _epee(c: Vector2, s: float, sens: float, col: Color) -> void:
 func _dessiner_pion(p: Vector2) -> void:
 	# Pion d'échecs (secours si pion_aine.png est absent)
 	var ombre := 1.0 - saut / 60.0
-	draw_set_transform(pion_pos + Vector2(0, 4), 0, Vector2(1.0, 0.35))
-	draw_circle(Vector2.ZERO, 26.0 * ombre, Color(0, 0, 0, 0.45))
-	draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+	_dessus.draw_set_transform(pion_pos + Vector2(0, 4), 0, Vector2(1.0, 0.35))
+	_dessus.draw_circle(Vector2.ZERO, 26.0 * ombre, Color(0, 0, 0, 0.45))
+	_dessus.draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
 	# Figurine du grand frère (assets/plateaux/pion_aine.png) si elle existe
 	if not _pion_charge:
@@ -1050,14 +1099,14 @@ func _dessiner_pion(p: Vector2) -> void:
 		# Les pieds (bas de l'image) sont posés sur la case
 		var r := Rect2(-w / 2.0, -h + 6.0, w, h)
 		# Lueur bleue de la Larme sous les pieds
-		draw_set_transform(pion_pos + Vector2(0, 4), 0, Vector2(1.0, 0.4))
+		_dessus.draw_set_transform(pion_pos + Vector2(0, 4), 0, Vector2(1.0, 0.4))
 		for i in 4:
-			draw_circle(Vector2.ZERO, 34.0 - i * 7.0, Color(COULEUR_LARME, 0.07 * ombre))
+			_dessus.draw_circle(Vector2.ZERO, 34.0 - i * 7.0, Color(COULEUR_LARME, 0.07 * ombre))
 		# Penché pendant le saut (pivot aux pieds), tassé à l'atterrissage
 		var ech := Vector2(1.0 + 0.07 * _ecrase, 1.0 - 0.09 * _ecrase)
-		draw_set_transform(p, _inclinaison, Vector2(-ech.x if _pion_gauche else ech.x, ech.y))
-		draw_texture_rect(_pion_tex, r, false)
-		draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+		_dessus.draw_set_transform(p, _inclinaison, Vector2(-ech.x if _pion_gauche else ech.x, ech.y))
+		_dessus.draw_texture_rect(_pion_tex, r, false)
+		_dessus.draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 		return
 
 	var corps := Color("f2e6cc")
@@ -1069,13 +1118,13 @@ func _dessiner_pion(p: Vector2) -> void:
 	var col := PackedVector2Array([
 		p + Vector2(-13, -36), p + Vector2(13, -36), p + Vector2(13, -41), p + Vector2(-13, -41)])
 	for poly in [base, tronc, col]:
-		draw_colored_polygon(poly, corps)
+		_dessus.draw_colored_polygon(poly, corps)
 		var ferme: PackedVector2Array = poly.duplicate()
 		ferme.append(poly[0])
-		draw_polyline(ferme, bord, 2.0, true)
-	draw_circle(p + Vector2(0, -52), 13.0, corps)
-	draw_arc(p + Vector2(0, -52), 13.0, 0, TAU, 32, bord, 2.0, true)
-	draw_circle(p + Vector2(-4, -56), 4.0, Color(1, 1, 1, 0.8))
+		_dessus.draw_polyline(ferme, bord, 2.0, true)
+	_dessus.draw_circle(p + Vector2(0, -52), 13.0, corps)
+	_dessus.draw_arc(p + Vector2(0, -52), 13.0, 0, TAU, 32, bord, 2.0, true)
+	_dessus.draw_circle(p + Vector2(-4, -56), 4.0, Color(1, 1, 1, 0.8))
 
 
 func _texte(p: Vector2, texte: String, taille: int, col: Color) -> void:

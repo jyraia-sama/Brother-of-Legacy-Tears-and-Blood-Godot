@@ -14,11 +14,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.33.2"
-const DATE := "2026-10-02"
+const NUMERO := "0.33.3"
+const DATE := "2026-10-03"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.33.3", "date": "2026-10-03", "titre": "Plateau fluide et chargement allégé",
+	"changements": [
+		"PLATEAU FLUIDE : le décor du plateau (chemins pavés, socles, cases, miniatures) n'est plus redessiné à chaque image. Il est dessiné une fois, puis seulement quand il change (case atteinte, brouillard levé). Pendant que le pion avance, seuls la figurine, le halo de la Larme, la pénombre et les anneaux bougent : environ 3 fois moins de calcul par image.",
+		"La pénombre autour du grand frère est maintenant un seul voile sombre qui le suit, au lieu d'assombrir chaque case et chaque pavé un par un (rendu quasi identique).",
+		"Chargement du jeu web encore allégé : 66 Mo -> 25 Mo (portraits, familiers, personnages et figurines aussi compressés en WebP).",
+	]},
 	{"version": "0.33.2", "date": "2026-10-02", "titre": "Version web plus fluide et plus légère",
 	"changements": [
 		"VERSION WEB PLUS FLUIDE : la sauvegarde n'est plus réécrite à chaque gain (or, XP de chaque héros, Écho, objet...). Elle est écrite une seule fois, une demi-seconde après, et tout de suite quand le jeu passe en arrière-plan. Une fin de combat réécrivait une quinzaine de fois un fichier de ~190 Ko : c'était la principale cause des saccades.",

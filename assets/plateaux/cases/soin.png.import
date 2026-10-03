@@ -15,9 +15,9 @@ dest_files=["res://.godot/imported/soin.png-40439ef9fe218763f6f8dc8ee86e5d8b.cte
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.85
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
