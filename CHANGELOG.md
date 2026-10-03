@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.33.3** (2026-10-03)
+Version actuelle : **0.34.0** (2026-10-03)
+
+## v0.34.0 — Le secret du Bélier  (2026-10-03)
+
+- UN NOUVEAU SECRET se cache dans le menu principal… Quelque part, un sanctuaire caché où veille une famille née sous le signe du Bélier. Ses membres ne se laissent pas approcher facilement, mais ceux qui les vainquent gagnent de précieux alliés. À toi de le trouver !
+- Les combats de ce sanctuaire s'adaptent à la puissance de ton équipe : on peut les tenter à n'importe quel moment de l'aventure, sans stamina.
 
 ## v0.33.3 — Plateau fluide et chargement allégé  (2026-10-03)
 

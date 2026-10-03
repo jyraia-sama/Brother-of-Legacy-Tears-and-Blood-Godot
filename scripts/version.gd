@@ -14,11 +14,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.33.3"
+const NUMERO := "0.34.0"
 const DATE := "2026-10-03"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.34.0", "date": "2026-10-03", "titre": "Le secret du Bélier",
+	"changements": [
+		"UN NOUVEAU SECRET se cache dans le menu principal… Quelque part, un sanctuaire caché où veille une famille née sous le signe du Bélier. Ses membres ne se laissent pas approcher facilement, mais ceux qui les vainquent gagnent de précieux alliés. À toi de le trouver !",
+		"Les combats de ce sanctuaire s'adaptent à la puissance de ton équipe : on peut les tenter à n'importe quel moment de l'aventure, sans stamina.",
+	]},
 	{"version": "0.33.3", "date": "2026-10-03", "titre": "Plateau fluide et chargement allégé",
 	"changements": [
 		"PLATEAU FLUIDE : le décor du plateau (chemins pavés, socles, cases, miniatures) n'est plus redessiné à chaque image. Il est dessiné une fois, puis seulement quand il change (case atteinte, brouillard levé). Pendant que le pion avance, seuls la figurine, le halo de la Larme, la pénombre et les anneaux bougent : environ 3 fois moins de calcul par image.",

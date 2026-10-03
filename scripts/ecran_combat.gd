@@ -13,6 +13,7 @@ extends Control
 ##   "arene"      : Arène JcJ contre la défense d'un joueur   ("combat", "graine", "adversaire", "retour")
 ##   "donjon"     : un des 4 combats d'une expédition de Donjon   ("donjon", "niveau", "vague", "retour")
 ##   "marche"     : un combat de la Marche Maudite   ("type", "region", "retour")
+##   "sanctuaire" : Sanctuaire du Bélier (secret), la famille du Bélier   ("epreuve", "retour")
 ##   "classee"    : Arène classée en temps réel, combat MANUEL à deux joueurs ("match", "mon_camp", "retour")
 ##                  -> le déroulement est géré par combat_classe.gd
 ##
@@ -107,6 +108,8 @@ func _creer_fond() -> void:
 		noir.color = Color("120608")
 	elif _mode == "marche":
 		chemin = "res://assets/plateaux/fond_%02d.png" % int(Marche.actes_du_jour()[int(demande.get("region", 0))])
+	elif _mode == "sanctuaire" and ResourceLoader.exists(Sanctuaire.FOND):
+		chemin = Sanctuaire.FOND
 	elif _mode == "donjon":
 		chemin = "res://assets/donjons/%s.png" % str(demande.get("donjon", "feu"))
 		noir.color = Color("#" + str(Donjons.DONJONS[demande.get("donjon", "feu")]["couleur"])).darkened(0.88)
@@ -191,6 +194,8 @@ func _creer_interface() -> void:
 		var lui: Dictionary = m["j2"] if mon_camp() == 0 else m["j1"]
 		texte_titre = "ARÈNE CLASSÉE — %s (%d)  contre  %s (%d)" % [EnLigne.nom_complet(str(moi.get("pseudo", "?"))), int(moi.get("points", 0)),
 			EnLigne.nom_complet(str(lui.get("pseudo", "?"))), int(lui.get("points", 0))]
+	elif _mode == "sanctuaire":
+		texte_titre = "LE SANCTUAIRE DU BÉLIER — " + str(Sanctuaire.EPREUVES[demande["epreuve"]]["titre"]).to_upper()
 	elif _mode == "donjon":
 		var v := int(demande.get("vague", 0))
 		texte_titre = "%s · NIVEAU %d — COMBAT %d / %d : %s" % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),
@@ -494,6 +499,8 @@ func _attendre(s: float) -> void:
 func _musique_combat() -> String:
 	if _mode == "boss_monde":
 		return "boss_monde"
+	if _mode == "sanctuaire":
+		return "boss"
 	var type: String = demande.get("type", "combat")
 	if _mode == "tour":
 		type = Tours.type_etage(int(demande.get("etage", 1)))
@@ -756,6 +763,9 @@ func _fin() -> void:
 	if _mode == "arene":
 		_fin_arene()
 		return
+	if _mode == "sanctuaire":
+		_fin_sanctuaire()
+		return
 	if _mode == "donjon":
 		_fin_donjon()
 		return
@@ -840,6 +850,21 @@ func _fin_tour() -> void:
 	_decouvrir(lignes)
 	resultat = {"mode": "tour", "victoire": victoire}
 	_afficher_resultat(victoire, lignes)
+
+
+func _fin_sanctuaire() -> void:
+	var victoire: bool = _res["victoire"]
+	var ep: String = demande["epreuve"]
+	var lignes: Array = []
+	if victoire:
+		lignes.append_array(Sanctuaire.valider_victoire(ep))
+		_xp_compte(lignes, "boss_acte")
+		_donner_xp(lignes, Sanctuaire.xp)
+	else:
+		lignes.append(Sanctuaire.EPREUVES[ep]["defaite"])
+	_decouvrir(lignes)
+	resultat = {"mode": "sanctuaire", "victoire": victoire, "epreuve": ep}
+	_afficher_resultat(victoire, lignes, Sanctuaire.EPREUVES[ep]["titre_victoire"] if victoire else "")
 
 
 func _fin_boss_monde() -> void:

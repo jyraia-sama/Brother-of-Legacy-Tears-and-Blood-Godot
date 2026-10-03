@@ -138,6 +138,16 @@ func _ready() -> void:
 	lune.pressed.connect(_toucher_lune)
 	add_child(lune)
 	_placer(lune, Rect2(160, 12, 80, 50))
+	# Secret : 3 touches rapides sur le blason au centre de la barre du haut (ou taper BELIER)
+	# -> le Sanctuaire du Bélier
+	var blason := Button.new()
+	blason.flat = true
+	blason.focus_mode = Control.FOCUS_NONE
+	for etat in ["normal", "hover", "pressed", "focus"]:
+		blason.add_theme_stylebox_override(etat, StyleBoxEmpty.new())
+	blason.pressed.connect(_toucher_blason)
+	add_child(blason)
+	_placer(blason, Rect2(488, 2, 48, 58))
 
 	# Guide des premiers pas (nouveau joueur)
 	Tutoriel.preparer_etape()
@@ -273,6 +283,23 @@ func _toucher_lune() -> void:
 	_derniere_touche = t
 	if _touches_lune >= 5:
 		_ouvrir_donjon_arnaud()
+
+
+var _touches_blason := 0
+var _derniere_touche_blason := 0
+
+
+func _toucher_blason() -> void:
+	var t := Time.get_ticks_msec()
+	_touches_blason = _touches_blason + 1 if t - _derniere_touche_blason < 1200 else 1
+	_derniere_touche_blason = t
+	if _touches_blason >= 3:
+		_ouvrir_sanctuaire()
+
+
+func _ouvrir_sanctuaire() -> void:
+	Audio.son("coffre")
+	get_tree().change_scene_to_file(Sanctuaire.SCENE)
 
 
 func _ouvrir_donjon_arnaud() -> void:
@@ -490,6 +517,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_saisie = (_saisie + char(event.unicode).to_lower()).right(6)
 		if _saisie == "arnaud":
 			_ouvrir_donjon_arnaud()
+			return
+		if _saisie == "belier" or _saisie.ends_with("bélier".right(6)):
+			_ouvrir_sanctuaire()
 			return
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F1:
 		_debug = not _debug

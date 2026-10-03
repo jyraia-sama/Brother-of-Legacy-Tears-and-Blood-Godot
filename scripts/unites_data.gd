@@ -2937,6 +2937,46 @@ const UNITES := {
 	# ============================================================
 	# ACTE CACHÉ (XIII) : Kaël (récompense de la vraie fin) et Morvaël (boss final)
 	# ============================================================
+	# --- La famille du Bélier (Sanctuaire du Bélier, secret) : héros non invocables, obtenus en les battant ---
+	"anais_toison": {
+		"nom": "Anaïs, Reine de la Toison d'Or", "rarete": "UR", "element": "sacre", "role": "soutien", "position": "arriere",
+		"invocable": false, "categorie": "heros", "couleur": "d8a840",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {"nom": "La Toison Flamboyante", "texte": "La Toison d'Or s'embrase : « On ne touche pas à ma famille ! »"},
+		"stats": {"pv": 1800, "atk": 330, "def": 245, "agi": 250, "mag": 300},
+		"secondaires": {"crit": 9, "degats_crit": 170, "res": 34, "preci": 99},
+		"skills": [
+			{"nom": "Toison d'Or", "type": "actif", "chance": 0.4, "cible": "allies", "effets": [{"effet": "soin", "mult": 1.1}], "niveau": 1, "description": "(40 % de chance par tour) Soigne toute l'équipe de 110 % de puissance de skill."},
+			{"nom": "Cœur de Reine", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.25}, {"effet": "aura", "stat": "def", "valeur": 0.1}], "niveau": 10, "description": "Soins prodigués +25 % ; toute l'équipe : DEF +10 %."},
+			{"nom": "Bouclier de la Toison", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.15}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Bouclier de 15 % des PV max sur toute l'équipe ; retire les afflictions."},
+			{"nom": "Le Foyer Uni", "type": "actif", "chance": 0.15, "cible": "allies", "effets": [{"effet": "ressusciter", "valeur": 0.6}, {"effet": "buff", "stat": "atk", "valeur": 0.15, "duree": 3}], "niveau": 30, "description": "(15 % de chance par tour) Ranime un allié K.O. avec 60 % de ses PV ; ATK +15 % pour toute l'équipe (3 tours)."},
+		],
+	},
+	"loucas_belier": {
+		"nom": "Loucas, le Bélier Ardent", "rarete": "UR", "element": "feu", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "heros", "couleur": "c8461e",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {"nom": "Tête Brûlée", "texte": "Loucas baisse les cornes, les sabots en feu : « Même pas mal ! »"},
+		"stats": {"pv": 1850, "atk": 410, "def": 240, "agi": 240, "mag": 180},
+		"secondaires": {"crit": 13, "degats_crit": 185, "res": 18, "preci": 96},
+		"skills": [
+			{"nom": "Charge du Bélier", "type": "actif", "chance": 0.4, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.4}, {"effet": "affliction", "nom": "etourdi", "chance": 0.25, "duree": 1}], "niveau": 1, "description": "(40 % de chance par tour) Fonce cornes en avant : inflige 240 % de puissance de skill à un ennemi ; 25 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Tête Dure", "type": "passif", "effets": [{"effet": "rage", "stat": "atk", "valeur": 0.3}, {"effet": "stat", "stat": "pv", "valeur": 0.1}], "niveau": 10, "description": "Sous 50 % de PV : ATK +30 % ; PV +10 %."},
+			{"nom": "Cornes de Braise", "type": "actif", "chance": 0.25, "cible": "avant", "effets": [{"effet": "degats", "mult": 1.5}, {"effet": "affliction", "nom": "brulure", "chance": 0.5, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 150 % de puissance de skill aux ennemis de l'Avant ; 50 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Cœur de Bélier", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "premier"}], "niveau": 30, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; agit toujours en premier au 1er tour."},
+		],
+	},
+	"alysse_etoile": {
+		"nom": "Alysse, l'Étoile du Bélier", "rarete": "UR", "element": "tenebres", "role": "assassin", "position": "avant",
+		"invocable": false, "categorie": "heros", "couleur": "5a3a9a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {"nom": "La Nuit des Étoiles", "texte": "Alysse s'entoure d'étoiles filantes : « Attrape-moi si tu peux ! »"},
+		"stats": {"pv": 1650, "atk": 400, "def": 215, "agi": 300, "mag": 230},
+		"secondaires": {"crit": 22, "degats_crit": 205, "res": 14, "preci": 100},
+		"skills": [
+			{"nom": "Pluie d'Étoiles", "type": "actif", "chance": 0.4, "cible": "aleatoire", "effets": [{"effet": "degats", "mult": 0.85, "coups": 3}], "niveau": 1, "description": "(40 % de chance par tour) Frappe 3 fois des ennemis au hasard (85 % de puissance de skill par coup)."},
+			{"nom": "Pas de Velours Céleste", "type": "passif", "effets": [{"effet": "stat", "stat": "crit", "valeur": 12}, {"effet": "stat", "stat": "agi", "valeur": 0.12}], "niveau": 10, "description": "Crit +12 ; AGI +12 %."},
+			{"nom": "Constellation du Bélier", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.0}, {"effet": "affliction", "nom": "aveugle", "chance": 0.35, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 100 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Aveuglement (2 tours)."},
+			{"nom": "Étoile Filante", "type": "passif", "effets": [{"effet": "double_attaque", "chance": 0.2}, {"effet": "execution", "valeur": 0.3}], "niveau": 30, "description": "20 % de chance d'attaquer deux fois ; +30 % de dégâts contre les cibles sous 50 % de PV."},
+		],
+	},
 	"kael_valcendre": {
 		"nom": "Kaël Valcendre", "rarete": "UR", "element": "tenebres", "role": "guerrier", "position": "avant",
 		"invocable": false, "categorie": "heros", "couleur": "8a1020",
