@@ -14,11 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.34.0"
+const NUMERO := "0.34.1"
 const DATE := "2026-10-03"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.34.1", "date": "2026-10-03", "titre": "Le gardien du sanctuaire",
+	"changements": [
+		"Le sanctuaire secret accueille un nouveau gardien… Il n'est pas né sous le même signe que les autres, et il n'est jamais vraiment seul. L'épreuve finale se joue désormais à quatre.",
+	]},
 	{"version": "0.34.0", "date": "2026-10-03", "titre": "Le secret du Bélier",
 	"changements": [
 		"UN NOUVEAU SECRET se cache dans le menu principal… Quelque part, un sanctuaire caché où veille une famille née sous le signe du Bélier. Ses membres ne se laissent pas approcher facilement, mais ceux qui les vainquent gagnent de précieux alliés. À toi de le trouver !",

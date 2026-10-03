@@ -1,11 +1,13 @@
 class_name Sanctuaire
 extends RefCounted
-## LE SANCTUAIRE DU BÉLIER (secret) — la famille du créateur du jeu, tous les trois nés sous le signe du Bélier.
+## LE SANCTUAIRE DU BÉLIER (secret) — la famille du créateur du jeu : Anaïs, Loucas et Alysse, nés sous le
+## signe du Bélier, et Laurent, le papa… Gémeau, gardien du Sanctuaire.
 ##
 ## Accès secret : toucher 3 fois de suite le blason au centre de la barre du haut du menu principal
 ## (ou taper B-E-L-I-E-R au clavier sur le menu).
 ##
-## Quatre épreuves, dans l'ordre : Alysse, puis Loucas, puis Anaïs, puis les trois réunis.
+## Cinq épreuves, dans l'ordre : Alysse, Loucas, Anaïs, Laurent le Gardien Gémeau (avec son Reflet jumeau),
+## puis toute la famille réunie.
 ## - La difficulté s'adapte à TON ÉQUIPE (sa puissance réelle : niveaux, étoiles, Échos) : le Sanctuaire
 ##   se joue à n'importe quel moment de l'aventure.
 ## - Première victoire : le membre de la famille rejoint ta collection (héros UR non invocable),
@@ -14,12 +16,12 @@ extends RefCounted
 
 const SCENE := "res://scenes/sanctuaire.tscn"
 const FOND := "res://assets/sanctuaire/fond.png"
-const ORDRE := ["alysse", "loucas", "anais", "famille"]
+const ORDRE := ["alysse", "loucas", "anais", "gemeau", "famille"]
 const TITRE_FINAL := "Cœur du Bélier"
 const OR_REJEU := 2000
 
 ## force : puissance de la famille par rapport à celle de ton équipe (réglée par simulation avec
-## outils/calibrer_sanctuaire.gd : environ 70 %, 60 %, 55 % et 45 % de victoires pour une équipe moyenne).
+## outils/calibrer_sanctuaire.gd : environ 70 %, 60 %, 55 %, 50 % et 45 % de victoires pour une équipe moyenne).
 const EPREUVES := {
 	"alysse": {
 		"titre": "Alysse, l'Étoile du Bélier", "boss": ["alysse_etoile"], "force": 0.65,
@@ -41,17 +43,25 @@ const EPREUVES := {
 		"titre": "Anaïs, Reine de la Toison d'Or", "boss": ["anais_toison"], "force": 0.91,
 		"gemmes": 250,
 		"intro": "Au cœur du Sanctuaire, une femme vêtue de la Toison d'Or veille sur le foyer. Sa lumière est douce… et redoutable.\n\n« Tu as battu mes deux enfants. Impressionnant. Mais une mère ne s'incline pas si facilement. Montre-moi que ton cœur est digne du Bélier. »",
-		"victoire": "La Toison d'Or s'apaise. Anaïs pose la main sur ton épaule.\n« Tu as du courage, et du cœur. Je veillerai sur toi aussi. »\n\nAu fond du Sanctuaire, une porte d'or s'entrouvre : les trois Béliers t'attendent ensemble…",
+		"victoire": "La Toison d'Or s'apaise. Anaïs pose la main sur ton épaule.\n« Tu as du courage, et du cœur. Je veillerai sur toi aussi. Mais devant la porte d'or, il reste quelqu'un… mon mari. Et il n'est jamais seul. »",
 		"titre_victoire": "ANAÏS REJOINT L'ÉQUIPE !",
 		"defaite": "Anaïs sourit doucement : « Repose-toi, et reviens. Le foyer t'attendra. »",
 	},
+	"gemeau": {
+		"titre": "Laurent, le Gardien Gémeau", "boss": ["laurent_gemeau", "laurent_reflet"], "poids": [1.15, 0.85], "force": 0.87,
+		"gemmes": 300,
+		"intro": "Devant la porte d'or se dresse le gardien du Sanctuaire. À côté de lui, son double exact, fait d'ombre.\n\nLaurent : « Je suis le papa de cette famille… et le seul qui n'est pas Bélier. Moi, je suis Gémeaux. »\nLe Reflet : « Ce qui veut dire qu'on est DEUX à te barrer la route. »\nLaurent : « Personne n'approche de ma famille sans passer par nous. »",
+		"victoire": "Le Reflet se dissout en riant et revient se fondre dans l'ombre de Laurent.\n\nLaurent : « Bien joué. Tu as l'étoffe d'un vrai protecteur. »\nAlysse, au loin : « Papa a perdu ! Papa a perdu ! »\nLaurent : « …Bon. Allez, venez, on va lui montrer ce qu'est une vraie famille. »",
+		"titre_victoire": "LAURENT REJOINT L'ÉQUIPE !",
+		"defaite": "Laurent et son Reflet, d'une seule voix : « On ne passe pas. Reviens quand tu seras prêt. »",
+	},
 	"famille": {
-		"titre": "La Famille du Bélier", "boss": ["loucas_belier", "alysse_etoile", "anais_toison"], "force": 0.81,
+		"titre": "La Famille du Bélier", "boss": ["laurent_gemeau", "loucas_belier", "alysse_etoile", "anais_toison"], "force": 0.79,
 		"gemmes": 500,
-		"intro": "Les trois Béliers se tiennent côte à côte, plus forts ensemble que jamais.\n\nAlysse : « Cette fois, on joue en équipe ! »\nLoucas : « Trois contre… euh… ton équipe. C'est équitable. »\nAnaïs : « Quand la famille est unie, rien ne lui résiste. Prouve-nous le contraire ! »",
-		"victoire": "Les trois Béliers baissent les armes et éclatent de rire ensemble.\n\nAnaïs : « Tu fais partie de la famille, maintenant. »\nLoucas : « Mais la prochaine fois, je gagne ! »\nAlysse : « Moi aussi ! »",
+		"intro": "Les quatre membres de la famille se tiennent côte à côte, plus forts ensemble que jamais.\n\nAlysse : « Cette fois, on joue en équipe ! »\nLoucas : « Quatre contre… euh… ton équipe. C'est équitable. »\nLaurent : « Trois Béliers et un Gémeau. Bonne chance. »\nAnaïs : « Quand la famille est unie, rien ne lui résiste. Prouve-nous le contraire ! »",
+		"victoire": "Les quatre baissent les armes et éclatent de rire ensemble.\n\nAnaïs : « Tu fais partie de la famille, maintenant. »\nLaurent : « Et chez nous, on ne laisse jamais personne de côté. »\nLoucas : « Mais la prochaine fois, je gagne ! »\nAlysse : « Moi aussi ! »",
 		"titre_victoire": "LA FAMILLE DU BÉLIER EST VAINCUE !",
-		"defaite": "Alysse, Loucas et Anaïs, main dans la main : « Ensemble, on est imbattables ! Reviens nous défier. »",
+		"defaite": "Laurent, Anaïs, Loucas et Alysse, main dans la main : « Ensemble, on est imbattables ! Reviens nous défier. »",
 	},
 }
 
@@ -109,9 +119,11 @@ static func generer(ep: String, equipe: Array) -> Array:
 	var niveau := clampi(int(round(niv / maxf(1, equipe.size()))) + 2, 1, UnitesData.NIVEAU_MAX)
 	var boss: Array = info["boss"]
 	var force: float = float(calibrage_test.get(ep, info["force"]))
-	var cible := total * force / boss.size()
+	var poids: Array = info.get("poids", [])
 	var liste: Array = []
-	for id in boss:
+	for k in boss.size():
+		var id: String = boss[k]
+		var cible := total * force / boss.size() * (float(poids[k]) if k < poids.size() else 1.0)
 		var base := puissance_unite({"id": id, "niveau": niveau})
 		liste.append({"id": id, "niveau": niveau, "mult": cible / maxf(1.0, base), "boss": true,
 			"nom": UnitesData.get_unite(id)["nom"]})

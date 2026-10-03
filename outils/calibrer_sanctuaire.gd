@@ -2,7 +2,7 @@ extends SceneTree
 ## Calibrage du Sanctuaire du Bélier (outil de dev) : cherche la « force » de chaque épreuve pour que des
 ## équipes réalistes (fichiers de simuler_progression.gd, profil occasionnel) gagnent le taux visé.
 ##   godot --headless --path . --script res://outils/calibrer_sanctuaire.gd -- --equipes=occ.json
-const CIBLES := {"alysse": 0.70, "loucas": 0.62, "anais": 0.55, "famille": 0.45}
+const CIBLES := {"alysse": 0.70, "loucas": 0.62, "anais": 0.55, "gemeau": 0.50, "famille": 0.45}
 var equipes: Array = []
 
 func _init():
@@ -18,7 +18,7 @@ func _init():
 							eq.append({"id": u["id"], "niveau": int(u["niveau"]), "place": int(u["place"]), "etoiles": int(u["etoiles"]), "echos": u["echos"]})
 						equipes.append({"eq": eq, "g": rng.randi()})
 	print("équipes : ", equipes.size())
-	for ep in Sanctuaire.ORDRE:
+	for ep in (OS.get_environment("EPREUVES").split(",") if OS.get_environment("EPREUVES") != "" else Sanctuaire.ORDRE):
 		var bas := 0.1
 		var haut := 3.0
 		for it in 10:

@@ -2937,7 +2937,8 @@ const UNITES := {
 	# ============================================================
 	# ACTE CACHÉ (XIII) : Kaël (récompense de la vraie fin) et Morvaël (boss final)
 	# ============================================================
-	# --- La famille du Bélier (Sanctuaire du Bélier, secret) : héros non invocables, obtenus en les battant ---
+	# --- La famille du Bélier (Sanctuaire du Bélier, secret) : héros non invocables, obtenus en les battant.
+	#     Laurent, le papa Gémeau, combat avec son Reflet (ennemi seulement). ---
 	"anais_toison": {
 		"nom": "Anaïs, Reine de la Toison d'Or", "rarete": "UR", "element": "sacre", "role": "soutien", "position": "arriere",
 		"invocable": false, "categorie": "heros", "couleur": "d8a840",
@@ -2975,6 +2976,32 @@ const UNITES := {
 			{"nom": "Pas de Velours Céleste", "type": "passif", "effets": [{"effet": "stat", "stat": "crit", "valeur": 12}, {"effet": "stat", "stat": "agi", "valeur": 0.12}], "niveau": 10, "description": "Crit +12 ; AGI +12 %."},
 			{"nom": "Constellation du Bélier", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.0}, {"effet": "affliction", "nom": "aveugle", "chance": 0.35, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 100 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Aveuglement (2 tours)."},
 			{"nom": "Étoile Filante", "type": "passif", "effets": [{"effet": "double_attaque", "chance": 0.2}, {"effet": "execution", "valeur": 0.3}], "niveau": 30, "description": "20 % de chance d'attaquer deux fois ; +30 % de dégâts contre les cibles sous 50 % de PV."},
+		],
+	},
+	"laurent_gemeau": {
+		"nom": "Laurent, le Gardien Gémeau", "rarete": "UR", "element": "sacre", "role": "tank", "position": "avant",
+		"invocable": false, "categorie": "heros", "couleur": "4a7ab8",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {"nom": "Les Deux Visages", "texte": "Laurent et son Reflet ne font plus qu'un : « Chez les Gémeaux, on est toujours deux ! »"},
+		"stats": {"pv": 2000, "atk": 380, "def": 260, "agi": 200, "mag": 220},
+		"secondaires": {"crit": 10, "degats_crit": 175, "res": 26, "preci": 95},
+		"skills": [
+			{"nom": "Coup Double", "type": "actif", "chance": 0.4, "cible": "aleatoire", "effets": [{"effet": "degats", "mult": 1.2, "coups": 2}], "niveau": 1, "description": "(40 % de chance par tour) Frappe 2 fois des ennemis au hasard (120 % de puissance de skill par coup)."},
+			{"nom": "Esprit des Gémeaux", "type": "passif", "effets": [{"effet": "double_attaque", "chance": 0.2}, {"effet": "stat", "stat": "def", "valeur": 0.12}], "niveau": 10, "description": "20 % de chance d'attaquer deux fois ; DEF +12 %."},
+			{"nom": "Bouclier du Père", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.14}, {"effet": "provocation", "duree": 2, "cible": "soi"}], "niveau": 20, "description": "(25 % de chance par tour) Bouclier de 14 % des PV max sur toute l'équipe ; attire les attaques ennemies (2 tours)."},
+			{"nom": "Le Jumeau Intérieur", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "renaissance", "valeur": 0.35}], "niveau": 30, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; renaît une fois par combat avec 35 % de ses PV."},
+		],
+	},
+	"laurent_reflet": {
+		"nom": "Le Reflet de Laurent", "rarete": "UR", "element": "tenebres", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "ennemi", "couleur": "2a2a4a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1700, "atk": 400, "def": 220, "agi": 240, "mag": 220},
+		"secondaires": {"crit": 14, "degats_crit": 185, "res": 18, "preci": 96},
+		"skills": [
+			{"nom": "Coup Miroir", "type": "actif", "chance": 0.4, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.2}], "niveau": 1, "description": "(40 % de chance par tour) Inflige 220 % de puissance de skill à un ennemi."},
+			{"nom": "Ombre Jumelle", "type": "passif", "effets": [{"effet": "vol_vie", "valeur": 0.12}, {"effet": "stat", "stat": "agi", "valeur": 0.1}], "niveau": 10, "description": "Vol de vie de 12 % sur ses attaques ; AGI +10 %."},
+			{"nom": "Inversion", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "debuff", "stat": "def", "valeur": 0.15, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; DEF -15 % pour tous les ennemis (2 tours)."},
+			{"nom": "Toujours Deux", "type": "passif", "effets": [{"effet": "survie", "charges": 1}], "niveau": 30, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat)."},
 		],
 	},
 	"kael_valcendre": {

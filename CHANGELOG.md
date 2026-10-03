@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.34.0** (2026-10-03)
+Version actuelle : **0.34.1** (2026-10-03)
+
+## v0.34.1 — Le gardien du sanctuaire  (2026-10-03)
+
+- Le sanctuaire secret accueille un nouveau gardien… Il n'est pas né sous le même signe que les autres, et il n'est jamais vraiment seul. L'épreuve finale se joue désormais à quatre.
 
 ## v0.34.0 — Le secret du Bélier  (2026-10-03)
 

@@ -1,15 +1,17 @@
-# Prompts ChatGPT : la famille du Bélier (Sanctuaire secret, v0.34.0)
+# Prompts ChatGPT : la famille du Bélier (Sanctuaire secret, v0.34.1)
 
-Trois boss secrets, transformés à partir de **vos photos**, dans le style des portraits et des figurines du jeu :
+Quatre boss secrets, transformés à partir de **vos photos**, dans le style des portraits et des figurines du jeu :
 
 | Fichier | Personnage | Élément · rôle | Thème |
 |---|---|---|---|
 | `alysse_etoile` | **Alysse, l'Étoile du Bélier** | Ténèbres · assassin | rapide et espiègle, pluie d'étoiles, constellation du Bélier |
 | `loucas_belier` | **Loucas, le Bélier Ardent** | Feu · guerrier | fonce comme un bélier, cornes de braise, « Même pas mal ! » |
 | `anais_toison` | **Anaïs, Reine de la Toison d'Or** | Sacré · soutien | la cheffe du foyer, la Toison d'Or qui soigne et protège |
+| `laurent_gemeau` | **Laurent, le Gardien Gémeau** | Sacré · tank | le papa, le seul Gémeaux de la famille : il garde la porte d'or avec son Reflet |
+| `laurent_reflet` | **Le Reflet de Laurent** | Ténèbres · guerrier | son jumeau d'ombre (boss seulement) : les Gémeaux sont toujours deux |
 
 **Accès secret** : dans le menu principal, touche **3 fois rapidement le blason au centre de la barre du haut**
-(ou tape `belier` au clavier). Ordre des épreuves : Alysse → Loucas → Anaïs → les trois réunis.
+(ou tape `belier` au clavier). Ordre des épreuves : Alysse → Loucas → Anaïs → Laurent et son Reflet → toute la famille réunie (à quatre).
 
 ## Conseils pour les photos
 
@@ -21,7 +23,7 @@ Trois boss secrets, transformés à partir de **vos photos**, dans le style des 
 
 ---
 
-## 1. Les portraits (un par personne) → `alysse_etoile.png`, `loucas_belier.png`, `anais_toison.png`
+## 1. Les portraits (un par personne) → `alysse_etoile.png`, `loucas_belier.png`, `anais_toison.png`, `laurent_gemeau.png`, `laurent_reflet.png`
 
 Joins **la photo de la personne** et **une planche de portraits du jeu déjà réussie** (par exemple `planche_39.png`)
 pour le style. Remplace la ligne « PERSONNAGE » par celle de la personne.
@@ -40,11 +42,14 @@ PERSONNAGE : (colle la ligne correspondante ci-dessous)
 - **Loucas** : `un jeune guerrier courageux au regard déterminé et au sourire fier, armure légère de cuir et de métal brun-rouge, casque ouvert orné de deux cornes de bélier recourbées aux pointes rougeoyantes comme des braises, gantelets solides, prêt à charger`
 - **Anaïs** : `une reine guerrière douce et protectrice, regard bienveillant et assuré, longue cape faite d'une toison dorée lumineuse, armure légère blanche et or, diadème orné de deux petites cornes de bélier dorées, bâton doré surmonté d'une tête de bélier, lumière dorée chaleureuse`
 
-Envoie-moi les trois images : je les recadre et je les mets en place sur les cartes du jeu.
+- **Laurent** : `un gardien protecteur et calme, regard assuré et un léger sourire complice, armure de chevalier bleu acier et argent, grand bouclier rond orné du symbole des Gémeaux (deux silhouettes jumelles côte à côte), épée longue, cape bleu nuit, une douce lumière argentée d'un côté de son visage et une ombre bleutée de l'autre`
+- **Le Reflet de Laurent** (joins le portrait de Laurent réussi au lieu de la photo) : `le double exact du personnage du portrait joint, même visage et même silhouette, mais fait d'ombre : armure noire aux reflets bleu sombre, yeux d'un bleu pâle lumineux, contours qui se dissolvent en fumée, sourire malicieux, comme un reflet dans un miroir sombre`
+
+Envoie-moi les cinq images : je les recadre et je les mets en place sur les cartes du jeu.
 
 ---
 
-## 2. Les figurines (pions de combat) → `figurine_alysse.png`, `figurine_loucas.png`, `figurine_anais.png`
+## 2. Les figurines (pions de combat) → `figurine_alysse.png`, `figurine_loucas.png`, `figurine_anais.png`, `figurine_laurent.png`, `figurine_reflet.png`
 
 Joins **le portrait réussi de la personne** et la **figurine du grand frère** (`pion_aine.png`) pour le rendu.
 Une figurine par message. Le fond vert sert à détourer : je le rends transparent automatiquement.
@@ -67,7 +72,7 @@ FORMAT, À RESPECTER STRICTEMENT :
 Utilisé pour l'écran du Sanctuaire et ses combats. Sans image jointe.
 
 ```
-Crée un décor de fond en 16:9 (1920x1080) pour un jeu mobile dark fantasy, sans personnage et sans texte : un sanctuaire caché taillé dans la roche, une grande salle chaleureuse éclairée de braseros dorés, au fond une immense tête de bélier sculptée dans la pierre avec des cornes enroulées, une toison d'or suspendue qui brille doucement, la constellation du Bélier qui scintille au plafond, des tapis rouges et des bannières brodées d'un bélier doré. Ambiance de foyer protecteur et majestueux. Style peinture numérique très détaillée, assez sombre au centre pour que des personnages restent lisibles.
+Crée un décor de fond en 16:9 (1920x1080) pour un jeu mobile dark fantasy, sans personnage et sans texte : un sanctuaire caché taillé dans la roche, une grande salle chaleureuse éclairée de braseros dorés, au fond une immense tête de bélier sculptée dans la pierre avec des cornes enroulées, une toison d'or suspendue qui brille doucement, de chaque côté de la porte deux statues de gardiens jumeaux, la constellation du Bélier qui scintille au plafond, des tapis rouges et des bannières brodées d'un bélier doré. Ambiance de foyer protecteur et majestueux. Style peinture numérique très détaillée, assez sombre au centre pour que des personnages restent lisibles.
 ```
 
 ---

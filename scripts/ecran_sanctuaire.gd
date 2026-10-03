@@ -4,7 +4,7 @@ extends Control
 
 const SCENE := Sanctuaire.SCENE
 const C_OR := Color("e8b54a")
-const PORTRAITS := {"alysse": "alysse_etoile", "loucas": "loucas_belier", "anais": "anais_toison", "famille": ""}
+const PORTRAITS := {"alysse": "alysse_etoile", "loucas": "loucas_belier", "anais": "anais_toison", "gemeau": "laurent_gemeau", "famille": ""}
 
 
 func _ready() -> void:
@@ -49,7 +49,7 @@ func _ready() -> void:
 	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(titre)
 
-	var sous := UiCommun.label("Trois Béliers veillent sur ce foyer caché. Bats-les un par un, puis réunis : chacun vaincu rejoint ton équipe.\nLeur force s'adapte à ton équipe · aucune stamina · rejouable.", 16, UiCommun.C_DOUX)
+	var sous := UiCommun.label("Trois Béliers et leur gardien Gémeau veillent sur ce foyer caché. Bats-les un par un, puis réunis : chacun vaincu rejoint ton équipe.\nLeur force s'adapte à ton équipe · aucune stamina · rejouable.", 16, UiCommun.C_DOUX)
 	sous.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sous.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	col.add_child(sous)
@@ -76,7 +76,7 @@ func _carte(ep: String) -> Control:
 	var ouverte := Sanctuaire.est_ouverte(ep)
 	var vaincue := Sanctuaire.est_vaincue(ep)
 	var p := PanelContainer.new()
-	p.custom_minimum_size = Vector2(300, 0)
+	p.custom_minimum_size = Vector2(290, 0)
 	p.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var st := StyleBoxFlat.new()
 	st.bg_color = Color(0.06, 0.035, 0.02, 0.88)
@@ -93,7 +93,7 @@ func _carte(ep: String) -> Control:
 	p.add_child(v)
 
 	var ill := CenterContainer.new()
-	ill.custom_minimum_size = Vector2(270, 300)
+	ill.custom_minimum_size = Vector2(260, 290)
 	v.add_child(ill)
 	if ep == "famille":
 		# Les trois portraits côte à côte
@@ -101,13 +101,13 @@ func _carte(ep: String) -> Control:
 		h.alignment = BoxContainer.ALIGNMENT_CENTER
 		h.add_theme_constant_override("separation", -10)
 		ill.add_child(h)
-		for id in ["alysse_etoile", "anais_toison", "loucas_belier"]:
+		for id in ["alysse_etoile", "anais_toison", "laurent_gemeau", "loucas_belier"]:
 			var c := CenterContainer.new()
-			c.add_child(UiCommun.illustration(id, Vector2(96, 150), 8, C_OR, 2) if UiCommun.chemin_portrait(id) != "" else UiCommun.portrait(id, 96))
+			c.add_child(UiCommun.illustration(id, Vector2(72, 130), 8, C_OR, 2) if UiCommun.chemin_portrait(id) != "" else UiCommun.portrait(id, 72))
 			h.add_child(c)
 	else:
 		var id: String = PORTRAITS[ep]
-		var img: Control = UiCommun.illustration(id, Vector2(270, 300), 10, C_OR, 2) \
+		var img: Control = UiCommun.illustration(id, Vector2(250, 285), 10, C_OR, 2) \
 			if UiCommun.chemin_portrait(id) != "" else UiCommun.portrait(id, 230)
 		ill.add_child(img)
 	if not ouverte:
