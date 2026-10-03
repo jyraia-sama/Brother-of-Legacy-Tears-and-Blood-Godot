@@ -14,11 +14,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.34.1"
+const NUMERO := "0.34.2"
 const DATE := "2026-10-03"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.34.2", "date": "2026-10-03", "titre": "Portraits du sanctuaire",
+	"changements": [
+		"Deux gardiens du sanctuaire secret ont maintenant leur portrait…",
+	]},
 	{"version": "0.34.1", "date": "2026-10-03", "titre": "Le gardien du sanctuaire",
 	"changements": [
 		"Le sanctuaire secret accueille un nouveau gardien… Il n'est pas né sous le même signe que les autres, et il n'est jamais vraiment seul. L'épreuve finale se joue désormais à quatre.",

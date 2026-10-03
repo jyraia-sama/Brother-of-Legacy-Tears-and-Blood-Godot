@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.34.1** (2026-10-03)
+Version actuelle : **0.34.2** (2026-10-03)
+
+## v0.34.2 — Portraits du sanctuaire  (2026-10-03)
+
+- Deux gardiens du sanctuaire secret ont maintenant leur portrait…
 
 ## v0.34.1 — Le gardien du sanctuaire  (2026-10-03)
 
