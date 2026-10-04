@@ -3,7 +3,7 @@ extends RefCounted
 ## LE SANCTUAIRE DU BÉLIER (secret) — la famille du créateur du jeu : Anaïs, Loucas et Alysse, nés sous le
 ## signe du Bélier, et Laurent, le papa… Gémeau, gardien du Sanctuaire.
 ##
-## Accès secret : toucher 3 fois de suite le blason au centre de la barre du haut du menu principal
+## Accès secret : toucher 3 fois de suite l'emblème au centre du menu principal
 ## (ou taper B-E-L-I-E-R au clavier sur le menu).
 ##
 ## Cinq épreuves, dans l'ordre : Alysse, Loucas, Anaïs, Laurent le Gardien Gémeau (avec son Reflet jumeau),

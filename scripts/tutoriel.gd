@@ -2,7 +2,7 @@ class_name Tutoriel
 extends RefCounted
 ## PREMIERS PAS : guide d'accueil d'un nouveau joueur.
 ##
-##  1) Un GUIDE en 9 étapes, affiché sur le menu principal (panneau à gauche) : chaque étape
+##  1) Un GUIDE en 9 étapes, affiché sur le menu principal (au centre, sous l'emblème) : chaque étape
 ##     indique quoi faire, fait briller le bon bouton du menu et donne une petite récompense.
 ##     Les étapes se valident toutes seules d'après la partie (un joueur avancé les a déjà faites).
 ##  2) Des ASTUCES à la première visite des écrans importants (Deck, Invocation, Échos...),

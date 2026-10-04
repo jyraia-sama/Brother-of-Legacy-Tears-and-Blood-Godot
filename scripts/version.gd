@@ -15,11 +15,21 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.36.1"
+const NUMERO := "0.37.0"
 const DATE := "2026-10-04"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.37.0", "date": "2026-10-04", "titre": "Le nouveau menu : les Deux Frères",
+	"changements": [
+		"NOUVEAU MENU PRINCIPAL : l'écran est coupé en deux par une fente dorée. À gauche LA LAME pour combattre (Aventure, Arène, Boss de Monde, Tours, Donjons, Expédition, Ménagerie), à droite LE SANG pour ton armée (Deck, Invocation, Fusion, Échos, Reliquaire, Bestiaire). Chaque bouton affiche une info utile : chapitre à reprendre, boss du jour et essais restants, reset des Tours, taille de l'équipe…",
+		"Arène, Boss de Monde, Tours, Donjons, Expédition et Ménagerie s'ouvrent maintenant directement depuis le menu (ils restent aussi dans l'écran Aventure) ; le bouton retour ramène au menu.",
+		"BARRE DU HAUT : ton blason et ton niveau (Mon héros), ton nom (Compte), ton titre et une vraie barre d'XP de compte. Ressources refaites : stamina avec sa jauge et le temps avant le prochain point, or, gemmes et Éclats, avec un bouton « + » vers la Boutique. En haut à droite : Aide, Nouveautés et Menu.",
+		"LE ROYAUME en bas de l'écran : Quêtes, Succès, Boutique, Guilde (enfin un vrai bouton !), Social et le nouveau Courrier. Les pastilles signalent les récompenses à réclamer, les missions terminées, les chasses à récolter et le Boss de Monde du jour.",
+		"LE COURRIER : tes lettres, cadeaux et compensations arrivent ici, avec « Tout récupérer ». Une première lettre t'attend avec un petit présent.",
+		"Le guide PREMIERS PAS passe au centre, sous l'emblème. Les stats ATK / DEF / PV du héros quittent le menu (elles restent dans Mon héros).",
+		"Les secrets du menu sont toujours là… pour ceux qui savent où chercher.",
+	]},
 	{"version": "0.36.1", "date": "2026-10-04", "titre": "Bouton Muet",
 	"changements": [
 		"Paramètres : nouvelle case « Muet » pour couper d'un coup la musique et les bruitages. Les réglages de volume sont conservés et reviennent dès qu'on la décoche.",
