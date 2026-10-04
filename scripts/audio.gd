@@ -119,6 +119,16 @@ static func get_volume(type: String) -> float:
 	return float(Sauvegarde.get_parametre("volume_" + type, 0.8))
 
 
+## Coupe tout le son (musique et bruitages) sans toucher aux réglages de volume.
+static func regler_muet(muet: bool) -> void:
+	Sauvegarde.definir_parametre("muet", muet)
+	_appliquer_volumes()
+
+
+static func est_muet() -> bool:
+	return bool(Sauvegarde.get_parametre("muet", false))
+
+
 ## Nom de la musique en cours ("" si aucune).
 static func musique_actuelle() -> String:
 	if _instance == null or not is_instance_valid(_instance):
@@ -177,7 +187,7 @@ static func _appliquer_volumes() -> void:
 	for type in ["musique", "sons"]:
 		var i := AudioServer.get_bus_index(BUS_MUSIQUE if type == "musique" else BUS_SONS)
 		var v := get_volume(type)
-		AudioServer.set_bus_mute(i, v <= 0.001)
+		AudioServer.set_bus_mute(i, v <= 0.001 or est_muet())
 		AudioServer.set_bus_volume_db(i, linear_to_db(maxf(v, 0.001)))
 
 

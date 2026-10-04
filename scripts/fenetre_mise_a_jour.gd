@@ -53,15 +53,15 @@ func _ready() -> void:
 			_ajouter_bouton("OK", queue_free)
 		"pret":
 			_titre("MISE À JOUR PRÊTE")
-			_texte("La version v%s est téléchargée. Redémarre le jeu pour en profiter." % str(MiseAJour.fiche.get("version", "")), UiCommun.C_TEXTE)
+			_texte("La version v%s est téléchargée. Relance le jeu pour en profiter." % str(MiseAJour.fiche.get("version", "")), UiCommun.C_TEXTE)
 			_nouveautes()
 			_ligne_boutons()
 			if not _bloquee:
 				_ajouter_bouton("Plus tard", queue_free)
-			_ajouter_bouton("Redémarrer maintenant", MiseAJour.redemarrer, true)
+			_ajouter_bouton(_texte_redemarrer(), MiseAJour.redemarrer, true)
 		"installation":
 			_titre("NOUVELLE VERSION : v%s" % str(MiseAJour.fiche.get("version", "")))
-			_texte("Cette version demande de réinstaller le jeu (le moteur ou les réglages ont changé).\nTa partie est conservée : elle est enregistrée sur ton ordinateur et sur ton compte.", UiCommun.C_TEXTE)
+			_texte("Cette version demande de réinstaller le jeu (le moteur ou les réglages ont changé).\nTa partie est conservée : elle est enregistrée sur ton appareil et sur ton compte.", UiCommun.C_TEXTE)
 			_nouveautes()
 			_texte(_aide_installation(), UiCommun.C_DOUX, 15)
 			_ligne_boutons()
@@ -118,11 +118,11 @@ func _fin(ok: bool, message: String) -> void:
 	_boutons.visible = true
 	if ok:
 		_barre.value = 1.0
-		_info.text = "Mise à jour installée ! Le jeu va redémarrer pour l'appliquer."
+		_info.text = "Mise à jour installée ! " + ("Le jeu va redémarrer pour l'appliquer." if _peut_redemarrer() else "Le jeu va se fermer : rouvre-le pour jouer à la nouvelle version.")
 		_info.add_theme_color_override("font_color", UiCommun.C_LEGENDE)
 		if not _bloquee:
 			_ajouter_bouton("Plus tard", queue_free)
-		_ajouter_bouton("Redémarrer maintenant", MiseAJour.redemarrer, true)
+		_ajouter_bouton(_texte_redemarrer(), MiseAJour.redemarrer, true)
 	else:
 		_barre.visible = false
 		_info.text = message
@@ -191,7 +191,13 @@ func _nouveautes() -> void:
 		defil.custom_minimum_size.y = minf(rt.get_content_height() + 4.0, hauteur_max)
 
 
+func _texte_redemarrer() -> String:
+	return "Redémarrer maintenant" if _peut_redemarrer() else "Fermer le jeu"
+
+
 func _aide_installation() -> String:
+	if MiseAJour.plateforme() == "android":
+		return "Sur Android : ouvre le fichier .apk téléchargé et choisis « Installer » (ou « Mettre à jour »). Si le téléphone le demande, autorise ton navigateur à installer des applications. Ta partie est conservée."
 	if MiseAJour.plateforme() == "macos":
 		return "Sur Mac : ouvre le fichier .zip téléchargé, glisse l'application dans « Applications » à la place de l'ancienne, puis lance-la (si le Mac la bloque : Réglages Système → Confidentialité et sécurité → « Ouvrir quand même »)."
 	return "Sur Windows : décompresse le fichier .zip téléchargé et remplace l'ancien dossier du jeu par le nouveau, puis lance BrothersOfLegacy.exe."

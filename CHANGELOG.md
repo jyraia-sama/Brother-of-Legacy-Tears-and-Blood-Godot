@@ -1,6 +1,16 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.35.0** (2026-10-04)
+Version actuelle : **0.36.1** (2026-10-04)
+
+## v0.36.1 — Bouton Muet  (2026-10-04)
+
+- Paramètres : nouvelle case « Muet » pour couper d'un coup la musique et les bruitages. Les réglages de volume sont conservés et reviennent dès qu'on la décoche.
+
+## v0.36.0 — Le jeu sur Android  (2026-10-04)
+
+- L'APPLICATION ANDROID : Brothers of Legacy s'installe maintenant comme une vraie application sur les téléphones et tablettes Android, en plein écran et en paysage (dans un sens ou dans l'autre). Ta partie te suit grâce à ton compte.
+- Elle se met à jour toute seule, comme sur ordinateur : au lancement, une fenêtre présente les nouveautés et le bouton « Mettre à jour » télécharge la nouvelle version. Il suffit ensuite de rouvrir le jeu.
+- Sur iPhone, la version web ajoutée à l'écran d'accueil reste la meilleure solution : elle est toujours à jour.
 
 ## v0.35.0 — Le jeu s'installe sur ordinateur  (2026-10-04)
 

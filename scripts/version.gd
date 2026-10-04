@@ -15,11 +15,21 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.35.0"
+const NUMERO := "0.36.1"
 const DATE := "2026-10-04"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.36.1", "date": "2026-10-04", "titre": "Bouton Muet",
+	"changements": [
+		"Paramètres : nouvelle case « Muet » pour couper d'un coup la musique et les bruitages. Les réglages de volume sont conservés et reviennent dès qu'on la décoche.",
+	]},
+	{"version": "0.36.0", "date": "2026-10-04", "titre": "Le jeu sur Android",
+	"changements": [
+		"L'APPLICATION ANDROID : Brothers of Legacy s'installe maintenant comme une vraie application sur les téléphones et tablettes Android, en plein écran et en paysage (dans un sens ou dans l'autre). Ta partie te suit grâce à ton compte.",
+		"Elle se met à jour toute seule, comme sur ordinateur : au lancement, une fenêtre présente les nouveautés et le bouton « Mettre à jour » télécharge la nouvelle version. Il suffit ensuite de rouvrir le jeu.",
+		"Sur iPhone, la version web ajoutée à l'écran d'accueil reste la meilleure solution : elle est toujours à jour.",
+	]},
 	{"version": "0.35.0", "date": "2026-10-04", "titre": "Le jeu s'installe sur ordinateur",
 	"changements": [
 		"LE JEU SUR ORDINATEUR : Brothers of Legacy existe maintenant en vraie application pour Windows et pour Mac, à installer sur ton ordinateur. Ta partie te suit grâce à ton compte.",

@@ -1,5 +1,5 @@
 extends SceneTree
-## PUBLIER UNE VERSION (web + ordinateur).
+## PUBLIER UNE VERSION (web + ordinateur + Android).
 ## Lancé par le bouton « Publier cette version » de l'onglet Versions, ou à la main :
 ##   godot --headless --path . -s res://outils/publier_pc.gd
 ## Options (après « -- ») :
@@ -7,6 +7,9 @@ extends SceneTree
 ##   --complet      : refait aussi les installations complètes Windows et Mac (sinon : automatique
 ##                    quand le moteur Godot ou les réglages du projet ont changé)
 ##   --sans-web     : ne réexporte pas la version web (docs/index.*)
+##   --android      : refait l'application Android (.apk) même sans installation complète
+##   --garder-installation : n'impose pas de réinstallation même si l'empreinte a changé
+##                    (à n'utiliser que si on est sûr que les applications déjà installées restent compatibles)
 ##
 ## Ce que fait l'outil :
 ##   1. recopie le numéro de scripts/version.gd dans les réglages du projet (application/config/version) ;
@@ -15,13 +18,18 @@ extends SceneTree
 ##   4. écrit la fiche docs/maj/version.json (numéro, nouveautés, taille, empreinte) ;
 ##   5. si besoin, crée les installations complètes dans build/ :
 ##        build/BrothersOfLegacy-Windows.zip et build/BrothersOfLegacy-Mac.zip
-##      (à déposer dans une « Release » GitHub nommée vX.Y.Z, voir GUIDE_VERSIONS.md).
+##      (à déposer dans une « Release » GitHub nommée vX.Y.Z, voir GUIDE_VERSIONS.md) ;
+##      et l'application Android dans docs/telecharger/BrothersOfLegacy-Android.apk (publiée avec le site).
+##      L'APK demande le kit Android et la clé de signature : s'ils manquent, il est simplement sauté.
 ## Il reste ensuite à faire le Commit + Push dans GitHub Desktop : les joueurs reçoivent la mise à jour.
 
 const DEPOT := "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot"
 const PRESET_WEB := "Web"
 const PRESET_WINDOWS := "Windows Desktop"
 const PRESET_MAC := "macOS"
+const PRESET_ANDROID := "Android"
+const SITE := "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/"
+const APK := "telecharger/BrothersOfLegacy-Android.apk"
 const NB_NOUVEAUTES := 15
 
 var projet := ""
@@ -61,7 +69,8 @@ func _init() -> void:
 	# 4. Installation complète nécessaire ? (moteur, réglages du projet ou système de mise à jour changés)
 	var ancienne := _lire_json(projet + "/docs/maj/version.json")
 	var empreinte_install := _empreinte_installation()
-	var complet := "--complet" in args or str(ancienne.get("empreinte_installation", "")) != empreinte_install
+	var complet := "--complet" in args or (str(ancienne.get("empreinte_installation", "")) != empreinte_install \
+			and not "--garder-installation" in args)
 	var installation_minimum := numero if complet else str(ancienne.get("installation_minimum", numero))
 	var version_minimum := numero if "--obligatoire" in args else str(ancienne.get("version_minimum", ""))
 
@@ -75,6 +84,14 @@ func _init() -> void:
 		print("- Installation complète Mac…")
 		if not _exporter(["--export-release", PRESET_MAC, projet + "/build/BrothersOfLegacy-Mac.zip"]):
 			_echec("l'export Mac a échoué (modèles d'export installés ?)"); return
+
+	var apk_refait := false
+	if complet or "--android" in args:
+		print("- Application Android…")
+		apk_refait = _exporter_android(numero)
+		if not apk_refait:
+			print("ATTENTION : APK Android non refait (kit Android ou clé de signature absents sur cet ordinateur).")
+			print("  Les téléphones gardent l'ancienne application ; demande à Claude de refaire l'APK.")
 
 	# 5. Fiche de version lue par le jeu
 	var nouveautes: Array = []
@@ -92,6 +109,7 @@ func _init() -> void:
 		"installations": {
 			"windows": "%s/releases/download/v%s/BrothersOfLegacy-Windows.zip" % [DEPOT, installation_minimum],
 			"macos": "%s/releases/download/v%s/BrothersOfLegacy-Mac.zip" % [DEPOT, installation_minimum],
+			"android": SITE + APK,
 		},
 		"nouveautes": nouveautes,
 	}
@@ -106,6 +124,8 @@ func _init() -> void:
 		print("  (les joueurs devront réinstaller : le jeu leur proposera le téléchargement).")
 	else:
 		print("Mise à jour rapide : les joueurs la recevront au prochain lancement du jeu.")
+	if apk_refait:
+		print("Application Android prête : docs/%s (publiée avec le Push)." % APK)
 	if version_minimum == numero:
 		print("Mise à jour OBLIGATOIRE.")
 	quit(0)
@@ -125,6 +145,30 @@ func _exporter(arguments: Array) -> bool:
 
 ## Empreinte de ce qui ne peut changer qu'avec une installation complète :
 ## réglages du projet (hors numéro de version), système de mise à jour, moteur Godot.
+func _exporter_android(numero: String) -> bool:
+	# Numéro de version Android : doit toujours augmenter (0.36.2 -> 3602)
+	var p := numero.split(".")
+	var code := 0
+	for i in 3:
+		code = code * 100 + (p[i].to_int() if i < p.size() else 0)
+	var chemin := projet + "/export_presets.cfg"
+	var texte := FileAccess.get_file_as_string(chemin)
+	var re := RegEx.new()
+	re.compile("(?m)^version/code=\\d+$")
+	if re.search(texte):
+		_creer_fichier(chemin, re.sub(texte, "version/code=%d" % maxi(code, 1)))
+	DirAccess.make_dir_recursive_absolute(projet + "/docs/telecharger")
+	var sortie := projet + "/build/BrothersOfLegacy-Android.apk"
+	if FileAccess.file_exists(sortie):
+		DirAccess.remove_absolute(sortie)
+	if not _exporter(["--export-release", PRESET_ANDROID, sortie]) or not FileAccess.file_exists(sortie):
+		return false
+	var dest := projet + "/docs/" + APK
+	if FileAccess.file_exists(dest):
+		DirAccess.remove_absolute(dest)
+	return DirAccess.copy_absolute(sortie, dest) == OK
+
+
 func _empreinte_installation() -> String:
 	# On ignore le numéro de version et les extensions de l'éditeur (sans effet sur le jeu installé).
 	var lignes := []
@@ -137,7 +181,10 @@ func _empreinte_installation() -> String:
 			continue
 		lignes.append(l)
 	var texte := "\n".join(lignes).strip_edges()
-	texte += FileAccess.get_file_as_string(projet + "/scripts/mise_a_jour.gd").replace("\r", "")
+	var re := RegEx.new()
+	re.compile("const VERSION_SYSTEME := (\\d+)")
+	var m := re.search(FileAccess.get_file_as_string(projet + "/scripts/mise_a_jour.gd"))
+	texte += "systeme=" + (m.get_string(1) if m else "0")
 	texte += _version_moteur()
 	return texte.sha256_text()
 

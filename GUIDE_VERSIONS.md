@@ -50,7 +50,7 @@ Les joueurs verront « Nouvelle version : réinstallation nécessaire » avec un
 
 ---
 
-## 1 ter. Installer le jeu sur un ordinateur (famille et amis)
+## 1 ter. Installer le jeu (famille et amis)
 
 Lien à envoyer : **https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest**
 
@@ -59,7 +59,18 @@ Lien à envoyer : **https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-B
   `xattr -cr "/Applications/Brother of Legacy - Tears and Blood.app"`
   puis relancer. Ces manipulations ne sont à faire qu'une fois.
 
+- **Android** : ouvrir sur le téléphone le lien
+  **https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/telecharger/BrothersOfLegacy-Android.apk**
+  puis ouvrir le fichier téléchargé et choisir **Installer**. La première fois, le téléphone demande d'autoriser le navigateur (Chrome…) à installer des applications : **Paramètres → Autoriser cette source**, puis revenir et **Installer**. Si Play Protect affiche un avertissement : **Plus de détails → Installer quand même**.
+- **iPhone / iPad** : pas d'application (Apple ne le permet pas sans l'App Store). Ouvrir le jeu web dans **Safari**, bouton **Partager → Sur l'écran d'accueil** : il s'ouvre ensuite comme une appli et il est toujours à jour.
+
 Ensuite, plus rien à faire : le jeu se met à jour tout seul.
+
+### L'application Android (APK)
+
+L'APK est fabriqué par Claude, qui a le kit Android et la **clé de signature** de l'application. Il est rangé dans `docs/telecharger/` et publié avec le site : pas de Release à faire pour Android.
+Sur ton PC, quand l'outil de publication refait les installations complètes, il saute l'APK (message « APK Android non refait ») : demande alors à Claude de le refaire.
+La clé de signature (fichier `brothersoflegacy.keystore` + son mot de passe) est conservée dans les documents du Projet Claude. **Ne la perds pas et ne la partage pas** : sans elle, une nouvelle application ne pourrait pas remplacer l'ancienne sur les téléphones (il faudrait désinstaller puis réinstaller).
 
 ---
 

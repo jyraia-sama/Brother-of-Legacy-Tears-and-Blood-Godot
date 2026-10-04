@@ -50,6 +50,9 @@ func _ready() -> void:
 	_maj_portrait()
 	if est_application_pc():
 		appliquer_plein_ecran_pc()
+	# Application Android : paysage, dans un sens ou dans l'autre selon la façon de tenir le téléphone
+	if OS.has_feature("android"):
+		DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_LANDSCAPE)
 
 
 # =====================================================================
