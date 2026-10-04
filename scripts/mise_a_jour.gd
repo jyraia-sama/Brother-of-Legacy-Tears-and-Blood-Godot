@@ -1,5 +1,5 @@
 extends Node
-## MISE À JOUR AUTOMATIQUE (version ordinateur : Windows et Mac).
+## MISE À JOUR AUTOMATIQUE (applications installées : Windows, Mac et Android).
 ## Chargé automatiquement au démarrage, EN PREMIER (Projet > Paramètres > Globals : « MiseAJour »).
 ##
 ## Comment ça marche :
@@ -19,6 +19,10 @@ extends Node
 ## Il est lu avant le chargement de la mise à jour ; s'il chargeait un script du jeu à ce moment-là,
 ## c'est l'ancienne version de ce script qui resterait en mémoire.
 ## Ce fichier lui-même ne se met pas à jour par ce système (il faut une installation complète).
+## Si une modification de ce fichier doit atteindre TOUS les joueurs, augmente VERSION_SYSTEME :
+## l'outil de publication refera alors les installations complètes.
+
+const VERSION_SYSTEME := 1
 
 signal verification_terminee(resultat: String)   # "a_jour", "maj", "installation", "erreur"
 signal telechargement_termine(ok: bool, message: String)
@@ -29,6 +33,7 @@ const URL_FICHE := "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Bl
 const URL_INSTALL := {
 	"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Windows.zip",
 	"macos": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Mac.zip",
+	"android": "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/telecharger/BrothersOfLegacy-Android.apk",
 }
 const PAGE_TELECHARGEMENT := "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest"
 
@@ -74,13 +79,21 @@ func _ready() -> void:
 
 
 ## Le système ne fonctionne que dans l'application installée sur ordinateur
-## (pas dans le navigateur, pas sur téléphone, pas quand on lance le jeu depuis l'éditeur).
+## et dans l'application Android (pas dans le navigateur, pas quand on lance le jeu depuis l'éditeur).
 func actif() -> bool:
-	return OS.has_feature("pc") and not OS.has_feature("web") and not OS.has_feature("editor")
+	return (OS.has_feature("pc") or OS.has_feature("android")) and not OS.has_feature("web") and not OS.has_feature("editor")
 
 
 func plateforme() -> String:
+	if OS.has_feature("android"):
+		return "android"
 	return "macos" if OS.has_feature("macos") else "windows"
+
+
+## Android ne permet pas à une application de se relancer elle-même : on la ferme
+## et le joueur la rouvre.
+func peut_redemarrer() -> bool:
+	return plateforme() != "android"
 
 
 # =====================================================================
@@ -313,13 +326,15 @@ func ouvrir_installation() -> void:
 
 
 ## Enregistre la partie puis relance le jeu (la nouvelle version est chargée au redémarrage).
+## Sur Android, le jeu se ferme simplement : le joueur le rouvre.
 func redemarrer() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	var s = load("res://scripts/sauvegarde.gd")
 	if s:
 		s.ecrire_maintenant(true)
 	await get_tree().create_timer(1.5, true).timeout
-	OS.set_restart_on_exit(true, OS.get_cmdline_args())
+	if peut_redemarrer():
+		OS.set_restart_on_exit(true, OS.get_cmdline_args())
 	get_tree().quit()
 
 
