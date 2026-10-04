@@ -31,6 +31,10 @@ window/size/window_width_override=1600
 window/size/window_height_override=900
 window/stretch/mode="canvas_items"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/bol_versions/plugin.cfg")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

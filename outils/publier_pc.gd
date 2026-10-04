@@ -126,10 +126,16 @@ func _exporter(arguments: Array) -> bool:
 ## Empreinte de ce qui ne peut changer qu'avec une installation complète :
 ## réglages du projet (hors numéro de version), système de mise à jour, moteur Godot.
 func _empreinte_installation() -> String:
+	# On ignore le numéro de version et les extensions de l'éditeur (sans effet sur le jeu installé).
 	var lignes := []
+	var section := ""
 	for l in FileAccess.get_file_as_string(projet + "/project.godot").split("\n"):
-		if not l.begins_with("config/version="):
-			lignes.append(l.strip_edges(false, true))
+		l = l.strip_edges(false, true)
+		if l.begins_with("["):
+			section = l
+		if section == "[editor_plugins]" or l.begins_with("config/version="):
+			continue
+		lignes.append(l)
 	var texte := "\n".join(lignes).strip_edges()
 	texte += FileAccess.get_file_as_string(projet + "/scripts/mise_a_jour.gd").replace("\r", "")
 	texte += _version_moteur()
