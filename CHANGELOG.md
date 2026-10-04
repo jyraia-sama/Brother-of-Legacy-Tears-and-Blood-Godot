@@ -1,6 +1,16 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.36.1** (2026-10-04)
+Version actuelle : **0.37.0** (2026-10-04)
+
+## v0.37.0 — Le nouveau menu : les Deux Frères  (2026-10-04)
+
+- NOUVEAU MENU PRINCIPAL : l'écran est coupé en deux par une fente dorée. À gauche LA LAME pour combattre (Aventure, Arène, Boss de Monde, Tours, Donjons, Expédition, Ménagerie), à droite LE SANG pour ton armée (Deck, Invocation, Fusion, Échos, Reliquaire, Bestiaire). Chaque bouton affiche une info utile : chapitre à reprendre, boss du jour et essais restants, reset des Tours, taille de l'équipe…
+- Arène, Boss de Monde, Tours, Donjons, Expédition et Ménagerie s'ouvrent maintenant directement depuis le menu (ils restent aussi dans l'écran Aventure) ; le bouton retour ramène au menu.
+- BARRE DU HAUT : ton blason et ton niveau (Mon héros), ton nom (Compte), ton titre et une vraie barre d'XP de compte. Ressources refaites : stamina avec sa jauge et le temps avant le prochain point, or, gemmes et Éclats, avec un bouton « + » vers la Boutique. En haut à droite : Aide, Nouveautés et Menu.
+- LE ROYAUME en bas de l'écran : Quêtes, Succès, Boutique, Guilde (enfin un vrai bouton !), Social et le nouveau Courrier. Les pastilles signalent les récompenses à réclamer, les missions terminées, les chasses à récolter et le Boss de Monde du jour.
+- LE COURRIER : tes lettres, cadeaux et compensations arrivent ici, avec « Tout récupérer ». Une première lettre t'attend avec un petit présent.
+- Le guide PREMIERS PAS passe au centre, sous l'emblème. Les stats ATK / DEF / PV du héros quittent le menu (elles restent dans Mon héros).
+- Les secrets du menu sont toujours là… pour ceux qui savent où chercher.
 
 ## v0.36.1 — Bouton Muet  (2026-10-04)
 
