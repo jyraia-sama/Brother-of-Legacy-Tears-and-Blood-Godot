@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.36.0** (2026-10-04)
+Version actuelle : **0.36.1** (2026-10-04)
+
+## v0.36.1 — Bouton Muet  (2026-10-04)
+
+- Paramètres : nouvelle case « Muet » pour couper d'un coup la musique et les bruitages. Les réglages de volume sont conservés et reviennent dès qu'on la décoche.
 
 ## v0.36.0 — Le jeu sur Android  (2026-10-04)
 

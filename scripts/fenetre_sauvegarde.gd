@@ -56,6 +56,13 @@ func _ready() -> void:
 	vb.add_child(_label("SON", 20, Color(1.0, 0.85, 0.55)))
 	vb.add_child(_curseur_volume("Musique", "musique"))
 	vb.add_child(_curseur_volume("Bruitages", "sons"))
+	var muet := CheckBox.new()
+	muet.text = "Muet (coupe la musique et les bruitages)"
+	muet.focus_mode = Control.FOCUS_NONE
+	muet.add_theme_font_size_override("font_size", 17)
+	muet.button_pressed = Audio.est_muet()
+	muet.toggled.connect(Audio.regler_muet)
+	vb.add_child(muet)
 	vb.add_child(HSeparator.new())
 
 	# Affichage : taille de l'interface (grande sur téléphone) et plein écran

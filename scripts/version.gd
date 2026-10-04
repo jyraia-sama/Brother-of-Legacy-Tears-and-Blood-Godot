@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.36.0"
+const NUMERO := "0.36.1"
 const DATE := "2026-10-04"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.36.1", "date": "2026-10-04", "titre": "Bouton Muet",
+	"changements": [
+		"Paramètres : nouvelle case « Muet » pour couper d'un coup la musique et les bruitages. Les réglages de volume sont conservés et reviennent dès qu'on la décoche.",
+	]},
 	{"version": "0.36.0", "date": "2026-10-04", "titre": "Le jeu sur Android",
 	"changements": [
 		"L'APPLICATION ANDROID : Brothers of Legacy s'installe maintenant comme une vraie application sur les téléphones et tablettes Android, en plein écran et en paysage (dans un sens ou dans l'autre). Ta partie te suit grâce à ton compte.",

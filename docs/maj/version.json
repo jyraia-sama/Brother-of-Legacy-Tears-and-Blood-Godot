@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"Paramètres : nouvelle case « Muet » pour couper d'un coup la musique et les bruitages. Les réglages de volume sont conservés et reviennent dès qu'on la décoche."
+			],
+			"titre": "Bouton Muet",
+			"version": "0.36.1"
+		},
+		{
+			"changements": [
 				"L'APPLICATION ANDROID : Brothers of Legacy s'installe maintenant comme une vraie application sur les téléphones et tablettes Android, en plein écran et en paysage (dans un sens ou dans l'autre). Ta partie te suit grâce à ton compte.",
 				"Elle se met à jour toute seule, comme sur ordinateur : au lancement, une fenêtre présente les nouveautés et le bouton « Mettre à jour » télécharge la nouvelle version. Il suffit ensuite de rouvrir le jeu.",
 				"Sur iPhone, la version web ajoutée à l'écran d'accueil reste la meilleure solution : elle est toujours à jour."
@@ -135,24 +142,13 @@
 			],
 			"titre": "Les dialogues de l'histoire et le nom Valcendre",
 			"version": "0.29.0"
-		},
-		{
-			"changements": [
-				"ACTE XIII CACHÉ — « Le Sang et la Larme » : il apparaît (bouton rouge et bleu en bas de l'Histoire principale) une fois l'Acte XII terminé. 6 chapitres, plus difficiles que l'Acte XII, dans le Sceau des Frères, contre les souvenirs des Héritiers dévorés. Boss final : Morvaël, la Soif Première (UR, deux phases).",
-				"FIN DE L'ACTE XII : épilogue de la fin douce-amère et titre « Gardien du Sceau » (donné aussi aux joueurs qui avaient déjà terminé l'Acte XII).",
-				"VRAIE FIN (Acte XIII terminé) : épilogue « Les Frères Réunis » et toutes les récompenses : Kaël Valcendre, Héros de Légende UR jouable et unique (Flamme Noire Maîtrisée, Lames Jumelles, Le Rire Retrouvé…) ; le titre « Les Frères Réunis » ; les deux Échos uniques du Sceau des Frères (la Larme et le Sang, Légendaires 6★, set à 2 pièces : ATK +15 % et PV +15 %) ; 1 000 gemmes et 3 Coffres Royaux.",
-				"Le set des Frères ne s'obtient qu'avec la vraie fin (ni en combat, ni à l'Atelier). Scénario complet : HISTOIRE.md.",
-				"Images provisoires de l'Acte XIII (écran des chapitres et plateau), à remplacer par des versions ChatGPT."
-			],
-			"titre": "L'Acte caché et la vraie fin",
-			"version": "0.28.0"
 		}
 	],
 	"pck": {
-		"sha256": "508fe8f293747bdb88eebed913a0c143d65833d608548425c66a65a0c7910bf9",
-		"taille": 26659552,
+		"sha256": "e569cb601f5ea7e26a0c06179fe631fcfb5ac77032f042a9582a6d336e162e49",
+		"taille": 26659840,
 		"url": "jeu.pck"
 	},
-	"version": "0.36.0",
+	"version": "0.36.1",
 	"version_minimum": ""
 }
