@@ -13,10 +13,12 @@ config_version=5
 config/name="Brother of Legacy : Tears and Blood"
 run/main_scene="uid://ccvyo6hrr61if"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+config/version="0.35.0"
 config/icon="res://icon.svg"
 
 [autoload]
 
+MiseAJour="*res://scripts/mise_a_jour.gd"
 Polices="*res://scripts/polices.gd"
 Ecran="*res://scripts/ecran.gd"
 EnLigne="*res://scripts/en_ligne.gd"
@@ -25,6 +27,8 @@ EnLigne="*res://scripts/en_ligne.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/window_width_override=1600
+window/size/window_height_override=900
 window/stretch/mode="canvas_items"
 
 [physics]
@@ -36,3 +40,4 @@ window/stretch/mode="canvas_items"
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

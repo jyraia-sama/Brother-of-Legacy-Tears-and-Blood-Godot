@@ -13,16 +13,53 @@ Tu as deux filets de sécurité, qui se complètent :
    Le jeu montrera automatiquement les nouveautés au joueur au prochain lancement.
 2. Recopie la même entrée dans `CHANGELOG.md`.
 3. Dans Godot, onglet **Versions** : clique sur **Sauvegarder cette version**.
-4. Dans GitHub Desktop :
+4. Toujours dans l'onglet **Versions** : clique sur **Publier cette version**.
+   L'outil exporte le jeu web (`docs/`) **et** la mise à jour pour ordinateur (`docs/maj/`). Compte une à trois minutes.
+   - Coche **Mise à jour obligatoire** si l'Arène ou le serveur ont changé : les joueurs ne pourront pas cliquer « Plus tard ».
+   - Si le cadre affiche **INSTALLATION COMPLÈTE CRÉÉE**, suis aussi la partie 1 bis ci-dessous.
+5. Dans GitHub Desktop :
    - écris un **Summary** (en bas à gauche), par exemple `v0.11.0 — Stamina et niveau de compte` ;
    - clique sur **Commit to main**, puis sur **Push origin** ;
    - va dans l'onglet **History**, fais un clic droit sur ce commit, choisis **Create Tag…**, tape `v0.11.0`, puis clique à nouveau sur **Push origin**.
+
+Au prochain lancement, l'application Windows / Mac de chaque joueur affiche « Mise à jour disponible » avec les nouveautés. Un clic sur **Mettre à jour** télécharge la version, puis le jeu redémarre dessus. La version web, elle, est à jour dès le Push (comme avant).
 
 La numérotation suit la forme `MAJEUR.MINEUR.CORRECTIF` :
 
 - **0.x.y** : le jeu est en développement. La version **1.0.0** sera la première version complète.
 - **MINEUR +1** (par exemple 0.11.0 → 0.12.0) : une nouveauté, comme un nouveau mode ou un nouvel écran.
 - **CORRECTIF +1** (par exemple 0.11.0 → 0.11.1) : uniquement des corrections de bugs ou de l'équilibrage.
+
+---
+
+## 1 bis. Installation complète (rare)
+
+Une simple mise à jour ne suffit pas quand **Godot** change de version (4.7 → 4.8…), quand les **réglages du projet** changent (Projet → Paramètres du projet, nouvel Autoload…) ou quand le système de mise à jour lui-même change. L'outil le détecte tout seul et crée alors, dans le dossier `build/` du projet (il s'ouvre automatiquement) :
+
+- `BrothersOfLegacy-Windows.zip`
+- `BrothersOfLegacy-Mac.zip`
+
+Ces fichiers sont trop gros pour le dépôt : on les dépose dans une **Release** GitHub.
+
+1. Fais d'abord le Commit, le Push et le tag (étape 5 ci-dessus).
+2. Sur github.com, ouvre ton dépôt, puis **Releases** (colonne de droite) → **Draft a new release**.
+3. **Choose a tag** : choisis le tag de la version (par exemple `v0.40.0`). Titre : le même.
+4. Glisse les deux fichiers `.zip` dans la zone « Attach binaries », puis clique sur **Publish release**.
+
+Les joueurs verront « Nouvelle version : réinstallation nécessaire » avec un bouton qui télécharge directement le bon fichier. Leur partie n'est pas perdue (elle est sur leur ordinateur et sur leur compte).
+
+---
+
+## 1 ter. Installer le jeu sur un ordinateur (famille et amis)
+
+Lien à envoyer : **https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest**
+
+- **Windows** : télécharger `BrothersOfLegacy-Windows.zip`, clic droit → **Extraire tout**, puis lancer `BrothersOfLegacy.exe` dans le dossier « Brothers of Legacy ». Au premier lancement, Windows affiche « Windows a protégé votre ordinateur » : cliquer **Informations complémentaires** → **Exécuter quand même**. Pour plus de confort : clic droit sur l'exe → **Afficher d'autres options** → **Envoyer vers → Bureau (créer un raccourci)**.
+- **Mac** : télécharger `BrothersOfLegacy-Mac.zip` (le Mac le décompresse tout seul), glisser l'application dans **Applications** puis l'ouvrir. Le Mac la bloque la première fois : **Réglages Système → Confidentialité et sécurité**, tout en bas, **Ouvrir quand même**. Si le Mac dit que l'application est « endommagée », ouvrir le Terminal et taper :
+  `xattr -cr "/Applications/Brother of Legacy - Tears and Blood.app"`
+  puis relancer. Ces manipulations ne sont à faire qu'une fois.
+
+Ensuite, plus rien à faire : le jeu se met à jour tout seul.
 
 ---
 

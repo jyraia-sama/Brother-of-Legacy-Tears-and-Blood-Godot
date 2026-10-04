@@ -4,6 +4,7 @@ extends EditorPlugin
 ##  - Sauvegarder cette version : crée un .zip du projet (dossier  <projet>_versions/ à côté du projet).
 ##  - Ouvrir dans un nouveau dossier : récupère une ancienne version sans toucher au projet.
 ##  - Remplacer le projet : revient VRAIMENT à l'ancienne version (l'état actuel est sauvegardé avant).
+##  - Publier cette version : exporte le web + la mise à jour ordinateur (outils/publier_pc.gd).
 
 const Outil := preload("res://addons/bol_versions/outil.gd")
 
@@ -11,6 +12,9 @@ var _dock: VBoxContainer
 var _lbl_version: Label
 var _liste: ItemList
 var _etat: Label
+var _obligatoire: CheckBox
+var _complet: CheckBox
+var _publier: Button
 
 
 func _enter_tree() -> void:
@@ -54,6 +58,24 @@ func _enter_tree() -> void:
 	actualiser.text = "Actualiser"
 	actualiser.pressed.connect(_rafraichir)
 	_dock.add_child(actualiser)
+
+	_dock.add_child(HSeparator.new())
+	var titre_pub := Label.new()
+	titre_pub.text = "Publier (web + Windows/Mac) :"
+	_dock.add_child(titre_pub)
+	_obligatoire = CheckBox.new()
+	_obligatoire.text = "Mise à jour obligatoire"
+	_obligatoire.tooltip_text = "Les joueurs devront installer cette version pour continuer (à cocher si l'Arène ou le serveur ont changé)."
+	_dock.add_child(_obligatoire)
+	_complet = CheckBox.new()
+	_complet.text = "Refaire les installations complètes"
+	_complet.tooltip_text = "Automatique si Godot ou les réglages du projet ont changé. À cocher seulement pour forcer."
+	_dock.add_child(_complet)
+	_publier = Button.new()
+	_publier.text = "Publier cette version"
+	_publier.tooltip_text = "Exporte le jeu web (docs/), la mise à jour ordinateur (docs/maj/) et, si besoin, les installations complètes (build/). Ensuite : Commit + Push dans GitHub Desktop."
+	_publier.pressed.connect(_publier_version)
+	_dock.add_child(_publier)
 
 	_etat = Label.new()
 	_etat.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -123,3 +145,31 @@ func _demander_remplacement() -> void:
 	d.canceled.connect(d.queue_free)
 	EditorInterface.get_base_control().add_child(d)
 	d.popup_centered()
+
+
+func _publier_version() -> void:
+	EditorInterface.save_all_scenes()
+	_publier.disabled = true
+	_etat.text = "Publication de la v%s en cours… (une à trois minutes, l'éditeur ne répond pas pendant ce temps)" % Outil.version_actuelle()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var options := ["--headless", "--path", Outil.dossier_projet(), "-s", "res://outils/publier_pc.gd", "--"]
+	if _obligatoire.button_pressed:
+		options.append("--obligatoire")
+	if _complet.button_pressed:
+		options.append("--complet")
+	var sortie := []
+	var code := OS.execute(OS.get_executable_path(), options, sortie, true)
+	var lignes := []
+	for l in "\n".join(sortie).split("\n"):
+		if l.begins_with("===") or l.begins_with("- ") or l.begins_with("À faire") or l.begins_with("INSTALL") \
+				or l.begins_with("  ") or l.begins_with("Mise à jour") or l.begins_with("ÉCHEC") or l.begins_with("ATTENTION"):
+			lignes.append(l)
+	_etat.text = ("\n".join(lignes) if not lignes.is_empty() else "\n".join(sortie).right(1500))
+	if code != 0 and lignes.is_empty():
+		_etat.text = "Échec de la publication :\n" + _etat.text
+	_obligatoire.button_pressed = false
+	_complet.button_pressed = false
+	_publier.disabled = false
+	if code == 0 and DirAccess.dir_exists_absolute(Outil.dossier_projet() + "/build") and _etat.text.contains("INSTALLATION COMPLÈTE"):
+		OS.shell_open(Outil.dossier_projet() + "/build")

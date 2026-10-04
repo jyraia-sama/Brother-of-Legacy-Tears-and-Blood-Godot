@@ -1,0 +1,155 @@
+{
+	"date": "2026-10-04",
+	"empreinte_installation": "41f70b90060ddcbd03fde9b04cfa5ddc0436994c691037a3873bf67dc2aa5ef4",
+	"godot": "4.7",
+	"installation_minimum": "0.35.0",
+	"installations": {
+		"macos": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Mac.zip",
+		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
+	},
+	"nouveautes": [
+		{
+			"changements": [
+				"LE JEU SUR ORDINATEUR : Brothers of Legacy existe maintenant en vraie application pour Windows et pour Mac, à installer sur ton ordinateur. Ta partie te suit grâce à ton compte.",
+				"MISES À JOUR AUTOMATIQUES : à chaque lancement, l'application regarde s'il existe une nouvelle version. Une fenêtre présente les nouveautés avec un bouton « Mettre à jour » : le téléchargement se fait dans le jeu, puis il redémarre tout seul sur la nouvelle version.",
+				"Paramètres → « Rechercher une mise à jour » pour vérifier à tout moment, et option « Plein écran » (ou touche F11) sur ordinateur."
+			],
+			"titre": "Le jeu s'installe sur ordinateur",
+			"version": "0.35.0"
+		},
+		{
+			"changements": [
+				"Deux gardiens du sanctuaire secret ont maintenant leur portrait…"
+			],
+			"titre": "Portraits du sanctuaire",
+			"version": "0.34.2"
+		},
+		{
+			"changements": [
+				"Le sanctuaire secret accueille un nouveau gardien… Il n'est pas né sous le même signe que les autres, et il n'est jamais vraiment seul. L'épreuve finale se joue désormais à quatre."
+			],
+			"titre": "Le gardien du sanctuaire",
+			"version": "0.34.1"
+		},
+		{
+			"changements": [
+				"UN NOUVEAU SECRET se cache dans le menu principal… Quelque part, un sanctuaire caché où veille une famille née sous le signe du Bélier. Ses membres ne se laissent pas approcher facilement, mais ceux qui les vainquent gagnent de précieux alliés. À toi de le trouver !",
+				"Les combats de ce sanctuaire s'adaptent à la puissance de ton équipe : on peut les tenter à n'importe quel moment de l'aventure, sans stamina."
+			],
+			"titre": "Le secret du Bélier",
+			"version": "0.34.0"
+		},
+		{
+			"changements": [
+				"PLATEAU FLUIDE : le décor du plateau (chemins pavés, socles, cases, miniatures) n'est plus redessiné à chaque image. Il est dessiné une fois, puis seulement quand il change (case atteinte, brouillard levé). Pendant que le pion avance, seuls la figurine, le halo de la Larme, la pénombre et les anneaux bougent : environ 3 fois moins de calcul par image.",
+				"La pénombre autour du grand frère est maintenant un seul voile sombre qui le suit, au lieu d'assombrir chaque case et chaque pavé un par un (rendu quasi identique).",
+				"Chargement du jeu web encore allégé : 66 Mo -> 25 Mo (portraits, familiers, personnages et figurines aussi compressés en WebP)."
+			],
+			"titre": "Plateau fluide et chargement allégé",
+			"version": "0.33.3"
+		},
+		{
+			"changements": [
+				"VERSION WEB PLUS FLUIDE : la sauvegarde n'est plus réécrite à chaque gain (or, XP de chaque héros, Écho, objet...). Elle est écrite une seule fois, une demi-seconde après, et tout de suite quand le jeu passe en arrière-plan. Une fin de combat réécrivait une quinzaine de fois un fichier de ~190 Ko : c'était la principale cause des saccades.",
+				"Synchronisation en ligne : le jeu ne recalcule plus toutes les 15 secondes l'empreinte complète de la partie quand rien n'a changé (petit gel régulier sur téléphone).",
+				"Téléchargement presque deux fois plus léger (66 Mo -> 36 Mo) : les grandes illustrations (fonds, Actes, cercle d'invocation...) sont compressées en WebP et les musiques réencodées, sans différence visible."
+			],
+			"titre": "Version web plus fluide et plus légère",
+			"version": "0.33.2"
+		},
+		{
+			"changements": [
+				"Images des 8 héros hommages : portraits (planche 39) et figurines de combat (planche 40). Les héros apparaissent désormais en pied sur leur socle pendant les combats.",
+				"Miniatures des cases du plateau (planche 38) : départ, combat, élite, gardien, boss, coffre, soin, mystère et piège sont posés sur des socles de pierre."
+			],
+			"titre": "Portraits, figurines et miniatures du plateau",
+			"version": "0.33.1"
+		},
+		{
+			"changements": [
+				"8 NOUVEAUX HÉROS INVOCABLES, inspirés de personnages de jeux vidéo sans les copier (noms, apparences et sorts originaux) : l'Axolotl des Sources (SSR Eau, soutien qui se régénère), l'Errant Silencieux (SSR Ténèbres, guerrier), la Chasseresse de Soie (UR Ténèbres, assassin), la Princesse des Sceaux (SSR Sacré, soutien), l'Élu de la Lame (SSR Sacré, tank), le Mercenaire Sans Nom (UR Sacré, guerrier), la Combattante Ardente (UR Feu, guerrier) et la Fleuriste des Ruines (UR Nature, soutien).",
+				"Chacun a 4 sorts (niveaux 1, 10, 20, 30) et sa version évoluée à l'Autel d'Évolution (niveau max 40, un sort amélioré et un sort de niveau 40) : 72 évolutions au total.",
+				"Équilibrés sur les héros de même rareté. Le Pacte Supérieur compte désormais 10 SSR et 8 UR.",
+				"FIGURINES DE COMBAT : une unité qui a sa figurine (assets/figurines/<identifiant>.png) apparaît en pied sur un socle à la place de son portrait rond. Elle respire doucement, s'élance pour frapper et bascule quand elle est K.O. ; les ennemis regardent vers la gauche. Marche pour tous les héros et ennemis dès qu'on ajoute leur image.",
+				"Prompts ChatGPT : PROMPTS_HEROS_HOMMAGES.md (planche 39 : portraits, planche 40 : figurines, planche 41 : évolutions). Les outils de découpe gèrent les planches 4 x 2 et les figurines sur fond vert."
+			],
+			"titre": "Huit héros hommages et figurines de combat",
+			"version": "0.33.0"
+		},
+		{
+			"changements": [
+				"L'AVENTURE RÉSISTE ENFIN : des joueurs virtuels ont rejoué toute l'histoire (Actes I à XIII) avec les vraies règles. Résultat : le jeu était beaucoup trop facile (aucune défaite de tout le jeu pour un joueur qui s'équipe), car les Éclats des boss donnent ~3 SSR dès l'Acte II alors que la difficulté était réglée pour une équipe de SR.",
+				"Nouvelle difficulté réglée sur des équipes réalistes : environ 1 défaite par chapitre si tu améliores tes Échos, 2 si tu les poses sans les améliorer, surtout sur les boss. L'Acte I reste très doux, l'Acte XIII plus exigeant.",
+				"Chaque chef de chapitre est réglé un par un (certains étaient bien plus coriaces que les autres) et il n'y a plus de pic de difficulté au premier chapitre de chaque Acte.",
+				"KAËL INVITÉ : les ennemis sont un peu plus forts dans ses chapitres. Il aide toujours, mais ne gagne plus le combat à ta place (il faisait passer le boss final de l'Acte XII de 35 % à 78 % de victoires).",
+				"Mimics réglés sur la même base (environ 3 victoires sur 4).",
+				"Conseil après deux défaites sur une même case : le jeu signale si ton équipe porte peu d'Échos Sanguins (le moyen le plus rapide de devenir plus fort), sinon il propose d'améliorer les Échos ou l'Absorption.",
+				"Outils d'équilibrage pour Godot : simuler_progression.gd, calibrer_aventure.gd, effet_echos.gd. Bilan complet : EQUILIBRAGE.md."
+			],
+			"titre": "Équilibrage de l'Aventure",
+			"version": "0.32.0"
+		},
+		{
+			"changements": [
+				"CASES EN SOCLES DE PIERRE : chaque case du plateau est un socle de pierre en relief (tranche, biseau, fissures) avec le médaillon coloré incrusté, dans le style du socle de la figurine.",
+				"CHEMINS PAVÉS : les chemins sont faits de pierres plates sur un sentier de terre ; ceux déjà parcourus sont clairs et teintés de la couleur de l'Acte, les autres restent dans la pénombre.",
+				"LA LUMIÈRE DE LA LARME : un halo bleu suit le grand frère et éclaire les cases proches ; les cases lointaines s'assombrissent.",
+				"MARCHE PLUS VIVANTE : la figurine se penche pendant le saut, se tasse à la réception et soulève un petit nuage de poussière.",
+				"Correction : le plateau de l'Acte XIII pouvait planter (couleur d'ambiance manquante)."
+			],
+			"titre": "Le plateau aux couleurs de la figurine",
+			"version": "0.31.0"
+		},
+		{
+			"changements": [
+				"Le PION DU PLATEAU devient une figurine du grand frère Valcendre (armure sombre, manteau bleu au phénix, médaillon de la Larme) : il saute de case en case et se tourne dans le sens de la marche."
+			],
+			"titre": "La figurine du grand frère",
+			"version": "0.30.1"
+		},
+		{
+			"changements": [
+				"PORTRAITS DE L'HISTOIRE (planches 36 et 37) : Kaël (jeune, corrompu, libéré), Aldric, Othmar, Corvin, Morvaël, le Frère Masqué, le blason des Valcendre (ton portrait dans les dialogues), l'Ermite, le moine, la veuve, le commandant, la résistante. Ils apparaissent dans les dialogues.",
+				"Nouveaux portraits d'unités : Kaël Valcendre (Légende), les boss Morvaël, le Frère Masqué, le Seigneur des Cendres, l'Héritier Maudit et l'Empereur Déchu.",
+				"KAËL À TES CÔTÉS : dans les chapitres où il est avec toi (tout l'Acte I, la fin de l'Acte X, l'Acte XII après le duel, la fin de l'Acte XIII), Kaël combat en unité invitée, en plus de ton équipe (6e place, entre l'Avant et l'Arrière). Jeune et impulsif dans l'Acte I (Flamme Noire Incontrôlée), puis libéré à la fin de l'histoire.",
+				"JOURNAL DE L'HISTOIRE (bouton en bas à gauche de l'Histoire principale) : revois toutes les scènes déjà vues, Acte par Acte."
+			],
+			"titre": "Portraits de l'histoire, Kaël invité et Journal",
+			"version": "0.30.0"
+		},
+		{
+			"changements": [
+				"DIALOGUES DE L'HISTOIRE : une scène s'affiche au début de chaque chapitre (et à la fin des chapitres importants), pour les 13 Actes, selon le scénario : la séparation des frères, le Frère Masqué, la réunion, le duel, la vraie fin… Portrait, nom et texte qui s'écrit lettre par lettre ; clic ou Espace pour continuer, « Passer » pour sauter la scène. Chaque scène ne s'affiche qu'une fois.",
+				"NOM DE FAMILLE : chaque joueur appartient à la lignée des Valcendre. Le pseudo devient le prénom : « Neo » s'affiche « Neo Valcendre » (menu, Mon héros, Social, Guilde, Arène, Arène classée, Marche). Le pseudo seul sert toujours pour se connecter et ajouter un ami.",
+				"Prompts ChatGPT des portraits des personnages (Kaël, Kaël corrompu, Kaël libéré, Aldric, Othmar, Corvin, Morvaël, le Frère Masqué, le blason des Valcendre…) et des images définitives de l'Acte XIII : PROMPTS_PERSONNAGES.md."
+			],
+			"titre": "Les dialogues de l'histoire et le nom Valcendre",
+			"version": "0.29.0"
+		},
+		{
+			"changements": [
+				"ACTE XIII CACHÉ — « Le Sang et la Larme » : il apparaît (bouton rouge et bleu en bas de l'Histoire principale) une fois l'Acte XII terminé. 6 chapitres, plus difficiles que l'Acte XII, dans le Sceau des Frères, contre les souvenirs des Héritiers dévorés. Boss final : Morvaël, la Soif Première (UR, deux phases).",
+				"FIN DE L'ACTE XII : épilogue de la fin douce-amère et titre « Gardien du Sceau » (donné aussi aux joueurs qui avaient déjà terminé l'Acte XII).",
+				"VRAIE FIN (Acte XIII terminé) : épilogue « Les Frères Réunis » et toutes les récompenses : Kaël Valcendre, Héros de Légende UR jouable et unique (Flamme Noire Maîtrisée, Lames Jumelles, Le Rire Retrouvé…) ; le titre « Les Frères Réunis » ; les deux Échos uniques du Sceau des Frères (la Larme et le Sang, Légendaires 6★, set à 2 pièces : ATK +15 % et PV +15 %) ; 1 000 gemmes et 3 Coffres Royaux.",
+				"Le set des Frères ne s'obtient qu'avec la vraie fin (ni en combat, ni à l'Atelier). Scénario complet : HISTOIRE.md.",
+				"Images provisoires de l'Acte XIII (écran des chapitres et plateau), à remplacer par des versions ChatGPT."
+			],
+			"titre": "L'Acte caché et la vraie fin",
+			"version": "0.28.0"
+		},
+		{
+			"changements": [
+				"DONJONS : les 4 combats s'enchaînent maintenant sans interruption. Entre deux vagues, un court message « Combat 1 / 4 gagné ! Prochain : … » s'affiche puis le combat suivant démarre tout seul (les PV restants sont toujours conservés). Le bilan ne s'affiche qu'à la fin de l'expédition (ou en cas d'échec)."
+			],
+			"titre": "Donjons en continu",
+			"version": "0.27.1"
+		}
+	],
+	"pck": {
+		"sha256": "89e6aa9bbaedd9d129d2761676a426b4e68914b87146c800d427e97254bfd38b",
+		"taille": 26657056,
+		"url": "jeu.pck"
+	},
+	"version": "0.35.0",
+	"version_minimum": ""
+}

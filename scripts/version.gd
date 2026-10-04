@@ -7,18 +7,25 @@ extends RefCounted
 ##   2. ajoute une entrée EN HAUT de HISTORIQUE (même numéro) ;
 ##   3. recopie-la dans CHANGELOG.md (à la racine du projet) ;
 ##   4. dans GitHub Desktop : Commit « vX.Y.Z — titre », puis crée l'étiquette (tag) vX.Y.Z ;
-##   5. dans Godot : onglet « Versions » -> « Sauvegarder cette version ».
+##   5. dans Godot : onglet « Versions » -> « Sauvegarder cette version », puis « Publier cette version »
+##      (exporte le web + la mise à jour Windows/Mac, voir GUIDE_VERSIONS.md).
 ##
 ## Numérotation  MAJEUR.MINEUR.CORRECTIF :
 ##   0.x.y  = jeu en développement (1.0.0 = première version complète)
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.34.2"
-const DATE := "2026-10-03"
+const NUMERO := "0.35.0"
+const DATE := "2026-10-04"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.35.0", "date": "2026-10-04", "titre": "Le jeu s'installe sur ordinateur",
+	"changements": [
+		"LE JEU SUR ORDINATEUR : Brothers of Legacy existe maintenant en vraie application pour Windows et pour Mac, à installer sur ton ordinateur. Ta partie te suit grâce à ton compte.",
+		"MISES À JOUR AUTOMATIQUES : à chaque lancement, l'application regarde s'il existe une nouvelle version. Une fenêtre présente les nouveautés avec un bouton « Mettre à jour » : le téléchargement se fait dans le jeu, puis il redémarre tout seul sur la nouvelle version.",
+		"Paramètres → « Rechercher une mise à jour » pour vérifier à tout moment, et option « Plein écran » (ou touche F11) sur ordinateur.",
+	]},
 	{"version": "0.34.2", "date": "2026-10-03", "titre": "Portraits du sanctuaire",
 	"changements": [
 		"Deux gardiens du sanctuaire secret ont maintenant leur portrait…",

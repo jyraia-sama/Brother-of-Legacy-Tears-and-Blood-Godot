@@ -11,6 +11,7 @@ extends Node
 ##  - PAYSAGE : en portrait, un message demande de tourner le téléphone.
 ##  - PLEIN ÉCRAN : au premier appui sur mobile (navigateur), le jeu passe en plein écran
 ##    et se verrouille en paysage quand le téléphone le permet (Android).
+##  - ORDINATEUR (application Windows / Mac) : plein écran au choix dans les Paramètres, ou touche F11.
 ##  - AJUSTEMENT : si un écran est trop large ou trop haut pour la taille choisie, il est
 ##    réduit juste assez pour tenir entièrement (rien n'est jamais coupé sur le bord).
 
@@ -47,6 +48,8 @@ func _ready() -> void:
 	_creer_calque_portrait()
 	get_tree().root.size_changed.connect(_maj_portrait)
 	_maj_portrait()
+	if est_application_pc():
+		appliquer_plein_ecran_pc()
 
 
 # =====================================================================
@@ -203,10 +206,42 @@ func _passer_plein_ecran() -> void:
 
 
 # =====================================================================
+# Plein écran (application ordinateur)
+# =====================================================================
+
+## Application installée sur ordinateur (Windows / Mac / Linux), pas le navigateur.
+func est_application_pc() -> bool:
+	return OS.has_feature("pc") and not OS.has_feature("web")
+
+
+func plein_ecran_pc() -> bool:
+	return bool(Sauvegarde.get_parametre("plein_ecran_pc", false))
+
+
+func changer_plein_ecran_pc(actif: bool) -> void:
+	Sauvegarde.definir_parametre("plein_ecran_pc", actif)
+	appliquer_plein_ecran_pc()
+
+
+func appliquer_plein_ecran_pc() -> void:
+	if not est_application_pc():
+		return
+	var voulu := DisplayServer.WINDOW_MODE_FULLSCREEN if plein_ecran_pc() else DisplayServer.WINDOW_MODE_WINDOWED
+	var actuel := DisplayServer.window_get_mode()
+	var plein := actuel in [DisplayServer.WINDOW_MODE_FULLSCREEN, DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN]
+	if plein != plein_ecran_pc():
+		DisplayServer.window_set_mode(voulu)
+
+
+# =====================================================================
 # Défilement au doigt
 # =====================================================================
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F11 and est_application_pc():
+		changer_plein_ecran_pc(not plein_ecran_pc())
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventScreenTouch:
 		if event.index != 0:
 			return

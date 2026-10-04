@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.34.2** (2026-10-03)
+Version actuelle : **0.35.0** (2026-10-04)
+
+## v0.35.0 — Le jeu s'installe sur ordinateur  (2026-10-04)
+
+- LE JEU SUR ORDINATEUR : Brothers of Legacy existe maintenant en vraie application pour Windows et pour Mac, à installer sur ton ordinateur. Ta partie te suit grâce à ton compte.
+- MISES À JOUR AUTOMATIQUES : à chaque lancement, l'application regarde s'il existe une nouvelle version. Une fenêtre présente les nouveautés avec un bouton « Mettre à jour » : le téléchargement se fait dans le jeu, puis il redémarre tout seul sur la nouvelle version.
+- Paramètres → « Rechercher une mise à jour » pour vérifier à tout moment, et option « Plein écran » (ou touche F11) sur ordinateur.
 
 ## v0.34.2 — Portraits du sanctuaire  (2026-10-03)
 

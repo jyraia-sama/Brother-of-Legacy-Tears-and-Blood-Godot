@@ -80,7 +80,29 @@ func _ready() -> void:
 		pe.button_pressed = bool(Sauvegarde.get_parametre("plein_ecran_auto", true))
 		pe.toggled.connect(func(v: bool): Sauvegarde.definir_parametre("plein_ecran_auto", v))
 		vb.add_child(pe)
+	if Ecran.est_application_pc():
+		var pc := CheckBox.new()
+		pc.text = "Plein écran (touche F11)"
+		pc.focus_mode = Control.FOCUS_NONE
+		pc.add_theme_font_size_override("font_size", 17)
+		pc.button_pressed = Ecran.plein_ecran_pc()
+		pc.toggled.connect(Ecran.changer_plein_ecran_pc)
+		vb.add_child(pc)
 	vb.add_child(HSeparator.new())
+
+	# Mise à jour (application Windows / Mac)
+	if MiseAJour.actif():
+		var lm := HBoxContainer.new()
+		lm.add_theme_constant_override("separation", 10)
+		vb.add_child(lm)
+		var t_version := _label("Version du jeu : v%s" % MiseAJour.version_actuelle, 17, Color(0.85, 0.7, 0.6))
+		t_version.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		lm.add_child(t_version)
+		var chercher := _bouton("Rechercher une mise à jour", func(): MiseAJour.verifier(true))
+		chercher.size_flags_horizontal = Control.SIZE_SHRINK_END
+		chercher.custom_minimum_size = Vector2(280, 40)
+		lm.add_child(chercher)
+		vb.add_child(HSeparator.new())
 
 	# Compte en ligne
 	if EnLigne.configure():
