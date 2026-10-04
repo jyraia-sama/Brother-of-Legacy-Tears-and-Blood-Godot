@@ -146,8 +146,8 @@
 		}
 	],
 	"pck": {
-		"sha256": "89e6aa9bbaedd9d129d2761676a426b4e68914b87146c800d427e97254bfd38b",
-		"taille": 26657056,
+		"sha256": "0635b6ef0803b66cec2cd611afffde66f25f3f47aece29d2c17e921f10face80",
+		"taille": 26657296,
 		"url": "jeu.pck"
 	},
 	"version": "0.35.0",
