@@ -1,6 +1,14 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.37.0** (2026-10-04)
+Version actuelle : **0.38.0** (2026-10-04)
+
+## v0.38.0 — La carte des Terres des Valcendre  (2026-10-04)
+
+- LA CARTE DU MONDE : le bouton Aventure ouvre maintenant « Les Terres des Valcendre ». Les 12 Actes de l'Histoire sont des lieux de la carte, du sud au nord : le Domaine Valcendre, la Cité en Deuil, les Camps du Drapeau Noir, le Sépulcre des Rois, les Terres Brûlées, la Forêt Pétrifiée, les Marais aux Murmures, le Bastion de l'Éclipse, le Val des Héros Déchus, la Citadelle des Supplices, les Champs du Jugement et le Trône de Cendres.
+- La route parcourue est dorée, la suite en pointillés ; la figurine du grand frère se tient sur l'Acte en cours et les terres inconnues restent dans la brume, qui se lève au fil de l'aventure.
+- Toucher un Acte ouvre sa fiche : partie, lieu, boss, set d'Échos et les 6 chapitres. « Continuer » lance directement le chapitre en cours, un chapitre déjà ouvert se relance d'un toucher, et « Voir l'Acte illustré » ouvre l'écran de l'Acte comme avant. Le Journal de l'histoire est en haut de la carte.
+- Une fois l'Acte XII terminé, le Sceau des Frères apparaît au-dessus du Trône de Cendres…
+- Menu principal : la colonne de gauche s'appelle désormais LA LARME, comme la moitié du Sceau que porte le grand frère (face au SANG de Kaël).
 
 ## v0.37.0 — Le nouveau menu : les Deux Frères  (2026-10-04)
 

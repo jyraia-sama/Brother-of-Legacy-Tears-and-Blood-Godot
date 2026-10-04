@@ -34,3 +34,46 @@ Composition : l'image est coupée en deux par une fine fente de lumière dorée 
 
 Contraintes : les bandes du haut (10 %) et du bas (10 %) restent sombres et calmes ; les colonnes de gauche (0 à 23 %) et de droite (77 à 100 %) restent sombres, sans personnage ni détail important, car des boutons s'y superposent. La zone juste sous le blason reste calme. Aucun texte, aucun logo, aucun bouton, aucune interface dans l'image.
 ```
+
+
+---
+
+# Prompt ChatGPT — carte du monde « Les Terres des Valcendre » (v0.38.0)
+
+La carte fonctionne déjà sans image (relief dessiné par le jeu). Quand l'illustration est prête, enregistre-la en **`assets/ui/carte_monde.png`** (16:9, 1920 x 1080 ou plus) : elle remplace le relief, et le jeu pose par-dessus les 13 lieux, la route, la brume et la fiche de l'Acte.
+
+## Emplacements des lieux (en % de l'image)
+
+| Acte | Lieu | Gauche → droite | Haut → bas |
+|---|---|---|---|
+| I | Domaine Valcendre | 9 % | 89 % |
+| II | La Cité en Deuil | 19 % | 81 % |
+| III | Camps du Drapeau Noir | 30 % | 88 % |
+| IV | Sépulcre des Rois | 39 % | 76 % |
+| V | Terres Brûlées | 27 % | 65 % |
+| VI | Forêt Pétrifiée | 14 % | 55 % |
+| VII | Marais aux Murmures | 23 % | 42 % |
+| VIII | Bastion de l'Éclipse | 36 % | 50 % |
+| IX | Val des Héros Déchus | 45 % | 37 % |
+| X | Citadelle des Supplices | 55 % | 46 % |
+| XI | Champs du Jugement | 62 % | 32 % |
+| XII | Trône de Cendres | 63 % | 18 % |
+| XIII | Le Sceau des Frères (caché) | 50 % | 16 % |
+
+La colonne de droite (de 70 % à 100 % de la largeur) et la bande du haut (0 à 9 %) sont recouvertes par la fiche et la barre du jeu : décor simple et sombre à ces endroits.
+
+## Prompt (à coller dans ChatGPT)
+
+```
+Carte du monde illustrée pour un jeu vidéo dark fantasy, format paysage 16:9 (1920x1080), style carte ancienne peinte à la main, vue de dessus légèrement inclinée, tons sombres (sépia, brun, rouge sang, gris cendre), sans aucun texte ni étiquette.
+
+Le voyage va du sud-ouest (en bas à gauche) vers le nord (en haut). Une mer sombre longe tout le bord gauche. Un fleuve descend des montagnes du nord jusqu'à la mer.
+- Tiers du bas (sud) : terres d'ocre et de cendres. En bas à gauche, un domaine seigneurial en ruine qui fume encore ; un peu plus haut, une cité grise endeuillée aux lanternes ; à droite, des camps de mercenaires aux drapeaux noirs ; plus à droite et plus haut, l'entrée d'anciennes catacombes royales dans une colline.
+- Centre : terres rougeâtres. Une plaine brûlée et calcinée au milieu ; à gauche, une forêt pétrifiée aux arbres de pierre grise près d'un petit lac de verre noir ; au-dessus, des marais brumeux aux eaux vertes ; au centre droit, un bastion fortifié sous un ciel d'éclipse rouge.
+- Tiers du haut (nord) : montagnes noires et cendres. Une vallée de tombeaux de héros ; une citadelle de torture hérissée de pointes ; une grande plaine de bataille ; et tout en haut à droite, au sommet des montagnes, un trône de pierre noire entouré d'une lueur rouge.
+- Juste à gauche du trône, dans le ciel, un médaillon de pierre fendu, une moitié bleue et une moitié rouge, à peine visible derrière un voile violet.
+
+Positions approximatives à respecter (en % depuis le bord gauche, puis depuis le haut) : domaine 9/89, cité 19/81, camps 30/88, catacombes 39/76, plaine brûlée 27/65, forêt pétrifiée 14/55, marais 23/42, bastion 36/50, vallée des héros 45/37, citadelle 55/46, plaine de bataille 62/32, trône 63/18, médaillon 50/16.
+
+Laisse la partie droite de l'image (de 70 % à 100 % de la largeur) et la bande du haut (9 %) simples et sombres, sans élément important. Aucun texte, aucun nom, aucune icône d'interface.
+```
