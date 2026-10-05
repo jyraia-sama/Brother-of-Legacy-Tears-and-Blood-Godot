@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.38.2** (2026-10-05)
+Version actuelle : **0.38.3** (2026-10-05)
+
+## v0.38.3 — Les figurines du sanctuaire  (2026-10-05)
+
+- Les gardiens du sanctuaire secret descendent de leur portrait : ils combattent désormais en pied, sur leur socle de pierre, comme les héros de légende. Et une fois recrutés, ils gardent leur figurine dans ton équipe…
 
 ## v0.38.2 — Portraits du sanctuaire (2)  (2026-10-05)
 
