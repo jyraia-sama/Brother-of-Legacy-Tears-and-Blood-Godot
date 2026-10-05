@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.38.1** (2026-10-05)
+Version actuelle : **0.38.2** (2026-10-05)
+
+## v0.38.2 — Portraits du sanctuaire (2)  (2026-10-05)
+
+- Le sanctuaire secret a deux nouveaux portraits… Le Bélier Ardent et un certain reflet dans le miroir n'attendent plus que toi.
 
 ## v0.38.1 — La Crypte des Valcendre  (2026-10-05)
 
