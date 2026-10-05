@@ -27,8 +27,8 @@ Illustration de fond pour le menu principal d'un jeu vidéo dark fantasy, format
 
 Composition : l'image est coupée en deux par une fine fente de lumière dorée en diagonale, qui part du haut à environ 58 % de la largeur et descend jusqu'en bas à environ 42 % de la largeur.
 
-- Moitié gauche (la Lame) : tons rouge sang et braises, cendres qui montent. Au centre de cette moitié (entre 24 % et 43 % de la largeur), le grand frère en pied : jeune homme aux cheveux sombres, armure noire ciselée, long manteau bleu nuit brodé d'un phénix argenté, médaillon bleu sur la poitrine, épée longue tenue vers le bas, tourné vers la droite (vers la fente).
-- Moitié droite (le Sang) : tons bleu nuit et violet, brume, lueurs bleues qui tombent. Entre 57 % et 79 % de la largeur, son petit frère Kaël, buste et taille : cheveux noirs en bataille, armure sombre aux reflets rouges, un pendentif mi-bleu mi-rouge, une goutte de sang lumineuse flottant au-dessus de sa main ouverte, tourné vers la gauche (vers son frère).
+- Moitié gauche (la Larme) : tons bleu nuit et argent, brume, gouttes de lumière bleue qui tombent comme des larmes. Au centre de cette moitié (entre 24 % et 43 % de la largeur), le grand frère en pied : jeune homme aux cheveux sombres, armure noire ciselée, long manteau bleu nuit brodé d'un phénix argenté, médaillon bleu sur la poitrine, épée longue tenue vers le bas, tourné vers la droite (vers la fente).
+- Moitié droite (le Sang) : tons rouge sang et braises, cendres qui montent. Entre 57 % et 79 % de la largeur, son petit frère Kaël, buste et taille : cheveux noirs en bataille, armure sombre aux reflets rouges, un pendentif mi-bleu mi-rouge, une goutte de sang lumineuse flottant au-dessus de sa main ouverte, tourné vers la gauche (vers son frère).
 - Exactement au centre de l'image (entre 44 % et 56 % de la largeur, 36 % à 57 % de la hauteur) : un grand blason rond flottant sur la fente, deux ailes de phénix dorées encadrant une gemme brisée en deux, une moitié bleue et une moitié rouge.
 - En haut, côté gauche, vers 37 à 41 % de la largeur et 12 à 19 % de la hauteur : une petite lune rouge sang dans le ciel.
 

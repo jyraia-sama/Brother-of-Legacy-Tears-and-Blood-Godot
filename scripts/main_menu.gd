@@ -23,8 +23,8 @@ const IMG_BLASON := "res://assets/personnages/aine.png"
 
 const BASE := Vector2(1280, 720)
 
-const C_LARME := Color("f0c2a0")
-const C_SANG := Color("c8c2f0")
+const C_LARME := Color("c8d2f4")
+const C_SANG := Color("f0c2a0")
 const C_OR := Color("c9a45c")
 const C_TEXTE := Color("ede4d8")
 const C_DOUX := Color("b3a597")
@@ -173,16 +173,17 @@ func _creer_fond() -> void:
 		_ui.add_child(fond)
 		_image_fond = true
 		return
-	# Fond dessiné : la Larme (rouge) et le Sang (bleu nuit), séparés par une fente dorée
-	_polygone([Vector2(0, 0), Vector2(742, 0), Vector2(538, 720), Vector2(0, 720)], Color("3a1014"))
-	_polygone([Vector2(742, 0), Vector2(1280, 0), Vector2(1280, 720), Vector2(538, 720)], Color("1a1830"))
+	# Fond dessiné : la Larme (bleu nuit, la pierre du grand frère) et le Sang (rouge, celle de Kaël),
+	# séparés par une fente dorée
+	_polygone([Vector2(0, 0), Vector2(742, 0), Vector2(538, 720), Vector2(0, 720)], Color("1a1830"))
+	_polygone([Vector2(742, 0), Vector2(1280, 0), Vector2(1280, 720), Vector2(538, 720)], Color("3a1014"))
 	# Lueurs douces vers la fente
-	_polygone([Vector2(560, 0), Vector2(742, 0), Vector2(538, 720), Vector2(356, 720)], Color(0.55, 0.12, 0.12, 0.25))
-	_polygone([Vector2(742, 0), Vector2(924, 0), Vector2(720, 720), Vector2(538, 720)], Color(0.25, 0.25, 0.6, 0.22))
+	_polygone([Vector2(560, 0), Vector2(742, 0), Vector2(538, 720), Vector2(356, 720)], Color(0.25, 0.25, 0.6, 0.22))
+	_polygone([Vector2(742, 0), Vector2(924, 0), Vector2(720, 720), Vector2(538, 720)], Color(0.55, 0.12, 0.12, 0.25))
 	_polygone([Vector2(739, 0), Vector2(745, 0), Vector2(541, 720), Vector2(535, 720)], C_OR)
-	# Braises qui montent côté Larme, lumières bleues côté Sang
-	_particules(Rect2(0, 700, 560, 20), Color(1.0, 0.45, 0.25, 0.8), true)
-	_particules(Rect2(720, 0, 560, 20), Color(0.55, 0.6, 1.0, 0.7), false)
+	# Larmes bleues qui tombent côté Larme, braises qui montent côté Sang
+	_particules(Rect2(0, 0, 560, 20), Color(0.55, 0.6, 1.0, 0.7), false)
+	_particules(Rect2(720, 700, 560, 20), Color(1.0, 0.45, 0.25, 0.8), true)
 	# Le grand frère (figurine) et Kaël
 	if ResourceLoader.exists(IMG_GRAND_FRERE):
 		var gf := TextureRect.new()
