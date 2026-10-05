@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-04",
+	"date": "2026-10-05",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,15 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"NOUVEAU FOND DU MENU : la crypte des Valcendre, la nuit où le Sceau des Frères se brise. Le grand frère et la Larme d'un côté, Kaël et le Sang de l'autre, le médaillon brisé entre eux et la tombe de leur père à leurs pieds.",
+				"Les boutons de la Larme et du Sang restent bien lisibles grâce à une ombre douce sur les côtés de l'écran ; le guide Premiers pas descend un peu pour laisser voir le médaillon.",
+				"Le sanctuaire secret a un nouveau portrait…"
+			],
+			"titre": "La Crypte des Valcendre",
+			"version": "0.38.1"
+		},
 		{
 			"changements": [
 				"LA CARTE DU MONDE : le bouton Aventure ouvre maintenant « Les Terres des Valcendre ». Les 12 Actes de l'Histoire sont des lieux de la carte, du sud au nord : le Domaine Valcendre, la Cité en Deuil, les Camps du Drapeau Noir, le Sépulcre des Rois, les Terres Brûlées, la Forêt Pétrifiée, les Marais aux Murmures, le Bastion de l'Éclipse, le Val des Héros Déchus, la Citadelle des Supplices, les Champs du Jugement et le Trône de Cendres.",
@@ -141,20 +150,13 @@
 			],
 			"titre": "Le plateau aux couleurs de la figurine",
 			"version": "0.31.0"
-		},
-		{
-			"changements": [
-				"Le PION DU PLATEAU devient une figurine du grand frère Valcendre (armure sombre, manteau bleu au phénix, médaillon de la Larme) : il saute de case en case et se tourne dans le sens de la marche."
-			],
-			"titre": "La figurine du grand frère",
-			"version": "0.30.1"
 		}
 	],
 	"pck": {
-		"sha256": "61cf3730c76d180578664412692faece70ff90ba03eba403be1ac6e076c31849",
-		"taille": 26711072,
+		"sha256": "eebb475ca58ac42c019f6e8a03cb0dbd2107f7be0494beb3171e6b976aeceb28",
+		"taille": 27167896,
 		"url": "jeu.pck"
 	},
-	"version": "0.38.0",
+	"version": "0.38.1",
 	"version_minimum": "0.37.0"
 }
