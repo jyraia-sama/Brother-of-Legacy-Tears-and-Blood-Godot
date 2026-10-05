@@ -191,6 +191,11 @@ func _nouveautes() -> void:
 		defil.custom_minimum_size.y = minf(rt.get_content_height() + 4.0, hauteur_max)
 
 
+## Windows et Mac relancent le jeu tout seuls ; Android le ferme (le joueur le rouvre).
+func _peut_redemarrer() -> bool:
+	return MiseAJour.peut_redemarrer()
+
+
 func _texte_redemarrer() -> String:
 	return "Redémarrer maintenant" if _peut_redemarrer() else "Fermer le jeu"
 

@@ -26,6 +26,7 @@ const HISTORIQUE := [
 		"La route parcourue est dorée, la suite en pointillés ; la figurine du grand frère se tient sur l'Acte en cours et les terres inconnues restent dans la brume, qui se lève au fil de l'aventure.",
 		"Toucher un Acte ouvre sa fiche : partie, lieu, boss, set d'Échos et les 6 chapitres. « Continuer » lance directement le chapitre en cours, un chapitre déjà ouvert se relance d'un toucher, et « Voir l'Acte illustré » ouvre l'écran de l'Acte comme avant. Le Journal de l'histoire est en haut de la carte.",
 		"Une fois l'Acte XII terminé, le Sceau des Frères apparaît au-dessus du Trône de Cendres…",
+		"CORRECTION (application ordinateur et Android) : « Rechercher une mise à jour » et la fenêtre de mise à jour ne fonctionnaient plus depuis la v0.36.0 (le jeu pouvait se fermer). La fenêtre s'ouvre de nouveau normalement.",
 		"Menu principal : la colonne de gauche s'appelle désormais LA LARME, comme la moitié du Sceau que porte le grand frère, face au SANG de Kaël. Les couleurs suivent le Sceau : la Larme en bleu, le Sang en rouge.",
 	]},
 	{"version": "0.37.0", "date": "2026-10-04", "titre": "Le nouveau menu : les Deux Frères",
