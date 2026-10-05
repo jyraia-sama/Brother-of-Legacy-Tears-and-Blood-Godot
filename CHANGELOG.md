@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.38.3** (2026-10-05)
+Version actuelle : **0.38.4** (2026-10-05)
+
+## v0.38.4 — Le décor du sanctuaire  (2026-10-05)
+
+- Le sanctuaire secret a enfin son décor : une grande salle taillée dans la roche, veillée par une immense tête de bélier, la toison d'or et deux gardiens jumeaux. Les combats de la famille s'y déroulent désormais.
 
 ## v0.38.3 — Les figurines du sanctuaire  (2026-10-05)
 
