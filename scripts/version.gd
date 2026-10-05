@@ -15,11 +15,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.38.4"
+const NUMERO := "0.39.0"
 const DATE := "2026-10-05"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.39.0", "date": "2026-10-05", "titre": "La carte des Valcendre",
+	"changements": [
+		"NOUVELLE CARTE PEINTE : les Terres des Valcendre s'étendent désormais sur une vraie carte illustrée, du domaine en flammes jusqu'au Trône de Cendres. Les 13 lieux, la route et la brume se posent directement sur le décor.",
+		"FICHE D'UN CHAPITRE : touche un chapitre (ou « Continuer ») pour ouvrir sa fenêtre, sur l'illustration de l'Acte : récit, niveau conseillé, niveau des ennemis, stamina minimum, cases du plateau, chef ou boss, butin d'Échos et renfort de Kaël. Les créatures que tu n'as pas encore croisées restent cachées derrière un « ? ».",
+		"Un chapitre terminé peut être revu et rejoué depuis sa fiche ; un chapitre verrouillé indique ce qu'il faut faire pour l'ouvrir.",
+		"L'ancien écran des Actes et l'ancienne liste de l'Histoire disparaissent : tout passe par la carte. En quittant un plateau, tu reviens sur la carte, sur l'Acte que tu jouais.",
+	]},
 	{"version": "0.38.4", "date": "2026-10-05", "titre": "Le décor du sanctuaire",
 	"changements": [
 		"Le sanctuaire secret a enfin son décor : une grande salle taillée dans la roche, veillée par une immense tête de bélier, la toison d'or et deux gardiens jumeaux. Les combats de la famille s'y déroulent désormais.",

@@ -15,7 +15,7 @@ extends RefCounted
 ##   var chap = ActesData.get_chapitre(3, 2)               # Acte III, chapitre 2
 ##   $LabelChap.text = chap["titre"]
 
-## Acte à afficher dans l'écran de sélection (voir ecran_acte.gd).
+## Acte à afficher par défaut (choisi sur la carte du monde, voir ecran_carte.gd).
 static var acte_courant: int = 1
 ## Scène à rouvrir quand on quitte l'écran d'un Acte (remplie automatiquement).
 static var scene_precedente: String = ""
