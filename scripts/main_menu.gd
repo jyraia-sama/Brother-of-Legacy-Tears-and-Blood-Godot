@@ -10,7 +10,8 @@ extends Control
 ##   - en bas : le Royaume (Quêtes, Succès, Boutique, Guilde, Social, Courrier).
 ##
 ## Tout est dessiné sur une surface de 1280 x 720 agrandie pour remplir l'écran.
-## IMAGE DE FOND : dépose l'illustration ChatGPT (16:9) dans assets/ui/menu_freres.png.
+## IMAGE DE FOND : dépose l'illustration ChatGPT dans assets/ui/menu_freres.png (16:9 ou 3:2 :
+## une image 3:2 est rognée en haut et en bas). Prompt : PROMPTS_MENU.md.
 ## Sans elle, le jeu dessine le fond lui-même (deux couleurs, le grand frère et Kaël).
 ## Garde dans l'image une LUNE ROUGE en haut côté grand frère et un BLASON au centre :
 ## ce sont les deux secrets (RECT_LUNE et RECT_EMBLEME ci-dessous).
@@ -172,6 +173,10 @@ func _creer_fond() -> void:
 		fond.size = BASE
 		_ui.add_child(fond)
 		_image_fond = true
+		# Ombre douce derrière les deux colonnes de boutons : elles restent lisibles
+		# quelle que soit l'illustration (une image ChatGPT n'est jamais calée au pixel près).
+		_degrade(Rect2(0, 0, 360, 720), Color(0.03, 0.02, 0.05, 0.78), true)
+		_degrade(Rect2(920, 0, 360, 720), Color(0.06, 0.01, 0.02, 0.78), false)
 		return
 	# Fond dessiné : la Larme (bleu nuit, la pierre du grand frère) et le Sang (rouge, celle de Kaël),
 	# séparés par une fente dorée
@@ -218,6 +223,18 @@ func _creer_fond() -> void:
 	lune.position = RECT_LUNE.position
 	lune.size = RECT_LUNE.size
 	_ui.add_child(lune)
+
+
+## Bande sombre qui s'efface vers le centre de l'écran (sombre_a_gauche : le bord sombre est à gauche).
+func _degrade(r: Rect2, couleur: Color, sombre_a_gauche: bool) -> void:
+	var p := Polygon2D.new()
+	p.polygon = PackedVector2Array([r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)])
+	var plein := couleur
+	var vide := Color(couleur, 0.0)
+	var g := plein if sombre_a_gauche else vide
+	var d := vide if sombre_a_gauche else plein
+	p.vertex_colors = PackedColorArray([g, d, d, g])
+	_ui.add_child(p)
 
 
 func _polygone(points: Array, couleur: Color) -> void:
