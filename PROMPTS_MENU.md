@@ -1,40 +1,44 @@
-# Prompt ChatGPT — fond du menu principal « Les Deux Frères » (v0.37.0)
+# Prompt ChatGPT — fond du menu principal : « La Crypte des Valcendre » (v0.38.0)
 
-Le menu fonctionne déjà sans image (fond dessiné par le jeu). Quand l'illustration est prête :
+Direction artistique : la nuit de l'Acte I, dans la crypte des ancêtres, au moment où le Sceau des Frères se brise.
+Tout le titre du jeu est dans l'image : la **Larme** (bleu, le grand frère) à gauche, le **Sang** (rouge, Kaël) à droite,
+le médaillon brisé entre les deux, la tombe du père à leurs pieds, la lune rouge au-dessus.
 
-1. Enregistre-la en **`assets/ui/menu_freres.png`** (format 16:9, idéalement 1920 x 1080 ou plus).
-2. Lance le jeu : le menu l'utilise tout seul et cache le fond dessiné (le grand frère, Kaël, la lune et l'emblème dessinés disparaissent, c'est l'image qui les remplace).
-3. Appuie sur **F1** dans le menu : deux cadres dorés montrent où sont les zones secrètes (lune et emblème). Si elles ne tombent pas sur la lune et le blason de l'image, donne-moi une capture et je recale `RECT_LUNE` / `RECT_EMBLEME` dans `scripts/main_menu.gd`.
+## Comment l'utiliser
 
-## Zones à respecter (en % de l'image)
+1. Colle le prompt ci-dessous dans ChatGPT. Il rend des images **3:2 (1536 x 1024)** : c'est prévu, le jeu rogne un peu le haut et le bas.
+2. Enregistre l'image en **`assets/ui/menu_freres.png`** : le menu l'utilise tout seul (le fond dessiné, le grand frère, Kaël, la lune et l'emblème dessinés disparaissent).
+3. Le jeu assombrit tout seul les côtés gauche et droit derrière les boutons : pas besoin que l'image soit parfaite à cet endroit.
+4. Appuie sur **F1** dans le menu : deux cadres dorés montrent les zones secrètes (lune et médaillon). ChatGPT ne place jamais les choses au pixel près : envoie-moi une capture et je recale `RECT_LUNE` / `RECT_EMBLEME` dans `scripts/main_menu.gd`.
 
-| Zone | Où | Contenu attendu |
+## Ce qui compte dans l'image (le reste est libre)
+
+| Élément | Où (dans l'image 3:2) | Pourquoi |
 |---|---|---|
-| Barre du haut | 0–10 % de la hauteur | ciel sombre, rien d'important (le jeu y pose le compte et les ressources) |
-| Barre du bas | 90–100 % de la hauteur | sol sombre, rien d'important (boutons du Royaume) |
-| Colonne gauche | 0–23 % de la largeur | décor simple et sombre (boutons de la Lame) |
-| Colonne droite | 77–100 % de la largeur | décor simple et sombre (boutons du Sang) |
-| Grand frère | 24–43 % de la largeur, 20–82 % de la hauteur | en pied, tourné vers la droite |
-| Kaël | 57–79 % de la largeur, 22–65 % de la hauteur | tourné vers la gauche |
-| **Lune rouge (secret)** | 37–41 % de la largeur, 12–19 % de la hauteur | petite lune rouge sang |
-| **Blason (secret)** | 44–56 % de la largeur, 36–57 % de la hauteur | médaillon rond au centre |
-| Sous le blason | 39–61 % de la largeur, 59–80 % de la hauteur | zone calme (le guide Premiers pas s'y affiche) |
+| Médaillon brisé | au centre exact | secret du Bélier (3 touches) |
+| Lune rouge | tiers haut, un peu à gauche du centre | secret d'Arnaud (5 touches) |
+| Grand frère / Kaël | vers 1/3 et 2/3 de la largeur | visibles entre les deux colonnes de boutons |
+| Bords gauche et droit (1/5 chacun) | sombres, sans détail | colonnes de la Larme et du Sang |
+| Haut et bas (15 % chacun) | sombres, calmes | barre du compte, barre du Royaume (et rognage) |
+| Sous le médaillon | calme | le guide Premiers pas s'y affiche |
 
 ## Prompt (à coller dans ChatGPT)
 
 ```
-Illustration de fond pour le menu principal d'un jeu vidéo dark fantasy, format paysage 16:9 (1920x1080), style peinture numérique détaillée et sombre, cohérent avec un jeu de cartes gacha gothique.
+Illustration de fond pour le menu principal d'un jeu vidéo dark fantasy, image paysage au format 3:2. Peinture numérique très détaillée, style art de jeu de cartes gacha dark fantasy, éclairage dramatique en clair-obscur, palette très sombre. Aucun texte, aucun titre, aucun logo, aucun cadre, aucune interface.
 
-Composition : l'image est coupée en deux par une fine fente de lumière dorée en diagonale, qui part du haut à environ 58 % de la largeur et descend jusqu'en bas à environ 42 % de la largeur.
+Scène : la crypte ancestrale d'une lignée de seigneurs, une grande salle gothique en ruine, la nuit où leur domaine a brûlé. Voûtes effondrées, colonnes brisées, tombeaux des ancêtres alignés dans l'ombre, poussière et cendres en suspension.
 
-- Moitié gauche (la Larme) : tons bleu nuit et argent, brume, gouttes de lumière bleue qui tombent comme des larmes. Au centre de cette moitié (entre 24 % et 43 % de la largeur), le grand frère en pied : jeune homme aux cheveux sombres, armure noire ciselée, long manteau bleu nuit brodé d'un phénix argenté, médaillon bleu sur la poitrine, épée longue tenue vers le bas, tourné vers la droite (vers la fente).
-- Moitié droite (le Sang) : tons rouge sang et braises, cendres qui montent. Entre 57 % et 79 % de la largeur, son petit frère Kaël, buste et taille : cheveux noirs en bataille, armure sombre aux reflets rouges, un pendentif mi-bleu mi-rouge, une goutte de sang lumineuse flottant au-dessus de sa main ouverte, tourné vers la gauche (vers son frère).
-- Exactement au centre de l'image (entre 44 % et 56 % de la largeur, 36 % à 57 % de la hauteur) : un grand blason rond flottant sur la fente, deux ailes de phénix dorées encadrant une gemme brisée en deux, une moitié bleue et une moitié rouge.
-- En haut, côté gauche, vers 37 à 41 % de la largeur et 12 à 19 % de la hauteur : une petite lune rouge sang dans le ciel.
+Au centre exact de l'image, au-dessus d'un autel de pierre, flotte un médaillon rond entouré de deux ailes de phénix dorées. Il est brisé en deux par une fissure verticale : la moitié gauche est une gemme bleue lumineuse, la moitié droite une gemme rouge sang lumineuse. Le médaillon est de taille moyenne (environ un cinquième de la hauteur de l'image) et éclaire la salle en bleu d'un côté et en rouge de l'autre. Au pied de l'autel, une stèle avec une épée plantée devant : la tombe du père.
 
-Contraintes : les bandes du haut (10 %) et du bas (10 %) restent sombres et calmes ; les colonnes de gauche (0 à 23 %) et de droite (77 à 100 %) restent sombres, sans personnage ni détail important, car des boutons s'y superposent. La zone juste sous le blason reste calme. Aucun texte, aucun logo, aucun bouton, aucune interface dans l'image.
+Moitié gauche, la Larme : lumière froide bleu nuit et argent, un rayon de lune tombe d'un vitrail brisé, de fines gouttes de lumière bleue tombent comme des larmes. Vers le tiers gauche de l'image, le frère aîné, debout, de trois quarts, tourné vers le médaillon : jeune homme aux cheveux sombres, armure noire ciselée, long manteau bleu nuit brodé d'un phénix argenté, une pierre bleue au cou, épée longue pointée vers le sol.
+
+Moitié droite, le Sang : lueur rouge de l'incendie qui passe par une porte éventrée, braises et cendres qui montent. Vers le tiers droit de l'image, son petit frère, debout, tourné vers le médaillon : jeune homme aux cheveux noirs en bataille, armure sombre aux reflets rouges, une pierre rouge au cou, une flamme noire qui s'enroule autour de sa main.
+
+En haut, par une haute fenêtre en ogive située un peu à gauche du centre, on voit une petite lune rouge sang, bien visible.
+
+Composition : les bandes de gauche et de droite (le premier et le dernier cinquième de la largeur) restent sombres, sans personnage ni détail important, seulement des colonnes dans l'ombre. Le haut et le bas de l'image restent sombres et calmes. La zone juste sous le médaillon reste calme.
 ```
-
 
 ---
 

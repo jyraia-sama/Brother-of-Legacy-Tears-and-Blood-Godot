@@ -10,7 +10,8 @@ extends Control
 ##   - en bas : le Royaume (Quêtes, Succès, Boutique, Guilde, Social, Courrier).
 ##
 ## Tout est dessiné sur une surface de 1280 x 720 agrandie pour remplir l'écran.
-## IMAGE DE FOND : dépose l'illustration ChatGPT (16:9) dans assets/ui/menu_freres.png.
+## IMAGE DE FOND : dépose l'illustration ChatGPT dans assets/ui/menu_freres.png (16:9 ou 3:2 :
+## une image 3:2 est rognée en haut et en bas). Prompt : PROMPTS_MENU.md.
 ## Sans elle, le jeu dessine le fond lui-même (deux couleurs, le grand frère et Kaël).
 ## Garde dans l'image une LUNE ROUGE en haut côté grand frère et un BLASON au centre :
 ## ce sont les deux secrets (RECT_LUNE et RECT_EMBLEME ci-dessous).
@@ -62,12 +63,24 @@ const ROYAUME_DROITE := [
 ]
 
 # Secrets (coordonnées sur la surface 1280 x 720)
-const RECT_LUNE := Rect2(470, 84, 54, 54)
-const RECT_EMBLEME := Rect2(565, 262, 150, 150)
+# (calées sur l'illustration « La Crypte des Valcendre » : lune rouge du vitrail et médaillon brisé)
+const RECT_LUNE := Rect2(474, 77, 54, 54)
+const RECT_EMBLEME := Rect2(568, 231, 140, 140)
+## Illustration plus étroite que l'écran (format 3:2 de ChatGPT) : elle est montrée en entier sur la
+## hauteur, centrée, et descendue de quelques pixels pour que la lune passe sous la barre du haut.
+const FOND_DECALAGE_Y := 30.0
 
 const ROMAINS := ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII"]
 
 ## Masque doux (portrait de Kaël) et masque rond (emblème).
+## Fond des bords gauche et droit de l'illustration (elle se fond dans sa copie assombrie).
+const SHADER_BORDS := "shader_type canvas_item;
+void fragment() {
+	vec4 c = texture(TEXTURE, UV);
+	c.a *= smoothstep(0.0, 0.08, UV.x) * smoothstep(1.0, 0.92, UV.x);
+	COLOR = c * COLOR;
+}"
+
 const SHADER_FONDU := "shader_type canvas_item;
 uniform float bord = 0.5;
 uniform float douceur = 0.2;
@@ -164,14 +177,40 @@ func _ajuster_ui() -> void:
 
 func _creer_fond() -> void:
 	if ResourceLoader.exists(BG_PATH):
+		var tex: Texture2D = load(BG_PATH)
+		# Derrière : la même image, assombrie, qui remplit tout l'écran (bords gauche et droit)
+		var arriere := TextureRect.new()
+		arriere.texture = tex
+		arriere.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		arriere.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		arriere.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		arriere.modulate = Color(0.32, 0.3, 0.36)
+		arriere.size = BASE
+		_ui.add_child(arriere)
+		# Devant : l'illustration entière sur la hauteur de l'écran, bords fondus
+		var largeur := BASE.y * tex.get_width() / float(tex.get_height())
 		var fond := TextureRect.new()
-		fond.texture = load(BG_PATH)
+		fond.texture = tex
 		fond.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		fond.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		fond.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		fond.size = BASE
+		if largeur < BASE.x:
+			fond.stretch_mode = TextureRect.STRETCH_SCALE
+			fond.position = Vector2((BASE.x - largeur) / 2.0, FOND_DECALAGE_Y)
+			fond.size = Vector2(largeur, BASE.y)
+			var sh := Shader.new()
+			sh.code = SHADER_BORDS
+			var m := ShaderMaterial.new()
+			m.shader = sh
+			fond.material = m
+		else:
+			fond.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+			fond.size = BASE
 		_ui.add_child(fond)
 		_image_fond = true
+		# Ombre douce derrière les deux colonnes de boutons : elles restent lisibles
+		# quelle que soit l'illustration (une image ChatGPT n'est jamais calée au pixel près).
+		_degrade(Rect2(0, 0, 360, 720), Color(0.03, 0.02, 0.05, 0.78), true)
+		_degrade(Rect2(920, 0, 360, 720), Color(0.06, 0.01, 0.02, 0.78), false)
 		return
 	# Fond dessiné : la Larme (bleu nuit, la pierre du grand frère) et le Sang (rouge, celle de Kaël),
 	# séparés par une fente dorée
@@ -218,6 +257,18 @@ func _creer_fond() -> void:
 	lune.position = RECT_LUNE.position
 	lune.size = RECT_LUNE.size
 	_ui.add_child(lune)
+
+
+## Bande sombre qui s'efface vers le centre de l'écran (sombre_a_gauche : le bord sombre est à gauche).
+func _degrade(r: Rect2, couleur: Color, sombre_a_gauche: bool) -> void:
+	var p := Polygon2D.new()
+	p.polygon = PackedVector2Array([r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)])
+	var plein := couleur
+	var vide := Color(couleur, 0.0)
+	var g := plein if sombre_a_gauche else vide
+	var d := vide if sombre_a_gauche else plein
+	p.vertex_colors = PackedColorArray([g, d, d, g])
+	_ui.add_child(p)
 
 
 func _polygone(points: Array, couleur: Color) -> void:
@@ -534,7 +585,7 @@ func _creer_guide() -> void:
 	var st := _style(Color(0.04, 0.024, 0.027, 0.92), C_OR if fait else Color("8a6a3a"), 12, 1)
 	st.set_content_margin_all(10)
 	p.add_theme_stylebox_override("panel", st)
-	_placer(p, Rect2(500, 424, 280, 150))
+	_placer(p, Rect2(500, 478, 280, 150))
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 3)
 	p.add_child(vb)
@@ -1008,6 +1059,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F1:
 		_debug = not _debug
 		for b in _zones_secretes:
+			b.flat = not _debug
 			var st: StyleBox = StyleBoxEmpty.new()
 			if _debug:
 				st = _style(Color(1, 0.8, 0.3, 0.15), Color(1, 0.8, 0.3), 6, 2)

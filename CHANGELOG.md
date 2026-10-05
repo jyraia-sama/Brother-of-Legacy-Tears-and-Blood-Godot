@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.38.0** (2026-10-04)
+Version actuelle : **0.38.1** (2026-10-05)
+
+## v0.38.1 — La Crypte des Valcendre  (2026-10-05)
+
+- NOUVEAU FOND DU MENU : la crypte des Valcendre, la nuit où le Sceau des Frères se brise. Le grand frère et la Larme d'un côté, Kaël et le Sang de l'autre, le médaillon brisé entre eux et la tombe de leur père à leurs pieds.
+- Les boutons de la Larme et du Sang restent bien lisibles grâce à une ombre douce sur les côtés de l'écran ; le guide Premiers pas descend un peu pour laisser voir le médaillon.
+- Le sanctuaire secret a un nouveau portrait…
 
 ## v0.38.0 — La carte des Terres des Valcendre  (2026-10-04)
 

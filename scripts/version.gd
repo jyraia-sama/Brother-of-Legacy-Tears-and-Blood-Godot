@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.38.0"
-const DATE := "2026-10-04"
+const NUMERO := "0.38.1"
+const DATE := "2026-10-05"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.38.1", "date": "2026-10-05", "titre": "La Crypte des Valcendre",
+	"changements": [
+		"NOUVEAU FOND DU MENU : la crypte des Valcendre, la nuit où le Sceau des Frères se brise. Le grand frère et la Larme d'un côté, Kaël et le Sang de l'autre, le médaillon brisé entre eux et la tombe de leur père à leurs pieds.",
+		"Les boutons de la Larme et du Sang restent bien lisibles grâce à une ombre douce sur les côtés de l'écran ; le guide Premiers pas descend un peu pour laisser voir le médaillon.",
+		"Le sanctuaire secret a un nouveau portrait…",
+	]},
 	{"version": "0.38.0", "date": "2026-10-04", "titre": "La carte des Terres des Valcendre",
 	"changements": [
 		"LA CARTE DU MONDE : le bouton Aventure ouvre maintenant « Les Terres des Valcendre ». Les 12 Actes de l'Histoire sont des lieux de la carte, du sud au nord : le Domaine Valcendre, la Cité en Deuil, les Camps du Drapeau Noir, le Sépulcre des Rois, les Terres Brûlées, la Forêt Pétrifiée, les Marais aux Murmures, le Bastion de l'Éclipse, le Val des Héros Déchus, la Citadelle des Supplices, les Champs du Jugement et le Trône de Cendres.",
