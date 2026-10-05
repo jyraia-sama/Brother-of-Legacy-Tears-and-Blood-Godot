@@ -227,7 +227,8 @@ func ouvrir_fenetre(resultat: String) -> void:
 	if _fenetre_ouverte:
 		return
 	var script = load(SCRIPT_FENETRE)
-	if script == null:
+	if script == null or not (script as Script).can_instantiate():
+		push_error("Fenêtre de mise à jour illisible : " + SCRIPT_FENETRE)
 		return
 	_fenetre_ouverte = true
 	var f: Node = script.new()
