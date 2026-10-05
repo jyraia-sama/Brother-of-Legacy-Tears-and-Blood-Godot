@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"Le sanctuaire secret a deux nouveaux portraits… Le Bélier Ardent et un certain reflet dans le miroir n'attendent plus que toi."
+			],
+			"titre": "Portraits du sanctuaire (2)",
+			"version": "0.38.2"
+		},
+		{
+			"changements": [
 				"NOUVEAU FOND DU MENU : la crypte des Valcendre, la nuit où le Sceau des Frères se brise. Le grand frère et la Larme d'un côté, Kaël et le Sang de l'autre, le médaillon brisé entre eux et la tombe de leur père à leurs pieds.",
 				"Les boutons de la Larme et du Sang restent bien lisibles grâce à une ombre douce sur les côtés de l'écran ; le guide Premiers pas descend un peu pour laisser voir le médaillon.",
 				"Le sanctuaire secret a un nouveau portrait…"
@@ -139,24 +146,13 @@
 			],
 			"titre": "Équilibrage de l'Aventure",
 			"version": "0.32.0"
-		},
-		{
-			"changements": [
-				"CASES EN SOCLES DE PIERRE : chaque case du plateau est un socle de pierre en relief (tranche, biseau, fissures) avec le médaillon coloré incrusté, dans le style du socle de la figurine.",
-				"CHEMINS PAVÉS : les chemins sont faits de pierres plates sur un sentier de terre ; ceux déjà parcourus sont clairs et teintés de la couleur de l'Acte, les autres restent dans la pénombre.",
-				"LA LUMIÈRE DE LA LARME : un halo bleu suit le grand frère et éclaire les cases proches ; les cases lointaines s'assombrissent.",
-				"MARCHE PLUS VIVANTE : la figurine se penche pendant le saut, se tasse à la réception et soulève un petit nuage de poussière.",
-				"Correction : le plateau de l'Acte XIII pouvait planter (couleur d'ambiance manquante)."
-			],
-			"titre": "Le plateau aux couleurs de la figurine",
-			"version": "0.31.0"
 		}
 	],
 	"pck": {
-		"sha256": "eebb475ca58ac42c019f6e8a03cb0dbd2107f7be0494beb3171e6b976aeceb28",
-		"taille": 27167896,
+		"sha256": "5e12ba89ae05b38ad2baf57f25a7c361acb1cc81052d601dd6badc200232d0b4",
+		"taille": 27610360,
 		"url": "jeu.pck"
 	},
-	"version": "0.38.1",
+	"version": "0.38.2",
 	"version_minimum": "0.37.0"
 }
