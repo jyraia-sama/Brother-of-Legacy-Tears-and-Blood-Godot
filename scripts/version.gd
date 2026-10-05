@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.38.1"
+const NUMERO := "0.38.2"
 const DATE := "2026-10-05"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.38.2", "date": "2026-10-05", "titre": "Portraits du sanctuaire (2)",
+	"changements": [
+		"Le sanctuaire secret a deux nouveaux portraits… Le Bélier Ardent et un certain reflet dans le miroir n'attendent plus que toi.",
+	]},
 	{"version": "0.38.1", "date": "2026-10-05", "titre": "La Crypte des Valcendre",
 	"changements": [
 		"NOUVEAU FOND DU MENU : la crypte des Valcendre, la nuit où le Sceau des Frères se brise. Le grand frère et la Larme d'un côté, Kaël et le Sang de l'autre, le médaillon brisé entre eux et la tombe de leur père à leurs pieds.",
