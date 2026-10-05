@@ -74,7 +74,8 @@ func _on_bouton(id: String, titre: String) -> void:
 		"retour":
 			_retour_menu()
 		"histoire":
-			get_tree().change_scene_to_file("res://scenes/histoire.tscn")
+			EcranCarte.scene_retour = scene_file_path
+			get_tree().change_scene_to_file(EcranCarte.SCENE)
 		"tour":
 			EcranTours.scene_retour = scene_file_path
 			get_tree().change_scene_to_file(EcranTours.SCENE)

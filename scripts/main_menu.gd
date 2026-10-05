@@ -2,7 +2,7 @@ extends Control
 ## MENU PRINCIPAL « Les Deux Frères » - Brothers of Legacy : Tears and Blood
 ##
 ## L'écran est coupé en deux par une fente dorée :
-##   - à gauche LA LAME (combattre) : Aventure, Arène, Boss de Monde, Tours, Donjons, Expédition, Ménagerie ;
+##   - à gauche LA LARME (combattre, le grand frère) : Aventure, Arène, Boss de Monde, Tours, Donjons, Expédition, Ménagerie ;
 ##   - à droite LE SANG (l'armée) : Deck, Invocation, Fusion, Échos, Reliquaire, Bestiaire ;
 ##   - en haut : le compte (blason = Mon héros, nom = Compte, titre, XP de compte),
 ##     les ressources (stamina, or, gemmes, Éclats) et Aide / Nouveautés / Menu ;
@@ -23,7 +23,7 @@ const IMG_BLASON := "res://assets/personnages/aine.png"
 
 const BASE := Vector2(1280, 720)
 
-const C_LAME := Color("f0c2a0")
+const C_LARME := Color("f0c2a0")
 const C_SANG := Color("c8c2f0")
 const C_OR := Color("c9a45c")
 const C_TEXTE := Color("ede4d8")
@@ -33,7 +33,7 @@ const C_PASTILLE := Color("d23a46")
 const C_BARRE := Color(0.03, 0.02, 0.024, 0.8)
 const C_CASE := Color(0.04, 0.024, 0.027, 0.74)
 
-const LAME := [
+const LARME := [
 	{"id": "aventure",   "titre": "Aventure"},
 	{"id": "arene",      "titre": "Arène"},
 	{"id": "boss_monde", "titre": "Boss de Monde"},
@@ -126,7 +126,7 @@ func _ready() -> void:
 	Tutoriel.preparer_etape()
 
 	_creer_barre_haut()
-	_creer_colonne(LAME, "LA LAME", "Combattre", C_LAME, true)
+	_creer_colonne(LARME, "LA LARME", "Combattre", C_LARME, true)
 	_creer_colonne(SANG, "LE SANG", "L'armée", C_SANG, false)
 	_creer_embleme()
 	_creer_barre_bas()
@@ -173,14 +173,14 @@ func _creer_fond() -> void:
 		_ui.add_child(fond)
 		_image_fond = true
 		return
-	# Fond dessiné : la Lame (rouge) et le Sang (bleu nuit), séparés par une fente dorée
+	# Fond dessiné : la Larme (rouge) et le Sang (bleu nuit), séparés par une fente dorée
 	_polygone([Vector2(0, 0), Vector2(742, 0), Vector2(538, 720), Vector2(0, 720)], Color("3a1014"))
 	_polygone([Vector2(742, 0), Vector2(1280, 0), Vector2(1280, 720), Vector2(538, 720)], Color("1a1830"))
 	# Lueurs douces vers la fente
 	_polygone([Vector2(560, 0), Vector2(742, 0), Vector2(538, 720), Vector2(356, 720)], Color(0.55, 0.12, 0.12, 0.25))
 	_polygone([Vector2(742, 0), Vector2(924, 0), Vector2(720, 720), Vector2(538, 720)], Color(0.25, 0.25, 0.6, 0.22))
 	_polygone([Vector2(739, 0), Vector2(745, 0), Vector2(541, 720), Vector2(535, 720)], C_OR)
-	# Braises qui montent côté Lame, lumières bleues côté Sang
+	# Braises qui montent côté Larme, lumières bleues côté Sang
 	_particules(Rect2(0, 700, 560, 20), Color(1.0, 0.45, 0.25, 0.8), true)
 	_particules(Rect2(720, 0, 560, 20), Color(0.55, 0.6, 1.0, 0.7), false)
 	# Le grand frère (figurine) et Kaël
@@ -396,7 +396,7 @@ func _case_ressource(r: Rect2, icone: String, couleur: Color, fond_icone: Color,
 
 
 # =====================================================================
-# Colonnes : la Lame et le Sang
+# Colonnes : la Larme et le Sang
 # =====================================================================
 
 func _creer_colonne(liste: Array, titre: String, sous_titre: String, couleur: Color, a_gauche: bool) -> void:
@@ -592,7 +592,7 @@ func _creer_guide() -> void:
 		Tutoriel._etat()["vus"].append("bienvenue")
 		Sauvegarde.sauvegarder()
 		FenetreSimple.ouvrir.call_deferred(self, "Bienvenue, héros !",
-			"Le guide PREMIERS PAS (au centre) t'accompagne pour tes débuts : suis ses étapes, le bouton concerné brille dans le menu, et chaque étape rapporte une récompense.\n\nÀ gauche, LA LAME pour combattre ; à droite, LE SANG pour ton armée. Le bouton « ? » en haut à droite explique tout le jeu. N'oublie pas ta récompense de connexion dans les Quêtes !",
+			"Le guide PREMIERS PAS (au centre) t'accompagne pour tes débuts : suis ses étapes, le bouton concerné brille dans le menu, et chaque étape rapporte une récompense.\n\nÀ gauche, LA LARME pour combattre ; à droite, LE SANG pour ton armée. Le bouton « ? » en haut à droite explique tout le jeu. N'oublie pas ta récompense de connexion dans les Quêtes !",
 			[["C'est parti !", null]])
 
 
@@ -917,10 +917,11 @@ func _on_bouton(id: String) -> void:
 	var ici := scene_file_path
 	match id:
 		"aventure":
-			# L'écran Aventure reviendra toujours ici (et pas à l'écran des Actes)
+			# La carte du monde (Histoire principale) reviendra toujours ici
 			ActesData.scene_menu = ici
 			ActesData.scene_precedente = ici
-			get_tree().change_scene_to_file("res://scenes/aventure.tscn")
+			EcranCarte.scene_retour = ici
+			get_tree().change_scene_to_file(EcranCarte.SCENE)
 		"arene":
 			ActesData.scene_menu = ici
 			EcranArene.scene_retour = ici

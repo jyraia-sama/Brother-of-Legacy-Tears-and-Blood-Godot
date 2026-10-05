@@ -19,7 +19,7 @@ const MAX_LETTRES := 60
 const LETTRES_JEU := [
 	{"id": "nouveau_menu_0_37", "de": "Les Valcendre",
 	"titre": "Un nouveau hall pour la lignée",
-	"texte": "Le menu principal a fait peau neuve : la Lame pour combattre, le Sang pour ton armée, et le Royaume en bas de l'écran.\n\nCe courrier recevra désormais tes cadeaux, tes compensations et les récompenses spéciales. Voici un petit présent pour fêter ça.",
+	"texte": "Le menu principal a fait peau neuve : la Larme pour combattre, le Sang pour ton armée, et le Royaume en bas de l'écran.\n\nCe courrier recevra désormais tes cadeaux, tes compensations et les récompenses spéciales. Voici un petit présent pour fêter ça.",
 	"recompense": {"or": 5000, "gemmes": 50}},
 ]
 
