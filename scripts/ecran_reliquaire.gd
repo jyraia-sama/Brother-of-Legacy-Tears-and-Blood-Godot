@@ -6,7 +6,7 @@ extends Control
 ##   ATELIER    : fabriquer un Écho Sanguin choisi, démanteler les Échos inutiles en Poussière.
 
 const SCENE := "res://scenes/reliquaire.tscn"
-const FOND := "res://assets/ui/reliquaire_bg.png"
+const FOND := "res://assets/fonds/reliquaire.png"
 const C_VIOLET := Color("b08aff")
 
 static var scene_retour := ""
@@ -32,7 +32,7 @@ func _ready() -> void:
 	noir.color = UiCommun.C_FOND
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
-	if not UiCommun.fond_image(self, FOND, Color(0.4, 0.4, 0.4)):
+	if not UiCommun.fond_image(self, FOND, UiCommun.TEINTE_FOND):
 		UiCommun.fond_degrade(self, Color("1a0f24"), Color("07040a"))
 	UiCommun.particules(self, Color(C_VIOLET, 0.8), true, 25)
 

@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.39.1"
+const NUMERO := "0.40.0"
 const DATE := "2026-10-06"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.40.0", "date": "2026-10-06", "titre": "Les salles du Sang",
+	"changements": [
+		"NOUVEAUX DÉCORS : les six salles du Sang ont chacune leur fond peint. La salle d'armes pour le Deck, le cercle runique pour l'Autel d'Invocation, le laboratoire d'alchimie pour la Fusion et l'Évolution, la crypte-reliquaire des Échos Sanguins, la forge et le trésor du Reliquaire, la bibliothèque du chasseur pour le Bestiaire.",
+		"Les décors sont bien plus visibles : ils sont moins assombris, et les grands panneaux deviennent légèrement transparents pour laisser voir la salle derrière, sans gêner la lecture.",
+	]},
 	{"version": "0.39.1", "date": "2026-10-06", "titre": "Un menu plus clair",
 	"changements": [
 		"Le fond du menu principal est bien plus lumineux : le grand frère, Kaël, le médaillon et la crypte se distinguent enfin, même sur un téléphone ou un écran peu lumineux.",

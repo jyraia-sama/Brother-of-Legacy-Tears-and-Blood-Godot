@@ -8,7 +8,7 @@ extends Control
 ## Commandes : clic sur une carte = fiche détaillée · molette = défiler · Échap = retour
 
 const SCENE := "res://scenes/bestiaire.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/bestiaire.png"
 
 ## Pour tester : true = toutes les unités sont visibles même non découvertes.
 const TOUT_REVELER := false
@@ -18,7 +18,7 @@ const TAILLE_CARTE := Vector2(150, 200)
 static var scene_retour := ""
 
 const C_FOND := Color("130d0f")
-const C_PANNEAU := Color(0.08, 0.02, 0.03, 0.94)
+const C_PANNEAU := Color(0.08, 0.02, 0.03, 0.78)
 const C_OR := Color(0.85, 0.65, 0.3)
 const C_TEXTE := Color(0.93, 0.88, 0.83)
 const C_DOUX := Color(0.66, 0.59, 0.55)
@@ -508,7 +508,7 @@ func _creer_fond() -> void:
 		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		img.modulate = Color(0.22, 0.18, 0.18)
+		img.modulate = UiCommun.TEINTE_FOND
 		img.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(img)
 
