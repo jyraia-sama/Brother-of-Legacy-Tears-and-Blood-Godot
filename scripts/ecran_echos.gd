@@ -8,7 +8,7 @@ extends Control
 ## Cliquer un emplacement du héros filtre l'inventaire sur cet emplacement.
 
 const SCENE := "res://scenes/echos.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/echos.png"
 
 static var scene_retour := ""
 
@@ -45,7 +45,7 @@ func _ready() -> void:
 		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		img.modulate = Color(0.2, 0.15, 0.16)
+		img.modulate = UiCommun.TEINTE_FOND
 		add_child(img)
 
 	var marge := MarginContainer.new()

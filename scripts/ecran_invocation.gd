@@ -10,7 +10,7 @@ extends Control
 ## BANDEAU DU BAS : invocation spéciale d'un événement ponctuel (voir evenements.gd).
 
 const SCENE := "res://scenes/invocation.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/invocation.png"
 
 static var scene_retour := ""
 
@@ -41,7 +41,7 @@ func _ready() -> void:
 		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		img.modulate = Color(0.24, 0.18, 0.2)
+		img.modulate = UiCommun.TEINTE_FOND
 		add_child(img)
 
 	var marge := MarginContainer.new()

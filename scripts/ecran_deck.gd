@@ -9,7 +9,7 @@ extends Control
 ## Les doublons sont autorisés dans l'équipe.
 
 const SCENE := "res://scenes/deck.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/deck.png"
 const TRIS := [["rarete", "Rareté"], ["niveau", "Niveau"], ["nom", "Nom"], ["element", "Élément"]]
 const TAILLE_CARTE := Vector2(150, 200)
 const ORDRE_RARETE := {"UR": 0, "SSR": 1, "SR": 2, "R": 3, "N": 4}
@@ -511,7 +511,7 @@ func _creer_fond() -> void:
 		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		img.modulate = Color(0.2, 0.17, 0.17)
+		img.modulate = UiCommun.TEINTE_FOND
 		add_child(img)
 
 

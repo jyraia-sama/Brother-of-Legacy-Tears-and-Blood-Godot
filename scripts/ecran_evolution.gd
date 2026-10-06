@@ -6,7 +6,7 @@ extends Control
 ## Règles : voir evolution.gd.
 
 const SCENE := "res://scenes/evolution.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/fusion.png"
 const C_EVO := Color("7ae0ff")
 const ORDRE_RARETE := {"LEG": 5, "UR": 4, "SSR": 3, "SR": 2, "R": 1, "N": 0}
 
@@ -30,7 +30,7 @@ func _ready() -> void:
 	noir.color = Color("080b10")
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
-	if not UiCommun.fond_image(self, FOND, Color(0.3, 0.34, 0.4)):
+	if not UiCommun.fond_image(self, FOND, UiCommun.TEINTE_FOND):
 		UiCommun.fond_degrade(self, Color("0a2030"), Color("050608"))
 	UiCommun.particules(self, C_EVO, true, 36)
 

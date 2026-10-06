@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.39.1** (2026-10-06)
+Version actuelle : **0.40.0** (2026-10-06)
+
+## v0.40.0 — Les salles du Sang  (2026-10-06)
+
+- NOUVEAUX DÉCORS : les six salles du Sang ont chacune leur fond peint. La salle d'armes pour le Deck, le cercle runique pour l'Autel d'Invocation, le laboratoire d'alchimie pour la Fusion et l'Évolution, la crypte-reliquaire des Échos Sanguins, la forge et le trésor du Reliquaire, la bibliothèque du chasseur pour le Bestiaire.
+- Les décors sont bien plus visibles : ils sont moins assombris, et les grands panneaux deviennent légèrement transparents pour laisser voir la salle derrière, sans gêner la lecture.
 
 ## v0.39.1 — Un menu plus clair  (2026-10-06)
 

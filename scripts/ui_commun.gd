@@ -28,9 +28,12 @@ static func texte_rarete(id: String) -> String:
 	return t + (" · Évolué" if UnitesData.est_evolue(id) else "")
 
 
+## Opacité des grands panneaux : un peu transparents pour laisser voir le décor peint derrière.
+const OPACITE_PANNEAUX := 0.8
+
 static func style_panneau(bord := C_OR, fond := Color(0.08, 0.02, 0.03, 0.94)) -> StyleBoxFlat:
 	var s := StyleBoxFlat.new()
-	s.bg_color = fond
+	s.bg_color = Color(fond, fond.a * OPACITE_PANNEAUX)
 	s.border_color = bord
 	s.set_border_width_all(2)
 	s.set_corner_radius_all(8)
@@ -408,6 +411,10 @@ static func fond_degrade(parent: Control, haut: Color, bas: Color) -> TextureRec
 	parent.add_child(r)
 	return r
 
+
+## Assombrissement des fonds d'écran peints (assets/fonds/) : assez sombre pour que les panneaux
+## restent lisibles, assez clair pour que le décor se voie (1.0 = image d'origine).
+const TEINTE_FOND := Color(0.5, 0.46, 0.46)
 
 ## Image de fond si elle existe (assombrie), sinon rien. Renvoie true si l'image a été mise.
 static func fond_image(parent: Control, chemin: String, teinte := Color(0.6, 0.6, 0.6)) -> bool:

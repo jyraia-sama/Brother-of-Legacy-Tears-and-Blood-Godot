@@ -10,7 +10,7 @@ extends Control
 ## Les unités de l'équipe peuvent être principales mais jamais sacrifiées.
 
 const SCENE := "res://scenes/fusion.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/fusion.png"
 const ORDRE_RARETE := {"LEG": 5, "UR": 4, "SSR": 3, "SR": 2, "R": 1, "N": 0}
 
 static var scene_retour := ""
@@ -575,7 +575,7 @@ func _creer_fond() -> void:
 		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		img.modulate = Color(0.22, 0.12, 0.12)
+		img.modulate = UiCommun.TEINTE_FOND
 		add_child(img)
 
 
