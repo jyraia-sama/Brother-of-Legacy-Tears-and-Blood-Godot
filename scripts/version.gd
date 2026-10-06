@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.39.0"
-const DATE := "2026-10-05"
+const NUMERO := "0.39.1"
+const DATE := "2026-10-06"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.39.1", "date": "2026-10-06", "titre": "Un menu plus clair",
+	"changements": [
+		"Le fond du menu principal est bien plus lumineux : le grand frère, Kaël, le médaillon et la crypte se distinguent enfin, même sur un téléphone ou un écran peu lumineux.",
+		"Correction : un réglage d'affichage assombrissait par erreur les illustrations du menu et de la carte du monde (leurs couleurs étaient « appliquées deux fois »). La carte des Valcendre retrouve elle aussi ses vraies couleurs.",
+	]},
 	{"version": "0.39.0", "date": "2026-10-05", "titre": "La carte des Valcendre",
 	"changements": [
 		"NOUVELLE CARTE PEINTE : les Terres des Valcendre s'étendent désormais sur une vraie carte illustrée, du domaine en flammes jusqu'au Trône de Cendres. Les 13 lieux, la route et la brume se posent directement sur le décor.",

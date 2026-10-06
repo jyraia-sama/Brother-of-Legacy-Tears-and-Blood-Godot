@@ -200,7 +200,7 @@ func _creer_fond() -> void:
 		fond.position = Vector2(0, IMAGE_DECALAGE_Y)
 		fond.size = Vector2(largeur, BASE.y)
 		var sh := Shader.new()
-		sh.code = "shader_type canvas_item;\nvoid fragment() {\n\tvec4 c = texture(TEXTURE, UV);\n\tc.a *= smoothstep(1.0, 0.9, UV.x);\n\tCOLOR = c * COLOR;\n}"
+		sh.code = "shader_type canvas_item;\nvoid fragment() {\n\tCOLOR.a *= smoothstep(1.0, 0.9, UV.x);\n}"
 		var m := ShaderMaterial.new()
 		m.shader = sh
 		fond.material = m
