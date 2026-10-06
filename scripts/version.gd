@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.41.0"
+const NUMERO := "0.42.0"
 const DATE := "2026-10-06"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.42.0", "date": "2026-10-06", "titre": "Des décors qui respirent",
+	"changements": [
+		"DÉCORS BIEN PLUS VISIBLES : les fonds peints sont nettement moins assombris et les panneaux plus transparents. On voit enfin la salle ou le lieu derrière chaque menu, et les textes restent lisibles.",
+		"STAMINA DÉTAILLÉE : sur la carte des Actes, le plateau, les Donjons, les Tours (choix et étages) et le Reliquaire, la stamina s'affiche comme sur le menu principal, avec la jauge, « Pleine » ou le compte à rebours avant le prochain point (« +1 dans 3 min 12 s »).",
+		"Tour du Paradis : les panneaux clairs restent bien blancs pour que le texte reste lisible sur le décor lumineux.",
+	]},
 	{"version": "0.41.0", "date": "2026-10-06", "titre": "Les lieux de la Larme",
 	"changements": [
 		"NOUVEAUX DÉCORS : les lieux de la Larme ont chacun leur fond peint. L'arène en ruine sous la lune (Arène et Arène classée), le champ de bataille et l'ombre du titan (Boss de Monde), la vallée aux six donjons, la caravane des Expéditions, le campement de la Compagnie et les enclos de la Ménagerie.",

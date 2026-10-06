@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.41.0** (2026-10-06)
+Version actuelle : **0.42.0** (2026-10-06)
+
+## v0.42.0 — Des décors qui respirent  (2026-10-06)
+
+- DÉCORS BIEN PLUS VISIBLES : les fonds peints sont nettement moins assombris et les panneaux plus transparents. On voit enfin la salle ou le lieu derrière chaque menu, et les textes restent lisibles.
+- STAMINA DÉTAILLÉE : sur la carte des Actes, le plateau, les Donjons, les Tours (choix et étages) et le Reliquaire, la stamina s'affiche comme sur le menu principal, avec la jauge, « Pleine » ou le compte à rebours avant le prochain point (« +1 dans 3 min 12 s »).
+- Tour du Paradis : les panneaux clairs restent bien blancs pour que le texte reste lisible sur le décor lumineux.
 
 ## v0.41.0 — Les lieux de la Larme  (2026-10-06)
 

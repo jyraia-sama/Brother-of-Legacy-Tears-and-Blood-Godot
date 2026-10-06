@@ -18,7 +18,7 @@ const TAILLE_CARTE := Vector2(150, 200)
 static var scene_retour := ""
 
 const C_FOND := Color("130d0f")
-const C_PANNEAU := Color(0.08, 0.02, 0.03, 0.78)
+const C_PANNEAU := Color(0.08, 0.02, 0.03, 0.58)
 const C_OR := Color(0.85, 0.65, 0.3)
 const C_TEXTE := Color(0.93, 0.88, 0.83)
 const C_DOUX := Color(0.66, 0.59, 0.55)

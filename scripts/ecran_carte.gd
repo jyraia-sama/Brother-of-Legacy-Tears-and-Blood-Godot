@@ -87,7 +87,7 @@ var _sel := 1
 var _noeuds := {}
 var _panneau: PanelContainer
 var _fenetre: Control = null
-var _lbl_stamina: Label
+var _lbl_stamina: CaseStamina
 var _lbl_or: Label
 
 
@@ -558,15 +558,13 @@ func _creer_hud() -> void:
 	_placer(p, Rect2(132, 32, 420, 18))
 	var journal := _bouton("✎  Journal", 15, false)
 	journal.tooltip_text = "Revoir les scènes de l'histoire déjà vues"
-	_placer(journal, Rect2(904, 10, 120, 40))
+	_placer(journal, Rect2(820, 10, 120, 40))
 	journal.pressed.connect(func(): FenetreJournal.ouvrir(self))
 	var st := _style(Color(0.03, 0.02, 0.024, 0.85), Color("4a3638"), 18, 1)
 	st.content_margin_left = 12
 	st.content_margin_right = 12
-	_lbl_stamina = _label("", 14, C_TEXTE, true)
-	_lbl_stamina.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_lbl_stamina.add_theme_stylebox_override("normal", st)
-	_placer(_lbl_stamina, Rect2(1034, 12, 106, 36))
+	_lbl_stamina = CaseStamina.new()
+	_placer(_lbl_stamina, Rect2(950, 7, 190, 46))
 	_lbl_or = _label("", 14, C_TEXTE, true)
 	_lbl_or.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_lbl_or.add_theme_stylebox_override("normal", st)
@@ -595,7 +593,7 @@ func _creer_legende() -> void:
 
 
 func _maj_ressources() -> void:
-	_lbl_stamina.text = "⚡ %d / %d" % [Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max()]
+	_lbl_stamina.maj()
 	_lbl_or.text = "● " + _nombre(Sauvegarde.get_or())
 
 

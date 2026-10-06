@@ -16,7 +16,7 @@ var _accent: Color
 var _c_texte: Color
 
 var _lbl_decompte: Label
-var _lbl_stamina: Label
+var _lbl_stamina: CaseStamina
 var _lbl_monnaie: Label
 var _liste: VBoxContainer
 var _defil: ScrollContainer
@@ -62,7 +62,7 @@ func _ready() -> void:
 	h.add_child(_lbl_decompte)
 	_lbl_monnaie = UiCommun.label("", 18, _accent)
 	h.add_child(_lbl_monnaie)
-	_lbl_stamina = UiCommun.label("", 18, Color("7ad0ff") if _enfer else Color("2a6ab0"))
+	_lbl_stamina = CaseStamina.new()
 	h.add_child(_lbl_stamina)
 
 	var corps := HBoxContainer.new()
@@ -118,7 +118,10 @@ func _creer_fond() -> void:
 
 
 func _style_panneau() -> StyleBoxFlat:
-	return UiCommun.style_panneau(_accent.darkened(0.2), Color(0.06, 0.01, 0.01, 0.9) if _enfer else Color(1, 1, 1, 0.82))
+	var s := UiCommun.style_panneau(_accent.darkened(0.2), Color(0.06, 0.01, 0.01, 0.9) if _enfer else Color(1, 1, 1, 0.82))
+	if not _enfer:
+		s.bg_color.a = 0.86   # thème clair : le texte foncé a besoin d'un panneau bien blanc
+	return s
 
 
 # =====================================================================
@@ -375,7 +378,7 @@ func _combattre(n: int) -> void:
 
 func _maj_haut() -> void:
 	_lbl_decompte.text = "Réinitialisation dans %s" % Calendrier.texte_duree(Calendrier.secondes_avant_semaine())
-	_lbl_stamina.text = "Stamina %d/%d" % [Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max()]
+	_lbl_stamina.maj()
 	var m: String = Tours.TOURS[_tour]["monnaie"]
 	_lbl_monnaie.text = "%s : %d" % [Reliquaire.nom(m), Sauvegarde.get_objet(m)]
 

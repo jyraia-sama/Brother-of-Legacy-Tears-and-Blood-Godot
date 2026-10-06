@@ -9,7 +9,7 @@ const FOND := "res://assets/fonds/tours.png"
 static var scene_retour := ""
 
 var _lbl_decompte: Label
-var _lbl_stamina: Label
+var _lbl_stamina: CaseStamina
 
 
 func _ready() -> void:
@@ -54,7 +54,7 @@ func _ready() -> void:
 	var titre := UiCommun.label("TOURS INFINIES", 34, UiCommun.C_OR)
 	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(titre)
-	_lbl_stamina = UiCommun.label("", 20, Color("7ad0ff"))
+	_lbl_stamina = CaseStamina.new()
 	tete.add_child(_lbl_stamina)
 
 	_lbl_decompte = UiCommun.label("", 20, Color("ffb070"))
@@ -148,7 +148,7 @@ func _carte_tour(tour: String, accent: Color, haut: Color, bas: Color) -> Button
 
 func _maj() -> void:
 	_lbl_decompte.text = "Réinitialisation des tours dans  %s" % Calendrier.texte_duree(Calendrier.secondes_avant_semaine())
-	_lbl_stamina.text = "Stamina : %d / %d" % [Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max()]
+	_lbl_stamina.maj()
 
 
 func _entrer(tour: String) -> void:
