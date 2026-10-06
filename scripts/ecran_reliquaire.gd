@@ -15,7 +15,7 @@ var _onglet := "inventaire"
 var _onglets := {}
 var _contenu: VBoxContainer
 var _lbl_or: Label
-var _lbl_stamina: Label
+var _lbl_stamina: CaseStamina
 var _voile: Control             # choix d'un héros pour un tome
 
 # Atelier : choix courants
@@ -67,7 +67,7 @@ func _ready() -> void:
 	var pousse := Control.new()
 	pousse.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(pousse)
-	_lbl_stamina = UiCommun.label("", 18, Color("7ad0ff"))
+	_lbl_stamina = CaseStamina.new()
 	tete.add_child(_lbl_stamina)
 	_lbl_or = UiCommun.label("", 19, Color("ffd060"))
 	tete.add_child(_lbl_or)
@@ -88,7 +88,7 @@ func _ready() -> void:
 
 func _rafraichir() -> void:
 	_lbl_or.text = "Or : %d" % Sauvegarde.get_or()
-	_lbl_stamina.text = "Stamina %d/%d" % [Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max()]
+	_lbl_stamina.maj()
 	for cle in _onglets:
 		_onglets[cle].button_pressed = (cle == _onglet)
 	for e in _contenu.get_children():

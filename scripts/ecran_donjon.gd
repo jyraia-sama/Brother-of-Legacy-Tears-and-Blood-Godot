@@ -11,7 +11,7 @@ static var scene_retour := ""
 static var donjon_courant := "feu"
 static var niveau_courant := 0      # 0 = le prochain niveau à faire
 
-var _lbl_stamina: Label
+var _lbl_stamina: CaseStamina
 var _col_donjons: VBoxContainer
 var _col_niveaux: VBoxContainer
 var _fiche: VBoxContainer
@@ -58,7 +58,7 @@ func _ready() -> void:
 		EcranEvolution.scene_retour = SCENE
 		get_tree().change_scene_to_file(EcranEvolution.SCENE))
 	tete.add_child(evo)
-	_lbl_stamina = UiCommun.label("", 19, Color("7ad0ff"))
+	_lbl_stamina = CaseStamina.new()
 	tete.add_child(_lbl_stamina)
 
 	var corps := HBoxContainer.new()
@@ -367,7 +367,7 @@ func _lancer() -> void:
 
 
 func _maj_stamina() -> void:
-	_lbl_stamina.text = "Stamina %d/%d" % [Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max()]
+	_lbl_stamina.maj()
 
 
 func _message(texte: String) -> void:

@@ -108,7 +108,7 @@ var police: Font
 var hud: CanvasLayer
 var lbl_titre: Label
 var lbl_or: Label
-var lbl_stamina: Label
+var lbl_stamina: CaseStamina
 var info: PanelContainer
 var info_titre: Label
 var info_sous: Label
@@ -684,9 +684,7 @@ func _gagner_or(montant: int) -> void:
 func _maj_stamina() -> void:
 	if lbl_stamina == null:
 		return
-	var st := Sauvegarde.get_stamina()
-	var mx := Sauvegarde.get_stamina_max()
-	lbl_stamina.text = "Stamina %d/%d" % [st, mx] + ("" if st >= mx else "  (+1 dans %s)" % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina()))
+	lbl_stamina.maj()
 
 
 func _message(titre: String, texte: String, ensuite := Callable()) -> void:
@@ -1213,9 +1211,7 @@ func _creer_hud() -> void:
 	centre.add_child(loot)
 	ligne.add_child(centre)
 
-	lbl_stamina = Label.new()
-	lbl_stamina.add_theme_font_size_override("font_size", 18)
-	lbl_stamina.add_theme_color_override("font_color", Color("7ad0ff"))
+	lbl_stamina = CaseStamina.new()
 	ligne.add_child(lbl_stamina)
 	var minuterie := Timer.new()
 	minuterie.wait_time = 1.0
