@@ -11,6 +11,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"DÉCORS BIEN PLUS VISIBLES : les fonds peints sont nettement moins assombris et les panneaux plus transparents. On voit enfin la salle ou le lieu derrière chaque menu, et les textes restent lisibles.",
+				"STAMINA DÉTAILLÉE : sur la carte des Actes, le plateau, les Donjons, les Tours (choix et étages) et le Reliquaire, la stamina s'affiche comme sur le menu principal, avec la jauge, « Pleine » ou le compte à rebours avant le prochain point (« +1 dans 3 min 12 s »).",
+				"Tour du Paradis : les panneaux clairs restent bien blancs pour que le texte reste lisible sur le décor lumineux."
+			],
+			"titre": "Des décors qui respirent",
+			"version": "0.42.0"
+		},
+		{
+			"changements": [
 				"NOUVEAUX DÉCORS : les lieux de la Larme ont chacun leur fond peint. L'arène en ruine sous la lune (Arène et Arène classée), le champ de bataille et l'ombre du titan (Boss de Monde), la vallée aux six donjons, la caravane des Expéditions, le campement de la Compagnie et les enclos de la Ménagerie.",
 				"TOURS INFINIES : les deux tours se dressent face à face sur l'écran de choix. Chaque carte montre l'intérieur de sa tour, et on retrouve ces mêmes décors en montant les étages : les escaliers de lave de l'Enfer, et les escaliers de marbre du Paradis."
 			],
@@ -129,20 +138,13 @@
 			],
 			"titre": "Portraits du sanctuaire",
 			"version": "0.34.2"
-		},
-		{
-			"changements": [
-				"Le sanctuaire secret accueille un nouveau gardien… Il n'est pas né sous le même signe que les autres, et il n'est jamais vraiment seul. L'épreuve finale se joue désormais à quatre."
-			],
-			"titre": "Le gardien du sanctuaire",
-			"version": "0.34.1"
 		}
 	],
 	"pck": {
-		"sha256": "3a49c3b574743834d513ba8182bcdbc3d646c298a74db956e535596c1280bc75",
-		"taille": 35119572,
+		"sha256": "0acd7d698fc6ebed1660bfaeb4fd3fb71e7faeb1d8f0a9b35cee5047e1e71d9c",
+		"taille": 35123180,
 		"url": "jeu.pck"
 	},
-	"version": "0.41.0",
+	"version": "0.42.0",
 	"version_minimum": "0.37.0"
 }
