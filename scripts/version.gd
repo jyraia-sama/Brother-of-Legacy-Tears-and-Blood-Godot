@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.42.1"
+const NUMERO := "0.42.2"
 const DATE := "2026-10-06"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.42.2", "date": "2026-10-06", "titre": "Les 13 Actes illustrés",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS : les Actes V à XIII ont à leur tour leur vraie scène peinte. Les bûchers de l'Inquisiteur, le lac de verre noir de la Forêt Pétrifiée, le trône de ronces de la Dame, le siège sous l'Éclipse du Sang, le Val des Héros Déchus, la Citadelle des Supplices, le duel des deux frères, le Trône de Cendres et la Soif Première au cœur du Sceau.",
+		"Fiche d'un chapitre : le niveau des ennemis s'affiche « Niv. 30 » au lieu de « Niv. 30 à 30 » quand le plafond est atteint.",
+	]},
 	{"version": "0.42.1", "date": "2026-10-06", "titre": "Les premiers Actes illustrés",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS : les Actes I à IV ont leur vraie scène peinte. Le domaine Valcendre en flammes, la Cité en Deuil et sa Veuve aux Lanternes, les camps du Drapeau Noir, et le Sépulcre des Rois avec son gardien couronné. On les retrouve en fond de la fiche de chaque chapitre et dans la fiche de l'Acte.",
