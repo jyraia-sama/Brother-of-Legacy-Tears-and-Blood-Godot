@@ -28,7 +28,7 @@ const ESPACEMENT_MS := 60        # un même son ne se répète pas plus vite que
 ## Musique de chaque écran (nom du fichier .tscn). Écran absent = "menu".
 ## "" = l'écran choisit lui-même sa musique (combat, étage de tour).
 const MUSIQUE_PAR_SCENE := {
-	"aventure.tscn": "aventure", "histoire.tscn": "aventure", "ecran_acte.tscn": "aventure",
+	"aventure.tscn": "aventure", "carte_monde.tscn": "aventure",
 	"plateau.tscn": "aventure",
 	"invocation.tscn": "invocation",
 	"boss_monde.tscn": "boss_monde",

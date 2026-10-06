@@ -7,21 +7,23 @@ extends Control
 ##    parcourue, en pointillés pour la suite. La figurine du grand frère se tient sur l'Acte en cours.
 ##  - Les terres pas encore atteintes restent dans la brume, qui se lève au fil des Actes.
 ##  - Toucher un Acte ouvre sa fiche à droite : partie, lieu, boss, set d'Échos et ses 6 chapitres.
-##    « Continuer » lance directement le plateau du chapitre en cours ; « Voir l'Acte illustré »
-##    ouvre l'écran de l'Acte (image et 6 vignettes).
+##    Toucher un chapitre (ou « Continuer ») ouvre sa fenêtre d'informations : niveau conseillé,
+##    ennemis de l'Acte (cachés tant qu'ils ne sont pas au Bestiaire), boss, plateau, butin, stamina,
+##    sur l'illustration de l'Acte ; « Jouer » lance le plateau.
 ##  - L'Acte XIII (caché) apparaît au-dessus du Trône une fois l'Acte XII terminé.
 ##
-## IMAGE DE LA CARTE : dépose une carte peinte (16:9) dans assets/ui/carte_monde.png ;
-## elle remplace le relief dessiné. Les lieux restent aux positions de LIEUX (surface 1280 x 720).
+## IMAGE DE LA CARTE : assets/ui/carte_monde.png (peinte, 3:2) remplace le relief dessiné.
+## Les lieux sont alors aux positions de POS_IMAGE ; sans image, à celles de LIEUX (surface 1280 x 720).
 
 const SCENE := "res://scenes/carte_monde.tscn"
 const BG_PATH := "res://assets/ui/carte_monde.png"
 const IMG_PION := "res://assets/plateaux/pion_aine.png"
-const SCENE_ACTE := "res://scenes/ecran_acte.tscn"
 const SCENE_PLATEAU := "res://scenes/plateau.tscn"
 const BASE := Vector2(1280, 720)
 
 static var scene_retour := ""
+## Dernier Acte joué : la carte s'ouvre dessus au retour d'un plateau.
+static var acte_choisi := 0
 
 const C_OR := Color("c9a45c")
 const C_TEXTE := Color("ede4d8")
@@ -46,6 +48,16 @@ const LIEUX := [
 	{"lieu": "Champs du Jugement",      "boss": "Le Frère Masqué",              "pos": Vector2(790, 232)},
 	{"lieu": "Trône de Cendres",        "boss": "L'Héritier Maudit",            "pos": Vector2(812, 128)},
 	{"lieu": "Le Sceau des Frères",     "boss": "Morvaël, la Soif Première",    "pos": Vector2(640, 118)},
+]
+
+## Positions des lieux sur la carte PEINTE (assets/ui/carte_monde.png, surface 1280 x 720) :
+## l'image 3:2 est montrée sur toute la hauteur, calée à gauche et descendue de IMAGE_DECALAGE_Y.
+const IMAGE_DECALAGE_Y := 50.0
+const POS_IMAGE := [
+	Vector2(162, 605), Vector2(232, 486), Vector2(450, 648), Vector2(534, 542),
+	Vector2(506, 430), Vector2(211, 352), Vector2(260, 261), Vector2(541, 303),
+	Vector2(295, 141), Vector2(682, 141), Vector2(548, 184), Vector2(485, 78),
+	Vector2(394, 96),
 ]
 
 const COULEURS_PARTIE := {
@@ -74,6 +86,7 @@ var _tout_fini := false
 var _sel := 1
 var _noeuds := {}
 var _panneau: PanelContainer
+var _fenetre: Control = null
 var _lbl_stamina: Label
 var _lbl_or: Label
 
@@ -82,7 +95,7 @@ func _ready() -> void:
 	Sauvegarde.charger()
 	ActesData.charger()
 	FinHistoire.verifier_rattrapage()
-	# L'écran d'un Acte (et le plateau, via cet écran) reviendront ici
+	# Le plateau reviendra ici
 	ActesData.scene_precedente = scene_file_path
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var noir := ColorRect.new()
@@ -100,6 +113,9 @@ func _ready() -> void:
 	_nb = 13 if ActesData.acte_debloque(13) else 12
 	_courant = _acte_en_cours()
 	_sel = _courant
+	if acte_choisi >= 1 and acte_choisi <= _nb:
+		_sel = acte_choisi
+	_image_fond = ResourceLoader.exists(BG_PATH)
 
 	_creer_fond()
 	_creer_brume()
@@ -163,15 +179,32 @@ func _chapitres_termines() -> int:
 # =====================================================================
 
 func _creer_fond() -> void:
-	if ResourceLoader.exists(BG_PATH):
+	if _image_fond:
+		var tex: Texture2D = load(BG_PATH)
+		# Derrière : la même carte assombrie (sous la fiche de droite)
+		var arriere := TextureRect.new()
+		arriere.texture = tex
+		arriere.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		arriere.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		arriere.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		arriere.modulate = Color(0.3, 0.28, 0.3)
+		arriere.size = BASE
+		_ui.add_child(arriere)
+		# Devant : la carte entière sur la hauteur, calée à gauche, bord droit fondu
+		var largeur := BASE.y * tex.get_width() / float(tex.get_height())
 		var fond := TextureRect.new()
-		fond.texture = load(BG_PATH)
+		fond.texture = tex
 		fond.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		fond.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		fond.stretch_mode = TextureRect.STRETCH_SCALE
 		fond.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		fond.size = BASE
+		fond.position = Vector2(0, IMAGE_DECALAGE_Y)
+		fond.size = Vector2(largeur, BASE.y)
+		var sh := Shader.new()
+		sh.code = "shader_type canvas_item;\nvoid fragment() {\n\tvec4 c = texture(TEXTURE, UV);\n\tc.a *= smoothstep(1.0, 0.9, UV.x);\n\tCOLOR = c * COLOR;\n}"
+		var m := ShaderMaterial.new()
+		m.shader = sh
+		fond.material = m
 		_ui.add_child(fond)
-		_image_fond = true
 		return
 	_boite(Rect2(Vector2.ZERO, BASE), Color("17110f"))
 	_polygone(MER, Color("0f1a22"))
@@ -190,7 +223,7 @@ func _creer_fond() -> void:
 		_triangle(m, Color("2e2426"), Color("4d3d3f"))
 	# Lueur rouge du Trône de Cendres
 	for i in 4:
-		_ellipse(LIEUX[11].pos, Vector2.ONE * (90 - i * 20), Color(0.7, 0.14, 0.17, 0.09), Color(0, 0, 0, 0))
+		_ellipse(_pos(12), Vector2.ONE * (90 - i * 20), Color(0.7, 0.14, 0.17, 0.09), Color(0, 0, 0, 0))
 	_texte_partie("L'Aube et les Cendres", Vector2(565, 700), Color("8a6a4a"))
 	_texte_partie("La Descente et le Sang", Vector2(600, 448), Color("8a4a50"))
 	_texte_partie("Le Crépuscule et l'Héritage", Vector2(400, 196), Color("7a6a6c"))
@@ -200,9 +233,9 @@ func _creer_fond() -> void:
 func _creer_brume() -> void:
 	var bas := 0.0
 	if _courant <= 4:
-		bas = 480.0
+		bas = 460.0 if _image_fond else 480.0
 	elif _courant <= 8:
-		bas = 300.0
+		bas = 230.0 if _image_fond else 300.0
 	if bas <= 0.0:
 		return
 	var p := Polygon2D.new()
@@ -220,7 +253,7 @@ func _creer_brume() -> void:
 func _creer_route() -> void:
 	var points: Array = []
 	for i in 12:
-		points.append(LIEUX[i].pos)
+		points.append(_pos(i + 1))
 	# Route à venir : petits points
 	var fin_faite := 12 if _tout_fini else mini(_courant, 12)
 	for i in range(fin_faite - 1, 11):
@@ -239,8 +272,13 @@ func _creer_route() -> void:
 	# Le chemin vers l'Acte caché, au-dessus du Trône
 	if _nb == 13:
 		for i in 3:
-			_ellipse(LIEUX[12].pos, Vector2.ONE * (80 - i * 22), Color(0.48, 0.36, 1.0, 0.1), Color(0, 0, 0, 0))
-		_pointilles(LIEUX[11].pos, LIEUX[12].pos, Color("9a7aff"), 10.0)
+			_ellipse(_pos(13), Vector2.ONE * (80 - i * 22), Color(0.48, 0.36, 1.0, 0.1), Color(0, 0, 0, 0))
+		_pointilles(_pos(12), _pos(13), Color("9a7aff"), 10.0)
+
+
+## Position d'un lieu (carte peinte ou relief dessiné).
+func _pos(a: int) -> Vector2:
+	return POS_IMAGE[a - 1] if _image_fond else LIEUX[a - 1].pos
 
 
 func _pointilles(a: Vector2, b: Vector2, couleur: Color, pas: float) -> void:
@@ -257,7 +295,7 @@ func _pointilles(a: Vector2, b: Vector2, couleur: Color, pas: float) -> void:
 
 func _creer_noeuds() -> void:
 	for a in range(1, _nb + 1):
-		var pos: Vector2 = LIEUX[a - 1].pos
+		var pos: Vector2 = _pos(a)
 		var b := Button.new()
 		b.text = ROMAINS[a]
 		b.focus_mode = Control.FOCUS_NONE
@@ -288,7 +326,7 @@ func _creer_noeuds() -> void:
 		pion.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		pion.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		pion.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var pos: Vector2 = LIEUX[_courant - 1].pos
+		var pos: Vector2 = _pos(_courant)
 		# Au-dessus du lieu, ou à sa gauche s'il est trop près de la barre du haut
 		var r_pion := Rect2(pos.x - 16, pos.y - 84, 32, 56)
 		if r_pion.position.y < 66:
@@ -433,18 +471,16 @@ func _afficher_acte(a: int) -> void:
 	pousse.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vb.add_child(pousse)
 
-	if ouvert:
-		var principal := _bouton("Continuer : chapitre %d" % en_cours if en_cours > 0 else "Choisir un chapitre", 16, true)
-		principal.custom_minimum_size = Vector2(0, 42)
-		if en_cours > 0:
-			principal.pressed.connect(_lancer.bind(a, en_cours))
-		else:
-			principal.pressed.connect(_ouvrir_acte.bind(a))
+	if ouvert and en_cours > 0:
+		var principal := _bouton("Continuer : chapitre %d" % en_cours, 16, true)
+		principal.custom_minimum_size = Vector2(0, 44)
+		principal.pressed.connect(_ouvrir_chapitre.bind(a, en_cours))
 		vb.add_child(principal)
-		var second := _bouton("Voir l'Acte illustré", 14, false)
-		second.custom_minimum_size = Vector2(0, 34)
-		second.pressed.connect(_ouvrir_acte.bind(a))
-		vb.add_child(second)
+	elif ouvert:
+		var fini := _label("Acte terminé : touche un chapitre pour le revoir ou le rejouer.", 13, C_OR)
+		fini.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		fini.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		vb.add_child(fini)
 	else:
 		var l := _label("Termine l'Acte %s pour ouvrir cette région" % ROMAINS[a - 1], 13, C_DOUX)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -499,12 +535,9 @@ func _ligne_chapitre(a: int, c: int, titre: String, courant: bool) -> Button:
 	b.add_theme_stylebox_override("hover", survol)
 	b.add_theme_stylebox_override("pressed", survol)
 	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-	if ouvert:
-		b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		b.tooltip_text = "Jouer ce chapitre"
-		b.pressed.connect(_lancer.bind(a, c))
-	else:
-		b.disabled = true
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	b.tooltip_text = "Voir le chapitre"
+	b.pressed.connect(_ouvrir_chapitre.bind(a, c))
 	return b
 
 
@@ -585,15 +618,8 @@ func _lancer(a: int, c: int) -> void:
 	ActesData.acte_courant = a
 	ActesData.chapitre_courant = c
 	ActesData.scene_precedente = scene_file_path
+	acte_choisi = a
 	get_tree().change_scene_to_file(SCENE_PLATEAU)
-
-
-func _ouvrir_acte(a: int) -> void:
-	if not ActesData.acte_debloque(a):
-		return
-	ActesData.acte_courant = a
-	ActesData.scene_precedente = scene_file_path
-	get_tree().change_scene_to_file(SCENE_ACTE)
 
 
 func _retour() -> void:
@@ -607,7 +633,323 @@ func _retour() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:
-		_retour()
+		if is_instance_valid(_fenetre):
+			_fermer_chapitre()
+		else:
+			_retour()
+		get_viewport().set_input_as_handled()
+
+
+# =====================================================================
+# Fenêtre d'informations d'un chapitre
+# =====================================================================
+
+func _ouvrir_chapitre(a: int, c: int) -> void:
+	Audio.son("clic")
+	_fermer_chapitre()
+	var ouvert := ActesData.chapitre_debloque(a, c)
+	var fait := ActesData.est_termine(a, c)
+	var chap := ActesData.get_chapitre(a, c)
+
+	# Voile sombre : un clic à côté de la fenêtre la ferme
+	var voile := Button.new()
+	voile.flat = true
+	voile.focus_mode = Control.FOCUS_NONE
+	voile.add_theme_stylebox_override("normal", _style(Color(0, 0, 0, 0.72), Color(0, 0, 0, 0), 0, 0))
+	voile.add_theme_stylebox_override("hover", _style(Color(0, 0, 0, 0.72), Color(0, 0, 0, 0), 0, 0))
+	voile.add_theme_stylebox_override("pressed", _style(Color(0, 0, 0, 0.72), Color(0, 0, 0, 0), 0, 0))
+	voile.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	voile.pressed.connect(_fermer_chapitre)
+	_placer(voile, Rect2(Vector2.ZERO, BASE))
+	_fenetre = voile
+
+	# Cadre avec l'illustration de l'Acte en fond
+	var r := Rect2(150, 64, 980, 600)
+	var cadre := Panel.new()
+	cadre.clip_contents = true
+	cadre.mouse_filter = Control.MOUSE_FILTER_STOP
+	var bord := C_VIOLET if a == 13 else (C_OR if ouvert else Color("5a4245"))
+	cadre.add_theme_stylebox_override("panel", _style(Color("0e0809"), bord, 18, 2))
+	_placer(cadre, r, voile)
+	var tex := ActesData.get_image(a)
+	if tex != null:
+		var img := TextureRect.new()
+		img.texture = tex
+		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		img.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		img.modulate = Color(0.8, 0.75, 0.75) if ouvert else Color(0.4, 0.36, 0.36)
+		img.position = Vector2(2, 2)
+		img.size = r.size - Vector2(4, 4)
+		cadre.add_child(img)
+	# Dégradé : sombre à gauche (texte lisible), l'image respire à droite
+	var grad := Gradient.new()
+	grad.set_color(0, Color(0.03, 0.018, 0.02, 0.96))
+	grad.set_color(1, Color(0.03, 0.018, 0.02, 0.2))
+	grad.add_point(0.55, Color(0.03, 0.018, 0.02, 0.85))
+	var gt := GradientTexture2D.new()
+	gt.gradient = grad
+	gt.fill_from = Vector2(0, 0)
+	gt.fill_to = Vector2(1, 0)
+	var voile_img := TextureRect.new()
+	voile_img.texture = gt
+	voile_img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	voile_img.stretch_mode = TextureRect.STRETCH_SCALE
+	voile_img.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	voile_img.position = Vector2(2, 2)
+	voile_img.size = r.size - Vector2(4, 4)
+	cadre.add_child(voile_img)
+
+	var marge := MarginContainer.new()
+	for k in ["margin_left", "margin_right", "margin_top", "margin_bottom"]:
+		marge.add_theme_constant_override(k, 22)
+	marge.position = Vector2.ZERO
+	marge.size = r.size
+	cadre.add_child(marge)
+	var colonnes := HBoxContainer.new()
+	colonnes.add_theme_constant_override("separation", 22)
+	marge.add_child(colonnes)
+
+	# ---------- Colonne gauche : récit, niveaux, ennemis ----------
+	var g := VBoxContainer.new()
+	g.add_theme_constant_override("separation", 8)
+	g.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	colonnes.add_child(g)
+	g.add_child(_label("ACTE %s · %s  —  CHAPITRE %d" % [ROMAINS[a], LIEUX[a - 1].lieu.to_upper(), c], 12, COULEURS_PARTIE.get(str(ActesData.get_acte(a).get("partie", "")), C_OR), true))
+	var titre := _label(str(chap.get("titre", "Chapitre %d" % c)), 26, C_TEXTE, true)
+	titre.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	g.add_child(titre)
+	var statut := "✔  Terminé : tu peux le rejouer" if fait else ("▶  Disponible" if ouvert else "✕  Verrouillé")
+	g.add_child(_label(statut, 13, C_OR if fait else (Color("ffd27a") if ouvert else Color("a08a84")), true))
+	var desc := _label(str(chap.get("description", "")), 14, C_DOUX)
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc.custom_minimum_size = Vector2(520, 0)
+	g.add_child(desc)
+
+	var infos := _infos_plateau(a, c)
+	var niv := Rencontres.niveau_attendu(a, c)
+	var max_bonus := 0
+	for v in Rencontres.BONUS_NIVEAU.values():
+		max_bonus = maxi(max_bonus, int(v))
+	var grille := GridContainer.new()
+	grille.columns = 4
+	grille.add_theme_constant_override("h_separation", 8)
+	grille.add_theme_constant_override("v_separation", 8)
+	g.add_child(grille)
+	grille.add_child(_case_fenetre("NIVEAU CONSEILLÉ", "Niv. %d" % niv))
+	grille.add_child(_case_fenetre("ENNEMIS", "Niv. %d à %d" % [niv, mini(niv + max_bonus, UnitesData.NIVEAU_MAX)]))
+	grille.add_child(_case_fenetre("STAMINA", "⚡ %d minimum" % int(infos["stamina"])))
+	grille.add_child(_case_fenetre("PLATEAU", "%d cases" % int(infos["cases"])))
+
+	g.add_child(_label("Créatures de la région", 12, C_DOUX, true))
+	var pool: Dictionary = Rencontres.POOLS.get(a, {})
+	var ligne := HFlowContainer.new()
+	ligne.add_theme_constant_override("h_separation", 8)
+	ligne.add_theme_constant_override("v_separation", 8)
+	g.add_child(ligne)
+	var vus: Array = []
+	for id in pool.get("monstres", []) + pool.get("gardiens", []):
+		var sid := str(id)
+		if sid in vus or UnitesData.get_unite(sid).is_empty():
+			continue
+		vus.append(sid)
+		ligne.add_child(_vignette_ennemi(sid, 46))
+	var n_vus := 0
+	for sid in vus:
+		if Sauvegarde.est_decouvert(sid):
+			n_vus += 1
+	g.add_child(_label("%d / %d au Bestiaire · les créatures inconnues restent cachées" % [n_vus, vus.size()], 11, Color("8e7f72")))
+
+	var pousse := Control.new()
+	pousse.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	g.add_child(pousse)
+
+	var boutons := HBoxContainer.new()
+	boutons.add_theme_constant_override("separation", 12)
+	g.add_child(boutons)
+	var fermer := _bouton("Fermer", 16, false)
+	fermer.custom_minimum_size = Vector2(130, 46)
+	fermer.pressed.connect(_fermer_chapitre)
+	boutons.add_child(fermer)
+	if ouvert:
+		var jouer := _bouton("▶  Rejouer" if fait else "▶  Jouer", 18, true)
+		jouer.custom_minimum_size = Vector2(220, 46)
+		jouer.pressed.connect(_lancer.bind(a, c))
+		boutons.add_child(jouer)
+	else:
+		var cond := "Termine le chapitre %d de l'Acte %s pour l'ouvrir." % [c - 1, ROMAINS[a]] if c > 1 \
+			else "Termine l'Acte %s pour ouvrir cette région." % ROMAINS[a - 1]
+		var lc := _label("🔒  " + cond, 13, C_DOUX)
+		lc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		lc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		lc.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		boutons.add_child(lc)
+
+	# ---------- Colonne droite : boss, plateau, butin ----------
+	var d := VBoxContainer.new()
+	d.add_theme_constant_override("separation", 8)
+	d.custom_minimum_size = Vector2(300, 0)
+	colonnes.add_child(d)
+	var boss_id := str(pool.get("boss", "")) if c == 6 else ""
+	if c < 6 and not (pool.get("gardiens", []) as Array).is_empty():
+		var gs: Array = pool["gardiens"]
+		boss_id = str(gs[(c - 1) % gs.size()])
+	d.add_child(_bloc_boss(boss_id, c == 6, LIEUX[a - 1].boss if c == 6 else ""))
+
+	var bp := _bloc_fenetre("SUR LE PLATEAU")
+	d.add_child(bp)
+	var vp: VBoxContainer = bp.get_child(0)
+	var types: Dictionary = infos["types"]
+	for t in [PlateauGenerateur.Type.COMBAT, PlateauGenerateur.Type.ELITE, PlateauGenerateur.Type.GARDIEN,
+			PlateauGenerateur.Type.COFFRE, PlateauGenerateur.Type.SOIN, PlateauGenerateur.Type.MYSTERE, PlateauGenerateur.Type.PIEGE]:
+		if int(types.get(t, 0)) > 0:
+			vp.add_child(_ligne_info(str(PlateauGenerateur.NOMS[t]), "× %d" % int(types[t])))
+	vp.add_child(_ligne_info("Boss", "× 1"))
+
+	var bl := _bloc_fenetre("BUTIN")
+	d.add_child(bl)
+	var vl: VBoxContainer = bl.get_child(0)
+	var set_id: String = Echos.SET_PAR_ACTE.get(a, "")
+	if Echos.SETS.has(set_id):
+		var emp := clampi(c, 1, 6)
+		vl.add_child(_ligne_info("Set d'Échos", str(Echos.SETS[set_id]["nom"])))
+		vl.add_child(_ligne_info("Emplacement", str(Echos.EMPLACEMENTS[emp]["nom"])))
+	vl.add_child(_ligne_info("Or et expérience", "à chaque combat"))
+
+	if c in FinHistoire.CHAPITRES_INVITE.get(a, []):
+		var bk := _bloc_fenetre("RENFORT")
+		d.add_child(bk)
+		var lk := _label("Kaël combat à tes côtés dans ce chapitre (invité).", 13, Color("ff9a9a"))
+		lk.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		(bk.get_child(0) as VBoxContainer).add_child(lk)
+
+
+func _fermer_chapitre() -> void:
+	if is_instance_valid(_fenetre):
+		_fenetre.queue_free()
+	_fenetre = null
+
+
+## Cases du plateau par type et stamina minimale (chemin le moins coûteux du départ au boss).
+func _infos_plateau(a: int, c: int) -> Dictionary:
+	var plateau := PlateauGenerateur.generer(a, c)
+	var noeuds: Array = plateau.get("noeuds", [])
+	var types := {}
+	var par_id := {}
+	for n in noeuds:
+		par_id[int(n["id"])] = n
+		var t := int(n["type"])
+		types[t] = int(types.get(t, 0)) + 1
+	var cout := func(id: int) -> int:
+		var n: Dictionary = par_id[id]
+		if not PlateauGenerateur.est_combat(int(n["type"])):
+			return 0
+		return int(Sauvegarde.COUT_STAMINA_AVENTURE[Rencontres.type_rencontre(n, c)])
+	var depart := int(plateau.get("depart", -1))
+	var boss := int(plateau.get("boss", -1))
+	var stamina := 0
+	if par_id.has(depart) and par_id.has(boss):
+		var dist := {depart: 0}
+		var a_voir := [depart]
+		while not a_voir.is_empty():
+			var meilleur := 0
+			for i in a_voir.size():
+				if int(dist[a_voir[i]]) < int(dist[a_voir[meilleur]]):
+					meilleur = i
+			var u: int = a_voir[meilleur]
+			a_voir.remove_at(meilleur)
+			if u == boss:
+				break
+			for v in par_id[u].get("voisins", []):
+				var vid := int(v)
+				if not par_id.has(vid):
+					continue
+				var nd: int = int(dist[u]) + int(cout.call(vid))
+				if not dist.has(vid) or nd < int(dist[vid]):
+					dist[vid] = nd
+					if not vid in a_voir:
+						a_voir.append(vid)
+		stamina = int(dist.get(boss, 0))
+	return {"types": types, "cases": noeuds.size(), "stamina": stamina}
+
+
+func _case_fenetre(titre: String, valeur: String) -> PanelContainer:
+	var p := PanelContainer.new()
+	var st := _style(Color(0.08, 0.05, 0.055, 0.85), Color("4a3638"), 8, 1)
+	st.set_content_margin_all(8)
+	p.add_theme_stylebox_override("panel", st)
+	p.custom_minimum_size = Vector2(124, 0)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 0)
+	p.add_child(v)
+	v.add_child(_label(titre, 10, Color("8e7f72"), true))
+	v.add_child(_label(valeur, 15, C_TEXTE, true))
+	return p
+
+
+func _bloc_fenetre(titre: String) -> PanelContainer:
+	var p := PanelContainer.new()
+	var st := _style(Color(0.05, 0.03, 0.035, 0.82), Color("4a3638"), 10, 1)
+	st.set_content_margin_all(10)
+	p.add_theme_stylebox_override("panel", st)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 3)
+	p.add_child(v)
+	v.add_child(_label(titre, 11, C_OR, true))
+	return p
+
+
+func _ligne_info(nom: String, valeur: String) -> HBoxContainer:
+	var h := HBoxContainer.new()
+	var l := _label(nom, 13, C_DOUX)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(l)
+	h.add_child(_label(valeur, 13, C_TEXTE, true))
+	return h
+
+
+## Portrait d'un ennemi : « ? » tant qu'il n'est pas au Bestiaire.
+func _vignette_ennemi(id: String, d: float) -> Control:
+	if Sauvegarde.est_decouvert(id):
+		var p := UiCommun.portrait(id, d)
+		p.mouse_filter = Control.MOUSE_FILTER_PASS
+		p.tooltip_text = str(UnitesData.get_unite(id).get("nom", id))
+		return p
+	var inconnu := Panel.new()
+	inconnu.custom_minimum_size = Vector2(d, d)
+	inconnu.mouse_filter = Control.MOUSE_FILTER_PASS
+	inconnu.tooltip_text = "Créature inconnue"
+	inconnu.add_theme_stylebox_override("panel", _style(Color("1a1213"), Color("4a3e3c"), int(d / 2), 2))
+	var q := _label("?", int(d * 0.45), Color("7a6e68"), true)
+	q.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	q.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	q.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	inconnu.add_child(q)
+	return inconnu
+
+
+func _bloc_boss(id: String, boss_acte: bool, nom_scenario := "") -> PanelContainer:
+	var p := _bloc_fenetre("BOSS DE L'ACTE" if boss_acte else "CHEF DU CHAPITRE")
+	var v: VBoxContainer = p.get_child(0)
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 12)
+	v.add_child(h)
+	if id == "" or UnitesData.get_unite(id).is_empty():
+		h.add_child(_label("?", 20, C_DOUX, true))
+		return p
+	var connu := Sauvegarde.est_decouvert(id)
+	h.add_child(_vignette_ennemi(id, 72))
+	var t := VBoxContainer.new()
+	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	t.alignment = BoxContainer.ALIGNMENT_CENTER
+	h.add_child(t)
+	var nom := _label(str(UnitesData.get_unite(id).get("nom", id)) if connu else (nom_scenario if nom_scenario != "" else "Inconnu"), 16, Color("ff9a9a") if boss_acte else C_TEXTE, true)
+	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	nom.custom_minimum_size = Vector2(180, 0)
+	t.add_child(nom)
+	var sous := "Le vaincre achève l'Acte." if boss_acte else "Attend au bout du plateau."
+	t.add_child(_label(sous, 12, C_DOUX))
+	return p
 
 
 # =====================================================================

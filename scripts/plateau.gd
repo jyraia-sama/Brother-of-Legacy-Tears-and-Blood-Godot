@@ -13,7 +13,7 @@ extends Node2D
 
 const T := PlateauGenerateur.Type
 
-const SCENE_CHAPITRES := "res://scenes/ecran_acte.tscn"
+const SCENE_CHAPITRES := "res://scenes/carte_monde.tscn"
 const ECART := Vector2(190, 115)      # distance en pixels entre deux cases
 const RAYON := 28.0                   # taille d'une case
 const BROUILLARD := true              # false = tout le plateau visible

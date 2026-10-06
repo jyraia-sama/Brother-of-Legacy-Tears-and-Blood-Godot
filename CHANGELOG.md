@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.38.4** (2026-10-05)
+Version actuelle : **0.39.0** (2026-10-05)
+
+## v0.39.0 — La carte des Valcendre  (2026-10-05)
+
+- NOUVELLE CARTE PEINTE : les Terres des Valcendre s'étendent désormais sur une vraie carte illustrée, du domaine en flammes jusqu'au Trône de Cendres. Les 13 lieux, la route et la brume se posent directement sur le décor.
+- FICHE D'UN CHAPITRE : touche un chapitre (ou « Continuer ») pour ouvrir sa fenêtre, sur l'illustration de l'Acte : récit, niveau conseillé, niveau des ennemis, stamina minimum, cases du plateau, chef ou boss, butin d'Échos et renfort de Kaël. Les créatures que tu n'as pas encore croisées restent cachées derrière un « ? ».
+- Un chapitre terminé peut être revu et rejoué depuis sa fiche ; un chapitre verrouillé indique ce qu'il faut faire pour l'ouvrir.
+- L'ancien écran des Actes et l'ancienne liste de l'Histoire disparaissent : tout passe par la carte. En quittant un plateau, tu reviens sur la carte, sur l'Acte que tu jouais.
 
 ## v0.38.4 — Le décor du sanctuaire  (2026-10-05)
 

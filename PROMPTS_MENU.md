@@ -44,7 +44,7 @@ Composition : les bandes de gauche et de droite (le premier et le dernier cinqui
 
 # Prompt ChatGPT — carte du monde « Les Terres des Valcendre » (v0.38.0)
 
-La carte fonctionne déjà sans image (relief dessiné par le jeu). Quand l'illustration est prête, enregistre-la en **`assets/ui/carte_monde.png`** (16:9, 1920 x 1080 ou plus) : elle remplace le relief, et le jeu pose par-dessus les 13 lieux, la route, la brume et la fiche de l'Acte.
+**En service depuis la v0.39.0** : l'image est dans `assets/ui/carte_monde.png` (3:2, 1536 x 1024). Les lieux sont calés à la main dans `POS_IMAGE` (`scripts/ecran_carte.gd`) : si tu changes l'image, envoie-la-moi pour que je recale les 13 positions.
 
 ## Emplacements des lieux (en % de l'image)
 
