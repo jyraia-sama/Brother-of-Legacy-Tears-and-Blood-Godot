@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.42.0** (2026-10-06)
+Version actuelle : **0.42.1** (2026-10-06)
+
+## v0.42.1 — Les premiers Actes illustrés  (2026-10-06)
+
+- NOUVELLES ILLUSTRATIONS : les Actes I à IV ont leur vraie scène peinte. Le domaine Valcendre en flammes, la Cité en Deuil et sa Veuve aux Lanternes, les camps du Drapeau Noir, et le Sépulcre des Rois avec son gardien couronné. On les retrouve en fond de la fiche de chaque chapitre et dans la fiche de l'Acte.
+- La fiche d'un chapitre laisse mieux voir l'illustration de l'Acte : l'image est plus lumineuse, et les encadrés de droite sont plus transparents.
 
 ## v0.42.0 — Des décors qui respirent  (2026-10-06)
 

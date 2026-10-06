@@ -676,15 +676,15 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		img.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		img.modulate = Color(0.8, 0.75, 0.75) if ouvert else Color(0.4, 0.36, 0.36)
+		img.modulate = Color(0.95, 0.92, 0.92) if ouvert else Color(0.62, 0.58, 0.58)
 		img.position = Vector2(2, 2)
 		img.size = r.size - Vector2(4, 4)
 		cadre.add_child(img)
 	# Dégradé : sombre à gauche (texte lisible), l'image respire à droite
 	var grad := Gradient.new()
-	grad.set_color(0, Color(0.03, 0.018, 0.02, 0.96))
-	grad.set_color(1, Color(0.03, 0.018, 0.02, 0.2))
-	grad.add_point(0.55, Color(0.03, 0.018, 0.02, 0.85))
+	grad.set_color(0, Color(0.03, 0.018, 0.02, 0.94))
+	grad.set_color(1, Color(0.03, 0.018, 0.02, 0.0))
+	grad.add_point(0.5, Color(0.03, 0.018, 0.02, 0.78))
 	var gt := GradientTexture2D.new()
 	gt.gradient = grad
 	gt.fill_from = Vector2(0, 0)
@@ -887,7 +887,7 @@ func _case_fenetre(titre: String, valeur: String) -> PanelContainer:
 
 func _bloc_fenetre(titre: String) -> PanelContainer:
 	var p := PanelContainer.new()
-	var st := _style(Color(0.05, 0.03, 0.035, 0.82), Color("4a3638"), 10, 1)
+	var st := _style(Color(0.05, 0.03, 0.035, 0.62), Color("4a3638"), 10, 1)
 	st.set_content_margin_all(10)
 	p.add_theme_stylebox_override("panel", st)
 	var v := VBoxContainer.new()

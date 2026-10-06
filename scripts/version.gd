@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.42.0"
+const NUMERO := "0.42.1"
 const DATE := "2026-10-06"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.42.1", "date": "2026-10-06", "titre": "Les premiers Actes illustrés",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS : les Actes I à IV ont leur vraie scène peinte. Le domaine Valcendre en flammes, la Cité en Deuil et sa Veuve aux Lanternes, les camps du Drapeau Noir, et le Sépulcre des Rois avec son gardien couronné. On les retrouve en fond de la fiche de chaque chapitre et dans la fiche de l'Acte.",
+		"La fiche d'un chapitre laisse mieux voir l'illustration de l'Acte : l'image est plus lumineuse, et les encadrés de droite sont plus transparents.",
+	]},
 	{"version": "0.42.0", "date": "2026-10-06", "titre": "Des décors qui respirent",
 	"changements": [
 		"DÉCORS BIEN PLUS VISIBLES : les fonds peints sont nettement moins assombris et les panneaux plus transparents. On voit enfin la salle ou le lieu derrière chaque menu, et les textes restent lisibles.",
