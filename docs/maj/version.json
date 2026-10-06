@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVEAUX DÉCORS : les six salles du Sang ont chacune leur fond peint. La salle d'armes pour le Deck, le cercle runique pour l'Autel d'Invocation, le laboratoire d'alchimie pour la Fusion et l'Évolution, la crypte-reliquaire des Échos Sanguins, la forge et le trésor du Reliquaire, la bibliothèque du chasseur pour le Bestiaire.",
+				"Les décors sont bien plus visibles : ils sont moins assombris, et les grands panneaux deviennent légèrement transparents pour laisser voir la salle derrière, sans gêner la lecture."
+			],
+			"titre": "Les salles du Sang",
+			"version": "0.40.0"
+		},
+		{
+			"changements": [
 				"Le fond du menu principal est bien plus lumineux : le grand frère, Kaël, le médaillon et la crypte se distinguent enfin, même sur un téléphone ou un écran peu lumineux.",
 				"Correction : un réglage d'affichage assombrissait par erreur les illustrations du menu et de la carte du monde (leurs couleurs étaient « appliquées deux fois »). La carte des Valcendre retrouve elle aussi ses vraies couleurs."
 			],
@@ -128,22 +136,13 @@
 			],
 			"titre": "Le secret du Bélier",
 			"version": "0.34.0"
-		},
-		{
-			"changements": [
-				"PLATEAU FLUIDE : le décor du plateau (chemins pavés, socles, cases, miniatures) n'est plus redessiné à chaque image. Il est dessiné une fois, puis seulement quand il change (case atteinte, brouillard levé). Pendant que le pion avance, seuls la figurine, le halo de la Larme, la pénombre et les anneaux bougent : environ 3 fois moins de calcul par image.",
-				"La pénombre autour du grand frère est maintenant un seul voile sombre qui le suit, au lieu d'assombrir chaque case et chaque pavé un par un (rendu quasi identique).",
-				"Chargement du jeu web encore allégé : 66 Mo -> 25 Mo (portraits, familiers, personnages et figurines aussi compressés en WebP)."
-			],
-			"titre": "Plateau fluide et chargement allégé",
-			"version": "0.33.3"
 		}
 	],
 	"pck": {
-		"sha256": "64d4950fba80edca057f556fbc4622c732278d71d25b5a5f1612779bbe537c75",
-		"taille": 29256232,
+		"sha256": "806a13c8e6b351fd6923eb749e5e10032cc067d156e7b9abb1596dcd861159ab",
+		"taille": 31655628,
 		"url": "jeu.pck"
 	},
-	"version": "0.39.1",
+	"version": "0.40.0",
 	"version_minimum": "0.37.0"
 }
