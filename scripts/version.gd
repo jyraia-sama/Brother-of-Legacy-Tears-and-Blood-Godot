@@ -22,7 +22,7 @@ const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 const HISTORIQUE := [
 	{"version": "0.42.1", "date": "2026-10-06", "titre": "Les premiers Actes illustrés",
 	"changements": [
-		"NOUVELLES ILLUSTRATIONS : les Actes I à IV ont leur vraie scène peinte. Le domaine Valcendre en flammes, la Cité en Deuil et sa Veuve aux Lanternes, les camps du Drapeau Noir, et le Sépulcre des Rois avec son gardien couronné. On les retrouve en fond de la fiche de chaque chapitre et dans la fiche de l'Acte.",
+		"NOUVELLES ILLUSTRATIONS : les Actes I à VIII ont leur vraie scène peinte. Le domaine Valcendre en flammes, la Cité en Deuil, les camps du Drapeau Noir, le Sépulcre des Rois, les bûchers de l'Inquisiteur, le lac de verre noir de la Forêt Pétrifiée, le trône de ronces de la Dame et le siège sous l'Éclipse du Sang. On les retrouve en fond de la fiche de chaque chapitre et dans la fiche de l'Acte.",
 		"La fiche d'un chapitre laisse mieux voir l'illustration de l'Acte : l'image est plus lumineuse, et les encadrés de droite sont plus transparents.",
 	]},
 	{"version": "0.42.0", "date": "2026-10-06", "titre": "Des décors qui respirent",

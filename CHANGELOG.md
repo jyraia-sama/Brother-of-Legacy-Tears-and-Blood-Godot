@@ -4,7 +4,7 @@ Version actuelle : **0.42.1** (2026-10-06)
 
 ## v0.42.1 — Les premiers Actes illustrés  (2026-10-06)
 
-- NOUVELLES ILLUSTRATIONS : les Actes I à IV ont leur vraie scène peinte. Le domaine Valcendre en flammes, la Cité en Deuil et sa Veuve aux Lanternes, les camps du Drapeau Noir, et le Sépulcre des Rois avec son gardien couronné. On les retrouve en fond de la fiche de chaque chapitre et dans la fiche de l'Acte.
+- NOUVELLES ILLUSTRATIONS : les Actes I à VIII ont leur vraie scène peinte. Le domaine Valcendre en flammes, la Cité en Deuil, les camps du Drapeau Noir, le Sépulcre des Rois, les bûchers de l'Inquisiteur, le lac de verre noir de la Forêt Pétrifiée, le trône de ronces de la Dame et le siège sous l'Éclipse du Sang. On les retrouve en fond de la fiche de chaque chapitre et dans la fiche de l'Acte.
 - La fiche d'un chapitre laisse mieux voir l'illustration de l'Acte : l'image est plus lumineuse, et les encadrés de droite sont plus transparents.
 
 ## v0.42.0 — Des décors qui respirent  (2026-10-06)
