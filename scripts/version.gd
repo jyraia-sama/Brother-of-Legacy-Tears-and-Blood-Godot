@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.40.0"
+const NUMERO := "0.41.0"
 const DATE := "2026-10-06"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.41.0", "date": "2026-10-06", "titre": "Les lieux de la Larme",
+	"changements": [
+		"NOUVEAUX DÉCORS : les lieux de la Larme ont chacun leur fond peint. L'arène en ruine sous la lune (Arène et Arène classée), le champ de bataille et l'ombre du titan (Boss de Monde), la vallée aux six donjons, la caravane des Expéditions, le campement de la Compagnie et les enclos de la Ménagerie.",
+		"TOURS INFINIES : les deux tours se dressent face à face sur l'écran de choix. Chaque carte montre l'intérieur de sa tour, et on retrouve ces mêmes décors en montant les étages : les escaliers de lave de l'Enfer, et les escaliers de marbre du Paradis.",
+	]},
 	{"version": "0.40.0", "date": "2026-10-06", "titre": "Les salles du Sang",
 	"changements": [
 		"NOUVEAUX DÉCORS : les six salles du Sang ont chacune leur fond peint. La salle d'armes pour le Deck, le cercle runique pour l'Autel d'Invocation, le laboratoire d'alchimie pour la Fusion et l'Évolution, la crypte-reliquaire des Échos Sanguins, la forge et le trésor du Reliquaire, la bibliothèque du chasseur pour le Bestiaire.",

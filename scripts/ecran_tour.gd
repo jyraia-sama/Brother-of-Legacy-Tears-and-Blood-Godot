@@ -109,7 +109,7 @@ func _creer_fond() -> void:
 	noir.color = Color("080203") if _enfer else Color("dfe6f5")
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
-	if not UiCommun.fond_image(self, "res://assets/tours/%s_bg.png" % _tour, Color(0.6, 0.6, 0.6) if _enfer else Color(0.95, 0.95, 0.95)):
+	if not UiCommun.fond_image(self, "res://assets/fonds/tour_%s.png" % _tour, UiCommun.TEINTE_FOND if _enfer else Color(0.42, 0.42, 0.46)):
 		if _enfer:
 			UiCommun.fond_degrade(self, Color("4a0a04"), Color("050001"))
 		else:

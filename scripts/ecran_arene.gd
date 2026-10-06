@@ -9,7 +9,7 @@ extends Control
 ## Points, essais, Insignes et achats sont gérés par le serveur (supabase/02_arene.sql).
 
 const SCENE := "res://scenes/arene.tscn"
-const FOND := "res://assets/ui/aventure_bg.png"
+const FOND := "res://assets/fonds/arene.png"
 
 static var scene_retour := ""
 ## Onglet à rouvrir en revenant d'un combat
@@ -39,7 +39,7 @@ var _def_modifiee := false
 func _ready() -> void:
 	Sauvegarde.charger()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	UiCommun.fond_image(self, FOND, Color(0.3, 0.26, 0.3))
+	UiCommun.fond_image(self, FOND, UiCommun.TEINTE_FOND)
 
 	var marge := MarginContainer.new()
 	marge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

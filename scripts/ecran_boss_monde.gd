@@ -4,7 +4,7 @@ extends Control
 ## les autres sont grisés. Avant l'assaut : préparer l'armée (4 escouades de 5).
 
 const SCENE := "res://scenes/boss_monde.tscn"
-const FOND := "res://assets/boss_monde/boss_monde_bg.png"
+const FOND := "res://assets/fonds/boss_monde.png"
 const C_SANG := Color("d0453a")
 
 static var scene_retour := ""
@@ -24,7 +24,7 @@ func _ready() -> void:
 	noir.color = Color("0a0506")
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
-	if not UiCommun.fond_image(self, FOND, Color(0.45, 0.45, 0.45)):
+	if not UiCommun.fond_image(self, FOND, UiCommun.TEINTE_FOND):
 		UiCommun.fond_degrade(self, Color("1a0608"), Color("050203"))
 	UiCommun.particules(self, Color("b02020"), true, 35)
 

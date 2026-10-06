@@ -4,7 +4,7 @@ extends Control
 ## Affiche l'étage atteint, le record et le compte à rebours avant la réinitialisation (lundi 00:00).
 
 const SCENE := "res://scenes/tours.tscn"
-const FOND := "res://assets/tours/tours_bg.png"
+const FOND := "res://assets/fonds/tours.png"
 
 static var scene_retour := ""
 
@@ -19,7 +19,7 @@ func _ready() -> void:
 	noir.color = Color("0c0708")
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
-	if not UiCommun.fond_image(self, FOND, Color(0.55, 0.55, 0.55)):
+	if not UiCommun.fond_image(self, FOND, UiCommun.TEINTE_FOND):
 		# Moitié gauche infernale, moitié droite céleste
 		var g := Gradient.new()
 		g.set_color(0, Color("3a0804"))
@@ -102,7 +102,9 @@ func _carte_tour(tour: String, accent: Color, haut: Color, bas: Color) -> Button
 	fond.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fond.show_behind_parent = true
 	b.add_child(fond)
-	if not UiCommun.fond_image(fond, "res://assets/tours/%s_carte.png" % tour, Color(0.85, 0.85, 0.85)):
+	# Avec l'illustration (assombrie), les deux cartes prennent un texte clair
+	var avec_image := UiCommun.fond_image(fond, "res://assets/fonds/tour_%s.png" % tour, Color(0.55, 0.5, 0.5) if tour == "enfer" else Color(0.42, 0.42, 0.46))
+	if not avec_image:
 		UiCommun.fond_degrade(fond, haut if tour == "paradis" else bas, bas if tour == "paradis" else haut)
 		var p := UiCommun.particules(fond, accent, tour == "enfer", 30)
 		p.position = Vector2(380, 760 if tour == "enfer" else -10)
@@ -114,7 +116,7 @@ func _carte_tour(tour: String, accent: Color, haut: Color, bas: Color) -> Button
 	vb.add_theme_constant_override("separation", 10)
 	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(vb)
-	var sombre := tour == "enfer"
+	var sombre := tour == "enfer" or avec_image
 	var c_txt := Color("ffe0d0") if sombre else Color("2a2440")
 	var nom := UiCommun.label(str(d["nom"]).to_upper(), 40, accent if sombre else Color("8a6a10"))
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

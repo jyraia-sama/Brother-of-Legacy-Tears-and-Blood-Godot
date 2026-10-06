@@ -40,6 +40,10 @@ var _minuterie: Timer
 var _tic := 0
 
 
+
+func _fond_ecran() -> String:
+	return "res://assets/fonds/arene.png"
+
 func _titre_ecran() -> String:
 	return "ARÈNE CLASSÉE"
 
