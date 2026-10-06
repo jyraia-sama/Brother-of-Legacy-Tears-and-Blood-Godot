@@ -5,7 +5,7 @@ extends Control
 ## Le joueur choisit 1 des 8 Héros de Légende ; il rejoint sa collection et son équipe.
 
 const SCENE := "res://scenes/choix_heros.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/choix_heros.png"
 const HEROS := ["brute_noire", "barbe_bleue", "lance_doree", "nymphe",
 	"mage_gris", "dague_violette", "samourai_rouge", "chevalier_blanc"]
 
@@ -28,7 +28,7 @@ func _ready() -> void:
 		img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		img.modulate = Color(0.25, 0.2, 0.2)
+		img.modulate = UiCommun.TEINTE_FOND
 		add_child(img)
 
 	var marge := MarginContainer.new()

@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.42.2"
+const NUMERO := "0.43.0"
 const DATE := "2026-10-06"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.43.0", "date": "2026-10-06", "titre": "Le Royaume du refuge",
+	"changements": [
+		"NOUVEAUX DÉCORS DU ROYAUME : la place du refuge et son panneau des contrats (Quêtes), la galerie des trophées (Succès), l'échoppe du marchand (Boutique), la grande salle aux bannières (Guilde), la taverne sous la neige (Social) et la tour des corbeaux (Courrier).",
+		"Le choix du héros de départ se fait désormais dans la cour du domaine Valcendre en flammes, sous la lune rouge, entre deux statues de chevaliers.",
+		"Tous les menus du jeu ont maintenant leur propre décor peint.",
+	]},
 	{"version": "0.42.2", "date": "2026-10-06", "titre": "Les 13 Actes illustrés",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS : les Actes V à XIII ont à leur tour leur vraie scène peinte. Les bûchers de l'Inquisiteur, le lac de verre noir de la Forêt Pétrifiée, le trône de ronces de la Dame, le siège sous l'Éclipse du Sang, le Val des Héros Déchus, la Citadelle des Supplices, le duel des deux frères, le Trône de Cendres et la Soif Première au cœur du Sceau.",

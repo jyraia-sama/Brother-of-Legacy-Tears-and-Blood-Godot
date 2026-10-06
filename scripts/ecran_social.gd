@@ -6,7 +6,7 @@ extends Control
 ## Commandes : Échap = retour
 
 const SCENE := "res://scenes/social.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/social.png"
 
 ## Écran à rouvrir avec le bouton Retour (rempli par l'écran qui ouvre Social).
 static var scene_retour := ""
@@ -35,7 +35,7 @@ var _charge := false
 func _ready() -> void:
 	Sauvegarde.charger()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	UiCommun.fond_image(self, FOND, Color(0.35, 0.3, 0.3))
+	UiCommun.fond_image(self, FOND, UiCommun.TEINTE_FOND)
 
 	var marge := MarginContainer.new()
 	marge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

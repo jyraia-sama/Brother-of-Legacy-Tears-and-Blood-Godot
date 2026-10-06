@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.42.2** (2026-10-06)
+Version actuelle : **0.43.0** (2026-10-06)
+
+## v0.43.0 — Le Royaume du refuge  (2026-10-06)
+
+- NOUVEAUX DÉCORS DU ROYAUME : la place du refuge et son panneau des contrats (Quêtes), la galerie des trophées (Succès), l'échoppe du marchand (Boutique), la grande salle aux bannières (Guilde), la taverne sous la neige (Social) et la tour des corbeaux (Courrier).
+- Le choix du héros de départ se fait désormais dans la cour du domaine Valcendre en flammes, sous la lune rouge, entre deux statues de chevaliers.
+- Tous les menus du jeu ont maintenant leur propre décor peint.
 
 ## v0.42.2 — Les 13 Actes illustrés  (2026-10-06)
 
