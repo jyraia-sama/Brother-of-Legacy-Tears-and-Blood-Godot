@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.42.1** (2026-10-06)
+Version actuelle : **0.42.2** (2026-10-06)
+
+## v0.42.2 — Les 13 Actes illustrés  (2026-10-06)
+
+- NOUVELLES ILLUSTRATIONS : les Actes V à XIII ont à leur tour leur vraie scène peinte. Les bûchers de l'Inquisiteur, le lac de verre noir de la Forêt Pétrifiée, le trône de ronces de la Dame, le siège sous l'Éclipse du Sang, le Val des Héros Déchus, la Citadelle des Supplices, le duel des deux frères, le Trône de Cendres et la Soif Première au cœur du Sceau.
+- Fiche d'un chapitre : le niveau des ennemis s'affiche « Niv. 30 » au lieu de « Niv. 30 à 30 » quand le plafond est atteint.
 
 ## v0.42.1 — Les premiers Actes illustrés  (2026-10-06)
 

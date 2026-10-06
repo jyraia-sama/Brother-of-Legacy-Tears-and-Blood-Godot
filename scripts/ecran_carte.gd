@@ -735,7 +735,8 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 	grille.add_theme_constant_override("v_separation", 8)
 	g.add_child(grille)
 	grille.add_child(_case_fenetre("NIVEAU CONSEILLÉ", "Niv. %d" % niv))
-	grille.add_child(_case_fenetre("ENNEMIS", "Niv. %d à %d" % [niv, mini(niv + max_bonus, UnitesData.NIVEAU_MAX)]))
+	var niv_max := mini(niv + max_bonus, UnitesData.NIVEAU_MAX)
+	grille.add_child(_case_fenetre("ENNEMIS", "Niv. %d" % niv if niv_max <= niv else "Niv. %d à %d" % [niv, niv_max]))
 	grille.add_child(_case_fenetre("STAMINA", "⚡ %d minimum" % int(infos["stamina"])))
 	grille.add_child(_case_fenetre("PLATEAU", "%d cases" % int(infos["cases"])))
 
