@@ -11,6 +11,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVEAUX DÉCORS DU ROYAUME : la place du refuge et son panneau des contrats (Quêtes), la galerie des trophées (Succès), l'échoppe du marchand (Boutique), la grande salle aux bannières (Guilde), la taverne sous la neige (Social) et la tour des corbeaux (Courrier).",
+				"Le choix du héros de départ se fait désormais dans la cour du domaine Valcendre en flammes, sous la lune rouge, entre deux statues de chevaliers.",
+				"Tous les menus du jeu ont maintenant leur propre décor peint."
+			],
+			"titre": "Le Royaume du refuge",
+			"version": "0.43.0"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS : les Actes V à XIII ont à leur tour leur vraie scène peinte. Les bûchers de l'Inquisiteur, le lac de verre noir de la Forêt Pétrifiée, le trône de ronces de la Dame, le siège sous l'Éclipse du Sang, le Val des Héros Déchus, la Citadelle des Supplices, le duel des deux frères, le Trône de Cendres et la Soif Première au cœur du Sceau.",
 				"Fiche d'un chapitre : le niveau des ennemis s'affiche « Niv. 30 » au lieu de « Niv. 30 à 30 » quand le plafond est atteint."
 			],
@@ -129,22 +138,13 @@
 			],
 			"titre": "Bouton Muet",
 			"version": "0.36.1"
-		},
-		{
-			"changements": [
-				"L'APPLICATION ANDROID : Brothers of Legacy s'installe maintenant comme une vraie application sur les téléphones et tablettes Android, en plein écran et en paysage (dans un sens ou dans l'autre). Ta partie te suit grâce à ton compte.",
-				"Elle se met à jour toute seule, comme sur ordinateur : au lancement, une fenêtre présente les nouveautés et le bouton « Mettre à jour » télécharge la nouvelle version. Il suffit ensuite de rouvrir le jeu.",
-				"Sur iPhone, la version web ajoutée à l'écran d'accueil reste la meilleure solution : elle est toujours à jour."
-			],
-			"titre": "Le jeu sur Android",
-			"version": "0.36.0"
 		}
 	],
 	"pck": {
-		"sha256": "fd2f2b2b63c4b55a1a8cd80e60bd82c6d90f901201f4865a7721f6ee1e235ee3",
-		"taille": 38299452,
+		"sha256": "b8f4c813acf8ae766829d48664c38a79335c407d5f55ad1c9f79570218ee2673",
+		"taille": 40824992,
 		"url": "jeu.pck"
 	},
-	"version": "0.42.2",
+	"version": "0.43.0",
 	"version_minimum": "0.37.0"
 }
