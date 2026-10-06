@@ -10,6 +10,10 @@ const C_CADEAU := Color("8affa0")
 var _ouverte := -1
 
 
+func _fond_ecran() -> String:
+	return "res://assets/fonds/courrier.png"
+
+
 func _titre_ecran() -> String:
 	return "COURRIER"
 

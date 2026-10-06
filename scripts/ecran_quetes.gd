@@ -8,6 +8,10 @@ const C_SEMAINE := Color("b08aff")
 const C_OK := Color("8affa0")
 
 
+func _fond_ecran() -> String:
+	return "res://assets/fonds/quetes.png"
+
+
 func _titre_ecran() -> String:
 	return "QUÊTES"
 

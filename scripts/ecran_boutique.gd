@@ -10,6 +10,10 @@ var _onglet := "marche"
 var _boutons := {}
 
 
+func _fond_ecran() -> String:
+	return "res://assets/fonds/boutique.png"
+
+
 func _titre_ecran() -> String:
 	return "BOUTIQUE"
 

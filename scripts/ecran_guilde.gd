@@ -7,7 +7,7 @@ extends Control
 ## Tout est vérifié par le serveur (supabase/01_comptes_amis_guildes.sql).
 
 const SCENE := "res://scenes/guilde.tscn"
-const FOND := "res://assets/ui/menu_bg.png"
+const FOND := "res://assets/fonds/guilde.png"
 
 ## Coût de création d'une guilde (en or).
 const COUT_CREATION := 10000
@@ -47,7 +47,7 @@ var _etat: Label
 func _ready() -> void:
 	Sauvegarde.charger()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	UiCommun.fond_image(self, FOND, Color(0.35, 0.3, 0.3))
+	UiCommun.fond_image(self, FOND, UiCommun.TEINTE_FOND)
 
 	var marge := MarginContainer.new()
 	marge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

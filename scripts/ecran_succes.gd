@@ -7,6 +7,10 @@ const C_OK := Color("8affa0")
 const C_TITRE := Color("ffd27a")
 
 
+func _fond_ecran() -> String:
+	return "res://assets/fonds/succes.png"
+
+
 func _titre_ecran() -> String:
 	return "SUCCÈS"
 
