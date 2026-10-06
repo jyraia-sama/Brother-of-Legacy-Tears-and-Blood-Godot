@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-05",
+	"date": "2026-10-06",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,14 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"Le fond du menu principal est bien plus lumineux : le grand frère, Kaël, le médaillon et la crypte se distinguent enfin, même sur un téléphone ou un écran peu lumineux.",
+				"Correction : un réglage d'affichage assombrissait par erreur les illustrations du menu et de la carte du monde (leurs couleurs étaient « appliquées deux fois »). La carte des Valcendre retrouve elle aussi ses vraies couleurs."
+			],
+			"titre": "Un menu plus clair",
+			"version": "0.39.1"
+		},
 		{
 			"changements": [
 				"NOUVELLE CARTE PEINTE : les Terres des Valcendre s'étendent désormais sur une vraie carte illustrée, du domaine en flammes jusqu'au Trône de Cendres. Les 13 lieux, la route et la brume se posent directement sur le décor.",
@@ -129,22 +137,13 @@
 			],
 			"titre": "Plateau fluide et chargement allégé",
 			"version": "0.33.3"
-		},
-		{
-			"changements": [
-				"VERSION WEB PLUS FLUIDE : la sauvegarde n'est plus réécrite à chaque gain (or, XP de chaque héros, Écho, objet...). Elle est écrite une seule fois, une demi-seconde après, et tout de suite quand le jeu passe en arrière-plan. Une fin de combat réécrivait une quinzaine de fois un fichier de ~190 Ko : c'était la principale cause des saccades.",
-				"Synchronisation en ligne : le jeu ne recalcule plus toutes les 15 secondes l'empreinte complète de la partie quand rien n'a changé (petit gel régulier sur téléphone).",
-				"Téléchargement presque deux fois plus léger (66 Mo -> 36 Mo) : les grandes illustrations (fonds, Actes, cercle d'invocation...) sont compressées en WebP et les musiques réencodées, sans différence visible."
-			],
-			"titre": "Version web plus fluide et plus légère",
-			"version": "0.33.2"
 		}
 	],
 	"pck": {
-		"sha256": "be86d53df57e911d2a138dd0680fa77cf52022f77be718790596bd3a1f9b030c",
-		"taille": 29255544,
+		"sha256": "64d4950fba80edca057f556fbc4622c732278d71d25b5a5f1612779bbe537c75",
+		"taille": 29256232,
 		"url": "jeu.pck"
 	},
-	"version": "0.39.0",
+	"version": "0.39.1",
 	"version_minimum": "0.37.0"
 }
