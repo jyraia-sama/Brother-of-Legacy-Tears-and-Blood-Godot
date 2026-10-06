@@ -74,21 +74,34 @@ const ROMAINS := ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X
 
 ## Masque doux (portrait de Kaël) et masque rond (emblème).
 ## Fond des bords gauche et droit de l'illustration (elle se fond dans sa copie assombrie).
+## L'image est aussi ÉCLAIRCIE ici (les ombres remontent, les lumières restent) : l'illustration
+## ChatGPT est très sombre et devenait illisible sur les écrans peu lumineux (téléphones).
+## Attention : dans fragment(), COLOR contient DÉJÀ la texture. (Avant la v0.39.1, le shader la
+## remultipliait par texture(), ce qui assombrissait l'image au carré.)
+## gamma < 1 : ombres plus claires ; gain : luminosité générale.
 const SHADER_BORDS := "shader_type canvas_item;
+uniform float gamma = 0.62;
+uniform float gain = 1.12;
+uniform float fondu = 1.0;
 void fragment() {
-	vec4 c = texture(TEXTURE, UV);
-	c.a *= smoothstep(0.0, 0.08, UV.x) * smoothstep(1.0, 0.92, UV.x);
-	COLOR = c * COLOR;
+	vec4 c = COLOR;
+	c.rgb = clamp(pow(c.rgb, vec3(gamma)) * gain, 0.0, 1.0);
+	c.a *= mix(1.0, smoothstep(0.0, 0.08, UV.x) * smoothstep(1.0, 0.92, UV.x), fondu);
+	COLOR = c;
 }"
+## Réglage de l'éclaircissement du fond (1.0 / 1.0 = image d'origine).
+const FOND_GAMMA := 0.8
+const FOND_GAIN := 1.08
 
 const SHADER_FONDU := "shader_type canvas_item;
 uniform float bord = 0.5;
 uniform float douceur = 0.2;
 void fragment() {
-	vec4 c = texture(TEXTURE, UV);
+	// COLOR contient déjà la texture (x modulate) : ne pas la remultiplier par texture()
+	vec4 c = COLOR;
 	float d = distance(UV, vec2(0.5));
 	c.a *= smoothstep(bord, bord - douceur, d);
-	COLOR = c * COLOR;
+	COLOR = c;
 }"
 
 var _ui: Control
@@ -184,8 +197,8 @@ func _creer_fond() -> void:
 		arriere.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		arriere.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		arriere.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		arriere.modulate = Color(0.32, 0.3, 0.36)
 		arriere.size = BASE
+		arriere.material = _materiau_fond(false, 0.4)
 		_ui.add_child(arriere)
 		# Devant : l'illustration entière sur la hauteur de l'écran, bords fondus
 		var largeur := BASE.y * tex.get_width() / float(tex.get_height())
@@ -197,20 +210,17 @@ func _creer_fond() -> void:
 			fond.stretch_mode = TextureRect.STRETCH_SCALE
 			fond.position = Vector2((BASE.x - largeur) / 2.0, FOND_DECALAGE_Y)
 			fond.size = Vector2(largeur, BASE.y)
-			var sh := Shader.new()
-			sh.code = SHADER_BORDS
-			var m := ShaderMaterial.new()
-			m.shader = sh
-			fond.material = m
+			fond.material = _materiau_fond(true)
 		else:
 			fond.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 			fond.size = BASE
+			fond.material = _materiau_fond(false)
 		_ui.add_child(fond)
 		_image_fond = true
 		# Ombre douce derrière les deux colonnes de boutons : elles restent lisibles
 		# quelle que soit l'illustration (une image ChatGPT n'est jamais calée au pixel près).
-		_degrade(Rect2(0, 0, 360, 720), Color(0.03, 0.02, 0.05, 0.78), true)
-		_degrade(Rect2(920, 0, 360, 720), Color(0.06, 0.01, 0.02, 0.78), false)
+		_degrade(Rect2(0, 0, 360, 720), Color(0.03, 0.02, 0.05, 0.72), true)
+		_degrade(Rect2(920, 0, 360, 720), Color(0.06, 0.01, 0.02, 0.72), false)
 		return
 	# Fond dessiné : la Larme (bleu nuit, la pierre du grand frère) et le Sang (rouge, celle de Kaël),
 	# séparés par une fente dorée
@@ -257,6 +267,18 @@ func _creer_fond() -> void:
 	lune.position = RECT_LUNE.position
 	lune.size = RECT_LUNE.size
 	_ui.add_child(lune)
+
+
+## Matériau du fond : éclaircit l'illustration (et fond ses bords gauche/droit si bords_fondus).
+func _materiau_fond(bords_fondus: bool, assombrir := 1.0) -> ShaderMaterial:
+	var sh := Shader.new()
+	sh.code = SHADER_BORDS
+	var m := ShaderMaterial.new()
+	m.shader = sh
+	m.set_shader_parameter("gamma", FOND_GAMMA)
+	m.set_shader_parameter("gain", FOND_GAIN * assombrir)
+	m.set_shader_parameter("fondu", 1.0 if bords_fondus else 0.0)
+	return m
 
 
 ## Bande sombre qui s'efface vers le centre de l'écran (sombre_a_gauche : le bord sombre est à gauche).

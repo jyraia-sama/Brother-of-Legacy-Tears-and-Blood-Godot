@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.39.0** (2026-10-05)
+Version actuelle : **0.39.1** (2026-10-06)
+
+## v0.39.1 — Un menu plus clair  (2026-10-06)
+
+- Le fond du menu principal est bien plus lumineux : le grand frère, Kaël, le médaillon et la crypte se distinguent enfin, même sur un téléphone ou un écran peu lumineux.
+- Correction : un réglage d'affichage assombrissait par erreur les illustrations du menu et de la carte du monde (leurs couleurs étaient « appliquées deux fois »). La carte des Valcendre retrouve elle aussi ses vraies couleurs.
 
 ## v0.39.0 — La carte des Valcendre  (2026-10-05)
 
