@@ -22,6 +22,11 @@ func _couleur() -> Color:
 	return UiCommun.C_OR
 
 
+## Fond peint propre à l'écran (assets/fonds/…) ; "" = fond commun du menu.
+func _fond_ecran() -> String:
+	return ""
+
+
 func _ready() -> void:
 	Sauvegarde.charger()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -29,7 +34,8 @@ func _ready() -> void:
 	noir.color = Color("0b0607")
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
-	UiCommun.fond_image(self, FOND, Color(0.3, 0.26, 0.26))
+	if not UiCommun.fond_image(self, _fond_ecran(), UiCommun.TEINTE_FOND):
+		UiCommun.fond_image(self, FOND, Color(0.3, 0.26, 0.26))
 	var marge := MarginContainer.new()
 	marge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for c in ["left", "right", "top", "bottom"]:

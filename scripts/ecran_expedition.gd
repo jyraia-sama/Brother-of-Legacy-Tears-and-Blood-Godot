@@ -22,7 +22,7 @@ func _ready() -> void:
 	noir.color = Color("0a0708")
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
-	if not UiCommun.fond_image(self, "res://assets/expedition/expedition_bg.png", Color(0.45, 0.42, 0.42)):
+	if not UiCommun.fond_image(self, "res://assets/fonds/expedition.png", UiCommun.TEINTE_FOND):
 		UiCommun.fond_degrade(self, Color("2a1210"), Color("050304"))
 	UiCommun.particules(self, Color("ff7a4a"), true, 30)
 

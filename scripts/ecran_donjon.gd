@@ -29,7 +29,7 @@ func _ready() -> void:
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
 	_fond = UiCommun.fond_degrade(self, Color(0, 0, 0, 0), Color(0, 0, 0, 0))
-	UiCommun.fond_image(self, "res://assets/donjons/donjons_bg.png", Color(0.45, 0.42, 0.42))
+	UiCommun.fond_image(self, "res://assets/fonds/donjons.png", UiCommun.TEINTE_FOND)
 
 	var marge := MarginContainer.new()
 	_marge = marge

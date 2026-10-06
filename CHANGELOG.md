@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.40.0** (2026-10-06)
+Version actuelle : **0.41.0** (2026-10-06)
+
+## v0.41.0 — Les lieux de la Larme  (2026-10-06)
+
+- NOUVEAUX DÉCORS : les lieux de la Larme ont chacun leur fond peint. L'arène en ruine sous la lune (Arène et Arène classée), le champ de bataille et l'ombre du titan (Boss de Monde), la vallée aux six donjons, la caravane des Expéditions, le campement de la Compagnie et les enclos de la Ménagerie.
+- TOURS INFINIES : les deux tours se dressent face à face sur l'écran de choix. Chaque carte montre l'intérieur de sa tour, et on retrouve ces mêmes décors en montant les étages : les escaliers de lave de l'Enfer, et les escaliers de marbre du Paradis.
 
 ## v0.40.0 — Les salles du Sang  (2026-10-06)
 

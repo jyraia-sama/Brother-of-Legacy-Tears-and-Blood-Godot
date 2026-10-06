@@ -16,6 +16,10 @@ var _lbl_timers: Array = []        # [[Label, index équipe]]
 var _lbl_sceaux: Label
 
 
+
+func _fond_ecran() -> String:
+	return "res://assets/fonds/menagerie.png"
+
 func _titre_ecran() -> String:
 	return "LA MÉNAGERIE"
 
