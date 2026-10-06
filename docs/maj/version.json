@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS : les Actes V à XIII ont à leur tour leur vraie scène peinte. Les bûchers de l'Inquisiteur, le lac de verre noir de la Forêt Pétrifiée, le trône de ronces de la Dame, le siège sous l'Éclipse du Sang, le Val des Héros Déchus, la Citadelle des Supplices, le duel des deux frères, le Trône de Cendres et la Soif Première au cœur du Sceau.",
+				"Fiche d'un chapitre : le niveau des ennemis s'affiche « Niv. 30 » au lieu de « Niv. 30 à 30 » quand le plafond est atteint."
+			],
+			"titre": "Les 13 Actes illustrés",
+			"version": "0.42.2"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS : les Actes I à IV ont leur vraie scène peinte. Le domaine Valcendre en flammes, la Cité en Deuil et sa Veuve aux Lanternes, les camps du Drapeau Noir, et le Sépulcre des Rois avec son gardien couronné. On les retrouve en fond de la fiche de chaque chapitre et dans la fiche de l'Acte.",
 				"La fiche d'un chapitre laisse mieux voir l'illustration de l'Acte : l'image est plus lumineuse, et les encadrés de droite sont plus transparents."
 			],
@@ -130,22 +138,13 @@
 			],
 			"titre": "Le jeu sur Android",
 			"version": "0.36.0"
-		},
-		{
-			"changements": [
-				"LE JEU SUR ORDINATEUR : Brothers of Legacy existe maintenant en vraie application pour Windows et pour Mac, à installer sur ton ordinateur. Ta partie te suit grâce à ton compte.",
-				"MISES À JOUR AUTOMATIQUES : à chaque lancement, l'application regarde s'il existe une nouvelle version. Une fenêtre présente les nouveautés avec un bouton « Mettre à jour » : le téléchargement se fait dans le jeu, puis il redémarre tout seul sur la nouvelle version.",
-				"Paramètres → « Rechercher une mise à jour » pour vérifier à tout moment, et option « Plein écran » (ou touche F11) sur ordinateur."
-			],
-			"titre": "Le jeu s'installe sur ordinateur",
-			"version": "0.35.0"
 		}
 	],
 	"pck": {
-		"sha256": "36b8881bc350839b0004e148e4a108f63f687a38f6473d704af79f3a8bb82567",
-		"taille": 35368556,
+		"sha256": "fd2f2b2b63c4b55a1a8cd80e60bd82c6d90f901201f4865a7721f6ee1e235ee3",
+		"taille": 38299452,
 		"url": "jeu.pck"
 	},
-	"version": "0.42.1",
+	"version": "0.42.2",
 	"version_minimum": "0.37.0"
 }
