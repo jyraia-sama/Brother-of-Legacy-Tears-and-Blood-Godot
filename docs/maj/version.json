@@ -11,6 +11,16 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLE CARTE PEINTE : les Terres des Valcendre s'étendent désormais sur une vraie carte illustrée, du domaine en flammes jusqu'au Trône de Cendres. Les 13 lieux, la route et la brume se posent directement sur le décor.",
+				"FICHE D'UN CHAPITRE : touche un chapitre (ou « Continuer ») pour ouvrir sa fenêtre, sur l'illustration de l'Acte : récit, niveau conseillé, niveau des ennemis, stamina minimum, cases du plateau, chef ou boss, butin d'Échos et renfort de Kaël. Les créatures que tu n'as pas encore croisées restent cachées derrière un « ? ».",
+				"Un chapitre terminé peut être revu et rejoué depuis sa fiche ; un chapitre verrouillé indique ce qu'il faut faire pour l'ouvrir.",
+				"L'ancien écran des Actes et l'ancienne liste de l'Histoire disparaissent : tout passe par la carte. En quittant un plateau, tu reviens sur la carte, sur l'Acte que tu jouais."
+			],
+			"titre": "La carte des Valcendre",
+			"version": "0.39.0"
+		},
+		{
+			"changements": [
 				"Le sanctuaire secret a enfin son décor : une grande salle taillée dans la roche, veillée par une immense tête de bélier, la toison d'or et deux gardiens jumeaux. Les combats de la famille s'y déroulent désormais."
 			],
 			"titre": "Le décor du sanctuaire",
@@ -128,21 +138,13 @@
 			],
 			"titre": "Version web plus fluide et plus légère",
 			"version": "0.33.2"
-		},
-		{
-			"changements": [
-				"Images des 8 héros hommages : portraits (planche 39) et figurines de combat (planche 40). Les héros apparaissent désormais en pied sur leur socle pendant les combats.",
-				"Miniatures des cases du plateau (planche 38) : départ, combat, élite, gardien, boss, coffre, soin, mystère et piège sont posés sur des socles de pierre."
-			],
-			"titre": "Portraits, figurines et miniatures du plateau",
-			"version": "0.33.1"
 		}
 	],
 	"pck": {
-		"sha256": "f67ffcd6365d23320e4099022357f8300ae59ad78470e9bdf9f6ee3dbaf12dca",
-		"taille": 28835756,
+		"sha256": "be86d53df57e911d2a138dd0680fa77cf52022f77be718790596bd3a1f9b030c",
+		"taille": 29255544,
 		"url": "jeu.pck"
 	},
-	"version": "0.38.4",
+	"version": "0.39.0",
 	"version_minimum": "0.37.0"
 }
