@@ -50,6 +50,7 @@ const SANG := [
 	{"id": "echos",      "titre": "Échos Sanguins"},
 	{"id": "reliquaire", "titre": "Le Reliquaire"},
 	{"id": "bestiaire",  "titre": "Bestiaire"},
+	{"id": "galerie",    "titre": "Galerie d'Art"},
 ]
 const ROYAUME_GAUCHE := [
 	{"id": "quetes",   "titre": "Quêtes",   "icone": "✔"},
@@ -551,6 +552,8 @@ func _sous_titre(id: String) -> String:
 			return "Forge, coffres et Atelier"
 		"bestiaire":
 			return "%d unités découvertes" % Sauvegarde.nombre_decouverts()
+		"galerie":
+			return "Illustrations, figurines et décors"
 	return ""
 
 
@@ -1034,6 +1037,9 @@ func _on_bouton(id: String) -> void:
 		"reliquaire":
 			EcranReliquaire.scene_retour = ici
 			get_tree().change_scene_to_file(EcranReliquaire.SCENE)
+		"galerie":
+			EcranGalerie.scene_retour = ici
+			get_tree().change_scene_to_file(EcranGalerie.SCENE)
 		"bestiaire":
 			EcranBestiaire.scene_retour = ici
 			get_tree().change_scene_to_file(EcranBestiaire.SCENE)
