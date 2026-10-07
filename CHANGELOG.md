@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.43.0** (2026-10-06)
+Version actuelle : **0.44.0** (2026-10-07)
+
+## v0.44.0 — Les Titans de la semaine  (2026-10-07)
+
+- LES BOSS DE MONDE ONT UN VISAGE : les 7 titans de la semaine ont leur illustration. Le Béhémoth des Cendres, le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel.
+- En combat, le boss se dresse désormais en figurine géante sur son socle de ruines, face aux 20 petites unités de ton armée, avec son illustration en fond.
+- Les cartes des 7 jours montrent le visage de chaque boss, et leurs portraits apparaissent aussi au Bestiaire.
 
 ## v0.43.0 — Le Royaume du refuge  (2026-10-06)
 

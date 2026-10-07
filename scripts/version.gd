@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.43.0"
-const DATE := "2026-10-06"
+const NUMERO := "0.44.0"
+const DATE := "2026-10-07"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.44.0", "date": "2026-10-07", "titre": "Les Titans de la semaine",
+	"changements": [
+		"LES BOSS DE MONDE ONT UN VISAGE : les 7 titans de la semaine ont leur illustration. Le Béhémoth des Cendres, le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel.",
+		"En combat, le boss se dresse désormais en figurine géante sur son socle de ruines, face aux 20 petites unités de ton armée, avec son illustration en fond.",
+		"Les cartes des 7 jours montrent le visage de chaque boss, et leurs portraits apparaissent aussi au Bestiaire.",
+	]},
 	{"version": "0.43.0", "date": "2026-10-06", "titre": "Le Royaume du refuge",
 	"changements": [
 		"NOUVEAUX DÉCORS DU ROYAUME : la place du refuge et son panneau des contrats (Quêtes), la galerie des trophées (Succès), l'échoppe du marchand (Boutique), la grande salle aux bannières (Guilde), la taverne sous la neige (Social) et la tour des corbeaux (Courrier).",
