@@ -11,6 +11,18 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"INVOCATIONS PLUS EXIGEANTES : les héros rares se méritent. Pacte Supérieur : SSR 17 %, UR 1,6 %, Légende 0,2 % (au lieu de 22 %, 2,5 % et 0,3 %), SSR garanti toutes les 25 invocations (au lieu de 20). Pacte Doré : SR 6 % (au lieu de 10 %). Invocations d'événement : SSR 19,5 %, UR 2,7 %, Légende 0,3 %.",
+				"AVENTURE PLUS DIFFICILE : les ennemis se renforcent davantage d'Acte en Acte (jusqu'à environ +24 % de puissance à la fin de l'histoire). Il faudra davantage améliorer ses Échos, fusionner et éveiller ses héros pour venir à bout des derniers Actes.",
+				"Équilibrage vérifié par simulation : un joueur régulier perd en moyenne 1 à 5 combats par chapitre, et ne reste presque jamais bloqué.",
+				"MODES DÉBLOQUÉS AU FIL DE L'HISTOIRE : pour ne pas tout découvrir d'un coup, les menus s'ouvrent en avançant. Échos Sanguins au chapitre 3 de l'Acte I ; Fusion et Reliquaire à la fin de l'Acte I ; Arène et Donjons à la fin de l'Acte II ; Boss de Monde, Tours et Guilde à la fin de l'Acte III ; Expédition et Ménagerie à la fin de l'Acte IV. Une fenêtre annonce chaque nouveauté. Les joueurs déjà avancés gardent tout ce qu'ils ont débloqué.",
+				"PLACES D'ÉQUIPE : l'aventure commence avec 3 héros ; la 4e place s'ouvre à la fin de l'Acte I, la 5e à la fin de l'Acte III. Les premiers Actes ont été rééquilibrés en conséquence.",
+				"Les quêtes du jour et de la semaine ne proposent plus de missions dans des modes encore fermés."
+			],
+			"titre": "Le prix de la gloire",
+			"version": "0.48.0"
+		},
+		{
+			"changements": [
 				"LA GUILDE PREND VIE : niveau et XP de guilde, trésor commun, et un don par jour (gratuit, en or ou en gemmes) qui fait grandir la guilde et te rapporte des Sceaux de guilde.",
 				"DISCUSSION DE GUILDE : un chat pour parler avec tous les membres, directement dans l'écran de guilde.",
 				"BOSS DE GUILDE : chaque semaine, toute la guilde affronte le même titan avec ses armées (2 assauts par jour). Les dégâts s'additionnent ; paliers à 25, 50, 75 et 100 % avec Sceaux, or, coffres et Éclats pour tous les participants.",
@@ -130,20 +142,13 @@
 			],
 			"titre": "Les figurines du sanctuaire",
 			"version": "0.38.3"
-		},
-		{
-			"changements": [
-				"Le sanctuaire secret a deux nouveaux portraits… Le Bélier Ardent et un certain reflet dans le miroir n'attendent plus que toi."
-			],
-			"titre": "Portraits du sanctuaire (2)",
-			"version": "0.38.2"
 		}
 	],
 	"pck": {
-		"sha256": "4099dcd4ec442ae56ea9e7537b15ec21964c726faae52e96d610cacbaf32c240",
-		"taille": 81028728,
+		"sha256": "1e756e3b7ffd8889680f5d6b2d9026cb69ea6a19a7ef4466dd97dd3b320a3f1b",
+		"taille": 81036188,
 		"url": "jeu.pck"
 	},
-	"version": "0.47.0",
+	"version": "0.48.0",
 	"version_minimum": "0.37.0"
 }
