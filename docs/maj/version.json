@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"Arnaud Riff-de-Sang a enfin son portrait et sa figurine de combat (Deck, invocations, Galerie d'Art et combats)."
+			],
+			"titre": "Arnaud monte sur scène",
+			"version": "0.49.1"
+		},
+		{
+			"changements": [
 				"ARÈNE CLASSÉE — SORTS PLUS LISIBLES : à ton tour, chaque action est une grande carte qui dit clairement ce qu'elle fait (dégâts, effets, chances), qui elle touche (« Tu choisis la cible », « Touche tous les ennemis », « Sur toute l'équipe »…) et sa recharge (« Prêt dans 2 tours »). Plus besoin de survoler les boutons, ce qui marche aussi sur téléphone.",
 				"ARÈNE CLASSÉE — PRÉPARER SON ÉQUIPE : un bouton « Préparer mon équipe » ouvre le Deck directement depuis l'Arène classée, et on y revient ensuite.",
 				"NOUVEAU HÉROS UR : Arnaud Riff-de-Sang (Feu · soutien), guitariste punk à la crête écarlate, en hommage à Arnaud. Riff Incendiaire, Crête de Défi, Solo Déchaîné et Larsen Assourdissant ; son évolution : Arnaud, Roi du Chaos Écarlate. Invocable, et offert une fois à qui termine le Donjon d'Arnaud (le secret du menu principal)."
@@ -137,20 +144,13 @@
 			],
 			"titre": "La carte des Valcendre",
 			"version": "0.39.0"
-		},
-		{
-			"changements": [
-				"Le sanctuaire secret a enfin son décor : une grande salle taillée dans la roche, veillée par une immense tête de bélier, la toison d'or et deux gardiens jumeaux. Les combats de la famille s'y déroulent désormais."
-			],
-			"titre": "Le décor du sanctuaire",
-			"version": "0.38.4"
 		}
 	],
 	"pck": {
-		"sha256": "8b5860a33734c3feb7321f501710b34c4d251d56f2d2e23f8887278b4d1dae6c",
-		"taille": 81042572,
+		"sha256": "7e08805510af9dfdedf64bd6ce0785a8aa1a33ced4bbac6cfdff14a57e0425ec",
+		"taille": 81496968,
 		"url": "jeu.pck"
 	},
-	"version": "0.49.0",
+	"version": "0.49.1",
 	"version_minimum": "0.37.0"
 }
