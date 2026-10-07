@@ -150,7 +150,7 @@ func _ready() -> void:
 		return
 
 	Courrier.verifier()
-	Guilde.rafraichir()          # bénédictions de guilde à jour (silencieux hors ligne)
+	_rafraichir_guilde()         # bénédictions de guilde à jour (silencieux hors ligne)
 	Tutoriel.preparer_etape()
 
 	_creer_barre_haut()
@@ -556,6 +556,15 @@ func _sous_titre(id: String) -> String:
 		"galerie":
 			return "Illustrations, figurines et décors"
 	return ""
+
+
+## Copie locale des bénédictions de guilde (appliquées en combat même hors ligne).
+func _rafraichir_guilde() -> void:
+	if not EnLigne.est_connecte():
+		return
+	var r := await EnLigne.appeler("guilde_vie")
+	if r.ok:
+		Guilde.memoriser(r.data.get("benedictions", {}) if r.data is Dictionary else {})
 
 
 func _duree_courte(s: int) -> String:

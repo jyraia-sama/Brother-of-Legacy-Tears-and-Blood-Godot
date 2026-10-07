@@ -154,10 +154,12 @@ static func accueil(acte: int, chapitre: int) -> float:
 	return (0.55 + 0.45 * minf(1.0, p / 12.0)) * (premiers[p] if p < premiers.size() else 1.0)
 
 
-## Pente de difficulté : l'Acte I est plus clément (x0,88), l'Acte XII plus exigeant (x1,02).
+## Pente de difficulté : l'Acte I est plus clément (x0,88), puis les ennemis se renforcent Acte après Acte
+## (x1,26 à la fin de l'Acte XII avec PENTE_DIFFICULTE = 0,38 ; c'était 0,14 avant la v0.48).
+const PENTE_DIFFICULTE := 0.24
 static func pente(acte: int, chapitre: int) -> float:
 	var p := (acte - 1) * 6 + (chapitre - 1)
-	return 0.88 + 0.14 * p / 71.0
+	return 0.88 + PENTE_DIFFICULTE * p / 71.0
 
 
 ## Niveau attendu des héros du joueur au début d'un chapitre.

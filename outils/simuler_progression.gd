@@ -377,8 +377,7 @@ func _gestion() -> void:
 		or_ -= 4500
 		var tirages: Array = []
 		for k in 10:
-			var x := rng.randf()
-			tirages.append("N" if x < 0.6 else ("R" if x < 0.9 else "SR"))
+			tirages.append(_tirer_rarete(Invocation.PACTES["dore"]["taux"]))
 		if not "SR" in tirages:
 			tirages[0] = "SR"
 		for r in tirages:
@@ -392,11 +391,7 @@ func _gestion() -> void:
 
 func _invoquer_superieur() -> void:
 	nb_invoc += 1
-	var x := rng.randf()
-	var r := "SR"
-	if x < 0.003: r = "LEG"
-	elif x < 0.028: r = "UR"
-	elif x < 0.248: r = "SSR"
+	var r := _tirer_rarete(Invocation.PACTES["superieur"]["taux"])
 	if r == "SR":
 		pity += 1
 		if pity >= Invocation.GARANTIE_SUPERIEUR:
@@ -404,6 +399,17 @@ func _invoquer_superieur() -> void:
 	if r != "SR":
 		pity = 0
 	_ajouter(_tirer(r))
+
+
+## Rareté tirée avec les VRAIS taux du jeu (invocation.gd).
+func _tirer_rarete(taux: Array) -> String:
+	var x := rng.randf()
+	var cumul := 0.0
+	for t in taux:
+		cumul += float(t[1])
+		if x < cumul:
+			return str(t[0])
+	return str(taux[0][0])
 
 
 func _tirer(r: String) -> String:

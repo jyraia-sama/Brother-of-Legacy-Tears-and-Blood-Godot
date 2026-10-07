@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.47.0"
+const NUMERO := "0.48.0"
 const DATE := "2026-10-07"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.48.0", "date": "2026-10-07", "titre": "Le prix de la gloire",
+	"changements": [
+		"INVOCATIONS PLUS EXIGEANTES : les héros rares se méritent. Pacte Supérieur : SSR 17 %, UR 1,6 %, Légende 0,2 % (au lieu de 22 %, 2,5 % et 0,3 %), SSR garanti toutes les 25 invocations (au lieu de 20). Pacte Doré : SR 6 % (au lieu de 10 %). Invocations d'événement : SSR 19,5 %, UR 2,7 %, Légende 0,3 %.",
+		"AVENTURE PLUS DIFFICILE : les ennemis se renforcent davantage d'Acte en Acte (jusqu'à environ +24 % de puissance à la fin de l'histoire). Il faudra davantage améliorer ses Échos, fusionner et éveiller ses héros pour venir à bout des derniers Actes.",
+		"Équilibrage vérifié par simulation : un joueur régulier perd en moyenne 2 à 4 combats par chapitre, sans jamais rester bloqué.",
+	]},
 	{"version": "0.47.0", "date": "2026-10-07", "titre": "La vie de guilde",
 	"changements": [
 		"LA GUILDE PREND VIE : niveau et XP de guilde, trésor commun, et un don par jour (gratuit, en or ou en gemmes) qui fait grandir la guilde et te rapporte des Sceaux de guilde.",

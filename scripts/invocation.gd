@@ -13,19 +13,19 @@ const PACTES := {
 	"dore": {
 		"nom": "Pacte Doré",
 		"monnaie": "or", "prix_x1": 500, "prix_x10": 4500,
-		"taux": [["N", 0.60], ["R", 0.30], ["SR", 0.10]],
+		"taux": [["N", 0.66], ["R", 0.28], ["SR", 0.06]],
 	},
 	"superieur": {
 		"nom": "Pacte Supérieur",
 		"monnaie": "eclat", "prix_x1": 1, "prix_x10": 10,
-		"taux": [["SR", 0.752], ["SSR", 0.22], ["UR", 0.025], ["LEG", 0.003]],
+		"taux": [["SR", 0.812], ["SSR", 0.17], ["UR", 0.016], ["LEG", 0.002]],
 	},
 }
 
 ## Pacte Doré x10 : au moins un SR garanti.
 const X10_DORE_SR_GARANTI := true
 ## Pacte Supérieur : SSR (ou mieux) garanti si aucun n'est sorti depuis ce nombre d'invocations.
-const GARANTIE_SUPERIEUR := 20
+const GARANTIE_SUPERIEUR := 25
 
 const NOMS_RARETE := {"N": "N", "R": "R", "SR": "SR", "SSR": "SSR", "UR": "UR", "LEG": "Légende"}
 
