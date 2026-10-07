@@ -308,9 +308,12 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 	racine.add_child(nom)
 
 	# Figurine (pion) de l'unité si elle existe : elle remplace le portrait rond
-	var fig := "" if (geant or petit) else UiCommun.chemin_figurine(info["id"])
+	var fig := "" if petit else UiCommun.chemin_figurine(info["id"])
 	if fig != "":
 		var h_fig := HAUTEUR_FIGURINE_BOSS if grand else HAUTEUR_FIGURINE
+		if geant:
+			h_fig = HAUTEUR_FIGURINE_GEANT
+			largeur = h_fig * 1.05
 		racine.custom_minimum_size = Vector2(largeur, h_fig + 64)
 		racine.size = racine.custom_minimum_size
 		var socle_fig := _creer_figurine(fig, u, h_fig, largeur, info["camp"] != mon_camp())
@@ -328,6 +331,12 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 		var pv_f := _label("%d / %d" % [info["pv"], info["pv_max"]], 12, C_DOUX)
 		pv_f.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		racine.add_child(pv_f)
+		if geant:
+			# Boss de Monde : sa grande barre de vie est en haut de l'écran
+			barre_f.visible = false
+			bouclier_f.visible = false
+			pv_f.visible = false
+			_creer_barre_geant(info)
 		return {"racine": racine, "portrait": socle_fig["zone"], "figurine": socle_fig["image"], "barre": barre_f,
 			"bouclier": bouclier_f, "pv_label": pv_f, "pv_max": info["pv_max"], "base_pos": Vector2.ZERO}
 
@@ -383,6 +392,8 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 
 const HAUTEUR_FIGURINE := 165.0
 const HAUTEUR_FIGURINE_BOSS := 200.0
+## Figurine d'un Boss de Monde : immense face aux 20 petites unités.
+const HAUTEUR_FIGURINE_GEANT := 560.0
 
 ## Figurine debout sur un petit socle (ombre + liseré de la couleur de l'élément).
 ## `vers_gauche` : les ennemis regardent vers la gauche (les figurines sont dessinées tournées vers la droite).

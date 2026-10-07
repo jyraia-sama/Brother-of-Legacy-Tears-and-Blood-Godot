@@ -111,11 +111,14 @@ func _remplir_cartes() -> void:
 		var jour := UiCommun.label(Calendrier.JOURS[i].to_upper(), 18, UiCommun.C_OR if dispo else UiCommun.C_DOUX)
 		jour.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		vb.add_child(jour)
-		var chemin := "res://assets/boss_monde/%s.png" % b["id"]
+		# Vignette : le visage du boss (portrait recadré), sinon l'illustration entière
+		var chemin := UiCommun.chemin_portrait(b["id"])
+		if chemin == "":
+			chemin = "res://assets/boss_monde/%s.png" % b["id"]
 		if ResourceLoader.exists(chemin):
 			var img := TextureRect.new()
 			img.texture = load(chemin)
-			img.custom_minimum_size = Vector2(190, 140)
+			img.custom_minimum_size = Vector2(190, 170)
 			img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 			img.mouse_filter = Control.MOUSE_FILTER_IGNORE
