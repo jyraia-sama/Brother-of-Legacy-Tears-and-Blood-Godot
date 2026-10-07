@@ -30,6 +30,12 @@ Même chose avec le fichier `supabase/04_arene_classee.sql` : **New query** → 
 (À faire une fois, après les fichiers 01 et 02. Sans ce fichier, l'écran « Arène classée » affiche une erreur.
 Réglages — points de départ, force de l'Elo, durée des saisons, délais d'absence — au début du fichier.)
 
+### 2 quinquies. Vie de guilde (v0.47)
+Même chose avec le fichier `supabase/05_guildes_vie.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après le fichier 01. Ajoute : niveau et trésor de guilde, dons quotidiens, Sceaux de guilde,
+mot du chef, journal, bénédictions, boutique, Boss de guilde et discussion. Sans ce fichier, la guilde n'affiche
+que Membres / Candidatures / Réglages. Réglages — dons, bénédictions, PV du boss, boutique — au début du fichier.)
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

@@ -15,11 +15,20 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.46.0"
+const NUMERO := "0.47.0"
 const DATE := "2026-10-07"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.47.0", "date": "2026-10-07", "titre": "La vie de guilde",
+	"changements": [
+		"LA GUILDE PREND VIE : niveau et XP de guilde, trésor commun, et un don par jour (gratuit, en or ou en gemmes) qui fait grandir la guilde et te rapporte des Sceaux de guilde.",
+		"DISCUSSION DE GUILDE : un chat pour parler avec tous les membres, directement dans l'écran de guilde.",
+		"BOSS DE GUILDE : chaque semaine, toute la guilde affronte le même titan avec ses armées (2 assauts par jour). Les dégâts s'additionnent ; paliers à 25, 50, 75 et 100 % avec Sceaux, or, coffres et Éclats pour tous les participants.",
+		"BÉNÉDICTIONS : Force, Vitalité, Rempart, Fortune et Savoir, 5 rangs chacune, achetées par le chef ou les officiers avec le trésor. Elles renforcent les héros (ATK, PV, DEF) et augmentent l'or et l'XP gagnés en combat, pour tous les membres.",
+		"BOUTIQUE DE GUILDE : élixirs, tomes, coffres d'or, Pierre d'Éveil, Éclats… contre des Sceaux de guilde (limites par semaine).",
+		"Mot du chef et journal de la guilde (dons, niveaux, bénédictions, titan abattu).",
+	]},
 	{"version": "0.46.0", "date": "2026-10-07", "titre": "La Galerie d'Art",
 	"changements": [
 		"NOUVEAU : LA GALERIE D'ART (colonne du Sang, menu principal). Toutes les illustrations du jeu, rangées par onglets : Créatures, Figurines, Familiers, Boss de Monde, Histoire, Décors et Plateau.",

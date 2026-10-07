@@ -958,7 +958,8 @@ static func basculer_verrou_echo(uid_echo: int) -> void:
 
 ## Bonus totaux des Échos portés par un héros (pour le combat).
 static func bonus_echos(uid_heros: int) -> Dictionary:
-	return Echos.bonus(echos_de(uid_heros))
+	# + bénédictions de guilde (Force, Vitalité, Rempart)
+	return Guilde.appliquer_aux_stats(Echos.bonus(echos_de(uid_heros)))
 
 
 ## Stats finales d'un héros : niveau + étoiles + Échos.
