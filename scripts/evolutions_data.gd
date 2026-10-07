@@ -921,6 +921,19 @@ const UNITES := {
 			{"nom": "Volonté Indomptable", "type": "passif", "effets": [{"effet": "rage", "stat": "atk", "valeur": 0.25}], "niveau": 40, "evolue": true, "description": "Sous 50 % de PV : ATK +25 %."},
 		],
 	},
+	"arnaud_riff_evo": {
+		"nom": "Arnaud, Roi du Chaos Écarlate", "rarete": "UR", "element": "feu", "role": "soutien", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "c0203a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": ["mag", "agi"], "phase2": {}, "evolution_de": "arnaud_riff",
+		"stats": {"pv": 2170, "atk": 445, "def": 275, "agi": 350, "mag": 375},
+		"secondaires": {"crit": 13, "degats_crit": 180, "res": 34, "preci": 99},
+		"skills": [
+			{"nom": "Riff Infernal", "type": "actif", "chance": 0.4, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.05}, {"effet": "affliction", "nom": "brulure", "chance": 0.4, "duree": 2}], "niveau": 1, "evolue": true, "description": "(40 % de chance par tour) Inflige 105 % de puissance de skill à tous les ennemis ; 40 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Crête de Défi", "type": "passif", "effets": [{"effet": "aura", "stat": "atk", "valeur": 0.1}, {"effet": "stat", "stat": "agi", "valeur": 0.12}], "niveau": 10, "description": "Toute l'équipe : ATK +10 % ; AGI +12 %."},
+			{"nom": "Solo Déchaîné", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "buff", "stat": "atk", "valeur": 0.2, "duree": 2}, {"effet": "buff", "stat": "agi", "valeur": 0.15, "duree": 2}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Un solo endiablé galvanise ses alliés : ATK +20 % et AGI +15 % pour toute l'équipe (2 tours) ; retire les afflictions."},
+			{"nom": "Larsen Assourdissant", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "silence", "chance": 0.35, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Pousse l'ampli à fond : inflige 120 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Silence (1 tour)."},
+			{"nom": "Rappel du Public", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "aura", "stat": "agi", "valeur": 0.08}], "niveau": 40, "evolue": true, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; toute l'équipe : AGI +8 %."},
+		],
+	},
 	"fleuriste_ruines_evo": {
 		"nom": "La Voix de la Terre", "rarete": "UR", "element": "nature", "role": "soutien", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "b06a7a",
 		"legende": false, "forge": false, "race": "Humain", "dominantes": ["mag", "pv"], "phase2": {}, "evolution_de": "fleuriste_ruines",

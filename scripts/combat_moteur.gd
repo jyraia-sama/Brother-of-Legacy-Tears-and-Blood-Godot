@@ -785,7 +785,7 @@ func _cibles_skill_permises(c: Dictionary) -> Array:
 
 ## Actions possibles : [{type, nom, description, cibles: [idx] (vide = automatique), recharge, dispo}]
 func actions_possibles(c: Dictionary) -> Array:
-	var l: Array = [{"type": "attaque", "nom": "Attaque", "description": "Attaque normale (dégâts physiques).",
+	var l: Array = [{"type": "attaque", "nom": "Attaque", "description": "Attaque normale : dégâts physiques (ATK).",
 		"cibles": _cibles_attaque_permises(c).map(func(x): return x["idx"]), "recharge": 0, "dispo": true}]
 	var silence: bool = c["afflictions"].has("silence")
 	var rec: Dictionary = _recharges.get(c["idx"], {})

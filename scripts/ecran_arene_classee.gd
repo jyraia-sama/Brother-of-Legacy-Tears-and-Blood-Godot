@@ -195,6 +195,13 @@ func _zone_recherche() -> void:
 	vb.add_child(portraits)
 	for u in equipe:
 		portraits.add_child(UiCommun.portrait(u["id"], 58))
+	var prep := UiCommun.bouton("✎ Préparer mon équipe", 17)
+	prep.custom_minimum_size = Vector2(0, 52)
+	prep.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	prep.tooltip_text = "Ouvre le Deck pour choisir tes héros et leurs places ; tu reviens ensuite ici."
+	prep.disabled = _recherche
+	prep.pressed.connect(_preparer_equipe)
+	portraits.add_child(prep)
 	if equipe.is_empty():
 		vb.add_child(UiCommun.label("Ton équipe est vide : prépare-la dans le Deck.", 15, Color("ff7a6a")))
 	var droite := VBoxContainer.new()
@@ -336,6 +343,13 @@ func _equipe() -> Array:
 		c.erase("uid")
 		e.append(c)
 	return e
+
+
+## Va préparer l'équipe dans le Deck, puis revient dans l'Arène classée.
+func _preparer_equipe() -> void:
+	_quitter_file()
+	EcranDeck.scene_retour = SCENE
+	get_tree().change_scene_to_file(EcranDeck.SCENE)
 
 
 func _demarrer_recherche() -> void:

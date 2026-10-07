@@ -132,17 +132,7 @@ func _choisir(c: Dictionary) -> Dictionary:
 	for b in _zone_boutons.get_children():
 		b.queue_free()
 	for a in moteur.actions_possibles(c):
-		var txt: String = a["nom"]
-		if a["type"] == "skill" and int(a["recharge"]) > 0:
-			txt += "  (%d)" % int(a["recharge"])
-		elif a["type"] == "skill" and a.get("silence", false):
-			txt += "  (silence)"
-		var b := UiCommun.bouton(txt, 16)
-		b.custom_minimum_size = Vector2(0, 46)
-		b.disabled = not a["dispo"]
-		b.tooltip_text = str(a.get("description", "")) + ("" if a["type"] == "attaque" else "\nRecharge après usage : %d tour(s)." % CombatMoteur.recharge_sort({"chance": _chance(c, a["nom"])}))
-		b.pressed.connect(_clic_action.bind(a))
-		_zone_boutons.add_child(b)
+		_zone_boutons.add_child(_carte_action(c, a))
 	_temps_restant = MINUTEUR
 	while _choix_fait.is_empty() and not _fin:
 		await get_tree().process_frame
@@ -153,6 +143,113 @@ func _choisir(c: Dictionary) -> Dictionary:
 			_info("Temps écoulé : action automatique.")
 	_fermer_choix()
 	return _choix_fait
+
+
+# ---------- Cartes d'action (lisibles, une par sort) ----------
+
+const C_CARTE_ATTAQUE := Color("c8b48a")
+const C_CARTE_SORT := Color("ffb040")
+
+## Une carte cliquable : icône + nom, ce que fait le sort en 1 à 3 lignes courtes, recharge.
+func _carte_action(c: Dictionary, a: Dictionary) -> Control:
+	var est_sort: bool = a["type"] == "skill"
+	var dispo: bool = a["dispo"]
+	var coul: Color = C_CARTE_SORT if est_sort else C_CARTE_ATTAQUE
+	# Carte = panneau qui prend la hauteur de son texte (cliquable comme un bouton)
+	var b := PanelContainer.new()
+	b.custom_minimum_size = Vector2(250, 0)
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if dispo else Control.CURSOR_ARROW
+	var styles := {}
+	for etat in ["normal", "hover", "disabled"]:
+		var st := StyleBoxFlat.new()
+		st.bg_color = Color(0.13, 0.07, 0.06, 0.96) if etat != "hover" else Color(0.27, 0.14, 0.08, 0.98)
+		st.border_color = coul if etat != "disabled" else Color(0.35, 0.33, 0.33)
+		st.set_border_width_all(3 if etat == "hover" else 2)
+		st.set_corner_radius_all(10)
+		st.content_margin_left = 12
+		st.content_margin_right = 12
+		st.content_margin_top = 8
+		st.content_margin_bottom = 8
+		styles[etat] = st
+	b.add_theme_stylebox_override("panel", styles["normal"] if dispo else styles["disabled"])
+	if dispo:
+		b.mouse_entered.connect(func(): b.add_theme_stylebox_override("panel", styles["hover"]))
+		b.mouse_exited.connect(func(): b.add_theme_stylebox_override("panel", styles["normal"]))
+		b.gui_input.connect(func(ev: InputEvent):
+			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+				_clic_action(a))
+	var vb := VBoxContainer.new()
+	vb.add_theme_constant_override("separation", 3)
+	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(vb)
+	# Nom
+	var icone := "⚔ " if not est_sort else "✦ "
+	var nom := UiCommun.label(icone + str(a["nom"]), 19, coul if dispo else Color(0.6, 0.58, 0.58))
+	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vb.add_child(nom)
+	# Ce que fait le sort
+	var lignes := texte_court(str(a.get("description", "")))
+	var eff := UiCommun.label("\n".join(lignes.map(func(l): return "• " + l)), 15,
+		Color(0.95, 0.92, 0.88) if dispo else Color(0.55, 0.53, 0.53))
+	eff.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	eff.size_flags_vertical = Control.SIZE_EXPAND_FILL     # le pied reste en bas de la carte
+	vb.add_child(eff)
+	# Pied : cible et recharge
+	var pied := ""
+	var cibles: Array = a["cibles"]
+	if cibles.size() > 1:
+		pied = "🎯 Tu choisis la cible"
+	elif est_sort:
+		pied = {"ennemis": "Touche tous les ennemis", "allies": "Sur toute l'équipe", "soi": "Sur lui-même",
+			"avant": "Ennemis de l'Avant", "arriere": "Ennemis de l'Arrière", "aleatoire": "Ennemis au hasard",
+			"allie_faible": "L'allié le plus blessé"}.get(_cible_sort(c, a["nom"]), "Cible automatique")
+	else:
+		pied = "Cible automatique"
+	if est_sort:
+		if a.get("silence", false):
+			pied = "⛔ Réduit au silence"
+		elif int(a["recharge"]) > 0:
+			pied = "⏳ Prêt dans %d tour%s" % [int(a["recharge"]), "s" if int(a["recharge"]) > 1 else ""]
+		elif not dispo:
+			pied = "Inutile pour l'instant"
+		else:
+			var r := CombatMoteur.recharge_sort({"chance": _chance(c, a["nom"])})
+			pied += "  ·  recharge %d tour%s" % [r, "s" if r > 1 else ""]
+	var lp := UiCommun.label(pied, 14, Color("ffd060") if dispo else Color("ff8a6a"))
+	vb.add_child(lp)
+	for l in [nom, eff, lp]:
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return b
+
+
+## Description simplifiée d'un sort pour l'arène classée, en lignes courtes :
+## sans « (30 % de chance par tour) » (ici on choisit soi-même), sans la petite phrase d'ambiance.
+static func texte_court(desc: String) -> Array:
+	var re := RegEx.new()
+	re.compile("^\\(\\d+ ?% de chance par tour\\)\\s*")
+	var t := re.sub(desc.strip_edges(), "")
+	# « Tourne sur lui-même, lame tendue : inflige ... » -> « Inflige ... »
+	var i := t.find(" : ")
+	if i > 0 and not t.substr(0, i).contains("%"):
+		t = t.substr(i + 3)
+	t = t.replace(" de puissance de skill", " de puissance").replace("puissance de skill", "puissance")
+	t = t.replace("de chance d'infliger", "de chance :").replace("toute l'équipe", "l'équipe")
+	var l: Array = []
+	for morceau in t.split(" ; ", false):
+		var m := morceau.strip_edges().trim_suffix(".")
+		if m != "":
+			l.append(m.substr(0, 1).to_upper() + m.substr(1))
+	if l.is_empty():
+		l.append("Attaque normale")
+	return l
+
+
+func _cible_sort(c: Dictionary, nom: String) -> String:
+	for sk in c["actifs"]:
+		if sk["nom"] == nom:
+			return str(sk.get("cible", ""))
+	return ""
 
 
 func _chance(c: Dictionary, nom: String) -> float:
@@ -328,13 +425,15 @@ func _construire() -> void:
 	_panneau = PanelContainer.new()
 	var st := UiCommun.style_panneau(UiCommun.C_OR, Color(0.06, 0.02, 0.03, 0.94))
 	st.set_content_margin_all(12)
+	st.bg_color.a = 0.95     # bien opaque : le texte des sorts doit rester lisible
 	_panneau.add_theme_stylebox_override("panel", st)
 	_panneau.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
-	_panneau.anchor_left = 0.27
-	_panneau.anchor_right = 0.73
+	_panneau.anchor_left = 0.12
+	_panneau.anchor_right = 0.88
 	_panneau.anchor_top = 1.0
 	_panneau.anchor_bottom = 1.0
-	_panneau.offset_top = -126
+	_panneau.offset_top = -190
+	_panneau.grow_vertical = Control.GROW_DIRECTION_BEGIN   # grandit vers le haut si un sort a beaucoup de texte
 	_panneau.offset_bottom = -8
 	_panneau.visible = false
 	ecran.add_child(_panneau)
@@ -343,17 +442,17 @@ func _construire() -> void:
 	_panneau.add_child(vb)
 	var tete := HBoxContainer.new()
 	vb.add_child(tete)
-	_lbl_titre = UiCommun.label("", 20, UiCommun.C_OR)
+	_lbl_titre = UiCommun.label("", 22, UiCommun.C_OR)
 	_lbl_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(_lbl_titre)
-	_lbl_info = UiCommun.label("", 15, UiCommun.C_DOUX)
+	_lbl_info = UiCommun.label("", 17, Color("ffe0a0"))
 	tete.add_child(_lbl_info)
 	_barre_temps = UiCommun.barre(Color("ffb040"), 0, 8)
 	_barre_temps.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_barre_temps.max_value = MINUTEUR
 	vb.add_child(_barre_temps)
 	_zone_boutons = HBoxContainer.new()
-	_zone_boutons.add_theme_constant_override("separation", 8)
+	_zone_boutons.add_theme_constant_override("separation", 10)
 	_zone_boutons.alignment = BoxContainer.ALIGNMENT_CENTER
 	vb.add_child(_zone_boutons)
 

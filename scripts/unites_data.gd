@@ -1127,6 +1127,20 @@ const UNITES := {
 			{"nom": "Prière de la Terre", "type": "actif", "chance": 0.15, "cible": "allies", "effets": [{"effet": "ressusciter", "valeur": 0.6}, {"effet": "bouclier", "valeur": 0.2}], "niveau": 30, "description": "(15 % de chance par tour) Ranime un allié K.O. avec 60 % de ses PV ; bouclier de 20 % des PV max sur toute l'équipe."},
 		],
 	},
+	# --- Hommage à Arnaud, l'ami qui a donné l'envie de créer ce jeu (v0.48.1) ---
+	"arnaud_riff": {
+		"nom": "Arnaud Riff-de-Sang", "rarete": "UR", "element": "feu", "role": "soutien", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "c0203a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1780, "atk": 365, "def": 225, "agi": 285, "mag": 300},
+		"secondaires": {"crit": 10, "degats_crit": 170, "res": 30, "preci": 99},
+		"skills": [
+			{"nom": "Riff Incendiaire", "type": "actif", "chance": 0.4, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "brulure", "chance": 0.3, "duree": 2}], "niveau": 1, "description": "(40 % de chance par tour) Fait hurler sa guitare : inflige 90 % de puissance de skill à tous les ennemis ; 30 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Crête de Défi", "type": "passif", "effets": [{"effet": "aura", "stat": "atk", "valeur": 0.1}, {"effet": "stat", "stat": "agi", "valeur": 0.12}], "niveau": 10, "description": "Toute l'équipe : ATK +10 % ; AGI +12 %."},
+			{"nom": "Solo Déchaîné", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "buff", "stat": "atk", "valeur": 0.2, "duree": 2}, {"effet": "buff", "stat": "agi", "valeur": 0.15, "duree": 2}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Un solo endiablé galvanise ses alliés : ATK +20 % et AGI +15 % pour toute l'équipe (2 tours) ; retire les afflictions."},
+			{"nom": "Larsen Assourdissant", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "silence", "chance": 0.35, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Pousse l'ampli à fond : inflige 120 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Silence (1 tour)."},
+		],
+	},
 
 
 	# ============================================================
