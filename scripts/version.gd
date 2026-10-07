@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.48.0"
+const NUMERO := "0.49.0"
 const DATE := "2026-10-07"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.49.0", "date": "2026-10-07", "titre": "Le Riff de Sang",
+	"changements": [
+		"ARÈNE CLASSÉE — SORTS PLUS LISIBLES : à ton tour, chaque action est une grande carte qui dit clairement ce qu'elle fait (dégâts, effets, chances), qui elle touche (« Tu choisis la cible », « Touche tous les ennemis », « Sur toute l'équipe »…) et sa recharge (« Prêt dans 2 tours »). Plus besoin de survoler les boutons, ce qui marche aussi sur téléphone.",
+		"ARÈNE CLASSÉE — PRÉPARER SON ÉQUIPE : un bouton « Préparer mon équipe » ouvre le Deck directement depuis l'Arène classée, et on y revient ensuite.",
+		"NOUVEAU HÉROS UR : Arnaud Riff-de-Sang (Feu · soutien), guitariste punk à la crête écarlate, en hommage à Arnaud. Riff Incendiaire, Crête de Défi, Solo Déchaîné et Larsen Assourdissant ; son évolution : Arnaud, Roi du Chaos Écarlate. Invocable, et offert une fois à qui termine le Donjon d'Arnaud (le secret du menu principal).",
+	]},
 	{"version": "0.48.0", "date": "2026-10-07", "titre": "Le prix de la gloire",
 	"changements": [
 		"INVOCATIONS PLUS EXIGEANTES : les héros rares se méritent. Pacte Supérieur : SSR 17 %, UR 1,6 %, Légende 0,2 % (au lieu de 22 %, 2,5 % et 0,3 %), SSR garanti toutes les 25 invocations (au lieu de 20). Pacte Doré : SR 6 % (au lieu de 10 %). Invocations d'événement : SSR 19,5 %, UR 2,7 %, Légende 0,3 %.",

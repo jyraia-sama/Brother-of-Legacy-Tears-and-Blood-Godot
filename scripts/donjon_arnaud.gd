@@ -14,6 +14,8 @@ extends Control
 
 const SCENE := "res://scenes/donjon_arnaud.tscn"
 const URL_ARNAUD := "https://donjon.bkdaoc.com/"
+## Héros hommage offert en fin de donjon (une seule fois).
+const HEROS_OFFERT := "arnaud_riff"
 const RECOMPENSE_GEMMES := 100
 
 const L := 23          # largeur de la carte (cases)
@@ -412,6 +414,12 @@ func _fin_du_jeu() -> void:
 		Sauvegarde.ajouter_gemmes(RECOMPENSE_GEMMES)
 		Sauvegarde.sauvegarder()
 		bonus = "\n\nPour avoir trouvé ce secret : +%d gemmes !" % RECOMPENSE_GEMMES
+	# Le héros hommage, Arnaud Riff-de-Sang, offert une seule fois (aussi à ceux qui avaient déjà fini le donjon)
+	if not bool(t.get("heros", false)) and UnitesData.existe(HEROS_OFFERT):
+		t["heros"] = true
+		Sauvegarde.ajouter_heros(HEROS_OFFERT)
+		Sauvegarde.sauvegarder()
+		bonus += "\n\n%s rejoint ta collection : retrouve-le dans ton Deck !" % UnitesData.get_unite(HEROS_OFFERT)["nom"]
 	var contenu := VBoxContainer.new()
 	contenu.add_theme_constant_override("separation", 10)
 	var lien := UiCommun.bouton("Jouer au jeu d'Arnaud : donjon.bkdaoc.com", 18)

@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.48.0** (2026-10-07)
+Version actuelle : **0.49.0** (2026-10-07)
+
+## v0.49.0 — Le Riff de Sang  (2026-10-07)
+
+- ARÈNE CLASSÉE — SORTS PLUS LISIBLES : à ton tour, chaque action est une grande carte qui dit clairement ce qu'elle fait (dégâts, effets, chances), qui elle touche (« Tu choisis la cible », « Touche tous les ennemis », « Sur toute l'équipe »…) et sa recharge (« Prêt dans 2 tours »). Plus besoin de survoler les boutons, ce qui marche aussi sur téléphone.
+- ARÈNE CLASSÉE — PRÉPARER SON ÉQUIPE : un bouton « Préparer mon équipe » ouvre le Deck directement depuis l'Arène classée, et on y revient ensuite.
+- NOUVEAU HÉROS UR : Arnaud Riff-de-Sang (Feu · soutien), guitariste punk à la crête écarlate, en hommage à Arnaud. Riff Incendiaire, Crête de Défi, Solo Déchaîné et Larsen Assourdissant ; son évolution : Arnaud, Roi du Chaos Écarlate. Invocable, et offert une fois à qui termine le Donjon d'Arnaud (le secret du menu principal).
 
 ## v0.48.0 — Le prix de la gloire  (2026-10-07)
 
