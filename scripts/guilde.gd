@@ -62,14 +62,8 @@ static func memoriser(benedic: Variant) -> void:
 	Sauvegarde.sauvegarder()
 
 
-## Met à jour la copie locale des bénédictions (au menu principal). Silencieux en cas d'échec.
-static func rafraichir() -> void:
-	if not EnLigne.est_connecte():
-		return
-	var r := await EnLigne.appeler("guilde_vie")
-	if not r.ok:
-		return
-	memoriser(r.data.get("benedictions", {}) if r.data is Dictionary else {})
+## (La mise à jour depuis le serveur est faite par le menu principal : ce fichier ne doit pas
+## dépendre d'EnLigne, sinon les outils de simulation, qui chargent Sauvegarde, ne compilent plus.)
 
 
 ## Titan affronté par la guilde cette semaine (un des 7 Boss de Monde, en rotation).

@@ -53,7 +53,7 @@ static var mult_test := {}
 
 
 static func est_debloque() -> bool:
-	return Sauvegarde.admin("boss_monde_libre") or ActesData.est_termine(DEBLOCAGE.x, DEBLOCAGE.y)
+	return Sauvegarde.admin("boss_monde_libre") or Deblocages.est_ouvert("boss_monde")
 
 
 ## Ce boss peut-il être affronté aujourd'hui ?

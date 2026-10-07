@@ -1,6 +1,15 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.47.0** (2026-10-07)
+Version actuelle : **0.48.0** (2026-10-07)
+
+## v0.48.0 — Le prix de la gloire  (2026-10-07)
+
+- INVOCATIONS PLUS EXIGEANTES : les héros rares se méritent. Pacte Supérieur : SSR 17 %, UR 1,6 %, Légende 0,2 % (au lieu de 22 %, 2,5 % et 0,3 %), SSR garanti toutes les 25 invocations (au lieu de 20). Pacte Doré : SR 6 % (au lieu de 10 %). Invocations d'événement : SSR 19,5 %, UR 2,7 %, Légende 0,3 %.
+- AVENTURE PLUS DIFFICILE : les ennemis se renforcent davantage d'Acte en Acte (jusqu'à environ +24 % de puissance à la fin de l'histoire). Il faudra davantage améliorer ses Échos, fusionner et éveiller ses héros pour venir à bout des derniers Actes.
+- Équilibrage vérifié par simulation : un joueur régulier perd en moyenne 1 à 5 combats par chapitre, et ne reste presque jamais bloqué.
+- MODES DÉBLOQUÉS AU FIL DE L'HISTOIRE : pour ne pas tout découvrir d'un coup, les menus s'ouvrent en avançant. Échos Sanguins au chapitre 3 de l'Acte I ; Fusion et Reliquaire à la fin de l'Acte I ; Arène et Donjons à la fin de l'Acte II ; Boss de Monde, Tours et Guilde à la fin de l'Acte III ; Expédition et Ménagerie à la fin de l'Acte IV. Une fenêtre annonce chaque nouveauté. Les joueurs déjà avancés gardent tout ce qu'ils ont débloqué.
+- PLACES D'ÉQUIPE : l'aventure commence avec 3 héros ; la 4e place s'ouvre à la fin de l'Acte I, la 5e à la fin de l'Acte III. Les premiers Actes ont été rééquilibrés en conséquence.
+- Les quêtes du jour et de la semaine ne proposent plus de missions dans des modes encore fermés.
 
 ## v0.47.0 — La vie de guilde  (2026-10-07)
 

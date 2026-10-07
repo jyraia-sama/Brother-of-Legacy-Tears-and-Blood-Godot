@@ -45,6 +45,7 @@ var graine := 0
 var profil := "regulier"   # regulier · occasionnel · sans_echos
 var sortie := ""
 var instantanes: Array = []   # équipes au début de chaque chapitre (pour calibrer_aventure.gd)
+var places := 5      # places d'équipe ouvertes (mis à jour à chaque Acte)
 var m_types := {}   # "acte-type" -> [victoires, combats]
 
 # --- Mesures ---
@@ -100,6 +101,11 @@ func _jouer() -> Dictionary:
 		_ajouter(id)
 	var parcours := {}
 	for acte in range(1, 14):
+		# Places d'équipe débloquées par l'histoire (voir Deblocages) : 3, puis 4 après l'Acte I, 5 après l'Acte III
+		places = Deblocages.PLACES_DEPART
+		for cond in Deblocages.PLACES:
+			if acte > int(cond[0]):
+				places += 1
 		for chap in range(1, 7):
 			var st0 := _stamina_totale()
 			var force_eq := 0.0
@@ -377,8 +383,7 @@ func _gestion() -> void:
 		or_ -= 4500
 		var tirages: Array = []
 		for k in 10:
-			var x := rng.randf()
-			tirages.append("N" if x < 0.6 else ("R" if x < 0.9 else "SR"))
+			tirages.append(_tirer_rarete(Invocation.PACTES["dore"]["taux"]))
 		if not "SR" in tirages:
 			tirages[0] = "SR"
 		for r in tirages:
@@ -392,11 +397,7 @@ func _gestion() -> void:
 
 func _invoquer_superieur() -> void:
 	nb_invoc += 1
-	var x := rng.randf()
-	var r := "SR"
-	if x < 0.003: r = "LEG"
-	elif x < 0.028: r = "UR"
-	elif x < 0.248: r = "SSR"
+	var r := _tirer_rarete(Invocation.PACTES["superieur"]["taux"])
 	if r == "SR":
 		pity += 1
 		if pity >= Invocation.GARANTIE_SUPERIEUR:
@@ -404,6 +405,17 @@ func _invoquer_superieur() -> void:
 	if r != "SR":
 		pity = 0
 	_ajouter(_tirer(r))
+
+
+## Rareté tirée avec les VRAIS taux du jeu (invocation.gd).
+func _tirer_rarete(taux: Array) -> String:
+	var x := rng.randf()
+	var cumul := 0.0
+	for t in taux:
+		cumul += float(t[1])
+		if x < cumul:
+			return str(t[0])
+	return str(taux[0][0])
 
 
 func _tirer(r: String) -> String:
@@ -428,7 +440,7 @@ func _force(h: Dictionary) -> float:
 func _equipe() -> Array:
 	var tri := roster.duplicate()
 	tri.sort_custom(func(a, b): return _force(a) > _force(b))
-	var eq := tri.slice(0, 5)
+	var eq := tri.slice(0, places)
 	eq.sort_custom(func(a, b): return Rencontres._ordre_place(a["id"]) < Rencontres._ordre_place(b["id"]))
 	for i in eq.size():
 		eq[i]["place"] = i

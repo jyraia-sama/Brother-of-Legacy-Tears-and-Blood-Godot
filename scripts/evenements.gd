@@ -20,7 +20,7 @@ const EVENEMENTS := [
 		"couleur": "d02030",
 		"vedettes": ["empereur_dechu", "dragon_ombre", "archange_noir"],
 		"chance_vedette": 0.5,
-		"taux": [["SR", 0.70], ["SSR", 0.25], ["UR", 0.045], ["LEG", 0.005]],
+		"taux": [["SR", 0.775], ["SSR", 0.195], ["UR", 0.027], ["LEG", 0.003]],
 		"prix_x1": 1, "prix_x10": 10,
 	},
 	{
@@ -31,7 +31,7 @@ const EVENEMENTS := [
 		"couleur": "e8c050",
 		"vedettes": ["cheval_sacre", "phenix_immortel", "chien_sylvestre"],
 		"chance_vedette": 0.5,
-		"taux": [["SR", 0.70], ["SSR", 0.25], ["UR", 0.045], ["LEG", 0.005]],
+		"taux": [["SR", 0.775], ["SSR", 0.195], ["UR", 0.027], ["LEG", 0.003]],
 		"prix_x1": 1, "prix_x10": 10,
 	},
 ]

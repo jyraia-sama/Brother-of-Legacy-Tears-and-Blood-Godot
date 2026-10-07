@@ -151,13 +151,21 @@ const XP_PENTE := 0.35
 static func accueil(acte: int, chapitre: int) -> float:
 	var p := (acte - 1) * 6 + (chapitre - 1)
 	var premiers := [0.80, 0.88, 0.95]        # tout premiers chapitres : apprendre sans se faire battre
-	return (0.55 + 0.45 * minf(1.0, p / 12.0)) * (premiers[p] if p < premiers.size() else 1.0)
+	return (0.55 + 0.45 * minf(1.0, p / 12.0)) * (premiers[p] if p < premiers.size() else 1.0) \
+		* float(ALLEGEMENT_PLACES.get(acte, 1.0))
 
 
-## Pente de difficulté : l'Acte I est plus clément (x0,88), l'Acte XII plus exigeant (x1,02).
+## Allègement des Actes où l'équipe vient de gagner une place : le nouveau héros n'a pas encore
+## été monté (réglé avec outils/simuler_progression.gd, v0.48).
+const ALLEGEMENT_PLACES := {2: 0.93, 3: 0.90, 4: 0.86, 5: 0.94}
+
+
+## Pente de difficulté : l'Acte I est plus clément (x0,88), puis les ennemis se renforcent Acte après Acte
+## (x1,26 à la fin de l'Acte XII avec PENTE_DIFFICULTE = 0,38 ; c'était 0,14 avant la v0.48).
+const PENTE_DIFFICULTE := 0.24
 static func pente(acte: int, chapitre: int) -> float:
 	var p := (acte - 1) * 6 + (chapitre - 1)
-	return 0.88 + 0.14 * p / 71.0
+	return 0.88 + PENTE_DIFFICULTE * p / 71.0
 
 
 ## Niveau attendu des héros du joueur au début d'un chapitre.
@@ -262,18 +270,35 @@ static func _ordre_place(id: String) -> int:
 
 ## Puissance totale de l'équipe de référence du joueur à ce chapitre. Elle glisse d'un Acte à l'autre
 ## au fil des chapitres (l'équipe d'un vrai joueur se renforce peu à peu, pas d'un coup au début d'un Acte).
+## Puissance de l'équipe de référence : seulement ses N meilleures unités, N = places d'équipe
+## que le joueur a pendant cet Acte (3, puis 4, puis 5 : voir Deblocages).
 static func puissance_reference(acte: int, chapitre: int) -> float:
 	var niveau := niveau_attendu(acte, chapitre)
-	var a := _puissance_equipe(acte, niveau)
+	var n := places_acte(acte)
+	var a := _puissance_equipe(acte, niveau, n)
 	if not EQUIPE_REFERENCE.has(acte + 1):
 		return a
-	return lerpf(a, _puissance_equipe(acte + 1, niveau), (chapitre - 1) / 6.0)
+	return lerpf(a, _puissance_equipe(acte + 1, niveau, n), (chapitre - 1) / 6.0)
 
 
-static func _puissance_equipe(acte: int, niveau: int) -> float:
-	var total := 0.0
+## Places d'équipe pendant un Acte (débloquées en terminant les Actes précédents).
+static func places_acte(acte: int) -> int:
+	var n := Deblocages.PLACES_DEPART
+	for cond in Deblocages.PLACES:
+		if acte > int(cond[0]):
+			n += 1
+	return mini(n, 5)
+
+
+static func _puissance_equipe(acte: int, niveau: int, n := 5) -> float:
+	var p: Array = []
 	for r in EQUIPE_REFERENCE[acte]:
-		total += _puissance_moyenne(r, niveau)
+		p.append(_puissance_moyenne(r, niveau))
+	p.sort()
+	p.reverse()
+	var total := 0.0
+	for i in mini(n, p.size()):
+		total += p[i]
 	return total
 
 

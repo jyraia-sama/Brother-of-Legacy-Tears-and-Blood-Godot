@@ -227,6 +227,20 @@ func _remplir_equipe() -> void:
 			carte = UiCommun.carte_heros(Sauvegarde.get_heros(uid), TAILLE_CARTE.x, TAILLE_CARTE.y)
 			if uid == _selection:
 				carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color.WHITE, 0.08, 3))
+		elif Deblocages.condition_place(i) != "":
+			# Place pas encore débloquée (3 au début, puis 4 et 5 au fil de l'histoire)
+			carte = Button.new()
+			carte.custom_minimum_size = TAILLE_CARTE
+			carte.focus_mode = Control.FOCUS_NONE
+			carte.disabled = true
+			var sv := UiCommun.style_carte(Color(1, 1, 1, 0.06))
+			sv.bg_color = Color(0.04, 0.03, 0.03, 0.85)
+			carte.add_theme_stylebox_override("disabled", sv)
+			carte.text = "🔒\n" + Deblocages.condition_place(i).replace("Se débloque ", "").replace("à la fin", "Fin").replace("au chapitre", "Chapitre")
+			carte.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			carte.add_theme_font_size_override("font_size", 13)
+			carte.add_theme_color_override("font_disabled_color", Color("8a7f78"))
+			carte.tooltip_text = Deblocages.condition_place(i)
 		else:
 			carte = Button.new()
 			carte.custom_minimum_size = TAILLE_CARTE
