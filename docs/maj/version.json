@@ -11,6 +11,16 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVEAU : LA GALERIE D'ART (colonne du Sang, menu principal). Toutes les illustrations du jeu, rangées par onglets : Créatures, Figurines, Familiers, Boss de Monde, Histoire, Décors et Plateau.",
+				"Toucher une créature ouvre sa fiche : portrait et figurine côte à côte, rareté, élément, rôle, où la trouver (Invocation, Actes, Donjons, Tours, Boss de Monde) et toutes ses compétences. Les images s'ouvrent en grand, avec Précédent / Suivant (ou les flèches du clavier).",
+				"Ce que tu n'as pas encore découvert reste caché derrière un « ? » : les créatures pas encore rencontrées, les Actes pas encore ouverts et les personnages qui dévoileraient la suite de l'histoire.",
+				"NOUVELLE DIRECTION ARTISTIQUE (2/3) : 24 héros et monstres de plus sont repeints, avec leur figurine de combat. Archange Noir, Titan des Abysses, Reine des Liches, Chat des Abysses, Phénix Immortel, Cheval Céleste, les ennemis de l'Acte I et des terres sombres…"
+			],
+			"titre": "La Galerie d'Art",
+			"version": "0.46.0"
+		},
+		{
+			"changements": [
 				"NOUVELLE DIRECTION ARTISTIQUE (1/3) : 56 héros et monstres sont repeints dans le style des héros hommages. Les huit Légendes, les premiers compagnons, les créatures des bas-fonds, les sauvages, les guerriers des terres, les créatures des ruines et les puissants.",
 				"Chacun a désormais sa figurine de combat en pied, avec sa propre attitude : le Mage Gris jongle avec ses boules de feu, la Dague Violette guette accroupie, le Brigand Ivre lève sa chope, l'Esprit Frappeur fait voler la vaisselle…",
 				"Le Lapin Pyromane a trouvé sa vraie nature : un petit artificier fou, carotte-dynamite allumée à la main."
@@ -124,25 +134,13 @@
 			],
 			"titre": "La Crypte des Valcendre",
 			"version": "0.38.1"
-		},
-		{
-			"changements": [
-				"LA CARTE DU MONDE : le bouton Aventure ouvre maintenant « Les Terres des Valcendre ». Les 12 Actes de l'Histoire sont des lieux de la carte, du sud au nord : le Domaine Valcendre, la Cité en Deuil, les Camps du Drapeau Noir, le Sépulcre des Rois, les Terres Brûlées, la Forêt Pétrifiée, les Marais aux Murmures, le Bastion de l'Éclipse, le Val des Héros Déchus, la Citadelle des Supplices, les Champs du Jugement et le Trône de Cendres.",
-				"La route parcourue est dorée, la suite en pointillés ; la figurine du grand frère se tient sur l'Acte en cours et les terres inconnues restent dans la brume, qui se lève au fil de l'aventure.",
-				"Toucher un Acte ouvre sa fiche : partie, lieu, boss, set d'Échos et les 6 chapitres. « Continuer » lance directement le chapitre en cours, un chapitre déjà ouvert se relance d'un toucher, et « Voir l'Acte illustré » ouvre l'écran de l'Acte comme avant. Le Journal de l'histoire est en haut de la carte.",
-				"Une fois l'Acte XII terminé, le Sceau des Frères apparaît au-dessus du Trône de Cendres…",
-				"CORRECTION (application ordinateur et Android) : « Rechercher une mise à jour » et la fenêtre de mise à jour ne fonctionnaient plus depuis la v0.36.0 (le jeu pouvait se fermer). La fenêtre s'ouvre de nouveau normalement.",
-				"Menu principal : la colonne de gauche s'appelle désormais LA LARME, comme la moitié du Sceau que porte le grand frère, face au SANG de Kaël. Les couleurs suivent le Sceau : la Larme en bleu, le Sang en rouge."
-			],
-			"titre": "La carte des Terres des Valcendre",
-			"version": "0.38.0"
 		}
 	],
 	"pck": {
-		"sha256": "1ccb571af17411dd8832d12650cf34b32c629c5e58494391a2779549835770b5",
-		"taille": 69553552,
+		"sha256": "7000154c926a9a5d390da49e2b2b51793ed1baacb4011a37fbd79407df465d40",
+		"taille": 81008156,
 		"url": "jeu.pck"
 	},
-	"version": "0.45.0",
+	"version": "0.46.0",
 	"version_minimum": "0.37.0"
 }
