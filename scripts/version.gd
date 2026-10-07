@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.49.0"
+const NUMERO := "0.49.1"
 const DATE := "2026-10-07"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.49.1", "date": "2026-10-07", "titre": "Arnaud monte sur scène",
+	"changements": [
+		"Arnaud Riff-de-Sang a enfin son portrait et sa figurine de combat (Deck, invocations, Galerie d'Art et combats).",
+	]},
 	{"version": "0.49.0", "date": "2026-10-07", "titre": "Le Riff de Sang",
 	"changements": [
 		"ARÈNE CLASSÉE — SORTS PLUS LISIBLES : à ton tour, chaque action est une grande carte qui dit clairement ce qu'elle fait (dégâts, effets, chances), qui elle touche (« Tu choisis la cible », « Touche tous les ennemis », « Sur toute l'équipe »…) et sa recharge (« Prêt dans 2 tours »). Plus besoin de survoler les boutons, ce qui marche aussi sur téléphone.",

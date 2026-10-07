@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.49.0** (2026-10-07)
+Version actuelle : **0.49.1** (2026-10-07)
+
+## v0.49.1 — Arnaud monte sur scène  (2026-10-07)
+
+- Arnaud Riff-de-Sang a enfin son portrait et sa figurine de combat (Deck, invocations, Galerie d'Art et combats).
 
 ## v0.49.0 — Le Riff de Sang  (2026-10-07)
 
