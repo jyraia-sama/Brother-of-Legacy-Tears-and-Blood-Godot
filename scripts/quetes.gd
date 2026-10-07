@@ -48,6 +48,12 @@ const POOL := {
 	"chapitres_termines": {"texte": "Termine %d chapitre(s) de l'histoire", "objectif": [1, 4],
 		"recompense": [{"or": 2500, "gemmes": 20}, {"eclat_superieur": 1, "gemmes": 60}]},
 }
+## Mode de jeu dont dépend une quête : elle n'est pas proposée tant que ce mode est fermé (Deblocages).
+const MODE_QUETE := {
+	"ameliorations_echo": "echos", "etages": "tours", "donjons_termines": "donjon",
+	"missions_compagnie": "expedition", "marches": "expedition", "combats_arene": "arene",
+	"fusions": "fusion", "coffres_ouverts": "reliquaire", "boss_monde_tentatives": "boss_monde",
+}
 ## Quêtes toujours présentes (les autres sont tirées au hasard)
 const TOUJOURS := {"jour": ["combats_gagnes", "stamina_depensee"], "semaine": ["combats_gagnes"]}
 const NOMBRE := 5
@@ -112,7 +118,7 @@ static func liste(periode: String) -> Array:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash("BoL-quetes-%s-%d" % [periode, int(q[periode])])
 	var ids: Array = TOUJOURS[periode].duplicate()
-	var reste: Array = POOL.keys().filter(func(k): return not k in ids)
+	var reste: Array = POOL.keys().filter(func(k): return not k in ids and Deblocages.est_ouvert(str(MODE_QUETE.get(k, ""))))
 	while ids.size() < NOMBRE and not reste.is_empty():
 		ids.append(reste.pop_at(rng.randi_range(0, reste.size() - 1)))
 	var i := 0 if periode == "jour" else 1

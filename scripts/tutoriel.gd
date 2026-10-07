@@ -77,7 +77,7 @@ static func faite(id: String) -> bool:
 		"combat": return Sauvegarde.get_stat("combats_gagnes") >= 1
 		"chapitre": return Sauvegarde.nombre_chapitres_termines() >= 1
 		"invocation": return Succes.valeur("invocations") >= 1
-		"equipe": return Sauvegarde.get_equipe().size() >= Sauvegarde.TAILLE_EQUIPE_MAX
+		"equipe": return Sauvegarde.get_equipe().size() >= Deblocages.places_equipe()
 		"echo":
 			for e in Sauvegarde.liste_echos():
 				if int(e["porteur"]) >= 0:

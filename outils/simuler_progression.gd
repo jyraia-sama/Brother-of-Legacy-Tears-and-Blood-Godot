@@ -45,6 +45,7 @@ var graine := 0
 var profil := "regulier"   # regulier · occasionnel · sans_echos
 var sortie := ""
 var instantanes: Array = []   # équipes au début de chaque chapitre (pour calibrer_aventure.gd)
+var places := 5      # places d'équipe ouvertes (mis à jour à chaque Acte)
 var m_types := {}   # "acte-type" -> [victoires, combats]
 
 # --- Mesures ---
@@ -100,6 +101,11 @@ func _jouer() -> Dictionary:
 		_ajouter(id)
 	var parcours := {}
 	for acte in range(1, 14):
+		# Places d'équipe débloquées par l'histoire (voir Deblocages) : 3, puis 4 après l'Acte I, 5 après l'Acte III
+		places = Deblocages.PLACES_DEPART
+		for cond in Deblocages.PLACES:
+			if acte > int(cond[0]):
+				places += 1
 		for chap in range(1, 7):
 			var st0 := _stamina_totale()
 			var force_eq := 0.0
@@ -434,7 +440,7 @@ func _force(h: Dictionary) -> float:
 func _equipe() -> Array:
 	var tri := roster.duplicate()
 	tri.sort_custom(func(a, b): return _force(a) > _force(b))
-	var eq := tri.slice(0, 5)
+	var eq := tri.slice(0, places)
 	eq.sort_custom(func(a, b): return Rencontres._ordre_place(a["id"]) < Rencontres._ordre_place(b["id"]))
 	for i in eq.size():
 		eq[i]["place"] = i

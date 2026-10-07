@@ -548,7 +548,7 @@ static func a_choisi_heros_depart() -> bool:
 
 
 ## Unités offertes au début de l'aventure, en plus du héros choisi.
-const UNITES_DE_DEPART := ["chevalier", "archer", "clerc"]
+const UNITES_DE_DEPART := ["chevalier", "clerc", "archer"]   # avec 3 places au début : héros, chevalier et clerc (soins)
 
 ## Choix du héros de départ (premier lancement ou après "Nouvelle partie").
 static func choisir_heros_depart(id_unite: String) -> void:
@@ -628,13 +628,15 @@ static func get_equipe() -> Array:
 	return e
 
 
-## Les 5 places de l'équipe : uid, ou -1 si la place est vide.
+## Les 5 places de l'équipe : uid, ou -1 si la place est vide (ou pas encore débloquée :
+## 3 places au début, puis 4 et 5 au fil de l'histoire, voir Deblocages).
 static func get_slots() -> Array:
 	charger()
 	var brut: Array = donnees["equipe"]
 	var s: Array = []
+	var ouvertes := Deblocages.places_equipe()
 	for i in TAILLE_EQUIPE_MAX:
-		var uid := int(brut[i]) if i < brut.size() else -1
+		var uid := int(brut[i]) if (i < brut.size() and i < ouvertes) else -1
 		s.append(uid if (uid >= 0 and not get_heros(uid).is_empty() and not uid in s and not est_occupe(uid)) else -1)
 	return s
 
@@ -660,7 +662,7 @@ static func definir_slots(slots: Array) -> void:
 
 ## Met un héros à une place. S'il était déjà dans l'équipe, il échange sa place.
 static func placer(uid: int, place: int) -> void:
-	if est_occupe(uid):
+	if est_occupe(uid) or place >= Deblocages.places_equipe():
 		return
 	var s := get_slots()
 	var ancienne := s.find(uid)

@@ -172,6 +172,9 @@ func _ready() -> void:
 
 	# Le jeu vient d'être mis à jour : on montre les nouveautés
 	FenetreChangelog.verifier_mise_a_jour(self)
+	# Modes et places d'équipe qui viennent de s'ouvrir grâce à l'histoire
+	for n in Deblocages.nouveautes():
+		FenetreSimple.ouvrir.call_deferred(self, n["titre"], n["texte"], [["Super !", null]])
 	EnLigne.etat_change.connect(_sur_etat_compte)
 	_sur_etat_compte()
 
@@ -507,8 +510,16 @@ func _bouton_menu(id: String, titre: String, r: Rect2, a_gauche: bool, grand: bo
 	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	_placer(b, r)
 	b.pressed.connect(_on_bouton.bind(id))
+	var ouvert := Deblocages.est_ouvert(id)
+	if not ouvert:
+		# Mode pas encore débloqué : bouton assombri, cadenas et condition d'ouverture
+		var sf := _style(Color(0.02, 0.015, 0.015, 0.8), Color(1, 1, 1, 0.08), 12, 1)
+		b.add_theme_stylebox_override("normal", sf)
+		b.add_theme_stylebox_override("hover", _style(Color(0.05, 0.03, 0.03, 0.85), Color(1, 1, 1, 0.2), 12, 1))
+		b.tooltip_text = Deblocages.texte_condition(id)
 	var alig := HORIZONTAL_ALIGNMENT_LEFT if a_gauche else HORIZONTAL_ALIGNMENT_RIGHT
-	var nom := _label(titre, 22 if grand else 18, C_TEXTE if not grand else Color("fff0dc"), true)
+	var nom := _label(("🔒 " + titre) if not ouvert else titre, 22 if grand else 18,
+		Color("7d716b") if not ouvert else (C_TEXTE if not grand else Color("fff0dc")), true)
 	nom.horizontal_alignment = alig
 	_placer(nom, Rect2(16, 6 if grand else 4, r.size.x - 32, 28 if grand else 24), b)
 	var sous := _label(_sous_titre(id), 13, C_DOUX if not grand else Color("f0d9b0"))
@@ -522,6 +533,8 @@ func _bouton_menu(id: String, titre: String, r: Rect2, a_gauche: bool, grand: bo
 
 ## Petite ligne d'information sous le nom de chaque bouton.
 func _sous_titre(id: String) -> String:
+	if not Deblocages.est_ouvert(id):
+		return Deblocages.texte_condition(id)
 	match id:
 		"aventure":
 			return _prochain_chapitre()
@@ -542,7 +555,7 @@ func _sous_titre(id: String) -> String:
 		"menagerie":
 			return "Familiers et terrains de chasse"
 		"deck":
-			return "Équipe %d / 5 · Avant et Arrière" % Sauvegarde.get_equipe().size()
+			return "Équipe %d / %d · Avant et Arrière" % [Sauvegarde.get_equipe().size(), Deblocages.places_equipe()]
 		"invocation":
 			return "Pactes Doré, Supérieur et Sauvage"
 		"fusion":
@@ -750,7 +763,10 @@ func _bouton_royaume(c: Dictionary, x: float, depuis_gauche: bool) -> float:
 	var largeur := 132.0
 	var r := Rect2(x if depuis_gauche else x - largeur, 662, largeur, 44)
 	var b := Button.new()
-	b.text = "%s  %s" % [c["icone"], c["titre"]]
+	b.text = "%s  %s" % ["🔒" if not Deblocages.est_ouvert(c["id"]) else c["icone"], c["titre"]]
+	if not Deblocages.est_ouvert(c["id"]):
+		b.tooltip_text = Deblocages.texte_condition(c["id"])
+		b.modulate = Color(0.6, 0.6, 0.6)
 	b.focus_mode = Control.FOCUS_NONE
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	b.add_theme_font_size_override("font_size", 15)
@@ -1001,6 +1017,10 @@ func _bouton_icone(icone: String, r: Rect2, aide: String) -> Button:
 # =====================================================================
 
 func _on_bouton(id: String) -> void:
+	if not Deblocages.est_ouvert(id):
+		var pres: Array = Deblocages.PRESENTATIONS.get(id, [id, ""])
+		FenetreSimple.ouvrir(self, "🔒 " + str(pres[0]), "%s.\n\n%s" % [Deblocages.texte_condition(id), pres[1]], [["Compris", null]])
+		return
 	var ici := scene_file_path
 	match id:
 		"aventure":
