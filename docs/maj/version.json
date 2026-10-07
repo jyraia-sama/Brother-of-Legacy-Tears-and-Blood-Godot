@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-06",
+	"date": "2026-10-07",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,15 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"LES BOSS DE MONDE ONT UN VISAGE : les 7 titans de la semaine ont leur illustration. Le Béhémoth des Cendres, le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel.",
+				"En combat, le boss se dresse désormais en figurine géante sur son socle de ruines, face aux 20 petites unités de ton armée, avec son illustration en fond.",
+				"Les cartes des 7 jours montrent le visage de chaque boss, et leurs portraits apparaissent aussi au Bestiaire."
+			],
+			"titre": "Les Titans de la semaine",
+			"version": "0.44.0"
+		},
 		{
 			"changements": [
 				"NOUVEAUX DÉCORS DU ROYAUME : la place du refuge et son panneau des contrats (Quêtes), la galerie des trophées (Succès), l'échoppe du marchand (Boutique), la grande salle aux bannières (Guilde), la taverne sous la neige (Social) et la tour des corbeaux (Courrier).",
@@ -131,20 +140,13 @@
 			],
 			"titre": "Le nouveau menu : les Deux Frères",
 			"version": "0.37.0"
-		},
-		{
-			"changements": [
-				"Paramètres : nouvelle case « Muet » pour couper d'un coup la musique et les bruitages. Les réglages de volume sont conservés et reviennent dès qu'on la décoche."
-			],
-			"titre": "Bouton Muet",
-			"version": "0.36.1"
 		}
 	],
 	"pck": {
-		"sha256": "b8f4c813acf8ae766829d48664c38a79335c407d5f55ad1c9f79570218ee2673",
-		"taille": 40824992,
+		"sha256": "b08f48a2d1e3ad87da73b9539e7ffbafc48c76e8d7bf93cbcd5d755a034c8158",
+		"taille": 50880028,
 		"url": "jeu.pck"
 	},
-	"version": "0.43.0",
+	"version": "0.44.0",
 	"version_minimum": "0.37.0"
 }
