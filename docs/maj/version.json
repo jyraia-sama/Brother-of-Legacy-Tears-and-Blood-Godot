@@ -11,6 +11,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLE DIRECTION ARTISTIQUE (1/3) : 56 héros et monstres sont repeints dans le style des héros hommages. Les huit Légendes, les premiers compagnons, les créatures des bas-fonds, les sauvages, les guerriers des terres, les créatures des ruines et les puissants.",
+				"Chacun a désormais sa figurine de combat en pied, avec sa propre attitude : le Mage Gris jongle avec ses boules de feu, la Dague Violette guette accroupie, le Brigand Ivre lève sa chope, l'Esprit Frappeur fait voler la vaisselle…",
+				"Le Lapin Pyromane a trouvé sa vraie nature : un petit artificier fou, carotte-dynamite allumée à la main."
+			],
+			"titre": "Un nouveau visage (1/3)",
+			"version": "0.45.0"
+		},
+		{
+			"changements": [
 				"LES BOSS DE MONDE ONT UN VISAGE : les 7 titans de la semaine ont leur illustration. Le Béhémoth des Cendres, le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel.",
 				"En combat, le boss se dresse désormais en figurine géante sur son socle de ruines, face aux 20 petites unités de ton armée, avec son illustration en fond.",
 				"Les cartes des 7 jours montrent le visage de chaque boss, et leurs portraits apparaissent aussi au Bestiaire."
@@ -127,26 +136,13 @@
 			],
 			"titre": "La carte des Terres des Valcendre",
 			"version": "0.38.0"
-		},
-		{
-			"changements": [
-				"NOUVEAU MENU PRINCIPAL : l'écran est coupé en deux par une fente dorée. À gauche LA LAME pour combattre (Aventure, Arène, Boss de Monde, Tours, Donjons, Expédition, Ménagerie), à droite LE SANG pour ton armée (Deck, Invocation, Fusion, Échos, Reliquaire, Bestiaire). Chaque bouton affiche une info utile : chapitre à reprendre, boss du jour et essais restants, reset des Tours, taille de l'équipe…",
-				"Arène, Boss de Monde, Tours, Donjons, Expédition et Ménagerie s'ouvrent maintenant directement depuis le menu (ils restent aussi dans l'écran Aventure) ; le bouton retour ramène au menu.",
-				"BARRE DU HAUT : ton blason et ton niveau (Mon héros), ton nom (Compte), ton titre et une vraie barre d'XP de compte. Ressources refaites : stamina avec sa jauge et le temps avant le prochain point, or, gemmes et Éclats, avec un bouton « + » vers la Boutique. En haut à droite : Aide, Nouveautés et Menu.",
-				"LE ROYAUME en bas de l'écran : Quêtes, Succès, Boutique, Guilde (enfin un vrai bouton !), Social et le nouveau Courrier. Les pastilles signalent les récompenses à réclamer, les missions terminées, les chasses à récolter et le Boss de Monde du jour.",
-				"LE COURRIER : tes lettres, cadeaux et compensations arrivent ici, avec « Tout récupérer ». Une première lettre t'attend avec un petit présent.",
-				"Le guide PREMIERS PAS passe au centre, sous l'emblème. Les stats ATK / DEF / PV du héros quittent le menu (elles restent dans Mon héros).",
-				"Les secrets du menu sont toujours là… pour ceux qui savent où chercher."
-			],
-			"titre": "Le nouveau menu : les Deux Frères",
-			"version": "0.37.0"
 		}
 	],
 	"pck": {
-		"sha256": "b08f48a2d1e3ad87da73b9539e7ffbafc48c76e8d7bf93cbcd5d755a034c8158",
-		"taille": 50880028,
+		"sha256": "1ccb571af17411dd8832d12650cf34b32c629c5e58494391a2779549835770b5",
+		"taille": 69553552,
 		"url": "jeu.pck"
 	},
-	"version": "0.44.0",
+	"version": "0.45.0",
 	"version_minimum": "0.37.0"
 }
