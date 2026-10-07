@@ -15,11 +15,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.45.0"
+const NUMERO := "0.46.0"
 const DATE := "2026-10-07"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.46.0", "date": "2026-10-07", "titre": "La Galerie d'Art",
+	"changements": [
+		"NOUVEAU : LA GALERIE D'ART (colonne du Sang, menu principal). Toutes les illustrations du jeu, rangées par onglets : Créatures, Figurines, Familiers, Boss de Monde, Histoire, Décors et Plateau.",
+		"Toucher une créature ouvre sa fiche : portrait et figurine côte à côte, rareté, élément, rôle, où la trouver (Invocation, Actes, Donjons, Tours, Boss de Monde) et toutes ses compétences. Les images s'ouvrent en grand, avec Précédent / Suivant (ou les flèches du clavier).",
+		"Ce que tu n'as pas encore découvert reste caché derrière un « ? » : les créatures pas encore rencontrées, les Actes pas encore ouverts et les personnages qui dévoileraient la suite de l'histoire.",
+		"NOUVELLE DIRECTION ARTISTIQUE (2/3) : 24 héros et monstres de plus sont repeints, avec leur figurine de combat. Archange Noir, Titan des Abysses, Reine des Liches, Chat des Abysses, Phénix Immortel, Cheval Céleste, les ennemis de l'Acte I et des terres sombres…",
+	]},
 	{"version": "0.45.0", "date": "2026-10-07", "titre": "Un nouveau visage (1/3)",
 	"changements": [
 		"NOUVELLE DIRECTION ARTISTIQUE (1/3) : 56 héros et monstres sont repeints dans le style des héros hommages. Les huit Légendes, les premiers compagnons, les créatures des bas-fonds, les sauvages, les guerriers des terres, les créatures des ruines et les puissants.",

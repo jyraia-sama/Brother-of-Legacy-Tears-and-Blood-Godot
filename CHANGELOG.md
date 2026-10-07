@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.45.0** (2026-10-07)
+Version actuelle : **0.46.0** (2026-10-07)
+
+## v0.46.0 — La Galerie d'Art  (2026-10-07)
+
+- NOUVEAU : LA GALERIE D'ART (colonne du Sang, menu principal). Toutes les illustrations du jeu, rangées par onglets : Créatures, Figurines, Familiers, Boss de Monde, Histoire, Décors et Plateau.
+- Toucher une créature ouvre sa fiche : portrait et figurine côte à côte, rareté, élément, rôle, où la trouver (Invocation, Actes, Donjons, Tours, Boss de Monde) et toutes ses compétences. Les images s'ouvrent en grand, avec Précédent / Suivant (ou les flèches du clavier).
+- Ce que tu n'as pas encore découvert reste caché derrière un « ? » : les créatures pas encore rencontrées, les Actes pas encore ouverts et les personnages qui dévoileraient la suite de l'histoire.
+- NOUVELLE DIRECTION ARTISTIQUE (2/3) : 24 héros et monstres de plus sont repeints, avec leur figurine de combat. Archange Noir, Titan des Abysses, Reine des Liches, Chat des Abysses, Phénix Immortel, Cheval Céleste, les ennemis de l'Acte I et des terres sombres…
 
 ## v0.45.0 — Un nouveau visage (1/3)  (2026-10-07)
 
