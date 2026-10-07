@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.44.0** (2026-10-07)
+Version actuelle : **0.45.0** (2026-10-07)
+
+## v0.45.0 — Un nouveau visage (1/3)  (2026-10-07)
+
+- NOUVELLE DIRECTION ARTISTIQUE (1/3) : 56 héros et monstres sont repeints dans le style des héros hommages. Les huit Légendes, les premiers compagnons, les créatures des bas-fonds, les sauvages, les guerriers des terres, les créatures des ruines et les puissants.
+- Chacun a désormais sa figurine de combat en pied, avec sa propre attitude : le Mage Gris jongle avec ses boules de feu, la Dague Violette guette accroupie, le Brigand Ivre lève sa chope, l'Esprit Frappeur fait voler la vaisselle…
+- Le Lapin Pyromane a trouvé sa vraie nature : un petit artificier fou, carotte-dynamite allumée à la main.
 
 ## v0.44.0 — Les Titans de la semaine  (2026-10-07)
 

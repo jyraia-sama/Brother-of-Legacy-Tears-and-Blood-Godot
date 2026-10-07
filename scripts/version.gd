@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.44.0"
+const NUMERO := "0.45.0"
 const DATE := "2026-10-07"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.45.0", "date": "2026-10-07", "titre": "Un nouveau visage (1/3)",
+	"changements": [
+		"NOUVELLE DIRECTION ARTISTIQUE (1/3) : 56 héros et monstres sont repeints dans le style des héros hommages. Les huit Légendes, les premiers compagnons, les créatures des bas-fonds, les sauvages, les guerriers des terres, les créatures des ruines et les puissants.",
+		"Chacun a désormais sa figurine de combat en pied, avec sa propre attitude : le Mage Gris jongle avec ses boules de feu, la Dague Violette guette accroupie, le Brigand Ivre lève sa chope, l'Esprit Frappeur fait voler la vaisselle…",
+		"Le Lapin Pyromane a trouvé sa vraie nature : un petit artificier fou, carotte-dynamite allumée à la main.",
+	]},
 	{"version": "0.44.0", "date": "2026-10-07", "titre": "Les Titans de la semaine",
 	"changements": [
 		"LES BOSS DE MONDE ONT UN VISAGE : les 7 titans de la semaine ont leur illustration. Le Béhémoth des Cendres, le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel.",
