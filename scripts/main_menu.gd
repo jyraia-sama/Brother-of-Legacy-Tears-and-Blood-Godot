@@ -150,6 +150,7 @@ func _ready() -> void:
 		return
 
 	Courrier.verifier()
+	Guilde.rafraichir()          # bénédictions de guilde à jour (silencieux hors ligne)
 	Tutoriel.preparer_etape()
 
 	_creer_barre_haut()

@@ -795,6 +795,7 @@ func _fin() -> void:
 	if victoire:
 		var niveau_ennemi := int(demande["ennemis"][0]["niveau"]) if not demande["ennemis"].is_empty() else 1
 		or_gagne = Rencontres.or_victoire(type, niveau_ennemi)
+		or_gagne = int(round(or_gagne * (1.0 + Guilde.bonus("fortune") / 100.0)))   # bénédiction de guilde
 		Sauvegarde.ajouter_or(or_gagne)
 		Sauvegarde.ajouter_stat("combats_gagnes")
 		lignes.append("Or : +%d" % or_gagne)
@@ -820,6 +821,7 @@ func _fin() -> void:
 			if h.is_empty():
 				continue
 			var xp := Rencontres.xp_victoire(type, int(h["niveau"]), acte, chapitre)
+			xp = int(round(xp * (1.0 + Guilde.bonus("savoir") / 100.0)))            # bénédiction de guilde
 			if _res["pv_final"][i] <= 0.0:
 				xp = int(xp * 0.5)       # un héros K.O. gagne moitié moins
 			var niveaux := Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp)
@@ -879,6 +881,9 @@ func _fin_sanctuaire() -> void:
 
 
 func _fin_boss_monde() -> void:
+	if demande.get("guilde", false):
+		_fin_boss_guilde()
+		return
 	var index := int(demande.get("boss_index", 0))
 	var pct := 100.0 * float(_res["degats_ennemis"]) / maxf(1.0, float(_res["pv_max_ennemis"]))
 	var tue: bool = _res["victoire"]
@@ -892,6 +897,32 @@ func _fin_boss_monde() -> void:
 	_decouvrir(lignes)
 	resultat = {"mode": "boss_monde", "victoire": tue, "pct": pct}
 	_afficher_resultat(true, lignes, "BOSS ABATTU !" if tue else "FIN DE L'ASSAUT")
+
+
+## Boss de guilde : les dégâts infligés sont ajoutés à ceux de toute la guilde (serveur).
+func _fin_boss_guilde() -> void:
+	var degats := int(_res["degats_ennemis"])
+	var lignes: Array = ["Dégâts infligés : %d" % degats]
+	var r := await EnLigne.appeler("guilde_boss_frapper", {"p_degats": degats})
+	if r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "ok":
+		var d: Dictionary = r.data
+		lignes.append("Dégâts comptés pour la guilde : %d" % int(d["coup"]))
+		lignes.append("Le titan de la guilde : %.1f %% de ses PV perdus%s" % [
+			100.0 * float(d["degats"]) / maxf(1.0, float(d["pv_max"])), "  —  ABATTU !" if d["abattu"] else ""])
+	elif r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "essais":
+		lignes.append("Plus d'assaut disponible aujourd'hui : ces dégâts ne comptent pas.")
+	else:
+		lignes.append("Le serveur n'a pas pu enregistrer les dégâts : " + (str(r.erreur) if not r.ok else str(r.data)))
+	var xp_armee := int(150 + 100.0 * degats / maxf(1.0, float(_res["pv_max_ennemis"])) * 6)
+	for e in demande["equipe"]:
+		if e.has("uid"):
+			Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp_armee)
+	lignes.append("Toute l'armée : +%d XP" % xp_armee)
+	lignes.append("Va dans l'onglet Boss de guilde pour réclamer les paliers atteints.")
+	_xp_compte(lignes, "boss_monde")
+	_decouvrir(lignes)
+	resultat = {"mode": "boss_guilde", "degats": degats}
+	_afficher_resultat(true, lignes, "FIN DE L'ASSAUT")
 
 
 ## Arène : le résultat est envoyé au serveur, qui calcule les points et les Insignes.

@@ -1,6 +1,15 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.46.0** (2026-10-07)
+Version actuelle : **0.47.0** (2026-10-07)
+
+## v0.47.0 — La vie de guilde  (2026-10-07)
+
+- LA GUILDE PREND VIE : niveau et XP de guilde, trésor commun, et un don par jour (gratuit, en or ou en gemmes) qui fait grandir la guilde et te rapporte des Sceaux de guilde.
+- DISCUSSION DE GUILDE : un chat pour parler avec tous les membres, directement dans l'écran de guilde.
+- BOSS DE GUILDE : chaque semaine, toute la guilde affronte le même titan avec ses armées (2 assauts par jour). Les dégâts s'additionnent ; paliers à 25, 50, 75 et 100 % avec Sceaux, or, coffres et Éclats pour tous les participants.
+- BÉNÉDICTIONS : Force, Vitalité, Rempart, Fortune et Savoir, 5 rangs chacune, achetées par le chef ou les officiers avec le trésor. Elles renforcent les héros (ATK, PV, DEF) et augmentent l'or et l'XP gagnés en combat, pour tous les membres.
+- BOUTIQUE DE GUILDE : élixirs, tomes, coffres d'or, Pierre d'Éveil, Éclats… contre des Sceaux de guilde (limites par semaine).
+- Mot du chef et journal de la guilde (dons, niveaux, bénédictions, titan abattu).
 
 ## v0.46.0 — La Galerie d'Art  (2026-10-07)
 
