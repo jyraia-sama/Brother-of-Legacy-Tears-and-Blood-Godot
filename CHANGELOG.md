@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.54.0** (2026-10-08)
+Version actuelle : **0.54.1** (2026-10-08)
+
+## v0.54.1 — Le Sceau peint  (2026-10-08)
+
+- ÉCRAN DE CHARGEMENT : le Sceau des Frères est maintenant un vrai médaillon peint, or ciselé et ailes de phénix. Ses deux moitiés de cristal, éteintes au départ, se remplissent réellement de larmes bleues et de sang au fil du chargement, avec une surface qui ondule et un liseré de lumière, avant de se ressouder. Même animation sur la page de chargement du jeu web.
 
 ## v0.54.0 — Le Sceau des Frères  (2026-10-08)
 

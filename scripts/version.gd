@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.54.0"
+const NUMERO := "0.54.1"
 const DATE := "2026-10-08"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.54.1", "date": "2026-10-08", "titre": "Le Sceau peint",
+	"changements": [
+		"ÉCRAN DE CHARGEMENT : le Sceau des Frères est maintenant un vrai médaillon peint, or ciselé et ailes de phénix. Ses deux moitiés de cristal, éteintes au départ, se remplissent réellement de larmes bleues et de sang au fil du chargement, avec une surface qui ondule et un liseré de lumière, avant de se ressouder. Même animation sur la page de chargement du jeu web.",
+	]},
 	{"version": "0.54.0", "date": "2026-10-08", "titre": "Le Sceau des Frères",
 	"changements": [
 		"NOUVELLE ICÔNE : les deux frères face à face, l'aîné avec une larme bleutée, Kaël avec une larme de sang. Sur le jeu web dès cette version (onglet du navigateur, appli installée sur l'écran d'accueil) ; sur Windows, Mac et Android à la prochaine installation complète.",

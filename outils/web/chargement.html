@@ -9,7 +9,7 @@
 	« Le Sceau des Frères se reforme » : pendant le téléchargement du jeu, des larmes bleues coulent de l'œil
 	de l'aîné et des gouttes de sang de celui de Kaël, et remplissent les deux moitiés du médaillon au rythme
 	du téléchargement. Quand le jeu démarre, il enchaîne sur la fin (le Sceau se ressoude : ecran_chargement.gd).
-	Image de fond : docs/chargement.jpg (copie de assets/ui/chargement.png).
+	Image de fond : docs/chargement.jpg (copie de assets/ui/chargement.png). Médaillon : docs/sceau/*.webp (copies de assets/ui/sceau/).
 -->
 <style>
 html, body, #canvas { margin: 0; padding: 0; border: 0; }
@@ -98,42 +98,37 @@ const engine = new Engine(GODOT_CONFIG);
 		return [(W - IMG.w * e) / 2 + o[0] * IMG.w * e, (H - IMG.h * e) / 2 + o[1] * IMG.h * e];
 	}
 
-	function moitie(cx, cy, r, cote, rot, coul, temps) {
+	// Le médaillon peint (docs/sceau/) : pour chaque moitié, la version vide et le liquide seul
+	const LIQ_Y = [0.228, 0.729], CIBLE_X = { '-1': [0.30, 0.46], '1': [0.54, 0.70] };
+	const imgs = {};
+	['gauche_vide', 'droite_vide', 'gauche_liquide', 'droite_liquide'].forEach((n) => {
+		const im = new Image(); im.src = 'sceau/' + n + '.webp'; imgs[n] = im;
+	});
+	const prete = (im) => im.complete && im.naturalWidth > 0;
+
+	function moitie(cadre, cote, temps) {
+		const nom = cote < 0 ? 'gauche' : 'droite';
+		const vide = imgs[nom + '_vide'], liq = imgs[nom + '_liquide'];
+		if (!prete(vide) || !prete(liq)) return;
+		const [x, y, t] = cadre, dx = t * 0.05 * cote;
 		ctx.save();
-		ctx.translate(cx, cy); ctx.rotate(rot);
-		const chemin = new Path2D();
-		chemin.moveTo(0, -r);
-		chemin.arc(0, 0, r, -Math.PI / 2, Math.PI / 2, cote < 0);
-		chemin.closePath();
-		ctx.fillStyle = 'rgba(10,5,10,0.94)';
-		ctx.fill(chemin);
+		ctx.translate(x + t / 2 + dx, y + t / 2); ctx.rotate(-cote * 4 * Math.PI / 180); ctx.translate(-t / 2, -t / 2);
+		ctx.drawImage(vide, 0, 0, t, t);
 		if (niveau > 0.001) {
-			ctx.save();
-			ctx.clip(chemin);
-			const surface = r - 2 * r * niveau;
-			const g = ctx.createLinearGradient(0, surface, 0, r);
-			g.addColorStop(0, rgba(eclaircir(coul, 0.35), 0.92));
-			g.addColorStop(1, rgba(assombrir(coul, 0.55), 0.92));
-			ctx.fillStyle = g;
-			ctx.beginPath();
-			ctx.moveTo(-r * 1.1 * cote, r * 1.1);
-			for (let i = 0; i <= 24; i++) {
-				const x = (i / 24) * r * cote;
-				const v = Math.sin(temps * 3 + x * 0.09 * cote) * r * 0.03 * (1 - niveau * 0.7);
-				ctx.lineTo(x, surface + v);
-			}
-			ctx.lineTo(r * 1.1 * cote, r * 1.1);
-			ctx.closePath();
-			ctx.fill();
-			ctx.restore();
+			const surf = (u) => (LIQ_Y[1] - niveau * (LIQ_Y[1] - LIQ_Y[0]) + (Math.sin(u * 38 + temps * 3.2) * 0.006 + Math.sin(u * 17 - temps * 2.1) * 0.004) * (1 - niveau * 0.6)) * t;
+			const sous = (decal) => {
+				const pth = new Path2D(); pth.moveTo(0, t);
+				for (let k = 0; k <= 40; k++) pth.lineTo(k / 40 * t, surf(k / 40) + decal);
+				pth.lineTo(t, t); pth.closePath(); return pth;
+			};
+			ctx.save(); ctx.clip(sous(0)); ctx.drawImage(liq, 0, 0, t, t); ctx.restore();
+			// liseré lumineux à la surface (seulement sur le liquide)
+			const bande = new Path2D(); bande.moveTo(0, surf(0));
+			for (let k = 0; k <= 40; k++) bande.lineTo(k / 40 * t, surf(k / 40));
+			for (let k = 40; k >= 0; k--) bande.lineTo(k / 40 * t, surf(k / 40) + t * 0.014);
+			bande.closePath();
+			ctx.save(); ctx.clip(bande); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.55; ctx.drawImage(liq, 0, 0, t, t); ctx.restore();
 		}
-		ctx.lineJoin = 'round';
-		ctx.strokeStyle = rgba(assombrir(OR, 0.35), 1); ctx.lineWidth = 7; ctx.stroke(chemin);
-		ctx.strokeStyle = rgba(OR, 1); ctx.lineWidth = 3; ctx.stroke(chemin);
-		// gemme
-		const gx = r * 0.5 * cote;
-		ctx.fillStyle = rgba(assombrir(OR, 0.3), 1); ctx.beginPath(); ctx.arc(gx, 0, r * 0.11, 0, 7); ctx.fill();
-		ctx.fillStyle = rgba(eclaircir(coul, 0.15 + 0.4 * niveau), 1); ctx.beginPath(); ctx.arc(gx, 0, r * 0.08, 0, 7); ctx.fill();
 		ctx.restore();
 	}
 
@@ -148,44 +143,46 @@ const engine = new Engine(GODOT_CONFIG);
 		dernier = now;
 		niveau += (cible - niveau) * Math.min(dt * 3, 1);
 		ctx.clearRect(0, 0, W, H);
-		const cx = W * 0.5, cy = H * 0.53, r = Math.min(W, H) * 0.13, dx = r * 0.32, rot = 7 * Math.PI / 180;
+		const cote = Math.min(W, H) * 0.5, cx = W * 0.5, cy = H * 0.53;
+		const cadre = [cx - cote / 2, cy - cote / 2, cote], r = cote * 0.27;
 		// halos
 		for (let i = 0; i < 8; i++) {
-			const a = (0.025 + 0.05 * niveau) * (1 - i / 8);
-			ctx.fillStyle = rgba(LARME, a); ctx.beginPath(); ctx.arc(cx - dx - r * 0.25, cy, r * (1.1 + i * 0.13), 0, 7); ctx.fill();
-			ctx.fillStyle = rgba(SANG, a); ctx.beginPath(); ctx.arc(cx + dx + r * 0.25, cy, r * (1.1 + i * 0.13), 0, 7); ctx.fill();
+			const a = (0.03 + 0.06 * niveau) * (1 - i / 8);
+			ctx.fillStyle = rgba(LARME, a); ctx.beginPath(); ctx.arc(cx - r * 0.45, cy, r * (1 + i * 0.16), 0, 7); ctx.fill();
+			ctx.fillStyle = rgba(SANG, a); ctx.beginPath(); ctx.arc(cx + r * 0.45, cy, r * (1 + i * 0.16), 0, 7); ctx.fill();
 		}
 		// cercle de runes
-		ctx.strokeStyle = rgba(OR, 0.25 + 0.35 * niveau); ctx.lineWidth = 2;
-		for (let k = 0; k < 24; k++) {
-			const a0 = temps * 0.25 + k * Math.PI * 2 / 24;
-			ctx.beginPath(); ctx.arc(cx, cy, r * 1.32, a0, a0 + Math.PI / 24); ctx.stroke();
+		ctx.strokeStyle = rgba(OR, 0.18 + 0.3 * niveau); ctx.lineWidth = 2;
+		for (let k = 0; k < 32; k++) {
+			const a0 = temps * 0.18 + k * Math.PI * 2 / 32;
+			ctx.beginPath(); ctx.arc(cx, cy, cote * 0.56, a0, a0 + Math.PI / 32); ctx.stroke();
 		}
-		// gouttes qui coulent des yeux
+		moitie(cadre, -1, temps);
+		moitie(cadre, 1, temps);
+		// gouttes qui coulent des yeux jusqu'à la surface du liquide
 		if (niveau < 0.995 && temps >= prochaine) {
 			prochaine = temps + 0.12 + Math.random() * 0.16;
-			gouttes.push({ cote: Math.random() < 0.5 ? -1 : 1, u: 0, v: 0.8 + Math.random() * 0.3, dx: 0.2 + Math.random() * 0.5 });
+			gouttes.push({ cote: Math.random() < 0.5 ? -1 : 1, u: 0, v: 0.8 + Math.random() * 0.3, x: Math.random() });
 		}
 		gouttes = gouttes.filter((g) => {
 			g.u += dt * g.v * (0.5 + g.u * 1.4);
 			if (g.u >= 1) return false;
 			const dep = oeil(g.cote < 0 ? OEIL_LARME : OEIL_SANG);
-			const arr = [cx + (dx + r * g.dx) * g.cote, cy + r - 2 * r * niveau - r * 0.05];
+			const bx = CIBLE_X[String(g.cote)];
+			const surface = LIQ_Y[1] - niveau * (LIQ_Y[1] - LIQ_Y[0]);
+			const arr = [cadre[0] + (bx[0] + (bx[1] - bx[0]) * g.x) * cote + cote * 0.05 * g.cote, cadre[1] + surface * cote];
 			const ctrl = [dep[0] + (arr[0] - dep[0]) * 0.45, Math.min(dep[1], arr[1]) - H * 0.12];
 			const col = g.cote < 0 ? LARME : SANG;
 			for (let k = 0; k < 6; k++) {
 				const p = bezier(dep, ctrl, arr, Math.max(g.u - k * 0.025, 0));
-				ctx.fillStyle = rgba(col, 0.55 - k * 0.08); ctx.beginPath(); ctx.arc(p[0], p[1], r * (0.07 - k * 0.009), 0, 7); ctx.fill();
+				ctx.fillStyle = rgba(col, 0.55 - k * 0.08); ctx.beginPath(); ctx.arc(p[0], p[1], r * (0.06 - k * 0.008), 0, 7); ctx.fill();
 			}
 			const p = bezier(dep, ctrl, arr, g.u);
-			ctx.fillStyle = rgba(col, 0.18); ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.16, 0, 7); ctx.fill();
-			ctx.fillStyle = rgba(eclaircir(col, 0.25), 1); ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.065, 0, 7); ctx.fill();
+			ctx.fillStyle = rgba(col, 0.18); ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.14, 0, 7); ctx.fill();
+			ctx.fillStyle = rgba(col, 0.35); ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.09, 0, 7); ctx.fill();
+			ctx.fillStyle = rgba(eclaircir(col, 0.3), 1); ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.055, 0, 7); ctx.fill();
 			return true;
 		});
-		moitie(cx - dx, cy, r, -1, rot, LARME, temps);
-		moitie(cx + dx, cy, r, 1, -rot, SANG, temps);
-		ctx.strokeStyle = `rgba(255,255,255,${0.04 + 0.25 * niveau})`; ctx.lineWidth = 2;
-		ctx.beginPath(); ctx.moveTo(cx, cy - r * 1.05); ctx.lineTo(cx, cy + r * 1.05); ctx.stroke();
 		requestAnimationFrame(dessiner);
 	}
 	requestAnimationFrame(dessiner);
