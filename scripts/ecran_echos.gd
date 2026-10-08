@@ -6,6 +6,11 @@ extends Control
 ## Centre  : ses 6 emplacements, les sets actifs et ses stats (base -> avec Échos).
 ## Droite  : l'inventaire (filtres emplacement / set / tri) et la fiche de l'Écho choisi.
 ## Cliquer un emplacement du héros filtre l'inventaire sur cet emplacement.
+##
+## Bouton « ? » (en haut, il brille) : le guide pas à pas des Échos (FenetreGuideEchos),
+## ouvert tout seul à la première visite.
+## MODE ESSAI : on place des Échos possédés « en essai » sur le héros (plusieurs à la fois) et on
+## compare ses stats actuelles et en essai. Rien ne change tant qu'on n'appuie pas sur « Équiper l'essai ».
 
 const SCENE := "res://scenes/echos.tscn"
 const FOND := "res://assets/fonds/echos.png"
@@ -30,10 +35,18 @@ var _opt_emplacement: OptionButton
 var _opt_set: OptionButton
 var _opt_tri: OptionButton
 var _lbl_inventaire: Label
+var _btn_aide: Button
+
+# Mode Essai : emplacement (1-6) -> uid de l'Écho essayé (-1 = vide)
+var _essai_actif := false
+var _essai := {}
+
+const C_ESSAI := Color("5fd0ff")
+const C_HAUSSE := Color("8aff9a")
+const C_BAISSE := Color("ff7a6a")
 
 
 func _ready() -> void:
-	Tutoriel.astuce("echos", self)      # astuce à la première visite
 	Sauvegarde.charger()
 	_rng.randomize()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -66,8 +79,18 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
 	var titre := UiCommun.label("ÉCHOS SANGUINS", 30, Color("d0453a"))
-	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(titre)
+	# Bouton d'aide « ? » bien en vue : doré, lumineux et qui pulse
+	_btn_aide = UiCommun.bouton("?", 26)
+	_btn_aide.custom_minimum_size = Vector2(52, 46)
+	_btn_aide.tooltip_text = "Guide des Échos Sanguins : sets, optimisation, où les trouver, Mode Essai."
+	UiCommun.bouton_vif(_btn_aide, Color("c8871e"))
+	_btn_aide.pressed.connect(_ouvrir_guide)
+	tete.add_child(_btn_aide)
+	var lbl_aide := UiCommun.label("← Comment ça marche ?", 15, UiCommun.C_LEGENDE)
+	lbl_aide.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	lbl_aide.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tete.add_child(lbl_aide)
 	_lbl_or = UiCommun.label("", 20, Color("ffd060"))
 	tete.add_child(_lbl_or)
 
@@ -183,6 +206,23 @@ func _ready() -> void:
 	var equipe := Sauvegarde.get_equipe()
 	_heros = equipe[0] if not equipe.is_empty() else -1
 	_tout()
+	_animer_aide()
+	# Première visite : le guide s'ouvre tout seul
+	if Tutoriel.premiere_fois("guide_echos"):
+		Tutoriel.premiere_fois("echos")      # l'ancienne astuce est remplacée par le guide
+		_ouvrir_guide.call_deferred()
+
+
+func _ouvrir_guide() -> void:
+	FenetreGuideEchos.ouvrir(self, _heros)
+
+
+## Le « ? » grossit légèrement en rythme pour attirer l'œil.
+func _animer_aide() -> void:
+	_btn_aide.resized.connect(func(): _btn_aide.pivot_offset = _btn_aide.size / 2.0)
+	var tw := _btn_aide.create_tween().set_loops()
+	tw.tween_property(_btn_aide, "scale", Vector2(1.12, 1.12), 0.6).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(_btn_aide, "scale", Vector2.ONE, 0.6).set_trans(Tween.TRANS_SINE)
 
 
 func _panneau(largeur: float) -> PanelContainer:
@@ -198,6 +238,8 @@ func _panneau(largeur: float) -> PanelContainer:
 # =====================================================================
 
 func _tout() -> void:
+	if _essai_actif:
+		_nettoyer_essai()
 	_lbl_or.text = "Or : %d" % Sauvegarde.get_or()
 	_remplir_heros()
 	_remplir_centre()
@@ -241,6 +283,8 @@ func _remplir_heros() -> void:
 		hb.add_child(t)
 		b.pressed.connect(func():
 			_heros = uid
+			if _essai_actif:
+				_essai = _equipement_actuel()     # l'essai repart de l'équipement du nouveau héros
 			_tout())
 		_liste_heros.add_child(b)
 
@@ -257,19 +301,58 @@ func _remplir_centre() -> void:
 	tete.add_theme_constant_override("separation", 12)
 	tete.add_child(UiCommun.portrait(h["id"], 64))
 	var t := UiCommun.label("%s\nNv %d  ·  %s  ·  %s" % [u["nom"], int(h["niveau"]), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]]], 20, UiCommun.couleur_rarete(h["id"]))
+	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
 	_centre.add_child(tete)
 
-	# Les 6 emplacements
-	var portes := {}
-	for e in Sauvegarde.echos_de(_heros):
-		portes[int(e["emplacement"])] = e
+	# Barre du Mode Essai
+	var barre := HBoxContainer.new()
+	barre.add_theme_constant_override("separation", 6)
+	_centre.add_child(barre)
+	if not _essai_actif:
+		var be := UiCommun.bouton("🧪 Mode Essai", 15)
+		be.tooltip_text = "Essaie des Échos sur ce héros et compare ses stats avant d'équiper."
+		be.pressed.connect(_entrer_essai)
+		barre.add_child(be)
+		var aide := UiCommun.label("Compare plusieurs Échos avant de les équiper.", 13, UiCommun.C_DOUX)
+		aide.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		barre.add_child(aide)
+	else:
+		var lbl := UiCommun.label("MODE ESSAI", 16, C_ESSAI)
+		lbl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		barre.add_child(lbl)
+		var nb := _nb_changements()
+		var ok := UiCommun.bouton("Équiper l'essai%s" % ((" (%d)" % nb) if nb > 0 else ""), 14)
+		ok.disabled = nb == 0
+		if nb > 0:
+			UiCommun.bouton_vif(ok)
+		ok.pressed.connect(_valider_essai)
+		barre.add_child(ok)
+		var annuler := UiCommun.bouton("Annuler l'essai", 14)
+		annuler.disabled = nb == 0
+		annuler.pressed.connect(func():
+			_essai = _equipement_actuel()
+			_tout())
+		barre.add_child(annuler)
+		var quitter := UiCommun.bouton("Quitter", 14)
+		quitter.pressed.connect(_quitter_essai)
+		barre.add_child(quitter)
+		var info := UiCommun.label("Clique des Échos dans l'inventaire pour les essayer (plusieurs à la fois). Rien ne change tant que tu ne valides pas.", 13, UiCommun.C_DOUX)
+		info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_centre.add_child(info)
+
+	# Les 6 emplacements (ceux de l'essai en Mode Essai)
+	var actuels := _equipement_actuel()
+	var affiches := _essai if _essai_actif else actuels
 	var grille := GridContainer.new()
 	grille.columns = 3
 	grille.add_theme_constant_override("h_separation", 8)
 	grille.add_theme_constant_override("v_separation", 8)
 	_centre.add_child(grille)
 	for i in range(1, 7):
+		var uid_e := int(affiches.get(i, -1))
+		var e := Sauvegarde.get_echo(uid_e) if uid_e >= 0 else {}
+		var change: bool = _essai_actif and uid_e != int(actuels.get(i, -1))
 		var b := Button.new()
 		b.custom_minimum_size = Vector2(190, 96)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -280,51 +363,242 @@ func _remplir_centre() -> void:
 		vb.offset_top = 6
 		vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(vb)
-		vb.add_child(UiCommun.label("%d · %s" % [i, Echos.EMPLACEMENTS[i]["nom"]], 13, UiCommun.C_DOUX))
-		if portes.has(i):
-			var e: Dictionary = portes[i]
+		vb.add_child(UiCommun.label("%d · %s%s" % [i, Echos.EMPLACEMENTS[i]["nom"], "  · ESSAI" if change else ""], 13,
+			C_ESSAI if change else UiCommun.C_DOUX))
+		if not e.is_empty():
 			var coul: Color = Echos.RARETES[int(e["rarete"])]["couleur"]
-			b.add_theme_stylebox_override("normal", UiCommun.style_carte(coul, 0.02 if int(e["uid"]) != _echo else 0.1, 2))
+			var bord := C_ESSAI if change else coul
+			b.add_theme_stylebox_override("normal", UiCommun.style_carte(bord, 0.1 if (int(e["uid"]) == _echo or change) else 0.02, 3 if change else 2))
 			vb.add_child(UiCommun.label("%s  %s  +%d" % [Echos.SETS[e["set"]]["nom"], _etoiles(e), int(e["niveau"])], 15, coul))
 			vb.add_child(UiCommun.label(Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 14))
 		else:
-			b.add_theme_stylebox_override("normal", UiCommun.style_carte(Color(1, 1, 1, 0.15)))
-			vb.add_child(UiCommun.label("Vide", 15, UiCommun.C_DOUX))
+			b.add_theme_stylebox_override("normal", UiCommun.style_carte(C_ESSAI if change else Color(1, 1, 1, 0.15), 0.06 if change else 0.0, 3 if change else 2))
+			vb.add_child(UiCommun.label("Vide" + (" (retiré)" if change else ""), 15, C_ESSAI if change else UiCommun.C_DOUX))
 		b.add_theme_stylebox_override("hover", UiCommun.style_carte(UiCommun.C_OR, 0.06))
-		b.pressed.connect(_clic_emplacement.bind(i, int(portes[i]["uid"]) if portes.has(i) else -1))
+		b.pressed.connect(_clic_emplacement.bind(i, uid_e))
 		grille.add_child(b)
 
-	# Sets actifs
-	var bonus := Sauvegarde.bonus_echos(_heros)
-	_centre.add_child(UiCommun.label("SETS ACTIFS", 15, UiCommun.C_OR))
-	var vus := {}
-	if bonus["sets"].is_empty():
-		_centre.add_child(UiCommun.label("Aucun (2 ou 4 Échos du même set sont nécessaires).", 14, UiCommun.C_DOUX))
-	for nom in bonus["sets"]:
-		vus[nom] = int(vus.get(nom, 0)) + 1
-	for nom in vus:
-		var sid := ""
-		for k in Echos.SETS:
-			if Echos.SETS[k]["nom"] == nom:
-				sid = k
-		var l := UiCommun.label(("x%d  " % vus[nom] if vus[nom] > 1 else "") + Echos.description_set(sid), 14, Color("ffb08a"))
+	var liste_actuelle := Sauvegarde.echos_de(_heros)
+	var bonus_actuel := Sauvegarde.bonus_echos(_heros)
+	if not _essai_actif:
+		# Sets actifs
+		_centre.add_child(UiCommun.label("SETS ACTIFS", 15, UiCommun.C_OR))
+		if bonus_actuel["sets"].is_empty():
+			_centre.add_child(UiCommun.label("Aucun (2 ou 4 Échos du même set sont nécessaires).", 14, UiCommun.C_DOUX))
+		var vus := _compter_sets(bonus_actuel)
+		for sid in vus:
+			var l := UiCommun.label(("x%d  " % vus[sid] if vus[sid] > 1 else "") + Echos.description_set(sid), 14, Color("ffb08a"))
+			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			_centre.add_child(l)
+		# Stats base -> avec Échos
+		_centre.add_child(UiCommun.label("STATS  (base → avec Échos)", 15, UiCommun.C_OR))
+		var base := Sauvegarde.stats_base_heros(_heros)
+		var fin := Sauvegarde.stats_heros(_heros)
+		var gs := GridContainer.new()
+		gs.columns = 3
+		gs.add_theme_constant_override("h_separation", 26)
+		_centre.add_child(gs)
+		for p in STATS_AFFICHEES:
+			var diff: int = int(fin[p[0]]) - int(base[p[0]])
+			var l := UiCommun.label("%s : %d%s" % [p[1], int(fin[p[0]]), ("  (+%d)" % diff) if diff > 0 else ""], 14,
+				Color("8aff9a") if diff > 0 else UiCommun.C_TEXTE)
+			gs.add_child(l)
+		return
+
+	# ----- Mode Essai : comparaison actuel / essai -----
+	var liste_essai := _echos_essai()
+	var bonus_essai := Guilde.appliquer_aux_stats(Echos.bonus(liste_essai))
+	_centre.add_child(UiCommun.label("SETS  (actuels → en essai)", 15, UiCommun.C_OR))
+	var sa := _compter_sets(bonus_actuel)
+	var se := _compter_sets(bonus_essai)
+	if sa.is_empty() and se.is_empty():
+		_centre.add_child(UiCommun.label("Aucun set actif, ni maintenant ni avec l'essai.", 14, UiCommun.C_DOUX))
+	var tous_sets: Array = sa.keys()
+	for k in se:
+		if not k in tous_sets:
+			tous_sets.append(k)
+	for sid in tous_sets:
+		var na := int(sa.get(sid, 0))
+		var ne := int(se.get(sid, 0))
+		var etat := "" if na == ne else ("  ▲ gagné" if ne > na else "  ▼ perdu")
+		var coul := Color("ffb08a") if na == ne else (C_HAUSSE if ne > na else C_BAISSE)
+		var txt := ("x%d → x%d  " % [na, ne]) if na != ne else (("x%d  " % ne) if ne > 1 else "")
+		var l := UiCommun.label(txt + Echos.description_set(sid) + etat, 14, coul)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_centre.add_child(l)
+	# Effets spéciaux des sets
+	for eff in [["vol_vie", "Vol de vie", true], ["contre_chance", "Contre-attaque", true], ["etourdir_skill", "Étourdir (sorts)", true]]:
+		var va := float(bonus_actuel[eff[0]]) * 100.0
+		var ve := float(bonus_essai[eff[0]]) * 100.0
+		if va > 0.0 or ve > 0.0:
+			_centre.add_child(_ligne_effet(eff[1], "%s %%" % _n(va), "%s %%" % _n(ve), ve - va))
+	if bool(bonus_actuel["immunite_debut"]) or bool(bonus_essai["immunite_debut"]):
+		var ia := bool(bonus_actuel["immunite_debut"])
+		var ie := bool(bonus_essai["immunite_debut"])
+		_centre.add_child(_ligne_effet("Immunité 1er tour", "oui" if ia else "non", "oui" if ie else "non", float(int(ie) - int(ia))))
 
-	# Stats base -> avec Échos
-	_centre.add_child(UiCommun.label("STATS  (base → avec Échos)", 15, UiCommun.C_OR))
-	var base := Sauvegarde.stats_base_heros(_heros)
-	var fin := Sauvegarde.stats_heros(_heros)
-	var gs := GridContainer.new()
-	gs.columns = 3
-	gs.add_theme_constant_override("h_separation", 26)
-	_centre.add_child(gs)
-	for p in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"], ["crit", "Crit %"],
-			["degats_crit", "Dégâts crit %"], ["res", "RES"], ["preci", "Précision %"]]:
-		var diff: int = int(fin[p[0]]) - int(base[p[0]])
-		var l := UiCommun.label("%s : %d%s" % [p[1], int(fin[p[0]]), ("  (+%d)" % diff) if diff > 0 else ""], 14,
-			Color("8aff9a") if diff > 0 else UiCommun.C_TEXTE)
-		gs.add_child(l)
+	_centre.add_child(UiCommun.label("STATS  (actuelles → en essai)", 15, UiCommun.C_OR))
+	var base_h := Sauvegarde.stats_base_heros(_heros)
+	var avant := Echos.appliquer(base_h, bonus_actuel)
+	var apres := Echos.appliquer(base_h, bonus_essai)
+	avant["puissance"] = int(round(UnitesData.puissance_skill(avant)))
+	apres["puissance"] = int(round(UnitesData.puissance_skill(apres)))
+	var gt := GridContainer.new()
+	gt.columns = 4
+	gt.add_theme_constant_override("h_separation", 28)
+	gt.add_theme_constant_override("v_separation", 2)
+	_centre.add_child(gt)
+	for x in ["Stat", "Actuel", "Essai", "Écart"]:
+		gt.add_child(UiCommun.label(x, 13, UiCommun.C_DOUX))
+	for p in STATS_AFFICHEES + [["puissance", "Puissance des sorts"]]:
+		var a := int(avant[p[0]])
+		var e := int(apres[p[0]])
+		var d := e - a
+		var coul := C_HAUSSE if d > 0 else (C_BAISSE if d < 0 else UiCommun.C_TEXTE)
+		gt.add_child(UiCommun.label(p[1], 14))
+		gt.add_child(UiCommun.label(str(a), 14))
+		gt.add_child(UiCommun.label(str(e), 14, coul))
+		gt.add_child(UiCommun.label(("+%d" % d) if d > 0 else (str(d) if d < 0 else "="), 14, coul))
+	if liste_actuelle.size() != liste_essai.size() or _nb_changements() > 0:
+		var pris := _pris_a_d_autres()
+		if not pris.is_empty():
+			var l := UiCommun.label("⚠ Pris à un autre héros si tu valides : " + ", ".join(pris), 13, Color("ffd060"))
+			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			_centre.add_child(l)
+
+
+const STATS_AFFICHEES := [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"], ["crit", "Crit %"],
+	["degats_crit", "Dégâts crit %"], ["res", "RES"], ["preci", "Précision %"]]
+
+
+func _ligne_effet(nom: String, avant: String, apres: String, diff: float) -> Label:
+	var coul := C_HAUSSE if diff > 0.0 else (C_BAISSE if diff < 0.0 else UiCommun.C_TEXTE)
+	return UiCommun.label("%s : %s → %s" % [nom, avant, apres], 14, coul)
+
+
+## Set -> nombre d'activations, d'après bonus["sets"] (liste de noms).
+func _compter_sets(b: Dictionary) -> Dictionary:
+	var r := {}
+	for nom in b["sets"]:
+		for k in Echos.SETS:
+			if Echos.SETS[k]["nom"] == nom:
+				r[k] = int(r.get(k, 0)) + 1
+	return r
+
+
+func _n(x: float) -> String:
+	return str(int(round(x))) if is_equal_approx(x, round(x)) else str(snappedf(x, 0.1))
+
+
+# =====================================================================
+# Mode Essai
+# =====================================================================
+
+## Emplacement -> uid de l'Écho porté actuellement par le héros choisi.
+func _equipement_actuel() -> Dictionary:
+	var r := {}
+	for e in Sauvegarde.echos_de(_heros):
+		r[int(e["emplacement"])] = int(e["uid"])
+	return r
+
+
+## Échos de l'essai (ceux qui existent encore).
+func _echos_essai() -> Array:
+	var l: Array = []
+	for i in range(1, 7):
+		var e := Sauvegarde.get_echo(int(_essai.get(i, -1)))
+		if not e.is_empty():
+			l.append(e)
+	return l
+
+
+func _nettoyer_essai() -> void:
+	for i in _essai.keys():
+		if Sauvegarde.get_echo(int(_essai[i])).is_empty():
+			_essai.erase(i)
+
+
+func _nb_changements() -> int:
+	var actuels := _equipement_actuel()
+	var n := 0
+	for i in range(1, 7):
+		if int(_essai.get(i, -1)) != int(actuels.get(i, -1)):
+			n += 1
+	return n
+
+
+## Noms des Échos de l'essai actuellement portés par un autre héros (« Écho … (Héros) »).
+func _pris_a_d_autres() -> Array:
+	var r: Array = []
+	for e in _echos_essai():
+		var p := int(e["porteur"])
+		if p >= 0 and p != _heros:
+			var h := Sauvegarde.get_heros(p)
+			r.append("%s (%s)" % [Echos.nom(e), UnitesData.get_unite(h["id"])["nom"] if not h.is_empty() else "?"])
+	return r
+
+
+func _entrer_essai() -> void:
+	if _heros < 0:
+		return
+	_essai_actif = true
+	_essai = _equipement_actuel()
+	_tout()
+
+
+func _quitter_essai() -> void:
+	_essai_actif = false
+	_essai = {}
+	_tout()
+
+
+## Place un Écho en essai sur son emplacement (ou l'en retire s'il y est déjà).
+func _essayer(uid_echo: int) -> void:
+	var e := Sauvegarde.get_echo(uid_echo)
+	if e.is_empty():
+		return
+	var emp := int(e["emplacement"])
+	if int(_essai.get(emp, -1)) == uid_echo:
+		_essai.erase(emp)
+	else:
+		_essai[emp] = uid_echo
+
+
+func _valider_essai() -> void:
+	if _nb_changements() == 0:
+		return
+	var pris := _pris_a_d_autres()
+	if pris.is_empty():
+		_appliquer_essai()
+		return
+	var d := ConfirmationDialog.new()
+	d.title = "Équiper l'essai"
+	d.dialog_text = "Ces Échos sont portés par un autre héros et lui seront retirés :\n\n• %s\n\nContinuer ?" % "\n• ".join(pris)
+	d.ok_button_text = "Équiper"
+	d.cancel_button_text = "Annuler"
+	d.confirmed.connect(func():
+		d.queue_free()
+		_appliquer_essai())
+	d.canceled.connect(d.queue_free)
+	add_child(d)
+	d.popup_centered(Vector2i(560, 0))
+
+
+func _appliquer_essai() -> void:
+	var actuels := _equipement_actuel()
+	for i in range(1, 7):
+		var cible := int(_essai.get(i, -1))
+		var actuel := int(actuels.get(i, -1))
+		if cible == actuel:
+			continue
+		if cible >= 0:
+			Sauvegarde.equiper_echo(cible, _heros)     # remplace l'Écho du même emplacement
+		elif actuel >= 0:
+			Sauvegarde.retirer_echo(actuel)
+	_essai_actif = false
+	_essai = {}
+	_tout()
+	_flash("Essai équipé !", C_HAUSSE)
 
 
 func _remplir_inventaire() -> void:
@@ -429,8 +703,14 @@ func _carte_echo(e: Dictionary) -> Button:
 		vb.add_child(UiCommun.label("Porté : " + nom_p, 11, UiCommun.C_DOUX))
 	elif e.get("verrou", false):
 		vb.add_child(UiCommun.label("Verrouillé", 11, Color("8ab0d0")))
+	var en_essai: bool = _essai_actif and int(_essai.get(int(e["emplacement"]), -1)) == int(e["uid"])
+	if en_essai:
+		b.add_theme_stylebox_override("normal", UiCommun.style_carte(C_ESSAI, 0.12, 3))
+		vb.add_child(UiCommun.label("▶ EN ESSAI", 11, C_ESSAI))
 	b.pressed.connect(func():
 		_echo = int(e["uid"])
+		if _essai_actif:
+			_essayer(_echo)            # Mode Essai : un clic place (ou retire) l'Écho en essai
 		_remplir_centre()
 		_remplir_inventaire()
 		_remplir_fiche())
@@ -460,7 +740,16 @@ func _remplir_fiche() -> void:
 	boutons.add_theme_constant_override("separation", 6)
 	_fiche.add_child(boutons)
 	var porteur := int(e["porteur"])
-	if porteur == _heros:
+	if _essai_actif:
+		var emp := int(e["emplacement"])
+		var dedans: bool = int(_essai.get(emp, -1)) == _echo
+		var be := UiCommun.bouton("Retirer de l'essai" if dedans else "Essayer", 14)
+		be.add_theme_color_override("font_color", C_ESSAI)
+		be.pressed.connect(func():
+			_essayer(_echo)
+			_tout())
+		boutons.add_child(be)
+	elif porteur == _heros:
 		var r := UiCommun.bouton("Retirer", 14)
 		r.pressed.connect(func():
 			Sauvegarde.retirer_echo(_echo)

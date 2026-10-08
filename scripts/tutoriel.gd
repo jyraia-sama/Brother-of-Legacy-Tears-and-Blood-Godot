@@ -166,9 +166,23 @@ static func astuce(ecran: String, parent: Node) -> void:
 	FenetreSimple.ouvrir.call_deferred(parent, "Astuce — " + str(a[0]), a[1], [["Compris !", null]])
 
 
+## Guides complets ouverts tout seuls à la première visite (ex. guide des Échos).
+const GUIDES_AUTO := ["guide_echos"]
+
+
+## Vrai la première fois seulement (puis la clé est marquée comme vue).
+static func premiere_fois(cle: String) -> bool:
+	var t := _etat()
+	if cle in t["vus"]:
+		return false
+	t["vus"].append(cle)
+	Sauvegarde.sauvegarder()
+	return true
+
+
 ## Réaffiche toutes les astuces (Paramètres).
 static func reinitialiser_astuces() -> void:
 	var t := _etat()
-	t["vus"] = t["vus"].filter(func(v): return not ASTUCES.has(v))
+	t["vus"] = t["vus"].filter(func(v): return not ASTUCES.has(v) and not v in GUIDES_AUTO)
 	t["masque"] = false
 	Sauvegarde.sauvegarder()

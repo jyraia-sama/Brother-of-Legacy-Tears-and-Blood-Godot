@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.51.0"
+const NUMERO := "0.52.0"
 const DATE := "2026-10-08"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.52.0", "date": "2026-10-08", "titre": "Le Guide des Échos",
+	"changements": [
+		"ÉCHOS SANGUINS — GUIDE COMPLET : un bouton « ? » doré et lumineux, en haut de l'écran des Échos, ouvre un guide pas à pas en 7 parties : la marche à suivre, les emplacements et raretés, l'amélioration (chances et coûts de +1 à +15), tous les sets avec leur bonus et l'Acte où les trouver, l'optimisation (stats fixes en début de partie, % ensuite, avec le point de bascule chiffré et un conseil personnalisé pour le héros choisi), où trouver des Échos et comment en obtenir des plus rares (tableau des drops, étoiles par Acte, Atelier du Reliquaire). Il s'ouvre tout seul à la première visite.",
+		"ÉCHOS SANGUINS — MODE ESSAI : sur chaque héros, essaie plusieurs Échos à la fois (jusqu'à un set complet) parmi ceux que tu possèdes et compare ses stats actuelles et en essai (gains en vert, pertes en rouge, sets gagnés ou perdus, puissance des sorts). Rien ne change tant que tu n'appuies pas sur « Équiper l'essai » ; le jeu prévient si un Écho est pris à un autre héros.",
+	]},
 	{"version": "0.51.0", "date": "2026-10-08", "titre": "Visages et détails",
 	"changements": [
 		"PROFIL DES AUTRES JOUEURS : la fiche ouverte depuis Social ou Guilde est maintenant complète, comme ton propre écran « Mon héros » : titre, niveau, guilde, héros principal (stats et Échos), son équipe avec ses cartes, ses résultats d'Arène, d'Arène classée et de Marche Maudite, ses statistiques (chapitres, Tours, Donjons, Boss de Monde, Succès...) et sa collection par rareté. (Serveur : lancer supabase/06_profil_public.sql.)",

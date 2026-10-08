@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.51.0** (2026-10-08)
+Version actuelle : **0.52.0** (2026-10-08)
+
+## v0.52.0 — Le Guide des Échos  (2026-10-08)
+
+- ÉCHOS SANGUINS — GUIDE COMPLET : un bouton « ? » doré et lumineux, en haut de l'écran des Échos, ouvre un guide pas à pas en 7 parties : la marche à suivre, les emplacements et raretés, l'amélioration (chances et coûts de +1 à +15), tous les sets avec leur bonus et l'Acte où les trouver, l'optimisation (stats fixes en début de partie, % ensuite, avec le point de bascule chiffré et un conseil personnalisé pour le héros choisi), où trouver des Échos et comment en obtenir des plus rares (tableau des drops, étoiles par Acte, Atelier du Reliquaire). Il s'ouvre tout seul à la première visite.
+- ÉCHOS SANGUINS — MODE ESSAI : sur chaque héros, essaie plusieurs Échos à la fois (jusqu'à un set complet) parmi ceux que tu possèdes et compare ses stats actuelles et en essai (gains en vert, pertes en rouge, sets gagnés ou perdus, puissance des sorts). Rien ne change tant que tu n'appuies pas sur « Équiper l'essai » ; le jeu prévient si un Écho est pris à un autre héros.
 
 ## v0.51.0 — Visages et détails  (2026-10-08)
 

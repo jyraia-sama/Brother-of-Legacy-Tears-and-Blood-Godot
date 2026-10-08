@@ -31,7 +31,8 @@ const SECTIONS := [
 • Chaque Écho a une stat principale, des stats secondaires, une rareté et des étoiles.
 • AMÉLIORATION de +1 à +15 : les chances baissent avec le niveau ; en cas d'échec seul l'or est perdu. Aux paliers +3, +6, +9, +12 et +15, une stat secondaire apparaît ou se renforce.
 • SETS : 2 ou 4 Échos du même set donnent un bonus en plus.
-• Chaque Acte de l'histoire donne un set, et le chapitre N donne l'emplacement N."""],
+• Chaque Acte de l'histoire donne un set, et le chapitre N donne l'emplacement N.
+• Le bouton « ? » de l'écran des Échos ouvre un GUIDE COMPLET (tous les sets, fixe ou %, où trouver les Échos rares), et le MODE ESSAI compare les stats d'un héros avant d'équiper."""],
 	["Modes de jeu", """• HISTOIRE : 12 Actes de 6 chapitres.
 • TOURS de l'Enfer et du Paradis : 100 étages chacune, remises à zéro chaque lundi, butin pour forger des héros exclusifs.
 • DONJONS : 6 donjons de 10 niveaux ; 4 combats d'affilée sans soin ; ressources d'évolution.
