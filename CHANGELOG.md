@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.49.1** (2026-10-07)
+Version actuelle : **0.50.0** (2026-10-08)
+
+## v0.50.0 — Les cadres de rareté  (2026-10-08)
+
+- CADRES DE RARETÉ : les cartes des héros, monstres et familiers peuvent maintenant porter un cadre orné propre à leur rareté (fer pour N, bronze pour R, argent et améthystes pour SR, or pour SSR, fer noir et rubis pour UR, or blanc pour les Légendes), partout où elles apparaissent : Deck, Fusion, Évolution, Invocations, Bestiaire, Galerie d'Art, Arène, Armée, Compagnie, Marche Maudite, Reliquaire, Ménagerie et grandes fiches. Les cadres s'affichent dès que leurs images sont ajoutées (prompts dans PROMPTS_CADRES.md).
 
 ## v0.49.1 — Arnaud monte sur scène  (2026-10-07)
 

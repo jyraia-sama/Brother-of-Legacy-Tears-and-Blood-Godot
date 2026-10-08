@@ -120,6 +120,80 @@ static func chemin_figurine(id: String) -> String:
 	return ""
 
 
+## CADRES DE CARTE PAR RARETÉ : un cadre orné par rareté, dans assets/cadres/<clé>.png
+## (n, r, sr, ssr, ur, leg), fond et centre transparents. Le cadre est posé par-dessus les cartes
+## et les grandes illustrations (Deck, Fusion, Invocation, Bestiaire, Galerie...). Tant que
+## l'image d'une rareté n'existe pas, la carte garde son simple contour coloré.
+## Les ornements doivent rester dans les COINS : les côtés sont étirés selon la taille de la carte.
+const DOSSIER_CADRES := "res://assets/cadres/"
+## Taille d'un coin orné, en fraction de la largeur de l'image du cadre.
+const MARGE_CADRE := 0.24
+
+static var _cadres := {}
+
+
+## Clé de rareté d'une unité ou d'un familier : "N", "R", "SR", "SSR", "UR" ou "LEG".
+static func cle_rarete(id: String) -> String:
+	if FamiliersData.existe(id):
+		return str(FamiliersData.get_familier(id).get("rarete", "N"))
+	if not UnitesData.existe(id):
+		return ""
+	var u := UnitesData.get_unite(id)
+	return "LEG" if u.get("legende", false) else str(u.get("rarete", "N"))
+
+
+## Texture du cadre d'une rareté (null si l'image n'existe pas encore).
+static func texture_cadre(cle: String) -> Texture2D:
+	if cle == "":
+		return null
+	if not _cadres.has(cle):
+		var chemin := DOSSIER_CADRES + cle.to_lower() + ".png"
+		_cadres[cle] = load(chemin) if ResourceLoader.exists(chemin) else null
+	return _cadres[cle]
+
+
+## Pose le cadre de rareté de l'unité id par-dessus le contrôle c (retrait = marge depuis
+## ses bords, pour laisser voir le contour de sélection). Renvoie false s'il n'y a pas de cadre.
+static func encadrer(c: Control, id: String, retrait := 0.0) -> bool:
+	var tex := texture_cadre(cle_rarete(id))
+	if tex == null:
+		return false
+	var zone := Control.new()
+	zone.name = "Cadre"
+	zone.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	zone.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	zone.offset_left = retrait
+	zone.offset_top = retrait
+	zone.offset_right = -retrait
+	zone.offset_bottom = -retrait
+	c.add_child(zone)
+	var cadre := NinePatchRect.new()
+	cadre.texture = tex
+	cadre.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var m := int(round(tex.get_width() * MARGE_CADRE))
+	cadre.patch_margin_left = m
+	cadre.patch_margin_right = m
+	cadre.patch_margin_top = m
+	cadre.patch_margin_bottom = m
+	zone.add_child(cadre)
+	# Le cadre est mis à l'échelle de la carte (coins proportionnés), seuls les côtés s'étirent
+	var ajuster := func():
+		var t := zone.size
+		if t.x <= 1 or t.y <= 1:
+			return
+		var k := minf(t.x, t.y * 0.75) / float(tex.get_width())
+		cadre.scale = Vector2(k, k)
+		cadre.size = t / k
+	zone.resized.connect(ajuster)
+	ajuster.call()
+	return true
+
+
+## Épaisseur du bord d'un cadre posé sur une carte de cette largeur (pour placer les textes).
+static func bord_cadre(id: String, largeur: float) -> float:
+	return largeur * 0.075 if texture_cadre(cle_rarete(id)) != null else 0.0
+
+
 ## Met l'image de l'unité dans un portrait rond (Panel), si elle existe.
 ## L'image est découpée en cercle par le Panel, l'initiale est cachée et le
 ## contour coloré (élément) est redessiné par-dessus l'image.
@@ -211,7 +285,7 @@ static func _carte_heros(h: Dictionary, largeur: float, hauteur: float) -> Butto
 	var nom := label(u["nom"], 12 if petit else 14)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	nom.custom_minimum_size = Vector2(largeur - 12, 0)
+	nom.custom_minimum_size = Vector2(largeur - 12 - 2 * bord_cadre(id, largeur), 0)
 	nom.add_theme_color_override("font_outline_color", Color.BLACK)
 	nom.add_theme_constant_override("outline_size", 5)
 	vb.add_child(nom)
@@ -228,7 +302,7 @@ static func _carte_heros(h: Dictionary, largeur: float, hauteur: float) -> Butto
 	et.add_theme_color_override("font_outline_color", Color.BLACK)
 	et.add_theme_constant_override("outline_size", 4)
 	vb.add_child(et)
-	var xp := barre(Color("7ab8ff"), largeur - 30, 5)
+	var xp := barre(Color("7ab8ff"), largeur - 30 - 2 * bord_cadre(id, largeur), 5)
 	xp.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	xp.max_value = Sauvegarde.xp_heros_pour_niveau(niv)
 	xp.value = int(h["xp"]) if niv < UnitesData.niveau_max(id) else xp.max_value
@@ -253,11 +327,14 @@ static func habiller_carte(b: Button, id: String, largeur: float) -> VBoxContain
 	var voile := fond_degrade(ill, Color(0, 0, 0, 0), Color(0, 0, 0, 0.92))
 	voile.anchor_top = 0.52
 	voile.offset_top = 0
+	# Cadre de rareté par-dessus l'illustration
+	encadrer(b, id, 2.0)
+	var bord := bord_cadre(id, largeur)
 	# Pastille d'élément en haut à droite
 	var pastille := Panel.new()
 	pastille.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pastille.size = Vector2(14, 14)
-	pastille.position = Vector2(largeur - 22, 9)
+	pastille.position = Vector2(largeur - 22 - bord * 1.6, 9 + bord * 1.6)
 	var sp := StyleBoxFlat.new()
 	sp.bg_color = COULEURS_ELEMENT[u["element"]]
 	sp.set_corner_radius_all(7)
@@ -270,9 +347,9 @@ static func habiller_carte(b: Button, id: String, largeur: float) -> VBoxContain
 	var vb := VBoxContainer.new()
 	vb.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	vb.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	vb.offset_left = 5
-	vb.offset_right = -5
-	vb.offset_bottom = -7
+	vb.offset_left = 5 + bord
+	vb.offset_right = -5 - bord
+	vb.offset_bottom = -7 - bord
 	vb.alignment = BoxContainer.ALIGNMENT_END
 	vb.add_theme_constant_override("separation", 1)
 	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -307,7 +384,15 @@ static func illustration(id: String, taille: Vector2, arrondi := 10, bord := Col
 	var chemin := chemin_portrait(id)
 	if chemin == "":
 		return p
-	p.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
+	# L'image est découpée par un masque arrondi (le cadre, lui, peut déborder des coins)
+	var masque := Panel.new()
+	masque.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	masque.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var sm := st.duplicate() as StyleBoxFlat
+	sm.set_border_width_all(0)
+	masque.add_theme_stylebox_override("panel", sm)
+	masque.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
+	p.add_child(masque)
 	var tex: Texture2D = load(chemin)
 	var zone := AtlasTexture.new()
 	zone.atlas = tex
@@ -318,7 +403,7 @@ static func illustration(id: String, taille: Vector2, arrondi := 10, bord := Col
 	img.stretch_mode = TextureRect.STRETCH_SCALE
 	img.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	img.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	p.add_child(img)
+	masque.add_child(img)
 	# L'image couvre la zone en restant calée EN HAUT (la tête n'est jamais coupée) :
 	# si la zone est plus large que l'image, on ne coupe que le bas ;
 	# si elle est plus haute, on coupe à gauche et à droite.
@@ -331,6 +416,8 @@ static func illustration(id: String, taille: Vector2, arrondi := 10, bord := Col
 		sc.draw_center = false
 		contour.add_theme_stylebox_override("panel", sc)
 		p.add_child(contour)
+		# Grande illustration avec contour = on pose aussi le cadre de rareté
+		encadrer(p, id)
 	return p
 
 
@@ -355,6 +442,7 @@ static func _carte_heros_simple(h: Dictionary, largeur: float, hauteur: float) -
 	vb.add_theme_constant_override("separation", 3)
 	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(vb)
+	encadrer(b, id, 2.0)
 	vb.add_child(portrait(id, hauteur * 0.34))
 	var nom := label(u["nom"], 13)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
