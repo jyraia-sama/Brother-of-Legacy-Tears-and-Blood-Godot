@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.53.0"
+const NUMERO := "0.54.0"
 const DATE := "2026-10-08"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.54.0", "date": "2026-10-08", "titre": "Le Sceau des Frères",
+	"changements": [
+		"NOUVELLE ICÔNE : les deux frères face à face, l'aîné avec une larme bleutée, Kaël avec une larme de sang. Sur le jeu web dès cette version (onglet du navigateur, appli installée sur l'écran d'accueil) ; sur Windows, Mac et Android à la prochaine installation complète.",
+		"NOUVEL ÉCRAN DE CHARGEMENT : « le Sceau des Frères se reforme ». Entre les deux frères, les larmes bleues de l'aîné et les gouttes de sang de Kaël coulent de leurs yeux et remplissent chacune une moitié du médaillon brisé, au rythme du chargement. À 100 %, les deux moitiés se ressoudent dans un éclair, une onde de lumière balaie l'écran et le titre apparaît. Une phrase de l'histoire s'affiche en bas, différente à chaque lancement. Toucher l'écran accélère l'animation.",
+		"JEU WEB : la page de téléchargement du jeu (avant son lancement, la plus longue attente sur téléphone) joue la même animation à la place de la barre grise, avec le pourcentage réel du téléchargement ; le jeu enchaîne ensuite directement sur le Sceau qui se ressoude.",
+	]},
 	{"version": "0.53.0", "date": "2026-10-08", "titre": "Les yeux du créateur",
 	"changements": [
 		"STATISTIQUES DU JEU (réservé au créateur) : dans le menu Admin, un bouton « 📊 Statistiques du jeu » apparaît uniquement sur le compte jyraia (c'est le serveur qui vérifie). Vue d'ensemble (comptes, joueurs en ligne et actifs sur 24 h / 7 j / 30 j, nouveaux comptes, appareils, lancements, téléchargements, courbe d'activité des 30 derniers jours, guildes, Arène, Arène classée, Marche Maudite), liste des joueurs (pseudo, statut, inscription, niveau, chapitres, puissance, guilde, version, plateformes) avec recherche et tri, appareils par plateforme et versions utilisées, téléchargements des applications par version. (Serveur : lancer supabase/07_statistiques.sql.)",

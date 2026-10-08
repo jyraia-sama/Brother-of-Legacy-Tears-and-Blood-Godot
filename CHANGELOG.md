@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.53.0** (2026-10-08)
+Version actuelle : **0.54.0** (2026-10-08)
+
+## v0.54.0 — Le Sceau des Frères  (2026-10-08)
+
+- NOUVELLE ICÔNE : les deux frères face à face, l'aîné avec une larme bleutée, Kaël avec une larme de sang. Sur le jeu web dès cette version (onglet du navigateur, appli installée sur l'écran d'accueil) ; sur Windows, Mac et Android à la prochaine installation complète.
+- NOUVEL ÉCRAN DE CHARGEMENT : « le Sceau des Frères se reforme ». Entre les deux frères, les larmes bleues de l'aîné et les gouttes de sang de Kaël coulent de leurs yeux et remplissent chacune une moitié du médaillon brisé, au rythme du chargement. À 100 %, les deux moitiés se ressoudent dans un éclair, une onde de lumière balaie l'écran et le titre apparaît. Une phrase de l'histoire s'affiche en bas, différente à chaque lancement. Toucher l'écran accélère l'animation.
+- JEU WEB : la page de téléchargement du jeu (avant son lancement, la plus longue attente sur téléphone) joue la même animation à la place de la barre grise, avec le pourcentage réel du téléchargement ; le jeu enchaîne ensuite directement sur le Sceau qui se ressoude.
 
 ## v0.53.0 — Les yeux du créateur  (2026-10-08)
 

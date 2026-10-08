@@ -125,6 +125,7 @@ var _fenetre_compte: FenetreCompte
 
 
 func _ready() -> void:
+	EcranChargement.lancer(get_tree())       # au premier affichage : le Sceau des Frères se reforme
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var noir := ColorRect.new()
 	noir.color = Color("0b0708")
