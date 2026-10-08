@@ -327,6 +327,7 @@ func _carte_familier(f: Dictionary) -> Button:
 	b.add_theme_stylebox_override("hover", UiCommun.style_carte(UiCommun.C_OR, 0.06))
 	b.add_theme_stylebox_override("pressed", UiCommun.style_carte(UiCommun.C_OR, 0.1))
 	b.pressed.connect(_fiche.bind(int(f["uid"])))
+	UiCommun.encadrer(b, f["id"], 2.0)     # cadre de rareté (si son image existe)
 	var vb := VBoxContainer.new()
 	vb.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	vb.offset_top = 10

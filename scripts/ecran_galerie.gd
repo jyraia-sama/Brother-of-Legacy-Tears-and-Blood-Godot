@@ -227,15 +227,20 @@ func _vignette(el: Dictionary, i: int) -> Button:
 	b.add_theme_stylebox_override("hover", survol)
 	b.add_theme_stylebox_override("pressed", survol)
 	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	# Héros, monstres et familiers découverts : cadre de leur rareté
+	var avec_cadre: bool = el["ouvert"] and el["type"] in ["unite", "familier"] and not el.get("figurine", false)
+	var marge_cadre := UiCommun.bord_cadre(str(el["id"]), b.custom_minimum_size.x) if avec_cadre else 0.0
 	var v := VBoxContainer.new()
 	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	v.offset_left = 4
-	v.offset_right = -4
-	v.offset_top = 4
-	v.offset_bottom = -4
+	v.offset_left = 4 + marge_cadre
+	v.offset_right = -4 - marge_cadre
+	v.offset_top = 4 + marge_cadre
+	v.offset_bottom = -4 - marge_cadre
 	v.add_theme_constant_override("separation", 3)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(v)
+	if avec_cadre:
+		UiCommun.encadrer(b, str(el["id"]), 2.0)
 	if el["ouvert"]:
 		var img := TextureRect.new()
 		img.texture = load(el["chemin"])

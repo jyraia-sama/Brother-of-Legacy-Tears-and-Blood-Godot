@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.49.1"
-const DATE := "2026-10-07"
+const NUMERO := "0.50.0"
+const DATE := "2026-10-08"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.50.0", "date": "2026-10-08", "titre": "Les cadres de rareté",
+	"changements": [
+		"CADRES DE RARETÉ : les cartes des héros, monstres et familiers peuvent maintenant porter un cadre orné propre à leur rareté (fer pour N, bronze pour R, argent et améthystes pour SR, or pour SSR, fer noir et rubis pour UR, or blanc pour les Légendes), partout où elles apparaissent : Deck, Fusion, Évolution, Invocations, Bestiaire, Galerie d'Art, Arène, Armée, Compagnie, Marche Maudite, Reliquaire, Ménagerie et grandes fiches. Les cadres s'affichent dès que leurs images sont ajoutées (prompts dans PROMPTS_CADRES.md).",
+	]},
 	{"version": "0.49.1", "date": "2026-10-07", "titre": "Arnaud monte sur scène",
 	"changements": [
 		"Arnaud Riff-de-Sang a enfin son portrait et sa figurine de combat (Deck, invocations, Galerie d'Art et combats).",
