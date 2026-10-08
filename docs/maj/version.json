@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ÉCHOS SANGUINS — GUIDE COMPLET : un bouton « ? » doré et lumineux, en haut de l'écran des Échos, ouvre un guide pas à pas en 7 parties : la marche à suivre, les emplacements et raretés, l'amélioration (chances et coûts de +1 à +15), tous les sets avec leur bonus et l'Acte où les trouver, l'optimisation (stats fixes en début de partie, % ensuite, avec le point de bascule chiffré et un conseil personnalisé pour le héros choisi), où trouver des Échos et comment en obtenir des plus rares (tableau des drops, étoiles par Acte, Atelier du Reliquaire). Il s'ouvre tout seul à la première visite.",
+				"ÉCHOS SANGUINS — MODE ESSAI : sur chaque héros, essaie plusieurs Échos à la fois (jusqu'à un set complet) parmi ceux que tu possèdes et compare ses stats actuelles et en essai (gains en vert, pertes en rouge, sets gagnés ou perdus, puissance des sorts). Rien ne change tant que tu n'appuies pas sur « Équiper l'essai » ; le jeu prévient si un Écho est pris à un autre héros."
+			],
+			"titre": "Le Guide des Échos",
+			"version": "0.52.0"
+		},
+		{
+			"changements": [
 				"PROFIL DES AUTRES JOUEURS : la fiche ouverte depuis Social ou Guilde est maintenant complète, comme ton propre écran « Mon héros » : titre, niveau, guilde, héros principal (stats et Échos), son équipe avec ses cartes, ses résultats d'Arène, d'Arène classée et de Marche Maudite, ses statistiques (chapitres, Tours, Donjons, Boss de Monde, Succès...) et sa collection par rareté. (Serveur : lancer supabase/06_profil_public.sql.)",
 				"ÉCHOS SANGUINS : l'inventaire a deux onglets. « Sac » ne montre que les Échos libres ; « Équipés sur les héros » range les Échos portés, héros par héros (le héros choisi en premier). Cliquer un emplacement du héros ramène au Sac, filtré sur cet emplacement.",
 				"QUÊTES : les boutons « Réclamer » (quêtes, récompense de connexion, Succès, guide du menu, Arène classée) deviennent vert vif et lumineux quand une récompense t'attend ; le coffre bonus brille en doré.",
@@ -134,21 +142,13 @@
 			],
 			"titre": "Des décors qui respirent",
 			"version": "0.42.0"
-		},
-		{
-			"changements": [
-				"NOUVEAUX DÉCORS : les lieux de la Larme ont chacun leur fond peint. L'arène en ruine sous la lune (Arène et Arène classée), le champ de bataille et l'ombre du titan (Boss de Monde), la vallée aux six donjons, la caravane des Expéditions, le campement de la Compagnie et les enclos de la Ménagerie.",
-				"TOURS INFINIES : les deux tours se dressent face à face sur l'écran de choix. Chaque carte montre l'intérieur de sa tour, et on retrouve ces mêmes décors en montant les étages : les escaliers de lave de l'Enfer, et les escaliers de marbre du Paradis."
-			],
-			"titre": "Les lieux de la Larme",
-			"version": "0.41.0"
 		}
 	],
 	"pck": {
-		"sha256": "a310a9b2e768570023ff2db84fa6177cb3a634ea9f1d0d1af0e96bd2f53113b6",
-		"taille": 82058172,
+		"sha256": "1416d42ae39a3ecc30bb461e97749c3ff5bbe05d8e3131a14b525197b6e694d8",
+		"taille": 82086848,
 		"url": "jeu.pck"
 	},
-	"version": "0.51.0",
+	"version": "0.52.0",
 	"version_minimum": "0.37.0"
 }
