@@ -70,6 +70,7 @@ func _carte(d: Dictionary) -> void:
 	b.custom_minimum_size = Vector2(150, 44)
 	b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	b.disabled = not dispo
+	UiCommun.bouton_vif(b)
 	b.pressed.connect(func():
 		_annoncer(Succes.reclamer(id))
 		rafraichir())

@@ -252,30 +252,9 @@ func _voir_profil(d: Dictionary) -> void:
 	EcranSocial.ouvrir_profil(self, str(d.id))
 
 
-## Fiche d'un joueur (utilisée aussi par l'écran Guilde).
+## Fiche d'un joueur (utilisée aussi par l'écran Guilde) : voir profil_public.gd.
 static func ouvrir_profil(parent: Node, id_joueur: String) -> void:
-	var r := await EnLigne.appeler("profil_joueur", {"p_joueur": id_joueur})
-	if not is_instance_valid(parent) or not parent.is_inside_tree():
-		return
-	if not r.ok or not (r.data is Dictionary):
-		FenetreSimple.ouvrir(parent, "Profil", r.erreur if not r.ok else "Joueur introuvable.")
-		return
-	var p: Dictionary = r.data
-	var contenu := HBoxContainer.new()
-	contenu.add_theme_constant_override("separation", 18)
-	contenu.add_child(UiCommun.avatar(str(p.heros_vitrine), str(p.pseudo), 90))
-	var infos := VBoxContainer.new()
-	contenu.add_child(infos)
-	infos.add_child(UiCommun.label("Niveau de compte %d" % int(p.niveau), 19))
-	var heros := str(p.heros_vitrine)
-	if heros != "" and UnitesData.existe(heros):
-		infos.add_child(UiCommun.label("Héros : " + str(UnitesData.get_unite(heros)["nom"]), 17, UiCommun.C_DOUX))
-	var guilde := str(p.guilde)
-	infos.add_child(UiCommun.label("Guilde : " + (guilde + " (" + _nom_role(str(p.role)) + ")" if guilde != "" else "aucune"), 17, UiCommun.C_DOUX))
-	var pres := EnLigne.texte_presence(str(p.vu_le))
-	infos.add_child(UiCommun.label(pres, 17, Color("8fe07a") if pres == "En ligne" else UiCommun.C_DOUX))
-	infos.add_child(UiCommun.label("Joueur depuis le " + str(p.cree_le).left(10), 15, UiCommun.C_DOUX))
-	FenetreSimple.ouvrir(parent, EnLigne.nom_complet(str(p.pseudo)), "", [], contenu)
+	ProfilPublic.ouvrir(parent, id_joueur)
 
 
 static func _nom_role(role: String) -> String:

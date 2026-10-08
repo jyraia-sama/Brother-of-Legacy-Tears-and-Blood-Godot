@@ -69,6 +69,7 @@ func _ready() -> void:
 	_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(_titre)
 	var rapide := CheckBox.new()
+	UiCommun.habiller_case(rapide)
 	rapide.text = "Rapide"
 	rapide.focus_mode = Control.FOCUS_NONE
 	rapide.tooltip_text = "Barre de chargement plus courte."

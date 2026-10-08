@@ -36,6 +36,12 @@ Même chose avec le fichier `supabase/05_guildes_vie.sql` : **New query** → co
 mot du chef, journal, bénédictions, boutique, Boss de guilde et discussion. Sans ce fichier, la guilde n'affiche
 que Membres / Candidatures / Réglages. Réglages — dons, bénédictions, PV du boss, boutique — au début du fichier.)
 
+### 2 sexies. Profil public détaillé (v0.51)
+Même chose avec le fichier `supabase/06_profil_public.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après les fichiers 01 à 05. Ajoute la « vitrine » de chaque joueur — titre, héros principal,
+équipe, statistiques, collection — et ses résultats d'Arène, d'Arène classée et de Marche Maudite dans la fiche
+qu'on ouvre depuis Social ou Guilde. Sans ce fichier, la fiche reste la version courte.)
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

@@ -15,11 +15,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.50.1"
+const NUMERO := "0.51.0"
 const DATE := "2026-10-08"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.51.0", "date": "2026-10-08", "titre": "Visages et détails",
+	"changements": [
+		"PROFIL DES AUTRES JOUEURS : la fiche ouverte depuis Social ou Guilde est maintenant complète, comme ton propre écran « Mon héros » : titre, niveau, guilde, héros principal (stats et Échos), son équipe avec ses cartes, ses résultats d'Arène, d'Arène classée et de Marche Maudite, ses statistiques (chapitres, Tours, Donjons, Boss de Monde, Succès...) et sa collection par rareté. (Serveur : lancer supabase/06_profil_public.sql.)",
+		"ÉCHOS SANGUINS : l'inventaire a deux onglets. « Sac » ne montre que les Échos libres ; « Équipés sur les héros » range les Échos portés, héros par héros (le héros choisi en premier). Cliquer un emplacement du héros ramène au Sac, filtré sur cet emplacement.",
+		"QUÊTES : les boutons « Réclamer » (quêtes, récompense de connexion, Succès, guide du menu, Arène classée) deviennent vert vif et lumineux quand une récompense t'attend ; le coffre bonus brille en doré.",
+		"PARAMÈTRES ET MENU ADMIN : cases à cocher bien plus visibles (grande case dorée, cochée en vert avec une coche blanche, texte doré quand l'option est active).",
+	]},
 	{"version": "0.50.1", "date": "2026-10-08", "titre": "Des cadres dignes des héros",
 	"changements": [
 		"Les cadres de rareté sont arrivés : fer pour N, bronze pour R, argent et améthystes pour SR, or et ambre pour SSR, fer noir et rubis pour UR, or blanc et pierres de lune pour les Légendes. Les coins ornés débordent légèrement de la carte, comme de vraies cartes de collection.",

@@ -142,6 +142,7 @@ func _remplir() -> void:
 		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		h.add_child(t)
 		var b := UiCommun.bouton("Réclamer", 17)
+		UiCommun.bouton_vif(b)
 		b.pressed.connect(_reclamer)
 		h.add_child(b)
 	# Combat en cours
