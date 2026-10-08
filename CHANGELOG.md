@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.50.0** (2026-10-08)
+Version actuelle : **0.50.1** (2026-10-08)
+
+## v0.50.1 — Des cadres dignes des héros  (2026-10-08)
+
+- Les cadres de rareté sont arrivés : fer pour N, bronze pour R, argent et améthystes pour SR, or et ambre pour SSR, fer noir et rubis pour UR, or blanc et pierres de lune pour les Légendes. Les coins ornés débordent légèrement de la carte, comme de vraies cartes de collection.
 
 ## v0.50.0 — Les cadres de rareté  (2026-10-08)
 
