@@ -33,7 +33,7 @@ const URL_FICHE := "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Bl
 const URL_INSTALL := {
 	"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Windows.zip",
 	"macos": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Mac.zip",
-	"android": "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/telecharger/BrothersOfLegacy-Android.apk",
+	"android": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Android.apk",
 }
 const PAGE_TELECHARGEMENT := "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest"
 

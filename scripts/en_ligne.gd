@@ -16,6 +16,8 @@ signal etat_change          ## connexion, déconnexion, session perdue
 signal partie_remplacee     ## la partie de l'appareil vient d'être remplacée par celle du compte
 
 const FICHIER_COMPTE := "user://compte.json"
+## Identifiant anonyme de l'appareil (tiré au hasard), pour compter les installations.
+const FICHIER_APPAREIL := "user://appareil.json"
 const INTERVALLE_ENVOI := 15.0      # secondes
 const INTERVALLE_PRESENCE := 120.0  # secondes
 const EN_LIGNE_SI_VU_DEPUIS := 300  # un joueur est « en ligne » s'il a été vu il y a moins de 5 min
@@ -106,6 +108,8 @@ func _ready() -> void:
 		lien_mot_de_passe = true
 	if configure() and est_connecte():
 		_reprendre_session()
+	elif configure():
+		signaler_appareil(true)
 
 
 ## Session mémorisée : on se reconnecte tout seul au lancement.
@@ -118,6 +122,7 @@ func _reprendre_session() -> void:
 		_signaler_presence()
 	elif not est_connecte():
 		push_warning("EnLigne : session expirée, il faut se reconnecter.")
+	signaler_appareil(true)
 	etat_change.emit()
 
 
@@ -257,6 +262,7 @@ func _ouvrir_session(d: Dictionary) -> void:
 	await _synchroniser_a_la_connexion()
 	_connexion_en_cours = false
 	_signaler_presence()
+	signaler_appareil(false)       # relie cet appareil au compte
 	etat_change.emit()
 
 
@@ -630,3 +636,69 @@ func texte_presence(vu_le: String) -> String:
 	if s < 86400:
 		return "Vu il y a %d h" % int(s / 3600.0)
 	return "Vu il y a %d j" % int(s / 86400.0)
+
+
+# ------------------------------------------------------------------
+# Statistiques : appareil (anonyme) et accès du créateur
+# ------------------------------------------------------------------
+
+## Identifiant de l'appareil, tiré au hasard à la première utilisation (rien de personnel).
+func id_appareil() -> String:
+	if FileAccess.file_exists(FICHIER_APPAREIL):
+		var d = JSON.parse_string(FileAccess.get_file_as_string(FICHIER_APPAREIL))
+		if d is Dictionary and str(d.get("id", "")).length() == 36:
+			return str(d["id"])
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	var h := ""
+	for i in 16:
+		var o := rng.randi_range(0, 255)
+		if i == 6:
+			o = (o & 0x0f) | 0x40          # UUID version 4
+		elif i == 8:
+			o = (o & 0x3f) | 0x80
+		h += "%02x" % o
+	var id := "%s-%s-%s-%s-%s" % [h.substr(0, 8), h.substr(8, 4), h.substr(12, 4), h.substr(16, 4), h.substr(20, 12)]
+	var f := FileAccess.open(FICHIER_APPAREIL, FileAccess.WRITE)
+	if f:
+		f.store_string(JSON.stringify({"id": id}))
+		f.close()
+	return id
+
+
+## windows, macos, linux, android, web-pc, web-android ou web-iphone.
+func plateforme() -> String:
+	if OS.has_feature("web"):
+		var ua = JavaScriptBridge.eval("navigator.userAgent + ' ' + (navigator.maxTouchPoints || 0)", true)
+		var t := str(ua).to_lower()
+		if t.contains("iphone") or t.contains("ipad") or (t.contains("macintosh") and not t.ends_with(" 0")):
+			return "web-iphone"
+		if t.contains("android"):
+			return "web-android"
+		return "web-pc"
+	match OS.get_name():
+		"Windows": return "windows"
+		"macOS": return "macos"
+		"Android": return "android"
+		"Linux", "FreeBSD": return "linux"
+	return "autre"
+
+
+## Signale au serveur que le jeu tourne sur cet appareil (compte des installations).
+## lancement = true au démarrage du jeu, false quand on se connecte (relie l'appareil au compte).
+func signaler_appareil(lancement: bool) -> void:
+	if not configure():
+		return
+	var params := {"p_id": id_appareil(), "p_plateforme": plateforme(), "p_version": Version.NUMERO, "p_lancement": lancement}
+	if est_connecte():
+		await appeler("signaler_installation", params)
+	else:
+		await _http(HTTPClient.METHOD_POST, "/rest/v1/rpc/signaler_installation", params, false)
+
+
+## Le compte connecté a-t-il accès aux statistiques du jeu ? (vérifié par le serveur)
+func est_admin_stats() -> bool:
+	if not est_connecte():
+		return false
+	var r := await appeler("est_admin_stats")
+	return r.ok and r.data == true

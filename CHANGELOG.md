@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.52.0** (2026-10-08)
+Version actuelle : **0.53.0** (2026-10-08)
+
+## v0.53.0 — Les yeux du créateur  (2026-10-08)
+
+- STATISTIQUES DU JEU (réservé au créateur) : dans le menu Admin, un bouton « 📊 Statistiques du jeu » apparaît uniquement sur le compte jyraia (c'est le serveur qui vérifie). Vue d'ensemble (comptes, joueurs en ligne et actifs sur 24 h / 7 j / 30 j, nouveaux comptes, appareils, lancements, téléchargements, courbe d'activité des 30 derniers jours, guildes, Arène, Arène classée, Marche Maudite), liste des joueurs (pseudo, statut, inscription, niveau, chapitres, puissance, guilde, version, plateformes) avec recherche et tri, appareils par plateforme et versions utilisées, téléchargements des applications par version. (Serveur : lancer supabase/07_statistiques.sql.)
+- COMPTEUR D'APPAREILS : au lancement, le jeu signale anonymement la plateforme (web ordinateur, web Android, iPhone/iPad, Windows, Mac, Android) et la version, avec un identifiant tiré au hasard. Rien de personnel n'est envoyé.
+- ANDROID : l'application se télécharge désormais depuis la page des Releases GitHub, comme Windows et Mac, ce qui permet de compter ses téléchargements.
 
 ## v0.52.0 — Le Guide des Échos  (2026-10-08)
 

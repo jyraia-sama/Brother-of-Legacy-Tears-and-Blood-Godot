@@ -19,7 +19,8 @@ extends SceneTree
 ##   5. si besoin, crée les installations complètes dans build/ :
 ##        build/BrothersOfLegacy-Windows.zip et build/BrothersOfLegacy-Mac.zip
 ##      (à déposer dans une « Release » GitHub nommée vX.Y.Z, voir GUIDE_VERSIONS.md) ;
-##      et l'application Android dans docs/telecharger/BrothersOfLegacy-Android.apk (publiée avec le site).
+##      et l'application Android dans build/BrothersOfLegacy-Android.apk (à déposer AUSSI dans la Release,
+##      pour que GitHub compte ses téléchargements ; le lien de téléchargement vise la dernière Release).
 ##      L'APK demande le kit Android et la clé de signature : s'ils manquent, il est simplement sauté.
 ## Il reste ensuite à faire le Commit + Push dans GitHub Desktop : les joueurs reçoivent la mise à jour.
 
@@ -29,7 +30,7 @@ const PRESET_WINDOWS := "Windows Desktop"
 const PRESET_MAC := "macOS"
 const PRESET_ANDROID := "Android"
 const SITE := "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/"
-const APK := "telecharger/BrothersOfLegacy-Android.apk"
+const APK := "BrothersOfLegacy-Android.apk"
 const NB_NOUVEAUTES := 15
 
 var projet := ""
@@ -109,7 +110,7 @@ func _init() -> void:
 		"installations": {
 			"windows": "%s/releases/download/v%s/BrothersOfLegacy-Windows.zip" % [DEPOT, installation_minimum],
 			"macos": "%s/releases/download/v%s/BrothersOfLegacy-Mac.zip" % [DEPOT, installation_minimum],
-			"android": SITE + APK,
+			"android": "%s/releases/latest/download/%s" % [DEPOT, APK],
 		},
 		"nouveautes": nouveautes,
 	}
@@ -125,7 +126,8 @@ func _init() -> void:
 	else:
 		print("Mise à jour rapide : les joueurs la recevront au prochain lancement du jeu.")
 	if apk_refait:
-		print("Application Android prête : docs/%s (publiée avec le Push)." % APK)
+		print("Application Android prête : build/%s" % APK)
+		print("  -> dépose-la dans la Release GitHub (la dernière), à côté des fichiers Windows et Mac.")
 	if version_minimum == numero:
 		print("Mise à jour OBLIGATOIRE.")
 	quit(0)
@@ -157,16 +159,11 @@ func _exporter_android(numero: String) -> bool:
 	re.compile("(?m)^version/code=\\d+$")
 	if re.search(texte):
 		_creer_fichier(chemin, re.sub(texte, "version/code=%d" % maxi(code, 1)))
-	DirAccess.make_dir_recursive_absolute(projet + "/docs/telecharger")
 	var sortie := projet + "/build/BrothersOfLegacy-Android.apk"
 	if FileAccess.file_exists(sortie):
 		DirAccess.remove_absolute(sortie)
-	if not _exporter(["--export-release", PRESET_ANDROID, sortie]) or not FileAccess.file_exists(sortie):
-		return false
-	var dest := projet + "/docs/" + APK
-	if FileAccess.file_exists(dest):
-		DirAccess.remove_absolute(dest)
-	return DirAccess.copy_absolute(sortie, dest) == OK
+	# L'APK reste dans build/ : il se dépose dans la Release GitHub (qui compte les téléchargements).
+	return _exporter(["--export-release", PRESET_ANDROID, sortie]) and FileAccess.file_exists(sortie)
 
 
 func _empreinte_installation() -> String:

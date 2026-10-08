@@ -1,6 +1,7 @@
 class_name FenetreAdmin
 extends CanvasLayer
 ## MENU ADMIN (pour tester le jeu) : cases à cocher.
+## + bouton « Statistiques du jeu », visible seulement sur le compte du créateur (FenetreStatsJeu).
 ## Cocher une option active l'effet ; la décocher remet exactement comme avant
 ## (les vraies valeurs de la sauvegarde ne sont jamais modifiées par ces options).
 ##
@@ -161,6 +162,21 @@ func _ready() -> void:
 	bas.add_child(_bouton("Tout cocher", func(): _tout(true)))
 	bas.add_child(_bouton("Tout décocher", func(): _tout(false)))
 	bas.add_child(_bouton("Fermer", _fermer))
+
+	# Statistiques du jeu : réservé au compte du créateur. Le bouton n'apparaît que si le serveur
+	# confirme l'accès (et le serveur refuse de toute façon les données aux autres comptes).
+	var stats := _bouton("📊 Statistiques du jeu", func(): FenetreStatsJeu.ouvrir(get_parent()))
+	stats.custom_minimum_size = Vector2(240, 42)
+	stats.visible = false
+	UiCommun.bouton_vif(stats, Color("b8402f"))
+	bas.add_child(stats)
+	_montrer_stats(stats)
+
+
+func _montrer_stats(b: Button) -> void:
+	var ok: bool = await EnLigne.est_admin_stats()
+	if is_instance_valid(b):
+		b.visible = ok
 
 
 func _basculer(actif: bool, id: String) -> void:

@@ -42,6 +42,14 @@ Même chose avec le fichier `supabase/06_profil_public.sql` : **New query** → 
 équipe, statistiques, collection — et ses résultats d'Arène, d'Arène classée et de Marche Maudite dans la fiche
 qu'on ouvre depuis Social ou Guilde. Sans ce fichier, la fiche reste la version courte.)
 
+### 2 septies. Statistiques du jeu (v0.53)
+Même chose avec le fichier `supabase/07_statistiques.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après les fichiers 01 à 06.) Ajoute l'onglet **📊 Statistiques du jeu** du menu Admin : comptes,
+joueurs actifs, appareils par plateforme, versions utilisées, activité des 30 derniers jours, liste des joueurs (pseudos).
+- Il n'est visible **que sur le compte « jyraia »** : c'est le serveur qui vérifie, personne d'autre ne peut lire ces données.
+  Si ton pseudo est différent, change-le dans la ligne marquée ▼▼▼ au début du fichier, puis relance-le.
+- Les appareils sont comptés de façon anonyme (un identifiant tiré au hasard), à partir de la v0.53.
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

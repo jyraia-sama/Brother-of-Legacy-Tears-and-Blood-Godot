@@ -38,13 +38,14 @@ Une simple mise à jour ne suffit pas quand **Godot** change de version (4.7 →
 
 - `BrothersOfLegacy-Windows.zip`
 - `BrothersOfLegacy-Mac.zip`
+- `BrothersOfLegacy-Android.apk` (si Claude l'a refait ; sinon il te le donnera)
 
 Ces fichiers sont trop gros pour le dépôt : on les dépose dans une **Release** GitHub.
 
 1. Fais d'abord le Commit, le Push et le tag (étape 5 ci-dessus).
 2. Sur github.com, ouvre ton dépôt, puis **Releases** (colonne de droite) → **Draft a new release**.
 3. **Choose a tag** : choisis le tag de la version (par exemple `v0.40.0`). Titre : le même.
-4. Glisse les deux fichiers `.zip` dans la zone « Attach binaries », puis clique sur **Publish release**.
+4. Glisse les deux fichiers `.zip` **et l'APK Android** dans la zone « Attach binaries », puis clique sur **Publish release**.
 
 Les joueurs verront « Nouvelle version : réinstallation nécessaire » avec un bouton qui télécharge directement le bon fichier. Leur partie n'est pas perdue (elle est sur leur ordinateur et sur leur compte).
 
@@ -60,7 +61,8 @@ Lien à envoyer : **https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-B
   puis relancer. Ces manipulations ne sont à faire qu'une fois.
 
 - **Android** : ouvrir sur le téléphone le lien
-  **https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/telecharger/BrothersOfLegacy-Android.apk**
+  **https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Android.apk**
+  (ou la page **…/releases/latest**, fichier `BrothersOfLegacy-Android.apk`)
   puis ouvrir le fichier téléchargé et choisir **Installer**. La première fois, le téléphone demande d'autoriser le navigateur (Chrome…) à installer des applications : **Paramètres → Autoriser cette source**, puis revenir et **Installer**. Si Play Protect affiche un avertissement : **Plus de détails → Installer quand même**.
 - **iPhone / iPad** : pas d'application (Apple ne le permet pas sans l'App Store). Ouvrir le jeu web dans **Safari**, bouton **Partager → Sur l'écran d'accueil** : il s'ouvre ensuite comme une appli et il est toujours à jour.
 
@@ -68,7 +70,9 @@ Ensuite, plus rien à faire : le jeu se met à jour tout seul.
 
 ### L'application Android (APK)
 
-L'APK est fabriqué par Claude, qui a le kit Android et la **clé de signature** de l'application. Il est rangé dans `docs/telecharger/` et publié avec le site : pas de Release à faire pour Android.
+L'APK est fabriqué par Claude, qui a le kit Android et la **clé de signature** de l'application. Depuis la v0.53, il est déposé dans la **Release GitHub** (la dernière), à côté des fichiers Windows et Mac : GitHub compte ainsi ses téléchargements (onglet « Statistiques du jeu » du menu Admin).
+Quand un nouvel APK est fait : ouvre la dernière Release sur github.com → **Edit** (crayon) → supprime l'ancien `BrothersOfLegacy-Android.apk` s'il y en a un → glisse le nouveau dans « Attach binaries » → **Update release**.
+L'ancien fichier `docs/telecharger/BrothersOfLegacy-Android.apk` reste en place pour les anciens liens ; tu pourras le supprimer quand tout le monde aura le nouveau lien.
 Sur ton PC, quand l'outil de publication refait les installations complètes, il saute l'APK (message « APK Android non refait ») : demande alors à Claude de le refaire.
 La clé de signature (fichier `brothersoflegacy.keystore` + son mot de passe) est conservée dans les documents du Projet Claude. **Ne la perds pas et ne la partage pas** : sans elle, une nouvelle application ne pourrait pas remplacer l'ancienne sur les téléphones (il faudrait désinstaller puis réinstaller).
 

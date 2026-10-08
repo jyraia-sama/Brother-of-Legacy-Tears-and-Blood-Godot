@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.52.0"
+const NUMERO := "0.53.0"
 const DATE := "2026-10-08"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.53.0", "date": "2026-10-08", "titre": "Les yeux du créateur",
+	"changements": [
+		"STATISTIQUES DU JEU (réservé au créateur) : dans le menu Admin, un bouton « 📊 Statistiques du jeu » apparaît uniquement sur le compte jyraia (c'est le serveur qui vérifie). Vue d'ensemble (comptes, joueurs en ligne et actifs sur 24 h / 7 j / 30 j, nouveaux comptes, appareils, lancements, téléchargements, courbe d'activité des 30 derniers jours, guildes, Arène, Arène classée, Marche Maudite), liste des joueurs (pseudo, statut, inscription, niveau, chapitres, puissance, guilde, version, plateformes) avec recherche et tri, appareils par plateforme et versions utilisées, téléchargements des applications par version. (Serveur : lancer supabase/07_statistiques.sql.)",
+		"COMPTEUR D'APPAREILS : au lancement, le jeu signale anonymement la plateforme (web ordinateur, web Android, iPhone/iPad, Windows, Mac, Android) et la version, avec un identifiant tiré au hasard. Rien de personnel n'est envoyé.",
+		"ANDROID : l'application se télécharge désormais depuis la page des Releases GitHub, comme Windows et Mac, ce qui permet de compter ses téléchargements.",
+	]},
 	{"version": "0.52.0", "date": "2026-10-08", "titre": "Le Guide des Échos",
 	"changements": [
 		"ÉCHOS SANGUINS — GUIDE COMPLET : un bouton « ? » doré et lumineux, en haut de l'écran des Échos, ouvre un guide pas à pas en 7 parties : la marche à suivre, les emplacements et raretés, l'amélioration (chances et coûts de +1 à +15), tous les sets avec leur bonus et l'Acte où les trouver, l'optimisation (stats fixes en début de partie, % ensuite, avec le point de bascule chiffré et un conseil personnalisé pour le héros choisi), où trouver des Échos et comment en obtenir des plus rares (tableau des drops, étoiles par Acte, Atelier du Reliquaire). Il s'ouvre tout seul à la première visite.",
