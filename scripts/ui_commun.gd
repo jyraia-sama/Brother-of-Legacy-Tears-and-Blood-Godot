@@ -69,6 +69,86 @@ static func bouton(texte: String, taille := 17) -> Button:
 	return b
 
 
+## CASES À COCHER bien visibles : grande case cerclée d'or ; cochée = fond vert vif et coche blanche.
+static var _icones_case := {}
+
+static func _icone_case(cochee: bool, inactive := false) -> ImageTexture:
+	var cle := "%s_%s" % [cochee, inactive]
+	if _icones_case.has(cle):
+		return _icones_case[cle]
+	const T := 30
+	var img := Image.create(T, T, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	var bord := Color("e8b54a") if not inactive else Color(0.45, 0.42, 0.4)
+	var fond := (Color("2f9e44") if cochee else Color(0.08, 0.05, 0.05)) if not inactive else Color(0.15, 0.14, 0.14)
+	for y in T:
+		for x in T:
+			var dans_bord := x < 3 or y < 3 or x >= T - 3 or y >= T - 3
+			var coin := (x < 2 or x >= T - 2) and (y < 2 or y >= T - 2)
+			if coin:
+				continue
+			img.set_pixel(x, y, bord if dans_bord else fond)
+	if cochee:
+		# Coche blanche épaisse : de (7,15) à (12,21) puis jusqu'à (23,8)
+		var traits := [[Vector2(7, 15), Vector2(12, 21)], [Vector2(12, 21), Vector2(23, 8)]]
+		for t in traits:
+			for i in 41:
+				var p: Vector2 = t[0].lerp(t[1], i / 40.0)
+				for dy in range(-2, 2):
+					for dx in range(-2, 2):
+						var q := Vector2i(int(p.x) + dx, int(p.y) + dy)
+						if q.x >= 3 and q.y >= 3 and q.x < T - 3 and q.y < T - 3:
+							img.set_pixelv(q, Color.WHITE)
+	var tex := ImageTexture.create_from_image(img)
+	_icones_case[cle] = tex
+	return tex
+
+
+## Rend une CheckBox bien lisible (grande case, texte doré quand elle est cochée).
+static func habiller_case(c: CheckBox, taille_texte := 18) -> void:
+	c.add_theme_icon_override("checked", _icone_case(true))
+	c.add_theme_icon_override("unchecked", _icone_case(false))
+	c.add_theme_icon_override("checked_disabled", _icone_case(true, true))
+	c.add_theme_icon_override("unchecked_disabled", _icone_case(false, true))
+	c.add_theme_constant_override("h_separation", 10)
+	c.add_theme_font_size_override("font_size", taille_texte)
+	c.add_theme_color_override("font_color", C_TEXTE)
+	c.add_theme_color_override("font_pressed_color", C_LEGENDE)
+	c.add_theme_color_override("font_hover_color", Color.WHITE)
+	c.add_theme_color_override("font_hover_pressed_color", C_LEGENDE)
+	c.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	if c.custom_minimum_size.y < 40:
+		c.custom_minimum_size.y = 40
+
+
+## Bouton d'action à ne pas rater (« Réclamer », « Ouvrir le coffre »...) : fond vif, halo et
+## léger battement. Ne change rien s'il est désactivé (il reste gris).
+static func bouton_vif(b: Button, couleur := Color("2f9e44")) -> void:
+	if b.disabled:
+		return
+	var etats := {"normal": couleur, "hover": couleur.lightened(0.18), "pressed": couleur.darkened(0.15)}
+	for e in etats:
+		var st := StyleBoxFlat.new()
+		st.bg_color = etats[e]
+		st.border_color = couleur.lightened(0.5)
+		st.set_border_width_all(2)
+		st.set_corner_radius_all(8)
+		st.shadow_color = Color(couleur, 0.55)
+		st.shadow_size = 8
+		st.set_content_margin_all(8)
+		b.add_theme_stylebox_override(e, st)
+	for k in ["font_color", "font_hover_color", "font_pressed_color"]:
+		b.add_theme_color_override(k, Color.WHITE)
+	b.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.6))
+	b.add_theme_constant_override("outline_size", 4)
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	# Léger battement lumineux pour attirer l'œil
+	b.ready.connect(func():
+		var tw := b.create_tween().set_loops()
+		tw.tween_property(b, "modulate", Color(1.18, 1.18, 1.18), 0.7).set_trans(Tween.TRANS_SINE)
+		tw.tween_property(b, "modulate", Color.WHITE, 0.7).set_trans(Tween.TRANS_SINE))
+
+
 static func barre(couleur: Color, largeur: float, hauteur: float) -> ProgressBar:
 	var b := ProgressBar.new()
 	b.custom_minimum_size = Vector2(largeur, hauteur)

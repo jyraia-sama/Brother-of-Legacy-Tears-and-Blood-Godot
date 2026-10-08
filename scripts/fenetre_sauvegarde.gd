@@ -57,6 +57,7 @@ func _ready() -> void:
 	vb.add_child(_curseur_volume("Musique", "musique"))
 	vb.add_child(_curseur_volume("Bruitages", "sons"))
 	var muet := CheckBox.new()
+	UiCommun.habiller_case(muet)
 	muet.text = "Muet (coupe la musique et les bruitages)"
 	muet.focus_mode = Control.FOCUS_NONE
 	muet.add_theme_font_size_override("font_size", 17)
@@ -81,6 +82,7 @@ func _ready() -> void:
 		tailles.add_child(b)
 	if Ecran.est_mobile() and OS.has_feature("web"):
 		var pe := CheckBox.new()
+		UiCommun.habiller_case(pe)
 		pe.text = "Plein écran automatique au premier appui"
 		pe.focus_mode = Control.FOCUS_NONE
 		pe.add_theme_font_size_override("font_size", 17)
@@ -89,6 +91,7 @@ func _ready() -> void:
 		vb.add_child(pe)
 	if Ecran.est_application_pc():
 		var pc := CheckBox.new()
+		UiCommun.habiller_case(pc)
 		pc.text = "Plein écran (touche F11)"
 		pc.focus_mode = Control.FOCUS_NONE
 		pc.add_theme_font_size_override("font_size", 17)

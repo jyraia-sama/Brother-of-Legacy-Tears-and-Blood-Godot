@@ -138,6 +138,7 @@ func _ready() -> void:
 		var ligne := HBoxContainer.new()
 		ligne.add_theme_constant_override("separation", 10)
 		var c := CheckBox.new()
+		UiCommun.habiller_case(c)
 		c.text = o[1]
 		c.focus_mode = Control.FOCUS_NONE
 		c.custom_minimum_size = Vector2(360, 0)

@@ -553,7 +553,9 @@ func envoyer_sauvegarde(forcer := false) -> bool:
 	return false
 
 
-## Met à jour ce que les autres joueurs voient : niveau, héros vitrine, « vu il y a... ».
+var _signature_vitrine := 0
+
+## Met à jour ce que les autres joueurs voient : niveau, héros vitrine, « vu il y a... », vitrine.
 func _maj_profil() -> void:
 	if not est_connecte():
 		return
@@ -563,6 +565,14 @@ func _maj_profil() -> void:
 		"heros_vitrine": str(h.get("id", "")),
 		"vu_le": Time.get_datetime_string_from_system(true) + "Z",
 	})
+	# La vitrine (fiche détaillée vue par les autres joueurs) part à part : si le serveur n'a pas
+	# encore la colonne (fichier 06 pas lancé), seul cet envoi échoue. Envoyée seulement si elle change.
+	var vit := ProfilPublic.vitrine()
+	var sig := JSON.stringify(vit).hash()
+	if sig != _signature_vitrine:
+		var r := await api(HTTPClient.METHOD_PATCH, "/rest/v1/profils?id=eq." + id_joueur(), {"vitrine": vit})
+		if r.ok:
+			_signature_vitrine = sig
 
 
 func _signaler_presence() -> void:

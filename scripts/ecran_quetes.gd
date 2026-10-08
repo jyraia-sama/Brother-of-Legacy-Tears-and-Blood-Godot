@@ -55,7 +55,8 @@ func _connexion() -> void:
 		vb.add_child(r)
 	var b := UiCommun.bouton("Réclamer la récompense du jour %d" % (suivant + 1) if dispo else "Déjà réclamée aujourd'hui — reviens demain !", 17)
 	b.disabled = not dispo
-	b.custom_minimum_size = Vector2(0, 46)
+	b.custom_minimum_size = Vector2(0, 52)
+	UiCommun.bouton_vif(b)
 	b.pressed.connect(func():
 		_annoncer(Quetes.reclamer_connexion())
 		rafraichir())
@@ -89,6 +90,7 @@ func _periode(periode: String, titre: String, reset: String, couleur: Color) -> 
 		b.custom_minimum_size = Vector2(150, 44)
 		b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		b.disabled = q["reclame"] or not q["fait"]
+		UiCommun.bouton_vif(b)            # vert vif et lumineux quand on peut réclamer
 		var id: String = q["id"]
 		b.pressed.connect(func():
 			_annoncer(Quetes.reclamer(periode, id))
@@ -108,6 +110,7 @@ func _periode(periode: String, titre: String, reset: String, couleur: Color) -> 
 	var bb := UiCommun.bouton("Ouvrir le coffre" if not deja else "Ouvert", 16)
 	bb.custom_minimum_size = Vector2(170, 44)
 	bb.disabled = not dispo
+	UiCommun.bouton_vif(bb, Color("c8901e"))     # coffre bonus : doré
 	bb.pressed.connect(func():
 		_annoncer(Quetes.reclamer(periode, "bonus"))
 		rafraichir())

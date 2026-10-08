@@ -681,6 +681,7 @@ func _creer_guide() -> void:
 	b.add_theme_stylebox_override("pressed", _style(C_ROUGE.lightened(0.15), Color("ffd27a"), 16, 1))
 	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	if fait:
+		UiCommun.bouton_vif(b)       # récompense du guide prête : bouton vert bien visible
 		b.pressed.connect(_reclamer_guide)
 	else:
 		b.pressed.connect(_on_bouton.bind(str(e["zone"])))

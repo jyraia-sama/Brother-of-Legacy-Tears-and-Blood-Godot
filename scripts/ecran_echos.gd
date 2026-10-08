@@ -22,7 +22,9 @@ var _rng := RandomNumberGenerator.new()
 var _lbl_or: Label
 var _liste_heros: VBoxContainer
 var _centre: VBoxContainer
-var _grille: GridContainer
+var _zone_inv: VBoxContainer       # contenu de l'inventaire (grille du sac, ou Échos portés par héros)
+var _vue_inv := "sac"              # "sac" = Échos libres, "portes" = Échos équipés sur un héros
+var _onglets_inv := {}             # vue -> bouton d'onglet
 var _fiche: VBoxContainer
 var _opt_emplacement: OptionButton
 var _opt_set: OptionButton
@@ -119,6 +121,20 @@ func _ready() -> void:
 	rapide.pressed.connect(_vente_rapide)
 	hi.add_child(rapide)
 
+	# Onglets : les Échos libres (sac) et ceux déjà portés par un héros, rangés à part
+	var onglets := HBoxContainer.new()
+	onglets.add_theme_constant_override("separation", 6)
+	vi.add_child(onglets)
+	for o in [["sac", "Sac"], ["portes", "Équipés sur les héros"]]:
+		var bo := UiCommun.bouton(o[1], 15)
+		bo.custom_minimum_size = Vector2(0, 36)
+		bo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bo.pressed.connect(func():
+			_vue_inv = o[0]
+			_remplir_inventaire())
+		onglets.add_child(bo)
+		_onglets_inv[o[0]] = bo
+
 	var filtres := HBoxContainer.new()
 	filtres.add_theme_constant_override("separation", 6)
 	vi.add_child(filtres)
@@ -152,11 +168,9 @@ func _ready() -> void:
 	di.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	di.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	vi.add_child(di)
-	_grille = GridContainer.new()
-	_grille.columns = 3
-	_grille.add_theme_constant_override("h_separation", 6)
-	_grille.add_theme_constant_override("v_separation", 6)
-	di.add_child(_grille)
+	_zone_inv = VBoxContainer.new()
+	_zone_inv.add_theme_constant_override("separation", 8)
+	di.add_child(_zone_inv)
 
 	var pf := PanelContainer.new()
 	pf.add_theme_stylebox_override("panel", UiCommun.style_panneau(Color(0.5, 0.35, 0.25), Color(0.05, 0.02, 0.02, 0.9)))
@@ -314,10 +328,21 @@ func _remplir_centre() -> void:
 
 
 func _remplir_inventaire() -> void:
-	for e in _grille.get_children():
+	for e in _zone_inv.get_children():
 		e.queue_free()
-	var liste: Array = Sauvegarde.liste_echos().filter(func(e):
-		return (_filtre_emplacement == 0 or int(e["emplacement"]) == _filtre_emplacement) \
+	var tous: Array = Sauvegarde.liste_echos()
+	var nb_sac := tous.filter(func(e): return int(e["porteur"]) < 0).size()
+	var nb_portes := tous.size() - nb_sac
+	# Onglets : l'actif est doré
+	for v in _onglets_inv:
+		var actif: bool = v == _vue_inv
+		var bo: Button = _onglets_inv[v]
+		bo.text = ("Sac (%d)" % nb_sac) if v == "sac" else ("Équipés sur les héros (%d)" % nb_portes)
+		bo.add_theme_stylebox_override("normal", UiCommun.style_carte(UiCommun.C_OR if actif else Color(1, 1, 1, 0.15), 0.1 if actif else 0.0, 2))
+		bo.add_theme_color_override("font_color", UiCommun.C_LEGENDE if actif else UiCommun.C_DOUX)
+	var liste: Array = tous.filter(func(e):
+		return ((int(e["porteur"]) < 0) == (_vue_inv == "sac")) \
+			and (_filtre_emplacement == 0 or int(e["emplacement"]) == _filtre_emplacement) \
 			and (_filtre_set == "" or e["set"] == _filtre_set))
 	liste.sort_custom(func(a, b):
 		var ka: Array = [int(a["etoiles"]), int(a["niveau"]), int(a["rarete"])]
@@ -329,12 +354,54 @@ func _remplir_inventaire() -> void:
 			ka = [ka[2], ka[0], ka[1]]
 			kb = [kb[2], kb[0], kb[1]]
 		return ka > kb)
-	_lbl_inventaire.text = "INVENTAIRE  (%d / %d)" % [liste.size(), Sauvegarde.liste_echos().size()]
+	_lbl_inventaire.text = "INVENTAIRE  (%d Échos)" % tous.size()
+	if _vue_inv == "sac":
+		var g := _nouvelle_grille()
+		for e in liste:
+			g.add_child(_carte_echo(e))
+		if liste.is_empty():
+			var vide := UiCommun.label("Aucun Écho libre ici.\nLes Échos tombent en combat : le set dépend\nde l'Acte, l'emplacement du numéro de chapitre.", 14, UiCommun.C_DOUX)
+			_zone_inv.add_child(vide)
+		return
+	# Échos portés : un bloc par héros (le héros choisi en premier, puis l'équipe)
+	var par_heros := {}
 	for e in liste:
-		_grille.add_child(_carte_echo(e))
+		var p := int(e["porteur"])
+		if not par_heros.has(p):
+			par_heros[p] = []
+		par_heros[p].append(e)
+	var equipe := Sauvegarde.get_equipe()
+	var ordre: Array = par_heros.keys()
+	ordre.sort_custom(func(x, y):
+		var kx := [1 if int(x) == _heros else 0, 1 if int(x) in equipe else 0, -int(x)]
+		var ky := [1 if int(y) == _heros else 0, 1 if int(y) in equipe else 0, -int(y)]
+		return kx > ky)
+	for p in ordre:
+		var h := Sauvegarde.get_heros(int(p))
+		var tete := HBoxContainer.new()
+		tete.add_theme_constant_override("separation", 8)
+		_zone_inv.add_child(tete)
+		if not h.is_empty():
+			tete.add_child(UiCommun.portrait(h["id"], 30))
+		var nom: String = UnitesData.get_unite(h["id"])["nom"] if not h.is_empty() else "?"
+		var lt := UiCommun.label("%s  ·  %d / 6" % [nom, Sauvegarde.echos_de(int(p)).size()], 15,
+			UiCommun.C_LEGENDE if int(p) == _heros else UiCommun.C_OR)
+		lt.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		tete.add_child(lt)
+		var g := _nouvelle_grille()
+		for e in par_heros[p]:
+			g.add_child(_carte_echo(e))
 	if liste.is_empty():
-		var vide := UiCommun.label("Aucun Écho ici.\nLes Échos tombent en combat : le set dépend\nde l'Acte, l'emplacement du numéro de chapitre.", 14, UiCommun.C_DOUX)
-		_grille.add_child(vide)
+		_zone_inv.add_child(UiCommun.label("Aucun Écho équipé ici.", 14, UiCommun.C_DOUX))
+
+
+func _nouvelle_grille() -> GridContainer:
+	var g := GridContainer.new()
+	g.columns = 3
+	g.add_theme_constant_override("h_separation", 6)
+	g.add_theme_constant_override("v_separation", 6)
+	_zone_inv.add_child(g)
+	return g
 
 
 func _carte_echo(e: Dictionary) -> Button:
@@ -356,7 +423,7 @@ func _carte_echo(e: Dictionary) -> Button:
 	vb.add_child(UiCommun.label("%s  +%d" % [_etoiles(e), int(e["niveau"])], 13, Color("ffd060")))
 	vb.add_child(UiCommun.label(Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 13))
 	var porteur := int(e["porteur"])
-	if porteur >= 0:
+	if porteur >= 0 and _vue_inv != "portes":      # dans l'onglet Équipés, le porteur est déjà en titre
 		var h := Sauvegarde.get_heros(porteur)
 		var nom_p: String = UnitesData.get_unite(h["id"])["nom"] if not h.is_empty() else "?"
 		vb.add_child(UiCommun.label("Porté : " + nom_p, 11, UiCommun.C_DOUX))
@@ -429,6 +496,7 @@ func _remplir_fiche() -> void:
 
 
 func _clic_emplacement(i: int, uid_echo: int) -> void:
+	_vue_inv = "sac"          # on montre les Échos libres qui vont dans cet emplacement
 	_filtre_emplacement = i
 	_opt_emplacement.select(i)
 	if uid_echo >= 0:
