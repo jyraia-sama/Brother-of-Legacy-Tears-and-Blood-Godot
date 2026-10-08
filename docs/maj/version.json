@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-07",
+	"date": "2026-10-08",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,13 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"CADRES DE RARETÉ : les cartes des héros, monstres et familiers peuvent maintenant porter un cadre orné propre à leur rareté (fer pour N, bronze pour R, argent et améthystes pour SR, or pour SSR, fer noir et rubis pour UR, or blanc pour les Légendes), partout où elles apparaissent : Deck, Fusion, Évolution, Invocations, Bestiaire, Galerie d'Art, Arène, Armée, Compagnie, Marche Maudite, Reliquaire, Ménagerie et grandes fiches. Les cadres s'affichent dès que leurs images sont ajoutées (prompts dans PROMPTS_CADRES.md)."
+			],
+			"titre": "Les cadres de rareté",
+			"version": "0.50.0"
+		},
 		{
 			"changements": [
 				"Arnaud Riff-de-Sang a enfin son portrait et sa figurine de combat (Deck, invocations, Galerie d'Art et combats)."
@@ -134,23 +141,13 @@
 			],
 			"titre": "Un menu plus clair",
 			"version": "0.39.1"
-		},
-		{
-			"changements": [
-				"NOUVELLE CARTE PEINTE : les Terres des Valcendre s'étendent désormais sur une vraie carte illustrée, du domaine en flammes jusqu'au Trône de Cendres. Les 13 lieux, la route et la brume se posent directement sur le décor.",
-				"FICHE D'UN CHAPITRE : touche un chapitre (ou « Continuer ») pour ouvrir sa fenêtre, sur l'illustration de l'Acte : récit, niveau conseillé, niveau des ennemis, stamina minimum, cases du plateau, chef ou boss, butin d'Échos et renfort de Kaël. Les créatures que tu n'as pas encore croisées restent cachées derrière un « ? ».",
-				"Un chapitre terminé peut être revu et rejoué depuis sa fiche ; un chapitre verrouillé indique ce qu'il faut faire pour l'ouvrir.",
-				"L'ancien écran des Actes et l'ancienne liste de l'Histoire disparaissent : tout passe par la carte. En quittant un plateau, tu reviens sur la carte, sur l'Acte que tu jouais."
-			],
-			"titre": "La carte des Valcendre",
-			"version": "0.39.0"
 		}
 	],
 	"pck": {
-		"sha256": "7e08805510af9dfdedf64bd6ce0785a8aa1a33ced4bbac6cfdff14a57e0425ec",
-		"taille": 81496968,
+		"sha256": "3f222923b44efeba99fc13936e4e2601517b866dedc0719db2a2840035e17cc0",
+		"taille": 81499624,
 		"url": "jeu.pck"
 	},
-	"version": "0.49.1",
+	"version": "0.50.0",
 	"version_minimum": "0.37.0"
 }
