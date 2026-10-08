@@ -11,6 +11,23 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"PROFIL DES AUTRES JOUEURS : la fiche ouverte depuis Social ou Guilde est maintenant complète, comme ton propre écran « Mon héros » : titre, niveau, guilde, héros principal (stats et Échos), son équipe avec ses cartes, ses résultats d'Arène, d'Arène classée et de Marche Maudite, ses statistiques (chapitres, Tours, Donjons, Boss de Monde, Succès...) et sa collection par rareté. (Serveur : lancer supabase/06_profil_public.sql.)",
+				"ÉCHOS SANGUINS : l'inventaire a deux onglets. « Sac » ne montre que les Échos libres ; « Équipés sur les héros » range les Échos portés, héros par héros (le héros choisi en premier). Cliquer un emplacement du héros ramène au Sac, filtré sur cet emplacement.",
+				"QUÊTES : les boutons « Réclamer » (quêtes, récompense de connexion, Succès, guide du menu, Arène classée) deviennent vert vif et lumineux quand une récompense t'attend ; le coffre bonus brille en doré.",
+				"PARAMÈTRES ET MENU ADMIN : cases à cocher bien plus visibles (grande case dorée, cochée en vert avec une coche blanche, texte doré quand l'option est active)."
+			],
+			"titre": "Visages et détails",
+			"version": "0.51.0"
+		},
+		{
+			"changements": [
+				"Les cadres de rareté sont arrivés : fer pour N, bronze pour R, argent et améthystes pour SR, or et ambre pour SSR, fer noir et rubis pour UR, or blanc et pierres de lune pour les Légendes. Les coins ornés débordent légèrement de la carte, comme de vraies cartes de collection."
+			],
+			"titre": "Des cadres dignes des héros",
+			"version": "0.50.1"
+		},
+		{
+			"changements": [
 				"CADRES DE RARETÉ : les cartes des héros, monstres et familiers peuvent maintenant porter un cadre orné propre à leur rareté (fer pour N, bronze pour R, argent et améthystes pour SR, or pour SSR, fer noir et rubis pour UR, or blanc pour les Légendes), partout où elles apparaissent : Deck, Fusion, Évolution, Invocations, Bestiaire, Galerie d'Art, Arène, Armée, Compagnie, Marche Maudite, Reliquaire, Ménagerie et grandes fiches. Les cadres s'affichent dès que leurs images sont ajoutées (prompts dans PROMPTS_CADRES.md)."
 			],
 			"titre": "Les cadres de rareté",
@@ -125,29 +142,13 @@
 			],
 			"titre": "Les lieux de la Larme",
 			"version": "0.41.0"
-		},
-		{
-			"changements": [
-				"NOUVEAUX DÉCORS : les six salles du Sang ont chacune leur fond peint. La salle d'armes pour le Deck, le cercle runique pour l'Autel d'Invocation, le laboratoire d'alchimie pour la Fusion et l'Évolution, la crypte-reliquaire des Échos Sanguins, la forge et le trésor du Reliquaire, la bibliothèque du chasseur pour le Bestiaire.",
-				"Les décors sont bien plus visibles : ils sont moins assombris, et les grands panneaux deviennent légèrement transparents pour laisser voir la salle derrière, sans gêner la lecture."
-			],
-			"titre": "Les salles du Sang",
-			"version": "0.40.0"
-		},
-		{
-			"changements": [
-				"Le fond du menu principal est bien plus lumineux : le grand frère, Kaël, le médaillon et la crypte se distinguent enfin, même sur un téléphone ou un écran peu lumineux.",
-				"Correction : un réglage d'affichage assombrissait par erreur les illustrations du menu et de la carte du monde (leurs couleurs étaient « appliquées deux fois »). La carte des Valcendre retrouve elle aussi ses vraies couleurs."
-			],
-			"titre": "Un menu plus clair",
-			"version": "0.39.1"
 		}
 	],
 	"pck": {
-		"sha256": "3f222923b44efeba99fc13936e4e2601517b866dedc0719db2a2840035e17cc0",
-		"taille": 81499624,
+		"sha256": "a310a9b2e768570023ff2db84fa6177cb3a634ea9f1d0d1af0e96bd2f53113b6",
+		"taille": 82058172,
 		"url": "jeu.pck"
 	},
-	"version": "0.50.0",
+	"version": "0.51.0",
 	"version_minimum": "0.37.0"
 }
