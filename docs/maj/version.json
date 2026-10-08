@@ -11,6 +11,22 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ÉCRAN DE CHARGEMENT : les larmes et les gouttes de sang tombent maintenant verticalement du haut de l'écran, comme une pluie, jusque dans les deux moitiés du Sceau (dans le jeu et sur la page web).",
+				"PLEIN ÉCRAN PAR DÉFAUT : les applications Windows et Mac s'ouvrent en plein écran (toujours réglable dans le Menu, ou touche F11). Sur le jeu web, ordinateur compris, le plein écran s'active au premier clic ou appui (réglable dans le Menu).",
+				"MENU : les boutons du bas restent toujours visibles, même quand on fait défiler la fenêtre sur un petit écran. Nouveau bouton « Quitter le jeu » à côté de « Fermer » (applications Windows, Mac et Android), avec confirmation ; la partie est sauvegardée avant de fermer."
+			],
+			"titre": "Plein écran",
+			"version": "0.55.0"
+		},
+		{
+			"changements": [
+				"ÉCRAN DE CHARGEMENT : le Sceau des Frères est maintenant un vrai médaillon peint, or ciselé et ailes de phénix. Ses deux moitiés de cristal, éteintes au départ, se remplissent réellement de larmes bleues et de sang au fil du chargement, avec une surface qui ondule et un liseré de lumière, avant de se ressouder. Même animation sur la page de chargement du jeu web."
+			],
+			"titre": "Le Sceau peint",
+			"version": "0.54.1"
+		},
+		{
+			"changements": [
 				"NOUVELLE ICÔNE : les deux frères face à face, l'aîné avec une larme bleutée, Kaël avec une larme de sang. Sur le jeu web dès cette version (onglet du navigateur, appli installée sur l'écran d'accueil) ; sur Windows, Mac et Android à la prochaine installation complète.",
 				"NOUVEL ÉCRAN DE CHARGEMENT : « le Sceau des Frères se reforme ». Entre les deux frères, les larmes bleues de l'aîné et les gouttes de sang de Kaël coulent de leurs yeux et remplissent chacune une moitié du médaillon brisé, au rythme du chargement. À 100 %, les deux moitiés se ressoudent dans un éclair, une onde de lumière balaie l'écran et le titre apparaît. Une phrase de l'histoire s'affiche en bas, différente à chaque lancement. Toucher l'écran accélère l'animation.",
 				"JEU WEB : la page de téléchargement du jeu (avant son lancement, la plus longue attente sur téléphone) joue la même animation à la place de la barre grise, avec le pourcentage réel du téléchargement ; le jeu enchaîne ensuite directement sur le Sceau qui se ressoude."
@@ -126,30 +142,13 @@
 			],
 			"titre": "Les Titans de la semaine",
 			"version": "0.44.0"
-		},
-		{
-			"changements": [
-				"NOUVEAUX DÉCORS DU ROYAUME : la place du refuge et son panneau des contrats (Quêtes), la galerie des trophées (Succès), l'échoppe du marchand (Boutique), la grande salle aux bannières (Guilde), la taverne sous la neige (Social) et la tour des corbeaux (Courrier).",
-				"Le choix du héros de départ se fait désormais dans la cour du domaine Valcendre en flammes, sous la lune rouge, entre deux statues de chevaliers.",
-				"Tous les menus du jeu ont maintenant leur propre décor peint."
-			],
-			"titre": "Le Royaume du refuge",
-			"version": "0.43.0"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS : les Actes V à XIII ont à leur tour leur vraie scène peinte. Les bûchers de l'Inquisiteur, le lac de verre noir de la Forêt Pétrifiée, le trône de ronces de la Dame, le siège sous l'Éclipse du Sang, le Val des Héros Déchus, la Citadelle des Supplices, le duel des deux frères, le Trône de Cendres et la Soif Première au cœur du Sceau.",
-				"Fiche d'un chapitre : le niveau des ennemis s'affiche « Niv. 30 » au lieu de « Niv. 30 à 30 » quand le plafond est atteint."
-			],
-			"titre": "Les 13 Actes illustrés",
-			"version": "0.42.2"
 		}
 	],
 	"pck": {
-		"sha256": "857bb760a74d99178d731c3c40d1f84d18fe15d2a9c51d82c157f974da636391",
-		"taille": 84388264,
+		"sha256": "4cc0476f843b29fd249a0a614069d977f89b952c0147d416d4ed3917fd419e85",
+		"taille": 85937600,
 		"url": "jeu.pck"
 	},
-	"version": "0.54.0",
+	"version": "0.55.0",
 	"version_minimum": "0.37.0"
 }
