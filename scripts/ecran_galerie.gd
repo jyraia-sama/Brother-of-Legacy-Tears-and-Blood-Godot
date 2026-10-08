@@ -235,12 +235,13 @@ func _vignette(el: Dictionary, i: int) -> Button:
 	v.offset_left = 4 + marge_cadre
 	v.offset_right = -4 - marge_cadre
 	v.offset_top = 4 + marge_cadre
-	v.offset_bottom = -4 - marge_cadre
+	v.offset_bottom = -4 - (b.custom_minimum_size.x * 0.2 if avec_cadre else 0.0)   # le nom passe au-dessus des coins ornés du bas
 	v.add_theme_constant_override("separation", 3)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(v)
 	if avec_cadre:
 		UiCommun.encadrer(b, str(el["id"]), 2.0)
+		b.clip_contents = false      # les coins ornés du cadre dépassent un peu de la vignette
 	if el["ouvert"]:
 		var img := TextureRect.new()
 		img.texture = load(el["chemin"])

@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.50.0"
+const NUMERO := "0.50.1"
 const DATE := "2026-10-08"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.50.1", "date": "2026-10-08", "titre": "Des cadres dignes des héros",
+	"changements": [
+		"Les cadres de rareté sont arrivés : fer pour N, bronze pour R, argent et améthystes pour SR, or et ambre pour SSR, fer noir et rubis pour UR, or blanc et pierres de lune pour les Légendes. Les coins ornés débordent légèrement de la carte, comme de vraies cartes de collection.",
+	]},
 	{"version": "0.50.0", "date": "2026-10-08", "titre": "Les cadres de rareté",
 	"changements": [
 		"CADRES DE RARETÉ : les cartes des héros, monstres et familiers peuvent maintenant porter un cadre orné propre à leur rareté (fer pour N, bronze pour R, argent et améthystes pour SR, or pour SSR, fer noir et rubis pour UR, or blanc pour les Légendes), partout où elles apparaissent : Deck, Fusion, Évolution, Invocations, Bestiaire, Galerie d'Art, Arène, Armée, Compagnie, Marche Maudite, Reliquaire, Ménagerie et grandes fiches. Les cadres s'affichent dès que leurs images sont ajoutées (prompts dans PROMPTS_CADRES.md).",

@@ -127,7 +127,7 @@ static func chemin_figurine(id: String) -> String:
 ## Les ornements doivent rester dans les COINS : les côtés sont étirés selon la taille de la carte.
 const DOSSIER_CADRES := "res://assets/cadres/"
 ## Taille d'un coin orné, en fraction de la largeur de l'image du cadre.
-const MARGE_CADRE := 0.24
+const MARGE_CADRE := 0.3
 
 static var _cadres := {}
 
@@ -144,28 +144,58 @@ static func cle_rarete(id: String) -> String:
 
 ## Texture du cadre d'une rareté (null si l'image n'existe pas encore).
 static func texture_cadre(cle: String) -> Texture2D:
+	return _info_cadre(cle).get("tex", null)
+
+
+## Cadre d'une rareté : {tex, debord} (vide sans image). debord = Rect2 des marges (px de l'image)
+## entre le bord de l'image et la baguette du cadre (les coins ornés dépassent de la baguette) :
+## gauche/haut dans position, droite/bas dans size.
+static func _info_cadre(cle: String) -> Dictionary:
 	if cle == "":
-		return null
-	if not _cadres.has(cle):
-		var chemin := DOSSIER_CADRES + cle.to_lower() + ".png"
-		_cadres[cle] = load(chemin) if ResourceLoader.exists(chemin) else null
-	return _cadres[cle]
+		return {}
+	if _cadres.has(cle):
+		return _cadres[cle]
+	var info := {}
+	var chemin := DOSSIER_CADRES + cle.to_lower() + ".png"
+	if ResourceLoader.exists(chemin):
+		var tex: Texture2D = load(chemin)
+		info["tex"] = tex
+		var img := tex.get_image()
+		if img != null and img.is_compressed():
+			img.decompress()
+		var w := tex.get_width()
+		var h := tex.get_height()
+		var g := 0
+		var d := 0
+		var hh := 0
+		var b := 0
+		if img != null:
+			while g < w / 3 and img.get_pixel(g, h / 2).a < 0.5:
+				g += 1
+			while d < w / 3 and img.get_pixel(w - 1 - d, h / 2).a < 0.5:
+				d += 1
+			while hh < h / 3 and img.get_pixel(w / 2, hh).a < 0.5:
+				hh += 1
+			while b < h / 3 and img.get_pixel(w / 2, h - 1 - b).a < 0.5:
+				b += 1
+		info["debord"] = Rect2(g, hh, d, b)
+	_cadres[cle] = info
+	return info
 
 
 ## Pose le cadre de rareté de l'unité id par-dessus le contrôle c (retrait = marge depuis
-## ses bords, pour laisser voir le contour de sélection). Renvoie false s'il n'y a pas de cadre.
+## ses bords, pour laisser voir le contour de sélection). La BAGUETTE du cadre est calée sur le
+## bord de la carte ; les coins ornés peuvent dépasser un peu. Renvoie false sans cadre.
 static func encadrer(c: Control, id: String, retrait := 0.0) -> bool:
-	var tex := texture_cadre(cle_rarete(id))
-	if tex == null:
+	var info := _info_cadre(cle_rarete(id))
+	if info.is_empty():
 		return false
+	var tex: Texture2D = info["tex"]
+	var deb: Rect2 = info["debord"]
 	var zone := Control.new()
 	zone.name = "Cadre"
 	zone.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	zone.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	zone.offset_left = retrait
-	zone.offset_top = retrait
-	zone.offset_right = -retrait
-	zone.offset_bottom = -retrait
 	c.add_child(zone)
 	var cadre := NinePatchRect.new()
 	cadre.texture = tex
@@ -178,12 +208,13 @@ static func encadrer(c: Control, id: String, retrait := 0.0) -> bool:
 	zone.add_child(cadre)
 	# Le cadre est mis à l'échelle de la carte (coins proportionnés), seuls les côtés s'étirent
 	var ajuster := func():
-		var t := zone.size
+		var t := zone.size - Vector2(2 * retrait, 2 * retrait)
 		if t.x <= 1 or t.y <= 1:
 			return
-		var k := minf(t.x, t.y * 0.75) / float(tex.get_width())
+		var k := minf(t.x, t.y * 0.75) / float(tex.get_width() - deb.position.x - deb.size.x)
 		cadre.scale = Vector2(k, k)
-		cadre.size = t / k
+		cadre.position = Vector2(retrait, retrait) - deb.position * k
+		cadre.size = (t + (deb.position + deb.size) * k) / k
 	zone.resized.connect(ajuster)
 	ajuster.call()
 	return true
@@ -191,7 +222,7 @@ static func encadrer(c: Control, id: String, retrait := 0.0) -> bool:
 
 ## Épaisseur du bord d'un cadre posé sur une carte de cette largeur (pour placer les textes).
 static func bord_cadre(id: String, largeur: float) -> float:
-	return largeur * 0.075 if texture_cadre(cle_rarete(id)) != null else 0.0
+	return largeur * 0.06 if texture_cadre(cle_rarete(id)) != null else 0.0
 
 
 ## Met l'image de l'unité dans un portrait rond (Panel), si elle existe.
