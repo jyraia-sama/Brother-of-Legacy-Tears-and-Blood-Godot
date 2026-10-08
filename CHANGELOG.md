@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.54.1** (2026-10-08)
+Version actuelle : **0.55.0** (2026-10-08)
+
+## v0.55.0 — Plein écran  (2026-10-08)
+
+- ÉCRAN DE CHARGEMENT : les larmes et les gouttes de sang tombent maintenant verticalement du haut de l'écran, comme une pluie, jusque dans les deux moitiés du Sceau (dans le jeu et sur la page web).
+- PLEIN ÉCRAN PAR DÉFAUT : les applications Windows et Mac s'ouvrent en plein écran (toujours réglable dans le Menu, ou touche F11). Sur le jeu web, ordinateur compris, le plein écran s'active au premier clic ou appui (réglable dans le Menu).
+- MENU : les boutons du bas restent toujours visibles, même quand on fait défiler la fenêtre sur un petit écran. Nouveau bouton « Quitter le jeu » à côté de « Fermer » (applications Windows, Mac et Android), avec confirmation ; la partie est sauvegardée avant de fermer.
 
 ## v0.54.1 — Le Sceau peint  (2026-10-08)
 

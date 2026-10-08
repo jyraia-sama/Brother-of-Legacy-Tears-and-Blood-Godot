@@ -6,8 +6,8 @@
 <title>$GODOT_PROJECT_NAME</title>
 <!--
 	PAGE DE CHARGEMENT DU JEU WEB (modèle d'export Godot : Projet > Exporter > Web > HTML > Custom HTML Shell).
-	« Le Sceau des Frères se reforme » : pendant le téléchargement du jeu, des larmes bleues coulent de l'œil
-	de l'aîné et des gouttes de sang de celui de Kaël, et remplissent les deux moitiés du médaillon au rythme
+	« Le Sceau des Frères se reforme » : pendant le téléchargement du jeu, des larmes bleues et des gouttes de sang tombent
+	du haut de l'écran et remplissent les deux moitiés du médaillon au rythme
 	du téléchargement. Quand le jeu démarre, il enchaîne sur la fin (le Sceau se ressoude : ecran_chargement.gd).
 	Image de fond : docs/chargement.jpg (copie de assets/ui/chargement.png). Médaillon : docs/sceau/*.webp (copies de assets/ui/sceau/).
 -->
@@ -65,8 +65,6 @@ const engine = new Engine(GODOT_CONFIG);
 		"Une larme pour ceux qu'on a perdus. Du sang pour ceux qu'on va sauver.",
 		"Le domaine a brûlé. La lignée, elle, brûle encore.",
 	];
-	const IMG = { w: 1672, h: 941 };                    // taille de chargement.jpg
-	const OEIL_LARME = [0.236, 0.335], OEIL_SANG = [0.815, 0.345];
 	const LARME = [63, 157, 255], SANG = [209, 20, 38], OR = [217, 166, 74];
 
 	const ecran = document.getElementById('chargement');
@@ -91,12 +89,6 @@ const engine = new Engine(GODOT_CONFIG);
 	const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 	const eclaircir = (c, k) => c.map((v) => Math.round(v + (255 - v) * k));
 	const assombrir = (c, k) => c.map((v) => Math.round(v * (1 - k)));
-
-	// Position des yeux à l'écran (l'image est affichée « en couverture »)
-	function oeil(o) {
-		const e = Math.max(W / IMG.w, H / IMG.h);
-		return [(W - IMG.w * e) / 2 + o[0] * IMG.w * e, (H - IMG.h * e) / 2 + o[1] * IMG.h * e];
-	}
 
 	// Le médaillon peint (docs/sceau/) : pour chaque moitié, la version vide et le liquide seul
 	const LIQ_Y = [0.228, 0.729], CIBLE_X = { '-1': [0.30, 0.46], '1': [0.54, 0.70] };
@@ -159,7 +151,7 @@ const engine = new Engine(GODOT_CONFIG);
 		}
 		moitie(cadre, -1, temps);
 		moitie(cadre, 1, temps);
-		// gouttes qui coulent des yeux jusqu'à la surface du liquide
+		// gouttes qui tombent du haut de l'écran jusqu'à la surface du liquide
 		if (niveau < 0.995 && temps >= prochaine) {
 			prochaine = temps + 0.12 + Math.random() * 0.16;
 			gouttes.push({ cote: Math.random() < 0.5 ? -1 : 1, u: 0, v: 0.8 + Math.random() * 0.3, x: Math.random() });
@@ -167,17 +159,17 @@ const engine = new Engine(GODOT_CONFIG);
 		gouttes = gouttes.filter((g) => {
 			g.u += dt * g.v * (0.5 + g.u * 1.4);
 			if (g.u >= 1) return false;
-			const dep = oeil(g.cote < 0 ? OEIL_LARME : OEIL_SANG);
+			// chute verticale depuis le haut de l'écran jusqu'à la surface du liquide
 			const bx = CIBLE_X[String(g.cote)];
 			const surface = LIQ_Y[1] - niveau * (LIQ_Y[1] - LIQ_Y[0]);
 			const arr = [cadre[0] + (bx[0] + (bx[1] - bx[0]) * g.x) * cote + cote * 0.05 * g.cote, cadre[1] + surface * cote];
-			const ctrl = [dep[0] + (arr[0] - dep[0]) * 0.45, Math.min(dep[1], arr[1]) - H * 0.12];
 			const col = g.cote < 0 ? LARME : SANG;
-			for (let k = 0; k < 6; k++) {
-				const p = bezier(dep, ctrl, arr, Math.max(g.u - k * 0.025, 0));
-				ctx.fillStyle = rgba(col, 0.55 - k * 0.08); ctx.beginPath(); ctx.arc(p[0], p[1], r * (0.06 - k * 0.008), 0, 7); ctx.fill();
-			}
-			const p = bezier(dep, ctrl, arr, g.u);
+			const p = [arr[0], -r * 0.3 + (arr[1] + r * 0.3) * g.u * g.u], vit = 2 * g.u;
+			ctx.lineCap = 'round';
+			ctx.strokeStyle = rgba(col, 0.35); ctx.lineWidth = r * 0.05;
+			ctx.beginPath(); ctx.moveTo(p[0], p[1] - r * (0.15 + 0.6 * vit)); ctx.lineTo(p[0], p[1]); ctx.stroke();
+			ctx.strokeStyle = rgba(eclaircir(col, 0.3), 0.6); ctx.lineWidth = r * 0.03;
+			ctx.beginPath(); ctx.moveTo(p[0], p[1] - r * (0.08 + 0.3 * vit)); ctx.lineTo(p[0], p[1]); ctx.stroke();
 			ctx.fillStyle = rgba(col, 0.18); ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.14, 0, 7); ctx.fill();
 			ctx.fillStyle = rgba(col, 0.35); ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.09, 0, 7); ctx.fill();
 			ctx.fillStyle = rgba(eclaircir(col, 0.3), 1); ctx.beginPath(); ctx.arc(p[0], p[1], r * 0.055, 0, 7); ctx.fill();

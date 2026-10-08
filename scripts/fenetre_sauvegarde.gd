@@ -38,11 +38,14 @@ func _ready() -> void:
 	panneau.custom_minimum_size = Vector2(620, 0)
 	centre.add_child(panneau)
 
-	# Défilement si l'écran est petit (téléphone)
+	# Défilement si l'écran est petit (téléphone) ; les boutons Fermer / Quitter restent toujours visibles en bas
+	var cadre := VBoxContainer.new()
+	cadre.add_theme_constant_override("separation", 10)
+	panneau.add_child(cadre)
 	var defil := ScrollContainer.new()
 	defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	defil.custom_minimum_size = Vector2(640, minf(900.0, get_viewport().get_visible_rect().size.y - 90.0))
-	panneau.add_child(defil)
+	defil.custom_minimum_size = Vector2(640, minf(840.0, get_viewport().get_visible_rect().size.y - 160.0))
+	cadre.add_child(defil)
 	var vb := VBoxContainer.new()
 	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vb.add_theme_constant_override("separation", 12)
@@ -80,10 +83,10 @@ func _ready() -> void:
 		b.button_pressed = Ecran.reglage_taille() == t
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		tailles.add_child(b)
-	if Ecran.est_mobile() and OS.has_feature("web"):
+	if OS.has_feature("web"):
 		var pe := CheckBox.new()
 		UiCommun.habiller_case(pe)
-		pe.text = "Plein écran automatique au premier appui"
+		pe.text = "Plein écran automatique au premier appui" if Ecran.est_mobile() else "Plein écran automatique au premier clic"
 		pe.focus_mode = Control.FOCUS_NONE
 		pe.add_theme_font_size_override("font_size", 17)
 		pe.button_pressed = bool(Sauvegarde.get_parametre("plein_ecran_auto", true))
@@ -181,9 +184,35 @@ func _ready() -> void:
 		adm.add_theme_color_override("font_color", Color("ff7a6a"))
 		lv.add_child(adm)
 
+	cadre.add_child(HSeparator.new())
+	var bas := HBoxContainer.new()
+	bas.alignment = BoxContainer.ALIGNMENT_CENTER
+	bas.add_theme_constant_override("separation", 14)
+	cadre.add_child(bas)
 	var fermer := _bouton("Fermer", queue_free)
-	fermer.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	vb.add_child(fermer)
+	fermer.custom_minimum_size = Vector2(200, 46)
+	bas.add_child(fermer)
+	# Quitter : applications (ordinateur, Android). Dans un navigateur, on ferme simplement l'onglet.
+	if not OS.has_feature("web") and not OS.has_feature("ios"):
+		var quitter := _bouton("Quitter le jeu", _demander_quitter)
+		quitter.custom_minimum_size = Vector2(200, 46)
+		quitter.add_theme_color_override("font_color", Color("ff7a6a"))
+		bas.add_child(quitter)
+
+
+func _demander_quitter() -> void:
+	FenetreSimple.confirmer(get_parent(), "Quitter le jeu ?", "Ta partie est sauvegardée automatiquement.", "Quitter", _quitter)
+
+
+## Sauvegarde (sur l'appareil, puis sur le compte si possible, 4 s au plus) et ferme le jeu.
+func _quitter() -> void:
+	Sauvegarde.ecrire_maintenant()
+	_etat.text = "Sauvegarde en cours…"
+	var arbre := get_tree()
+	arbre.create_timer(4.0).timeout.connect(arbre.quit)
+	if EnLigne.est_connecte():
+		await EnLigne.envoyer_sauvegarde()
+	arbre.quit()
 
 
 ## Ligne « Musique ━━━━●━━ 80 % » : le volume change en direct.

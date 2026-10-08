@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.54.1"
+const NUMERO := "0.55.0"
 const DATE := "2026-10-08"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.55.0", "date": "2026-10-08", "titre": "Plein écran",
+	"changements": [
+		"ÉCRAN DE CHARGEMENT : les larmes et les gouttes de sang tombent maintenant verticalement du haut de l'écran, comme une pluie, jusque dans les deux moitiés du Sceau (dans le jeu et sur la page web).",
+		"PLEIN ÉCRAN PAR DÉFAUT : les applications Windows et Mac s'ouvrent en plein écran (toujours réglable dans le Menu, ou touche F11). Sur le jeu web, ordinateur compris, le plein écran s'active au premier clic ou appui (réglable dans le Menu).",
+		"MENU : les boutons du bas restent toujours visibles, même quand on fait défiler la fenêtre sur un petit écran. Nouveau bouton « Quitter le jeu » à côté de « Fermer » (applications Windows, Mac et Android), avec confirmation ; la partie est sauvegardée avant de fermer.",
+	]},
 	{"version": "0.54.1", "date": "2026-10-08", "titre": "Le Sceau peint",
 	"changements": [
 		"ÉCRAN DE CHARGEMENT : le Sceau des Frères est maintenant un vrai médaillon peint, or ciselé et ailes de phénix. Ses deux moitiés de cristal, éteintes au départ, se remplissent réellement de larmes bleues et de sang au fil du chargement, avec une surface qui ondule et un liseré de lumière, avant de se ressouder. Même animation sur la page de chargement du jeu web.",

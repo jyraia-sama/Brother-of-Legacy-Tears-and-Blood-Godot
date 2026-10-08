@@ -9,9 +9,9 @@ extends Node
 ##    même en commençant sur une carte ou un bouton, avec de l'élan. Un glissement
 ##    n'appuie jamais sur le bouton de départ.
 ##  - PAYSAGE : en portrait, un message demande de tourner le téléphone.
-##  - PLEIN ÉCRAN : au premier appui sur mobile (navigateur), le jeu passe en plein écran
-##    et se verrouille en paysage quand le téléphone le permet (Android).
-##  - ORDINATEUR (application Windows / Mac) : plein écran au choix dans les Paramètres, ou touche F11.
+##  - PLEIN ÉCRAN : dans le navigateur (téléphone ou ordinateur), le jeu passe en plein écran au premier
+##    appui ou clic (le navigateur l'interdit sans geste du joueur) et se verrouille en paysage sur Android.
+##  - ORDINATEUR (application Windows / Mac) : plein écran par défaut ; réglable dans les Paramètres ou touche F11.
 ##  - AJUSTEMENT : si un écran est trop large ou trop haut pour la taille choisie, il est
 ##    réduit juste assez pour tenir entièrement (rien n'est jamais coupé sur le bord).
 
@@ -184,7 +184,7 @@ func _maj_portrait() -> void:
 # =====================================================================
 
 func _passer_plein_ecran() -> void:
-	if _plein_ecran_demande or not OS.has_feature("web") or not est_mobile():
+	if _plein_ecran_demande or not OS.has_feature("web"):
 		return
 	if not bool(Sauvegarde.get_parametre("plein_ecran_auto", true)):
 		return
@@ -218,7 +218,7 @@ func est_application_pc() -> bool:
 
 
 func plein_ecran_pc() -> bool:
-	return bool(Sauvegarde.get_parametre("plein_ecran_pc", false))
+	return bool(Sauvegarde.get_parametre("plein_ecran_pc", true))      # plein écran par défaut
 
 
 func changer_plein_ecran_pc(actif: bool) -> void:
@@ -245,6 +245,9 @@ func _input(event: InputEvent) -> void:
 		changer_plein_ecran_pc(not plein_ecran_pc())
 		get_viewport().set_input_as_handled()
 		return
+	# Navigateur sur ordinateur : plein écran au premier clic
+	if event is InputEventMouseButton and not event.pressed and OS.has_feature("web") and not est_mobile():
+		_passer_plein_ecran()
 	if event is InputEventScreenTouch:
 		if event.index != 0:
 			return

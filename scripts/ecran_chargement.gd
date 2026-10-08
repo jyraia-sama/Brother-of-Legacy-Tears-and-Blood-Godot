@@ -18,9 +18,6 @@ const IMAGE := "res://assets/ui/chargement.png"
 ## Ce qu'on charge pendant l'animation (les images du menu principal), pour un menu fluide ensuite.
 const A_CHARGER := ["res://assets/ui/menu_freres.png", "res://assets/personnages/kael_valcendre.png",
 	"res://assets/plateaux/pion_aine.png", "res://assets/personnages/aine.png"]
-## Position des yeux des deux frères dans l'illustration (fraction de l'image) : les gouttes en partent.
-const OEIL_LARME := Vector2(0.236, 0.335)
-const OEIL_SANG := Vector2(0.815, 0.345)
 const DUREE_MIN := 2.6           # secondes de remplissage au minimum (pour profiter du spectacle)
 const C_LARME := Color("3f9dff")
 const C_SANG := Color("d11426")
@@ -148,14 +145,6 @@ func _label(t: String, taille: int, c: Color) -> Label:
 
 func _disposer() -> void:
 	var s := get_viewport().get_visible_rect().size
-	# Image affichée « en couverture » : on retrouve où tombent les yeux des frères à l'écran
-	var tex_taille := Vector2(16, 9)
-	if ResourceLoader.exists(IMAGE):
-		tex_taille = (load(IMAGE) as Texture2D).get_size()
-	var echelle := maxf(s.x / tex_taille.x, s.y / tex_taille.y)
-	var decal := (s - tex_taille * echelle) / 2.0
-	_sceau.source_larme = (decal + OEIL_LARME * tex_taille * echelle) / s
-	_sceau.source_sang = (decal + OEIL_SANG * tex_taille * echelle) / s
 	_titre.size = Vector2(s.x, 70)
 	_titre.position = Vector2(0, s.y * 0.13)
 	var sous: Label = _titre.get_node("Sous")
@@ -224,7 +213,7 @@ func _changer(p: String) -> void:
 
 
 # =====================================================================
-# Le Sceau des Frères (dessiné) : deux moitiés, larmes et gouttes de sang qui coulent des yeux des frères
+# Le Sceau des Frères : médaillon peint en deux moitiés, larmes et gouttes de sang qui tombent du haut de l'écran
 # =====================================================================
 class Sceau extends Control:
 	## Illustration du médaillon (outils/sources/sceau_source.png), coupée en deux le long de la fissure :
@@ -238,8 +227,6 @@ class Sceau extends Control:
 	var soude := false
 	var onde := -1.0         # onde de choc (secondes depuis la soudure)
 	var temps := 0.0
-	var source_larme := Vector2(0.18, 0.4)
-	var source_sang := Vector2(0.82, 0.4)
 	var _gouttes: Array = []
 	var _prochaine := 0.0
 	var _dernier := 0.0
@@ -347,7 +334,7 @@ void fragment() {
 			_dessus.draw_arc(c, ro * 0.82, 0, TAU, 128, Color(EcranChargement.C_LARME, (1.0 - k) * 0.5), 3.0, true)
 			_dessus.draw_arc(c, ro * 0.7, 0, TAU, 128, Color(EcranChargement.C_SANG, (1.0 - k) * 0.5), 3.0, true)
 
-	## Les gouttes coulent des yeux des frères en arc jusqu'à la surface du liquide de leur moitié.
+	## Les gouttes tombent verticalement du haut de l'écran jusqu'à la surface du liquide de leur moitié.
 	func _gouttes_couler(cadre: Rect2, dt: float) -> void:
 		var r := cadre.size.x * 0.27
 		if not soude and niveau < 0.999 and temps >= _prochaine:
@@ -361,16 +348,16 @@ void fragment() {
 			if u >= 1.0:
 				continue
 			var cote: int = gt["cote"]
-			var depart := (source_larme if cote < 0 else source_sang) * size
 			var bx: Vector2 = CIBLE_X[cote]
 			var surface := LIQUIDE_Y.y - niveau * (LIQUIDE_Y.y - LIQUIDE_Y.x)
 			var arrivee := cadre.position + Vector2(lerpf(bx.x, bx.y, float(gt["x"])) * cadre.size.x + dx * cote, surface * cadre.size.y)
-			var ctrl := Vector2(lerpf(depart.x, arrivee.x, 0.45), minf(depart.y, arrivee.y) - size.y * 0.12)
+			var depart := Vector2(arrivee.x, -r * 0.3)
 			var col := EcranChargement.C_LARME if cote < 0 else EcranChargement.C_SANG
-			for k in 6:
-				var uu := maxf(u - k * 0.025, 0.0)
-				_dessus.draw_circle(_bezier(depart, ctrl, arrivee, uu), r * (0.06 - k * 0.008), Color(col, 0.55 - k * 0.08))
-			var p := _bezier(depart, ctrl, arrivee, u)
+			# chute accélérée, avec une traînée verticale
+			var p := depart.lerp(arrivee, u * u)
+			var vitesse := 2.0 * u
+			_dessus.draw_line(p - Vector2(0, r * (0.15 + 0.6 * vitesse)), p, Color(col, 0.35), r * 0.05, true)
+			_dessus.draw_line(p - Vector2(0, r * (0.08 + 0.3 * vitesse)), p, Color(col.lightened(0.3), 0.6), r * 0.03, true)
 			_dessus.draw_circle(p, r * 0.14, Color(col, 0.18))
 			_dessus.draw_circle(p, r * 0.09, Color(col, 0.35))
 			_dessus.draw_circle(p, r * 0.055, col.lightened(0.3))
