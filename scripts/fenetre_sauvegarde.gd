@@ -83,6 +83,14 @@ func _ready() -> void:
 		b.button_pressed = Ecran.reglage_taille() == t
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		tailles.add_child(b)
+	var c3 := CheckBox.new()
+	UiCommun.habiller_case(c3)
+	c3.text = "Combats en 3D (décoche si ton téléphone chauffe ou ralentit)"
+	c3.focus_mode = Control.FOCUS_NONE
+	c3.add_theme_font_size_override("font_size", 17)
+	c3.button_pressed = bool(Sauvegarde.get_parametre("combats_3d", true))
+	c3.toggled.connect(func(v: bool): Sauvegarde.definir_parametre("combats_3d", v))
+	vb.add_child(c3)
 	if OS.has_feature("web"):
 		var pe := CheckBox.new()
 		UiCommun.habiller_case(pe)

@@ -50,6 +50,9 @@ var _barre_geant: ProgressBar
 var _lbl_geant: Label
 var _idx_geant := -1
 var barre_haut: HBoxContainer   # barre du haut (le combat classé y ajoute « Abandonner »)
+## Combats en 2,5D (scène 3D + figurines) : modes concernés et scène 3D (null en 2D)
+const MODES_3D := ["aventure"]
+var _c3d: Combat3D = null
 
 
 ## Camp du joueur (Arène classée : le 2e joueur est le camp 1, affiché à gauche quand même).
@@ -70,6 +73,8 @@ func _ready() -> void:
 	demande_combat = demande
 	_mon_camp = int(demande.get("mon_camp", 0)) if _mode == "classee" else 0
 	Audio.musique(_musique_combat())
+	if _mode in MODES_3D and bool(Sauvegarde.get_parametre("combats_3d", true)):
+		_c3d = Combat3D.new()
 	_creer_fond()
 	_creer_interface()
 
@@ -118,6 +123,10 @@ func _creer_fond() -> void:
 	elif _mode == "donjon":
 		chemin = "res://assets/donjons/%s.png" % str(demande.get("donjon", "feu"))
 		noir.color = Color("#" + str(Donjons.DONJONS[demande.get("donjon", "feu")]["couleur"])).darkened(0.88)
+	if _c3d != null:
+		add_child(_c3d)
+		_c3d.construire(chemin, noir.color)
+		return
 	if ResourceLoader.exists(chemin):
 		var img := TextureRect.new()
 		img.texture = load(chemin)
@@ -241,6 +250,8 @@ func _changer_vitesse(v: float, memoriser := true) -> void:
 	if not v in _boutons_vitesse:
 		v = 1.0
 	_vitesse = v
+	if _c3d != null:
+		_c3d.vitesse = v
 	if memoriser:
 		Sauvegarde.definir_parametre(_cle_vitesse(), v)
 	for cle in _boutons_vitesse:
@@ -278,10 +289,48 @@ func _placer_unites() -> void:
 		var p := _position(info["camp"], info["place"])
 		var taille: Vector2 = carte["racine"].custom_minimum_size
 		carte["racine"].position = Vector2(size.x * p.x, size.y * p.y) - taille / 2.0
+		if _c3d != null:
+			_placer_3d(info, carte, p)
 		carte["base_pos"] = carte["racine"].position
 		_cartes[info["idx"]] = carte
 		if not info["vivant"]:
 			carte["racine"].modulate = Color(0.4, 0.4, 0.4, 0.5)
+
+
+## 2,5D : le nom et les barres (2D) suivent la figurine 3D à l'écran (la caméra bouge).
+func _process(_delta: float) -> void:
+	if _c3d == null:
+		return
+	for idx in _cartes:
+		if not _c3d.a(idx):
+			continue
+		var c: Dictionary = _cartes[idx]
+		var racine: Control = c["racine"]
+		var e := _c3d.ecran(idx)
+		racine.position = Vector2(e["pieds"].x - racine.size.x / 2.0, e["pieds"].y - racine.size.y + 40.0)
+		c["base_pos"] = racine.position
+
+
+## 2,5D : la figurine devient une figurine 3D ; le nom et les barres (2D) se placent au-dessus d'elle.
+func _placer_3d(info: Dictionary, carte: Dictionary, frac: Vector2) -> void:
+	var racine: Control = carte["racine"]
+	if carte.has("figurine"):
+		var u := UnitesData.get_unite(info["id"])
+		_c3d.ajouter(int(info["idx"]), UiCommun.chemin_figurine(info["id"]), frac, bool(info["boss"]),
+			bool(info.get("geant", false)), info["camp"] != mon_camp(),
+			UiCommun.COULEURS_ELEMENT.get(str(u.get("element", "neutre")), Color.WHITE))
+		var img: TextureRect = carte["figurine"]
+		img.visible = false
+		carte["portrait"].get_child(0).visible = false        # socle 2D
+		var e := _c3d.ecran(int(info["idx"]))
+		var h := maxf(40.0, e["pieds"].y - e["tete"].y)
+		carte["portrait"].custom_minimum_size.y = h
+		racine.custom_minimum_size.y = h + 64.0
+		racine.size = racine.custom_minimum_size
+		racine.position = Vector2(e["pieds"].x - racine.size.x / 2.0, e["tete"].y - 24.0)
+	else:
+		var pt := _c3d.ecran_sol(frac)
+		racine.position = pt - Vector2(racine.size.x / 2.0, racine.size.y * 0.8)
 
 
 func _creer_carte(info: Dictionary) -> Dictionary:
@@ -489,6 +538,9 @@ func _milliers(n: int) -> String:
 func _trembler(force: float) -> void:
 	if _passer:
 		return
+	if _c3d != null:
+		_c3d.trembler(force / 60.0)
+		return
 	var tw := create_tween()
 	for k in 5:
 		tw.tween_property(_arene, "position", Vector2(randf_range(-force, force), randf_range(-force, force)), 0.03 / _vitesse)
@@ -543,13 +595,19 @@ func _jouer(ev: Dictionary) -> void:
 				_texte_centre(ev["nom"], Color("ff7a5a"))
 				_trembler(14.0)
 			_texte_flottant(ev["a"], ev["nom"], Color("ffd27a"), 22, -70)
-			_pulser(ev["a"])
+			if _c3d != null and _c3d.a(ev["a"]):
+				_c3d.sort(ev["a"], _couleur_unite(ev["a"]))
+			else:
+				_pulser(ev["a"])
 			await _attendre(0.45)
 		"degats":
 			_maj_pv(ev["c"], ev["pv"], ev.get("bouclier", 0))
 			var txt := str(ev["v"]) + (" !" if ev["crit"] else "")
 			_texte_flottant(ev["c"], txt, Color("ffdd55") if ev["crit"] else Color("ff6a5a"), 30 if ev["crit"] else 24, -40)
-			_secouer(ev["c"])
+			if _c3d != null and _c3d.a(ev["c"]):
+				_c3d.touche(ev["c"], bool(ev["crit"]))
+			else:
+				_secouer(ev["c"])
 			await _attendre(0.28)
 		"perte":
 			_maj_pv(ev["c"], ev["pv"], -1)
@@ -557,6 +615,8 @@ func _jouer(ev: Dictionary) -> void:
 			await _attendre(0.2)
 		"soin":
 			_maj_pv(ev["c"], ev["pv"], -1)
+			if _c3d != null:
+				_c3d.soin(ev["c"])
 			_texte_flottant(ev["c"], "+%d" % ev["v"], Color("6aff8a"), 22, -40)
 			await _attendre(0.2)
 		"rate":
@@ -632,6 +692,13 @@ func _appliquer_sans_animation(ev: Dictionary) -> void:
 		"survie": _maj_pv(ev["c"], 1, -1)
 
 
+func _couleur_unite(idx: int) -> Color:
+	for info in _infos:
+		if int(info["idx"]) == idx:
+			return UiCommun.COULEURS_ELEMENT.get(str(UnitesData.get_unite(info["id"]).get("element", "neutre")), Color.WHITE)
+	return Color.WHITE
+
+
 # =====================================================================
 # Effets visuels
 # =====================================================================
@@ -650,6 +717,12 @@ func _maj_pv(idx: int, pv: int, bouclier: int) -> void:
 
 func _elan(a: int, cible: int) -> void:
 	if _passer:
+		return
+	if _c3d != null and _c3d.a(a):
+		if a == _idx_geant:
+			_trembler(8.0)
+		_c3d.elan(a, cible, 0.14 / _vitesse, 0.16 / _vitesse, a == _idx_geant)
+		await _attendre(0.16)
 		return
 	var ca: Dictionary = _cartes[a]
 	var cc: Dictionary = _cartes[cible]
@@ -691,6 +764,12 @@ func _ko(idx: int) -> void:
 	c["pv_label"].text = "K.O."
 	var tw := create_tween()
 	tw.tween_property(c["racine"], "modulate", Color(0.4, 0.4, 0.4, 0.45), 0.3 / _vitesse)
+	if _c3d != null and _c3d.a(idx):
+		if _passer:
+			_c3d.etat_ko(idx, true)
+		else:
+			_c3d.ko(idx)
+		return
 	# Une figurine K.O. bascule en arrière
 	if c.has("figurine"):
 		var img: TextureRect = c["figurine"]
@@ -701,6 +780,8 @@ func _ko(idx: int) -> void:
 func _revivre(idx: int, pv: int) -> void:
 	var c: Dictionary = _cartes[idx]
 	c["racine"].modulate = Color.WHITE
+	if _c3d != null:
+		_c3d.revivre(idx)
 	if c.has("figurine"):
 		c["figurine"].rotation = 0.0
 	_maj_pv(idx, pv, 0)

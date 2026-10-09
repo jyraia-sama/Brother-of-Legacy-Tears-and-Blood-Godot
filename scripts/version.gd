@@ -15,11 +15,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.57.1"
+const NUMERO := "0.58.0"
 const DATE := "2026-10-09"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.58.0", "date": "2026-10-09", "titre": "Le champ de bataille en 3D",
+	"changements": [
+		"COMBATS EN 3D (prototype, combats de l'Aventure) : le champ de bataille devient une vraie scène 3D. Le décor du chapitre se prolonge en sol jusqu'à la caméra, les figurines se tiennent debout sur le terrain avec leurs ombres et un liseré de leur élément, les torches vacillent, des braises flottent et la caméra respire doucement.",
+		"ANIMATIONS 3D : l'attaquant bondit vers sa cible, la cible recule sous le coup avec une gerbe d'étincelles (plus grosse sur un coup critique, avec tremblement), chaque sort fait jaillir une lumière de la couleur de l'élément et la caméra se rapproche un instant, les soins font monter des lueurs vertes et une figurine K.O. bascule au sol.",
+		"Les noms, barres de vie et textes de dégâts restent lisibles en 2D et suivent les figurines. Les règles du combat ne changent pas.",
+		"MENU : nouvelle case « Combats en 3D » (cochée par défaut) pour revenir aux combats 2D si un téléphone chauffe ou ralentit.",
+	]},
 	{"version": "0.57.1", "date": "2026-10-09", "titre": "La salle de guerre",
 	"changements": [
 		"GUERRE DES BANNIÈRES : la salle de guerre des Valcendre a son décor peint (table de campagne, bannières au phénix, feux de l'armée ennemie sous la lune rouge), et les assauts se livrent au pied des remparts assiégés. Les deux images rejoignent la Galerie d'Art.",

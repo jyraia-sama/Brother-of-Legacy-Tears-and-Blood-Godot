@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.57.1** (2026-10-09)
+Version actuelle : **0.58.0** (2026-10-09)
+
+## v0.58.0 — Le champ de bataille en 3D  (2026-10-09)
+
+- COMBATS EN 3D (prototype, combats de l'Aventure) : le champ de bataille devient une vraie scène 3D. Le décor du chapitre se prolonge en sol jusqu'à la caméra, les figurines se tiennent debout sur le terrain avec leurs ombres et un liseré de leur élément, les torches vacillent, des braises flottent et la caméra respire doucement.
+- ANIMATIONS 3D : l'attaquant bondit vers sa cible, la cible recule sous le coup avec une gerbe d'étincelles (plus grosse sur un coup critique, avec tremblement), chaque sort fait jaillir une lumière de la couleur de l'élément et la caméra se rapproche un instant, les soins font monter des lueurs vertes et une figurine K.O. bascule au sol.
+- Les noms, barres de vie et textes de dégâts restent lisibles en 2D et suivent les figurines. Les règles du combat ne changent pas.
+- MENU : nouvelle case « Combats en 3D » (cochée par défaut) pour revenir aux combats 2D si un téléphone chauffe ou ralentit.
 
 ## v0.57.1 — La salle de guerre  (2026-10-09)
 
