@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.57.0"
+const NUMERO := "0.57.1"
 const DATE := "2026-10-09"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.57.1", "date": "2026-10-09", "titre": "La salle de guerre",
+	"changements": [
+		"GUERRE DES BANNIÈRES : la salle de guerre des Valcendre a son décor peint (table de campagne, bannières au phénix, feux de l'armée ennemie sous la lune rouge), et les assauts se livrent au pied des remparts assiégés. Les deux images rejoignent la Galerie d'Art.",
+	]},
 	{"version": "0.57.0", "date": "2026-10-09", "titre": "La Guerre des Bannières",
 	"changements": [
 		"LA GUERRE DES BANNIÈRES (Guilde → Guerre) : une guerre de guildes chaque semaine, en asynchrone, chacun joue quand il veut. Lundi-mardi : préparation (le chef inscrit la guilde une fois pour toutes, chacun prépare sa défense de guerre). Mercredi-samedi : 2 assauts par jour contre la forteresse ennemie. Dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne.",

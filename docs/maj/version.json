@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"GUERRE DES BANNIÈRES : la salle de guerre des Valcendre a son décor peint (table de campagne, bannières au phénix, feux de l'armée ennemie sous la lune rouge), et les assauts se livrent au pied des remparts assiégés. Les deux images rejoignent la Galerie d'Art."
+			],
+			"titre": "La salle de guerre",
+			"version": "0.57.1"
+		},
+		{
+			"changements": [
 				"LA GUERRE DES BANNIÈRES (Guilde → Guerre) : une guerre de guildes chaque semaine, en asynchrone, chacun joue quand il veut. Lundi-mardi : préparation (le chef inscrit la guilde une fois pour toutes, chacun prépare sa défense de guerre). Mercredi-samedi : 2 assauts par jour contre la forteresse ennemie. Dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne.",
 				"LA FORTERESSE : un poste par membre, rangés par puissance en Remparts, Tours et Donjon. Une couche s'ouvre quand chaque poste de la précédente a été pris au moins une étoile. ★ victoire · ★★ victoire avec 3 unités debout ou plus · ★★★ aucune perte ; seul le meilleur résultat d'un poste compte.",
 				"STRATÉGIE : la FATIGUE épuise jusqu'au lendemain les unités qui ont attaqué (toute la collection compte), l'ÉCLAIREUR révèle une fois par jour les unités d'un poste ennemi (sinon seuls ses éléments sont visibles), et le JOURNAL de guerre permet de REVOIR chaque assaut.",
@@ -134,23 +141,13 @@
 			],
 			"titre": "La vie de guilde",
 			"version": "0.47.0"
-		},
-		{
-			"changements": [
-				"NOUVEAU : LA GALERIE D'ART (colonne du Sang, menu principal). Toutes les illustrations du jeu, rangées par onglets : Créatures, Figurines, Familiers, Boss de Monde, Histoire, Décors et Plateau.",
-				"Toucher une créature ouvre sa fiche : portrait et figurine côte à côte, rareté, élément, rôle, où la trouver (Invocation, Actes, Donjons, Tours, Boss de Monde) et toutes ses compétences. Les images s'ouvrent en grand, avec Précédent / Suivant (ou les flèches du clavier).",
-				"Ce que tu n'as pas encore découvert reste caché derrière un « ? » : les créatures pas encore rencontrées, les Actes pas encore ouverts et les personnages qui dévoileraient la suite de l'histoire.",
-				"NOUVELLE DIRECTION ARTISTIQUE (2/3) : 24 héros et monstres de plus sont repeints, avec leur figurine de combat. Archange Noir, Titan des Abysses, Reine des Liches, Chat des Abysses, Phénix Immortel, Cheval Céleste, les ennemis de l'Acte I et des terres sombres…"
-			],
-			"titre": "La Galerie d'Art",
-			"version": "0.46.0"
 		}
 	],
 	"pck": {
-		"sha256": "974d75f0ec7e928c4baf68695f7928ca3a66d6811969c811995fb72187e99466",
-		"taille": 85973720,
+		"sha256": "e2601b74f00fc00b84014dd73c59fe04541ab018587f2af1881edca8422127d5",
+		"taille": 89923368,
 		"url": "jeu.pck"
 	},
-	"version": "0.57.0",
+	"version": "0.57.1",
 	"version_minimum": "0.37.0"
 }

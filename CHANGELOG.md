@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.57.0** (2026-10-09)
+Version actuelle : **0.57.1** (2026-10-09)
+
+## v0.57.1 — La salle de guerre  (2026-10-09)
+
+- GUERRE DES BANNIÈRES : la salle de guerre des Valcendre a son décor peint (table de campagne, bannières au phénix, feux de l'armée ennemie sous la lune rouge), et les assauts se livrent au pied des remparts assiégés. Les deux images rejoignent la Galerie d'Art.
 
 ## v0.57.0 — La Guerre des Bannières  (2026-10-09)
 
