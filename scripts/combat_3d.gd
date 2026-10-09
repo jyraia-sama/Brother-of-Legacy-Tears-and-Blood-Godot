@@ -35,6 +35,23 @@ func _init() -> void:
 	add_child(_vp)
 	_monde = Node3D.new()
 	_vp.add_child(_monde)
+	resized.connect(_replacer)
+
+
+## L'écran change de forme (rotation du téléphone, fenêtre) : on recale les unités dans le cadre.
+func _replacer() -> void:
+	if _camera == null:
+		return
+	for idx in _unites:
+		var u: Dictionary = _unites[idx]
+		var p := position_sol(u["frac"])
+		var dx := p.x - Vector3(u["pos"]).x
+		if absf(dx) < 0.001:
+			continue
+		u["pos"] = p
+		for cle in ["sprite", "ombre", "anneau"]:
+			var n: Node3D = u[cle]
+			n.position.x += dx
 
 
 ## Construit le décor à partir de l'image de fond du combat.
@@ -188,10 +205,40 @@ func _particules(couleur: Color, nombre: int, vie: float, taille := 0.035) -> CP
 # =====================================================================
 
 ## Position 3D (au sol) à partir de la position « écran » (fractions) utilisée en 2D.
+## La profondeur vient de frac.y ; la position horizontale est calculée pour que les pieds tombent
+## à un endroit précis de l'ÉCRAN (et non du monde) : ainsi la perspective ne pousse jamais une
+## unité proche hors du cadre, et les rangs sont décalés en diagonale pour ne pas se cacher.
 func position_sol(frac: Vector2) -> Vector3:
-	var x := (frac.x - 0.5) * 16.0
-	var z := lerpf(-0.8, 5.6, clampf((frac.y - 0.3) / 0.5, 0.0, 1.0))
-	return Vector3(x, 0, z)
+	var t := clampf((frac.y - 0.3) / 0.5, 0.0, 1.0)
+	var z := lerpf(-2.6, 4.6, t)
+	var cote := signf(frac.x - 0.5)
+	return Vector3(_x_pour_ecran(0.5 + cote * _ecart_centre(frac), z), 0, z)
+
+
+## Formation en quinconce (distance au centre de l'écran, en fraction de largeur) : une unité
+## n'est jamais juste derrière une autre de profondeur voisine, même si celle de devant est un boss.
+func _ecart_centre(frac: Vector2) -> float:
+	var dx := absf(frac.x - 0.5)
+	if dx < 0.2:                       # Avant : fond près du centre, devant un peu en retrait
+		return 0.07 if frac.y < 0.5 else 0.18
+	if dx < 0.3:                       # unité invitée, entre les deux rangs
+		return 0.25
+	if frac.y < 0.45:                  # Arrière, du fond vers le devant
+		return 0.27
+	if frac.y < 0.7:
+		return 0.41
+	return 0.30
+
+
+## Abscisse au sol (à la profondeur z) qui apparaît à la fraction sx de la largeur de l'écran,
+## vue depuis la position de repos de la caméra.
+func _x_pour_ecran(sx: float, z: float) -> float:
+	var vue := _cam_base.affine_inverse() * Vector3(0, 0, z)
+	var profondeur := maxf(0.5, -vue.z)
+	var t := size if size.x > 1.0 and size.y > 1.0 else Vector2(_vp.size)
+	var aspect := t.x / t.y if t.x > 1.0 and t.y > 1.0 else 16.0 / 9.0
+	var demi := tan(deg_to_rad(_camera.fov) / 2.0) * aspect * profondeur
+	return (sx * 2.0 - 1.0) * demi - vue.x
 
 
 func ajouter(idx: int, chemin_figurine: String, frac: Vector2, boss: bool, geant: bool, vers_gauche: bool, couleur_element: Color) -> void:
@@ -241,7 +288,7 @@ func ajouter(idx: int, chemin_figurine: String, frac: Vector2, boss: bool, geant
 	anneau.scale = Vector3(1, 0.15, 1)
 	anneau.position = pos + Vector3(0, 0.02, 0)
 	_monde.add_child(anneau)
-	_unites[idx] = {"sprite": s, "ombre": ombre, "anneau": anneau, "pos": pos, "hauteur": h, "base_scale": s.scale}
+	_unites[idx] = {"sprite": s, "ombre": ombre, "anneau": anneau, "pos": pos, "hauteur": h, "base_scale": s.scale, "frac": frac}
 	# Respiration
 	var tw := create_tween().set_loops()
 	tw.tween_interval(randf() * 1.2)

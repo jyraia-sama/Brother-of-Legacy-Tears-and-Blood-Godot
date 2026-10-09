@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"COMBATS EN 3D : les unités se placent maintenant en quinconce. Un boss au premier rang ne cache plus le monstre qui se tient derrière lui, et l'arrière-garde recule d'un pas pour rester visible au-dessus des têtes.",
+				"Plus aucune unité n'est rognée par le bord de l'écran : la place de chaque figurine est calculée d'après l'écran, quelle que soit sa forme (et recalée si on tourne le téléphone ou si on redimensionne la fenêtre)."
+			],
+			"titre": "Chacun à sa place",
+			"version": "0.58.1"
+		},
+		{
+			"changements": [
 				"COMBATS EN 3D (prototype, combats de l'Aventure) : le champ de bataille devient une vraie scène 3D. Le décor du chapitre se prolonge en sol jusqu'à la caméra, les figurines se tiennent debout sur le terrain avec leurs ombres et un liseré de leur élément, les torches vacillent, des braises flottent et la caméra respire doucement.",
 				"ANIMATIONS 3D : l'attaquant bondit vers sa cible, la cible recule sous le coup avec une gerbe d'étincelles (plus grosse sur un coup critique, avec tremblement), chaque sort fait jaillir une lumière de la couleur de l'élément et la caméra se rapproche un instant, les soins font monter des lueurs vertes et une figurine K.O. bascule au sol.",
 				"Les noms, barres de vie et textes de dégâts restent lisibles en 2D et suivent les figurines. Les règles du combat ne changent pas.",
@@ -127,25 +135,13 @@
 			],
 			"titre": "Le Riff de Sang",
 			"version": "0.49.0"
-		},
-		{
-			"changements": [
-				"INVOCATIONS PLUS EXIGEANTES : les héros rares se méritent. Pacte Supérieur : SSR 17 %, UR 1,6 %, Légende 0,2 % (au lieu de 22 %, 2,5 % et 0,3 %), SSR garanti toutes les 25 invocations (au lieu de 20). Pacte Doré : SR 6 % (au lieu de 10 %). Invocations d'événement : SSR 19,5 %, UR 2,7 %, Légende 0,3 %.",
-				"AVENTURE PLUS DIFFICILE : les ennemis se renforcent davantage d'Acte en Acte (jusqu'à environ +24 % de puissance à la fin de l'histoire). Il faudra davantage améliorer ses Échos, fusionner et éveiller ses héros pour venir à bout des derniers Actes.",
-				"Équilibrage vérifié par simulation : un joueur régulier perd en moyenne 1 à 5 combats par chapitre, et ne reste presque jamais bloqué.",
-				"MODES DÉBLOQUÉS AU FIL DE L'HISTOIRE : pour ne pas tout découvrir d'un coup, les menus s'ouvrent en avançant. Échos Sanguins au chapitre 3 de l'Acte I ; Fusion et Reliquaire à la fin de l'Acte I ; Arène et Donjons à la fin de l'Acte II ; Boss de Monde, Tours et Guilde à la fin de l'Acte III ; Expédition et Ménagerie à la fin de l'Acte IV. Une fenêtre annonce chaque nouveauté. Les joueurs déjà avancés gardent tout ce qu'ils ont débloqué.",
-				"PLACES D'ÉQUIPE : l'aventure commence avec 3 héros ; la 4e place s'ouvre à la fin de l'Acte I, la 5e à la fin de l'Acte III. Les premiers Actes ont été rééquilibrés en conséquence.",
-				"Les quêtes du jour et de la semaine ne proposent plus de missions dans des modes encore fermés."
-			],
-			"titre": "Le prix de la gloire",
-			"version": "0.48.0"
 		}
 	],
 	"pck": {
-		"sha256": "b9d0976f6421aa4263eb1e01f8a0323d583e92a22775f8413ec85eb5fcfa573f",
-		"taille": 89939788,
+		"sha256": "1fcd3fcceae7505fcaf3082c64b63ea0361a7f0fb46f64906d00e5377919edb3",
+		"taille": 89941228,
 		"url": "jeu.pck"
 	},
-	"version": "0.58.0",
+	"version": "0.58.1",
 	"version_minimum": "0.37.0"
 }

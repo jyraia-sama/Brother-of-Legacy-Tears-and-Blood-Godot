@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.58.0** (2026-10-09)
+Version actuelle : **0.58.1** (2026-10-09)
+
+## v0.58.1 — Chacun à sa place  (2026-10-09)
+
+- COMBATS EN 3D : les unités se placent maintenant en quinconce. Un boss au premier rang ne cache plus le monstre qui se tient derrière lui, et l'arrière-garde recule d'un pas pour rester visible au-dessus des têtes.
+- Plus aucune unité n'est rognée par le bord de l'écran : la place de chaque figurine est calculée d'après l'écran, quelle que soit sa forme (et recalée si on tourne le téléphone ou si on redimensionne la fenêtre).
 
 ## v0.58.0 — Le champ de bataille en 3D  (2026-10-09)
 

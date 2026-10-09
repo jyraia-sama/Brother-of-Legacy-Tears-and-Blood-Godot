@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.58.0"
+const NUMERO := "0.58.1"
 const DATE := "2026-10-09"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.58.1", "date": "2026-10-09", "titre": "Chacun à sa place",
+	"changements": [
+		"COMBATS EN 3D : les unités se placent maintenant en quinconce. Un boss au premier rang ne cache plus le monstre qui se tient derrière lui, et l'arrière-garde recule d'un pas pour rester visible au-dessus des têtes.",
+		"Plus aucune unité n'est rognée par le bord de l'écran : la place de chaque figurine est calculée d'après l'écran, quelle que soit sa forme (et recalée si on tourne le téléphone ou si on redimensionne la fenêtre).",
+	]},
 	{"version": "0.58.0", "date": "2026-10-09", "titre": "Le champ de bataille en 3D",
 	"changements": [
 		"COMBATS EN 3D (prototype, combats de l'Aventure) : le champ de bataille devient une vraie scène 3D. Le décor du chapitre se prolonge en sol jusqu'à la caméra, les figurines se tiennent debout sur le terrain avec leurs ombres et un liseré de leur élément, les torches vacillent, des braises flottent et la caméra respire doucement.",
