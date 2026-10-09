@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.58.1** (2026-10-09)
+Version actuelle : **0.58.2** (2026-10-09)
+
+## v0.58.2 — La nuit des Valcendre  (2026-10-09)
+
+- COMBATS EN 3D, ACTE I : premier décor peint spécialement pour la 3D. Au fond, le château des Valcendre en flammes, le village qui brûle et les bannières au phénix ; au sol, la terre battue du village incendié, avec ses cendres, ses pavés brisés et ses braises, nette jusqu'aux pieds des figurines au lieu d'être étirée.
+- La caméra vise un peu plus haut sur ce décor pour laisser voir le château. Les autres Actes gardent leur décor actuel en attendant le leur.
 
 ## v0.58.1 — Chacun à sa place  (2026-10-09)
 

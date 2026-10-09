@@ -52,6 +52,8 @@ var _idx_geant := -1
 var barre_haut: HBoxContainer   # barre du haut (le combat classé y ajoute « Abandonner »)
 ## Combats en 2,5D (scène 3D + figurines) : modes concernés et scène 3D (null en 2D)
 const MODES_3D := ["aventure"]
+## Hauteur (fraction de l'image) où commence le sol peint de chaque toile de fond 3D
+const COUPES_3D := {1: 0.72}
 var _c3d: Combat3D = null
 
 
@@ -125,7 +127,12 @@ func _creer_fond() -> void:
 		noir.color = Color("#" + str(Donjons.DONJONS[demande.get("donjon", "feu")]["couleur"])).darkened(0.88)
 	if _c3d != null:
 		add_child(_c3d)
-		_c3d.construire(chemin, noir.color)
+		# Décor fait pour la 3D (toile de fond + sol raccordable), s'il existe pour cet Acte
+		var d3 := "res://assets/combat3d/acte_%02d" % int(demande.get("acte", 1))
+		if _mode == "aventure" and ResourceLoader.exists(d3 + "_fond.png") and ResourceLoader.exists(d3 + "_sol.png"):
+			_c3d.construire(d3 + "_fond.png", noir.color, d3 + "_sol.png", COUPES_3D.get(int(demande.get("acte", 1)), 0.72))
+		else:
+			_c3d.construire(chemin, noir.color)
 		return
 	if ResourceLoader.exists(chemin):
 		var img := TextureRect.new()

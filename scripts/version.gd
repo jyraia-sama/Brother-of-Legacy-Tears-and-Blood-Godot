@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.58.1"
+const NUMERO := "0.58.2"
 const DATE := "2026-10-09"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.58.2", "date": "2026-10-09", "titre": "La nuit des Valcendre",
+	"changements": [
+		"COMBATS EN 3D, ACTE I : premier décor peint spécialement pour la 3D. Au fond, le château des Valcendre en flammes, le village qui brûle et les bannières au phénix ; au sol, la terre battue du village incendié, avec ses cendres, ses pavés brisés et ses braises, nette jusqu'aux pieds des figurines au lieu d'être étirée.",
+		"La caméra vise un peu plus haut sur ce décor pour laisser voir le château. Les autres Actes gardent leur décor actuel en attendant le leur.",
+	]},
 	{"version": "0.58.1", "date": "2026-10-09", "titre": "Chacun à sa place",
 	"changements": [
 		"COMBATS EN 3D : les unités se placent maintenant en quinconce. Un boss au premier rang ne cache plus le monstre qui se tient derrière lui, et l'arrière-garde recule d'un pas pour rester visible au-dessus des têtes.",

@@ -12,6 +12,10 @@ const LARGEUR := 32.0           # largeur du décor (unités 3D)
 const COUPE := 0.65             # part du décor dressée au fond ; le reste devient le sol
 const Z_FOND := -6.0
 const Z_PRES := 9.0
+const LARGEUR_DECOR := 27.0     # largeur de la toile de fond d'un décor 3D (cadre + balancement)
+const TASSEMENT_DECOR := 0.85   # hauteur de la toile de fond d'un décor 3D (1 = proportions exactes)
+const VISEE_DECOR := 1.8        # la caméra vise un peu plus haut avec un décor 3D (plus de ciel)
+const TUILE_SOL := 6.0          # taille (en mètres) d'une répétition de la texture de sol
 const HAUTEUR_UNITE := 2.3
 const HAUTEUR_BOSS := 3.0
 const HAUTEUR_GEANT := 7.5
@@ -55,8 +59,13 @@ func _replacer() -> void:
 
 
 ## Construit le décor à partir de l'image de fond du combat.
-func construire(chemin_fond: String, teinte_nuit: Color) -> void:
+## Avec chemin_sol (texture de sol raccordable, vue du dessus) : l'image de fond est entièrement dressée
+## au fond (coupée à « coupe », là où commence son sol peint) et le sol 3D est carrelé avec la texture.
+func construire(chemin_fond: String, teinte_nuit: Color, chemin_sol := "", coupe := COUPE) -> void:
 	var tex: Texture2D = load(chemin_fond) if chemin_fond != "" and ResourceLoader.exists(chemin_fond) else null
+	var tex_sol: Texture2D = load(chemin_sol) if chemin_sol != "" and ResourceLoader.exists(chemin_sol) else null
+	if tex_sol == null:
+		coupe = COUPE
 	var ratio := 9.0 / 16.0
 	if tex:
 		ratio = float(tex.get_height()) / float(tex.get_width())
@@ -78,16 +87,21 @@ func construire(chemin_fond: String, teinte_nuit: Color) -> void:
 	# Toile de fond : le haut de l'image, dressé au fond
 	var fond := MeshInstance3D.new()
 	var q := QuadMesh.new()
-	q.size = Vector2(LARGEUR, h_image * COUPE)
+	# Décor fait pour la 3D : toile juste assez large pour le cadre (et légèrement tassée en hauteur),
+	# pour que le château et le ciel restent dans l'image au lieu de dépasser en haut.
+	var l_fond := LARGEUR_DECOR if tex_sol else LARGEUR
+	if tex_sol:
+		h_image = l_fond * ratio * TASSEMENT_DECOR
+	q.size = Vector2(l_fond, h_image * coupe)
 	fond.mesh = q
 	var mf := StandardMaterial3D.new()
 	mf.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mf.albedo_color = Color(0.72, 0.68, 0.68)
 	if tex:
 		mf.albedo_texture = tex
-		mf.uv1_scale = Vector3(1, COUPE, 1)
+		mf.uv1_scale = Vector3(1, coupe, 1)
 	fond.material_override = mf
-	fond.position = Vector3(0, h_image * COUPE / 2.0, Z_FOND)
+	fond.position = Vector3(0, h_image * coupe / 2.0, Z_FOND)
 	_monde.add_child(fond)
 
 	# Sol : le bas de l'image, couché et étiré jusqu'à la caméra (raccord parfait avec la toile)
@@ -98,7 +112,14 @@ func construire(chemin_fond: String, teinte_nuit: Color) -> void:
 	var ms := StandardMaterial3D.new()
 	ms.albedo_color = Color(0.85, 0.8, 0.8)
 	ms.roughness = 0.95
-	if tex:
+	if tex_sol:
+		# Carrelage : une tuile tous les TUILE_SOL mètres, filtrage anisotrope pour rester net au loin
+		ms.albedo_texture = tex_sol
+		ms.uv1_scale = Vector3(LARGEUR / TUILE_SOL, (Z_PRES - Z_FOND) / TUILE_SOL, 1)
+		ms.texture_repeat = true
+		ms.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
+		ms.albedo_color = Color(0.95, 0.88, 0.85)
+	elif tex:
 		ms.albedo_texture = tex
 		ms.uv1_scale = Vector3(1, 1.0 - COUPE, 1)
 		ms.uv1_offset = Vector3(0, COUPE, 0)
@@ -130,7 +151,7 @@ func construire(chemin_fond: String, teinte_nuit: Color) -> void:
 	_camera.fov = 40.0
 	_camera.position = Vector3(0, 4.6, 13.2)
 	_monde.add_child(_camera)
-	_camera.look_at(Vector3(0, 1.0, 1.0))
+	_camera.look_at(Vector3(0, VISEE_DECOR if tex_sol else 1.0, 1.0))
 	_cam_base = _camera.transform
 	# Lent mouvement de caméra « vivant »
 	var tw := create_tween().set_loops()
