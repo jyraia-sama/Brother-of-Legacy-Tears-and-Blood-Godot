@@ -1,0 +1,26 @@
+name: Publier les installations
+# Branche temporaire « installations-vX.Y.Z » : les fichiers d'installation (trop gros pour un
+# seul fichier du dépôt) sont découpés en morceaux ; ce travail les recolle et crée la Release.
+on:
+  push:
+    branches: ['installations-*']
+permissions:
+  contents: write
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recoller et publier
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#installations-}"
+          for f in BrothersOfLegacy-Android.apk BrothersOfLegacy-Windows.zip BrothersOfLegacy-Mac.zip; do
+            cat "$f".part-* > "$f"
+          done
+          sha256sum -c sommes.sha256
+          gh release create "$VERSION" BrothersOfLegacy-Android.apk BrothersOfLegacy-Windows.zip BrothersOfLegacy-Mac.zip \
+            --repo "$GITHUB_REPOSITORY" --target main --latest \
+            --title "$VERSION — Les applications à jour" \
+            --notes-file NOTES.md
