@@ -687,7 +687,7 @@ func plateforme() -> String:
 ## Signale au serveur que le jeu tourne sur cet appareil (compte des installations).
 ## lancement = true au démarrage du jeu, false quand on se connecte (relie l'appareil au compte).
 func signaler_appareil(lancement: bool) -> void:
-	if not configure():
+	if not configure() or OS.has_feature("editor"):      # pas les essais depuis Godot ni l'outil de publication
 		return
 	var params := {"p_id": id_appareil(), "p_plateforme": plateforme(), "p_version": Version.NUMERO, "p_lancement": lancement}
 	if est_connecte():

@@ -50,6 +50,7 @@ func _ready() -> void:
 	_maj_portrait()
 	if est_application_pc():
 		appliquer_plein_ecran_pc()
+		_appliquer_icone()
 	# Application Android : paysage, dans un sens ou dans l'autre selon la façon de tenir le téléphone
 	if OS.has_feature("android"):
 		DisplayServer.screen_set_orientation(DisplayServer.SCREEN_SENSOR_LANDSCAPE)
@@ -215,6 +216,16 @@ func _passer_plein_ecran() -> void:
 ## Application installée sur ordinateur (Windows / Mac / Linux), pas le navigateur.
 func est_application_pc() -> bool:
 	return OS.has_feature("pc") and not OS.has_feature("web")
+
+
+## Icône de la fenêtre et de la barre des tâches (les deux frères), même avec une ancienne installation.
+func _appliquer_icone() -> void:
+	var tex := load("res://assets/pwa/icone_512.png") as Texture2D
+	if tex:
+		var img := tex.get_image()
+		if img:
+			img.resize(256, 256, Image.INTERPOLATE_LANCZOS)
+			DisplayServer.set_icon(img)
 
 
 func plein_ecran_pc() -> bool:

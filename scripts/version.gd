@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.55.0"
-const DATE := "2026-10-08"
+const NUMERO := "0.56.0"
+const DATE := "2026-10-09"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.56.0", "date": "2026-10-09", "titre": "Les applications à jour",
+	"changements": [
+		"APPLICATION ANDROID : nouvelle application à installer (page des téléchargements du jeu). L'ancienne (v0.36) ne pouvait plus se mettre à jour toute seule à cause d'un bug de sa fenêtre de mise à jour : elle restait bloquée sur le vieux menu. La nouvelle repart à jour, avec la nouvelle icône, et se mettra de nouveau à jour automatiquement. La partie n'est pas perdue (elle est sur le téléphone et sur le compte).",
+		"ORDINATEUR : la fenêtre du jeu et la barre des tâches affichent la nouvelle icône des deux frères. Pour l'icône du fichier .exe et du raccourci du bureau, une nouvelle installation complète est disponible (facultative).",
+		"JEU WEB SUR TÉLÉPHONE : l'appli ajoutée à l'écran d'accueil s'ouvre maintenant en plein écran, sans la barre du navigateur (Android : « Installer l'application » ; iPhone : « Sur l'écran d'accueil »), avec la nouvelle icône. Une nouvelle version publiée s'installe toute seule au lancement suivant au lieu de rester bloquée sur l'ancienne.",
+	]},
 	{"version": "0.55.0", "date": "2026-10-08", "titre": "Plein écran",
 	"changements": [
 		"ÉCRAN DE CHARGEMENT : les larmes et les gouttes de sang tombent maintenant verticalement du haut de l'écran, comme une pluie, jusque dans les deux moitiés du Sceau (dans le jeu et sur la page web).",

@@ -2,7 +2,14 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, viewport-fit=cover">
+<!-- Ouvert depuis l'écran d'accueil : en plein écran, sans la barre du navigateur (iPhone et Android) -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brothers of Legacy">
+<meta name="application-name" content="Brothers of Legacy">
+<meta name="theme-color" content="#07040a">
 <title>$GODOT_PROJECT_NAME</title>
 <!--
 	PAGE DE CHARGEMENT DU JEU WEB (modèle d'export Godot : Projet > Exporter > Web > HTML > Custom HTML Shell).
@@ -179,7 +186,25 @@ const engine = new Engine(GODOT_CONFIG);
 	}
 	requestAnimationFrame(dessiner);
 
+	// Nouvelle version publiée : le service worker la prépare en arrière-plan. Tant que le jeu
+	// n'a pas démarré, on l'active tout de suite (la page se recharge sur la nouvelle version) ;
+	// sinon elle sera prise au prochain lancement.
+	let jeuLance = false;
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.getRegistration().then((reg) => {
+			if (!reg) return;
+			const activer = (w) => { if (w && navigator.serviceWorker.controller && !jeuLance) w.postMessage('update'); };
+			activer(reg.waiting);
+			reg.addEventListener('updatefound', () => {
+				const w = reg.installing;
+				if (w) w.addEventListener('statechange', () => { if (w.state === 'installed') activer(w); });
+			});
+			reg.update().catch(() => {});
+		}).catch(() => {});
+	}
+
 	function fermer() {
+		jeuLance = true;
 		cible = 1; niveau = 1;
 		ecran.style.opacity = 0;
 		setTimeout(() => { actif = false; ecran.remove(); }, 550);

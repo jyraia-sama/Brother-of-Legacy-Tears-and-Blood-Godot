@@ -19,8 +19,8 @@ extends SceneTree
 ##   5. si besoin, crée les installations complètes dans build/ :
 ##        build/BrothersOfLegacy-Windows.zip et build/BrothersOfLegacy-Mac.zip
 ##      (à déposer dans une « Release » GitHub nommée vX.Y.Z, voir GUIDE_VERSIONS.md) ;
-##      et l'application Android dans build/BrothersOfLegacy-Android.apk (à déposer AUSSI dans la Release,
-##      pour que GitHub compte ses téléchargements ; le lien de téléchargement vise la dernière Release).
+##      et l'application Android dans build/BrothersOfLegacy-Android.apk (plus de 100 Mo : trop gros pour le
+##      dépôt, elle se dépose dans la Release GitHub, à côté des fichiers Windows et Mac).
 ##      L'APK demande le kit Android et la clé de signature : s'ils manquent, il est simplement sauté.
 ## Il reste ensuite à faire le Commit + Push dans GitHub Desktop : les joueurs reçoivent la mise à jour.
 
@@ -58,6 +58,7 @@ func _init() -> void:
 		print("- Export web…")
 		if not _exporter(["--export-release", PRESET_WEB, projet + "/docs/index.html"]):
 			_echec("l'export web a échoué"); return
+		_completer_manifeste(numero)
 
 	# 3. Contenu du jeu pour ordinateur (Windows et Mac utilisent le même fichier)
 	print("- Export du contenu ordinateur (jeu.pck)…")
@@ -126,14 +127,39 @@ func _init() -> void:
 	else:
 		print("Mise à jour rapide : les joueurs la recevront au prochain lancement du jeu.")
 	if apk_refait:
-		print("Application Android prête : build/%s" % APK)
-		print("  -> dépose-la dans la Release GitHub (la dernière), à côté des fichiers Windows et Mac.")
+		print("Application Android prête : build/%s -> à déposer dans la Release GitHub." % APK)
 	if version_minimum == numero:
 		print("Mise à jour OBLIGATOIRE.")
 	quit(0)
 
 
 # ---------------------------------------------------------------------
+
+## Complète le manifeste de l'appli web écrit par Godot : icône 192 px (exigée par Android pour
+## « Installer l'application », sinon le jeu s'ouvre dans un onglet avec la barre du navigateur),
+## nom court, identifiant, couleurs. Les icônes portent le numéro de version (rafraîchissement).
+func _completer_manifeste(numero: String) -> void:
+	var img := Image.load_from_file(projet + "/assets/pwa/icone_512.png")
+	if img:
+		img.resize(192, 192, Image.INTERPOLATE_LANCZOS)
+		img.save_png(projet + "/docs/index.192x192.png")
+	var m := _lire_json(projet + "/docs/index.manifest.json")
+	m["id"] = "./index.html"
+	m["name"] = "Brothers of Legacy : Tears and Blood"
+	m["short_name"] = "Brothers of Legacy"
+	m["start_url"] = "./index.html"
+	m["scope"] = "./"
+	m["display"] = "fullscreen"
+	m["display_override"] = ["fullscreen", "standalone"]
+	m["orientation"] = "landscape"
+	m["background_color"] = "#07040a"
+	m["theme_color"] = "#07040a"
+	var icones: Array = []
+	for t in [144, 180, 192, 512]:
+		icones.append({"src": "index.%dx%d.png?v=%s" % [t, t, numero], "sizes": "%dx%d" % [t, t], "type": "image/png", "purpose": "any"})
+	m["icons"] = icones
+	_creer_fichier(projet + "/docs/index.manifest.json", JSON.stringify(m, "\t"))
+
 
 func _exporter(arguments: Array) -> bool:
 	var sortie := []
@@ -162,7 +188,7 @@ func _exporter_android(numero: String) -> bool:
 	var sortie := projet + "/build/BrothersOfLegacy-Android.apk"
 	if FileAccess.file_exists(sortie):
 		DirAccess.remove_absolute(sortie)
-	# L'APK reste dans build/ : il se dépose dans la Release GitHub (qui compte les téléchargements).
+	# Plus de 100 Mo : l'APK reste dans build/ et se dépose dans la Release GitHub.
 	return _exporter(["--export-release", PRESET_ANDROID, sortie]) and FileAccess.file_exists(sortie)
 
 

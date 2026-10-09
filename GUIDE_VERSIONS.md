@@ -72,7 +72,8 @@ Ensuite, plus rien à faire : le jeu se met à jour tout seul.
 
 L'APK est fabriqué par Claude, qui a le kit Android et la **clé de signature** de l'application. Depuis la v0.53, il est déposé dans la **Release GitHub** (la dernière), à côté des fichiers Windows et Mac : GitHub compte ainsi ses téléchargements (onglet « Statistiques du jeu » du menu Admin).
 Quand un nouvel APK est fait : ouvre la dernière Release sur github.com → **Edit** (crayon) → supprime l'ancien `BrothersOfLegacy-Android.apk` s'il y en a un → glisse le nouveau dans « Attach binaries » → **Update release**.
-L'ancien fichier `docs/telecharger/BrothersOfLegacy-Android.apk` reste en place pour les anciens liens ; tu pourras le supprimer quand tout le monde aura le nouveau lien.
+L'APK fait plus de 100 Mo : il ne peut plus être rangé dans `docs/` (limite de GitHub). L'ancien lien (`…/telecharger/BrothersOfLegacy-Android.apk`) renvoie automatiquement vers la dernière Release (page `docs/404.html`).
+Sans kit Android, Claude exporte l'APK non signé puis le signe avec `outils/signer_apk.py` (signature APK v2, même clé).
 Sur ton PC, quand l'outil de publication refait les installations complètes, il saute l'APK (message « APK Android non refait ») : demande alors à Claude de le refaire.
 La clé de signature (fichier `brothersoflegacy.keystore` + son mot de passe) est conservée dans les documents du Projet Claude. **Ne la perds pas et ne la partage pas** : sans elle, une nouvelle application ne pourrait pas remplacer l'ancienne sur les téléphones (il faudrait désinstaller puis réinstaller).
 

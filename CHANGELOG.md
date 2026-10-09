@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.55.0** (2026-10-08)
+Version actuelle : **0.56.0** (2026-10-09)
+
+## v0.56.0 — Les applications à jour  (2026-10-09)
+
+- APPLICATION ANDROID : nouvelle application à installer (page des téléchargements du jeu). L'ancienne (v0.36) ne pouvait plus se mettre à jour toute seule à cause d'un bug de sa fenêtre de mise à jour : elle restait bloquée sur le vieux menu. La nouvelle repart à jour, avec la nouvelle icône, et se mettra de nouveau à jour automatiquement. La partie n'est pas perdue (elle est sur le téléphone et sur le compte).
+- ORDINATEUR : la fenêtre du jeu et la barre des tâches affichent la nouvelle icône des deux frères. Pour l'icône du fichier .exe et du raccourci du bureau, une nouvelle installation complète est disponible (facultative).
+- JEU WEB SUR TÉLÉPHONE : l'appli ajoutée à l'écran d'accueil s'ouvre maintenant en plein écran, sans la barre du navigateur (Android : « Installer l'application » ; iPhone : « Sur l'écran d'accueil »), avec la nouvelle icône. Une nouvelle version publiée s'installe toute seule au lancement suivant au lieu de rester bloquée sur l'ancienne.
 
 ## v0.55.0 — Plein écran  (2026-10-08)
 

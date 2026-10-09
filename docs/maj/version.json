@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-08",
+	"date": "2026-10-09",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,15 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"APPLICATION ANDROID : nouvelle application à installer (page des téléchargements du jeu). L'ancienne (v0.36) ne pouvait plus se mettre à jour toute seule à cause d'un bug de sa fenêtre de mise à jour : elle restait bloquée sur le vieux menu. La nouvelle repart à jour, avec la nouvelle icône, et se mettra de nouveau à jour automatiquement. La partie n'est pas perdue (elle est sur le téléphone et sur le compte).",
+				"ORDINATEUR : la fenêtre du jeu et la barre des tâches affichent la nouvelle icône des deux frères. Pour l'icône du fichier .exe et du raccourci du bureau, une nouvelle installation complète est disponible (facultative).",
+				"JEU WEB SUR TÉLÉPHONE : l'appli ajoutée à l'écran d'accueil s'ouvre maintenant en plein écran, sans la barre du navigateur (Android : « Installer l'application » ; iPhone : « Sur l'écran d'accueil »), avec la nouvelle icône. Une nouvelle version publiée s'installe toute seule au lancement suivant au lieu de rester bloquée sur l'ancienne."
+			],
+			"titre": "Les applications à jour",
+			"version": "0.56.0"
+		},
 		{
 			"changements": [
 				"ÉCRAN DE CHARGEMENT : les larmes et les gouttes de sang tombent maintenant verticalement du haut de l'écran, comme une pluie, jusque dans les deux moitiés du Sceau (dans le jeu et sur la page web).",
@@ -133,22 +142,13 @@
 			],
 			"titre": "Un nouveau visage (1/3)",
 			"version": "0.45.0"
-		},
-		{
-			"changements": [
-				"LES BOSS DE MONDE ONT UN VISAGE : les 7 titans de la semaine ont leur illustration. Le Béhémoth des Cendres, le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel.",
-				"En combat, le boss se dresse désormais en figurine géante sur son socle de ruines, face aux 20 petites unités de ton armée, avec son illustration en fond.",
-				"Les cartes des 7 jours montrent le visage de chaque boss, et leurs portraits apparaissent aussi au Bestiaire."
-			],
-			"titre": "Les Titans de la semaine",
-			"version": "0.44.0"
 		}
 	],
 	"pck": {
-		"sha256": "4cc0476f843b29fd249a0a614069d977f89b952c0147d416d4ed3917fd419e85",
-		"taille": 85937600,
+		"sha256": "df9064a80a981bd20dbd308873e0a95af17e85b692e3bed38fc538fe364b97a7",
+		"taille": 85939328,
 		"url": "jeu.pck"
 	},
-	"version": "0.55.0",
+	"version": "0.56.0",
 	"version_minimum": "0.37.0"
 }

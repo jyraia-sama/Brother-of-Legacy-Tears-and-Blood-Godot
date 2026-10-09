@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brothers of Legacy</title>
+<script>
+// Ancien lien de l'application Android (docs/telecharger/…apk) : on renvoie vers la dernière version
+// publiée dans les Releases GitHub. Toute autre page introuvable ramène au jeu.
+(function () {
+	var p = location.pathname.toLowerCase();
+	if (p.indexOf('.apk') !== -1) {
+		location.replace('https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Android.apk');
+	} else {
+		location.replace('/Brother-of-Legacy-Tears-and-Blood-Godot/');
+	}
+})();
+</script>
+</head>
+<body style="background:#07040a;color:#d9c7b8;font-family:sans-serif;text-align:center;padding-top:20vh">
+Redirection…
+</body>
+</html>
