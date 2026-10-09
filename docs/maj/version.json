@@ -11,6 +11,17 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"LA GUERRE DES BANNIÈRES (Guilde → Guerre) : une guerre de guildes chaque semaine, en asynchrone, chacun joue quand il veut. Lundi-mardi : préparation (le chef inscrit la guilde une fois pour toutes, chacun prépare sa défense de guerre). Mercredi-samedi : 2 assauts par jour contre la forteresse ennemie. Dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne.",
+				"LA FORTERESSE : un poste par membre, rangés par puissance en Remparts, Tours et Donjon. Une couche s'ouvre quand chaque poste de la précédente a été pris au moins une étoile. ★ victoire · ★★ victoire avec 3 unités debout ou plus · ★★★ aucune perte ; seul le meilleur résultat d'un poste compte.",
+				"STRATÉGIE : la FATIGUE épuise jusqu'au lendemain les unités qui ont attaqué (toute la collection compte), l'ÉCLAIREUR révèle une fois par jour les unités d'un poste ennemi (sinon seuls ses éléments sont visibles), et le JOURNAL de guerre permet de REVOIR chaque assaut.",
+				"LA LÉGION DE LA SOIF : s'il n'y a pas d'autre guilde à votre mesure, la guerre a lieu quand même contre cette armée fantôme faite des reflets de défenses de vrais joueurs ; elle attaque votre forteresse un peu plus chaque jour.",
+				"BUTIN : pour chaque membre qui a attaqué, Sceaux de guilde (selon le résultat et les étoiles gagnées), or, coffres et tome ; XP et trésor pour la guilde. (Serveur : lancer supabase/08_guerre.sql.)"
+			],
+			"titre": "La Guerre des Bannières",
+			"version": "0.57.0"
+		},
+		{
+			"changements": [
 				"APPLICATION ANDROID : nouvelle application à installer (page des téléchargements du jeu). L'ancienne (v0.36) ne pouvait plus se mettre à jour toute seule à cause d'un bug de sa fenêtre de mise à jour : elle restait bloquée sur le vieux menu. La nouvelle repart à jour, avec la nouvelle icône, et se mettra de nouveau à jour automatiquement. La partie n'est pas perdue (elle est sur le téléphone et sur le compte).",
 				"ORDINATEUR : la fenêtre du jeu et la barre des tâches affichent la nouvelle icône des deux frères. Pour l'icône du fichier .exe et du raccourci du bureau, une nouvelle installation complète est disponible (facultative).",
 				"JEU WEB SUR TÉLÉPHONE : l'appli ajoutée à l'écran d'accueil s'ouvre maintenant en plein écran, sans la barre du navigateur (Android : « Installer l'application » ; iPhone : « Sur l'écran d'accueil »), avec la nouvelle icône. Une nouvelle version publiée s'installe toute seule au lancement suivant au lieu de rester bloquée sur l'ancienne."
@@ -133,22 +144,13 @@
 			],
 			"titre": "La Galerie d'Art",
 			"version": "0.46.0"
-		},
-		{
-			"changements": [
-				"NOUVELLE DIRECTION ARTISTIQUE (1/3) : 56 héros et monstres sont repeints dans le style des héros hommages. Les huit Légendes, les premiers compagnons, les créatures des bas-fonds, les sauvages, les guerriers des terres, les créatures des ruines et les puissants.",
-				"Chacun a désormais sa figurine de combat en pied, avec sa propre attitude : le Mage Gris jongle avec ses boules de feu, la Dague Violette guette accroupie, le Brigand Ivre lève sa chope, l'Esprit Frappeur fait voler la vaisselle…",
-				"Le Lapin Pyromane a trouvé sa vraie nature : un petit artificier fou, carotte-dynamite allumée à la main."
-			],
-			"titre": "Un nouveau visage (1/3)",
-			"version": "0.45.0"
 		}
 	],
 	"pck": {
-		"sha256": "be8157358d89a8bbac1e0997e15d2d8d008c07558a78de655ffa0dab5760327d",
-		"taille": 85939328,
+		"sha256": "b7fb42ada1f5d30f30b273649404a72f924393bff60d0b5b8b4ad9bd910968d0",
+		"taille": 85973720,
 		"url": "jeu.pck"
 	},
-	"version": "0.56.0",
+	"version": "0.57.0",
 	"version_minimum": "0.37.0"
 }

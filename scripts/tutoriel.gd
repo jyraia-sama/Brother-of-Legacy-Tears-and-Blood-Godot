@@ -167,7 +167,7 @@ static func astuce(ecran: String, parent: Node) -> void:
 
 
 ## Guides complets ouverts tout seuls à la première visite (ex. guide des Échos).
-const GUIDES_AUTO := ["guide_echos"]
+const GUIDES_AUTO := ["guide_echos", "guide_guerre"]
 
 
 ## Vrai la première fois seulement (puis la clé est marquée comme vue).

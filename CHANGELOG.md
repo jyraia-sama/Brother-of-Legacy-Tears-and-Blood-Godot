@@ -1,6 +1,14 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.56.0** (2026-10-09)
+Version actuelle : **0.57.0** (2026-10-09)
+
+## v0.57.0 — La Guerre des Bannières  (2026-10-09)
+
+- LA GUERRE DES BANNIÈRES (Guilde → Guerre) : une guerre de guildes chaque semaine, en asynchrone, chacun joue quand il veut. Lundi-mardi : préparation (le chef inscrit la guilde une fois pour toutes, chacun prépare sa défense de guerre). Mercredi-samedi : 2 assauts par jour contre la forteresse ennemie. Dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne.
+- LA FORTERESSE : un poste par membre, rangés par puissance en Remparts, Tours et Donjon. Une couche s'ouvre quand chaque poste de la précédente a été pris au moins une étoile. ★ victoire · ★★ victoire avec 3 unités debout ou plus · ★★★ aucune perte ; seul le meilleur résultat d'un poste compte.
+- STRATÉGIE : la FATIGUE épuise jusqu'au lendemain les unités qui ont attaqué (toute la collection compte), l'ÉCLAIREUR révèle une fois par jour les unités d'un poste ennemi (sinon seuls ses éléments sont visibles), et le JOURNAL de guerre permet de REVOIR chaque assaut.
+- LA LÉGION DE LA SOIF : s'il n'y a pas d'autre guilde à votre mesure, la guerre a lieu quand même contre cette armée fantôme faite des reflets de défenses de vrais joueurs ; elle attaque votre forteresse un peu plus chaque jour.
+- BUTIN : pour chaque membre qui a attaqué, Sceaux de guilde (selon le résultat et les étoiles gagnées), or, coffres et tome ; XP et trésor pour la guilde. (Serveur : lancer supabase/08_guerre.sql.)
 
 ## v0.56.0 — Les applications à jour  (2026-10-09)
 

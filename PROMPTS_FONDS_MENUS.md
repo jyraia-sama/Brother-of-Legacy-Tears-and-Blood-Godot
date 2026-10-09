@@ -159,3 +159,19 @@ Scène : la tour des corbeaux messagers, au sommet de la forteresse. Une pièce 
 ```
 Scène : la cour intérieure du domaine Valcendre, la nuit où il brûle. Au premier plan, un sol pavé couvert de cendres et de braises ; au fond, le château en flammes sous une lune rouge, des fumées qui montent. Deux grandes statues de chevaliers gardiens encadrent la scène à gauche et à droite. Lumière rouge et orange de l'incendie, ambiance de départ précipité.
 ```
+
+---
+
+## LA GUERRE DES BANNIÈRES (v0.57) — 2 images
+
+Colle le BLOC COMMUN, puis l'un des blocs ci-dessous.
+
+**Fond de l'écran de guerre** (`guerre.png`)
+```
+Une salle de guerre dans la forteresse des Valcendre, la nuit : une grande table de chêne couverte d'une carte de campagne, de pions de bois et de dagues plantées, éclairée par des chandeliers. Aux murs, des bannières de guerre rouge sang et bleu nuit frappées d'un phénix. Par une haute fenêtre, au loin, les feux d'une armée ennemie sur les collines. Ambiance tendue, veille de bataille, lumière chaude des bougies contre le froid bleu de la nuit.
+```
+
+**Fond des combats de guerre** (`guerre_combat.png`)
+```
+Le pied des remparts d'une forteresse assiégée, de nuit, sous une lune rouge. Murailles de pierre noire à moitié écroulées, échelles de siège, bannières déchirées, braises et fumée. Le sol au premier plan est un terrain dégagé de pierre et de terre battue, éclairé par des feux de camp. Au loin, des tours avec des torches.
+```

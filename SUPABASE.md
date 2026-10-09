@@ -50,6 +50,12 @@ joueurs actifs, appareils par plateforme, versions utilisées, activité des 30 
   Si ton pseudo est différent, change-le dans la ligne marquée ▼▼▼ au début du fichier, puis relance-le.
 - Les appareils sont comptés de façon anonyme (un identifiant tiré au hasard), à partir de la v0.53.
 
+### 2 octies. Guerre des Bannières (v0.57)
+Même chose avec le fichier `supabase/08_guerre.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après les fichiers 01 et 05.) Ajoute la guerre de guildes hebdomadaire : inscription des guildes,
+défenses de guerre, appariement automatique (ou Légion de la Soif), forteresses, assauts, fatigue, éclaireur,
+journal avec rediffusions, bilan et butin. Réglages (assauts par jour, butin, force de la Légion…) au début du fichier.
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

@@ -15,11 +15,19 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.56.0"
+const NUMERO := "0.57.0"
 const DATE := "2026-10-09"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.57.0", "date": "2026-10-09", "titre": "La Guerre des Bannières",
+	"changements": [
+		"LA GUERRE DES BANNIÈRES (Guilde → Guerre) : une guerre de guildes chaque semaine, en asynchrone, chacun joue quand il veut. Lundi-mardi : préparation (le chef inscrit la guilde une fois pour toutes, chacun prépare sa défense de guerre). Mercredi-samedi : 2 assauts par jour contre la forteresse ennemie. Dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne.",
+		"LA FORTERESSE : un poste par membre, rangés par puissance en Remparts, Tours et Donjon. Une couche s'ouvre quand chaque poste de la précédente a été pris au moins une étoile. ★ victoire · ★★ victoire avec 3 unités debout ou plus · ★★★ aucune perte ; seul le meilleur résultat d'un poste compte.",
+		"STRATÉGIE : la FATIGUE épuise jusqu'au lendemain les unités qui ont attaqué (toute la collection compte), l'ÉCLAIREUR révèle une fois par jour les unités d'un poste ennemi (sinon seuls ses éléments sont visibles), et le JOURNAL de guerre permet de REVOIR chaque assaut.",
+		"LA LÉGION DE LA SOIF : s'il n'y a pas d'autre guilde à votre mesure, la guerre a lieu quand même contre cette armée fantôme faite des reflets de défenses de vrais joueurs ; elle attaque votre forteresse un peu plus chaque jour.",
+		"BUTIN : pour chaque membre qui a attaqué, Sceaux de guilde (selon le résultat et les étoiles gagnées), or, coffres et tome ; XP et trésor pour la guilde. (Serveur : lancer supabase/08_guerre.sql.)",
+	]},
 	{"version": "0.56.0", "date": "2026-10-09", "titre": "Les applications à jour",
 	"changements": [
 		"APPLICATION ANDROID : nouvelle application à installer (page des téléchargements du jeu). L'ancienne (v0.36) ne pouvait plus se mettre à jour toute seule à cause d'un bug de sa fenêtre de mise à jour : elle restait bloquée sur le vieux menu. La nouvelle repart à jour, avec la nouvelle icône, et se mettra de nouveau à jour automatiquement. La partie n'est pas perdue (elle est sur le téléphone et sur le compte).",

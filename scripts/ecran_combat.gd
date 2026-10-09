@@ -14,6 +14,8 @@ extends Control
 ##   "donjon"     : un des 4 combats d'une expédition de Donjon   ("donjon", "niveau", "vague", "retour")
 ##   "marche"     : un combat de la Marche Maudite   ("type", "region", "retour")
 ##   "sanctuaire" : Sanctuaire du Bélier (secret), la famille du Bélier   ("epreuve", "retour")
+##   "guerre"     : Guerre des Bannières, assaut d'un poste ennemi ("attaque", "graine", "adversaire", "poste", "retour")
+##   "guerre_revoir" : rediffusion d'un assaut de guerre (même graine, mêmes équipes : combat identique)
 ##   "classee"    : Arène classée en temps réel, combat MANUEL à deux joueurs ("match", "mon_camp", "retour")
 ##                  -> le déroulement est géré par combat_classe.gd
 ##
@@ -71,7 +73,7 @@ func _ready() -> void:
 	_creer_fond()
 	_creer_interface()
 
-	CombatMoteur.ignorer_admin = _mode in ["arene", "classee"]
+	CombatMoteur.ignorer_admin = _mode in ["arene", "classee", "guerre", "guerre_revoir"]
 	var moteur := CombatMoteur.new(demande["equipe"], demande["ennemis"], int(demande.get("graine", 0)),
 		int(demande.get("tours_max", CombatMoteur.TOURS_MAX)))
 	CombatMoteur.ignorer_admin = false
@@ -110,6 +112,9 @@ func _creer_fond() -> void:
 		chemin = "res://assets/plateaux/fond_%02d.png" % int(Marche.actes_du_jour()[int(demande.get("region", 0))])
 	elif _mode == "sanctuaire" and ResourceLoader.exists(Sanctuaire.FOND):
 		chemin = Sanctuaire.FOND
+	elif _mode in ["guerre", "guerre_revoir"]:
+		chemin = EcranGuerre.FOND_COMBAT if ResourceLoader.exists(EcranGuerre.FOND_COMBAT) else "res://assets/plateaux/fond_08.png"
+		noir.color = Color("12060a")
 	elif _mode == "donjon":
 		chemin = "res://assets/donjons/%s.png" % str(demande.get("donjon", "feu"))
 		noir.color = Color("#" + str(Donjons.DONJONS[demande.get("donjon", "feu")]["couleur"])).darkened(0.88)
@@ -194,6 +199,9 @@ func _creer_interface() -> void:
 		var lui: Dictionary = m["j2"] if mon_camp() == 0 else m["j1"]
 		texte_titre = "ARÈNE CLASSÉE — %s (%d)  contre  %s (%d)" % [EnLigne.nom_complet(str(moi.get("pseudo", "?"))), int(moi.get("points", 0)),
 			EnLigne.nom_complet(str(lui.get("pseudo", "?"))), int(lui.get("points", 0))]
+	elif _mode in ["guerre", "guerre_revoir"]:
+		texte_titre = "%sGUERRE DES BANNIÈRES — %s : %s" % ["REDIFFUSION · " if _mode == "guerre_revoir" else "",
+			str(Guerre.COUCHES[int(demande.get("couche", 0))]).to_upper(), str(demande.get("adversaire", "?"))]
 	elif _mode == "sanctuaire":
 		texte_titre = "LE SANCTUAIRE DU BÉLIER — " + str(Sanctuaire.EPREUVES[demande["epreuve"]]["titre"]).to_upper()
 	elif _mode == "donjon":
@@ -774,6 +782,14 @@ func _fin() -> void:
 	if _mode == "arene":
 		_fin_arene()
 		return
+	if _mode == "guerre":
+		_fin_guerre()
+		return
+	if _mode == "guerre_revoir":
+		var e := Guerre.etoiles(_res)
+		_afficher_resultat(e > 0, ["Rediffusion de l'assaut de %s contre %s : %s" % [str(demande.get("attaquant", "?")),
+			str(demande.get("adversaire", "?")), Guerre.texte_etoiles(e)]], "REDIFFUSION")
+		return
 	if _mode == "sanctuaire":
 		_fin_sanctuaire()
 		return
@@ -947,6 +963,34 @@ func _fin_arene() -> void:
 		lignes.append("Le résultat n'a pas pu être envoyé : %s" % (r.erreur if not r.ok else str(r.data.get("erreur", "?"))))
 	resultat = {"mode": "arene", "victoire": victoire}
 	_afficher_resultat(victoire, lignes)
+
+
+## Guerre des Bannières : les étoiles sont envoyées au serveur, qui garde le meilleur résultat du poste.
+func _fin_guerre() -> void:
+	var victoire: bool = _res["victoire"]
+	var e := Guerre.etoiles(_res)
+	var lignes: Array = ["Envoi du résultat…"]
+	var r := await EnLigne.appeler("guerre_terminer", {"p_attaque": demande["attaque"], "p_etoiles": e})
+	lignes.clear()
+	var adv: String = str(demande.get("adversaire", "?"))
+	lignes.append(("Tu as pris le poste de %s : %s" % [adv, Guerre.texte_etoiles(e)]) if victoire
+		else ("%s a repoussé ton assaut." % adv))
+	if victoire:
+		lignes.append("★ victoire   ★★ 3 unités debout ou plus   ★★★ aucune perte")
+	if r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "ok":
+		var gain := int(r.data["gain"])
+		if gain > 0:
+			lignes.append("+%d étoile%s pour ta guilde (total %d)." % [gain, "s" if gain > 1 else "", int(r.data["total"])])
+		else:
+			lignes.append("Pas d'étoile nouvelle : ce poste avait déjà été pris aussi bien.")
+		if victoire:
+			Sauvegarde.ajouter_stat("combats_gagnes")
+			_xp_compte(lignes, "arene")
+	else:
+		lignes.append("Le résultat n'a pas pu être envoyé : %s" % (r.erreur if not r.ok else Guerre.texte_erreur(str(r.data.get("code", "?")))))
+	lignes.append("Les unités de cet assaut sont épuisées jusqu'à demain.")
+	resultat = {"mode": "guerre", "victoire": victoire, "etoiles": e}
+	_afficher_resultat(victoire, lignes, ("VICTOIRE  " + Guerre.texte_etoiles(e)) if victoire else "")
 
 
 ## Marche Maudite : le résultat est appliqué à la marche, puis retour à la carte.

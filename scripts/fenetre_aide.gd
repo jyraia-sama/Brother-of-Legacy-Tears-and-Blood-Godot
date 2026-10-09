@@ -44,6 +44,7 @@ const SECTIONS := [
 	["En ligne", """• Crée un COMPTE (Paramètres → Gérer le compte) : ta partie est sauvegardée en ligne automatiquement.
 • SOCIAL : ajoute des amis. GUILDE : crée ou rejoins une guilde.
 • ARÈNE : ta défense est enregistrée automatiquement à ta première visite ; modifie-la dans l'onglet Défense.
+• GUERRE DES BANNIÈRES (Guilde → Guerre) : chaque semaine, ta guilde affronte une autre guilde, ou la Légion de la Soif. Lundi-mardi : préparation et défense de guerre ; mercredi-samedi : 2 assauts par jour contre la forteresse ennemie (Remparts, Tours, Donjon) ; dimanche : bilan et butin. Fatigue des unités, éclaireur et rediffusions.
 • Tu peux aussi copier un CODE DE SAUVEGARDE (Paramètres) pour garder ta partie de côté."""],
 	["Sur téléphone", """• Le jeu s'installe comme une appli : Android → menu ⋮ → Ajouter à l'écran d'accueil ; iPhone → Partager → Sur l'écran d'accueil.
 • Glisse le doigt pour faire défiler les listes.

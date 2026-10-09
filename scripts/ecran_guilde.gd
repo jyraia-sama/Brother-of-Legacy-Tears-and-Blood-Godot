@@ -3,7 +3,7 @@ extends Control
 ## GUILDE
 ##  - Sans guilde : créer une guilde, ou en chercher une (rejoindre / postuler).
 ##  - Dans une guilde : Accueil (niveau, dons, annonce, journal), Discussion, Boss de guilde,
-##    Bénédictions, Boutique, Membres, Candidatures (chef/officiers), Guerre (bientôt), Réglages.
+##    Bénédictions, Boutique, Membres, Candidatures (chef/officiers), Guerre (écran de guerre), Réglages.
 ##    Vie de guilde : supabase/05_guildes_vie.sql (+ scripts/guilde.gd pour les bonus en combat).
 ## Rôles : Chef (tous les droits), Officier (accepte les candidats, exclut les membres), Membre.
 ## Tout est vérifié par le serveur (supabase/01_comptes_amis_guildes.sql).
@@ -808,26 +808,22 @@ func _afficher_candidatures() -> void:
 		]))
 
 
-## Guerre de guildes : menu prêt, combats codés plus tard.
+## Guerre des Bannières : résumé et accès à l'écran de guerre (ecran_guerre.gd).
 func _afficher_guerre() -> void:
-	_contenu.add_child(UiCommun.label("GUERRE DE GUILDES", 26, UiCommun.C_OR))
-	_contenu.add_child(UiCommun.label("Bientôt disponible", 20, UiCommun.C_LEGENDE))
-	var texte := UiCommun.label("Deux guildes s'affrontent pendant une saison de guerre :\n"
-		+ "  • chaque membre prépare une équipe de défense pour sa guilde ;\n"
-		+ "  • pendant la guerre, chacun attaque les défenses de la guilde adverse ;\n"
-		+ "  • chaque victoire rapporte des points à la guilde ; la guilde qui en a le plus gagne ;\n"
-		+ "  • récompenses pour tous les membres et classement des guildes.", 17)
+	_contenu.add_child(UiCommun.label("LA GUERRE DES BANNIÈRES", 26, UiCommun.C_OR))
+	var texte := UiCommun.label("Une guerre de guildes chaque semaine, chacun joue quand il veut :\n"
+		+ "  • lundi-mardi : préparation (inscription de la guilde, défenses de guerre) ;\n"
+		+ "  • mercredi-samedi : 2 assauts par jour contre la forteresse ennemie (Remparts, Tours, Donjon) ;\n"
+		+ "  • dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne, et chacun réclame son butin.\n"
+		+ "Fatigue des unités, éclaireur, rediffusions… et s'il n'y a pas d'autre guilde à votre mesure,\n"
+		+ "c'est la Légion de la Soif qui vous attaque.", 17)
 	texte.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_contenu.add_child(texte)
-	var ligne := HBoxContainer.new()
-	ligne.add_theme_constant_override("separation", 10)
-	_contenu.add_child(ligne)
-	for t in ["Préparer ma défense", "Inscrire la guilde", "Classement des guildes"]:
-		var b := UiCommun.bouton(t)
-		b.disabled = true
-		b.tooltip_text = "Bientôt disponible"
-		b.custom_minimum_size = Vector2(240, 46)
-		ligne.add_child(b)
+	var b := UiCommun.bouton("⚔ Ouvrir la Guerre des Bannières", 20)
+	b.custom_minimum_size = Vector2(420, 54)
+	UiCommun.bouton_vif(b, Color("b8402f"))
+	b.pressed.connect(func(): get_tree().change_scene_to_file(EcranGuerre.SCENE))
+	_contenu.add_child(b)
 
 
 func _afficher_reglages() -> void:
