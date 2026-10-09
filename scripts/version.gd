@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.58.2"
+const NUMERO := "0.59.0"
 const DATE := "2026-10-09"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.0", "date": "2026-10-09", "titre": "Le menu prend vie",
+	"changements": [
+		"MENU PRINCIPAL ANIMÉ : les flammes du côté de Kaël vacillent et l'air ondule de chaleur au-dessus du brasier, des braises montent, la lumière bleue du vitrail respire et scintille avec de la poussière qui y flotte, le médaillon des deux frères bat comme un cœur, la lune rouge luit, des étincelles s'échappent de la main de Kaël et une brume glisse au ras du sol.",
+		"FIGURINES EN HAUTE DÉFINITION : les 101 figurines de combat ont été agrandies deux fois plus fines (840 px au lieu de 420) par un modèle d'intelligence artificielle. Elles ne sont plus pixelisées sur les combats 3D, surtout au premier plan et sur les grands écrans.",
+		"Leurs contours sont adoucis en 3D et les figurines du fond restent nettes au lieu de scintiller.",
+	]},
 	{"version": "0.58.2", "date": "2026-10-09", "titre": "La nuit des Valcendre",
 	"changements": [
 		"COMBATS EN 3D, ACTE I : premier décor peint spécialement pour la 3D. Au fond, le château des Valcendre en flammes, le village qui brûle et les bannières au phénix ; au sol, la terre battue du village incendié, avec ses cendres, ses pavés brisés et ses braises, nette jusqu'aux pieds des figurines au lieu d'être étirée.",

@@ -269,7 +269,9 @@ func ajouter(idx: int, chemin_figurine: String, frac: Vector2, boss: bool, geant
 	var s := Sprite3D.new()
 	s.texture = tex
 	s.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
-	s.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+	# Bords adoucis (pré-passe opaque : contours lissés, ombres conservées) et filtrage avec mipmaps
+	s.alpha_cut = SpriteBase3D.ALPHA_CUT_OPAQUE_PREPASS
+	s.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
 	s.shaded = true
 	s.flip_h = vers_gauche
 	s.pixel_size = h / float(tex.get_height())

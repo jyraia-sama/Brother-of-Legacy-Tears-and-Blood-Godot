@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.58.2** (2026-10-09)
+Version actuelle : **0.59.0** (2026-10-09)
+
+## v0.59.0 — Le menu prend vie  (2026-10-09)
+
+- MENU PRINCIPAL ANIMÉ : les flammes du côté de Kaël vacillent et l'air ondule de chaleur au-dessus du brasier, des braises montent, la lumière bleue du vitrail respire et scintille avec de la poussière qui y flotte, le médaillon des deux frères bat comme un cœur, la lune rouge luit, des étincelles s'échappent de la main de Kaël et une brume glisse au ras du sol.
+- FIGURINES EN HAUTE DÉFINITION : les 101 figurines de combat ont été agrandies deux fois plus fines (840 px au lieu de 420) par un modèle d'intelligence artificielle. Elles ne sont plus pixelisées sur les combats 3D, surtout au premier plan et sur les grands écrans.
+- Leurs contours sont adoucis en 3D et les figurines du fond restent nettes au lieu de scintiller.
 
 ## v0.58.2 — La nuit des Valcendre  (2026-10-09)
 

@@ -84,8 +84,44 @@ const SHADER_BORDS := "shader_type canvas_item;
 uniform float gamma = 0.62;
 uniform float gain = 1.12;
 uniform float fondu = 1.0;
+// FOND ANIMÉ (0 = image fixe) : les flammes vacillent et ondulent sous la chaleur, la lumière bleue
+// du vitrail respire et scintille, le médaillon des frères bat doucement, la lune rouge luit.
+// Les zones sont reconnues à leur couleur : ça marche sur toute illustration du même style.
+uniform float anime = 0.0;
+uniform vec2 medaillon = vec2(0.5, 0.375);
+uniform vec2 lune = vec2(0.37, 0.105);
+float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float bruit(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+	return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+float fbm(vec2 p) { return bruit(p) * 0.6 + bruit(p * 2.13 + 3.7) * 0.4; }
+float feu(vec3 c) { return smoothstep(0.1, 0.4, c.r - max(c.g * 0.8, c.b)) * smoothstep(0.3, 0.75, c.r); }
+float bleu(vec3 c) { return smoothstep(0.06, 0.3, c.b - c.r) * smoothstep(0.25, 0.75, c.b); }
 void fragment() {
 	vec4 c = COLOR;
+	if (anime > 0.5) {
+		float t = TIME;
+		vec2 uv = UV;
+		// Chaleur : l'image ondule au-dessus des flammes (le motif monte)
+		float mf = feu(c.rgb);
+		vec2 d = vec2(fbm(uv * vec2(22.0, 12.0) + vec2(0.0, t * 1.6)), fbm(uv * vec2(16.0, 10.0) + vec2(7.0, t * 2.1))) - 0.5;
+		uv += d * 0.007 * mf;
+		c = texture(TEXTURE, uv);
+		// Flammes qui vacillent (taches de lumière qui montent)
+		float fl = fbm(uv * vec2(10.0, 5.0) + vec2(0.0, t * 1.3)) * 0.7 + bruit(vec2(t * 3.0, uv.x * 4.0)) * 0.3;
+		c.rgb *= 1.0 + feu(c.rgb) * (fl - 0.45) * 1.1;
+		// Lumière bleue du vitrail : respiration lente et scintillements
+		float mb = bleu(c.rgb);
+		c.rgb *= 1.0 + mb * (0.14 * sin(t * 1.1 + uv.y * 5.0) + 0.5 * pow(bruit(uv * vec2(90.0, 60.0) + vec2(0.0, t * 0.8)), 6.0));
+		// Le médaillon bat comme un cœur, la lune luit
+		vec2 r = vec2(TEXTURE_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.x, 1.0);
+		float coeur = pow(0.5 + 0.5 * sin(t * 2.2), 3.0);
+		c.rgb *= 1.0 + 0.35 * coeur * smoothstep(0.11, 0.0, distance(uv * r, medaillon * r));
+		c.rgb += vec3(0.5, 0.06, 0.05) * (0.12 + 0.08 * sin(t * 0.9)) * smoothstep(0.06, 0.0, distance(uv * r, lune * r));
+	}
 	c.rgb = clamp(pow(c.rgb, vec3(gamma)) * gain, 0.0, 1.0);
 	c.a *= mix(1.0, smoothstep(0.0, 0.08, UV.x) * smoothstep(1.0, 0.92, UV.x), fondu);
 	COLOR = c;
@@ -93,6 +129,25 @@ void fragment() {
 ## Réglage de l'éclaircissement du fond (1.0 / 1.0 = image d'origine).
 const FOND_GAMMA := 0.8
 const FOND_GAIN := 1.08
+
+## Brume qui glisse lentement au ras du sol du menu (deux couches qui se croisent).
+const SHADER_BRUME := "shader_type canvas_item;
+float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float bruit(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+	return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+void fragment() {
+	float t = TIME;
+	vec2 uv = UV * vec2(6.0, 1.6);
+	float n = bruit(uv + vec2(t * 0.05, 0.0)) * 0.6 + bruit(uv * 1.9 - vec2(t * 0.08, t * 0.01)) * 0.4;
+	float h = smoothstep(0.0, 0.7, UV.y);
+	// bleutée à gauche, rougeâtre à droite
+	vec3 teinte = mix(vec3(0.45, 0.5, 0.75), vec3(0.75, 0.35, 0.3), smoothstep(0.35, 0.65, UV.x));
+	COLOR = vec4(teinte, smoothstep(0.35, 0.85, n) * h * 0.22);
+}"
 
 const SHADER_FONDU := "shader_type canvas_item;
 uniform float bord = 0.5;
@@ -216,13 +271,14 @@ func _creer_fond() -> void:
 			fond.stretch_mode = TextureRect.STRETCH_SCALE
 			fond.position = Vector2((BASE.x - largeur) / 2.0, FOND_DECALAGE_Y)
 			fond.size = Vector2(largeur, BASE.y)
-			fond.material = _materiau_fond(true)
+			fond.material = _materiau_fond(true, 1.0, true)
 		else:
 			fond.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 			fond.size = BASE
-			fond.material = _materiau_fond(false)
+			fond.material = _materiau_fond(false, 1.0, true)
 		_ui.add_child(fond)
 		_image_fond = true
+		_animer_fond(fond)
 		# Ombre douce derrière les deux colonnes de boutons : elles restent lisibles
 		# quelle que soit l'illustration (une image ChatGPT n'est jamais calée au pixel près).
 		_degrade(Rect2(0, 0, 360, 720), Color(0.03, 0.02, 0.05, 0.72), true)
@@ -276,7 +332,7 @@ func _creer_fond() -> void:
 
 
 ## Matériau du fond : éclaircit l'illustration (et fond ses bords gauche/droit si bords_fondus).
-func _materiau_fond(bords_fondus: bool, assombrir := 1.0) -> ShaderMaterial:
+func _materiau_fond(bords_fondus: bool, assombrir := 1.0, anime := false) -> ShaderMaterial:
 	var sh := Shader.new()
 	sh.code = SHADER_BORDS
 	var m := ShaderMaterial.new()
@@ -284,7 +340,72 @@ func _materiau_fond(bords_fondus: bool, assombrir := 1.0) -> ShaderMaterial:
 	m.set_shader_parameter("gamma", FOND_GAMMA)
 	m.set_shader_parameter("gain", FOND_GAIN * assombrir)
 	m.set_shader_parameter("fondu", 1.0 if bords_fondus else 0.0)
+	m.set_shader_parameter("anime", 1.0 if anime else 0.0)
 	return m
+
+
+## Vie du fond : braises qui montent du brasier (côté Kaël), poussière bleue qui flotte dans la lumière
+## du vitrail (côté grand frère), brume qui glisse au ras du sol. Les flammes elles-mêmes bougent
+## grâce au shader du fond (SHADER_BORDS, paramètre « anime »).
+func _animer_fond(fond: TextureRect) -> void:
+	var r := Rect2(fond.position, fond.size)
+	# Braises du brasier, à droite
+	var braises := _nuee(r.position + Vector2(0.82, 0.72) * r.size, Vector2(r.size.x * 0.16, r.size.y * 0.2), Color(1.0, 0.55, 0.2), 40, 6.0)
+	braises.direction = Vector2(-0.15, -1)
+	braises.initial_velocity_min = 18.0
+	braises.initial_velocity_max = 55.0
+	braises.orbit_velocity_min = -0.02
+	braises.orbit_velocity_max = 0.02
+	braises.scale_amount_min = 1.2
+	braises.scale_amount_max = 2.8
+	# Étincelles autour de la main de Kaël
+	var magie := _nuee(r.position + Vector2(0.66, 0.53) * r.size, Vector2(30, 30), Color(1.0, 0.25, 0.2), 14, 2.2)
+	magie.direction = Vector2(0, -1)
+	magie.spread = 60.0
+	magie.initial_velocity_min = 6.0
+	magie.initial_velocity_max = 22.0
+	# Poussière dans la lumière bleue, à gauche (descend lentement)
+	var poussiere := _nuee(r.position + Vector2(0.26, 0.4) * r.size, Vector2(r.size.x * 0.12, r.size.y * 0.3), Color(0.6, 0.72, 1.0), 30, 9.0)
+	poussiere.direction = Vector2(0.3, 1)
+	poussiere.spread = 40.0
+	poussiere.initial_velocity_min = 4.0
+	poussiere.initial_velocity_max = 12.0
+	poussiere.scale_amount_min = 0.8
+	poussiere.scale_amount_max = 2.0
+	# Brume au ras du sol
+	var brume := ColorRect.new()
+	brume.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	brume.position = Vector2(0, r.end.y - 200)
+	brume.size = Vector2(BASE.x, 200)
+	var sh := Shader.new()
+	sh.code = SHADER_BRUME
+	var m := ShaderMaterial.new()
+	m.shader = sh
+	brume.material = m
+	_ui.add_child(brume)
+
+
+func _nuee(centre: Vector2, demi: Vector2, couleur: Color, nombre: int, duree: float) -> CPUParticles2D:
+	var p := CPUParticles2D.new()
+	p.amount = nombre
+	p.lifetime = duree
+	p.preprocess = duree
+	p.position = centre
+	p.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
+	p.emission_rect_extents = demi
+	p.spread = 25.0
+	p.gravity = Vector2.ZERO
+	p.color = couleur
+	var fondu := Gradient.new()
+	fondu.set_color(0, Color(couleur, 0.0))
+	fondu.add_point(0.25, couleur)
+	fondu.set_color(fondu.get_point_count() - 1, Color(couleur, 0.0))
+	p.color_ramp = fondu
+	var mat := CanvasItemMaterial.new()
+	mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	p.material = mat
+	_ui.add_child(p)
+	return p
 
 
 ## Bande sombre qui s'efface vers le centre de l'écran (sombre_a_gauche : le bord sombre est à gauche).

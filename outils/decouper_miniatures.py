@@ -10,6 +10,7 @@ Si la planche a un fond transparent au lieu de vert, ça marche aussi.
 Figurines de combat (pions) : une planche de figurines sur fond vert, rangées dans assets/figurines/ :
          python3 outils/decouper_miniatures.py planche_40.png --figurines axolotl_sources errant_silencieux ...
 Options : --dossier=chemin  --hauteur=px  (--figurines = --dossier=assets/figurines --hauteur=420)
+Puis agrandir chaque nouvelle figurine x2 (840 px) avec outils/agrandir_figurines.py (combats 3D).
 """
 import os
 import sys

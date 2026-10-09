@@ -11,6 +11,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"MENU PRINCIPAL ANIMÉ : les flammes du côté de Kaël vacillent et l'air ondule de chaleur au-dessus du brasier, des braises montent, la lumière bleue du vitrail respire et scintille avec de la poussière qui y flotte, le médaillon des deux frères bat comme un cœur, la lune rouge luit, des étincelles s'échappent de la main de Kaël et une brume glisse au ras du sol.",
+				"FIGURINES EN HAUTE DÉFINITION : les 101 figurines de combat ont été agrandies deux fois plus fines (840 px au lieu de 420) par un modèle d'intelligence artificielle. Elles ne sont plus pixelisées sur les combats 3D, surtout au premier plan et sur les grands écrans.",
+				"Leurs contours sont adoucis en 3D et les figurines du fond restent nettes au lieu de scintiller."
+			],
+			"titre": "Le menu prend vie",
+			"version": "0.59.0"
+		},
+		{
+			"changements": [
 				"COMBATS EN 3D, ACTE I : premier décor peint spécialement pour la 3D. Au fond, le château des Valcendre en flammes, le village qui brûle et les bannières au phénix ; au sol, la terre battue du village incendié, avec ses cendres, ses pavés brisés et ses braises, nette jusqu'aux pieds des figurines au lieu d'être étirée.",
 				"La caméra vise un peu plus haut sur ce décor pour laisser voir le château. Les autres Actes gardent leur décor actuel en attendant le leur."
 			],
@@ -127,20 +136,13 @@
 			],
 			"titre": "Les cadres de rareté",
 			"version": "0.50.0"
-		},
-		{
-			"changements": [
-				"Arnaud Riff-de-Sang a enfin son portrait et sa figurine de combat (Deck, invocations, Galerie d'Art et combats)."
-			],
-			"titre": "Arnaud monte sur scène",
-			"version": "0.49.1"
 		}
 	],
 	"pck": {
-		"sha256": "f2638d2f8842e3573db2ac794ffacefac6ab785822824d0151b4fe51294cb620",
-		"taille": 95275948,
+		"sha256": "4427ae0797662b39b99c2717a2609ee4767f3a96a4a945282cfb1c8957d786fe",
+		"taille": 100284316,
 		"url": "jeu.pck"
 	},
-	"version": "0.58.2",
+	"version": "0.59.0",
 	"version_minimum": "0.37.0"
 }
