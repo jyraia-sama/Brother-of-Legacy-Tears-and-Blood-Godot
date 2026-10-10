@@ -4,7 +4,7 @@ Le jeu est écrit en français. La version anglaise vient du fichier **`langues/
 chaque texte français (`msgid`) y a sa traduction anglaise (`msgstr`).
 
 - Le joueur choisit sa langue dans **Paramètres → LANGUE · LANGUAGE** (Français / English).
-  Sans choix enregistré, le jeu se met en anglais si l'appareil est en anglais, sinon en français.
+  Sans choix enregistré, le jeu est en français.
 - Les textes simples des boutons et étiquettes se traduisent tout seuls.
 - Les textes « à trous » (avec `%d`, `%s`…) passent par `UiCommun.t("…") % [...]` dans le code.
 - Un texte absent du fichier `.po` reste en français : rien ne casse.

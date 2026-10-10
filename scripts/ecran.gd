@@ -76,15 +76,12 @@ func tactile() -> bool:
 # Taille de l'interface
 # =====================================================================
 
-## LANGUE DU JEU : "fr" (texte d'origine) ou "en" (langues/en.po). Sans choix enregistré :
-## anglais si l'appareil est en anglais, sinon français.
+## LANGUE DU JEU : "fr" (texte d'origine, par défaut) ou "en" (choisie dans les Paramètres).
 const LANGUES := {"fr": "Français", "en": "English"}
 
 func langue() -> String:
 	var l := str(Sauvegarde.get_parametre("langue", ""))
-	if LANGUES.has(l):
-		return l
-	return "en" if OS.get_locale_language() == "en" else "fr"
+	return l if LANGUES.has(l) else "fr"
 
 
 ## Les textes anglais sont dans scripts/traduction_en.gd (copie de langues/en.po) : un script part
