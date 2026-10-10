@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE XIII : Morvaël, la Soif Première, a son portrait, sa figurine et son visage dans les dialogues. Tous les ennemis de l'Histoire principale (Actes I à XIII) sont désormais dans la nouvelle direction artistique."
+			],
+			"titre": "La Soif Première",
+			"version": "0.59.15"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE XII : 6 créatures redessinées : le Héraut de l'Apocalypse, l'Héritier Maudit, la Reine des Liches, le Seigneur Démon, l'Empereur Déchu et le Garde des Cendres Éternelles.",
 				"DIALOGUES DE L'HISTOIRE : l'Héritier Maudit et l'Empereur Déchu ont leur nouveau visage dans les dialogues."
 			],
@@ -113,22 +120,13 @@
 			],
 			"titre": "La lune immobile",
 			"version": "0.59.1"
-		},
-		{
-			"changements": [
-				"MENU PRINCIPAL ANIMÉ : les flammes du côté de Kaël vacillent et l'air ondule de chaleur au-dessus du brasier, des braises montent, la lumière bleue du vitrail respire et scintille avec de la poussière qui y flotte, le médaillon des deux frères bat comme un cœur, la lune rouge luit, des étincelles s'échappent de la main de Kaël et une brume glisse au ras du sol.",
-				"FIGURINES EN HAUTE DÉFINITION : les 101 figurines de combat ont été agrandies deux fois plus fines (840 px au lieu de 420) par un modèle d'intelligence artificielle. Elles ne sont plus pixelisées sur les combats 3D, surtout au premier plan et sur les grands écrans.",
-				"Leurs contours sont adoucis en 3D et les figurines du fond restent nettes au lieu de scintiller."
-			],
-			"titre": "Le menu prend vie",
-			"version": "0.59.0"
 		}
 	],
 	"pck": {
-		"sha256": "1f89c57c4d8c7dae6d0358af53cd1cdcbb40ebf1f4649634b78bbae415eefaca",
-		"taille": 90045232,
+		"sha256": "bc0a5d24bb3572e49a9378b9c7da81c82664b3f05aa038d7220f86550b1411c1",
+		"taille": 90368184,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.14",
+	"version": "0.59.15",
 	"version_minimum": "0.37.0"
 }

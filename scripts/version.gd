@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.14"
+const NUMERO := "0.59.15"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.15", "date": "2026-10-10", "titre": "La Soif Première",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, ACTE XIII : Morvaël, la Soif Première, a son portrait, sa figurine et son visage dans les dialogues. Tous les ennemis de l'Histoire principale (Actes I à XIII) sont désormais dans la nouvelle direction artistique.",
+	]},
 	{"version": "0.59.14", "date": "2026-10-10", "titre": "L'éternité en héritage",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE XII : 6 créatures redessinées : le Héraut de l'Apocalypse, l'Héritier Maudit, la Reine des Liches, le Seigneur Démon, l'Empereur Déchu et le Garde des Cendres Éternelles.",

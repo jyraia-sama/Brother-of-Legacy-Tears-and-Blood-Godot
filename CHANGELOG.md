@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.14** (2026-10-10)
+Version actuelle : **0.59.15** (2026-10-10)
+
+## v0.59.15 — La Soif Première  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE XIII : Morvaël, la Soif Première, a son portrait, sa figurine et son visage dans les dialogues. Tous les ennemis de l'Histoire principale (Actes I à XIII) sont désormais dans la nouvelle direction artistique.
 
 ## v0.59.14 — L'éternité en héritage  (2026-10-10)
 
