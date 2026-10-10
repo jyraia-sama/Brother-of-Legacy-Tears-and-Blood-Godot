@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE V : 7 créatures redessinées : le Cyclope Furieux, le Démon Mineur (en équilibre sur son trident), le Zélote Fanatique, la Harpie Sanglante, l'Inquisiteur Implacable, le Mirage des Vaincus et le Spectre Vengeur."
+			],
+			"titre": "L'aiguillon de la souffrance",
+			"version": "0.59.7"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE IV : 11 créatures redessinées : l'Araignée Géante, le Chevalier Rouillé, le Garde d'Os, la Gargouille Ailée (en fontaine), le Golem Fissuré, la Liche Mineure, l'Ombre Rampante, le Prêtre de l'Autel, le Seigneur du Donjon Maudit, le Guerrier Squelette et le Zombie Enragé."
 			],
 			"titre": "Le sépulcre des oubliés",
@@ -125,20 +132,13 @@
 			],
 			"titre": "Plein écran",
 			"version": "0.55.0"
-		},
-		{
-			"changements": [
-				"ÉCRAN DE CHARGEMENT : le Sceau des Frères est maintenant un vrai médaillon peint, or ciselé et ailes de phénix. Ses deux moitiés de cristal, éteintes au départ, se remplissent réellement de larmes bleues et de sang au fil du chargement, avec une surface qui ondule et un liseré de lumière, avant de se ressouder. Même animation sur la page de chargement du jeu web."
-			],
-			"titre": "Le Sceau peint",
-			"version": "0.54.1"
 		}
 	],
 	"pck": {
-		"sha256": "3ae47bcd943191857cf83c2f518da96416e270dc0696097787d0890497254c9d",
-		"taille": 83517680,
+		"sha256": "df2a07639e459dcb196d2478170c8ddca38521d079780b37a290d4a70599254d",
+		"taille": 83880152,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.6",
+	"version": "0.59.7",
 	"version_minimum": "0.37.0"
 }

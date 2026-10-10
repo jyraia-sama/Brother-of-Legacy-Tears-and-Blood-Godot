@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.6"
+const NUMERO := "0.59.7"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.7", "date": "2026-10-10", "titre": "L'aiguillon de la souffrance",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, ACTE V : 7 créatures redessinées : le Cyclope Furieux, le Démon Mineur (en équilibre sur son trident), le Zélote Fanatique, la Harpie Sanglante, l'Inquisiteur Implacable, le Mirage des Vaincus et le Spectre Vengeur.",
+	]},
 	{"version": "0.59.6", "date": "2026-10-10", "titre": "Le sépulcre des oubliés",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE IV : 11 créatures redessinées : l'Araignée Géante, le Chevalier Rouillé, le Garde d'Os, la Gargouille Ailée (en fontaine), le Golem Fissuré, la Liche Mineure, l'Ombre Rampante, le Prêtre de l'Autel, le Seigneur du Donjon Maudit, le Guerrier Squelette et le Zombie Enragé.",

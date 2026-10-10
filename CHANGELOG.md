@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.6** (2026-10-10)
+Version actuelle : **0.59.7** (2026-10-10)
+
+## v0.59.7 — L'aiguillon de la souffrance  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE V : 7 créatures redessinées : le Cyclope Furieux, le Démon Mineur (en équilibre sur son trident), le Zélote Fanatique, la Harpie Sanglante, l'Inquisiteur Implacable, le Mirage des Vaincus et le Spectre Vengeur.
 
 ## v0.59.6 — Le sépulcre des oubliés  (2026-10-10)
 
