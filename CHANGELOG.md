@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.3** (2026-10-10)
+Version actuelle : **0.59.4** (2026-10-10)
+
+## v0.59.4 — La cité en deuil  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS : le Seigneur des Cendres, boss de l'Acte I, a son portrait et sa figurine (toute la galerie de l'Acte I est refaite). Acte II : 9 créatures redessinées : la Banshee Pleureuse, la Chauve-Souris Nocturne, le Corbeau Maudit, l'Esprit Frappeur, le Moine Déchu, le Pestiféré Errant, le Porteur de Lanterne Noire, le Souvenir Spectral et la Veuve aux Lanternes.
+- Les fantômes gardent leurs voiles bleus translucides sur le terrain 3D.
 
 ## v0.59.3 — Les routes de l'exil  (2026-10-10)
 

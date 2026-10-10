@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS : le Seigneur des Cendres, boss de l'Acte I, a son portrait et sa figurine (toute la galerie de l'Acte I est refaite). Acte II : 9 créatures redessinées : la Banshee Pleureuse, la Chauve-Souris Nocturne, le Corbeau Maudit, l'Esprit Frappeur, le Moine Déchu, le Pestiféré Errant, le Porteur de Lanterne Noire, le Souvenir Spectral et la Veuve aux Lanternes.",
+				"Les fantômes gardent leurs voiles bleus translucides sur le terrain 3D."
+			],
+			"titre": "La cité en deuil",
+			"version": "0.59.4"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE I : 10 créatures redessinées, portrait et figurine haute définition peints ensemble : le Bandit des Routes, le Brigand Ivre, le Gobelin Maraudeur, le Loup Affamé, le Patrouilleur Vautour, le Pillard Incendiaire, le Profanateur de Tombes, le Rat Corrompu, le Rat Géant et le Vautour Charognard, chacun avec sa propre pose (et quelques-unes pleines d'humour).",
 				"COMBATS EN 3D : les figurines très larges (quadrupèdes, poses étirées) sont légèrement réduites et toujours gardées entières dans le cadre ; le rapprochement de la caméra pendant les sorts est plus doux."
 			],
@@ -127,21 +135,13 @@
 			],
 			"titre": "Les yeux du créateur",
 			"version": "0.53.0"
-		},
-		{
-			"changements": [
-				"ÉCHOS SANGUINS — GUIDE COMPLET : un bouton « ? » doré et lumineux, en haut de l'écran des Échos, ouvre un guide pas à pas en 7 parties : la marche à suivre, les emplacements et raretés, l'amélioration (chances et coûts de +1 à +15), tous les sets avec leur bonus et l'Acte où les trouver, l'optimisation (stats fixes en début de partie, % ensuite, avec le point de bascule chiffré et un conseil personnalisé pour le héros choisi), où trouver des Échos et comment en obtenir des plus rares (tableau des drops, étoiles par Acte, Atelier du Reliquaire). Il s'ouvre tout seul à la première visite.",
-				"ÉCHOS SANGUINS — MODE ESSAI : sur chaque héros, essaie plusieurs Échos à la fois (jusqu'à un set complet) parmi ceux que tu possèdes et compare ses stats actuelles et en essai (gains en vert, pertes en rouge, sets gagnés ou perdus, puissance des sorts). Rien ne change tant que tu n'appuies pas sur « Équiper l'essai » ; le jeu prévient si un Écho est pris à un autre héros."
-			],
-			"titre": "Le Guide des Échos",
-			"version": "0.52.0"
 		}
 	],
 	"pck": {
-		"sha256": "628fe424fed1f9d60ac3c3c7e22613ca699377c3b02064c8bfbed7fc03db12d7",
-		"taille": 101713784,
+		"sha256": "f21dbfcce149761117e9cf72b3c196fd746c73139a1ea96d0ccd89afe9c53d58",
+		"taille": 103533112,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.3",
+	"version": "0.59.4",
 	"version_minimum": "0.37.0"
 }

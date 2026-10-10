@@ -3,7 +3,7 @@ image paysage coupée en deux par un trait noir vertical.
   - moitié gauche : le portrait -> recadré en carré sur le haut -> assets/unites/<id>.png (384 px)
   - moitié droite : la figurine sur fond vert -> détourée, recadrée -> assets/figurines/<id>.png (1024 px de haut max)
 
-Usage :  python3 outils/decouper_portrait_figurine.py image.png <identifiant> [--sans-portrait] [--sans-figurine]
+Usage :  python3 outils/decouper_portrait_figurine.py image.png <identifiant> [--sans-portrait] [--sans-figurine] [--spectre]\n  --spectre : créature translucide (fantôme) : retire la teinte verte qui transparaît dans les voiles
 """
 import os
 import sys
@@ -37,6 +37,16 @@ def bords_noirs(img: Image.Image) -> tuple:
     return (int(cols[0]), int(lignes[0]), int(cols[-1]) + 1, int(lignes[-1]) + 1)
 
 
+def sans_reflet_vert(img: Image.Image) -> Image.Image:
+    """Créatures translucides (fantômes, voiles) : le vert du fond transparaît et rend les voiles
+    bleus turquoise. On ramène le vert au niveau moyen du rouge et du bleu là où il dépasse."""
+    a = np.asarray(img).astype(float)
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    plafond = (r + b) / 2.0 + 8.0
+    a[..., 1] = np.where(g > plafond, plafond + (g - plafond) * 0.15, g)
+    return Image.fromarray(a.clip(0, 255).astype(np.uint8), "RGBA")
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if len(args) < 2:
@@ -64,6 +74,8 @@ def main():
         if boite is None:
             sys.exit("figurine introuvable (fond vert ?)")
         fig = fig.crop(boite)
+        if "--spectre" in sys.argv:
+            fig = sans_reflet_vert(fig)
         if fig.height > HAUTEUR_FIGURINE:
             fig = fig.resize((round(fig.width * HAUTEUR_FIGURINE / fig.height), HAUTEUR_FIGURINE), Image.LANCZOS)
         cible = f"assets/figurines/{ident}.png"

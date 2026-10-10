@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.3"
+const NUMERO := "0.59.4"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.4", "date": "2026-10-10", "titre": "La cité en deuil",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS : le Seigneur des Cendres, boss de l'Acte I, a son portrait et sa figurine (toute la galerie de l'Acte I est refaite). Acte II : 9 créatures redessinées : la Banshee Pleureuse, la Chauve-Souris Nocturne, le Corbeau Maudit, l'Esprit Frappeur, le Moine Déchu, le Pestiféré Errant, le Porteur de Lanterne Noire, le Souvenir Spectral et la Veuve aux Lanternes.",
+		"Les fantômes gardent leurs voiles bleus translucides sur le terrain 3D.",
+	]},
 	{"version": "0.59.3", "date": "2026-10-10", "titre": "Les routes de l'exil",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE I : 10 créatures redessinées, portrait et figurine haute définition peints ensemble : le Bandit des Routes, le Brigand Ivre, le Gobelin Maraudeur, le Loup Affamé, le Patrouilleur Vautour, le Pillard Incendiaire, le Profanateur de Tombes, le Rat Corrompu, le Rat Géant et le Vautour Charognard, chacun avec sa propre pose (et quelques-unes pleines d'humour).",
