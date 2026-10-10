@@ -105,19 +105,21 @@ void fragment() {
 	if (anime > 0.5) {
 		float t = TIME;
 		vec2 uv = UV;
+		vec2 r = vec2(TEXTURE_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.x, 1.0);
+		// La lune est rouge comme le feu : on la protège de l'ondulation et du vacillement
+		float hors_lune = smoothstep(0.06, 0.09, distance(UV * r, lune * r));
 		// Chaleur : l'image ondule au-dessus des flammes (le motif monte)
-		float mf = feu(c.rgb);
+		float mf = feu(c.rgb) * hors_lune;
 		vec2 d = vec2(fbm(uv * vec2(22.0, 12.0) + vec2(0.0, t * 1.6)), fbm(uv * vec2(16.0, 10.0) + vec2(7.0, t * 2.1))) - 0.5;
 		uv += d * 0.007 * mf;
 		c = texture(TEXTURE, uv);
 		// Flammes qui vacillent (taches de lumière qui montent)
 		float fl = fbm(uv * vec2(10.0, 5.0) + vec2(0.0, t * 1.3)) * 0.7 + bruit(vec2(t * 3.0, uv.x * 4.0)) * 0.3;
-		c.rgb *= 1.0 + feu(c.rgb) * (fl - 0.45) * 1.1;
+		c.rgb *= 1.0 + feu(c.rgb) * hors_lune * (fl - 0.45) * 1.1;
 		// Lumière bleue du vitrail : respiration lente et scintillements
 		float mb = bleu(c.rgb);
 		c.rgb *= 1.0 + mb * (0.14 * sin(t * 1.1 + uv.y * 5.0) + 0.5 * pow(bruit(uv * vec2(90.0, 60.0) + vec2(0.0, t * 0.8)), 6.0));
 		// Le médaillon bat comme un cœur, la lune luit
-		vec2 r = vec2(TEXTURE_PIXEL_SIZE.y / TEXTURE_PIXEL_SIZE.x, 1.0);
 		float coeur = pow(0.5 + 0.5 * sin(t * 2.2), 3.0);
 		c.rgb *= 1.0 + 0.35 * coeur * smoothstep(0.11, 0.0, distance(uv * r, medaillon * r));
 		c.rgb += vec3(0.5, 0.06, 0.05) * (0.12 + 0.08 * sin(t * 0.9)) * smoothstep(0.06, 0.0, distance(uv * r, lune * r));

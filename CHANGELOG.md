@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.0** (2026-10-09)
+Version actuelle : **0.59.1** (2026-10-10)
+
+## v0.59.1 — La lune immobile  (2026-10-10)
+
+- MENU ANIMÉ : la lune rouge ne bouge plus. Le menu la prenait pour une flamme à cause de sa couleur et la faisait onduler avec le feu ; elle garde seulement sa lueur douce.
 
 ## v0.59.0 — Le menu prend vie  (2026-10-09)
 

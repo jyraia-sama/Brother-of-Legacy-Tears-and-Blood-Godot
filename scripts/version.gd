@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.0"
-const DATE := "2026-10-09"
+const NUMERO := "0.59.1"
+const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.1", "date": "2026-10-10", "titre": "La lune immobile",
+	"changements": [
+		"MENU ANIMÉ : la lune rouge ne bouge plus. Le menu la prenait pour une flamme à cause de sa couleur et la faisait onduler avec le feu ; elle garde seulement sa lueur douce.",
+	]},
 	{"version": "0.59.0", "date": "2026-10-09", "titre": "Le menu prend vie",
 	"changements": [
 		"MENU PRINCIPAL ANIMÉ : les flammes du côté de Kaël vacillent et l'air ondule de chaleur au-dessus du brasier, des braises montent, la lumière bleue du vitrail respire et scintille avec de la poussière qui y flotte, le médaillon des deux frères bat comme un cœur, la lune rouge luit, des étincelles s'échappent de la main de Kaël et une brume glisse au ras du sol.",

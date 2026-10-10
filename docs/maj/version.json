@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-09",
+	"date": "2026-10-10",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,13 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"MENU ANIMÉ : la lune rouge ne bouge plus. Le menu la prenait pour une flamme à cause de sa couleur et la faisait onduler avec le feu ; elle garde seulement sa lueur douce."
+			],
+			"titre": "La lune immobile",
+			"version": "0.59.1"
+		},
 		{
 			"changements": [
 				"MENU PRINCIPAL ANIMÉ : les flammes du côté de Kaël vacillent et l'air ondule de chaleur au-dessus du brasier, des braises montent, la lumière bleue du vitrail respire et scintille avec de la poussière qui y flotte, le médaillon des deux frères bat comme un cœur, la lune rouge luit, des étincelles s'échappent de la main de Kaël et une brume glisse au ras du sol.",
@@ -129,20 +136,13 @@
 			],
 			"titre": "Des cadres dignes des héros",
 			"version": "0.50.1"
-		},
-		{
-			"changements": [
-				"CADRES DE RARETÉ : les cartes des héros, monstres et familiers peuvent maintenant porter un cadre orné propre à leur rareté (fer pour N, bronze pour R, argent et améthystes pour SR, or pour SSR, fer noir et rubis pour UR, or blanc pour les Légendes), partout où elles apparaissent : Deck, Fusion, Évolution, Invocations, Bestiaire, Galerie d'Art, Arène, Armée, Compagnie, Marche Maudite, Reliquaire, Ménagerie et grandes fiches. Les cadres s'affichent dès que leurs images sont ajoutées (prompts dans PROMPTS_CADRES.md)."
-			],
-			"titre": "Les cadres de rareté",
-			"version": "0.50.0"
 		}
 	],
 	"pck": {
-		"sha256": "4602676f51fdf21bd3b2ed693dda74affd11d16f7676c7ff950b32abc90299c7",
-		"taille": 100284316,
+		"sha256": "ea14df48a525b58452feeeee5a9810601aacb38e8bc11c3d92cd5cc4747774f9",
+		"taille": 100284556,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.0",
+	"version": "0.59.1",
 	"version_minimum": "0.37.0"
 }
