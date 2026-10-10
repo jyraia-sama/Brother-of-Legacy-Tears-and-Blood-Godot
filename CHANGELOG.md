@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.11** (2026-10-10)
+Version actuelle : **0.59.12** (2026-10-10)
+
+## v0.59.12 — Les chemins de la désolation  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE X : 6 créatures redessinées : l'Abomination de Laboratoire (un golem d'alchimiste qui fait coucou), le Troll des Cavernes, l'Hydre Bicéphale, le Tortionnaire, la Wyverne Sauvage et le Maître des Supplices.
 
 ## v0.59.11 — Là où meurent les légendes  (2026-10-10)
 

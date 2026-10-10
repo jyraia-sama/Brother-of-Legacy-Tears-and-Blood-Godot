@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE X : 6 créatures redessinées : l'Abomination de Laboratoire (un golem d'alchimiste qui fait coucou), le Troll des Cavernes, l'Hydre Bicéphale, le Tortionnaire, la Wyverne Sauvage et le Maître des Supplices."
+			],
+			"titre": "Les chemins de la désolation",
+			"version": "0.59.12"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE IX : 6 créatures redessinées : le Champion Déchu, le Chevalier Déchu, la Liche Novice, l'Ombre du Premier Roi, le Pilleur de Tombes Royales et le Séraphin Déchu.",
 				"DIALOGUES DE L'HISTOIRE : Kaël, Othmar et le Seigneur des Cendres ont dans les dialogues le même visage que leur nouvelle carte et leur figurine."
 			],
@@ -115,23 +122,13 @@
 			],
 			"titre": "Chacun à sa place",
 			"version": "0.58.1"
-		},
-		{
-			"changements": [
-				"COMBATS EN 3D (prototype, combats de l'Aventure) : le champ de bataille devient une vraie scène 3D. Le décor du chapitre se prolonge en sol jusqu'à la caméra, les figurines se tiennent debout sur le terrain avec leurs ombres et un liseré de leur élément, les torches vacillent, des braises flottent et la caméra respire doucement.",
-				"ANIMATIONS 3D : l'attaquant bondit vers sa cible, la cible recule sous le coup avec une gerbe d'étincelles (plus grosse sur un coup critique, avec tremblement), chaque sort fait jaillir une lumière de la couleur de l'élément et la caméra se rapproche un instant, les soins font monter des lueurs vertes et une figurine K.O. bascule au sol.",
-				"Les noms, barres de vie et textes de dégâts restent lisibles en 2D et suivent les figurines. Les règles du combat ne changent pas.",
-				"MENU : nouvelle case « Combats en 3D » (cochée par défaut) pour revenir aux combats 2D si un téléphone chauffe ou ralentit."
-			],
-			"titre": "Le champ de bataille en 3D",
-			"version": "0.58.0"
 		}
 	],
 	"pck": {
-		"sha256": "8c74c7cde12cfb1ed73b0c90002595f0e3e0c83c73cb61970576d730f11ed251",
-		"taille": 87479812,
+		"sha256": "970863be02a0f8185a4d25648db4af48f54beeb73e3d5f781180281a21699fb7",
+		"taille": 88465324,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.11",
+	"version": "0.59.12",
 	"version_minimum": "0.37.0"
 }

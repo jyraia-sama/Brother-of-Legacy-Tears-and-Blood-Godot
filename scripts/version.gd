@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.11"
+const NUMERO := "0.59.12"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.12", "date": "2026-10-10", "titre": "Les chemins de la désolation",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, ACTE X : 6 créatures redessinées : l'Abomination de Laboratoire (un golem d'alchimiste qui fait coucou), le Troll des Cavernes, l'Hydre Bicéphale, le Tortionnaire, la Wyverne Sauvage et le Maître des Supplices.",
+	]},
 	{"version": "0.59.11", "date": "2026-10-10", "titre": "Là où meurent les légendes",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE IX : 6 créatures redessinées : le Champion Déchu, le Chevalier Déchu, la Liche Novice, l'Ombre du Premier Roi, le Pilleur de Tombes Royales et le Séraphin Déchu.",
