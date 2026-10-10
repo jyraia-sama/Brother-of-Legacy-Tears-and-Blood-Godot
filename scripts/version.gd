@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.16"
+const NUMERO := "0.59.17"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.17", "date": "2026-10-10", "titre": "Les clés de l'Admin",
+	"changements": [
+		"GALERIE D'ART ET MENU ADMIN : les cases « Bestiaire entièrement débloqué » et « Tous les Actes, chapitres et niveaux de Donjon débloqués » révèlent maintenant TOUTE la galerie (Histoire, personnages, Décors, Sanctuaire, Divers compris).",
+	]},
 	{"version": "0.59.16", "date": "2026-10-10", "titre": "Une galerie bien rangée",
 	"changements": [
 		"GALERIE D'ART RANGÉE AUTREMENT : 8 onglets — Héros, Évolution (les 73 versions évoluées, absentes jusqu'ici), Monstres, Figurines, Boss de Monde, Histoire, Décors et Divers (familiers, cases du plateau, effets d'invocation).",

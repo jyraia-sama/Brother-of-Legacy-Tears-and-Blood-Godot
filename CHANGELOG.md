@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.16** (2026-10-10)
+Version actuelle : **0.59.17** (2026-10-10)
+
+## v0.59.17 — Les clés de l'Admin  (2026-10-10)
+
+- GALERIE D'ART ET MENU ADMIN : les cases « Bestiaire entièrement débloqué » et « Tous les Actes, chapitres et niveaux de Donjon débloqués » révèlent maintenant TOUTE la galerie (Histoire, personnages, Décors, Sanctuaire, Divers compris).
 
 ## v0.59.16 — Une galerie bien rangée  (2026-10-10)
 

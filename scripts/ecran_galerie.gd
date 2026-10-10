@@ -102,6 +102,9 @@ func _choisir_onglet(o: String) -> void:
 	for k in _boutons_onglets:
 		(_boutons_onglets[k] as Button).button_pressed = k == o
 	_elements = _lister(o)
+	if _admin_tout_voir():
+		for el in _elements:
+			el["ouvert"] = true
 	for e in _grille.get_children():
 		e.queue_free()
 	var vus := 0
@@ -201,6 +204,11 @@ func _ajouter_unites(l: Array, ids: Array, figurines: bool) -> void:
 			continue
 		l.append({"type": "unite", "id": sid, "titre": str(UnitesData.get_unite(sid)["nom"]), "chemin": chemin,
 			"ouvert": _unite_vue(sid), "figurine": figurines})
+
+
+## Menu Admin : « Bestiaire entièrement débloqué » ou « Tous les Actes… débloqués » révèle toute la galerie.
+func _admin_tout_voir() -> bool:
+	return TOUT_REVELER or Sauvegarde.admin("bestiaire_complet") or Sauvegarde.admin("tout_debloque")
 
 
 func _image_vue(chemin: String) -> bool:
