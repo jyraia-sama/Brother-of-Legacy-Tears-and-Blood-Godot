@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.5** (2026-10-10)
+Version actuelle : **0.59.6** (2026-10-10)
+
+## v0.59.6 — Le sépulcre des oubliés  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE IV : 11 créatures redessinées : l'Araignée Géante, le Chevalier Rouillé, le Garde d'Os, la Gargouille Ailée (en fontaine), le Golem Fissuré, la Liche Mineure, l'Ombre Rampante, le Prêtre de l'Autel, le Seigneur du Donjon Maudit, le Guerrier Squelette et le Zombie Enragé.
 
 ## v0.59.5 — Sous les drapeaux noirs  (2026-10-10)
 
