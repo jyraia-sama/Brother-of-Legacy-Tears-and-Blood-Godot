@@ -7850,3 +7850,15 @@ msgstr "New record: floor %d!"
 
 msgid "Nv %d  ·  %s"
 msgstr "Lv %d  ·  %s"
+
+msgid "Redémarrer le jeu"
+msgstr "Restart the game"
+
+msgid "Redémarrer le jeu ?"
+msgstr "Restart the game?"
+
+msgid "Ta partie est sauvegardée avant de redémarrer."
+msgstr "Your progress is saved before restarting."
+
+msgid "Redémarrer"
+msgstr "Restart"

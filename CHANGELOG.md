@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.60.1** (2026-10-10)
+Version actuelle : **0.60.2** (2026-10-10)
+
+## v0.60.2 — Une langue au choix  (2026-10-10)
+
+- LANGUE : choisir English (ou Français) dans les Paramètres fonctionne maintenant partout (web, ordinateur, Android) : le jeu se sauvegarde et redémarre dans la nouvelle langue. En français, plus aucun texte anglais ne s'invite par erreur.
+- NOUVEAU BOUTON « Redémarrer le jeu » en bas des Paramètres (sauvegarde puis redémarrage ; dans le navigateur, la page est rechargée).
 
 ## v0.60.1 — Sans réinstaller  (2026-10-10)
 

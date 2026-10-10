@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.60.1"
+const NUMERO := "0.60.2"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.60.2", "date": "2026-10-10", "titre": "Une langue au choix",
+	"changements": [
+		"LANGUE : choisir English (ou Français) dans les Paramètres fonctionne maintenant partout (web, ordinateur, Android) : le jeu se sauvegarde et redémarre dans la nouvelle langue. En français, plus aucun texte anglais ne s'invite par erreur.",
+		"NOUVEAU BOUTON « Redémarrer le jeu » en bas des Paramètres (sauvegarde puis redémarrage ; dans le navigateur, la page est rechargée).",
+	]},
 	{"version": "0.60.1", "date": "2026-10-10", "titre": "Sans réinstaller",
 	"changements": [
 		"CORRECTIF : la v0.60.0 demandait par erreur de réinstaller le jeu sur ordinateur et Android (lien de téléchargement introuvable). Une simple mise à jour suffit à nouveau, et la langue anglaise fonctionne aussi dans les applications.",

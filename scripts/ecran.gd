@@ -87,18 +87,25 @@ func langue() -> String:
 	return "en" if OS.get_locale_language() == "en" else "fr"
 
 
-## Le fichier anglais est chargé ici (et non dans les réglages du projet) pour qu'une simple
-## mise à jour suffise : changer les réglages du projet obligerait à réinstaller le jeu.
-const FICHIER_ANGLAIS := "res://langues/en.po"
-var _anglais_charge := false
+## Les textes anglais sont dans scripts/traduction_en.gd (copie de langues/en.po) : un script part
+## toujours avec la mise à jour, et rien n'est à régler dans le projet (sinon il faudrait réinstaller).
+## (La traduction n'est branchée qu'en anglais : en français, Godot prendrait sinon l'anglais
+## comme langue de secours.)
+var _anglais: Translation = null
 
 func appliquer_langue() -> void:
-	if not _anglais_charge and ResourceLoader.exists(FICHIER_ANGLAIS):
-		var tr_en = load(FICHIER_ANGLAIS)
-		if tr_en is Translation:
-			TranslationServer.add_translation(tr_en)
-			_anglais_charge = true
-	TranslationServer.set_locale(langue())
+	if _anglais == null:
+		_anglais = Translation.new()
+		_anglais.locale = "en"
+		var textes: Dictionary = TraductionEn.TEXTES
+		for fr in textes:
+			_anglais.add_message(fr, textes[fr])
+	var l := langue()
+	if l == "en":
+		TranslationServer.add_translation(_anglais)
+	else:
+		TranslationServer.remove_translation(_anglais)
+	TranslationServer.set_locale(l)
 
 
 ## Change la langue et recharge l'écran en cours pour que tous les textes suivent.
@@ -107,7 +114,27 @@ func changer_langue(l: String) -> void:
 		return
 	Sauvegarde.definir_parametre("langue", l)
 	appliquer_langue()
-	get_tree().reload_current_scene.call_deferred()
+	redemarrer()
+
+
+## REDÉMARRER LE JEU (bouton des Paramètres, changement de langue) après avoir sauvegardé.
+##  - navigateur : la page est rechargée ;
+##  - ordinateur : l'application se ferme et se relance toute seule ;
+##  - téléphone (Android) : le jeu repart de l'écran de démarrage.
+func redemarrer() -> void:
+	Sauvegarde.ecrire_maintenant()
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("window.location.reload()")
+		return
+	if est_application_pc():
+		OS.set_restart_on_exit(true, OS.get_cmdline_user_args())
+		get_tree().quit()
+		return
+	var depart := str(ProjectSettings.get_setting("application/run/main_scene", ""))
+	if depart != "":
+		get_tree().change_scene_to_file.call_deferred(depart)
+	else:
+		get_tree().reload_current_scene.call_deferred()
 
 
 func reglage_taille() -> String:

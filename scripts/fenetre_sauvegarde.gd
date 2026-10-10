@@ -216,6 +216,10 @@ func _ready() -> void:
 	var fermer := _bouton("Fermer", queue_free)
 	fermer.custom_minimum_size = Vector2(200, 46)
 	bas.add_child(fermer)
+	var redem := _bouton("Redémarrer le jeu", func():
+		FenetreSimple.confirmer(get_parent(), "Redémarrer le jeu ?", "Ta partie est sauvegardée avant de redémarrer.", "Redémarrer", Ecran.redemarrer))
+	redem.custom_minimum_size = Vector2(200, 46)
+	bas.add_child(redem)
 	# Quitter : applications (ordinateur, Android). Dans un navigateur, on ferme simplement l'onglet.
 	if not OS.has_feature("web") and not OS.has_feature("ios"):
 		var quitter := _bouton("Quitter le jeu", _demander_quitter)
