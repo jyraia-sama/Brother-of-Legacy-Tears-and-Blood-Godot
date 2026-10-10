@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.60.0"
+const NUMERO := "0.60.1"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.60.1", "date": "2026-10-10", "titre": "Sans réinstaller",
+	"changements": [
+		"CORRECTIF : la v0.60.0 demandait par erreur de réinstaller le jeu sur ordinateur et Android (lien de téléchargement introuvable). Une simple mise à jour suffit à nouveau, et la langue anglaise fonctionne aussi dans les applications.",
+	]},
 	{"version": "0.60.0", "date": "2026-10-10", "titre": "Tears and Blood, in English",
 	"changements": [
 		"CHAT GLOBAL : un nouveau bouton « Chat » en haut à droite du menu principal ouvre une discussion avec tous les joueurs connectés. Une pastille rouge prévient quand il y a de nouveaux messages. (Serveur : fichier supabase/09_chat_global.sql à lancer une fois dans Supabase.)",

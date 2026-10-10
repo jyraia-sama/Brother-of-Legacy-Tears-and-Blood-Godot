@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Brother of Legacy : Tears and Blood"
-config/version="0.60.0"
+config/version="0.60.1"
 run/main_scene="uid://ccvyo6hrr61if"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -34,10 +34,6 @@ window/stretch/mode="canvas_items"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/bol_versions/plugin.cfg")
-
-[internationalization]
-
-locale/translations=PackedStringArray("res://langues/en.po")
 
 [physics]
 

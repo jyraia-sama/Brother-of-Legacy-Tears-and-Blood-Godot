@@ -87,7 +87,17 @@ func langue() -> String:
 	return "en" if OS.get_locale_language() == "en" else "fr"
 
 
+## Le fichier anglais est chargé ici (et non dans les réglages du projet) pour qu'une simple
+## mise à jour suffise : changer les réglages du projet obligerait à réinstaller le jeu.
+const FICHIER_ANGLAIS := "res://langues/en.po"
+var _anglais_charge := false
+
 func appliquer_langue() -> void:
+	if not _anglais_charge and ResourceLoader.exists(FICHIER_ANGLAIS):
+		var tr_en = load(FICHIER_ANGLAIS)
+		if tr_en is Translation:
+			TranslationServer.add_translation(tr_en)
+			_anglais_charge = true
 	TranslationServer.set_locale(langue())
 
 

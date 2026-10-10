@@ -8,6 +8,8 @@ chaque texte français (`msgid`) y a sa traduction anglaise (`msgstr`).
 - Les textes simples des boutons et étiquettes se traduisent tout seuls.
 - Les textes « à trous » (avec `%d`, `%s`…) passent par `UiCommun.t("…") % [...]` dans le code.
 - Un texte absent du fichier `.po` reste en français : rien ne casse.
+- Le fichier est chargé par le code (`Ecran.appliquer_langue`), **pas** dans Projet → Paramètres → Localisation :
+  modifier les réglages du projet obligerait tous les joueurs PC/Android à réinstaller le jeu.
 
 ## Ce qui est traduit (étape 1)
 Les menus, boutons, fenêtres, messages, guides et aides (environ 2 600 textes).

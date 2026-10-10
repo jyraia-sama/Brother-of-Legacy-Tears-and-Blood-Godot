@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.60.0** (2026-10-10)
+Version actuelle : **0.60.1** (2026-10-10)
+
+## v0.60.1 — Sans réinstaller  (2026-10-10)
+
+- CORRECTIF : la v0.60.0 demandait par erreur de réinstaller le jeu sur ordinateur et Android (lien de téléchargement introuvable). Une simple mise à jour suffit à nouveau, et la langue anglaise fonctionne aussi dans les applications.
 
 ## v0.60.0 — Tears and Blood, in English  (2026-10-10)
 
