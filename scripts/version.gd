@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.2"
+const NUMERO := "0.59.3"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.3", "date": "2026-10-10", "titre": "Les routes de l'exil",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, ACTE I : 10 créatures redessinées, portrait et figurine haute définition peints ensemble : le Bandit des Routes, le Brigand Ivre, le Gobelin Maraudeur, le Loup Affamé, le Patrouilleur Vautour, le Pillard Incendiaire, le Profanateur de Tombes, le Rat Corrompu, le Rat Géant et le Vautour Charognard, chacun avec sa propre pose (et quelques-unes pleines d'humour).",
+		"COMBATS EN 3D : les figurines très larges (quadrupèdes, poses étirées) sont légèrement réduites et toujours gardées entières dans le cadre ; le rapprochement de la caméra pendant les sorts est plus doux.",
+	]},
 	{"version": "0.59.2", "date": "2026-10-10", "titre": "Le lapin et le frère",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS : le Lapin Pyromane et Kaël (invité de l'Acte I) ont un portrait et une figurine entièrement redessinés, peints ensemble dans le style de la nouvelle direction artistique. Les figurines sont en haute définition (plus de 2 fois plus fines) et pensées pour le terrain 3D : vues légèrement d'en haut, pieds bien posés sur le socle.",

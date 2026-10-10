@@ -15,6 +15,7 @@ const Z_PRES := 9.0
 const LARGEUR_DECOR := 27.0     # largeur de la toile de fond d'un décor 3D (cadre + balancement)
 const TASSEMENT_DECOR := 0.85   # hauteur de la toile de fond d'un décor 3D (1 = proportions exactes)
 const VISEE_DECOR := 1.8        # la caméra vise un peu plus haut avec un décor 3D (plus de ciel)
+const LARGEUR_MAX := 2.1         # largeur maxi (mètres) d'une figurine normale ou de boss
 const TUILE_SOL := 6.0          # taille (en mètres) d'une répétition de la texture de sol
 const HAUTEUR_UNITE := 2.3
 const HAUTEUR_BOSS := 3.0
@@ -48,7 +49,7 @@ func _replacer() -> void:
 		return
 	for idx in _unites:
 		var u: Dictionary = _unites[idx]
-		var p := position_sol(u["frac"])
+		var p := _pos_unite(u["frac"], float(u.get("largeur", 0.0)))
 		var dx := p.x - Vector3(u["pos"]).x
 		if absf(dx) < 0.001:
 			continue
@@ -251,6 +252,17 @@ func _ecart_centre(frac: Vector2) -> float:
 	return 0.30
 
 
+## Position au sol d'une figurine : comme position_sol, mais recalée pour qu'elle reste entière
+## dans le cadre (on tient compte de sa largeur, avec une petite marge au bord de l'écran).
+func _pos_unite(frac: Vector2, largeur: float) -> Vector3:
+	var p := position_sol(frac)
+	var mini := _x_pour_ecran(0.015, p.z) + largeur / 2.0
+	var maxi := _x_pour_ecran(0.985, p.z) - largeur / 2.0
+	if mini < maxi:
+		p.x = clampf(p.x, mini, maxi)
+	return p
+
+
 ## Abscisse au sol (à la profondeur z) qui apparaît à la fraction sx de la largeur de l'écran,
 ## vue depuis la position de repos de la caméra.
 func _x_pour_ecran(sx: float, z: float) -> float:
@@ -265,7 +277,12 @@ func _x_pour_ecran(sx: float, z: float) -> float:
 func ajouter(idx: int, chemin_figurine: String, frac: Vector2, boss: bool, geant: bool, vers_gauche: bool, couleur_element: Color) -> void:
 	var tex: Texture2D = load(chemin_figurine)
 	var h := HAUTEUR_GEANT if geant else (HAUTEUR_BOSS if boss else HAUTEUR_UNITE)
-	var pos := position_sol(frac)
+	# Figurines très larges (quadrupèdes, poses étirées) : on limite leur largeur en réduisant la hauteur
+	var ratio := float(tex.get_width()) / float(tex.get_height())
+	if not geant:
+		h = minf(h, h * LARGEUR_MAX / maxf(0.01, h * ratio))
+	var largeur := h * ratio
+	var pos := _pos_unite(frac, largeur)
 	var s := Sprite3D.new()
 	s.texture = tex
 	s.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
@@ -311,7 +328,7 @@ func ajouter(idx: int, chemin_figurine: String, frac: Vector2, boss: bool, geant
 	anneau.scale = Vector3(1, 0.15, 1)
 	anneau.position = pos + Vector3(0, 0.02, 0)
 	_monde.add_child(anneau)
-	_unites[idx] = {"sprite": s, "ombre": ombre, "anneau": anneau, "pos": pos, "hauteur": h, "base_scale": s.scale, "frac": frac}
+	_unites[idx] = {"sprite": s, "ombre": ombre, "anneau": anneau, "pos": pos, "hauteur": h, "base_scale": s.scale, "frac": frac, "largeur": largeur}
 	# Respiration
 	var tw := create_tween().set_loops()
 	tw.tween_interval(randf() * 1.2)
@@ -421,7 +438,7 @@ func _approcher(cible: Vector3) -> void:
 	if _tw_cam:
 		_tw_cam.kill()
 	var proche := _cam_base
-	proche.origin = _cam_base.origin.lerp(cible + Vector3(0, 2.5, 6.0), 0.22)
+	proche.origin = _cam_base.origin.lerp(cible + Vector3(0, 2.5, 6.0), 0.14)
 	_tw_cam = create_tween()
 	_tw_cam.tween_property(_camera, "transform", proche, 0.25 / vitesse).set_trans(Tween.TRANS_SINE)
 	_tw_cam.tween_interval(0.25 / vitesse)

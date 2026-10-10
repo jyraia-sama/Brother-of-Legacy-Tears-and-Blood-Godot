@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.2** (2026-10-10)
+Version actuelle : **0.59.3** (2026-10-10)
+
+## v0.59.3 — Les routes de l'exil  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE I : 10 créatures redessinées, portrait et figurine haute définition peints ensemble : le Bandit des Routes, le Brigand Ivre, le Gobelin Maraudeur, le Loup Affamé, le Patrouilleur Vautour, le Pillard Incendiaire, le Profanateur de Tombes, le Rat Corrompu, le Rat Géant et le Vautour Charognard, chacun avec sa propre pose (et quelques-unes pleines d'humour).
+- COMBATS EN 3D : les figurines très larges (quadrupèdes, poses étirées) sont légèrement réduites et toujours gardées entières dans le cadre ; le rapprochement de la caméra pendant les sorts est plus doux.
 
 ## v0.59.2 — Le lapin et le frère  (2026-10-10)
 

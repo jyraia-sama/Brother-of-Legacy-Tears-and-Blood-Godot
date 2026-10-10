@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE I : 10 créatures redessinées, portrait et figurine haute définition peints ensemble : le Bandit des Routes, le Brigand Ivre, le Gobelin Maraudeur, le Loup Affamé, le Patrouilleur Vautour, le Pillard Incendiaire, le Profanateur de Tombes, le Rat Corrompu, le Rat Géant et le Vautour Charognard, chacun avec sa propre pose (et quelques-unes pleines d'humour).",
+				"COMBATS EN 3D : les figurines très larges (quadrupèdes, poses étirées) sont légèrement réduites et toujours gardées entières dans le cadre ; le rapprochement de la caméra pendant les sorts est plus doux."
+			],
+			"titre": "Les routes de l'exil",
+			"version": "0.59.3"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS : le Lapin Pyromane et Kaël (invité de l'Acte I) ont un portrait et une figurine entièrement redessinés, peints ensemble dans le style de la nouvelle direction artistique. Les figurines sont en haute définition (plus de 2 fois plus fines) et pensées pour le terrain 3D : vues légèrement d'en haut, pieds bien posés sur le socle.",
 				"Les autres unités suivront, Acte par Acte."
 			],
@@ -127,23 +135,13 @@
 			],
 			"titre": "Le Guide des Échos",
 			"version": "0.52.0"
-		},
-		{
-			"changements": [
-				"PROFIL DES AUTRES JOUEURS : la fiche ouverte depuis Social ou Guilde est maintenant complète, comme ton propre écran « Mon héros » : titre, niveau, guilde, héros principal (stats et Échos), son équipe avec ses cartes, ses résultats d'Arène, d'Arène classée et de Marche Maudite, ses statistiques (chapitres, Tours, Donjons, Boss de Monde, Succès...) et sa collection par rareté. (Serveur : lancer supabase/06_profil_public.sql.)",
-				"ÉCHOS SANGUINS : l'inventaire a deux onglets. « Sac » ne montre que les Échos libres ; « Équipés sur les héros » range les Échos portés, héros par héros (le héros choisi en premier). Cliquer un emplacement du héros ramène au Sac, filtré sur cet emplacement.",
-				"QUÊTES : les boutons « Réclamer » (quêtes, récompense de connexion, Succès, guide du menu, Arène classée) deviennent vert vif et lumineux quand une récompense t'attend ; le coffre bonus brille en doré.",
-				"PARAMÈTRES ET MENU ADMIN : cases à cocher bien plus visibles (grande case dorée, cochée en vert avec une coche blanche, texte doré quand l'option est active)."
-			],
-			"titre": "Visages et détails",
-			"version": "0.51.0"
 		}
 	],
 	"pck": {
-		"sha256": "f2bf1067393823cbd4b5ea20c817077cb702c8fb7bee97f5c54033c57d378250",
-		"taille": 100425160,
+		"sha256": "628fe424fed1f9d60ac3c3c7e22613ca699377c3b02064c8bfbed7fc03db12d7",
+		"taille": 101713784,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.2",
+	"version": "0.59.3",
 	"version_minimum": "0.37.0"
 }
