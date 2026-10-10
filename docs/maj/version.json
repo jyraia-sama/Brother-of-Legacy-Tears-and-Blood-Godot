@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE XII : 6 créatures redessinées : le Héraut de l'Apocalypse, l'Héritier Maudit, la Reine des Liches, le Seigneur Démon, l'Empereur Déchu et le Garde des Cendres Éternelles.",
+				"DIALOGUES DE L'HISTOIRE : l'Héritier Maudit et l'Empereur Déchu ont leur nouveau visage dans les dialogues."
+			],
+			"titre": "L'éternité en héritage",
+			"version": "0.59.14"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE XI : 5 créatures redessinées : l'Archange Noir, le Compagnon Traître, le Dragon d'Ombre, le Frère Masqué (qui ressemble enfin à Kaël sous son masque) et le Garde Fratricide.",
 				"DIALOGUES DE L'HISTOIRE : nouveaux portraits pour Kaël corrompu, Corvin le mercenaire et le Frère Masqué, assortis à leurs cartes et figurines."
 			],
@@ -114,21 +122,13 @@
 			],
 			"titre": "Le menu prend vie",
 			"version": "0.59.0"
-		},
-		{
-			"changements": [
-				"COMBATS EN 3D, ACTE I : premier décor peint spécialement pour la 3D. Au fond, le château des Valcendre en flammes, le village qui brûle et les bannières au phénix ; au sol, la terre battue du village incendié, avec ses cendres, ses pavés brisés et ses braises, nette jusqu'aux pieds des figurines au lieu d'être étirée.",
-				"La caméra vise un peu plus haut sur ce décor pour laisser voir le château. Les autres Actes gardent leur décor actuel en attendant le leur."
-			],
-			"titre": "La nuit des Valcendre",
-			"version": "0.58.2"
 		}
 	],
 	"pck": {
-		"sha256": "711f67943d9bf8e0f70147c02f508d58b0d7882b84293fd9b1060ec8dd7944f3",
-		"taille": 89199216,
+		"sha256": "1f89c57c4d8c7dae6d0358af53cd1cdcbb40ebf1f4649634b78bbae415eefaca",
+		"taille": 90045232,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.13",
+	"version": "0.59.14",
 	"version_minimum": "0.37.0"
 }

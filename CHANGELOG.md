@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.13** (2026-10-10)
+Version actuelle : **0.59.14** (2026-10-10)
+
+## v0.59.14 — L'éternité en héritage  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE XII : 6 créatures redessinées : le Héraut de l'Apocalypse, l'Héritier Maudit, la Reine des Liches, le Seigneur Démon, l'Empereur Déchu et le Garde des Cendres Éternelles.
+- DIALOGUES DE L'HISTOIRE : l'Héritier Maudit et l'Empereur Déchu ont leur nouveau visage dans les dialogues.
 
 ## v0.59.13 — Le jugement des frères  (2026-10-10)
 
