@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.9"
+const NUMERO := "0.59.10"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.10", "date": "2026-10-10", "titre": "L'éclipse du sang",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, ACTE VIII : 7 créatures redessinées : la Vouivre Écarlate, l'Avatar de l'Éclipse, la Chimère Enragée, le Démon de Flamme, le Démon de Siège, le Loup-Garou (en pleine transformation) et le Rôdeur de l'Éclipse.",
+	]},
 	{"version": "0.59.9", "date": "2026-10-10", "titre": "Le pacte des ronces",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE VII : 10 créatures redessinées : le Troll des Marais, le Serpent Cracheur, la Limace Acide, la Liane Vénéneuse (et son arrosoir), la Bête des Tourbières, la Sorcière des Bois, la Harpie Hurlante, la Reine Araignée, le Gardien de la Forêt Maudite et la Dame des Ronciers.",

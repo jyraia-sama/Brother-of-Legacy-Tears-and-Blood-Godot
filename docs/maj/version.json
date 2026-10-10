@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE VIII : 7 créatures redessinées : la Vouivre Écarlate, l'Avatar de l'Éclipse, la Chimère Enragée, le Démon de Flamme, le Démon de Siège, le Loup-Garou (en pleine transformation) et le Rôdeur de l'Éclipse."
+			],
+			"titre": "L'éclipse du sang",
+			"version": "0.59.10"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE VII : 10 créatures redessinées : le Troll des Marais, le Serpent Cracheur, la Limace Acide, la Liane Vénéneuse (et son arrosoir), la Bête des Tourbières, la Sorcière des Bois, la Harpie Hurlante, la Reine Araignée, le Gardien de la Forêt Maudite et la Dame des Ronciers."
 			],
 			"titre": "Le pacte des ronces",
@@ -117,24 +124,13 @@
 			],
 			"titre": "La salle de guerre",
 			"version": "0.57.1"
-		},
-		{
-			"changements": [
-				"LA GUERRE DES BANNIÈRES (Guilde → Guerre) : une guerre de guildes chaque semaine, en asynchrone, chacun joue quand il veut. Lundi-mardi : préparation (le chef inscrit la guilde une fois pour toutes, chacun prépare sa défense de guerre). Mercredi-samedi : 2 assauts par jour contre la forteresse ennemie. Dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne.",
-				"LA FORTERESSE : un poste par membre, rangés par puissance en Remparts, Tours et Donjon. Une couche s'ouvre quand chaque poste de la précédente a été pris au moins une étoile. ★ victoire · ★★ victoire avec 3 unités debout ou plus · ★★★ aucune perte ; seul le meilleur résultat d'un poste compte.",
-				"STRATÉGIE : la FATIGUE épuise jusqu'au lendemain les unités qui ont attaqué (toute la collection compte), l'ÉCLAIREUR révèle une fois par jour les unités d'un poste ennemi (sinon seuls ses éléments sont visibles), et le JOURNAL de guerre permet de REVOIR chaque assaut.",
-				"LA LÉGION DE LA SOIF : s'il n'y a pas d'autre guilde à votre mesure, la guerre a lieu quand même contre cette armée fantôme faite des reflets de défenses de vrais joueurs ; elle attaque votre forteresse un peu plus chaque jour.",
-				"BUTIN : pour chaque membre qui a attaqué, Sceaux de guilde (selon le résultat et les étoiles gagnées), or, coffres et tome ; XP et trésor pour la guilde. (Serveur : lancer supabase/08_guerre.sql.)"
-			],
-			"titre": "La Guerre des Bannières",
-			"version": "0.57.0"
 		}
 	],
 	"pck": {
-		"sha256": "945223f2f43992030dab70cc39a174e7e7786efb8ed284724f35c94d26c8ba1d",
-		"taille": 85727740,
+		"sha256": "c03eee1094f8556eba298bf2a2580d9e24fdf9b9aa4371c796755f1608c06c45",
+		"taille": 86610800,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.9",
+	"version": "0.59.10",
 	"version_minimum": "0.37.0"
 }

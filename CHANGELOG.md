@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.9** (2026-10-10)
+Version actuelle : **0.59.10** (2026-10-10)
+
+## v0.59.10 — L'éclipse du sang  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE VIII : 7 créatures redessinées : la Vouivre Écarlate, l'Avatar de l'Éclipse, la Chimère Enragée, le Démon de Flamme, le Démon de Siège, le Loup-Garou (en pleine transformation) et le Rôdeur de l'Éclipse.
 
 ## v0.59.9 — Le pacte des ronces  (2026-10-10)
 
