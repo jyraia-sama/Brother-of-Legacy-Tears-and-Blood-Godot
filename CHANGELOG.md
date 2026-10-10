@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.8** (2026-10-10)
+Version actuelle : **0.59.9** (2026-10-10)
+
+## v0.59.9 — Le pacte des ronces  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE VII : 10 créatures redessinées : le Troll des Marais, le Serpent Cracheur, la Limace Acide, la Liane Vénéneuse (et son arrosoir), la Bête des Tourbières, la Sorcière des Bois, la Harpie Hurlante, la Reine Araignée, le Gardien de la Forêt Maudite et la Dame des Ronciers.
 
 ## v0.59.8 — Les larmes de pierre  (2026-10-10)
 

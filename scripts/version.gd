@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.8"
+const NUMERO := "0.59.9"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.9", "date": "2026-10-10", "titre": "Le pacte des ronces",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, ACTE VII : 10 créatures redessinées : le Troll des Marais, le Serpent Cracheur, la Limace Acide, la Liane Vénéneuse (et son arrosoir), la Bête des Tourbières, la Sorcière des Bois, la Harpie Hurlante, la Reine Araignée, le Gardien de la Forêt Maudite et la Dame des Ronciers.",
+	]},
 	{"version": "0.59.8", "date": "2026-10-10", "titre": "Les larmes de pierre",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE VI : 7 créatures redessinées : l'Aberration Cristalline, la Gargouille de Jade, le Golem d'Obsidienne, le Golem de Pierre (et sa petite fleur), le Reflet de l'Âme, le Spectre Glacial et la Statue Hurlante.",

@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE VII : 10 créatures redessinées : le Troll des Marais, le Serpent Cracheur, la Limace Acide, la Liane Vénéneuse (et son arrosoir), la Bête des Tourbières, la Sorcière des Bois, la Harpie Hurlante, la Reine Araignée, le Gardien de la Forêt Maudite et la Dame des Ronciers."
+			],
+			"titre": "Le pacte des ronces",
+			"version": "0.59.9"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE VI : 7 créatures redessinées : l'Aberration Cristalline, la Gargouille de Jade, le Golem d'Obsidienne, le Golem de Pierre (et sa petite fleur), le Reflet de l'Âme, le Spectre Glacial et la Statue Hurlante."
 			],
 			"titre": "Les larmes de pierre",
@@ -121,22 +128,13 @@
 			],
 			"titre": "La Guerre des Bannières",
 			"version": "0.57.0"
-		},
-		{
-			"changements": [
-				"APPLICATION ANDROID : nouvelle application à installer (page des téléchargements du jeu). L'ancienne (v0.36) ne pouvait plus se mettre à jour toute seule à cause d'un bug de sa fenêtre de mise à jour : elle restait bloquée sur le vieux menu. La nouvelle repart à jour, avec la nouvelle icône, et se mettra de nouveau à jour automatiquement. La partie n'est pas perdue (elle est sur le téléphone et sur le compte).",
-				"ORDINATEUR : la fenêtre du jeu et la barre des tâches affichent la nouvelle icône des deux frères. Pour l'icône du fichier .exe et du raccourci du bureau, une nouvelle installation complète est disponible (facultative).",
-				"JEU WEB SUR TÉLÉPHONE : l'appli ajoutée à l'écran d'accueil s'ouvre maintenant en plein écran, sans la barre du navigateur (Android : « Installer l'application » ; iPhone : « Sur l'écran d'accueil »), avec la nouvelle icône. Une nouvelle version publiée s'installe toute seule au lancement suivant au lieu de rester bloquée sur l'ancienne."
-			],
-			"titre": "Les applications à jour",
-			"version": "0.56.0"
 		}
 	],
 	"pck": {
-		"sha256": "f663a07587241216e87cf755635db9c7e6590bb4159d8c6e4ab38c9a7f0c4fa2",
-		"taille": 84611212,
+		"sha256": "945223f2f43992030dab70cc39a174e7e7786efb8ed284724f35c94d26c8ba1d",
+		"taille": 85727740,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.8",
+	"version": "0.59.9",
 	"version_minimum": "0.37.0"
 }
