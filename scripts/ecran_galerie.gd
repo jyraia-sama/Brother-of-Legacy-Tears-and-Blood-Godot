@@ -113,7 +113,7 @@ func _choisir_onglet(o: String) -> void:
 		if el["ouvert"]:
 			vus += 1
 		_grille.add_child(_vignette(el, i))
-	_compteur.text = "%d / %d débloquées" % [vus, _elements.size()]
+	_compteur.text = UiCommun.t("%d / %d débloquées") % [vus, _elements.size()]
 
 
 func _lister(o: String) -> Array:
@@ -140,7 +140,7 @@ func _lister(o: String) -> Array:
 				var acte := ActesData.get_acte(a)
 				var ch := str(acte.get("image", ""))
 				if ResourceLoader.exists(ch):
-					l.append({"type": "image", "id": "acte_%d" % a, "titre": "Acte %s — %s" % [acte.get("romain", str(a)), acte.get("titre", "")],
+					l.append({"type": "image", "id": "acte_%d" % a, "titre": UiCommun.t("Acte %s — %s") % [acte.get("romain", str(a)), acte.get("titre", "")],
 						"chemin": ch, "ouvert": TOUT_REVELER or ActesData.acte_debloque(a), "texte": str(acte.get("partie", ""))})
 			for ch in _fichiers("res://assets/personnages"):
 				# Les personnages qui dévoileraient la suite de l'histoire attendent leur Acte
@@ -158,7 +158,7 @@ func _lister(o: String) -> Array:
 				var num: String = str(ch).get_file().get_basename().trim_prefix("fond_")
 				if not num.is_valid_int():
 					continue
-				l.append({"type": "image", "id": ch, "titre": "Champ de bataille de l'Acte %d" % int(num), "chemin": ch,
+				l.append({"type": "image", "id": ch, "titre": UiCommun.t("Champ de bataille de l'Acte %d") % int(num), "chemin": ch,
 					"texte": "Champ de bataille", "ouvert": TOUT_REVELER or ActesData.acte_debloque(int(num)) or Sauvegarde.image_vue(ch)})
 			# Fonds de menus : découverts la première fois que le menu est ouvert
 			for ch in _fichiers("res://assets/fonds"):
@@ -459,7 +459,7 @@ func _fiche_unite(corps: Control, el: Dictionary) -> void:
 		infos += "  ·  " + str(u["race"])
 	v.add_child(UiCommun.label(infos, 16, UiCommun.COULEURS_ELEMENT.get(u["element"], UiCommun.C_TEXTE)))
 	var cat: String = CATEGORIES.get(str(u.get("categorie", "")), "")
-	v.add_child(UiCommun.label("%s  ·  ligne %s" % [cat, "Avant" if str(u.get("position", "")) == "avant" else "Arrière"], 14, UiCommun.C_DOUX))
+	v.add_child(UiCommun.label(UiCommun.t("%s  ·  ligne %s") % [cat, "Avant" if str(u.get("position", "")) == "avant" else "Arrière"], 14, UiCommun.C_DOUX))
 	v.add_child(HSeparator.new())
 	v.add_child(UiCommun.label("OÙ LA TROUVER", 13, UiCommun.C_OR))
 	for ligne in _ou_trouver(id, u):
@@ -469,7 +469,7 @@ func _fiche_unite(corps: Control, el: Dictionary) -> void:
 	v.add_child(HSeparator.new())
 	v.add_child(UiCommun.label("COMPÉTENCES", 13, UiCommun.C_OR))
 	for sk in u.get("skills", []):
-		var t := UiCommun.label("%s  (%s, niv. %d)" % [sk["nom"], "actif" if sk["type"] == "actif" else "passif", int(sk.get("niveau", 1))], 16, Color("ffd27a"))
+		var t := UiCommun.label(UiCommun.t("%s  (%s, niv. %d)") % [sk["nom"], "actif" if sk["type"] == "actif" else "passif", int(sk.get("niveau", 1))], 16, Color("ffd27a"))
 		v.add_child(t)
 		var ds := UiCommun.label(str(sk.get("description", "")), 14, UiCommun.C_DOUX)
 		ds.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -487,7 +487,7 @@ func _ou_trouver(id: String, u: Dictionary) -> Array:
 	for a in Rencontres.POOLS:
 		var p: Dictionary = Rencontres.POOLS[a]
 		if id == str(p.get("boss", "")):
-			l.append("Boss de l'Acte %s" % ActesData.get_acte(int(a)).get("romain", str(a)))
+			l.append(UiCommun.t("Boss de l'Acte %s") % ActesData.get_acte(int(a)).get("romain", str(a)))
 		elif id in p.get("monstres", []) or id in p.get("gardiens", []):
 			actes.append(str(ActesData.get_acte(int(a)).get("romain", str(a))))
 	if not actes.is_empty():
@@ -495,22 +495,22 @@ func _ou_trouver(id: String, u: Dictionary) -> Array:
 	for dk in Donjons.DONJONS:
 		var dj: Dictionary = Donjons.DONJONS[dk]
 		if id == str(dj["boss"]):
-			l.append("Boss du donjon « %s »" % dj["nom"])
+			l.append(UiCommun.t("Boss du donjon « %s »") % dj["nom"])
 		elif id == str(dj["mini_boss"]):
-			l.append("Mini-boss du donjon « %s »" % dj["nom"])
+			l.append(UiCommun.t("Mini-boss du donjon « %s »") % dj["nom"])
 		elif id in dj["monstres"]:
-			l.append("Donjon « %s »" % dj["nom"])
+			l.append(UiCommun.t("Donjon « %s »") % dj["nom"])
 	for tk in Tours.TOURS:
 		var t: Dictionary = Tours.TOURS[tk]
 		for etage in t["boss"]:
 			if id == str(t["boss"][etage]):
-				l.append("%s, étage %d" % [t["nom"], int(etage)])
+				l.append(UiCommun.t("%s, étage %d") % [t["nom"], int(etage)])
 		for pal in t["paliers"]:
 			if id in pal["monstres"]:
 				l.append("%s : %s" % [t["nom"], pal["nom"]])
 	for i in BossMonde.BOSS.size():
 		if id == str(BossMonde.BOSS[i]["id"]):
-			l.append("Boss de Monde du %s" % Calendrier.JOURS[i].to_lower())
+			l.append(UiCommun.t("Boss de Monde du %s") % Calendrier.JOURS[i].to_lower())
 	if l.is_empty():
 		l.append("Rencontre spéciale")
 	return l
@@ -531,7 +531,7 @@ func _fiche_familier(corps: Control, el: Dictionary) -> void:
 	v.add_theme_constant_override("separation", 8)
 	h.add_child(v)
 	v.add_child(UiCommun.label(str(f["nom"]).to_upper(), 28, UiCommun.COULEURS_RARETE.get(f["rarete"], UiCommun.C_OR)))
-	v.add_child(UiCommun.label("Familier %s  ·  %s" % [f["rarete"], UnitesData.ELEMENTS.get(f["element"], "")], 16, UiCommun.C_DOUX))
+	v.add_child(UiCommun.label(UiCommun.t("Familier %s  ·  %s") % [f["rarete"], UnitesData.ELEMENTS.get(f["element"], "")], 16, UiCommun.C_DOUX))
 	var ds := UiCommun.label(str(f["description"]), 16, UiCommun.C_TEXTE)
 	ds.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(ds)

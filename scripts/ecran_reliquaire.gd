@@ -87,7 +87,7 @@ func _ready() -> void:
 
 
 func _rafraichir() -> void:
-	_lbl_or.text = "Or : %d" % Sauvegarde.get_or()
+	_lbl_or.text = UiCommun.t("Or : %d") % Sauvegarde.get_or()
 	_lbl_stamina.maj()
 	for cle in _onglets:
 		_onglets[cle].button_pressed = (cle == _onglet)
@@ -180,9 +180,9 @@ func _ouvrir(coffre: String, combien: int) -> void:
 			total[k] = int(total.get(k, 0)) + int(butin[k])
 	var lignes: Array = []
 	for k in total:
-		lignes.append(("Or : +%d" % int(total[k])) if k == "or" else "%s : +%d" % [Reliquaire.nom(k), int(total[k])])
+		lignes.append((UiCommun.t("Or : +%d") % int(total[k])) if k == "or" else "%s : +%d" % [Reliquaire.nom(k), int(total[k])])
 	_rafraichir()
-	_message("%s x%d ouvert(s) !" % [Reliquaire.nom(coffre), combien], "\n".join(lignes))
+	_message(UiCommun.t("%s x%d ouvert(s) !") % [Reliquaire.nom(coffre), combien], "\n".join(lignes))
 
 
 func _boire(elixir: String) -> void:
@@ -213,7 +213,7 @@ func _choisir_heros(tome: String) -> void:
 	p.add_child(vb)
 	var h := HBoxContainer.new()
 	vb.add_child(h)
-	var t := UiCommun.label("%s (+%d XP) : choisis un héros" % [Reliquaire.nom(tome), int(Reliquaire.XP_TOME[tome])], 22, C_VIOLET)
+	var t := UiCommun.label(UiCommun.t("%s (+%d XP) : choisis un héros") % [Reliquaire.nom(tome), int(Reliquaire.XP_TOME[tome])], 22, C_VIOLET)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(t)
 	var fermer := UiCommun.bouton("Fermer", 15)
@@ -253,7 +253,7 @@ func _appliquer_tome(tome: String, uid: int) -> void:
 	_rafraichir()
 	if gagnes >= 0:
 		_message("Tome utilisé", "%s gagne %d XP.%s" % [UnitesData.get_unite(h["id"])["nom"], int(Reliquaire.XP_TOME[tome]),
-			"\nNiveau %d → %d !" % [avant, avant + gagnes] if gagnes > 0 else ""])
+			UiCommun.t("\nNiveau %d → %d !") % [avant, avant + gagnes] if gagnes > 0 else ""])
 
 
 # =====================================================================
@@ -319,9 +319,9 @@ func _carte_recette(r: Dictionary) -> PanelContainer:
 	v2.add_child(UiCommun.label("%s · %s · %s" % [u["rarete"], UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]]], 13, UiCommun.C_DOUX))
 	v2.add_child(UiCommun.label(r["origine"], 13, C_VIOLET))
 	var s := UnitesData.stats(id, 1)
-	vb.add_child(UiCommun.label("PV %d  ATK %d  DEF %d  AGI %d  MAG %d" % [s["pv"], s["atk"], s["def"], s["agi"], s["mag"]], 13, UiCommun.C_TEXTE))
+	vb.add_child(UiCommun.label(UiCommun.t("PV %d  ATK %d  DEF %d  AGI %d  MAG %d") % [s["pv"], s["atk"], s["def"], s["agi"], s["mag"]], 13, UiCommun.C_TEXTE))
 	var ult: Dictionary = u["skills"][3]
-	var d := UiCommun.label("Niv. 30 · %s : %s" % [ult["nom"], ult["description"]], 12, UiCommun.C_DOUX)
+	var d := UiCommun.label(UiCommun.t("Niv. 30 · %s : %s") % [ult["nom"], ult["description"]], 12, UiCommun.C_DOUX)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(d)
 	var ok := Reliquaire.peut_payer(r["cout"], int(r["or"]))
@@ -332,10 +332,10 @@ func _carte_recette(r: Dictionary) -> PanelContainer:
 	for hh in Sauvegarde.liste_heros():
 		if hh["id"] == id:
 			possede += 1
-	var b := UiCommun.bouton("FORGER" + ("  (possédé x%d)" % possede if possede > 0 else ""), 16)
+	var b := UiCommun.bouton("FORGER" + (UiCommun.t("  (possédé x%d)") % possede if possede > 0 else ""), 16)
 	b.disabled = not ok
 	b.pressed.connect(func():
-		_confirmer("Forger %s pour %s ?" % [u["nom"], Reliquaire.texte_cout(r["cout"], int(r["or"]))], func():
+		_confirmer(UiCommun.t("Forger %s pour %s ?") % [u["nom"], Reliquaire.texte_cout(r["cout"], int(r["or"]))], func():
 			if Reliquaire.forger(r) >= 0:
 				_rafraichir()
 				_message("Forge", "%s rejoint ta collection !\nTu le trouveras dans le Deck." % u["nom"])))
@@ -351,7 +351,7 @@ func _atelier() -> void:
 	var h := HBoxContainer.new()
 	h.add_theme_constant_override("separation", 6)
 	h.add_child(UiCommun.icone_objet("poussiere_echo", 30))
-	h.add_child(UiCommun.label("Poussière d'Écho : %d" % Sauvegarde.get_objet("poussiere_echo"), 18, UiCommun.C_TEXTE))
+	h.add_child(UiCommun.label(UiCommun.t("Poussière d'Écho : %d") % Sauvegarde.get_objet("poussiere_echo"), 18, UiCommun.C_TEXTE))
 	_contenu.add_child(h)
 
 	_contenu.add_child(UiCommun.label("FABRIQUER UN ÉCHO SANGUIN", 18, C_VIOLET))
@@ -362,7 +362,7 @@ func _atelier() -> void:
 	var o_set := OptionButton.new()
 	var ids_sets: Array = Echos.SETS.keys().filter(func(k): return not k in Echos.SETS_UNIQUES)
 	for i in ids_sets.size():
-		o_set.add_item("%s (%d pièces)" % [Echos.SETS[ids_sets[i]]["nom"], int(Echos.SETS[ids_sets[i]]["pieces"])], i)
+		o_set.add_item(UiCommun.t("%s (%d pièces)") % [Echos.SETS[ids_sets[i]]["nom"], int(Echos.SETS[ids_sets[i]]["pieces"])], i)
 	o_set.selected = ids_sets.find(_set)
 	o_set.item_selected.connect(func(i: int):
 		_set = ids_sets[i]
@@ -402,15 +402,15 @@ func _atelier() -> void:
 		for i in 5:
 			if int(a["raretes"][i]) > 0:
 				noms_r.append("%s %d %%" % [Echos.RARETES[i]["nom"], int(a["raretes"][i])])
-		box.add_child(UiCommun.label("%s : %d Poussière + %d or" % [a["nom"], int(a["poussiere"]), int(a["or"])], 16, UiCommun.C_TEXTE))
-		box.add_child(UiCommun.label("%s  ·  %d à %d étoiles" % [", ".join(noms_r), int(a["etoiles"][0]), int(a["etoiles"][1])], 13, UiCommun.C_DOUX))
+		box.add_child(UiCommun.label(UiCommun.t("%s : %d Poussière + %d or") % [a["nom"], int(a["poussiere"]), int(a["or"])], 16, UiCommun.C_TEXTE))
+		box.add_child(UiCommun.label(UiCommun.t("%s  ·  %d à %d étoiles") % [", ".join(noms_r), int(a["etoiles"][0]), int(a["etoiles"][1])], 13, UiCommun.C_DOUX))
 		var b := UiCommun.bouton("Fabriquer", 16)
 		b.disabled = not Reliquaire.peut_payer({"poussiere_echo": int(a["poussiere"])}, int(a["or"]))
 		b.pressed.connect(func():
 			var e := Reliquaire.fabriquer_echo(type, _set, _emplacement, _principale)
 			_rafraichir()
 			if not e.is_empty():
-				_message("Atelier d'Échos", "Écho fabriqué :\n%s  %s\n%s  ·  %s" % [Echos.nom(e), "★".repeat(int(e["etoiles"])),
+				_message("Atelier d'Échos", UiCommun.t("Écho fabriqué :\n%s  %s\n%s  ·  %s") % [Echos.nom(e), "★".repeat(int(e["etoiles"])),
 					Echos.RARETES[int(e["rarete"])]["nom"], Echos.texte_stat(e["principale"], Echos.valeur_principale(e))]))
 		box.add_child(b)
 		ligne.add_child(box)
@@ -426,14 +426,14 @@ func _atelier() -> void:
 				gain += Reliquaire.poussiere_demantelement(e)
 		var hh := HBoxContainer.new()
 		hh.add_theme_constant_override("separation", 12)
-		var l := UiCommun.label("Échos %s : %d   →   +%d Poussière" % [Echos.RARETES[r]["nom"], uids.size(), gain], 16, Echos.RARETES[r]["couleur"])
+		var l := UiCommun.label(UiCommun.t("Échos %s : %d   →   +%d Poussière") % [Echos.RARETES[r]["nom"], uids.size(), gain], 16, Echos.RARETES[r]["couleur"])
 		l.custom_minimum_size = Vector2(520, 0)
 		hh.add_child(l)
 		hh.add_child(_petit_bouton("Tout démanteler", not uids.is_empty(), func():
-			_confirmer("Démanteler %d Échos %s pour %d Poussière d'Écho ?" % [uids.size(), Echos.RARETES[r]["nom"], gain], func():
+			_confirmer(UiCommun.t("Démanteler %d Échos %s pour %d Poussière d'Écho ?") % [uids.size(), Echos.RARETES[r]["nom"], gain], func():
 				var g := Reliquaire.demanteler(uids)
 				_rafraichir()
-				_message("Démantèlement", "+%d Poussière d'Écho" % g))))
+				_message("Démantèlement", UiCommun.t("+%d Poussière d'Écho") % g))))
 		_contenu.add_child(hh)
 	_contenu.add_child(UiCommun.label("Pour démanteler un Écho Rare ou mieux, vends-le ou verrouille ceux à garder dans le menu Échos Sanguins.", 13, UiCommun.C_DOUX))
 

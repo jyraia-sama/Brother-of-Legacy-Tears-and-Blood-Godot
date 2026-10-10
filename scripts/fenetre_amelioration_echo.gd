@@ -104,7 +104,7 @@ func _ready() -> void:
 	_boutons.append(plus1)
 	_btn_plus1 = plus1
 	for c in CIBLES:
-		var b := UiCommun.bouton("Jusqu'à +%d" % c, 17)
+		var b := UiCommun.bouton(UiCommun.t("Jusqu'à +%d") % c, 17)
 		b.custom_minimum_size = Vector2(0, 52)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.set_meta("cible", c)
@@ -163,18 +163,18 @@ func _maj() -> void:
 	var coul: Color = Echos.RARETES[int(e["rarete"])]["couleur"]
 	_panneau.add_theme_stylebox_override("panel", UiCommun.style_panneau(coul, Color(0.07, 0.02, 0.03, 0.97)))
 	var niv := int(e["niveau"])
-	_titre.text = "AMÉLIORER : %s  +%d" % [Echos.nom(e), niv]
+	_titre.text = UiCommun.t("AMÉLIORER : %s  +%d") % [Echos.nom(e), niv]
 	_titre.add_theme_color_override("font_color", coul)
 	for x in _infos.get_children():
 		x.queue_free()
-	_infos.add_child(UiCommun.label("%s   ·   %s   ·   Or : %d" % ["★".repeat(int(e["etoiles"])), Echos.RARETES[int(e["rarete"])]["nom"], Sauvegarde.get_or()], 15, Color("ffd060")))
+	_infos.add_child(UiCommun.label(UiCommun.t("%s   ·   %s   ·   Or : %d") % ["★".repeat(int(e["etoiles"])), Echos.RARETES[int(e["rarete"])]["nom"], Sauvegarde.get_or()], 15, Color("ffd060")))
 	if niv >= Echos.NIVEAU_MAX:
 		_infos.add_child(UiCommun.label("Principale : " + Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 17))
-		_infos.add_child(UiCommun.label("Niveau maximum atteint (+%d)." % Echos.NIVEAU_MAX, 17, C_OK))
+		_infos.add_child(UiCommun.label(UiCommun.t("Niveau maximum atteint (+%d).") % Echos.NIVEAU_MAX, 17, C_OK))
 	else:
 		var suivant := e.duplicate()
 		suivant["niveau"] = niv + 1
-		_infos.add_child(UiCommun.label("Principale : %s   →   %s  (au +%d)" % [Echos.texte_stat(e["principale"], Echos.valeur_principale(e)),
+		_infos.add_child(UiCommun.label(UiCommun.t("Principale : %s   →   %s  (au +%d)") % [Echos.texte_stat(e["principale"], Echos.valeur_principale(e)),
 			Echos.texte_stat(e["principale"], Echos.valeur_principale(suivant)), niv + 1], 17))
 	for s in e["secondaires"]:
 		_infos.add_child(UiCommun.label("      " + Echos.texte_stat(s["stat"], s["valeur"]), 14, Color("b8d8ff")))
@@ -185,15 +185,15 @@ func _maj() -> void:
 			break
 	if palier > 0:
 		var quoi := "nouvelle stat secondaire" if e["secondaires"].size() < 4 else "une stat secondaire renforcée"
-		_infos.add_child(UiCommun.label("Prochain palier : +%d → %s" % [palier, quoi], 14, Color("ffb08a")))
+		_infos.add_child(UiCommun.label(UiCommun.t("Prochain palier : +%d → %s") % [palier, quoi], 14, Color("ffb08a")))
 	if niv < Echos.NIVEAU_MAX:
 		var cout := Echos.cout_amelioration(e)
-		_infos.add_child(UiCommun.label("Tentative vers +%d :  %d %% de réussite   ·   %d or   (en cas d'échec, l'or est perdu mais l'Écho reste intact)" % [
+		_infos.add_child(UiCommun.label(UiCommun.t("Tentative vers +%d :  %d %% de réussite   ·   %d or   (en cas d'échec, l'or est perdu mais l'Écho reste intact)") % [
 			niv + 1, int(round(Echos.chance_amelioration(e) * 100)), cout], 15, UiCommun.C_TEXTE))
 	# Boutons
 	if niv < Echos.NIVEAU_MAX:
-		_btn_plus1.text = "+1\n%d or" % Echos.cout_amelioration(e)
-		_btn_plus1.tooltip_text = "Une tentative vers +%d : %d %% de réussite, %d or." % [niv + 1,
+		_btn_plus1.text = UiCommun.t("+1\n%d or") % Echos.cout_amelioration(e)
+		_btn_plus1.tooltip_text = UiCommun.t("Une tentative vers +%d : %d %% de réussite, %d or.") % [niv + 1,
 			int(round(Echos.chance_amelioration(e) * 100)), Echos.cout_amelioration(e)]
 	else:
 		_btn_plus1.text = "+1"
@@ -201,8 +201,8 @@ func _maj() -> void:
 		if b.has_meta("cible"):
 			var c: int = b.get_meta("cible")
 			b.visible = c > niv
-			b.text = "Jusqu'à +%d\n~%d or" % [c, cout_moyen(e, c)]
-			b.tooltip_text = "Tentatives en boucle jusqu'au +%d. Coût moyen estimé : %d or (le hasard peut coûter plus ou moins)." % [c, cout_moyen(e, c)]
+			b.text = UiCommun.t("Jusqu'à +%d\n~%d or") % [c, cout_moyen(e, c)]
+			b.tooltip_text = UiCommun.t("Tentatives en boucle jusqu'au +%d. Coût moyen estimé : %d or (le hasard peut coûter plus ou moins).") % [c, cout_moyen(e, c)]
 		b.disabled = _en_cours or niv >= Echos.NIVEAU_MAX or Sauvegarde.get_or() < Echos.cout_amelioration(e)
 	_btn_arret.disabled = not _en_cours
 	_btn_fermer.disabled = _en_cours
@@ -227,14 +227,14 @@ func _lancer(cible: int) -> void:
 			break
 		var cout := Echos.cout_amelioration(e)
 		if not Sauvegarde.depenser_or(cout):
-			_annoncer("Pas assez d'or (%d requis)." % cout, C_ECHEC)
+			_annoncer(UiCommun.t("Pas assez d'or (%d requis).") % cout, C_ECHEC)
 			Audio.son("erreur")
 			break
 		tentatives += 1
 		depense += cout
 		# Barre de chargement
 		var chance := Echos.chance_amelioration(e)
-		_lbl_barre.text = "Amélioration vers +%d…   (%d %% de réussite)" % [niv + 1, int(round(chance * 100))]
+		_lbl_barre.text = UiCommun.t("Amélioration vers +%d…   (%d %% de réussite)") % [niv + 1, int(round(chance * 100))]
 		_lbl_barre.add_theme_color_override("font_color", UiCommun.C_TEXTE)
 		_resultat.text = " "
 		_barre.value = 0
@@ -252,7 +252,7 @@ func _lancer(cible: int) -> void:
 		(_barre.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = C_OK if r["reussi"] else C_ECHEC
 		_annoncer(r["texte"], C_OK if r["reussi"] else C_ECHEC)
 		Audio.son("niveau" if r["reussi"] else "erreur")
-		_noter("+%d : %s   (−%d or)" % [niv + 1, "RÉUSSITE" if r["reussi"] else "échec", cout], C_OK if r["reussi"] else C_ECHEC)
+		_noter(UiCommun.t("+%d : %s   (−%d or)") % [niv + 1, "RÉUSSITE" if r["reussi"] else "échec", cout], C_OK if r["reussi"] else C_ECHEC)
 		_maj()
 		if cible < 0 or _arret:
 			break
@@ -261,7 +261,7 @@ func _lancer(cible: int) -> void:
 			return
 	_en_cours = false
 	if cible > 0 and tentatives > 1:
-		_lbl_barre.text = "%d tentatives   ·   %d or dépensés" % [tentatives, depense]
+		_lbl_barre.text = UiCommun.t("%d tentatives   ·   %d or dépensés") % [tentatives, depense]
 	if tentatives > 0:
 		_afficher_recap(avant, _echo(), tentatives, depense)
 	_maj()
@@ -273,7 +273,7 @@ func _afficher_recap(avant: Dictionary, apres: Dictionary, tentatives: int, depe
 		x.queue_free()
 	var n0 := int(avant["niveau"])
 	var n1 := int(apres["niveau"])
-	var titre := UiCommun.label("RÉCAPITULATIF   ·   +%d → +%d   ·   %d tentative%s, %d or" % [n0, n1, tentatives,
+	var titre := UiCommun.label(UiCommun.t("RÉCAPITULATIF   ·   +%d → +%d   ·   %d tentative%s, %d or") % [n0, n1, tentatives,
 		"s" if tentatives > 1 else "", depense], 16, UiCommun.C_OR)
 	_recap.add_child(titre)
 	if n1 == n0:
@@ -282,7 +282,7 @@ func _afficher_recap(avant: Dictionary, apres: Dictionary, tentatives: int, depe
 	var st: String = apres["principale"]
 	var v0 := Echos.valeur_principale(avant)
 	var v1 := Echos.valeur_principale(apres)
-	_recap.add_child(UiCommun.label("Principale : %s  →  %s   (%s)" % [Echos.texte_stat(st, v0), Echos.texte_stat(st, v1),
+	_recap.add_child(UiCommun.label(UiCommun.t("Principale : %s  →  %s   (%s)") % [Echos.texte_stat(st, v0), Echos.texte_stat(st, v1),
 		_ecart(st, v1 - v0)], 15, C_OK))
 	var anciennes := {}
 	for s0 in avant["secondaires"]:
@@ -293,7 +293,7 @@ func _afficher_recap(avant: Dictionary, apres: Dictionary, tentatives: int, depe
 		if not anciennes.has(nom):
 			_recap.add_child(UiCommun.label("Nouvelle stat : " + Echos.texte_stat(nom, v), 15, Color("8ad8ff")))
 		elif v > float(anciennes[nom]):
-			_recap.add_child(UiCommun.label("Renforcée : %s  →  %s   (%s)" % [Echos.texte_stat(nom, anciennes[nom]),
+			_recap.add_child(UiCommun.label(UiCommun.t("Renforcée : %s  →  %s   (%s)") % [Echos.texte_stat(nom, anciennes[nom]),
 				Echos.texte_stat(nom, v), _ecart(nom, v - float(anciennes[nom]))], 15, Color("8ad8ff")))
 
 

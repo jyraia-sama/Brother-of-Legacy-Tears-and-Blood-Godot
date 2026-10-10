@@ -118,14 +118,14 @@ func _charger() -> void:
 		_stats = {}
 		_vider()
 		var msg := str(r.get("erreur", ""))
-		var l := UiCommun.label("Impossible de charger les statistiques.\n\n%s\n\nVérifie que tu es connecté avec ton compte et que le fichier supabase/07_statistiques.sql a bien été lancé dans Supabase (voir SUPABASE.md)." % msg, 17, C_ROUGE)
+		var l := UiCommun.label(UiCommun.t("Impossible de charger les statistiques.\n\n%s\n\nVérifie que tu es connecté avec ton compte et que le fichier supabase/07_statistiques.sql a bien été lancé dans Supabase (voir SUPABASE.md).") % msg, 17, C_ROUGE)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_contenu.add_child(l)
 		_etat.text = ""
 		return
 	_stats = r.data
 	var h := Time.get_time_dict_from_system()
-	_etat.text = "à jour à %02d:%02d" % [h.hour, h.minute]
+	_etat.text = UiCommun.t("à jour à %02d:%02d") % [h.hour, h.minute]
 	_afficher()
 	await _charger_releases()
 	if is_instance_valid(self) and _onglet in ["ensemble", "telechargements"]:
@@ -149,7 +149,7 @@ func _charger_releases() -> void:
 	h.queue_free()
 	var data = JSON.parse_string((res[3] as PackedByteArray).get_string_from_utf8())
 	if res[0] != HTTPRequest.RESULT_SUCCESS or res[1] != 200 or not (data is Array):
-		_erreur_releases = "GitHub ne répond pas (code %s). Réessaie dans un moment." % str(res[1])
+		_erreur_releases = UiCommun.t("GitHub ne répond pas (code %s). Réessaie dans un moment.") % str(res[1])
 		return
 	_erreur_releases = ""
 	_releases = data
@@ -223,7 +223,7 @@ func _vue_ensemble() -> void:
 	_tuiles([[int(c.get("total", 0)), "comptes créés"], [int(c.get("en_ligne", 0)), "en ligne maintenant", C_VERT],
 		[int(c.get("actifs_jour", 0)), "joueurs actifs (24 h)"], [int(c.get("actifs_semaine", 0)), "joueurs actifs (7 jours)"],
 		[int(c.get("actifs_mois", 0)), "joueurs actifs (30 jours)"],
-		["+%d" % int(c.get("semaine", 0)), "nouveaux comptes (7 jours)\n+%d aujourd'hui · +%d en 30 j" % [int(c.get("jour", 0)), int(c.get("mois", 0))]]])
+		["+%d" % int(c.get("semaine", 0)), UiCommun.t("nouveaux comptes (7 jours)\n+%d aujourd'hui · +%d en 30 j") % [int(c.get("jour", 0)), int(c.get("mois", 0))]]])
 	_titre("Appareils et téléchargements")
 	var dl := _totaux_telechargements()
 	_tuiles([[int(a.get("total", 0)), "appareils qui ont lancé le jeu", C_BLEU], [int(a.get("actifs_jour", 0)), "appareils actifs (24 h)", C_BLEU],
@@ -243,10 +243,10 @@ func _vue_ensemble() -> void:
 	_contenu.add_child(graph)
 	_note("Les appareils et comptes actifs sont comptés à partir de cette version (v0.53) : la courbe se remplit jour après jour.")
 	_titre("Le jeu en ligne")
-	_tuiles([[int(j.get("guildes", 0)), "guildes\n%d membres" % int(j.get("membres_guilde", 0))],
-		[int(j.get("arene_combats", 0)), "combats d'Arène\n%d cette semaine · %d joueurs" % [int(j.get("arene_combats_semaine", 0)), int(j.get("arene_joueurs", 0))]],
-		[int(j.get("classee_matchs", 0)), "matchs d'Arène classée\n%d joueurs" % int(j.get("classee_joueurs", 0))],
-		[int(j.get("marche_jour", 0)), "Marches Maudites aujourd'hui\n%d au total" % int(j.get("marche_total", 0))],
+	_tuiles([[int(j.get("guildes", 0)), UiCommun.t("guildes\n%d membres") % int(j.get("membres_guilde", 0))],
+		[int(j.get("arene_combats", 0)), UiCommun.t("combats d'Arène\n%d cette semaine · %d joueurs") % [int(j.get("arene_combats_semaine", 0)), int(j.get("arene_joueurs", 0))]],
+		[int(j.get("classee_matchs", 0)), UiCommun.t("matchs d'Arène classée\n%d joueurs") % int(j.get("classee_joueurs", 0))],
+		[int(j.get("marche_jour", 0)), UiCommun.t("Marches Maudites aujourd'hui\n%d au total") % int(j.get("marche_total", 0))],
 		[int(j.get("sauvegardes", 0)), "parties sauvegardées en ligne"]])
 
 
@@ -272,7 +272,7 @@ func _vue_joueurs() -> void:
 		_tri = TRIS[i][0]
 		_remplir_tableau(joueurs))
 	barre.add_child(tri)
-	var nb := UiCommun.label("%d comptes" % joueurs.size(), 16, UiCommun.C_OR)
+	var nb := UiCommun.label(UiCommun.t("%d comptes") % joueurs.size(), 16, UiCommun.C_OR)
 	nb.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	barre.add_child(nb)
 	var tableau := GridContainer.new()
@@ -355,7 +355,7 @@ func _vue_appareils() -> void:
 	for v in a.get("par_version", []):
 		var num := str(v.get("version", ""))
 		gv.add_child(UiCommun.label("v" + num + ("  (actuelle)" if num == Version.NUMERO else ""), 16, UiCommun.C_TEXTE if num == Version.NUMERO else Color("ffb070")))
-		gv.add_child(UiCommun.label("%d appareil%s" % [int(v.get("n", 0)), "s" if int(v.get("n", 0)) > 1 else ""], 16))
+		gv.add_child(UiCommun.label(UiCommun.t("%d appareil%s") % [int(v.get("n", 0)), "s" if int(v.get("n", 0)) > 1 else ""], 16))
 	_note("En orange : les appareils qui n'ont pas encore la dernière version.")
 
 

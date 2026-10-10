@@ -47,7 +47,7 @@ func _creer_bouton_menagerie() -> void:
 	b.text = "LA MÉNAGERIE  ·  familiers et chasse"
 	var n := Menagerie.a_recolter()
 	if n > 0:
-		b.text += "   (%d à récolter)" % n
+		b.text += UiCommun.t("   (%d à récolter)") % n
 	b.add_theme_font_size_override("font_size", 24)
 	b.add_theme_color_override("font_color", Color("c8f0a0"))
 	b.add_theme_color_override("font_hover_color", Color.WHITE)
@@ -95,7 +95,7 @@ func _on_bouton(id: String, titre: String) -> void:
 			EcranArene.scene_retour = scene_file_path
 			get_tree().change_scene_to_file(EcranArene.SCENE)
 		_:
-			_message("« %s » : mode pas encore créé." % titre)
+			_message(UiCommun.t("« %s » : mode pas encore créé.") % titre)
 
 
 func _retour_menu() -> void:

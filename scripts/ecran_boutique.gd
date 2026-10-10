@@ -82,7 +82,7 @@ func _case(g: GridContainer, id_objet: String, titre: String, desc: String, prix
 
 
 func _marche() -> void:
-	_texte("Six offres qui changent chaque jour à minuit (%s). Une seule fois chacune." % Calendrier.texte_duree(Calendrier.secondes_avant_demain()))
+	_texte(UiCommun.t("Six offres qui changent chaque jour à minuit (%s). Une seule fois chacune.") % Calendrier.texte_duree(Calendrier.secondes_avant_demain()))
 	var g := _grille()
 	for o in Boutique.marche_du_jour():
 		var deja := Boutique.deja_achete_marche(o)
@@ -105,8 +105,8 @@ func _comptoir() -> void:
 		var reste := Boutique.restants(o)
 		var desc: String = o.get("desc", Reliquaire.OBJETS.get(o["id"], {}).get("desc", ""))
 		_case(g, "" if o["id"] == "stamina_pleine" else o["id"], Boutique.nom_offre(o), desc,
-			"%d gemmes" % int(o["prix"]),
-			"Encore %d %s" % [reste, "aujourd'hui" if o["periode"] == "jour" else "cette semaine"],
+			UiCommun.t("%d gemmes") % int(o["prix"]),
+			UiCommun.t("Encore %d %s") % [reste, "aujourd'hui" if o["periode"] == "jour" else "cette semaine"],
 			reste > 0 and Sauvegarde.get_gemmes() >= int(o["prix"]), func():
 				var r := Boutique.acheter_comptoir(o)
 				if r != "":
@@ -121,7 +121,7 @@ func _packs() -> void:
 	_texte("L'achat de gemmes avec de l'argent réel arrivera dans une prochaine version. Les prix ci-dessous sont indicatifs.", 15, Color("ffb070"))
 	var g := _grille()
 	for pk in Boutique.PACKS:
-		var titre := "%s gemmes" % _nombre(int(pk["gemmes"]))
-		var desc := ("+ %s gemmes offertes" % _nombre(int(pk["bonus"]))) if int(pk["bonus"]) > 0 else "Le petit pack pour démarrer."
+		var titre := UiCommun.t("%s gemmes") % _nombre(int(pk["gemmes"]))
+		var desc := (UiCommun.t("+ %s gemmes offertes") % _nombre(int(pk["bonus"]))) if int(pk["bonus"]) > 0 else "Le petit pack pour démarrer."
 		_case(g, "", titre, desc, "Bientôt disponible" if not Boutique.PACKS_ACTIFS else str(pk["prix"]),
-			"Prix prévu : %s" % pk["prix"], Boutique.PACKS_ACTIFS, func(): pass, C_GEMME)
+			UiCommun.t("Prix prévu : %s") % pk["prix"], Boutique.PACKS_ACTIFS, func(): pass, C_GEMME)

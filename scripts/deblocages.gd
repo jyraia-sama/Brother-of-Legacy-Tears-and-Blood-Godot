@@ -63,8 +63,8 @@ static func _texte(cond: Array) -> String:
 	var c := int(cond[1])
 	var romain := str(ActesData.get_acte(a).get("romain", str(a)))
 	if c >= 6:
-		return "Se débloque à la fin de l'Acte %s" % romain
-	return "Se débloque au chapitre %d de l'Acte %s" % [c + 1, romain]
+		return UiCommun.t("Se débloque à la fin de l'Acte %s") % romain
+	return UiCommun.t("Se débloque au chapitre %d de l'Acte %s") % [c + 1, romain]
 
 
 ## Nombre de places d'équipe ouvertes (3 à 5).
@@ -107,7 +107,7 @@ static func nouveautes() -> Array:
 	if places_equipe() > PLACES_DEPART and not cle in vus:
 		vus.append(cle)
 		if not premier:
-			l.append({"titre": "Nouvelle place d'équipe !", "texte": "Un nouveau compagnon peut rejoindre ton équipe : tu peux maintenant aligner %d héros. Va dans Deck & Équipe pour l'y placer." % places_equipe()})
+			l.append({"titre": "Nouvelle place d'équipe !", "texte": UiCommun.t("Un nouveau compagnon peut rejoindre ton équipe : tu peux maintenant aligner %d héros. Va dans Deck & Équipe pour l'y placer.") % places_equipe()})
 	if premier or not l.is_empty():
 		Sauvegarde.sauvegarder()
 	return l

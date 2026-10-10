@@ -173,9 +173,9 @@ func _remplir_donjons() -> void:
 		vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		h.add_child(vb)
 		vb.add_child(UiCommun.label(infos["nom"], 20, c.lightened(0.25)))
-		vb.add_child(UiCommun.label("%s  ·  ressources %s" % [UnitesData.ELEMENTS[d], Evolution.ESSENCES[d]["nom"]], 14, UiCommun.C_DOUX))
+		vb.add_child(UiCommun.label(UiCommun.t("%s  ·  ressources %s") % [UnitesData.ELEMENTS[d], Evolution.ESSENCES[d]["nom"]], 14, UiCommun.C_DOUX))
 		var fait := Donjons.niveau_termine(d)
-		vb.add_child(UiCommun.label("Niveau %d / %d terminé%s" % [fait, Donjons.NIVEAUX, "  ✔" if fait >= Donjons.NIVEAUX else ""], 14,
+		vb.add_child(UiCommun.label(UiCommun.t("Niveau %d / %d terminé%s") % [fait, Donjons.NIVEAUX, "  ✔" if fait >= Donjons.NIVEAUX else ""], 14,
 			UiCommun.C_OR if fait > 0 else UiCommun.C_DOUX))
 		_col_donjons.add_child(b)
 
@@ -199,11 +199,11 @@ func _remplir_niveaux() -> void:
 		var b := UiCommun.bouton("", 17)
 		b.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		var taille: String = Evolution.TAILLES[[0, 0, 0, 1, 1, 1, 1, 2, 2, 2][n - 1]]
-		var texte := "Niveau %d   ·   %s" % [n, Evolution.NOMS_TAILLE[taille] + "s"]
+		var texte := UiCommun.t("Niveau %d   ·   %s") % [n, Evolution.NOMS_TAILLE[taille] + "s"]
 		if n <= fait:
 			texte = "✔  " + texte
 		elif not ouvert:
-			texte = "Niveau %d  —  verrouillé" % n
+			texte = UiCommun.t("Niveau %d  —  verrouillé") % n
 		b.text = texte
 		b.disabled = not ouvert
 		var st := StyleBoxFlat.new()
@@ -239,7 +239,7 @@ func _remplir_fiche() -> void:
 	var n := _niveau_choisi()
 	var infos: Dictionary = Donjons.DONJONS[d]
 	var c := _couleur(d)
-	_fiche.add_child(UiCommun.label("%s  —  NIVEAU %d" % [str(infos["nom"]).to_upper(), n], 26, c.lightened(0.3)))
+	_fiche.add_child(UiCommun.label(UiCommun.t("%s  —  NIVEAU %d") % [str(infos["nom"]).to_upper(), n], 26, c.lightened(0.3)))
 	var st := UiCommun.label(infos["sous_titre"], 15, UiCommun.C_DOUX)
 	st.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_fiche.add_child(st)
@@ -261,7 +261,7 @@ func _remplir_fiche() -> void:
 		var vb := VBoxContainer.new()
 		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ligne.add_child(vb)
-		vb.add_child(UiCommun.label("%d.  %s   (niveau %d)" % [v + 1, Donjons.NOMS_VAGUE[type], int(ennemis[0]["niveau"])], 16,
+		vb.add_child(UiCommun.label(UiCommun.t("%d.  %s   (niveau %d)") % [v + 1, Donjons.NOMS_VAGUE[type], int(ennemis[0]["niveau"])], 16,
 			Color("ff9a7a") if type == "boss" else (Color("ffd060") if type == "mini_boss" else UiCommun.C_TEXTE)))
 		var noms: Array = []
 		for e in ennemis:
@@ -280,7 +280,7 @@ func _remplir_fiche() -> void:
 	var rapport := equipe / maxf(1.0, Donjons.puissance_conseillee(n))
 	var diff := "Très difficile" if rapport < 0.85 else ("Difficile" if rapport < 1.05 else ("Équilibré" if rapport < 1.3 else "Facile"))
 	var coul := Color("ff5a4a") if rapport < 0.85 else (Color("ffa040") if rapport < 1.05 else (Color("e0d060") if rapport < 1.3 else Color("6ad06a")))
-	_fiche.add_child(UiCommun.label("Puissance conseillée : %d   ·   Ton équipe : %d" % [int(Donjons.puissance_conseillee(n)), int(equipe)], 15, UiCommun.C_TEXTE))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Puissance conseillée : %d   ·   Ton équipe : %d") % [int(Donjons.puissance_conseillee(n)), int(equipe)], 15, UiCommun.C_TEXTE))
 	_fiche.add_child(UiCommun.label("Estimation : " + diff, 17, coul))
 
 	# Butin
@@ -293,8 +293,8 @@ func _remplir_fiche() -> void:
 	var b := Donjons.butin(d, n)
 	for o in b:
 		grille.add_child(_ligne_objet(o, "x%d" % int(b[o])))
-	grille.add_child(UiCommun.label("+ %d or" % Donjons.or_victoire(n), 15, Color("ffd060")))
-	_fiche.add_child(UiCommun.label("%d %% de chance d'une %s en bonus." % [int(Donjons.CHANCE_BONUS * 100),
+	grille.add_child(UiCommun.label(UiCommun.t("+ %d or") % Donjons.or_victoire(n), 15, Color("ffd060")))
+	_fiche.add_child(UiCommun.label(UiCommun.t("%d %% de chance d'une %s en bonus.") % [int(Donjons.CHANCE_BONUS * 100),
 		Reliquaire.nom(Donjons.ressource_principale(d, n))], 13, UiCommun.C_DOUX))
 
 	# Ressources possédées
@@ -306,7 +306,7 @@ func _remplir_fiche() -> void:
 		var r := Evolution.ressource(d, t)
 		poss.add_child(_ligne_objet(r, "%d" % Sauvegarde.get_objet(r)))
 	var usage := "toutes les évolutions (en plus de la ressource de l'élément)" if d == "neutre" \
-		else "faire évoluer les unités %s" % ("de " + UnitesData.ELEMENTS[d] if d != "eau" else "d'Eau")
+		else UiCommun.t("faire évoluer les unités %s") % ("de " + UnitesData.ELEMENTS[d] if d != "eau" else "d'Eau")
 	_fiche.add_child(UiCommun.label("Sert à " + usage + ".", 13, UiCommun.C_DOUX))
 
 	# Équipe et départ
@@ -314,7 +314,7 @@ func _remplir_fiche() -> void:
 	var noms: Array = []
 	for uid in Sauvegarde.get_equipe():
 		var h := Sauvegarde.get_heros(uid)
-		noms.append("%s Nv %d" % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])])
+		noms.append(UiCommun.t("%s Nv %d") % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])])
 	var eq := UiCommun.label("Équipe : " + (", ".join(noms) if not noms.is_empty() else "aucune unité"), 14, UiCommun.C_TEXTE)
 	eq.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_fiche.add_child(eq)
@@ -326,7 +326,7 @@ func _remplir_fiche() -> void:
 		EcranDeck.scene_retour = SCENE
 		get_tree().change_scene_to_file(EcranDeck.SCENE))
 	actions.add_child(deck)
-	var go := UiCommun.bouton("LANCER L'EXPÉDITION  (%d stamina)" % Donjons.COUT_STAMINA[n - 1], 20)
+	var go := UiCommun.bouton(UiCommun.t("LANCER L'EXPÉDITION  (%d stamina)") % Donjons.COUT_STAMINA[n - 1], 20)
 	go.custom_minimum_size = Vector2(0, 56)
 	go.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var sg := UiCommun.style_carte(c, 0.02, 2)

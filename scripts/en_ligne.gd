@@ -371,12 +371,12 @@ func _http(methode: int, chemin: String, corps = null, avec_jeton := true, entet
 		reseau_ok = false
 		push_warning("EnLigne %s : échec de la requête (résultat %d, code %d)" % [chemin, res[0], code])
 		return {"ok": false, "code": 0, "data": null,
-			"erreur": "Connexion au serveur impossible (erreur %d). Vérifie ta connexion internet." % res[0]}
+			"erreur": UiCommun.t("Connexion au serveur impossible (erreur %d). Vérifie ta connexion internet.") % res[0]}
 	reseau_ok = true
 	var ok := code >= 200 and code < 300
 	var erreur := ""
 	if not ok:
-		erreur = "Erreur du serveur (%d)." % code
+		erreur = UiCommun.t("Erreur du serveur (%d).") % code
 		if data is Dictionary:
 			var msg := str(data.get("msg", data.get("message", data.get("error_description", ""))))
 			if msg != "":
@@ -632,10 +632,10 @@ func texte_presence(vu_le: String) -> String:
 	if s < EN_LIGNE_SI_VU_DEPUIS:
 		return "En ligne"
 	if s < 3600:
-		return "Vu il y a %d min" % int(s / 60.0)
+		return UiCommun.t("Vu il y a %d min") % int(s / 60.0)
 	if s < 86400:
-		return "Vu il y a %d h" % int(s / 3600.0)
-	return "Vu il y a %d j" % int(s / 86400.0)
+		return UiCommun.t("Vu il y a %d h") % int(s / 3600.0)
+	return UiCommun.t("Vu il y a %d j") % int(s / 86400.0)
 
 
 # ------------------------------------------------------------------

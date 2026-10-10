@@ -486,7 +486,7 @@ func _evenement(id: int) -> void:
 			_gagner_or(gain)
 			Sauvegarde.ajouter_stat("coffres_ouverts")
 			_terminer(id)
-			var txt := "Tu ouvres le coffre : +%d or." % gain
+			var txt := UiCommun.t("Tu ouvres le coffre : +%d or.") % gain
 			if randf() < CHANCE_SCEAU_COFFRE:
 				Sauvegarde.ajouter_objet(Menagerie.SCEAU, 1)
 				txt += "\nTu trouves aussi un Sceau Sauvage !"
@@ -513,7 +513,7 @@ func _mystere(id: int) -> void:
 		var gain := 60 + int(noeuds[id]["niveau"]) * 20
 		_gagner_or(gain)
 		_terminer(id)
-		_message("Mystère : trésor caché", "Sous une dalle, une bourse oubliée : +%d or." % gain, _verifier_impasse)
+		_message("Mystère : trésor caché", UiCommun.t("Sous une dalle, une bourse oubliée : +%d or.") % gain, _verifier_impasse)
 	elif r < 0.6:
 		benediction = true
 		_terminer(id)
@@ -533,7 +533,7 @@ func _assez_de_stamina(id: int) -> bool:
 	var cout := _cout_stamina(id)
 	if Sauvegarde.get_stamina() >= cout:
 		return true
-	_message("Stamina insuffisante", "Ce combat coûte %d stamina, tu en as %d.\n\n+1 stamina toutes les 5 minutes (prochain point dans %s).\nTu peux aussi boire un Élixir au Reliquaire." % [
+	_message("Stamina insuffisante", UiCommun.t("Ce combat coûte %d stamina, tu en as %d.\n\n+1 stamina toutes les 5 minutes (prochain point dans %s).\nTu peux aussi boire un Élixir au Reliquaire.") % [
 		cout, Sauvegarde.get_stamina(), Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())])
 	return false
 
@@ -596,7 +596,7 @@ func _victoire(id: int) -> void:
 	var n: Dictionary = noeuds[id]
 	_terminer(id)
 	_maj_equipe_hud()
-	lbl_or.text = "Or : %d" % Sauvegarde.get_or()
+	lbl_or.text = UiCommun.t("Or : %d") % Sauvegarde.get_or()
 	if n["type"] == T.BOSS:
 		var premiere_fois := not ActesData.est_termine(acte, chapitre)
 		ActesData.marquer_termine(acte, chapitre)
@@ -610,7 +610,7 @@ func _victoire(id: int) -> void:
 		var p := (acte - 1) * 6 + chapitre
 		var xp := (20 + p * 3) if premiere_fois and not Sauvegarde.niveau_compte_max_atteint() else 0
 		var niveaux := Sauvegarde.ajouter_xp_compte(xp) if xp > 0 else 0
-		var texte := "Le boss est vaincu.\n\nOr gagné dans ce chapitre : %d" % or_gagne
+		var texte := UiCommun.t("Le boss est vaincu.\n\nOr gagné dans ce chapitre : %d") % or_gagne
 		# Fins de l'histoire (Acte XII : fin douce-amère ; Acte XIII caché : vraie fin)
 		var fin_lignes: Array = []
 		if chapitre == 6 and acte == 12:
@@ -624,9 +624,9 @@ func _victoire(id: int) -> void:
 		if not fin_lignes.is_empty():
 			texte += "\n\n" + "\n".join(fin_lignes)
 		if xp > 0:
-			texte += "\nBonus de premier passage : +%d XP de compte" % xp
+			texte += UiCommun.t("\nBonus de premier passage : +%d XP de compte") % xp
 		if niveaux > 0:
-			texte += "\n\nNIVEAU DE COMPTE %d ! Stamina max : %d — stamina rechargée !" % [Sauvegarde.get_niveau_compte(), Sauvegarde.get_stamina_max()]
+			texte += UiCommun.t("\n\nNIVEAU DE COMPTE %d ! Stamina max : %d — stamina rechargée !") % [Sauvegarde.get_niveau_compte(), Sauvegarde.get_stamina_max()]
 		_message("Chapitre terminé !", texte, _retour)
 	elif n.get("mimic", false):
 		# Le trésor du Mimic : le double d'un coffre normal
@@ -635,7 +635,7 @@ func _victoire(id: int) -> void:
 		Sauvegarde.ajouter_stat("coffres_ouverts")
 		Sauvegarde.ajouter_stat("mimics_vaincus")
 		Sauvegarde.ajouter_objet(Menagerie.SCEAU, 2)
-		_message("Mimic vaincu !", "Dans la carcasse du Mimic, tu trouves son trésor : +%d or et 2 Sceaux Sauvages." % gain, _verifier_impasse)
+		_message("Mimic vaincu !", UiCommun.t("Dans la carcasse du Mimic, tu trouves son trésor : +%d or et 2 Sceaux Sauvages.") % gain, _verifier_impasse)
 	else:
 		_verifier_impasse()
 
@@ -669,7 +669,7 @@ func _astuce_defaite(nb: int) -> String:
 	for uid in equipe:
 		portes += Sauvegarde.echos_de(int(uid)).size()
 	if portes < equipe.size() * 3:
-		return "Astuce : ton équipe porte peu d'Échos Sanguins (%d sur %d emplacements). Équipe ceux que tu as gagnés (menu Échos Sanguins) : c'est le moyen le plus rapide de devenir plus fort." % [portes, equipe.size() * 6]
+		return UiCommun.t("Astuce : ton équipe porte peu d'Échos Sanguins (%d sur %d emplacements). Équipe ceux que tu as gagnés (menu Échos Sanguins) : c'est le moyen le plus rapide de devenir plus fort.") % [portes, equipe.size() * 6]
 	if nb >= 3:
 		return "Astuce : améliore tes meilleurs Échos (+3, +6…), monte le niveau de tes nouvelles unités à l'Autel de Fusion (Absorption), ou retente : chaque combat a sa part de hasard."
 	return ""
@@ -678,7 +678,7 @@ func _astuce_defaite(nb: int) -> String:
 func _gagner_or(montant: int) -> void:
 	or_gagne += montant
 	Sauvegarde.ajouter_or(montant)
-	lbl_or.text = "Or : %d" % Sauvegarde.get_or()
+	lbl_or.text = UiCommun.t("Or : %d") % Sauvegarde.get_or()
 
 
 func _maj_stamina() -> void:
@@ -747,13 +747,13 @@ func _maj_survol(p: Vector2) -> void:
 	info_titre.text = PlateauGenerateur.NOMS[type]
 	var sous := ""
 	if PlateauGenerateur.est_combat(type):
-		sous = "Niveau %d" % Rencontres.niveau_ennemis(acte, chapitre, n)
+		sous = UiCommun.t("Niveau %d") % Rencontres.niveau_ennemis(acte, chapitre, n)
 	if n["voie_risquee"]:
 		sous += ("  ·  " if sous != "" else "") + "Voie risquée"
 	if n["cul_de_sac"]:
 		sous += ("  ·  " if sous != "" else "") + "Cul-de-sac"
 	if n.get("mimic", false) and not termines.has(id):
-		sous += ("  ·  " if sous != "" else "") + "MIMIC ! (niveau %d)" % Rencontres.niveau_ennemis(acte, chapitre, n)
+		sous += ("  ·  " if sous != "" else "") + UiCommun.t("MIMIC ! (niveau %d)") % Rencontres.niveau_ennemis(acte, chapitre, n)
 	if termines.has(id) and type != T.DEPART:
 		sous += ("  ·  " if sous != "" else "") + "Terminé"
 	info_sous.text = sous
@@ -998,7 +998,7 @@ func _dessiner_case(n: Dictionary, p: Vector2) -> void:
 		draw_texture_rect(mini, Rect2(p + Vector2(-w / 2.0, r * 0.35 - h), Vector2(w, h)), false, teinte)
 
 	if PlateauGenerateur.est_combat(type) and not fait:
-		_texte(p + Vector2(0, r + 26.0), "Nv %d" % Rencontres.niveau_ennemis(acte, chapitre, n), 14, Color(1, 0.9, 0.75, 0.85))
+		_texte(p + Vector2(0, r + 26.0), UiCommun.t("Nv %d") % Rencontres.niveau_ennemis(acte, chapitre, n), 14, Color(1, 0.9, 0.75, 0.85))
 
 
 ## Image de la miniature d'un type de case (chargée une seule fois), ou null.
@@ -1194,7 +1194,7 @@ func _creer_hud() -> void:
 	var a := ActesData.get_acte(acte)
 	var chap := ActesData.get_chapitre(acte, chapitre)
 	lbl_titre = Label.new()
-	lbl_titre.text = "ACTE %s · CHAPITRE %d — %s" % [a.get("romain", ""), chapitre, chap.get("titre", "")]
+	lbl_titre.text = UiCommun.t("ACTE %s · CHAPITRE %d — %s") % [a.get("romain", ""), chapitre, chap.get("titre", "")]
 	lbl_titre.tooltip_text = Echos.texte_loot(acte, chapitre)
 	lbl_titre.mouse_filter = Control.MOUSE_FILTER_PASS
 	lbl_titre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -1223,7 +1223,7 @@ func _creer_hud() -> void:
 	_maj_stamina()
 
 	lbl_or = Label.new()
-	lbl_or.text = "Or : %d" % Sauvegarde.get_or()
+	lbl_or.text = UiCommun.t("Or : %d") % Sauvegarde.get_or()
 	lbl_or.add_theme_font_size_override("font_size", 20)
 	lbl_or.add_theme_color_override("font_color", Color("ffd060"))
 	ligne.add_child(lbl_or)
@@ -1303,7 +1303,7 @@ func _maj_equipe_hud() -> void:
 		ligne.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var nom := _label(14, Color(0.92, 0.88, 0.85))
 		nom.autowrap_mode = TextServer.AUTOWRAP_OFF
-		nom.text = "%s Nv %d" % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])]
+		nom.text = UiCommun.t("%s Nv %d") % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])]
 		nom.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		nom.clip_text = true
 		ligne.add_child(nom)

@@ -119,12 +119,12 @@ static func raison_eveil_impossible(uid_principal: int, sacrifices: Array, pierr
 	if est_eveille(h):
 		return "Ce héros est déjà Éveillé (★6) : étoiles au maximum."
 	if int(h["niveau"]) < niveau_requis(h):
-		return "Niveau %d requis pour passer ★%d (actuellement Nv %d)." % [niveau_requis(h), etoiles(h) + 1, int(h["niveau"])]
+		return UiCommun.t("Niveau %d requis pour passer ★%d (actuellement Nv %d).") % [niveau_requis(h), etoiles(h) + 1, int(h["niveau"])]
 	var besoin := doublons_requis(h)
 	if pierres > Sauvegarde.get_objet(PIERRE):
 		return "Pas assez de Pierres d'Éveil."
 	if sacrifices.size() + pierres < besoin:
-		return "Il faut %d doublon(s) de %s ou Pierre(s) d'Éveil (sélectionnés : %d)." % [besoin, UnitesData.get_unite(h["id"])["nom"], sacrifices.size() + pierres]
+		return UiCommun.t("Il faut %d doublon(s) de %s ou Pierre(s) d'Éveil (sélectionnés : %d).") % [besoin, UnitesData.get_unite(h["id"])["nom"], sacrifices.size() + pierres]
 	for uid in sacrifices:
 		var s := Sauvegarde.get_heros(int(uid))
 		if s.is_empty() or UnitesData.lignee(s["id"]) != UnitesData.lignee(h["id"]):
@@ -133,7 +133,7 @@ static func raison_eveil_impossible(uid_principal: int, sacrifices: Array, pierr
 		if r != "":
 			return r
 	if Sauvegarde.get_or() < cout_eveil(h):
-		return "Pas assez d'or (%d requis)." % cout_eveil(h)
+		return UiCommun.t("Pas assez d'or (%d requis).") % cout_eveil(h)
 	return ""
 
 
@@ -202,17 +202,17 @@ static func raison_absorption_impossible(uid_principal: int, sacrifices: Array) 
 	if h.is_empty():
 		return "Choisis d'abord un héros principal."
 	if int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
-		return "Ce héros est déjà au niveau maximum (%d)." % UnitesData.niveau_max(h["id"])
+		return UiCommun.t("Ce héros est déjà au niveau maximum (%d).") % UnitesData.niveau_max(h["id"])
 	if sacrifices.is_empty():
 		return "Choisis au moins une unité à sacrifier."
 	if sacrifices.size() > MAX_SACRIFICES:
-		return "%d sacrifices maximum à la fois." % MAX_SACRIFICES
+		return UiCommun.t("%d sacrifices maximum à la fois.") % MAX_SACRIFICES
 	for uid in sacrifices:
 		var r := raison_non_sacrifiable(int(uid), uid_principal)
 		if r != "":
 			return r
 	if Sauvegarde.get_or() < cout_absorption(uid_principal, sacrifices):
-		return "Pas assez d'or (%d requis)." % cout_absorption(uid_principal, sacrifices)
+		return UiCommun.t("Pas assez d'or (%d requis).") % cout_absorption(uid_principal, sacrifices)
 	return ""
 
 

@@ -64,7 +64,7 @@ func _tic() -> void:
 
 
 func _maj_ressources() -> void:
-	_lbl_ressources.text = "Sceaux Sauvages %d   ·   Or %s" % [Sauvegarde.get_objet(Menagerie.SCEAU), _nombre(Sauvegarde.get_or())]
+	_lbl_ressources.text = UiCommun.t("Sceaux Sauvages %d   ·   Or %s") % [Sauvegarde.get_objet(Menagerie.SCEAU), _nombre(Sauvegarde.get_or())]
 
 
 func _remplir() -> void:
@@ -82,7 +82,7 @@ func _remplir() -> void:
 
 func _chasse() -> void:
 	var eq := Menagerie.equipes()
-	_texte("Une équipe de chasse = un héros N ou R (hors équipe de combat) + un familier. Le butin s'accumule même jeu fermé, jusqu'à 12 h de chasse : viens le récolter ! Places : %d / %d (une de plus aux niveaux de compte 10, 20 et 30)." % [
+	_texte(UiCommun.t("Une équipe de chasse = un héros N ou R (hors équipe de combat) + un familier. Le butin s'accumule même jeu fermé, jusqu'à 12 h de chasse : viens le récolter ! Places : %d / %d (une de plus aux niveaux de compte 10, 20 et 30).") % [
 		eq.size(), Menagerie.places()], 15, UiCommun.C_TEXTE)
 	for i in eq.size():
 		_carte_equipe(i, eq[i])
@@ -98,7 +98,7 @@ func _chasse() -> void:
 			h.add_child(b)
 		else:
 			var palier: int = Menagerie.PALIERS_PLACES[i - Menagerie.PLACES_DEPART]
-			h.add_child(UiCommun.label("Place verrouillée : niveau de compte %d" % palier, 17, UiCommun.C_DOUX))
+			h.add_child(UiCommun.label(UiCommun.t("Place verrouillée : niveau de compte %d") % palier, 17, UiCommun.C_DOUX))
 	_contenu.add_child(HSeparator.new())
 	_titre("LES TERRAINS DE CHASSE", C_VERT)
 	var g := GridContainer.new()
@@ -126,7 +126,7 @@ func _carte_equipe(i: int, e: Dictionary) -> void:
 	var noms := "%s  +  %s" % [FamiliersData.get_familier(f["id"])["nom"] if not f.is_empty() else "?",
 		UnitesData.get_unite(hs["id"])["nom"] if not hs.is_empty() else "?"]
 	vb.add_child(UiCommun.label(noms, 18, UiCommun.C_TEXTE))
-	vb.add_child(UiCommun.label("%s   ·   récolte x%s   ·   un butin toutes les %s" % [zone["nom"],
+	vb.add_child(UiCommun.label(UiCommun.t("%s   ·   récolte x%s   ·   un butin toutes les %s") % [zone["nom"],
 		_n(Menagerie.multiplicateur(int(e["heros"]), f, e["zone"])) if not f.is_empty() else "?",
 		_duree(Menagerie.minutes(f, e["zone"])) if not f.is_empty() else "?"], 14, C_VERT))
 	var ligne := HBoxContainer.new()
@@ -134,7 +134,7 @@ func _carte_equipe(i: int, e: Dictionary) -> void:
 	vb.add_child(ligne)
 	var plafond := Menagerie.plafond(e)
 	ligne.add_child(_barre(int(e["butins"]), plafond, C_VERT, 260))
-	ligne.add_child(UiCommun.label("Butins : %d / %d" % [int(e["butins"]), plafond], 14, UiCommun.C_TEXTE))
+	ligne.add_child(UiCommun.label(UiCommun.t("Butins : %d / %d") % [int(e["butins"]), plafond], 14, UiCommun.C_TEXTE))
 	var tl := UiCommun.label(_texte_timer(e), 14, Color("ffb070"))
 	ligne.add_child(tl)
 	_lbl_timers.append([tl, i])
@@ -165,7 +165,7 @@ func _texte_timer(e: Dictionary) -> String:
 	var s := Menagerie.secondes_avant_butin(e)
 	if s < 0:
 		return "STOCK PLEIN : récolte !"
-	return "Prochain butin dans %s" % Calendrier.texte_duree(s)
+	return UiCommun.t("Prochain butin dans %s") % Calendrier.texte_duree(s)
 
 
 func _carte_zone(z: String) -> PanelContainer:
@@ -185,12 +185,12 @@ func _carte_zone(z: String) -> PanelContainer:
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(desc)
 	var b: Dictionary = d["butin"]
-	var bt := UiCommun.label("Commun : %s\nRare : %s\nÉpique : %s" % [_nom_butin(b["commun"][0]), _nom_butin(b["rare"][0]), _nom_butin(b["epique"][0])], 13, UiCommun.C_TEXTE)
+	var bt := UiCommun.label(UiCommun.t("Commun : %s\nRare : %s\nÉpique : %s") % [_nom_butin(b["commun"][0]), _nom_butin(b["rare"][0]), _nom_butin(b["epique"][0])], 13, UiCommun.C_TEXTE)
 	bt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(bt)
 	var roles: Array = d["roles"].map(func(r): return UnitesData.ROLES[r])
-	vb.add_child(UiCommun.label("Héros favoris (+20 %%) : %s" % ", ".join(roles), 13, Color("ffb070")))
-	vb.add_child(UiCommun.label("Rythme : x%s" % _n(float(d["facteur"])) if ouverte else "Débloquée au niveau de compte %d" % int(d["niveau"]), 13, UiCommun.C_DOUX if ouverte else Color("ff7a6a")))
+	vb.add_child(UiCommun.label(UiCommun.t("Héros favoris (+20 %%) : %s") % ", ".join(roles), 13, Color("ffb070")))
+	vb.add_child(UiCommun.label(UiCommun.t("Rythme : x%s") % _n(float(d["facteur"])) if ouverte else UiCommun.t("Débloquée au niveau de compte %d") % int(d["niveau"]), 13, UiCommun.C_DOUX if ouverte else Color("ff7a6a")))
 	return p
 
 
@@ -222,7 +222,7 @@ func _nouvelle_chasse() -> void:
 	var of := _option(c, "Familier")
 	for f in fams:
 		var d := FamiliersData.get_familier(f["id"])
-		of.add_item("%s (%s, niv. %d%s) · terrain : %s" % [d["nom"], d["rarete"], int(f["niveau"]),
+		of.add_item(UiCommun.t("%s (%s, niv. %d%s) · terrain : %s") % [d["nom"], d["rarete"], int(f["niveau"]),
 			"" if int(f["etoiles"]) <= 1 else ", " + "★".repeat(int(f["etoiles"])), Menagerie.ZONES[d["terrain"]]["nom"]])
 	var est := UiCommun.label("", 15, C_VERT)
 	est.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -234,7 +234,7 @@ func _nouvelle_chasse() -> void:
 		oh.clear()
 		for h in heros:
 			var u := UnitesData.get_unite(h["id"])
-			oh.add_item("%s (%s, %s, niv. %d)%s" % [u["nom"], u["rarete"], UnitesData.ROLES[u["role"]], int(h["niveau"]),
+			oh.add_item(UiCommun.t("%s (%s, %s, niv. %d)%s") % [u["nom"], u["rarete"], UnitesData.ROLES[u["role"]], int(h["niveau"]),
 				"  ★ favori" if u["role"] in Menagerie.ZONES[z]["roles"] else ""])
 		oh.select(0)
 	var maj_estimation := func():
@@ -245,7 +245,7 @@ func _nouvelle_chasse() -> void:
 		var t: Array = []
 		for o in e:
 			t.append("%s %s" % [_n(e[o]), "or" if o == "or" else Reliquaire.nom(o)])
-		est.text = "Récolte x%s  ·  un butin toutes les %s  ·  Fortune %s\nEn 12 h (moyenne) : %s" % [
+		est.text = UiCommun.t("Récolte x%s  ·  un butin toutes les %s  ·  Fortune %s\nEn 12 h (moyenne) : %s") % [
 			_n(Menagerie.multiplicateur(h_uid, f, z)), _duree(Menagerie.minutes(f, z)), _n(Menagerie.fortune(f)), ", ".join(t)]
 	remplir_heros.call()
 	oz.item_selected.connect(func(_i):
@@ -286,7 +286,7 @@ func _familiers() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 12)
 	_contenu.add_child(tete)
-	var t := UiCommun.label("%d familier(s) · %d / %d découverts au Bestiaire" % [Menagerie.familiers().size(),
+	var t := UiCommun.label(UiCommun.t("%d familier(s) · %d / %d découverts au Bestiaire") % [Menagerie.familiers().size(),
 		_nb_decouverts(), FamiliersData.LISTE.size()], 16, UiCommun.C_TEXTE)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
@@ -341,7 +341,7 @@ func _carte_familier(f: Dictionary) -> Button:
 	n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	n.custom_minimum_size = Vector2(176, 0)
 	vb.add_child(n)
-	var s := UiCommun.label("%s · Niv. %d%s" % [d["rarete"], int(f["niveau"]), "  " + "★".repeat(int(f["etoiles"])) if int(f["etoiles"]) > 1 else ""], 13, coul)
+	var s := UiCommun.label(UiCommun.t("%s · Niv. %d%s") % [d["rarete"], int(f["niveau"]), "  " + "★".repeat(int(f["etoiles"])) if int(f["etoiles"]) > 1 else ""], 13, coul)
 	s.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(s)
 	if Menagerie.occupe_fam(int(f["uid"])):
@@ -364,10 +364,10 @@ func _fiche(uid: int) -> void:
 	vb.add_theme_constant_override("separation", 4)
 	c.add_child(vb)
 	var coul: Color = UiCommun.COULEURS_RARETE[d["rarete"]]
-	vb.add_child(UiCommun.label("%s · %s · Niveau %d / %d · %s" % [d["rarete"], UnitesData.ELEMENTS[d["element"]], int(f["niveau"]),
+	vb.add_child(UiCommun.label(UiCommun.t("%s · %s · Niveau %d / %d · %s") % [d["rarete"], UnitesData.ELEMENTS[d["element"]], int(f["niveau"]),
 		int(d["niveau_max"]), "★".repeat(int(f["etoiles"]))], 16, coul))
 	if int(f["niveau"]) < int(d["niveau_max"]):
-		vb.add_child(UiCommun.label("XP %d / %d (1 XP par butin)" % [int(f["xp"]), Menagerie.xp_niveau(int(f["niveau"]))], 13, UiCommun.C_DOUX))
+		vb.add_child(UiCommun.label(UiCommun.t("XP %d / %d (1 XP par butin)") % [int(f["xp"]), Menagerie.xp_niveau(int(f["niveau"]))], 13, UiCommun.C_DOUX))
 	for l in _lignes_stats(f):
 		vb.add_child(UiCommun.label(l, 15, UiCommun.C_TEXTE))
 	var desc := UiCommun.label(d["description"], 14, UiCommun.C_DOUX)
@@ -383,15 +383,15 @@ func _fiche(uid: int) -> void:
 			if r != "":
 				_erreur(r)
 			else:
-				_annoncer(["%s : %d étoiles !" % [d["nom"], int(Menagerie.get_fam(uid)["etoiles"])]])
+				_annoncer([UiCommun.t("%s : %d étoiles !") % [d["nom"], int(Menagerie.get_fam(uid)["etoiles"])]])
 			rafraichir()])
 	if not Menagerie.occupe_fam(uid):
 		var gain: int = Menagerie.OR_LIBERATION[d["rarete"]] * int(f["etoiles"])
-		boutons.append(["Libérer (+%d or)" % gain, func():
-			FenetreSimple.confirmer(self, "Libérer %s ?" % d["nom"], "Il retournera à la vie sauvage. Tu reçois %d or." % gain, "Libérer", func():
+		boutons.append([UiCommun.t("Libérer (+%d or)") % gain, func():
+			FenetreSimple.confirmer(self, UiCommun.t("Libérer %s ?") % d["nom"], UiCommun.t("Il retournera à la vie sauvage. Tu reçois %d or.") % gain, "Libérer", func():
 				var g := Menagerie.liberer(uid)
 				if g > 0:
-					_annoncer(["Or : +%d" % g])
+					_annoncer([UiCommun.t("Or : +%d") % g])
 				rafraichir())])
 	var fen := FenetreSimple.new()
 	fen.largeur = 700.0
@@ -404,10 +404,10 @@ func _fiche(uid: int) -> void:
 static func _lignes_stats(f: Dictionary) -> Array:
 	var d := FamiliersData.get_familier(f["id"])
 	return [
-		"Récolte : x%s" % _n(Menagerie.recolte(f)),
-		"Célérité : un butin toutes les %s (x rythme de la zone)" % _duree(float(d["celerite"])),
+		UiCommun.t("Récolte : x%s") % _n(Menagerie.recolte(f)),
+		UiCommun.t("Célérité : un butin toutes les %s (x rythme de la zone)") % _duree(float(d["celerite"])),
 		"Fortune : %s" % _n(Menagerie.fortune(f)),
-		"Terrain préféré : %s (+25 %% de récolte)" % Menagerie.ZONES[d["terrain"]]["nom"],
+		UiCommun.t("Terrain préféré : %s (+25 %% de récolte)") % Menagerie.ZONES[d["terrain"]]["nom"],
 		"Talent — " + FamiliersData.texte_talent(f["id"], int(f["etoiles"])),
 	]
 

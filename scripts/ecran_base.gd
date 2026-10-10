@@ -93,7 +93,7 @@ func rafraichir() -> void:
 
 
 func _maj_ressources() -> void:
-	_lbl_ressources.text = "Or %s   ·   Gemmes %d   ·   Stamina %d/%d" % [_nombre(Sauvegarde.get_or()),
+	_lbl_ressources.text = UiCommun.t("Or %s   ·   Gemmes %d   ·   Stamina %d/%d") % [_nombre(Sauvegarde.get_or()),
 		Sauvegarde.get_gemmes(), Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max()]
 
 

@@ -61,7 +61,7 @@ func _ready() -> void:
 	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	entete.add_child(titre)
 	if EnLigne.est_connecte():
-		entete.add_child(UiCommun.label("%s  (pseudo : %s)" % [EnLigne.nom_complet(), EnLigne.pseudo()], 20, UiCommun.C_LEGENDE))
+		entete.add_child(UiCommun.label(UiCommun.t("%s  (pseudo : %s)") % [EnLigne.nom_complet(), EnLigne.pseudo()], 20, UiCommun.C_LEGENDE))
 		var rafraichir := UiCommun.bouton("↻ Actualiser")
 		rafraichir.pressed.connect(_charger)
 		entete.add_child(rafraichir)
@@ -147,7 +147,7 @@ func _lignes(relation: String) -> Array:
 func _maj_titres_onglets() -> void:
 	var nb_amis := _lignes("ami").size()
 	var nb_recues := _lignes("recue").size()
-	_boutons_onglet["amis"].text = "Amis (%d/100)" % nb_amis
+	_boutons_onglet["amis"].text = UiCommun.t("Amis (%d/100)") % nb_amis
 	_boutons_onglet["demandes"].text = "Demandes" + (" (%d)" % nb_recues if nb_recues > 0 else "")
 
 
@@ -193,7 +193,7 @@ func _afficher() -> void:
 
 func _afficher_ajout() -> void:
 	_sous_titre("Ajouter un ami")
-	_vide("Entre le pseudo exact du joueur (majuscules sans importance). Donne aussi ton pseudo à tes amis : %s" % EnLigne.pseudo())
+	_vide(UiCommun.t("Entre le pseudo exact du joueur (majuscules sans importance). Donne aussi ton pseudo à tes amis : %s") % EnLigne.pseudo())
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 10)
 	_liste.add_child(ligne)
@@ -241,10 +241,10 @@ func _annuler(d: Dictionary) -> void:
 
 
 func _retirer(d: Dictionary) -> void:
-	FenetreSimple.confirmer(self, "Retirer un ami", "Retirer %s de ta liste d'amis ?" % EnLigne.nom_complet(str(d.pseudo)), "Retirer", func():
+	FenetreSimple.confirmer(self, "Retirer un ami", UiCommun.t("Retirer %s de ta liste d'amis ?") % EnLigne.nom_complet(str(d.pseudo)), "Retirer", func():
 		var r := await EnLigne.appeler("retirer_ami", {"p_joueur": d.id})
 		if is_inside_tree():
-			_etat.text = "%s a été retiré de tes amis." % EnLigne.nom_complet(str(d.pseudo)) if r.ok else r.erreur
+			_etat.text = UiCommun.t("%s a été retiré de tes amis.") % EnLigne.nom_complet(str(d.pseudo)) if r.ok else r.erreur
 			_charger())
 
 
@@ -280,7 +280,7 @@ func _ligne_joueur(d: Dictionary, actions: Array) -> Control:
 	infos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ligne.add_child(infos)
 	infos.add_child(UiCommun.label(EnLigne.nom_complet(str(d.pseudo)), 22, UiCommun.C_TEXTE))
-	var details := "Niv. %d" % int(d.niveau)
+	var details := UiCommun.t("Niv. %d") % int(d.niveau)
 	if str(d.get("guilde", "")) != "":
 		details += "  ·  Guilde : " + str(d.guilde)
 	infos.add_child(UiCommun.label(details, 16, UiCommun.C_DOUX))

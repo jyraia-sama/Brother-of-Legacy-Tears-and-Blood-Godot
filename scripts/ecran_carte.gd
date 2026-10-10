@@ -300,7 +300,7 @@ func _creer_noeuds() -> void:
 		b.text = ROMAINS[a]
 		b.focus_mode = Control.FOCUS_NONE
 		b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		b.tooltip_text = "Acte %s — %s" % [ROMAINS[a], ActesData.get_acte(a).get("titre", "")]
+		b.tooltip_text = UiCommun.t("Acte %s — %s") % [ROMAINS[a], ActesData.get_acte(a).get("titre", "")]
 		b.add_theme_font_size_override("font_size", 16 if a < 13 else 15)
 		_placer(b, Rect2(pos - Vector2(28, 28), Vector2(56, 56)))
 		b.pressed.connect(_choisir.bind(a))
@@ -409,7 +409,7 @@ func _afficher_acte(a: int) -> void:
 
 	var entete_partie := partie.to_upper()
 	if a < 13:
-		entete_partie = "PARTIE %s · %s" % ["I" if a <= 4 else ("II" if a <= 8 else "III"), entete_partie]
+		entete_partie = UiCommun.t("PARTIE %s · %s") % ["I" if a <= 4 else ("II" if a <= 8 else "III"), entete_partie]
 	vb.add_child(_label(entete_partie, 11, COULEURS_PARTIE.get(partie, C_OR), true))
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 10)
@@ -472,7 +472,7 @@ func _afficher_acte(a: int) -> void:
 	vb.add_child(pousse)
 
 	if ouvert and en_cours > 0:
-		var principal := _bouton("Continuer : chapitre %d" % en_cours, 16, true)
+		var principal := _bouton(UiCommun.t("Continuer : chapitre %d") % en_cours, 16, true)
 		principal.custom_minimum_size = Vector2(0, 44)
 		principal.pressed.connect(_ouvrir_chapitre.bind(a, en_cours))
 		vb.add_child(principal)
@@ -482,7 +482,7 @@ func _afficher_acte(a: int) -> void:
 		fini.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(fini)
 	else:
-		var l := _label("Termine l'Acte %s pour ouvrir cette région" % ROMAINS[a - 1], 13, C_DOUX)
+		var l := _label(UiCommun.t("Termine l'Acte %s pour ouvrir cette région") % ROMAINS[a - 1], 13, C_DOUX)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		var p := PanelContainer.new()
@@ -554,7 +554,7 @@ func _creer_hud() -> void:
 	retour.pressed.connect(_retour)
 	var t := _label("LES TERRES DES VALCENDRE", 20, C_OR, true)
 	_placer(t, Rect2(132, 6, 420, 26))
-	var p := _label("Histoire principale · %d / %d chapitres" % [_chapitres_termines(), ActesData.nb_chapitres_visibles()], 12, C_DOUX)
+	var p := _label(UiCommun.t("Histoire principale · %d / %d chapitres") % [_chapitres_termines(), ActesData.nb_chapitres_visibles()], 12, C_DOUX)
 	_placer(p, Rect2(132, 32, 420, 18))
 	var journal := _bouton("✎  Journal", 15, false)
 	journal.tooltip_text = "Revoir les scènes de l'histoire déjà vues"
@@ -713,8 +713,8 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 	g.add_theme_constant_override("separation", 8)
 	g.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	colonnes.add_child(g)
-	g.add_child(_label("ACTE %s · %s  —  CHAPITRE %d" % [ROMAINS[a], LIEUX[a - 1].lieu.to_upper(), c], 12, COULEURS_PARTIE.get(str(ActesData.get_acte(a).get("partie", "")), C_OR), true))
-	var titre := _label(str(chap.get("titre", "Chapitre %d" % c)), 26, C_TEXTE, true)
+	g.add_child(_label(UiCommun.t("ACTE %s · %s  —  CHAPITRE %d") % [ROMAINS[a], LIEUX[a - 1].lieu.to_upper(), c], 12, COULEURS_PARTIE.get(str(ActesData.get_acte(a).get("partie", "")), C_OR), true))
+	var titre := _label(str(chap.get("titre", UiCommun.t("Chapitre %d") % c)), 26, C_TEXTE, true)
 	titre.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	g.add_child(titre)
 	var statut := "✔  Terminé : tu peux le rejouer" if fait else ("▶  Disponible" if ouvert else "✕  Verrouillé")
@@ -734,10 +734,10 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 	grille.add_theme_constant_override("h_separation", 8)
 	grille.add_theme_constant_override("v_separation", 8)
 	g.add_child(grille)
-	grille.add_child(_case_fenetre("NIVEAU CONSEILLÉ", "Niv. %d" % niv))
+	grille.add_child(_case_fenetre("NIVEAU CONSEILLÉ", UiCommun.t("Niv. %d") % niv))
 	var niv_max := mini(niv + max_bonus, UnitesData.NIVEAU_MAX)
-	grille.add_child(_case_fenetre("ENNEMIS", "Niv. %d" % niv if niv_max <= niv else "Niv. %d à %d" % [niv, niv_max]))
-	grille.add_child(_case_fenetre("STAMINA", "⚡ %d minimum" % int(infos["stamina"])))
+	grille.add_child(_case_fenetre("ENNEMIS", UiCommun.t("Niv. %d") % niv if niv_max <= niv else UiCommun.t("Niv. %d à %d") % [niv, niv_max]))
+	grille.add_child(_case_fenetre("STAMINA", UiCommun.t("⚡ %d minimum") % int(infos["stamina"])))
 	grille.add_child(_case_fenetre("PLATEAU", "%d cases" % int(infos["cases"])))
 
 	g.add_child(_label("Créatures de la région", 12, C_DOUX, true))
@@ -757,7 +757,7 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 	for sid in vus:
 		if Sauvegarde.est_decouvert(sid):
 			n_vus += 1
-	g.add_child(_label("%d / %d au Bestiaire · les créatures inconnues restent cachées" % [n_vus, vus.size()], 11, Color("8e7f72")))
+	g.add_child(_label(UiCommun.t("%d / %d au Bestiaire · les créatures inconnues restent cachées") % [n_vus, vus.size()], 11, Color("8e7f72")))
 
 	var pousse := Control.new()
 	pousse.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -776,8 +776,8 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 		jouer.pressed.connect(_lancer.bind(a, c))
 		boutons.add_child(jouer)
 	else:
-		var cond := "Termine le chapitre %d de l'Acte %s pour l'ouvrir." % [c - 1, ROMAINS[a]] if c > 1 \
-			else "Termine l'Acte %s pour ouvrir cette région." % ROMAINS[a - 1]
+		var cond := UiCommun.t("Termine le chapitre %d de l'Acte %s pour l'ouvrir.") % [c - 1, ROMAINS[a]] if c > 1 \
+			else UiCommun.t("Termine l'Acte %s pour ouvrir cette région.") % ROMAINS[a - 1]
 		var lc := _label("🔒  " + cond, 13, C_DOUX)
 		lc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lc.size_flags_horizontal = Control.SIZE_EXPAND_FILL

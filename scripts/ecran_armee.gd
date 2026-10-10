@@ -66,7 +66,7 @@ func _ready() -> void:
 	for k in 4:
 		var ligne := HBoxContainer.new()
 		ligne.add_theme_constant_override("separation", 6)
-		var l := UiCommun.label("Escouade %d" % (k + 1), 14, UiCommun.C_OR)
+		var l := UiCommun.label(UiCommun.t("Escouade %d") % (k + 1), 14, UiCommun.C_OR)
 		l.custom_minimum_size = Vector2(88, 0)
 		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		ligne.add_child(l)
@@ -131,7 +131,7 @@ func _rafraichir() -> void:
 		var carte := UiCommun.carte_heros(h, 112, 150)
 		if uid in _places:
 			carte.modulate = Color(1, 1, 1, 0.35)
-			UiCommun.badge(carte, "Escouade %d" % (int(_places.find(uid) / 5.0) + 1), C_SANG)
+			UiCommun.badge(carte, UiCommun.t("Escouade %d") % (int(_places.find(uid) / 5.0) + 1), C_SANG)
 		if uid == _selection:
 			carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color.WHITE, 0.08, 3))
 		carte.pressed.connect(_clic_collection.bind(uid))
@@ -143,7 +143,7 @@ func _rafraichir() -> void:
 		if uid >= 0:
 			n += 1
 			p += _force(uid)
-	_lbl_info.text = "%d / 20 unités  ·  puissance %d%s" % [n, int(p),
+	_lbl_info.text = UiCommun.t("%d / 20 unités  ·  puissance %d%s") % [n, int(p),
 		"  ·  choisis une place" if _selection >= 0 else ""]
 
 

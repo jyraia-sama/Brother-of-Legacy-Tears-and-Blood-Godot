@@ -21,7 +21,7 @@ func _remplir() -> void:
 	for d in Succes.LISTE:
 		total += d["paliers"].size()
 		faits += Succes.reclames(d["id"])
-	_titre("Paliers obtenus : %d / %d   ·   Titres : %d / %d" % [faits, total, Succes.titres().size(), Succes.LISTE.size()])
+	_titre(UiCommun.t("Paliers obtenus : %d / %d   ·   Titres : %d / %d") % [faits, total, Succes.titres().size(), Succes.LISTE.size()])
 	_texte("Chaque palier atteint se réclame pour des gemmes. Le dernier palier d'un succès débloque un titre, à afficher dans « Mon héros ».")
 	# Ceux qu'on peut réclamer d'abord, puis les plus avancés
 	var l: Array = Succes.LISTE.duplicate()
@@ -56,7 +56,7 @@ func _carte(d: Dictionary) -> void:
 	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(vb)
 	vb.add_child(UiCommun.label(d["nom"], 18, C_TITRE if fini else UiCommun.C_TEXTE))
-	vb.add_child(UiCommun.label(str(d["desc"]) + "   Titre : « %s »" % d["titre"], 13, UiCommun.C_DOUX))
+	vb.add_child(UiCommun.label(str(d["desc"]) + UiCommun.t("   Titre : « %s »") % d["titre"], 13, UiCommun.C_DOUX))
 	var v := Succes.valeur(id)
 	var cible: int = d["paliers"][mini(rec, n - 1)][0]
 	var ligne := HBoxContainer.new()
@@ -65,7 +65,7 @@ func _carte(d: Dictionary) -> void:
 	ligne.add_child(_barre(v, cible, C_OK if (dispo or fini) else UiCommun.C_OR, 300))
 	ligne.add_child(UiCommun.label("%s / %s" % [_nombre(mini(v, cible) if not fini else v), _nombre(cible)], 14, UiCommun.C_TEXTE))
 	if not fini:
-		ligne.add_child(UiCommun.label("Palier %d : %s" % [rec + 1, Quetes.texte_recompense(d["paliers"][rec][1])], 14, UiCommun.C_OR))
+		ligne.add_child(UiCommun.label(UiCommun.t("Palier %d : %s") % [rec + 1, Quetes.texte_recompense(d["paliers"][rec][1])], 14, UiCommun.C_OR))
 	var b := UiCommun.bouton("Réclamer" if not fini else "Terminé", 16)
 	b.custom_minimum_size = Vector2(150, 44)
 	b.size_flags_vertical = Control.SIZE_SHRINK_CENTER

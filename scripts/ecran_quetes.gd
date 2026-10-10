@@ -18,8 +18,8 @@ func _titre_ecran() -> String:
 
 func _remplir() -> void:
 	_connexion()
-	_periode("jour", "QUÊTES DU JOUR", "Nouvelles quêtes dans %s" % Calendrier.texte_duree(Calendrier.secondes_avant_demain()), C_JOUR)
-	_periode("semaine", "QUÊTES DE LA SEMAINE", "Nouvelles quêtes dans %s" % Calendrier.texte_duree(Calendrier.secondes_avant_semaine()), C_SEMAINE)
+	_periode("jour", "QUÊTES DU JOUR", UiCommun.t("Nouvelles quêtes dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_demain()), C_JOUR)
+	_periode("semaine", "QUÊTES DE LA SEMAINE", UiCommun.t("Nouvelles quêtes dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_semaine()), C_SEMAINE)
 
 
 func _connexion() -> void:
@@ -46,14 +46,14 @@ func _connexion() -> void:
 		var vb := VBoxContainer.new()
 		vb.alignment = BoxContainer.ALIGNMENT_CENTER
 		p.add_child(vb)
-		var j := UiCommun.label("Jour %d%s" % [i + 1, "  ✔" if fait else ""], 16, c)
+		var j := UiCommun.label(UiCommun.t("Jour %d%s") % [i + 1, "  ✔" if fait else ""], 16, c)
 		j.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		vb.add_child(j)
 		var r := UiCommun.label(Quetes.texte_recompense(Quetes.CONNEXION[i]).replace(" · ", "\n"), 13, UiCommun.C_TEXTE if not fait else UiCommun.C_DOUX)
 		r.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		r.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(r)
-	var b := UiCommun.bouton("Réclamer la récompense du jour %d" % (suivant + 1) if dispo else "Déjà réclamée aujourd'hui — reviens demain !", 17)
+	var b := UiCommun.bouton(UiCommun.t("Réclamer la récompense du jour %d") % (suivant + 1) if dispo else "Déjà réclamée aujourd'hui — reviens demain !", 17)
 	b.disabled = not dispo
 	b.custom_minimum_size = Vector2(0, 52)
 	UiCommun.bouton_vif(b)
@@ -105,7 +105,7 @@ func _periode(periode: String, titre: String, reset: String, couleur: Color) -> 
 	var vbb := VBoxContainer.new()
 	vbb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hb.add_child(vbb)
-	vbb.add_child(UiCommun.label("COFFRE BONUS  —  %s  (%d / %d)" % [bonus["texte"], faites, liste.size()], 17, Color("ffd060")))
+	vbb.add_child(UiCommun.label(UiCommun.t("COFFRE BONUS  —  %s  (%d / %d)") % [bonus["texte"], faites, liste.size()], 17, Color("ffd060")))
 	vbb.add_child(UiCommun.label("Récompense : " + Quetes.texte_recompense(bonus["recompense"]), 14, UiCommun.C_OR))
 	var bb := UiCommun.bouton("Ouvrir le coffre" if not deja else "Ouvert", 16)
 	bb.custom_minimum_size = Vector2(170, 44)

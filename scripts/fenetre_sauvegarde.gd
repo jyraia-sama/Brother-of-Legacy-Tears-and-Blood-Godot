@@ -69,6 +69,22 @@ func _ready() -> void:
 	vb.add_child(muet)
 	vb.add_child(HSeparator.new())
 
+	# Langue du jeu (les noms des langues restent dans leur propre langue)
+	vb.add_child(_label("LANGUE  ·  LANGUAGE", 20, Color(1.0, 0.85, 0.55)))
+	var langues := HBoxContainer.new()
+	langues.add_theme_constant_override("separation", 8)
+	vb.add_child(langues)
+	var groupe_l := ButtonGroup.new()
+	for l in Ecran.LANGUES:
+		var bl := _bouton(Ecran.LANGUES[l], func(): Ecran.changer_langue(l))
+		bl.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		bl.toggle_mode = true
+		bl.button_group = groupe_l
+		bl.button_pressed = Ecran.langue() == l
+		bl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		langues.add_child(bl)
+	vb.add_child(HSeparator.new())
+
 	# Affichage : taille de l'interface (grande sur téléphone) et plein écran
 	vb.add_child(_label("AFFICHAGE", 20, Color(1.0, 0.85, 0.55)))
 	vb.add_child(_label("Taille de l'interface (« Très grande » conseillée sur téléphone) :", 16, Color(0.85, 0.7, 0.6)))
@@ -116,7 +132,7 @@ func _ready() -> void:
 		var lm := HBoxContainer.new()
 		lm.add_theme_constant_override("separation", 10)
 		vb.add_child(lm)
-		var t_version := _label("Version du jeu : v%s" % MiseAJour.version_actuelle, 17, Color(0.85, 0.7, 0.6))
+		var t_version := _label(UiCommun.t("Version du jeu : v%s") % MiseAJour.version_actuelle, 17, Color(0.85, 0.7, 0.6))
 		t_version.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		lm.add_child(t_version)
 		var chercher := _bouton("Rechercher une mise à jour", func(): MiseAJour.verifier(true))
@@ -266,7 +282,7 @@ func _curseur_volume(titre: String, type: String) -> HBoxContainer:
 func _resume() -> String:
 	var d: Dictionary = Sauvegarde.donnees
 	var date := Time.get_datetime_string_from_unix_time(int(d.get("sauvegarde_le", 0)) + _decalage_horaire(), true)
-	return "Niveau de compte : %d / %d   (XP %d / %d)\nOr : %d     Gemmes : %d     Stamina : %d / %d\nChapitres terminés : %d / 72\nDernière sauvegarde : %s" % [
+	return UiCommun.t("Niveau de compte : %d / %d   (XP %d / %d)\nOr : %d     Gemmes : %d     Stamina : %d / %d\nChapitres terminés : %d / 72\nDernière sauvegarde : %s") % [
 		Sauvegarde.get_niveau_compte(), Sauvegarde.NIVEAU_COMPTE_MAX, Sauvegarde.get_xp_compte(), Sauvegarde.xp_pour_niveau(Sauvegarde.get_niveau_compte()),
 		Sauvegarde.get_or(), Sauvegarde.get_gemmes(), Sauvegarde.get_stamina(), Sauvegarde.get_stamina_max(),
 		Sauvegarde.nombre_chapitres_termines(), date]

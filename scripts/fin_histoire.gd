@@ -44,7 +44,7 @@ static func fin_acte_12() -> Array:
 	if not f.get("acte12", false):
 		f["acte12"] = true
 		Succes.ajouter_titre(TITRE_ACTE_12)
-		l.append("Nouveau titre : « %s »" % TITRE_ACTE_12)
+		l.append(UiCommun.t("Nouveau titre : « %s »") % TITRE_ACTE_12)
 		Sauvegarde.sauvegarder()
 	return l
 
@@ -62,7 +62,7 @@ static func fin_acte_13() -> Array:
 	l.append("Kaël Valcendre rejoint ta collection (Héros de Légende) !")
 	# Titre
 	Succes.ajouter_titre(TITRE_ACTE_13)
-	l.append("Nouveau titre : « %s »" % TITRE_ACTE_13)
+	l.append(UiCommun.t("Nouveau titre : « %s »") % TITRE_ACTE_13)
 	# Les deux Échos uniques du Sceau des Frères (Légendaires, 6 étoiles)
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
@@ -76,7 +76,7 @@ static func fin_acte_13() -> Array:
 	# Gemmes et coffres
 	Sauvegarde.ajouter_gemmes(GEMMES_VRAIE_FIN)
 	Sauvegarde.ajouter_objet("coffre_royal", COFFRES_VRAIE_FIN)
-	l.append("Gemmes : +%d · Coffre Royal x%d" % [GEMMES_VRAIE_FIN, COFFRES_VRAIE_FIN])
+	l.append(UiCommun.t("Gemmes : +%d · Coffre Royal x%d") % [GEMMES_VRAIE_FIN, COFFRES_VRAIE_FIN])
 	Sauvegarde.sauvegarder()
 	return l
 

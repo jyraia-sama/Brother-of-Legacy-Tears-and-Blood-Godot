@@ -124,7 +124,7 @@ static func reclamer(id: String) -> Array:
 	s["reclames"][id] = i + 1
 	var lignes := Quetes.donner(d["paliers"][i][1])
 	if i + 1 >= d["paliers"].size():
-		lignes.append("Titre débloqué : « %s »" % d["titre"])
+		lignes.append(UiCommun.t("Titre débloqué : « %s »") % d["titre"])
 	Sauvegarde.sauvegarder()
 	return lignes
 

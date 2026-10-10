@@ -143,7 +143,7 @@ func _remplir_grille() -> void:
 			if _familier_visible(fid):
 				decouverts += 1
 			_grille.add_child(_carte_familier(fid))
-		_compteur.text = "Familiers découverts : %d / %d" % [decouverts, total]
+		_compteur.text = UiCommun.t("Familiers découverts : %d / %d") % [decouverts, total]
 		return
 	var toutes := UnitesData.toutes()
 	for id in toutes:
@@ -161,7 +161,7 @@ func _remplir_grille() -> void:
 		if _visible(id):
 			decouverts += 1
 		_grille.add_child(_carte(id, u))
-	_compteur.text = "Découverts : %d / %d" % [decouverts, total]
+	_compteur.text = UiCommun.t("Découverts : %d / %d") % [decouverts, total]
 
 
 func _carte(id: String, u: Dictionary) -> Button:
@@ -188,7 +188,7 @@ func _carte(id: String, u: Dictionary) -> Button:
 		n.add_theme_color_override("font_outline_color", Color.BLACK)
 		n.add_theme_constant_override("outline_size", 5)
 		bas.add_child(n)
-		var r := _label("%s · Légende" % u["rarete"] if u.get("legende", false) else u["rarete"], 12, bord)
+		var r := _label(UiCommun.t("%s · Légende") % u["rarete"] if u.get("legende", false) else u["rarete"], 12, bord)
 		r.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		r.add_theme_color_override("font_outline_color", Color.BLACK)
 		r.add_theme_constant_override("outline_size", 4)
@@ -236,7 +236,7 @@ func _carte(id: String, u: Dictionary) -> Button:
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	nom.custom_minimum_size = Vector2(130, 0)
 	vb.add_child(nom)
-	var rar := _label(("%s · Légende" % u["rarete"] if u.get("legende", false) else u["rarete"]) if connu else "", 13, bord)
+	var rar := _label((UiCommun.t("%s · Légende") % u["rarete"] if u.get("legende", false) else u["rarete"]) if connu else "", 13, bord)
 	rar.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(rar)
 	return b
@@ -320,12 +320,12 @@ func _selectionner_familier(fid: String) -> void:
 		_f_image.add_child(centre)
 	_f_nom.text = d["nom"]
 	_f_nom.add_theme_color_override("font_color", COULEURS_RARETE[d["rarete"]])
-	_f_infos.text = "%s  ·  %s  ·  Familier (Ménagerie)\nNon combattant · s'obtient au Pacte Sauvage de l'Autel d'Invocation" % [d["rarete"], UnitesData.ELEMENTS[d["element"]]]
+	_f_infos.text = UiCommun.t("%s  ·  %s  ·  Familier (Ménagerie)\nNon combattant · s'obtient au Pacte Sauvage de l'Autel d'Invocation") % [d["rarete"], UnitesData.ELEMENTS[d["element"]]]
 	_f_niveau.get_parent().visible = false
 	_f_stats.visible = false
 	var base := {"id": fid, "niveau": 1, "etoiles": 1}
 	_f_secondaires.text = "STATS DE CHASSE (niveau 1, 1 étoile)\n" + "\n".join(EcranMenagerie._lignes_stats(base)) \
-		+ "\nNiveau maximum : %d  ·  Éveil jusqu'à %d étoiles avec des doublons" % [int(d["niveau_max"]), FamiliersData.ETOILES_MAX]
+		+ UiCommun.t("\nNiveau maximum : %d  ·  Éveil jusqu'à %d étoiles avec des doublons") % [int(d["niveau_max"]), FamiliersData.ETOILES_MAX]
 	for enfant in _f_skills.get_children():
 		enfant.queue_free()
 	var desc := _label(d["description"], 15, C_TEXTE)
@@ -452,13 +452,13 @@ func _maj_fiche() -> void:
 	_f_nom.add_theme_color_override("font_color", COULEURS_RARETE[u["rarete"]])
 	var type_txt: String = "Héros de Légende" if u.get("legende", false) else ("Héros de Forge (Reliquaire)" if u.get("forge", false) else cat[u["categorie"]])
 	if UnitesData.est_evolue(_selection):
-		type_txt = "Évolution de « %s » (Autel d'Évolution, non invocable)" % UnitesData.get_unite(UnitesData.lignee(_selection))["nom"]
+		type_txt = UiCommun.t("Évolution de « %s » (Autel d'Évolution, non invocable)") % UnitesData.get_unite(UnitesData.lignee(_selection))["nom"]
 	if u.get("race", "") != "":
 		type_txt += "  ·  Race : " + u["race"]
 	_f_infos.text = "%s  ·  %s  ·  %s  ·  %s\n%s" % [
 		u["rarete"], UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]],
 		"Avant" if u["position"] == "avant" else "Arrière", type_txt]
-	_f_niveau.text = "Niveau %d" % _niveau
+	_f_niveau.text = UiCommun.t("Niveau %d") % _niveau
 
 	var s := UnitesData.stats(_selection, _niveau)
 	for enfant in _f_stats.get_children():
@@ -474,7 +474,7 @@ func _maj_fiche() -> void:
 		case.add_child(valeur)
 		case.add_child(nom)
 		_f_stats.add_child(case)
-	_f_secondaires.text = "Crit %d %%   ·   Dégâts crit %d %%   ·   RES %d   ·   Précision %d %%" % [
+	_f_secondaires.text = UiCommun.t("Crit %d %%   ·   Dégâts crit %d %%   ·   RES %d   ·   Précision %d %%") % [
 		s["crit"], s["degats_crit"], s["res"], s["preci"]]
 
 	for enfant in _f_skills.get_children():
@@ -483,7 +483,7 @@ func _maj_fiche() -> void:
 		var debloque: bool = sk["niveau"] <= _niveau
 		var bloc := VBoxContainer.new()
 		bloc.add_theme_constant_override("separation", 2)
-		var entete := _label("Niv. %d  ·  %s  (%s)%s" % [sk["niveau"], sk["nom"], sk["type"], "   ✦ Évolution" if sk.get("evolue", false) else ""], 17,
+		var entete := _label(UiCommun.t("Niv. %d  ·  %s  (%s)%s") % [sk["niveau"], sk["nom"], sk["type"], "   ✦ Évolution" if sk.get("evolue", false) else ""], 17,
 			C_OR if debloque else C_DOUX)
 		bloc.add_child(entete)
 		var d := _label(sk["description"], 15, C_TEXTE if debloque else C_DOUX)

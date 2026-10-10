@@ -263,7 +263,7 @@ func telecharger() -> void:
 		return
 	var rep: Array = await _requete_dl.request_completed
 	if rep[0] != HTTPRequest.RESULT_SUCCESS or rep[1] != 200:
-		_fin_telechargement(false, "Le téléchargement a échoué (code %s). Vérifie ta connexion et réessaie." % str(rep[1]))
+		_fin_telechargement(false, UiCommun.t("Le téléchargement a échoué (code %s). Vérifie ta connexion et réessaie.") % str(rep[1]))
 		return
 	# Vérifications : taille et empreinte identiques à celles de la fiche
 	var taille := 0

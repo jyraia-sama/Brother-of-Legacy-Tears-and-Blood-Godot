@@ -193,14 +193,14 @@ func _construire_sans_guilde() -> void:
 	gauche.add_child(UiCommun.label("Recrutement", 16, UiCommun.C_DOUX))
 	var recrut := _choix_recrutement("ouvert")
 	gauche.add_child(recrut)
-	var cout := UiCommun.label("Coût : %s or  (tu as %s or)" % [_nombre(COUT_CREATION), _nombre(Sauvegarde.get_or())], 17, UiCommun.C_LEGENDE)
+	var cout := UiCommun.label(UiCommun.t("Coût : %s or  (tu as %s or)") % [_nombre(COUT_CREATION), _nombre(Sauvegarde.get_or())], 17, UiCommun.C_LEGENDE)
 	gauche.add_child(cout)
 	var creer := UiCommun.bouton("Fonder la guilde")
 	creer.custom_minimum_size = Vector2(0, 48)
 	gauche.add_child(creer)
 	creer.pressed.connect(func():
 		if Sauvegarde.get_or() < COUT_CREATION:
-			_etat.text = "Il te faut %s or pour fonder une guilde." % _nombre(COUT_CREATION)
+			_etat.text = UiCommun.t("Il te faut %s or pour fonder une guilde.") % _nombre(COUT_CREATION)
 			return
 		creer.disabled = true
 		var r := await EnLigne.appeler("creer_guilde", {"p_nom": nom.text,
@@ -211,7 +211,7 @@ func _construire_sans_guilde() -> void:
 		if r.ok and str(r.data) == "ok":
 			Sauvegarde.depenser_or(COUT_CREATION)
 			await _charger()
-			_etat.text = "La guilde « %s » est fondée ! Tu en es le chef." % nom.text.strip_edges()
+			_etat.text = UiCommun.t("La guilde « %s » est fondée ! Tu en es le chef.") % nom.text.strip_edges()
 		else:
 			_etat.text = _message(r))
 
@@ -270,8 +270,8 @@ func _carte_guilde(g: Dictionary) -> Control:
 	infos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ligne.add_child(infos)
 	infos.add_child(UiCommun.label(str(g.nom), 22, UiCommun.C_TEXTE))
-	infos.add_child(UiCommun.label("%d/%d membres  ·  Chef : %s  ·  %s%s" % [int(g.membres), 30, str(g.chef),
-		_nom_recrutement(str(g.recrutement)), ("  ·  Niv. %d min." % int(g.niveau_min)) if int(g.niveau_min) > 1 else ""], 15, UiCommun.C_DOUX))
+	infos.add_child(UiCommun.label(UiCommun.t("%d/%d membres  ·  Chef : %s  ·  %s%s") % [int(g.membres), 30, str(g.chef),
+		_nom_recrutement(str(g.recrutement)), (UiCommun.t("  ·  Niv. %d min.") % int(g.niveau_min)) if int(g.niveau_min) > 1 else ""], 15, UiCommun.C_DOUX))
 	if str(g.description) != "":
 		var d := UiCommun.label(str(g.description), 15, UiCommun.C_TEXTE)
 		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -317,7 +317,7 @@ func _construire_avec_guilde() -> void:
 	bl.add_child(infos)
 	infos.add_child(UiCommun.label(str(g.nom), 30, UiCommun.C_LEGENDE))
 	var niveau_g: int = int(_vie.niveau) if _vie != null else int(g.niveau)
-	infos.add_child(UiCommun.label("Niveau %d  ·  %d/%d membres  ·  Recrutement : %s  ·  Ton rôle : %s" % [
+	infos.add_child(UiCommun.label(UiCommun.t("Niveau %d  ·  %d/%d membres  ·  Recrutement : %s  ·  Ton rôle : %s") % [
 		niveau_g, (g.membres as Array).size(), int(g.capacite), _nom_recrutement(str(g.recrutement)),
 		EcranSocial._nom_role(role)], 16, UiCommun.C_DOUX))
 	if _vie != null:
@@ -331,7 +331,7 @@ func _construire_avec_guilde() -> void:
 		barre.value = int(_vie.xp) - debut
 		barre.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		lx.add_child(barre)
-		lx.add_child(UiCommun.label("XP %s / %s   ·   Trésor : %s   ·   Mes Sceaux de guilde : %s" % [
+		lx.add_child(UiCommun.label(UiCommun.t("XP %s / %s   ·   Trésor : %s   ·   Mes Sceaux de guilde : %s") % [
 			_nombre(int(_vie.xp)), _nombre(fin), _nombre(int(_vie.tresor)), _nombre(int(_vie.mes_sceaux))], 15, UiCommun.C_TEXTE))
 	if str(g.description) != "":
 		var d := UiCommun.label(str(g.description), 16)
@@ -457,7 +457,7 @@ func _afficher_accueil() -> void:
 	var regl: Dictionary = (v.reglages as Dictionary).get("dons", {})
 	for d in Guilde.DONS:
 		var info: Dictionary = regl.get(d["id"], {})
-		var b := UiCommun.bouton("%s\n%s  →  +%d XP · +%d Sceaux" % [d["nom"], d["texte"], int(info.get("xp", 0)), int(info.get("sceaux", 0))], 15)
+		var b := UiCommun.bouton(UiCommun.t("%s\n%s  →  +%d XP · +%d Sceaux") % [d["nom"], d["texte"], int(info.get("xp", 0)), int(info.get("sceaux", 0))], 15)
 		b.custom_minimum_size = Vector2(300, 64)
 		b.disabled = bool(v.don_fait)
 		b.pressed.connect(_donner.bind(d["id"], info))
@@ -477,10 +477,10 @@ func _donner(type: String, info: Dictionary) -> void:
 	var cout_or := int(info.get("cout_or", 0))
 	var cout_gemmes := int(info.get("cout_gemmes", 0))
 	if Sauvegarde.get_or() < cout_or:
-		_etat.text = "Il te faut %s or pour ce don." % _nombre(cout_or)
+		_etat.text = UiCommun.t("Il te faut %s or pour ce don.") % _nombre(cout_or)
 		return
 	if Sauvegarde.get_gemmes() < cout_gemmes:
-		_etat.text = "Il te faut %d gemmes pour ce don." % cout_gemmes
+		_etat.text = UiCommun.t("Il te faut %d gemmes pour ce don.") % cout_gemmes
 		return
 	var r := await EnLigne.appeler("guilde_donner", {"p_type": type})
 	if not is_inside_tree():
@@ -489,7 +489,7 @@ func _donner(type: String, info: Dictionary) -> void:
 		Sauvegarde.depenser_or(int(r.data.get("cout_or", 0)))
 		Sauvegarde.depenser_gemmes(int(r.data.get("cout_gemmes", 0)))
 		await _charger()
-		_etat.text = "Don envoyé : +%d XP de guilde, +%d Sceaux de guilde." % [int(r.data.xp), int(r.data.sceaux)]
+		_etat.text = UiCommun.t("Don envoyé : +%d XP de guilde, +%d Sceaux de guilde.") % [int(r.data.xp), int(r.data.sceaux)]
 	else:
 		_etat.text = _message_vie(r)
 
@@ -625,9 +625,9 @@ func _afficher_boss() -> void:
 	barre.max_value = 100
 	barre.value = pct
 	col.add_child(barre)
-	col.add_child(UiCommun.label("%s / %s PV arrachés  (%.1f %%)%s" % [_nombre(int(b.degats)), _nombre(int(b.pv_max)), pct,
+	col.add_child(UiCommun.label(UiCommun.t("%s / %s PV arrachés  (%.1f %%)%s") % [_nombre(int(b.degats)), _nombre(int(b.pv_max)), pct,
 		"   —   ABATTU !" if b.abattu else ""], 17, Color("ff8a6a")))
-	col.add_child(UiCommun.label("Mes dégâts cette semaine : %s en %d assaut(s)   ·   Assauts restants aujourd'hui : %d" % [
+	col.add_child(UiCommun.label(UiCommun.t("Mes dégâts cette semaine : %s en %d assaut(s)   ·   Assauts restants aujourd'hui : %d") % [
 		_nombre(int(b.mes_degats)), int(b.mes_coups), maxi(0, int(b.essais_restants))], 15, UiCommun.C_TEXTE))
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 12)
@@ -662,7 +662,7 @@ func _afficher_boss() -> void:
 		_marge(p, 8).add_child(v)
 		v.add_child(UiCommun.label("%d %%%s" % [int(paliers[i]), "  ✔" if recu else ""], 18, UiCommun.C_OR if atteint else UiCommun.C_DOUX))
 		var butin: Dictionary = (regl.get("boss_butin", []) as Array)[i]
-		var l := UiCommun.label("+%d Sceaux\n%s" % [int((regl.get("boss_sceaux", []) as Array)[i]), Quetes.texte_recompense(butin)], 13, UiCommun.C_TEXTE)
+		var l := UiCommun.label(UiCommun.t("+%d Sceaux\n%s") % [int((regl.get("boss_sceaux", []) as Array)[i]), Quetes.texte_recompense(butin)], 13, UiCommun.C_TEXTE)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		v.add_child(l)
 		lp.add_child(p)
@@ -672,7 +672,7 @@ func _afficher_boss() -> void:
 		_texte("Personne n'a encore frappé le titan.", 15, UiCommun.C_DOUX)
 	var rang := 1
 	for c in b.classement:
-		_texte("%d.  %s  —  %s dégâts (%d assauts)" % [rang, EnLigne.nom_complet(str(c.pseudo)), _nombre(int(c.degats)), int(c.coups)], 16)
+		_texte(UiCommun.t("%d.  %s  —  %s dégâts (%d assauts)") % [rang, EnLigne.nom_complet(str(c.pseudo)), _nombre(int(c.degats)), int(c.coups)], 16)
 		rang += 1
 
 
@@ -693,7 +693,7 @@ func _reclamer_boss() -> void:
 		return
 	if r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "ok":
 		var lignes := Quetes.donner(r.data.get("recompense", {}))
-		lignes.push_front("Sceaux de guilde : +%d" % int(r.data.sceaux))
+		lignes.push_front(UiCommun.t("Sceaux de guilde : +%d") % int(r.data.sceaux))
 		Sauvegarde.sauvegarder()
 		await _charger()
 		_etat.text = "Paliers réclamés !  " + "  ·  ".join(lignes)
@@ -706,8 +706,8 @@ func _reclamer_boss() -> void:
 func _afficher_benedictions() -> void:
 	_titre("BÉNÉDICTIONS DE LA GUILDE")
 	_texte("Des bonus permanents pour TOUS les membres, achetés avec le trésor de guilde (alimenté par les dons). "
-		+ "Seuls le chef et les officiers peuvent les acheter. Rang n : coûte %d x n en trésor et demande le niveau de guilde 2n-1." % int((_vie.reglages as Dictionary).get("benediction_cout", 300)), 15, UiCommun.C_DOUX)
-	_texte("Trésor de guilde : %s" % _nombre(int(_vie.tresor)), 18, UiCommun.C_OR)
+		+ UiCommun.t("Seuls le chef et les officiers peuvent les acheter. Rang n : coûte %d x n en trésor et demande le niveau de guilde 2n-1.") % int((_vie.reglages as Dictionary).get("benediction_cout", 300)), 15, UiCommun.C_DOUX)
+	_texte(UiCommun.t("Trésor de guilde : %s") % _nombre(int(_vie.tresor)), 18, UiCommun.C_OR)
 	var niveau_g := int(_vie.niveau)
 	var cout_base := int((_vie.reglages as Dictionary).get("benediction_cout", 300))
 	for id in Guilde.BENEDICTIONS:
@@ -723,15 +723,15 @@ func _afficher_benedictions() -> void:
 		v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h.add_child(v)
 		v.add_child(UiCommun.label("%s   %s" % [info["nom"], "★".repeat(rang) + "☆".repeat(Guilde.RANG_MAX - rang)], 19))
-		v.add_child(UiCommun.label((info["texte"] % (rang * int(info["par_rang"]))) + ("   (prochain rang : +%d %%)" % ((rang + 1) * int(info["par_rang"])) if rang < Guilde.RANG_MAX else "   (maximum)"), 15, UiCommun.C_DOUX))
+		v.add_child(UiCommun.label((info["texte"] % (rang * int(info["par_rang"]))) + (UiCommun.t("   (prochain rang : +%d %%)") % ((rang + 1) * int(info["par_rang"])) if rang < Guilde.RANG_MAX else "   (maximum)"), 15, UiCommun.C_DOUX))
 		if rang < Guilde.RANG_MAX:
 			var suivant := rang + 1
-			var b := UiCommun.bouton("Rang %d : %s trésor" % [suivant, _nombre(cout_base * suivant)], 15)
+			var b := UiCommun.bouton(UiCommun.t("Rang %d : %s trésor") % [suivant, _nombre(cout_base * suivant)], 15)
 			b.custom_minimum_size = Vector2(230, 42)
 			b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 			var bloque := niveau_g < 2 * suivant - 1
 			b.disabled = not _peut_gerer() or bloque
-			b.tooltip_text = ("Guilde niveau %d requis" % (2 * suivant - 1)) if bloque else ("" if _peut_gerer() else "Réservé au chef et aux officiers")
+			b.tooltip_text = (UiCommun.t("Guilde niveau %d requis") % (2 * suivant - 1)) if bloque else ("" if _peut_gerer() else "Réservé au chef et aux officiers")
 			b.pressed.connect(func(): _action_vie("guilde_benir", {"p_benediction": id}))
 			h.add_child(b)
 		_contenu.add_child(p)
@@ -741,7 +741,7 @@ func _afficher_benedictions() -> void:
 
 func _afficher_boutique() -> void:
 	_titre("BOUTIQUE DE GUILDE")
-	_texte("Mes Sceaux de guilde : %s   ·   Les limites se réinitialisent chaque lundi." % _nombre(int(_vie.mes_sceaux)), 17, UiCommun.C_OR)
+	_texte(UiCommun.t("Mes Sceaux de guilde : %s   ·   Les limites se réinitialisent chaque lundi.") % _nombre(int(_vie.mes_sceaux)), 17, UiCommun.C_OR)
 	var grille := HFlowContainer.new()
 	grille.add_theme_constant_override("h_separation", 10)
 	grille.add_theme_constant_override("v_separation", 10)
@@ -755,8 +755,8 @@ func _afficher_boutique() -> void:
 		v.add_theme_constant_override("separation", 6)
 		_marge(p, 10).add_child(v)
 		v.add_child(UiCommun.label("%s  x%d" % [Reliquaire.nom(str(a.id)), int(a.quantite)], 17))
-		v.add_child(UiCommun.label("Cette semaine : %d / %d" % [deja, int(a.limite)], 14, UiCommun.C_DOUX))
-		var b := UiCommun.bouton("%d Sceaux" % int(a.prix), 16)
+		v.add_child(UiCommun.label(UiCommun.t("Cette semaine : %d / %d") % [deja, int(a.limite)], 14, UiCommun.C_DOUX))
+		var b := UiCommun.bouton(UiCommun.t("%d Sceaux") % int(a.prix), 16)
 		b.disabled = deja >= int(a.limite) or int(_vie.mes_sceaux) < int(a.prix)
 		b.pressed.connect(_acheter.bind(str(a.id)))
 		v.add_child(b)
@@ -788,11 +788,11 @@ func _afficher_membres() -> void:
 				elif role == "officier":
 					actions.append(["Rétrograder", func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "retrograder"})])
 				actions.append(["Nommer chef", func(): FenetreSimple.confirmer(self, "Nommer chef",
-					"Donner la direction de la guilde à %s ?\nTu deviendras officier." % EnLigne.nom_complet(str(m.pseudo)), "Nommer chef",
+					UiCommun.t("Donner la direction de la guilde à %s ?\nTu deviendras officier.") % EnLigne.nom_complet(str(m.pseudo)), "Nommer chef",
 					func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "nommer_chef"}))])
 			if mon_role == "chef" or (mon_role == "officier" and role == "membre"):
 				actions.append(["Exclure", func(): FenetreSimple.confirmer(self, "Exclure",
-					"Exclure %s de la guilde ?" % EnLigne.nom_complet(str(m.pseudo)), "Exclure",
+					UiCommun.t("Exclure %s de la guilde ?") % EnLigne.nom_complet(str(m.pseudo)), "Exclure",
 					func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "exclure"}))])
 		_contenu.add_child(_ligne_membre(m, EcranSocial._nom_role(role), COULEURS_ROLE.get(role, UiCommun.C_DOUX), actions))
 
@@ -865,7 +865,7 @@ func _afficher_reglages() -> void:
 	quitter.custom_minimum_size = Vector2(220, 44)
 	quitter.add_theme_color_override("font_color", Color("ff7a6a"))
 	quitter.pressed.connect(func(): FenetreSimple.confirmer(self, "Quitter la guilde",
-		"Quitter « %s » ?%s" % [g.nom, "\nLa guilde sera dissoute." if seul else ""], "Quitter",
+		UiCommun.t("Quitter « %s » ?%s") % [g.nom, "\nLa guilde sera dissoute." if seul else ""], "Quitter",
 		func(): _action("quitter_guilde", {})))
 	_contenu.add_child(quitter)
 
@@ -891,7 +891,7 @@ func _ligne_membre(m: Dictionary, texte_role: String, couleur_role: Color, actio
 	bas.add_theme_constant_override("separation", 12)
 	infos.add_child(bas)
 	bas.add_child(UiCommun.label(texte_role, 15, couleur_role))
-	bas.add_child(UiCommun.label("Niv. %d" % int(m.niveau), 15, UiCommun.C_DOUX))
+	bas.add_child(UiCommun.label(UiCommun.t("Niv. %d") % int(m.niveau), 15, UiCommun.C_DOUX))
 	if m.has("vu_le"):
 		var pres := EnLigne.texte_presence(str(m.vu_le))
 		bas.add_child(UiCommun.label(pres, 15, Color("8fe07a") if pres == "En ligne" else UiCommun.C_DOUX))

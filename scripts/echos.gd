@@ -71,21 +71,21 @@ const SETS_UNIQUES := ["freres"]
 static func description_set(set_id: String) -> String:
 	var f := facteur_sets
 	var t := {
-		"energy": "PV max +%s %% par set actif." % _n(15 * f),
-		"guard": "DEF +%s %% par set actif." % _n(15 * f),
-		"blade": "Taux critique +%s par set actif." % _n(12 * f),
-		"focus": "Précision +%s par set actif." % _n(20 * f),
-		"endure": "Résistance +%s par set actif." % _n(20 * f),
+		"energy": UiCommun.t("PV max +%s %% par set actif.") % _n(15 * f),
+		"guard": UiCommun.t("DEF +%s %% par set actif.") % _n(15 * f),
+		"blade": UiCommun.t("Taux critique +%s par set actif.") % _n(12 * f),
+		"focus": UiCommun.t("Précision +%s par set actif.") % _n(20 * f),
+		"endure": UiCommun.t("Résistance +%s par set actif.") % _n(20 * f),
 		"revenge": "%s %% de chance de contre-attaquer (75 %% des dégâts) quand touché, par set actif." % _n(15 * f),
 		"will": "Immunité aux afflictions pendant le 1er tour du combat.",
-		"swift": "Vitesse +%s %%." % _n(25 * f),
+		"swift": UiCommun.t("Vitesse +%s %%.") % _n(25 * f),
 		"vampire": "%s %% des dégâts infligés récupérés en PV." % _n(35 * f),
-		"fatal": "ATK +%s %%." % _n(35 * f),
-		"rage": "Dégâts critiques +%s %%." % _n(40 * f),
+		"fatal": UiCommun.t("ATK +%s %%.") % _n(35 * f),
+		"rage": UiCommun.t("Dégâts critiques +%s %%.") % _n(40 * f),
 		"despair": "%s %% de chance d'étourdir la cible quand un skill inflige des dégâts." % _n(25 * f),
-		"freres": "La Larme et le Sang réunis : ATK +%s %% et PV max +%s %%." % [_n(30 * f), _n(30 * f)],
+		"freres": UiCommun.t("La Larme et le Sang réunis : ATK +%s %% et PV max +%s %%.") % [_n(30 * f), _n(30 * f)],
 	}
-	return "%s (%d pièces) : %s" % [SETS[set_id]["nom"], SETS[set_id]["pieces"], t[set_id]]
+	return UiCommun.t("%s (%d pièces) : %s") % [SETS[set_id]["nom"], SETS[set_id]["pieces"], t[set_id]]
 
 
 static func _n(x: float) -> String:
@@ -141,7 +141,7 @@ static func valeur_principale(e: Dictionary) -> float:
 
 static func nom(e: Dictionary) -> String:
 	if e.has("unique"):
-		return "%s — Sceau des Frères" % e["unique"]
+		return UiCommun.t("%s — Sceau des Frères") % e["unique"]
 	return "%s %s" % [EMPLACEMENTS[int(e["emplacement"])]["nom"], SETS[e["set"]]["nom"]]
 
 
@@ -202,7 +202,7 @@ static func ameliorer(e: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
 	if rng.randf() >= chance_amelioration(e):
 		return {"reussi": false, "texte": "Échec de l'amélioration… l'Écho reste intact."}
 	e["niveau"] = int(e["niveau"]) + 1
-	var texte := "Réussite : +%d !" % int(e["niveau"])
+	var texte := UiCommun.t("Réussite : +%d !") % int(e["niveau"])
 	if int(e["niveau"]) in PALIERS:
 		var secs: Array = e["secondaires"]
 		if secs.size() < 4:
@@ -308,7 +308,7 @@ const BONUS_ETOILES := {"combat": -1, "elite": 0, "gardien": 0, "boss_chapitre":
 ## Ce qu'on peut trouver dans un chapitre (texte pour l'interface).
 static func texte_loot(acte: int, chapitre: int) -> String:
 	var emp := clampi(chapitre, 1, 6)
-	return "Échos : set %s · %s (emplacement %d)" % [SETS[SET_PAR_ACTE[acte]]["nom"], EMPLACEMENTS[emp]["nom"], emp]
+	return UiCommun.t("Échos : set %s · %s (emplacement %d)") % [SETS[SET_PAR_ACTE[acte]]["nom"], EMPLACEMENTS[emp]["nom"], emp]
 
 
 ## Renvoie un nouvel Écho (non enregistré) ou {} si rien ne tombe.

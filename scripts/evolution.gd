@@ -83,11 +83,11 @@ static func raison_impossible(uid: int) -> String:
 	if Sauvegarde.est_occupe(uid):
 		return "Cette unité est partie en mission (Compagnie)."
 	if int(h["niveau"]) < NIVEAU_REQUIS:
-		return "Niveau %d requis (actuellement Nv %d)." % [NIVEAU_REQUIS, int(h["niveau"])]
+		return UiCommun.t("Niveau %d requis (actuellement Nv %d).") % [NIVEAU_REQUIS, int(h["niveau"])]
 	var c := cout(h["id"])
 	for r in c:
 		if Sauvegarde.get_objet(r) < int(c[r]):
-			return "Pas assez de %s (%d / %d)." % [Reliquaire.nom(r), Sauvegarde.get_objet(r), int(c[r])]
+			return UiCommun.t("Pas assez de %s (%d / %d).") % [Reliquaire.nom(r), Sauvegarde.get_objet(r), int(c[r])]
 	return ""
 
 

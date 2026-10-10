@@ -51,7 +51,7 @@ func _fiche_heros(g: VBoxContainer) -> void:
 		(" · " + str(u["race"])) if str(u.get("race", "")) != "" else ""], 14, UiCommun.C_DOUX))
 	var niv := int(h["niveau"])
 	var nmax := UnitesData.niveau_max(id)
-	vb.add_child(UiCommun.label("Niveau %d / %d   ·   %s" % [niv, nmax, Fusion.texte_etoiles(Fusion.etoiles(h))], 17, Color("ffd060")))
+	vb.add_child(UiCommun.label(UiCommun.t("Niveau %d / %d   ·   %s") % [niv, nmax, Fusion.texte_etoiles(Fusion.etoiles(h))], 17, Color("ffd060")))
 	if niv < nmax:
 		vb.add_child(_barre(int(h["xp"]), Sauvegarde.xp_heros_pour_niveau(niv), Color("7ab8ff"), 300))
 	var s := Sauvegarde.stats_heros(uid)
@@ -62,7 +62,7 @@ func _fiche_heros(g: VBoxContainer) -> void:
 	for p in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"], ["crit", "Crit %"], ["degats_crit", "Dégâts crit %"], ["res", "RES"]]:
 		var dom: bool = p[0] in u.get("dominantes", [])
 		grille.add_child(UiCommun.label("%s : %s" % [p[1], str(int(s[p[0]]))], 16, UiCommun.C_LEGENDE if dom else UiCommun.C_TEXTE))
-	vb.add_child(UiCommun.label("Échos Sanguins équipés : %d / 6   ·   Puissance %s" % [Sauvegarde.echos_de(uid).size(),
+	vb.add_child(UiCommun.label(UiCommun.t("Échos Sanguins équipés : %d / 6   ·   Puissance %s") % [Sauvegarde.echos_de(uid).size(),
 		_nombre(int(s["pv"] * 0.25 + s["atk"] + s["def"] * 0.8 + s["agi"] * 0.5 + s["mag"] * 0.7))], 14, Color("d0453a")))
 	var boutons := HBoxContainer.new()
 	boutons.add_theme_constant_override("separation", 8)
@@ -75,7 +75,7 @@ func _fiche_heros(g: VBoxContainer) -> void:
 	g.add_child(UiCommun.label("SORTS", 18, UiCommun.C_OR))
 	for sk in u["skills"]:
 		var ok: bool = int(sk["niveau"]) <= niv
-		var t := UiCommun.label("Niv. %d · %s (%s)%s" % [sk["niveau"], sk["nom"], sk["type"], "" if ok else "  — verrouillé"], 16, UiCommun.C_OR if ok else UiCommun.C_DOUX)
+		var t := UiCommun.label(UiCommun.t("Niv. %d · %s (%s)%s") % [sk["niveau"], sk["nom"], sk["type"], "" if ok else "  — verrouillé"], 16, UiCommun.C_OR if ok else UiCommun.C_DOUX)
 		g.add_child(t)
 		var desc := UiCommun.label(sk["description"], 14, UiCommun.C_TEXTE if ok else UiCommun.C_DOUX)
 		desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -103,7 +103,7 @@ func _profil(d: VBoxContainer) -> void:
 	if titre != "":
 		d.add_child(UiCommun.label("« %s »" % titre, 18, Color("ffb070")))
 	var niv := Sauvegarde.get_niveau_compte()
-	d.add_child(UiCommun.label("Niveau de compte %d / %d   ·   Stamina max %d" % [niv, Sauvegarde.NIVEAU_COMPTE_MAX, Sauvegarde.get_stamina_max()], 17, UiCommun.C_TEXTE))
+	d.add_child(UiCommun.label(UiCommun.t("Niveau de compte %d / %d   ·   Stamina max %d") % [niv, Sauvegarde.NIVEAU_COMPTE_MAX, Sauvegarde.get_stamina_max()], 17, UiCommun.C_TEXTE))
 	if not Sauvegarde.niveau_compte_max_atteint():
 		var l := HBoxContainer.new()
 		l.add_theme_constant_override("separation", 10)
@@ -145,8 +145,8 @@ func _profil(d: VBoxContainer) -> void:
 		["Combats gagnés / perdus", "%s / %s" % [_nombre(Sauvegarde.get_stat("combats_gagnes")), _nombre(Sauvegarde.get_stat("combats_perdus"))]],
 		["Bestiaire", "%d / %d" % [Sauvegarde.donnees["bestiaire"].size(), total_bestiaire]],
 		["Invocations", _nombre(Succes.valeur("invocations"))],
-		["Record Tour de l'Enfer", "étage %d" % Tours.record("enfer")],
-		["Record Tour du Paradis", "étage %d" % Tours.record("paradis")],
+		["Record Tour de l'Enfer", UiCommun.t("étage %d") % Tours.record("enfer")],
+		["Record Tour du Paradis", UiCommun.t("étage %d") % Tours.record("paradis")],
 		["Donjons terminés", _nombre(Sauvegarde.get_stat("donjons_termines"))],
 		["Boss de Monde abattus", _nombre(Sauvegarde.get_stat("boss_monde_abattus"))],
 		["Marches Maudites (record)", "%d  (%d pts)" % [Sauvegarde.get_stat("marches"), Marche.record()]],
@@ -162,7 +162,7 @@ func _profil(d: VBoxContainer) -> void:
 	d.add_child(HSeparator.new())
 
 	# Collection
-	d.add_child(UiCommun.label("COLLECTION  (%d unités)" % Sauvegarde.liste_heros().size(), 18, UiCommun.C_OR))
+	d.add_child(UiCommun.label(UiCommun.t("COLLECTION  (%d unités)") % Sauvegarde.liste_heros().size(), 18, UiCommun.C_OR))
 	var par := {}
 	for h in Sauvegarde.liste_heros():
 		var r := Fusion.cle_rarete(h["id"])

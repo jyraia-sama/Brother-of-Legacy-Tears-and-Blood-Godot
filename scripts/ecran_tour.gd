@@ -173,7 +173,7 @@ func _ligne_etage(n: int, atteint: int) -> Control:
 	var fait := n <= atteint
 	var prochain := n == atteint + 1
 	var nom_type: String = {"combat": "", "elite": "  ·  Élite", "boss": "  ·  BOSS", "super": "  ·  SUPER BOSS"}[type]
-	var txt := "Étage %d%s" % [n, nom_type]
+	var txt := UiCommun.t("Étage %d%s") % [n, nom_type]
 	if grand:
 		txt += "\n" + UnitesData.get_unite(Tours.TOURS[_tour]["boss"][n])["nom"]
 	if fait:
@@ -239,7 +239,7 @@ func _maj_fiche() -> void:
 	var type := Tours.type_etage(n)
 	var atteint := Tours.etage_atteint(_tour)
 	var p: Dictionary = Tours.palier(_tour, n)
-	_fiche.add_child(UiCommun.label("ÉTAGE %d" % n, 30, _accent))
+	_fiche.add_child(UiCommun.label(UiCommun.t("ÉTAGE %d") % n, 30, _accent))
 	_fiche.add_child(UiCommun.label("%s  ·  %s" % [p["nom"], {"combat": "Combat", "elite": "Combat d'Élite",
 		"boss": "BOSS", "super": "SUPER BOSS"}[type]], 17, _c_texte))
 
@@ -262,7 +262,7 @@ func _maj_fiche() -> void:
 
 	_fiche.add_child(HSeparator.new())
 	var ennemis := Tours.generer(_tour, n)
-	_fiche.add_child(UiCommun.label("ENNEMIS  (niveau %d)" % int(ennemis[0]["niveau"]), 16, _accent))
+	_fiche.add_child(UiCommun.label(UiCommun.t("ENNEMIS  (niveau %d)") % int(ennemis[0]["niveau"]), 16, _accent))
 	var puissance_ennemis := 0.0
 	for e in ennemis:
 		var u := UnitesData.get_unite(e["id"])
@@ -277,7 +277,7 @@ func _maj_fiche() -> void:
 	var rapport := puissance_equipe / maxf(1.0, puissance_ennemis)
 	var diff := "Très difficile" if rapport < 0.85 else ("Difficile" if rapport < 1.05 else ("Équilibré" if rapport < 1.3 else "Facile"))
 	var couleur_diff := Color("ff5a4a") if rapport < 0.85 else (Color("ffa040") if rapport < 1.05 else (Color("e0d060") if rapport < 1.3 else Color("6ad06a")))
-	_fiche.add_child(UiCommun.label("Puissance ennemie : %d   ·   Ton équipe : %d" % [int(puissance_ennemis), int(puissance_equipe)], 15, _c_texte))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Puissance ennemie : %d   ·   Ton équipe : %d") % [int(puissance_ennemis), int(puissance_equipe)], 15, _c_texte))
 	_fiche.add_child(UiCommun.label("Estimation : " + diff, 17, couleur_diff))
 
 	_fiche.add_child(HSeparator.new())
@@ -292,7 +292,7 @@ func _maj_fiche() -> void:
 		ligne.add_theme_constant_override("separation", 6)
 		if o != "or":
 			ligne.add_child(UiCommun.icone_objet(o, 26))
-		ligne.add_child(UiCommun.label(("%d or" % int(butin[o])) if o == "or" else "%s x%d" % [Reliquaire.nom(o), int(butin[o])], 15,
+		ligne.add_child(UiCommun.label((UiCommun.t("%d or") % int(butin[o])) if o == "or" else "%s x%d" % [Reliquaire.nom(o), int(butin[o])], 15,
 			Color(_c_texte, 0.45) if deja else _c_texte))
 		grille.add_child(ligne)
 	_fiche.add_child(grille)
@@ -301,7 +301,7 @@ func _maj_fiche() -> void:
 	var equipe_txt: Array = []
 	for uid in Sauvegarde.get_equipe():
 		var h := Sauvegarde.get_heros(uid)
-		equipe_txt.append("%s Nv %d" % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])])
+		equipe_txt.append(UiCommun.t("%s Nv %d") % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])])
 	var eq := UiCommun.label("Équipe : " + ", ".join(equipe_txt), 14, _c_texte)
 	eq.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_fiche.add_child(eq)
@@ -315,7 +315,7 @@ func _maj_fiche() -> void:
 		get_tree().change_scene_to_file(EcranDeck.SCENE))
 	actions.add_child(deck)
 	var cout: int = Tours.COUT_STAMINA[type]
-	var go := UiCommun.bouton("COMBATTRE  (%d stamina)" % cout, 20)
+	var go := UiCommun.bouton(UiCommun.t("COMBATTRE  (%d stamina)") % cout, 20)
 	go.custom_minimum_size = Vector2(0, 54)
 	go.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	if deja:
@@ -323,7 +323,7 @@ func _maj_fiche() -> void:
 		go.text = "Étage déjà vaincu cette semaine"
 	elif n > atteint + 1 and not Sauvegarde.admin("tours_libres"):
 		go.disabled = true
-		go.text = "Termine d'abord l'étage %d" % (atteint + 1)
+		go.text = UiCommun.t("Termine d'abord l'étage %d") % (atteint + 1)
 	_styler(go, true)
 	go.pressed.connect(_combattre.bind(n))
 	actions.add_child(go)
@@ -368,7 +368,7 @@ func _combattre(n: int) -> void:
 	var cout: int = Tours.COUT_STAMINA[Tours.type_etage(n)]
 	if not Sauvegarde.depenser_stamina(cout):
 		var attente := Sauvegarde.secondes_avant_stamina()
-		_message("Pas assez de stamina (%d requis, tu en as %d).\nProchain point dans %s.\nTu peux utiliser un Élixir au Reliquaire." % [
+		_message(UiCommun.t("Pas assez de stamina (%d requis, tu en as %d).\nProchain point dans %s.\nTu peux utiliser un Élixir au Reliquaire.") % [
 			cout, Sauvegarde.get_stamina(), Calendrier.texte_duree(attente)])
 		return
 	EcranCombat.demande = {"mode": "tour", "tour": _tour, "etage": n, "type": Tours.type_etage(n),
@@ -377,7 +377,7 @@ func _combattre(n: int) -> void:
 
 
 func _maj_haut() -> void:
-	_lbl_decompte.text = "Réinitialisation dans %s" % Calendrier.texte_duree(Calendrier.secondes_avant_semaine())
+	_lbl_decompte.text = UiCommun.t("Réinitialisation dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_semaine())
 	_lbl_stamina.maj()
 	var m: String = Tours.TOURS[_tour]["monnaie"]
 	_lbl_monnaie.text = "%s : %d" % [Reliquaire.nom(m), Sauvegarde.get_objet(m)]

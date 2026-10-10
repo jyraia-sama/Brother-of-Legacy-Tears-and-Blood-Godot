@@ -118,7 +118,7 @@ func _gagner_xp(n: int) -> void:
 			hero[s] = int(hero[s]) + 1
 		_recalculer()
 		hero["pv"] = hero["pv_max"]
-		_log("[color=#8affa0]Niveau %d ! Toutes tes caractéristiques augmentent.[/color]" % int(hero["niveau"]))
+		_log(UiCommun.t("[color=#8affa0]Niveau %d ! Toutes tes caractéristiques augmentent.[/color]") % int(hero["niveau"]))
 
 
 # ---------------------------------------------------------------------
@@ -245,7 +245,7 @@ func _bouger(d: Vector2i) -> void:
 					_log("L'escalier est scellé. Il te faut la [color=#ffd84a]clé[/color] de l'étage.")
 					return
 				etage += 1
-				_log("[color=#e8b54a]Tu descends à l'étage %d...[/color]" % etage)
+				_log(UiCommun.t("[color=#e8b54a]Tu descends à l'étage %d...[/color]") % etage)
 				if etage == ETAGES:
 					_log("[color=#ff6a5a]Un grondement résonne : le Gardien t'attend.[/color]")
 				_nouvel_etage()
@@ -299,8 +299,8 @@ func _debut_combat(c: Vector2i) -> void:
 	_combat.visible = true
 	_c_nom.text = ennemi["nom"] + ("  (Boss)" if ennemi.get("boss", false) else "")
 	_c_nom.add_theme_color_override("font_color", ennemi["couleur"])
-	_c_texte.text = "%s te barre la route !" % ennemi["nom"]
-	_log("[color=#ff9a7a]Combat : %s ![/color]" % ennemi["nom"])
+	_c_texte.text = UiCommun.t("%s te barre la route !") % ennemi["nom"]
+	_log(UiCommun.t("[color=#ff9a7a]Combat : %s ![/color]") % ennemi["nom"])
 	_maj()
 
 
@@ -320,14 +320,14 @@ func _action(quoi: String) -> void:
 			hero["end"] = int(hero["end"]) - 2
 			var de := _d20()
 			if de + int(hero["dex"]) / 2 < 8:
-				txt = "d20 = %d : ton attaque manque sa cible !" % de
+				txt = UiCommun.t("d20 = %d : ton attaque manque sa cible !") % de
 			else:
 				var dg := maxi(1, rng.randi_range(4, 9) + int(hero["force"]) / 2 + int(hero["arme"]) - int(ennemi["def"]))
 				if de == 20:
 					dg *= 2
-					txt = "d20 = 20, CRITIQUE ! %d dégâts." % dg
+					txt = UiCommun.t("d20 = 20, CRITIQUE ! %d dégâts.") % dg
 				else:
-					txt = "d20 = %d : tu frappes pour %d dégâts." % [de, dg]
+					txt = UiCommun.t("d20 = %d : tu frappes pour %d dégâts.") % [de, dg]
 				ennemi["pv"] = int(ennemi["pv"]) - dg
 		"sort":
 			if recharge_sort > 0 or int(hero["end"]) < 4:
@@ -337,7 +337,7 @@ func _action(quoi: String) -> void:
 			recharge_sort = 4
 			var dg := rng.randi_range(10, 16) + int(hero["int"])
 			ennemi["pv"] = int(ennemi["pv"]) - dg
-			txt = "Boule de feu ! %d dégâts (ignore l'armure)." % dg
+			txt = UiCommun.t("Boule de feu ! %d dégâts (ignore l'armure).") % dg
 		"potion":
 			if int(hero["potions"]) <= 0:
 				_c_texte.text = "Plus de potions."
@@ -345,7 +345,7 @@ func _action(quoi: String) -> void:
 			hero["potions"] = int(hero["potions"]) - 1
 			var soin := 25 + int(hero["con"])
 			hero["pv"] = mini(int(hero["pv_max"]), int(hero["pv"]) + soin)
-			txt = "Potion : +%d PV." % soin
+			txt = UiCommun.t("Potion : +%d PV.") % soin
 		"fuite":
 			if ennemi.get("boss", false):
 				_c_texte.text = "On ne fuit pas le Gardien !"
@@ -363,7 +363,7 @@ func _action(quoi: String) -> void:
 	var enrage: bool = int(ennemi["pv"]) <= int(ennemi["pv_max"]) * 0.3
 	var de_m := _d20()
 	if de_m + 4 < 8 + int(hero["dex"]) / 3 + int(hero["armure"]):
-		txt += "\n%s rate son attaque." % ennemi["nom"]
+		txt += UiCommun.t("\n%s rate son attaque.") % ennemi["nom"]
 	else:
 		var dm := maxi(1, rng.randi_range(int(ennemi["atk"]) - 2, int(ennemi["atk"]) + 2) - int(hero["armure"]))
 		if enrage:
@@ -371,7 +371,7 @@ func _action(quoi: String) -> void:
 		hero["pv"] = int(hero["pv"]) - dm
 		# Encaisser redonne de l'endurance
 		hero["end"] = mini(int(hero["end_max"]), int(hero["end"]) + 2)
-		txt += "\n%s %s %d dégâts." % [ennemi["nom"], "EN RAGE t'inflige" if enrage else "t'inflige", dm]
+		txt += UiCommun.t("\n%s %s %d dégâts.") % [ennemi["nom"], "EN RAGE t'inflige" if enrage else "t'inflige", dm]
 	recharge_sort = maxi(0, recharge_sort - 1)
 	hero["end"] = mini(int(hero["end_max"]), int(hero["end"]) + 1)
 	_c_texte.text = txt
@@ -388,7 +388,7 @@ func _victoire(txt: String) -> void:
 		_log("[color=#e8b54a]Le Gardien du Donjon s'effondre ![/color]")
 		_fin_du_jeu()
 		return
-	_log("[color=#8affa0]%s est vaincu ! +%d XP[/color]" % [ennemi["nom"], int(ennemi["xp"])])
+	_log(UiCommun.t("[color=#8affa0]%s est vaincu ! +%d XP[/color]") % [ennemi["nom"], int(ennemi["xp"])])
 	_gagner_xp(int(ennemi["xp"]))
 	if rng.randf() < 0.25:
 		hero["potions"] = int(hero["potions"]) + 1
@@ -413,13 +413,13 @@ func _fin_du_jeu() -> void:
 		t["recompense"] = true
 		Sauvegarde.ajouter_gemmes(RECOMPENSE_GEMMES)
 		Sauvegarde.sauvegarder()
-		bonus = "\n\nPour avoir trouvé ce secret : +%d gemmes !" % RECOMPENSE_GEMMES
+		bonus = UiCommun.t("\n\nPour avoir trouvé ce secret : +%d gemmes !") % RECOMPENSE_GEMMES
 	# Le héros hommage, Arnaud Riff-de-Sang, offert une seule fois (aussi à ceux qui avaient déjà fini le donjon)
 	if not bool(t.get("heros", false)) and UnitesData.existe(HEROS_OFFERT):
 		t["heros"] = true
 		Sauvegarde.ajouter_heros(HEROS_OFFERT)
 		Sauvegarde.sauvegarder()
-		bonus += "\n\n%s rejoint ta collection : retrouve-le dans ton Deck !" % UnitesData.get_unite(HEROS_OFFERT)["nom"]
+		bonus += UiCommun.t("\n\n%s rejoint ta collection : retrouve-le dans ton Deck !") % UnitesData.get_unite(HEROS_OFFERT)["nom"]
 	var contenu := VBoxContainer.new()
 	contenu.add_theme_constant_override("separation", 10)
 	var lien := UiCommun.bouton("Jouer au jeu d'Arnaud : donjon.bkdaoc.com", 18)
@@ -549,7 +549,7 @@ func _log(t: String) -> void:
 
 
 func _maj() -> void:
-	_stats.text = "%s  ·  Niveau %d  (XP %d/%d)\nPV %d / %d     Endurance %d / %d\nFOR %d  DEX %d  CON %d  INT %d\nArme +%d · Armure +%d · Potions %d\nÉtage %d / %d     Clé : %s" % [
+	_stats.text = UiCommun.t("%s  ·  Niveau %d  (XP %d/%d)\nPV %d / %d     Endurance %d / %d\nFOR %d  DEX %d  CON %d  INT %d\nArme +%d · Armure +%d · Potions %d\nÉtage %d / %d     Clé : %s") % [
 		hero["nom"], hero["niveau"], hero["xp"], _xp_niveau(), maxi(0, int(hero["pv"])), hero["pv_max"],
 		hero["end"], hero["end_max"], hero["force"], hero["dex"], hero["con"], hero["int"],
 		hero["arme"], hero["armure"], hero["potions"], etage, ETAGES,
@@ -557,8 +557,8 @@ func _maj() -> void:
 	if _combat.visible and not ennemi.is_empty():
 		_c_pv_e.max_value = int(ennemi["pv_max"])
 		_c_pv_e.value = maxi(0, int(ennemi["pv"]))
-		_c_boutons["sort"].text = "Boule de feu (4 End)" if recharge_sort == 0 else "Boule de feu (%d)" % recharge_sort
-		_c_boutons["potion"].text = "Potion (%d)" % int(hero["potions"])
+		_c_boutons["sort"].text = "Boule de feu (4 End)" if recharge_sort == 0 else UiCommun.t("Boule de feu (%d)") % recharge_sort
+		_c_boutons["potion"].text = UiCommun.t("Potion (%d)") % int(hero["potions"])
 	_vue.queue_redraw()
 
 

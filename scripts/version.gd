@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.17"
+const NUMERO := "0.60.0"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.60.0", "date": "2026-10-10", "titre": "Tears and Blood, in English",
+	"changements": [
+		"CHAT GLOBAL : un nouveau bouton « Chat » en haut à droite du menu principal ouvre une discussion avec tous les joueurs connectés. Une pastille rouge prévient quand il y a de nouveaux messages. (Serveur : fichier supabase/09_chat_global.sql à lancer une fois dans Supabase.)",
+		"ENGLISH VERSION : nouveau réglage Paramètres → LANGUE · LANGUAGE (Français / English). Les menus, boutons, fenêtres, messages et guides sont traduits en anglais (environ 2 600 textes). Les noms des unités, leurs compétences et l'histoire restent en français pour l'instant (prochaine étape).",
+	]},
 	{"version": "0.59.17", "date": "2026-10-10", "titre": "Les clés de l'Admin",
 	"changements": [
 		"GALERIE D'ART ET MENU ADMIN : les cases « Bestiaire entièrement débloqué » et « Tous les Actes, chapitres et niveaux de Donjon débloqués » révèlent maintenant TOUTE la galerie (Histoire, personnages, Décors, Sanctuaire, Divers compris).",

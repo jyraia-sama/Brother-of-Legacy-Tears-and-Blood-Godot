@@ -46,7 +46,7 @@ static func texte_duree(s: int) -> String:
 	var h := int((s % 86400) / 3600.0)
 	var m := int((s % 3600) / 60.0)
 	if j > 0:
-		return "%d j %02d h %02d min" % [j, h, m]
+		return UiCommun.t("%d j %02d h %02d min") % [j, h, m]
 	if h > 0:
-		return "%d h %02d min %02d s" % [h, m, s % 60]
-	return "%d min %02d s" % [m, s % 60]
+		return UiCommun.t("%d h %02d min %02d s") % [h, m, s % 60]
+	return UiCommun.t("%d min %02d s") % [m, s % 60]

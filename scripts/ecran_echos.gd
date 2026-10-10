@@ -240,7 +240,7 @@ func _panneau(largeur: float) -> PanelContainer:
 func _tout() -> void:
 	if _essai_actif:
 		_nettoyer_essai()
-	_lbl_or.text = "Or : %d" % Sauvegarde.get_or()
+	_lbl_or.text = UiCommun.t("Or : %d") % Sauvegarde.get_or()
 	_remplir_heros()
 	_remplir_centre()
 	_remplir_inventaire()
@@ -277,7 +277,7 @@ func _remplir_heros() -> void:
 		var por := UiCommun.portrait(h["id"], 38)
 		por.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		hb.add_child(por)
-		var t := UiCommun.label("%s\nNv %d  ·  %d/6 Échos%s" % [u["nom"], int(h["niveau"]), Sauvegarde.echos_de(uid).size(),
+		var t := UiCommun.label(UiCommun.t("%s\nNv %d  ·  %d/6 Échos%s") % [u["nom"], int(h["niveau"]), Sauvegarde.echos_de(uid).size(),
 			"  ·  Équipe" if uid in equipe else ""], 13)
 		t.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		hb.add_child(t)
@@ -300,7 +300,7 @@ func _remplir_centre() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 12)
 	tete.add_child(UiCommun.portrait(h["id"], 64))
-	var t := UiCommun.label("%s\nNv %d  ·  %s  ·  %s" % [u["nom"], int(h["niveau"]), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]]], 20, UiCommun.couleur_rarete(h["id"]))
+	var t := UiCommun.label(UiCommun.t("%s\nNv %d  ·  %s  ·  %s") % [u["nom"], int(h["niveau"]), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]]], 20, UiCommun.couleur_rarete(h["id"]))
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
 	_centre.add_child(tete)
@@ -322,7 +322,7 @@ func _remplir_centre() -> void:
 		lbl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		barre.add_child(lbl)
 		var nb := _nb_changements()
-		var ok := UiCommun.bouton("Équiper l'essai%s" % ((" (%d)" % nb) if nb > 0 else ""), 14)
+		var ok := UiCommun.bouton(UiCommun.t("Équiper l'essai%s") % ((" (%d)" % nb) if nb > 0 else ""), 14)
 		ok.disabled = nb == 0
 		if nb > 0:
 			UiCommun.bouton_vif(ok)
@@ -573,7 +573,7 @@ func _valider_essai() -> void:
 		return
 	var d := ConfirmationDialog.new()
 	d.title = "Équiper l'essai"
-	d.dialog_text = "Ces Échos sont portés par un autre héros et lui seront retirés :\n\n• %s\n\nContinuer ?" % "\n• ".join(pris)
+	d.dialog_text = UiCommun.t("Ces Échos sont portés par un autre héros et lui seront retirés :\n\n• %s\n\nContinuer ?") % "\n• ".join(pris)
 	d.ok_button_text = "Équiper"
 	d.cancel_button_text = "Annuler"
 	d.confirmed.connect(func():
@@ -611,7 +611,7 @@ func _remplir_inventaire() -> void:
 	for v in _onglets_inv:
 		var actif: bool = v == _vue_inv
 		var bo: Button = _onglets_inv[v]
-		bo.text = ("Sac (%d)" % nb_sac) if v == "sac" else ("Équipés sur les héros (%d)" % nb_portes)
+		bo.text = (UiCommun.t("Sac (%d)") % nb_sac) if v == "sac" else (UiCommun.t("Équipés sur les héros (%d)") % nb_portes)
 		bo.add_theme_stylebox_override("normal", UiCommun.style_carte(UiCommun.C_OR if actif else Color(1, 1, 1, 0.15), 0.1 if actif else 0.0, 2))
 		bo.add_theme_color_override("font_color", UiCommun.C_LEGENDE if actif else UiCommun.C_DOUX)
 	var liste: Array = tous.filter(func(e):
@@ -628,7 +628,7 @@ func _remplir_inventaire() -> void:
 			ka = [ka[2], ka[0], ka[1]]
 			kb = [kb[2], kb[0], kb[1]]
 		return ka > kb)
-	_lbl_inventaire.text = "INVENTAIRE  (%d Échos)" % tous.size()
+	_lbl_inventaire.text = UiCommun.t("INVENTAIRE  (%d Échos)") % tous.size()
 	if _vue_inv == "sac":
 		var g := _nouvelle_grille()
 		for e in liste:
@@ -769,7 +769,7 @@ func _remplir_fiche() -> void:
 	var b2 := HBoxContainer.new()
 	b2.add_theme_constant_override("separation", 6)
 	_fiche.add_child(b2)
-	var v := UiCommun.bouton("Vendre (%d or)" % Echos.prix_vente(e), 14)
+	var v := UiCommun.bouton(UiCommun.t("Vendre (%d or)") % Echos.prix_vente(e), 14)
 	v.disabled = porteur >= 0 or e.get("verrou", false)
 	v.tooltip_text = "Retire-le d'abord du héros." if porteur >= 0 else ("Écho verrouillé." if e.get("verrou", false) else "")
 	v.pressed.connect(func():
@@ -812,7 +812,7 @@ func _vente_rapide() -> void:
 		return
 	var d := ConfirmationDialog.new()
 	d.title = "Vente rapide"
-	d.dialog_text = "Vendre %d Échos Normaux et Magiques non équipés pour %d or ?" % [cibles.size(), total]
+	d.dialog_text = UiCommun.t("Vendre %d Échos Normaux et Magiques non équipés pour %d or ?") % [cibles.size(), total]
 	d.ok_button_text = "Vendre"
 	d.cancel_button_text = "Annuler"
 	d.confirmed.connect(func():

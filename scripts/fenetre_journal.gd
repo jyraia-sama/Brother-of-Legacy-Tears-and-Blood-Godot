@@ -60,7 +60,7 @@ func _remplir() -> void:
 		if lignes.is_empty():
 			continue
 		rien = false
-		_liste.add_child(UiCommun.label("ACTE %s — %s" % [a["romain"], a["titre"]], 19, UiCommun.C_OR))
+		_liste.add_child(UiCommun.label(UiCommun.t("ACTE %s — %s") % [a["romain"], a["titre"]], 19, UiCommun.C_OR))
 		var g := GridContainer.new()
 		g.columns = 2
 		g.add_theme_constant_override("h_separation", 10)

@@ -156,12 +156,12 @@ func _rafraichir() -> void:
 	for e in _grille.get_children():
 		e.queue_free()
 	var liste := _liste()
-	_lbl_compte.text = {"toutes": "Unités qui peuvent évoluer (niveau %d requis)" % Evolution.NIVEAU_REQUIS,
-		"pretes": "Unités prêtes : niveau %d et ressources suffisantes" % Evolution.NIVEAU_REQUIS,
-		"evoluees": "Tes unités évoluées (niveau max %d)" % UnitesData.NIVEAU_MAX_EVOLUE}[_filtre] + "   —   %d" % liste.size()
+	_lbl_compte.text = {"toutes": UiCommun.t("Unités qui peuvent évoluer (niveau %d requis)") % Evolution.NIVEAU_REQUIS,
+		"pretes": UiCommun.t("Unités prêtes : niveau %d et ressources suffisantes") % Evolution.NIVEAU_REQUIS,
+		"evoluees": UiCommun.t("Tes unités évoluées (niveau max %d)") % UnitesData.NIVEAU_MAX_EVOLUE}[_filtre] + "   —   %d" % liste.size()
 	if liste.is_empty():
 		var l := UiCommun.label({"toutes": "Aucune unité à faire évoluer pour l'instant.",
-			"pretes": "Aucune unité prête. Monte une unité au niveau %d et récolte des ressources dans les Donjons." % Evolution.NIVEAU_REQUIS,
+			"pretes": UiCommun.t("Aucune unité prête. Monte une unité au niveau %d et récolte des ressources dans les Donjons.") % Evolution.NIVEAU_REQUIS,
 			"evoluees": "Aucune unité évoluée pour l'instant."}[_filtre], 16, UiCommun.C_DOUX)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size = Vector2(500, 0)
@@ -180,7 +180,7 @@ func _rafraichir() -> void:
 			if r == "":
 				UiCommun.badge(carte, "PRÊTE", C_EVO)
 			elif int(h["niveau"]) < Evolution.NIVEAU_REQUIS:
-				UiCommun.badge(carte, "Nv %d requis" % Evolution.NIVEAU_REQUIS, Color("8a8a8a"))
+				UiCommun.badge(carte, UiCommun.t("Nv %d requis") % Evolution.NIVEAU_REQUIS, Color("8a8a8a"))
 			else:
 				UiCommun.badge(carte, "Ressources", Color("e0a040"))
 		_grille.add_child(carte)
@@ -216,7 +216,7 @@ func _remplir_fiche() -> void:
 	fleche.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	haut.add_child(fleche)
 	haut.add_child(_bloc_unite(id_evo, ue["nom"], "Évolution  ·  jamais invocable"))
-	var sous := UiCommun.label("%s  ·  %s  ·  %s  ·  étoiles et Échos conservés" % [UiCommun.texte_rarete(id_base),
+	var sous := UiCommun.label(UiCommun.t("%s  ·  %s  ·  %s  ·  étoiles et Échos conservés") % [UiCommun.texte_rarete(id_base),
 		UnitesData.ELEMENTS[ub["element"]], UnitesData.ROLES[ub["role"]]], 14, UiCommun.C_DOUX)
 	sous.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_fiche.add_child(sous)
@@ -237,7 +237,7 @@ func _remplir_fiche() -> void:
 	var a := Fusion.appliquer_etoiles(UnitesData.stats(id_base, n_base), et)
 	var b1 := Fusion.appliquer_etoiles(UnitesData.stats(id_evo, 1), et)
 	var b40 := Fusion.appliquer_etoiles(UnitesData.stats(id_evo, UnitesData.NIVEAU_MAX_EVOLUE), et)
-	for t in ["", "Base Nv %d" % n_base, "Évolution Nv 1", "Évolution Nv %d" % UnitesData.NIVEAU_MAX_EVOLUE]:
+	for t in ["", UiCommun.t("Base Nv %d") % n_base, "Évolution Nv 1", UiCommun.t("Évolution Nv %d") % UnitesData.NIVEAU_MAX_EVOLUE]:
 		grille.add_child(UiCommun.label(t, 14, UiCommun.C_DOUX))
 	for p in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"], ["crit", "Crit %"], ["res", "RES"]]:
 		grille.add_child(UiCommun.label(p[1], 15, UiCommun.C_TEXTE))
@@ -259,8 +259,8 @@ func _remplir_fiche() -> void:
 		for s0 in ub["skills"]:
 			if int(s0["niveau"]) == int(sk["niveau"]):
 				ancien = s0["nom"]
-		var titre := "✦ Niv. %d  ·  %s  (%s)" % [sk["niveau"], sk["nom"], sk["type"]]
-		titre += ("   — remplace « %s »" % ancien) if ancien != "" else "   — NOUVEAU SORT"
+		var titre := UiCommun.t("✦ Niv. %d  ·  %s  (%s)") % [sk["niveau"], sk["nom"], sk["type"]]
+		titre += (UiCommun.t("   — remplace « %s »") % ancien) if ancien != "" else "   — NOUVEAU SORT"
 		_fiche.add_child(UiCommun.label(titre, 16, C_EVO))
 		var d := UiCommun.label(sk["description"], 14, UiCommun.C_TEXTE)
 		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -284,7 +284,7 @@ func _remplir_fiche() -> void:
 			Color("8affa0") if poss >= int(cout[r]) else Color("ff7a6a")))
 		_fiche.add_child(ligne)
 	var niv_ok := int(h["niveau"]) >= Evolution.NIVEAU_REQUIS
-	_fiche.add_child(UiCommun.label(("✔ " if niv_ok else "✘ ") + "Niveau %d requis (actuellement Nv %d)" % [Evolution.NIVEAU_REQUIS, int(h["niveau"])], 16,
+	_fiche.add_child(UiCommun.label(("✔ " if niv_ok else "✘ ") + UiCommun.t("Niveau %d requis (actuellement Nv %d)") % [Evolution.NIVEAU_REQUIS, int(h["niveau"])], 16,
 		Color("8affa0") if niv_ok else Color("ff7a6a")))
 	var raison := Evolution.raison_impossible(_selection)
 	var go := UiCommun.bouton("✦ FAIRE ÉVOLUER", 22)
@@ -331,7 +331,7 @@ func _bloc_unite(id: String, nom: String, legende: String) -> VBoxContainer:
 func _fiche_ressources() -> void:
 	_fiche.add_child(UiCommun.label("COMMENT ÇA MARCHE", 18, UiCommun.C_OR))
 	for t in ["Choisis une unité à gauche pour voir son évolution.",
-		"Une unité doit être au niveau %d. Elle garde ses étoiles et ses Échos, repart au niveau 1 et peut monter jusqu'au niveau %d." % [Evolution.NIVEAU_REQUIS, UnitesData.NIVEAU_MAX_EVOLUE],
+		UiCommun.t("Une unité doit être au niveau %d. Elle garde ses étoiles et ses Échos, repart au niveau 1 et peut monter jusqu'au niveau %d.") % [Evolution.NIVEAU_REQUIS, UnitesData.NIVEAU_MAX_EVOLUE],
 		"Chaque évolution coûte des ressources de l'élément de l'unité et du Sang (Puits de Sang).",
 		"Plus l'unité est rare, plus il faut de grosses ressources : Gouttes (N, R), Larmes (R, SR, SSR), Cœurs (SR à Légende)."]:
 		var l := UiCommun.label("•  " + t, 14, UiCommun.C_TEXTE)
@@ -348,8 +348,8 @@ func _fiche_ressources() -> void:
 		var sang: Array = []
 		for i in 3:
 			if int(c["sang"][i]) > 0:
-				sang.append("%d %s de Sang" % [int(c["sang"][i]), Evolution.NOMS_TAILLE[Evolution.TAILLES[i]] + "s"])
-		_fiche.add_child(UiCommun.label("%s :  %s de l'élément  +  %s" % ["Légende" if r == "LEG" else r, ", ".join(morceaux), ", ".join(sang)], 14, UiCommun.C_TEXTE))
+				sang.append(UiCommun.t("%d %s de Sang") % [int(c["sang"][i]), Evolution.NOMS_TAILLE[Evolution.TAILLES[i]] + "s"])
+		_fiche.add_child(UiCommun.label(UiCommun.t("%s :  %s de l'élément  +  %s") % ["Légende" if r == "LEG" else r, ", ".join(morceaux), ", ".join(sang)], 14, UiCommun.C_TEXTE))
 	_fiche.add_child(HSeparator.new())
 	_fiche.add_child(UiCommun.label("TES RESSOURCES", 16, UiCommun.C_OR))
 	var grille := GridContainer.new()
@@ -374,7 +374,7 @@ func _confirmer_evolution() -> void:
 		return
 	var d := ConfirmationDialog.new()
 	d.title = "Évolution"
-	d.dialog_text = "Faire évoluer %s en %s ?\n\nL'unité repart au NIVEAU 1 (niveau max %d).\nElle garde ses étoiles, ses Échos et sa place dans l'équipe.\nLes ressources seront dépensées." % [
+	d.dialog_text = UiCommun.t("Faire évoluer %s en %s ?\n\nL'unité repart au NIVEAU 1 (niveau max %d).\nElle garde ses étoiles, ses Échos et sa place dans l'équipe.\nLes ressources seront dépensées.") % [
 		UnitesData.get_unite(h["id"])["nom"], UnitesData.get_unite(UnitesData.id_evolution(h["id"]))["nom"], UnitesData.NIVEAU_MAX_EVOLUE]
 	d.ok_button_text = "Évoluer"
 	d.cancel_button_text = "Annuler"

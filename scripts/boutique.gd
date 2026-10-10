@@ -125,7 +125,7 @@ static func nom_offre(o: Dictionary) -> String:
 
 static func acheter_comptoir(o: Dictionary) -> String:
 	if restants(o) <= 0:
-		return "Limite atteinte (%s)." % ("aujourd'hui" if o["periode"] == "jour" else "cette semaine")
+		return UiCommun.t("Limite atteinte (%s).") % ("aujourd'hui" if o["periode"] == "jour" else "cette semaine")
 	if o["id"] == "stamina_pleine" and Sauvegarde.get_stamina() >= Sauvegarde.get_stamina_max():
 		return "Ta stamina est déjà pleine."
 	if not Sauvegarde.depenser_gemmes(int(o["prix"])):

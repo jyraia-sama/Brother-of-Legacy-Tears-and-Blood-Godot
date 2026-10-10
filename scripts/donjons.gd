@@ -234,7 +234,7 @@ static func valider_victoire(donjon: String, niveau: int) -> Array:
 	if niveau > int(e["niveau_max"]):
 		e["niveau_max"] = niveau
 		if niveau < NIVEAUX:
-			lignes.append("Niveau %d du donjon débloqué !" % (niveau + 1))
+			lignes.append(UiCommun.t("Niveau %d du donjon débloqué !") % (niveau + 1))
 	Sauvegarde.ajouter_stat("donjons_termines")
 	Sauvegarde.sauvegarder()
 	return lignes
@@ -256,10 +256,10 @@ static func demarrer(donjon: String, niveau: int) -> String:
 	if equipe.is_empty():
 		return "Ton équipe est vide : ajoute des héros dans le Deck."
 	if not est_ouvert(donjon, niveau):
-		return "Termine d'abord le niveau %d." % (niveau - 1)
+		return UiCommun.t("Termine d'abord le niveau %d.") % (niveau - 1)
 	var cout: int = COUT_STAMINA[niveau - 1]
 	if not Sauvegarde.depenser_stamina(cout):
-		return "Pas assez de stamina (%d requis, tu en as %d).\nProchain point dans %s.\nTu peux utiliser un Élixir au Reliquaire." % [
+		return UiCommun.t("Pas assez de stamina (%d requis, tu en as %d).\nProchain point dans %s.\nTu peux utiliser un Élixir au Reliquaire.") % [
 			cout, Sauvegarde.get_stamina(), Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())]
 	var pv: Array = []
 	for uid in equipe:

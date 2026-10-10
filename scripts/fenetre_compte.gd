@@ -185,7 +185,7 @@ func _valider() -> void:
 		# Compte créé, en attente de la confirmation par e-mail
 		_changer_mode(false)
 		_mdp.text = ""
-		_etat.text = "Compte créé ! Un e-mail de confirmation a été envoyé à %s.\nClique sur le lien qu'il contient (regarde aussi les spams), puis connecte-toi ici." % _email.text.strip_edges()
+		_etat.text = UiCommun.t("Compte créé ! Un e-mail de confirmation a été envoyé à %s.\nClique sur le lien qu'il contient (regarde aussi les spams), puis connecte-toi ici.") % _email.text.strip_edges()
 	elif r.ok:
 		_fermer()
 	else:
@@ -199,7 +199,7 @@ func _oubli() -> void:
 	var r := await EnLigne.mot_de_passe_oublie(_email.text)
 	if not is_instance_valid(self):
 		return
-	_occuper(false, "E-mail envoyé à %s : clique sur le lien qu'il contient pour choisir un nouveau mot de passe (regarde aussi les spams)." % _email.text.strip_edges() if r.ok else r.erreur)
+	_occuper(false, UiCommun.t("E-mail envoyé à %s : clique sur le lien qu'il contient pour choisir un nouveau mot de passe (regarde aussi les spams).") % _email.text.strip_edges() if r.ok else r.erreur)
 
 
 # ---------- Arrivée par le lien « mot de passe oublié » ----------
@@ -254,12 +254,12 @@ func _construire_connecte() -> void:
 	var infos := VBoxContainer.new()
 	ligne.add_child(infos)
 	infos.add_child(UiCommun.label(EnLigne.nom_complet(), 26, UiCommun.C_LEGENDE))
-	infos.add_child(UiCommun.label("Niveau de compte %d" % Sauvegarde.get_niveau_compte(), 16, UiCommun.C_DOUX))
+	infos.add_child(UiCommun.label(UiCommun.t("Niveau de compte %d") % Sauvegarde.get_niveau_compte(), 16, UiCommun.C_DOUX))
 
 	var synchro := "jamais"
 	if EnLigne.derniere_synchro > 0:
 		synchro = "il y a " + Calendrier.texte_duree(maxi(0, int(Time.get_unix_time_from_system()) - EnLigne.derniere_synchro))
-	_texte("Sauvegarde en ligne : automatique.\nDernier envoi : %s%s" % [synchro,
+	_texte(UiCommun.t("Sauvegarde en ligne : automatique.\nDernier envoi : %s%s") % [synchro,
 		"" if EnLigne.reseau_ok else "\n⚠ Le serveur ne répond pas : ta partie sera envoyée dès le retour de la connexion."], UiCommun.C_TEXTE)
 
 	_etat = UiCommun.label("", 16, Color(1.0, 0.75, 0.5))

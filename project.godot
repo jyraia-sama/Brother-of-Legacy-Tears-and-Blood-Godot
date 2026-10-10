@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Brother of Legacy : Tears and Blood"
-config/version="0.59.17"
+config/version="0.60.0"
 run/main_scene="uid://ccvyo6hrr61if"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -30,6 +30,10 @@ window/size/viewport_height=1080
 window/size/window_width_override=1600
 window/size/window_height_override=900
 window/stretch/mode="canvas_items"
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://langues/en.po")
 
 [editor_plugins]
 

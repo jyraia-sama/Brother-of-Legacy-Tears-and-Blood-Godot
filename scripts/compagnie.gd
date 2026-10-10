@@ -162,14 +162,14 @@ static func _tirer_bonus(rng: RandomNumberGenerator, conditions: Array) -> Dicti
 static func texte_condition(c: Dictionary) -> String:
 	match str(c["type"]):
 		"niveau":
-			return "Toutes les unités niveau %d ou plus" % int(c["valeur"])
+			return UiCommun.t("Toutes les unités niveau %d ou plus") % int(c["valeur"])
 		"role":
-			return "%d %s ou plus" % [int(c["nombre"]), UnitesData.ROLES[c["valeur"]]]
+			return UiCommun.t("%d %s ou plus") % [int(c["nombre"]), UnitesData.ROLES[c["valeur"]]]
 		"element":
-			return "%d unité%s %s ou plus" % [int(c["nombre"]), "s" if int(c["nombre"]) > 1 else "",
+			return UiCommun.t("%d unité%s %s ou plus") % [int(c["nombre"]), "s" if int(c["nombre"]) > 1 else "",
 				"d'" + UnitesData.ELEMENTS[c["valeur"]] if c["valeur"] == "eau" else "de " + UnitesData.ELEMENTS[c["valeur"]]]
 		"rarete":
-			return "1 unité %s ou plus rare" % str(c["valeur"])
+			return UiCommun.t("1 unité %s ou plus rare") % str(c["valeur"])
 	return ""
 
 
@@ -255,9 +255,9 @@ static func raison_depart(m: Dictionary, uids: Array) -> String:
 	if int(m["index"]) in _etat()["lancees"].map(func(x): return int(x)):
 		return "Cette mission a déjà été lancée aujourd'hui."
 	if escouades_libres() <= 0:
-		return "Les %d escouades sont déjà en mission." % ESCOUADES_MAX
+		return UiCommun.t("Les %d escouades sont déjà en mission.") % ESCOUADES_MAX
 	if uids.size() != int(m["taille"]):
-		return "Il faut exactement %d unité%s." % [int(m["taille"]), "s" if int(m["taille"]) > 1 else ""]
+		return UiCommun.t("Il faut exactement %d unité%s.") % [int(m["taille"]), "s" if int(m["taille"]) > 1 else ""]
 	for uid in uids:
 		if unite_en_mission(int(uid)):
 			return "Une des unités est déjà en mission."

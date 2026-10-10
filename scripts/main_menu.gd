@@ -235,6 +235,13 @@ func _ready() -> void:
 		FenetreSimple.ouvrir.call_deferred(self, n["titre"], n["texte"], [["Super !", null]])
 	EnLigne.etat_change.connect(_sur_etat_compte)
 	_sur_etat_compte()
+	# Chat global : on regarde toutes les 30 secondes s'il y a de nouveaux messages
+	var minuterie_chat := Timer.new()
+	minuterie_chat.wait_time = 30.0
+	minuterie_chat.autostart = true
+	minuterie_chat.timeout.connect(_maj_pastille_chat)
+	add_child(minuterie_chat)
+	_maj_pastille_chat()
 
 
 ## Agrandit la surface 1280 x 720 pour remplir l'écran (centrée).
@@ -552,6 +559,15 @@ func _creer_barre_haut() -> void:
 	_placer(_lbl_eclats, Rect2(40, 4, 60, 18), ecl)
 	_placer(_label("Éclats", 11, C_DOUX), Rect2(40, 23, 60, 15), ecl)
 
+	# --- Chat global (pastille rouge quand il y a de nouveaux messages)
+	var rc := Rect2(1040, 6, 48, 46)
+	var bc := _bouton_icone("❝", rc, "Chat global : discuter avec tous les joueurs")
+	bc.pressed.connect(_on_bouton.bind("chat"))
+	_boutons["chat"] = bc
+	var lc := _label("Chat", 11, C_DOUX)
+	lc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_placer(lc, Rect2(rc.position.x - 10, 53, 68, 15))
+
 	# --- Aide, Nouveautés, Menu
 	var coins := [["aide", "?", "Aide"], ["nouveautes", "✎", "Nouveautés"], ["parametres", "☰", "Menu"]]
 	for i in coins.size():
@@ -642,7 +658,7 @@ func _bouton_menu(id: String, titre: String, r: Rect2, a_gauche: bool, grand: bo
 		b.add_theme_stylebox_override("hover", _style(Color(0.05, 0.03, 0.03, 0.85), Color(1, 1, 1, 0.2), 12, 1))
 		b.tooltip_text = Deblocages.texte_condition(id)
 	var alig := HORIZONTAL_ALIGNMENT_LEFT if a_gauche else HORIZONTAL_ALIGNMENT_RIGHT
-	var nom := _label(("🔒 " + titre) if not ouvert else titre, 22 if grand else 18,
+	var nom := _label(("🔒 " + UiCommun.t(titre)) if not ouvert else titre, 22 if grand else 18,
 		Color("7d716b") if not ouvert else (C_TEXTE if not grand else Color("fff0dc")), true)
 	nom.horizontal_alignment = alig
 	_placer(nom, Rect2(16, 6 if grand else 4, r.size.x - 32, 28 if grand else 24), b)
@@ -666,12 +682,12 @@ func _sous_titre(id: String) -> String:
 			return "Combats JcJ et Arène classée"
 		"boss_monde":
 			if not BossMonde.est_debloque():
-				return "Débloqué après l'Acte %s" % ROMAINS[BossMonde.DEBLOCAGE.x]
+				return UiCommun.t("Débloqué après l'Acte %s") % ROMAINS[BossMonde.DEBLOCAGE.x]
 			var boss: Dictionary = BossMonde.BOSS[BossMonde.boss_du_jour()]
-			return "%s · %d essai%s" % [boss["titre"], BossMonde.essais_restants(),
+			return UiCommun.t("%s · %d essai%s") % [boss["titre"], BossMonde.essais_restants(),
 				"s" if BossMonde.essais_restants() > 1 else ""]
 		"tours":
-			return "Enfer et Paradis · reset %s" % _duree_courte(Calendrier.secondes_avant_semaine())
+			return UiCommun.t("Enfer et Paradis · reset %s") % _duree_courte(Calendrier.secondes_avant_semaine())
 		"donjon":
 			return "6 donjons · ressources d'évolution"
 		"expedition":
@@ -679,7 +695,7 @@ func _sous_titre(id: String) -> String:
 		"menagerie":
 			return "Familiers et terrains de chasse"
 		"deck":
-			return "Équipe %d / %d · Avant et Arrière" % [Sauvegarde.get_equipe().size(), Deblocages.places_equipe()]
+			return UiCommun.t("Équipe %d / %d · Avant et Arrière") % [Sauvegarde.get_equipe().size(), Deblocages.places_equipe()]
 		"invocation":
 			return "Pactes Doré, Supérieur et Sauvage"
 		"fusion":
@@ -689,7 +705,7 @@ func _sous_titre(id: String) -> String:
 		"reliquaire":
 			return "Forge, coffres et Atelier"
 		"bestiaire":
-			return "%d unités découvertes" % Sauvegarde.nombre_decouverts()
+			return UiCommun.t("%d unités découvertes") % Sauvegarde.nombre_decouverts()
 		"galerie":
 			return "Illustrations, figurines et décors"
 	return ""
@@ -717,7 +733,7 @@ func _prochain_chapitre() -> String:
 	for a in range(1, dernier + 1):
 		for c in range(1, 7):
 			if not ActesData.est_termine(a, c):
-				return "Acte %s · Chapitre %d — Continuer" % [ROMAINS[a], c]
+				return UiCommun.t("Acte %s · Chapitre %d — Continuer") % [ROMAINS[a], c]
 	return "Histoire terminée · tous les modes"
 
 
@@ -763,7 +779,7 @@ func _creer_guide() -> void:
 	p.add_child(vb)
 	var tete := HBoxContainer.new()
 	vb.add_child(tete)
-	var t := _label("PREMIERS PAS  %d / %d" % [i + 1, Tutoriel.ETAPES.size()], 12, C_OR, true)
+	var t := _label(UiCommun.t("PREMIERS PAS  %d / %d") % [i + 1, Tutoriel.ETAPES.size()], 12, C_OR, true)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
 	var x := Button.new()
@@ -888,7 +904,7 @@ func _bouton_royaume(c: Dictionary, x: float, depuis_gauche: bool) -> float:
 	var largeur := 132.0
 	var r := Rect2(x if depuis_gauche else x - largeur, 662, largeur, 44)
 	var b := Button.new()
-	b.text = "%s  %s" % ["🔒" if not Deblocages.est_ouvert(c["id"]) else c["icone"], c["titre"]]
+	b.text = "%s  %s" % ["🔒" if not Deblocages.est_ouvert(c["id"]) else c["icone"], UiCommun.t(c["titre"])]
 	if not Deblocages.est_ouvert(c["id"]):
 		b.tooltip_text = Deblocages.texte_condition(c["id"])
 		b.modulate = Color(0.6, 0.6, 0.6)
@@ -933,6 +949,29 @@ func _pastille(id: String, n: int) -> void:
 	b.add_child(l)
 	l.position = Vector2(b.size.x - 14, -7)
 	l.size = Vector2(22, 20)
+
+
+var _pastille_chat: Label = null
+
+func _maj_pastille_chat() -> void:
+	var nouveau: bool = await FenetreChat.a_lire()
+	if is_inside_tree():
+		_montrer_pastille_chat(nouveau)
+
+
+func _montrer_pastille_chat(visible_: bool) -> void:
+	if not _boutons.has("chat"):
+		return
+	if _pastille_chat == null:
+		var b: Button = _boutons["chat"]
+		_pastille_chat = _label("!", 11, Color.WHITE, true)
+		_pastille_chat.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_pastille_chat.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		_pastille_chat.add_theme_stylebox_override("normal", _style(C_PASTILLE, Color("120b0d"), 10, 2))
+		b.add_child(_pastille_chat)
+		_pastille_chat.position = Vector2(b.size.x - 14, -7)
+		_pastille_chat.size = Vector2(22, 20)
+	_pastille_chat.visible = visible_
 
 
 # =====================================================================
@@ -1042,7 +1081,7 @@ func _maj_ressources() -> void:
 	_lbl_stamina.text = "%d / %d" % [st, mx]
 	_barre_stamina.max_value = maxi(1, mx)
 	_barre_stamina.value = mini(st, mx)
-	_lbl_recharge.text = "Pleine" if st >= mx else "+1 dans %s" % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
+	_lbl_recharge.text = "Pleine" if st >= mx else UiCommun.t("+1 dans %s") % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
 	_lbl_or.text = _nombre(Sauvegarde.get_or())
 	_lbl_gemmes.text = _nombre(Sauvegarde.get_gemmes())
 	_lbl_eclats.text = _nombre(Sauvegarde.get_objet(Sauvegarde.ECLAT))
@@ -1148,6 +1187,9 @@ func _on_bouton(id: String) -> void:
 		return
 	var ici := scene_file_path
 	match id:
+		"chat":
+			_montrer_pastille_chat(false)
+			FenetreChat.ouvrir(self, _maj_pastille_chat)
 		"aventure":
 			# La carte du monde (Histoire principale) reviendra toujours ici
 			ActesData.scene_menu = ici

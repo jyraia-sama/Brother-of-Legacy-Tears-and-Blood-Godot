@@ -148,19 +148,19 @@ func _grande_carte(titre: String, texte: String, c: Color, image: String, etat: 
 
 
 func _maj_etats() -> void:
-	_lbl_sceaux.text = "Sceaux de Marche : %d" % Sauvegarde.get_objet("sceau_marche")
+	_lbl_sceaux.text = UiCommun.t("Sceaux de Marche : %d") % Sauvegarde.get_objet("sceau_marche")
 	var p := Marche.partie()
 	if Marche.en_cours():
-		_lbl_marche.text = "▶ Marche en cours — %s, score %d" % [Marche.nom_region(int(p["region"])), int(p["score"])]
+		_lbl_marche.text = UiCommun.t("▶ Marche en cours — %s, score %d") % [Marche.nom_region(int(p["region"])), int(p["score"])]
 	elif Marche.deja_jouee():
-		_lbl_marche.text = "✔ Marche du jour terminée : %d points. Nouvelle marche dans %s." % [
+		_lbl_marche.text = UiCommun.t("✔ Marche du jour terminée : %d points. Nouvelle marche dans %s.") % [
 			int(p["resultat"].get("score", 0)), Calendrier.texte_duree(Calendrier.secondes_avant_demain())]
 	else:
-		_lbl_marche.text = "La Marche du jour t'attend.   Record : %d" % Marche.record()
+		_lbl_marche.text = UiCommun.t("La Marche du jour t'attend.   Record : %d") % Marche.record()
 	var n := Compagnie.en_cours().size()
 	var prets := Compagnie.nombre_a_recuperer()
-	_lbl_compagnie.text = "Escouades en mission : %d / %d%s" % [n, Compagnie.ESCOUADES_MAX,
-		("   ·   %d mission%s terminée%s à récupérer !" % [prets, "s" if prets > 1 else "", "s" if prets > 1 else ""]) if prets > 0 else ""]
+	_lbl_compagnie.text = UiCommun.t("Escouades en mission : %d / %d%s") % [n, Compagnie.ESCOUADES_MAX,
+		(UiCommun.t("   ·   %d mission%s terminée%s à récupérer !") % [prets, "s" if prets > 1 else "", "s" if prets > 1 else ""]) if prets > 0 else ""]
 
 
 # =====================================================================
@@ -185,8 +185,8 @@ func _remplir_boutique() -> void:
 		ligne.add_child(vb)
 		vb.add_child(UiCommun.label("%s  x%d" % [Reliquaire.nom(a["id"]), int(a["quantite"])], 16, UiCommun.C_TEXTE))
 		var reste := Marche.achats_restants(a)
-		vb.add_child(UiCommun.label("Encore %d cette semaine" % reste, 12, UiCommun.C_DOUX))
-		var b := UiCommun.bouton("%d Sceaux" % int(a["prix"]), 15)
+		vb.add_child(UiCommun.label(UiCommun.t("Encore %d cette semaine") % reste, 12, UiCommun.C_DOUX))
+		var b := UiCommun.bouton(UiCommun.t("%d Sceaux") % int(a["prix"]), 15)
 		b.custom_minimum_size = Vector2(130, 40)
 		b.disabled = reste <= 0 or Sauvegarde.get_objet("sceau_marche") < int(a["prix"])
 		b.pressed.connect(func():

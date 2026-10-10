@@ -56,6 +56,13 @@ Même chose avec le fichier `supabase/08_guerre.sql` : **New query** → colle t
 défenses de guerre, appariement automatique (ou Légion de la Soif), forteresses, assauts, fatigue, éclaireur,
 journal avec rediffusions, bilan et butin. Réglages (assauts par jour, butin, force de la Légion…) au début du fichier.
 
+### 2 nonies. Chat global (v0.60)
+Même chose avec le fichier `supabase/09_chat_global.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après les fichiers 01 et 07.) Ajoute le **chat global** du menu principal (bouton « Chat » en haut à droite) :
+tous les joueurs connectés peuvent y écrire. Les 500 derniers messages sont gardés, 3 secondes minimum entre deux messages.
+- **Modération** : le compte « jyraia » (celui des statistiques, fichier 07) voit une croix ✕ à côté de chaque message pour le supprimer,
+  et ses messages s'affichent avec une couronne ♛.
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

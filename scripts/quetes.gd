@@ -207,7 +207,7 @@ static func donner(r: Dictionary) -> Array:
 		if o == "gemmes":
 			Sauvegarde.ajouter_gemmes(int(r[o]))
 			Sauvegarde._stat("gemmes_gagnees", int(r[o]))
-			l.append("Gemmes : +%d" % int(r[o]))
+			l.append(UiCommun.t("Gemmes : +%d") % int(r[o]))
 		else:
 			reste[o] = r[o]
 	l.append_array(Reliquaire.donner(reste))

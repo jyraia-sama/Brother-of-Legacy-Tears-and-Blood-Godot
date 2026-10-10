@@ -192,7 +192,7 @@ func _tout_rafraichir() -> void:
 	if Sauvegarde.get_heros(_principal).is_empty():
 		_principal = -1
 	_sacrifices = _sacrifices.filter(func(u): return not Sauvegarde.get_heros(int(u)).is_empty())
-	_lbl_or.text = "Or : %d" % Sauvegarde.get_or()
+	_lbl_or.text = UiCommun.t("Or : %d") % Sauvegarde.get_or()
 	for cle in _onglets:
 		_onglets[cle].button_pressed = (cle == _mode)
 	_remplir_principal()
@@ -211,7 +211,7 @@ func _remplir_principal() -> void:
 		_lbl_principal.text = "Clique une unité de la collection (à droite) pour la placer sur l'autel.\n\n" \
 			+ ("ÉVEIL : sacrifie des doublons (la même unité) pour gagner une étoile. ★6 = Éveillé.\nChaque étoile : +%d %% PV / ATK / DEF / AGI / MAG ; l'Éveil donne +%d %% en plus." \
 				% [int(Fusion.BONUS_PAR_ETOILE * 100), int(Fusion.BONUS_EVEIL * 100)] if _mode == "eveil" else \
-			"ABSORPTION : sacrifie n'importe quelles unités pour donner de l'XP au héros principal.\nPlus l'unité sacrifiée est rare, haut niveau ou étoilée, plus elle donne d'XP (x%.1f si c'est la même unité)." % Fusion.BONUS_MEME_UNITE)
+			UiCommun.t("ABSORPTION : sacrifie n'importe quelles unités pour donner de l'XP au héros principal.\nPlus l'unité sacrifiée est rare, haut niveau ou étoilée, plus elle donne d'XP (x%.1f si c'est la même unité).") % Fusion.BONUS_MEME_UNITE)
 	else:
 		carte = UiCommun.carte_heros(h)
 		carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color.WHITE, 0.08, 3))
@@ -220,7 +220,7 @@ func _remplir_principal() -> void:
 		var t := "%s\n%s · Nv %d / %d\n%s" % [u["nom"], UiCommun.texte_rarete(h["id"]), int(h["niveau"]), UnitesData.niveau_max(h["id"]),
 			Fusion.texte_etoiles(Fusion.etoiles(h)) + ("  ÉVEILLÉ" if Fusion.est_eveille(h) else "")]
 		if Sauvegarde.place_de(_principal) >= 0:
-			t += "\nDans l'équipe (place %d)" % (Sauvegarde.place_de(_principal) + 1)
+			t += UiCommun.t("\nDans l'équipe (place %d)") % (Sauvegarde.place_de(_principal) + 1)
 		t += "\n\n(clique sa carte pour changer de héros principal)"
 		_lbl_principal.text = t
 	carte.pressed.connect(func():
@@ -238,10 +238,10 @@ func _remplir_sacrifices() -> void:
 	var nb_cases := Fusion.MAX_SACRIFICES
 	if _mode == "eveil":
 		nb_cases = maxi(0, Fusion.doublons_requis(h) - _pierres) if not h.is_empty() and not Fusion.est_eveille(h) else 1
-		_lbl_sacrifices.text = "DOUBLONS À SACRIFIER  (%d / %d)" % [_sacrifices.size(), nb_cases] if not h.is_empty() and not Fusion.est_eveille(h) \
+		_lbl_sacrifices.text = UiCommun.t("DOUBLONS À SACRIFIER  (%d / %d)") % [_sacrifices.size(), nb_cases] if not h.is_empty() and not Fusion.est_eveille(h) \
 			else "DOUBLONS À SACRIFIER"
 	else:
-		_lbl_sacrifices.text = "UNITÉS À SACRIFIER  (%d / %d)" % [_sacrifices.size(), nb_cases]
+		_lbl_sacrifices.text = UiCommun.t("UNITÉS À SACRIFIER  (%d / %d)") % [_sacrifices.size(), nb_cases]
 	var taille := Vector2(100, 140) if _mode == "eveil" else Vector2(92, 124)
 	for i in nb_cases:
 		var carte: Button
@@ -264,7 +264,7 @@ func _remplir_sacrifices() -> void:
 		var possede := Sauvegarde.get_objet(Fusion.PIERRE)
 		_pierres = clampi(_pierres, 0, mini(possede, Fusion.doublons_requis(h)))
 		_ligne_pierres.add_child(UiCommun.icone_objet(Fusion.PIERRE, 30))
-		_ligne_pierres.add_child(UiCommun.label("Pierres d'Éveil utilisées : %d  (possédées : %d)" % [_pierres, possede], 15, Color("ff9ad8")))
+		_ligne_pierres.add_child(UiCommun.label(UiCommun.t("Pierres d'Éveil utilisées : %d  (possédées : %d)") % [_pierres, possede], 15, Color("ff9ad8")))
 		var moins := UiCommun.bouton("−", 16)
 		moins.custom_minimum_size = Vector2(36, 32)
 		moins.disabled = _pierres <= 0
@@ -301,11 +301,11 @@ func _remplir_apercu() -> void:
 			var et := Fusion.etoiles(h)
 			_apercu.add_child(UiCommun.label("%s   →   %s%s" % [Fusion.texte_etoiles(et), Fusion.texte_etoiles(et + 1),
 				"   ÉVEIL !" if et + 1 >= Fusion.ETOILES_MAX else ""], 20, Color("ffd060")))
-			_apercu.add_child(_ligne_condition("Doublons + Pierres : %d / %d" % [mini(_sacrifices.size() + _pierres, Fusion.doublons_requis(h)), Fusion.doublons_requis(h)],
+			_apercu.add_child(_ligne_condition(UiCommun.t("Doublons + Pierres : %d / %d") % [mini(_sacrifices.size() + _pierres, Fusion.doublons_requis(h)), Fusion.doublons_requis(h)],
 				_sacrifices.size() + _pierres >= Fusion.doublons_requis(h)))
-			_apercu.add_child(_ligne_condition("Niveau requis : %d  (actuel : %d)" % [Fusion.niveau_requis(h), int(h["niveau"])],
+			_apercu.add_child(_ligne_condition(UiCommun.t("Niveau requis : %d  (actuel : %d)") % [Fusion.niveau_requis(h), int(h["niveau"])],
 				int(h["niveau"]) >= Fusion.niveau_requis(h)))
-			_apercu.add_child(_ligne_condition("Coût : %d or" % Fusion.cout_eveil(h), Sauvegarde.get_or() >= Fusion.cout_eveil(h)))
+			_apercu.add_child(_ligne_condition(UiCommun.t("Coût : %d or") % Fusion.cout_eveil(h), Sauvegarde.get_or() >= Fusion.cout_eveil(h)))
 			apres = Fusion.appliquer_etoiles(UnitesData.stats(h["id"], int(h["niveau"])), et + 1)
 	else:
 		raison = Fusion.raison_absorption_impossible(_principal, _sacrifices)
@@ -314,14 +314,14 @@ func _remplir_apercu() -> void:
 		else:
 			var xp := Fusion.xp_totale(_principal, _sacrifices)
 			var ap := Fusion.apercu_xp(_principal, xp)
-			_apercu.add_child(UiCommun.label("XP gagnée : +%d" % xp, 20, Color("7ab8ff")))
-			_apercu.add_child(UiCommun.label("Niveau %d   →   %d%s" % [int(h["niveau"]), int(ap["niveau"]),
+			_apercu.add_child(UiCommun.label(UiCommun.t("XP gagnée : +%d") % xp, 20, Color("7ab8ff")))
+			_apercu.add_child(UiCommun.label(UiCommun.t("Niveau %d   →   %d%s") % [int(h["niveau"]), int(ap["niveau"]),
 				"" if int(ap["niveau"]) >= UnitesData.niveau_max(h["id"]) else "   (XP %d / %d)" % [int(ap["xp"]), Sauvegarde.xp_heros_pour_niveau(int(ap["niveau"]))]],
 				18, UiCommun.C_TEXTE))
 			if int(ap["perdue"]) > 0:
-				_apercu.add_child(UiCommun.label("Attention : %d XP seront perdus (niveau max atteint)." % int(ap["perdue"]), 14, Color("ff8a7a")))
+				_apercu.add_child(UiCommun.label(UiCommun.t("Attention : %d XP seront perdus (niveau max atteint).") % int(ap["perdue"]), 14, Color("ff8a7a")))
 			var cout := Fusion.cout_absorption(_principal, _sacrifices)
-			_apercu.add_child(_ligne_condition("Coût : %d or" % cout, Sauvegarde.get_or() >= cout))
+			_apercu.add_child(_ligne_condition(UiCommun.t("Coût : %d or") % cout, Sauvegarde.get_or() >= cout))
 			apres = Fusion.appliquer_etoiles(UnitesData.stats(h["id"], int(ap["niveau"])), Fusion.etoiles(h))
 	if not apres.is_empty():
 		_apercu.add_child(_tableau_stats(base, apres))
@@ -378,13 +378,13 @@ func _remplir_grille() -> void:
 	if h.is_empty():
 		# Choix du principal : les plus forts d'abord
 		liste.sort_custom(func(a, b): return _cle_tri(a) > _cle_tri(b))
-		_lbl_grille.text = "CHOISIS LE HÉROS PRINCIPAL  (%d unités)" % liste.size()
+		_lbl_grille.text = UiCommun.t("CHOISIS LE HÉROS PRINCIPAL  (%d unités)") % liste.size()
 	else:
 		# Choix des sacrifices : les plus faibles d'abord
 		liste.sort_custom(func(a, b): return _cle_tri(a) < _cle_tri(b))
 		var nom: String = UnitesData.get_unite(h["id"])["nom"]
-		_lbl_grille.text = ("DOUBLONS DE %s  (%d)" % [nom.to_upper(), liste.size()] if _mode == "eveil" \
-			else "CHOISIS LES UNITÉS À SACRIFIER  (%d)" % liste.size()) \
+		_lbl_grille.text = (UiCommun.t("DOUBLONS DE %s  (%d)") % [nom.to_upper(), liste.size()] if _mode == "eveil" \
+			else UiCommun.t("CHOISIS LES UNITÉS À SACRIFIER  (%d)") % liste.size()) \
 			+ "\nL'équipe, le héros de départ et les unités verrouillées ne peuvent pas être sacrifiés."
 	if liste.is_empty():
 		var l := UiCommun.label("Aucun doublon de ce héros pour l'instant.\nInvoque-en d'autres à l'Autel d'Invocation." if _mode == "eveil" and not h.is_empty() \
@@ -450,7 +450,7 @@ func _basculer_sacrifice(uid: int) -> void:
 	if _mode == "eveil":
 		limite = Fusion.doublons_requis(Sauvegarde.get_heros(_principal)) - _pierres
 	if _sacrifices.size() >= limite:
-		_message("Autel plein", "Tu as déjà choisi %d unité(s). Retire-en une pour en ajouter une autre." % limite)
+		_message("Autel plein", UiCommun.t("Tu as déjà choisi %d unité(s). Retire-en une pour en ajouter une autre.") % limite)
 		return
 	_sacrifices.append(uid)
 	_tout_rafraichir()
@@ -489,16 +489,16 @@ func _fusionner() -> void:
 	var rares := false
 	for uid in _sacrifices:
 		var s := Sauvegarde.get_heros(int(uid))
-		noms_sac.append("%s Nv %d" % [UnitesData.get_unite(s["id"])["nom"], int(s["niveau"])])
+		noms_sac.append(UiCommun.t("%s Nv %d") % [UnitesData.get_unite(s["id"])["nom"], int(s["niveau"])])
 		if ORDRE_RARETE[Fusion.cle_rarete(s["id"])] >= 3 or int(s["niveau"]) >= 10:
 			rares = true
 	var texte := ""
 	if _mode == "eveil":
-		texte = "Éveiller %s (★%d → ★%d) pour %d or ?\n\nSacrifiés : %s%s" % [nom, Fusion.etoiles(h), Fusion.etoiles(h) + 1,
+		texte = UiCommun.t("Éveiller %s (★%d → ★%d) pour %d or ?\n\nSacrifiés : %s%s") % [nom, Fusion.etoiles(h), Fusion.etoiles(h) + 1,
 			Fusion.cout_eveil(h), ", ".join(noms_sac) if not noms_sac.is_empty() else "aucun",
-			"\nPierres d'Éveil utilisées : %d" % _pierres if _pierres > 0 else ""]
+			UiCommun.t("\nPierres d'Éveil utilisées : %d") % _pierres if _pierres > 0 else ""]
 	else:
-		texte = "Donner %d XP à %s pour %d or ?\n\nSacrifiés (%d) : %s" % [Fusion.xp_totale(_principal, _sacrifices), nom,
+		texte = UiCommun.t("Donner %d XP à %s pour %d or ?\n\nSacrifiés (%d) : %s") % [Fusion.xp_totale(_principal, _sacrifices), nom,
 			Fusion.cout_absorption(_principal, _sacrifices), _sacrifices.size(), ", ".join(noms_sac)]
 	if rares:
 		texte += "\n\nAttention : certaines unités sacrifiées sont rares ou de haut niveau."
@@ -518,7 +518,7 @@ func _executer() -> void:
 			_effet_reussite()
 			var apres := avant + 1
 			_message("Éveil réussi !" if apres >= Fusion.ETOILES_MAX else "Étoile gagnée !",
-				"%s passe %s !\nBonus de stats : +%d %%.%s" % [nom, Fusion.texte_etoiles(apres, false),
+				UiCommun.t("%s passe %s !\nBonus de stats : +%d %%.%s") % [nom, Fusion.texte_etoiles(apres, false),
 				int(round((Fusion.multiplicateur(apres) - 1.0) * 100)),
 				"\n\nIl est désormais ÉVEILLÉ." if apres >= Fusion.ETOILES_MAX else ""])
 	else:
@@ -531,7 +531,7 @@ func _executer() -> void:
 			_tout_rafraichir()
 			_effet_reussite()
 			_message("Absorption réussie", "%s gagne %d XP.%s" % [nom, xp,
-				"\nNiveau %d → %d !" % [niv_avant, niv_avant + gagnes] if gagnes > 0 else ""])
+				UiCommun.t("\nNiveau %d → %d !") % [niv_avant, niv_avant + gagnes] if gagnes > 0 else ""])
 
 
 ## Petit éclat lumineux sur la carte du héros principal.

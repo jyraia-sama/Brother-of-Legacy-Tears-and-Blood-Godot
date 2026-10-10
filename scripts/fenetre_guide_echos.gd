@@ -176,7 +176,7 @@ static func _pas_a_pas() -> String:
 	s += _sous_titre("4. Vise un set")
 	s += "2 ou 4 Échos du même set donnent un bonus en plus. Les combinaisons possibles sur 6 emplacements : [b]2 + 2 + 2[/b] (trois petits sets, éventuellement le même trois fois) ou [b]4 + 2[/b] (un grand set et un petit). (Détails : section 4.)\n"
 	s += _sous_titre("5. Améliore tes meilleurs Échos")
-	s += "« Améliorer » monte un Écho de +1 à +%d avec de l'or. Garde ton or pour les Échos qui vont rester : bonne rareté, beaucoup d'étoiles, bonne stat principale. (Détails : section 3.)\n" % Echos.NIVEAU_MAX
+	s += UiCommun.t("« Améliorer » monte un Écho de +1 à +%d avec de l'or. Garde ton or pour les Échos qui vont rester : bonne rareté, beaucoup d'étoiles, bonne stat principale. (Détails : section 3.)\n") % Echos.NIVEAU_MAX
 	s += _sous_titre("6. Fixe ou pourcentage ?")
 	s += "En début de partie, les stats [b]fixes[/b] (ATK +, PV +…) rapportent le plus. Dès que les stats de tes héros grandissent (niveau, étoiles, raretés SSR/UR), les [b]%[/b] prennent le dessus. (Détails et chiffres : section 5.)\n"
 	s += _sous_titre("7. Teste avant d'équiper")
@@ -196,7 +196,7 @@ static func _emplacements() -> String:
 		var fixe := "fixe" if (em["principales"] as Array).size() <= 2 else "variable"
 		s += _ligne_tableau(["%d · %s" % [i, em["nom"]], fixe, ", ".join(noms)])
 	s += "[/table]\n"
-	s += "\n[color=%s]La MAG n'existe qu'en stat secondaire. La Vitesse principale n'existe que sur l'Artère, les critiques sur le Sacrifice, la Précision et la Résistance sur le Serment.[/color]\n" % C_DOUX
+	s += UiCommun.t("\n[color=%s]La MAG n'existe qu'en stat secondaire. La Vitesse principale n'existe que sur l'Artère, les critiques sur le Sacrifice, la Précision et la Résistance sur le Serment.[/color]\n") % C_DOUX
 
 	s += _sous_titre("La rareté (la couleur)")
 	s += "Elle donne le nombre de [b]stats secondaires[/b] au départ. Les autres apparaissent en améliorant l'Écho (jusqu'à 4).\n\n"
@@ -207,7 +207,7 @@ static func _emplacements() -> String:
 
 	s += _sous_titre("Les étoiles (★1 à ★6)")
 	s += "Elles fixent la [b]force[/b] de l'Écho : sa stat principale et ses tirages de stats secondaires. Exemple avec un Écho du Crâne à ATK fixe :\n\n"
-	s += "[table=3]" + _ligne_tableau(["Étoiles", "ATK à +0", "ATK à +%d" % Echos.NIVEAU_MAX], true)
+	s += "[table=3]" + _ligne_tableau(["Étoiles", "ATK à +0", UiCommun.t("ATK à +%d") % Echos.NIVEAU_MAX], true)
 	for et in range(1, 7):
 		var e0 := {"principale": "atk", "etoiles": et, "niveau": 0}
 		var e15 := {"principale": "atk", "etoiles": et, "niveau": Echos.NIVEAU_MAX}
@@ -218,10 +218,10 @@ static func _emplacements() -> String:
 
 
 static func _ameliorer() -> String:
-	var s := _titre("Améliorer un Écho (+1 à +%d)" % Echos.NIVEAU_MAX)
+	var s := _titre(UiCommun.t("Améliorer un Écho (+1 à +%d)") % Echos.NIVEAU_MAX)
 	s += "Chaque niveau renforce la stat principale. Chaque tentative coûte de l'or. [b]En cas d'échec, seul l'or est perdu[/b] : l'Écho reste intact, il ne perd jamais de niveau.\n"
 	s += _sous_titre("Les paliers")
-	s += "Aux niveaux [b]%s[/b], l'Écho gagne une nouvelle stat secondaire. S'il en a déjà 4, l'une d'elles est renforcée au hasard. C'est pour ça qu'un Écho Légendaire (4 stats dès le départ) gagne 5 renforcements en montant à +%d.\n" % [", ".join(Echos.PALIERS.map(func(x): return "+%d" % x)), Echos.NIVEAU_MAX]
+	s += UiCommun.t("Aux niveaux [b]%s[/b], l'Écho gagne une nouvelle stat secondaire. S'il en a déjà 4, l'une d'elles est renforcée au hasard. C'est pour ça qu'un Écho Légendaire (4 stats dès le départ) gagne 5 renforcements en montant à +%d.\n") % [", ".join(Echos.PALIERS.map(func(x): return "+%d" % x)), Echos.NIVEAU_MAX]
 	s += _sous_titre("Chances de réussite et coût")
 	s += "Le coût dépend des étoiles et du niveau actuel. Exemple pour un Écho ★4 :\n\n"
 	s += "[table=3]" + _ligne_tableau(["Passage", "Chance", "Coût (★4)"], true)
@@ -230,9 +230,9 @@ static func _ameliorer() -> String:
 		var cout := Echos.cout_amelioration({"etoiles": 4, "niveau": n - 1})
 		var couleur := C_BON if c >= 0.8 else ("#ffd27a" if c >= 0.4 else "#ff7a6a")
 		var pal := "  ◆" if n in Echos.PALIERS else ""
-		s += _cellule("+%d → +%d%s" % [n - 1, n, pal]) + _cellule("%d %%" % int(round(c * 100)), couleur) + _cellule("%d or" % cout)
+		s += _cellule("+%d → +%d%s" % [n - 1, n, pal]) + _cellule("%d %%" % int(round(c * 100)), couleur) + _cellule(UiCommun.t("%d or") % cout)
 	s += "[/table]\n"
-	s += "\n[color=%s]◆ = palier (nouvelle stat secondaire ou renforcement).[/color]\n" % C_DOUX
+	s += UiCommun.t("\n[color=%s]◆ = palier (nouvelle stat secondaire ou renforcement).[/color]\n") % C_DOUX
 	s += _sous_titre("Conseils")
 	s += "• Les premiers niveaux sont garantis : monte tous tes Échos équipés à +3 sans hésiter.\n"
 	s += "• Au-delà de +9, chaque tentative est un pari : réserve-les aux Échos ★5-★6 de bonne rareté que tu garderas longtemps.\n"
@@ -260,7 +260,7 @@ static func _sets() -> String:
 			("Acte " + ", ".join(acte_du_set.get(sid, ["?"])))
 		s += _cellule(Echos.SETS[sid]["nom"], C_SET) + _cellule(str(Echos.SETS[sid]["pieces"])) + _cellule(desc) + _cellule(ou)
 	s += "[/table]\n"
-	s += "\n[color=%s]Tous les sets (sauf le set unique des Frères) peuvent aussi être fabriqués à l'Atelier du Reliquaire.[/color]\n" % C_DOUX
+	s += UiCommun.t("\n[color=%s]Tous les sets (sauf le set unique des Frères) peuvent aussi être fabriqués à l'Atelier du Reliquaire.[/color]\n") % C_DOUX
 	s += _sous_titre("Quel set pour quel héros ?")
 	s += "• [b]Avant qui encaisse[/b] (Tank, Guerrier) : Guard ou Energy, à cumuler (2 + 2 + 2), avec Endure ou Will contre les afflictions.\n"
 	s += "• [b]Frappeur physique[/b] (Assassin, Guerrier, Tireur) : Fatal (4) + Blade, ou Rage (4) + Blade quand son taux critique est déjà élevé.\n"
@@ -273,35 +273,35 @@ static func _sets() -> String:
 
 static func _optimiser(uid_heros: int) -> String:
 	var s := _titre("Optimiser ses Échos : fixe ou % ?")
-	s += "Une stat [b]fixe[/b] ajoute toujours la même valeur (ATK +%d sur un ★6 +%d). Un [b]%%[/b] ajoute un pourcentage des stats de base du héros (niveau et étoiles compris, sans les Échos). Plus le héros est fort, plus le %% rapporte.\n" % [int(Echos.valeur_principale({"principale": "atk", "etoiles": 6, "niveau": Echos.NIVEAU_MAX})), Echos.NIVEAU_MAX]
+	s += UiCommun.t("Une stat [b]fixe[/b] ajoute toujours la même valeur (ATK +%d sur un ★6 +%d). Un [b]%%[/b] ajoute un pourcentage des stats de base du héros (niveau et étoiles compris, sans les Échos). Plus le héros est fort, plus le %% rapporte.\n") % [int(Echos.valeur_principale({"principale": "atk", "etoiles": 6, "niveau": Echos.NIVEAU_MAX})), Echos.NIVEAU_MAX]
 	s += _sous_titre("Le point de bascule")
 	s += "Avec deux Échos de mêmes étoiles et même niveau, le % devient meilleur que le fixe quand la stat de base du héros dépasse :\n\n"
-	s += "[table=4]" + _ligne_tableau(["Stat", "Fixe (★6 +%d)" % Echos.NIVEAU_MAX, "%% (★6 +%d)" % Echos.NIVEAU_MAX, "Le % gagne au-delà de"], true)
+	s += "[table=4]" + _ligne_tableau(["Stat", UiCommun.t("Fixe (★6 +%d)") % Echos.NIVEAU_MAX, "%% (★6 +%d)" % Echos.NIVEAU_MAX, "Le % gagne au-delà de"], true)
 	for st in ["atk", "def", "pv"]:
 		var fixe := Echos.valeur_principale({"principale": st, "etoiles": 6, "niveau": Echos.NIVEAU_MAX})
 		var pct := Echos.valeur_principale({"principale": st + "%", "etoiles": 6, "niveau": Echos.NIVEAU_MAX})
-		s += _ligne_tableau([Echos.NOMS_STATS[st], "+%d" % int(fixe), "+%s %%" % _n(pct), "[b]%d[/b] %s de base" % [seuil(st), Echos.NOMS_STATS[st]]])
+		s += _ligne_tableau([Echos.NOMS_STATS[st], "+%d" % int(fixe), "+%s %%" % _n(pct), UiCommun.t("[b]%d[/b] %s de base") % [seuil(st), Echos.NOMS_STATS[st]]])
 	s += "[/table]\n"
-	s += "\n[color=%s]Le seuil ne dépend ni des étoiles ni du niveau de l'Écho : il est le même pour un ★2 +0 que pour un ★6 +15. Pour les stats secondaires, la logique est la même (seuils proches).[/color]\n" % C_DOUX
+	s += UiCommun.t("\n[color=%s]Le seuil ne dépend ni des étoiles ni du niveau de l'Écho : il est le même pour un ★2 +0 que pour un ★6 +15. Pour les stats secondaires, la logique est la même (seuils proches).[/color]\n") % C_DOUX
 
 	if uid_heros >= 0:
 		var h := Sauvegarde.get_heros(uid_heros)
 		if not h.is_empty():
 			var base := Sauvegarde.stats_base_heros(uid_heros)
 			var nom: String = UnitesData.get_unite(h["id"])["nom"]
-			s += _sous_titre("Et pour %s (Nv %d) ?" % [nom, int(h["niveau"])])
+			s += _sous_titre(UiCommun.t("Et pour %s (Nv %d) ?") % [nom, int(h["niveau"])])
 			for st in ["atk", "def", "pv"]:
 				var b := int(base[st])
 				var mieux := b >= seuil(st)
-				s += "• %s de base [b]%d[/b] → %s\n" % [Echos.NOMS_STATS[st], b,
-					("[color=%s]le %% est meilleur (%s %%)[/color]" % [C_BON, Echos.NOMS_STATS[st]]) if mieux else \
-					("le [b]fixe[/b] est meilleur (le %% gagnera vers %d)" % seuil(st))]
+				s += UiCommun.t("• %s de base [b]%d[/b] → %s\n") % [Echos.NOMS_STATS[st], b,
+					(UiCommun.t("[color=%s]le %% est meilleur (%s %%)[/color]") % [C_BON, Echos.NOMS_STATS[st]]) if mieux else \
+					(UiCommun.t("le [b]fixe[/b] est meilleur (le %% gagnera vers %d)") % seuil(st))]
 
 	s += _sous_titre("Selon ton avancée")
 	s += "• [b]Début de partie[/b] (héros N et R, bas niveau) : les stats de base sont faibles, prends les [b]fixes[/b] (ATK, DEF, PV). Ne dépense pas trop d'or en améliorations : tes Échos seront vite remplacés.\n"
 	s += "• [b]Milieu de partie[/b] (SR/SSR, niveau 10 à 20, premières étoiles) : passe à [b]ATK %[/b] et [b]DEF %[/b] sur les emplacements variables. Les PV % ne battent les PV fixes que sur les héros très costauds.\n"
 	s += "• [b]Fin de partie[/b] (SSR/UR niveau 30, ★5-★6, évolutions) : [b]%[/b] partout, puis [b]Taux crit / Dégâts crit[/b] sur le Sacrifice pour les frappeurs.\n"
-	s += "\n[color=%s]Les SSR et UR ont de grosses stats dès le niveau 1 : pour eux, le %% d'ATK gagne souvent tout de suite. Le Mode Essai te le montre en chiffres.[/color]\n" % C_DOUX
+	s += UiCommun.t("\n[color=%s]Les SSR et UR ont de grosses stats dès le niveau 1 : pour eux, le %% d'ATK gagne souvent tout de suite. Le Mode Essai te le montre en chiffres.[/color]\n") % C_DOUX
 
 	s += _sous_titre("Les stats secondaires utiles")
 	s += "• [b]Taux crit[/b] : au-delà de 100, il ne sert plus à rien. Associe-le aux [b]Dégâts crit[/b].\n"

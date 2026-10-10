@@ -245,7 +245,7 @@ static func valider_victoire(tour: String, n: int) -> Array:
 	Sauvegarde.sauvegarder()
 	lignes.append_array(Reliquaire.donner(butin(tour, n)))
 	if nouveau_record:
-		lignes.append("Nouveau record : étage %d !" % n)
+		lignes.append(UiCommun.t("Nouveau record : étage %d !") % n)
 	return lignes
 
 

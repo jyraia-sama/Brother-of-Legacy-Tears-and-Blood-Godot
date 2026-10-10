@@ -170,7 +170,7 @@ func _creer_interface() -> void:
 
 	if _mode == "boss_monde":
 		for k in 4:
-			var le := _label("ESCOUADE %d" % (k + 1), 13, Color(1, 1, 1, 0.4))
+			var le := _label(UiCommun.t("ESCOUADE %d") % (k + 1), 13, Color(1, 1, 1, 0.4))
 			le.anchor_left = 0.005
 			le.anchor_right = 0.005
 			le.anchor_top = 0.235 + k * 0.185
@@ -197,32 +197,32 @@ func _creer_interface() -> void:
 	h.add_theme_constant_override("separation", 12)
 	barre.add_child(h)
 	var type: String = demande.get("type", "combat")
-	var texte_titre := "ACTE %s · CHAPITRE %d — %s" % [
+	var texte_titre := UiCommun.t("ACTE %s · CHAPITRE %d — %s") % [
 		ActesData.get_acte(int(demande.get("acte", 1))).get("romain", ""), int(demande.get("chapitre", 1)),
 		NOMS_TYPE.get(type, "Combat")]
 	if _mode == "tour":
 		var n := int(demande.get("etage", 1))
-		texte_titre = "%s · ÉTAGE %d — %s" % [str(Tours.TOURS[demande["tour"]]["nom"]).to_upper(), n,
+		texte_titre = UiCommun.t("%s · ÉTAGE %d — %s") % [str(Tours.TOURS[demande["tour"]]["nom"]).to_upper(), n,
 			{"combat": "Combat", "elite": "Élite", "boss": "BOSS", "super": "SUPER BOSS"}[Tours.type_etage(n)]]
 	elif _mode == "boss_monde":
 		texte_titre = "BOSS DE MONDE — " + str(BossMonde.BOSS[int(demande.get("boss_index", 0))]["titre"]).to_upper()
 	elif _mode == "marche":
-		texte_titre = "LA MARCHE MAUDITE · %s — %s" % [Marche.nom_region(int(demande.get("region", 0))).to_upper(),
+		texte_titre = UiCommun.t("LA MARCHE MAUDITE · %s — %s") % [Marche.nom_region(int(demande.get("region", 0))).to_upper(),
 			Marche.TYPES[demande.get("type", "combat")]["nom"].to_upper()]
 	elif _mode == "classee":
 		var m: Dictionary = demande["match"]
 		var moi: Dictionary = m["j1"] if mon_camp() == 0 else m["j2"]
 		var lui: Dictionary = m["j2"] if mon_camp() == 0 else m["j1"]
-		texte_titre = "ARÈNE CLASSÉE — %s (%d)  contre  %s (%d)" % [EnLigne.nom_complet(str(moi.get("pseudo", "?"))), int(moi.get("points", 0)),
+		texte_titre = UiCommun.t("ARÈNE CLASSÉE — %s (%d)  contre  %s (%d)") % [EnLigne.nom_complet(str(moi.get("pseudo", "?"))), int(moi.get("points", 0)),
 			EnLigne.nom_complet(str(lui.get("pseudo", "?"))), int(lui.get("points", 0))]
 	elif _mode in ["guerre", "guerre_revoir"]:
-		texte_titre = "%sGUERRE DES BANNIÈRES — %s : %s" % ["REDIFFUSION · " if _mode == "guerre_revoir" else "",
+		texte_titre = UiCommun.t("%sGUERRE DES BANNIÈRES — %s : %s") % ["REDIFFUSION · " if _mode == "guerre_revoir" else "",
 			str(Guerre.COUCHES[int(demande.get("couche", 0))]).to_upper(), str(demande.get("adversaire", "?"))]
 	elif _mode == "sanctuaire":
 		texte_titre = "LE SANCTUAIRE DU BÉLIER — " + str(Sanctuaire.EPREUVES[demande["epreuve"]]["titre"]).to_upper()
 	elif _mode == "donjon":
 		var v := int(demande.get("vague", 0))
-		texte_titre = "%s · NIVEAU %d — COMBAT %d / %d : %s" % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),
+		texte_titre = UiCommun.t("%s · NIVEAU %d — COMBAT %d / %d : %s") % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),
 			int(demande.get("niveau", 1)), v + 1, Donjons.VAGUES.size(), Donjons.NOMS_VAGUE[Donjons.VAGUES[v]]]
 	var titre := _label(texte_titre, 22, C_OR)
 	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -528,7 +528,7 @@ func _maj_texte_geant(pv: int) -> void:
 	if _lbl_geant == null:
 		return
 	var maxi_pv: float = _barre_geant.max_value
-	_lbl_geant.text = "%s / %s PV   —   dégâts infligés : %.1f %%" % [_milliers(pv), _milliers(int(maxi_pv)),
+	_lbl_geant.text = UiCommun.t("%s / %s PV   —   dégâts infligés : %.1f %%") % [_milliers(pv), _milliers(int(maxi_pv)),
 		100.0 * (maxi_pv - pv) / maxi_pv]
 
 
@@ -593,7 +593,7 @@ func _jouer(ev: Dictionary) -> void:
 	_bruitage(ev)
 	match ev["t"]:
 		"tour":
-			_lbl_tour.text = "Tour %d" % ev["n"]
+			_lbl_tour.text = UiCommun.t("Tour %d") % ev["n"]
 			await _attendre(0.25)
 		"attaque":
 			await _elan(ev["a"], ev["c"])
@@ -690,7 +690,7 @@ func _bruitage(ev: Dictionary) -> void:
 
 func _appliquer_sans_animation(ev: Dictionary) -> void:
 	match ev["t"]:
-		"tour": _lbl_tour.text = "Tour %d" % ev["n"]
+		"tour": _lbl_tour.text = UiCommun.t("Tour %d") % ev["n"]
 		"degats": _maj_pv(ev["c"], ev["pv"], ev.get("bouclier", 0))
 		"perte", "soin": _maj_pv(ev["c"], ev["pv"], -1)
 		"bouclier": _cartes[ev["c"]]["bouclier"].value = ev["v"]
@@ -875,7 +875,7 @@ func _fin() -> void:
 		return
 	if _mode == "guerre_revoir":
 		var e := Guerre.etoiles(_res)
-		_afficher_resultat(e > 0, ["Rediffusion de l'assaut de %s contre %s : %s" % [str(demande.get("attaquant", "?")),
+		_afficher_resultat(e > 0, [UiCommun.t("Rediffusion de l'assaut de %s contre %s : %s") % [str(demande.get("attaquant", "?")),
 			str(demande.get("adversaire", "?")), Guerre.texte_etoiles(e)]], "REDIFFUSION")
 		return
 	if _mode == "sanctuaire":
@@ -902,7 +902,7 @@ func _fin() -> void:
 		or_gagne = int(round(or_gagne * (1.0 + Guilde.bonus("fortune") / 100.0)))   # bénédiction de guilde
 		Sauvegarde.ajouter_or(or_gagne)
 		Sauvegarde.ajouter_stat("combats_gagnes")
-		lignes.append("Or : +%d" % or_gagne)
+		lignes.append(UiCommun.t("Or : +%d") % or_gagne)
 		_xp_compte(lignes, type)
 		# Écho Sanguin : set de l'Acte, emplacement = numéro du chapitre
 		var rng := RandomNumberGenerator.new()
@@ -910,13 +910,13 @@ func _fin() -> void:
 		var echo := Echos.tirer_drop(acte, chapitre, type, rng)
 		if not echo.is_empty():
 			Sauvegarde.ajouter_echo(echo)
-			lignes.append("Écho obtenu : %s  %s  (%s)" % [Echos.nom(echo), "★".repeat(int(echo["etoiles"])),
+			lignes.append(UiCommun.t("Écho obtenu : %s  %s  (%s)") % [Echos.nom(echo), "★".repeat(int(echo["etoiles"])),
 				Echos.RARETES[int(echo["rarete"])]["nom"]])
 		# Éclats de Pacte Supérieur : lâchés par les boss (garantis la première fois)
 		var eclats := _eclats_boss(type, acte, chapitre)
 		if eclats > 0:
 			Sauvegarde.ajouter_objet(Sauvegarde.ECLAT, eclats)
-			lignes.append("Éclat de Pacte Supérieur : +%d" % eclats)
+			lignes.append(UiCommun.t("Éclat de Pacte Supérieur : +%d") % eclats)
 		for i in equipe.size():
 			var e: Dictionary = equipe[i]
 			if not e.has("uid"):
@@ -929,9 +929,9 @@ func _fin() -> void:
 			if _res["pv_final"][i] <= 0.0:
 				xp = int(xp * 0.5)       # un héros K.O. gagne moitié moins
 			var niveaux := Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp)
-			var txt := "%s : +%d XP" % [UnitesData.get_unite(h["id"])["nom"], xp]
+			var txt := UiCommun.t("%s : +%d XP") % [UnitesData.get_unite(h["id"])["nom"], xp]
 			if niveaux > 0:
-				txt += "   NIVEAU %d !" % int(h["niveau"])
+				txt += UiCommun.t("   NIVEAU %d !") % int(h["niveau"])
 			lignes.append(txt)
 	else:
 		Sauvegarde.ajouter_stat("combats_perdus")
@@ -957,13 +957,13 @@ func _fin_tour() -> void:
 	var n := int(demande["etage"])
 	var lignes: Array = []
 	if victoire:
-		lignes.append("Étage %d vaincu !" % n)
+		lignes.append(UiCommun.t("Étage %d vaincu !") % n)
 		lignes.append_array(Tours.valider_victoire(tour, n))
 		_xp_compte(lignes, Tours.type_etage(n))
 		_donner_xp(lignes, func(niv: int) -> int: return Tours.xp(n, niv))
 		Sauvegarde.ajouter_stat("etages_%s" % tour)
 	else:
-		lignes.append("L'équipe est repoussée. Renforce-toi et retente l'étage %d." % n)
+		lignes.append(UiCommun.t("L'équipe est repoussée. Renforce-toi et retente l'étage %d.") % n)
 	_decouvrir(lignes)
 	resultat = {"mode": "tour", "victoire": victoire}
 	_afficher_resultat(victoire, lignes)
@@ -996,7 +996,7 @@ func _fin_boss_monde() -> void:
 	for e in demande["equipe"]:
 		if e.has("uid"):
 			Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp_armee)
-	lignes.append("Toute l'armée : +%d XP" % xp_armee)
+	lignes.append(UiCommun.t("Toute l'armée : +%d XP") % xp_armee)
 	_xp_compte(lignes, "boss_monde")
 	_decouvrir(lignes)
 	resultat = {"mode": "boss_monde", "victoire": tue, "pct": pct}
@@ -1006,12 +1006,12 @@ func _fin_boss_monde() -> void:
 ## Boss de guilde : les dégâts infligés sont ajoutés à ceux de toute la guilde (serveur).
 func _fin_boss_guilde() -> void:
 	var degats := int(_res["degats_ennemis"])
-	var lignes: Array = ["Dégâts infligés : %d" % degats]
+	var lignes: Array = [UiCommun.t("Dégâts infligés : %d") % degats]
 	var r := await EnLigne.appeler("guilde_boss_frapper", {"p_degats": degats})
 	if r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "ok":
 		var d: Dictionary = r.data
-		lignes.append("Dégâts comptés pour la guilde : %d" % int(d["coup"]))
-		lignes.append("Le titan de la guilde : %.1f %% de ses PV perdus%s" % [
+		lignes.append(UiCommun.t("Dégâts comptés pour la guilde : %d") % int(d["coup"]))
+		lignes.append(UiCommun.t("Le titan de la guilde : %.1f %% de ses PV perdus%s") % [
 			100.0 * float(d["degats"]) / maxf(1.0, float(d["pv_max"])), "  —  ABATTU !" if d["abattu"] else ""])
 	elif r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "essais":
 		lignes.append("Plus d'assaut disponible aujourd'hui : ces dégâts ne comptent pas.")
@@ -1021,7 +1021,7 @@ func _fin_boss_guilde() -> void:
 	for e in demande["equipe"]:
 		if e.has("uid"):
 			Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp_armee)
-	lignes.append("Toute l'armée : +%d XP" % xp_armee)
+	lignes.append(UiCommun.t("Toute l'armée : +%d XP") % xp_armee)
 	lignes.append("Va dans l'onglet Boss de guilde pour réclamer les paliers atteints.")
 	_xp_compte(lignes, "boss_monde")
 	_decouvrir(lignes)
@@ -1041,14 +1041,14 @@ func _fin_arene() -> void:
 	if r.ok and r.data is Dictionary and r.data.get("ok", false):
 		var d: Dictionary = r.data
 		var pts := int(d["points"])
-		lignes.append("Points d'Arène : %s%d  (total %d, rang %d)" % ["+" if pts >= 0 else "", pts, int(d["points_total"]), int(d["rang"])])
-		lignes.append("Insignes d'Arène : +%d" % int(d["insignes"]))
+		lignes.append(UiCommun.t("Points d'Arène : %s%d  (total %d, rang %d)") % ["+" if pts >= 0 else "", pts, int(d["points_total"]), int(d["rang"])])
+		lignes.append(UiCommun.t("Insignes d'Arène : +%d") % int(d["insignes"]))
 		if victoire:
 			Sauvegarde.ajouter_stat("combats_gagnes")
 			_xp_compte(lignes, "arene")
 		Sauvegarde.ajouter_stat("combats_arene")
 	else:
-		lignes.append("Le résultat n'a pas pu être envoyé : %s" % (r.erreur if not r.ok else str(r.data.get("erreur", "?"))))
+		lignes.append(UiCommun.t("Le résultat n'a pas pu être envoyé : %s") % (r.erreur if not r.ok else str(r.data.get("erreur", "?"))))
 	resultat = {"mode": "arene", "victoire": victoire}
 	_afficher_resultat(victoire, lignes)
 
@@ -1061,21 +1061,21 @@ func _fin_guerre() -> void:
 	var r := await EnLigne.appeler("guerre_terminer", {"p_attaque": demande["attaque"], "p_etoiles": e})
 	lignes.clear()
 	var adv: String = str(demande.get("adversaire", "?"))
-	lignes.append(("Tu as pris le poste de %s : %s" % [adv, Guerre.texte_etoiles(e)]) if victoire
-		else ("%s a repoussé ton assaut." % adv))
+	lignes.append((UiCommun.t("Tu as pris le poste de %s : %s") % [adv, Guerre.texte_etoiles(e)]) if victoire
+		else (UiCommun.t("%s a repoussé ton assaut.") % adv))
 	if victoire:
 		lignes.append("★ victoire   ★★ 3 unités debout ou plus   ★★★ aucune perte")
 	if r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "ok":
 		var gain := int(r.data["gain"])
 		if gain > 0:
-			lignes.append("+%d étoile%s pour ta guilde (total %d)." % [gain, "s" if gain > 1 else "", int(r.data["total"])])
+			lignes.append(UiCommun.t("+%d étoile%s pour ta guilde (total %d).") % [gain, "s" if gain > 1 else "", int(r.data["total"])])
 		else:
 			lignes.append("Pas d'étoile nouvelle : ce poste avait déjà été pris aussi bien.")
 		if victoire:
 			Sauvegarde.ajouter_stat("combats_gagnes")
 			_xp_compte(lignes, "arene")
 	else:
-		lignes.append("Le résultat n'a pas pu être envoyé : %s" % (r.erreur if not r.ok else Guerre.texte_erreur(str(r.data.get("code", "?")))))
+		lignes.append(UiCommun.t("Le résultat n'a pas pu être envoyé : %s") % (r.erreur if not r.ok else Guerre.texte_erreur(str(r.data.get("code", "?")))))
 	lignes.append("Les unités de cet assaut sont épuisées jusqu'à demain.")
 	resultat = {"mode": "guerre", "victoire": victoire, "etoiles": e}
 	_afficher_resultat(victoire, lignes, ("VICTOIRE  " + Guerre.texte_etoiles(e)) if victoire else "")
@@ -1105,7 +1105,7 @@ func _fin_donjon() -> void:
 	_decouvrir(lignes)
 	if not victoire:
 		Sauvegarde.ajouter_stat("combats_perdus")
-		lignes.push_front("L'expédition échoue au combat %d / %d. Renforce-toi et retente ta chance." % [
+		lignes.push_front(UiCommun.t("L'expédition échoue au combat %d / %d. Renforce-toi et retente ta chance.") % [
 			int(demande.get("vague", 0)) + 1, Donjons.VAGUES.size()])
 		Donjons.terminer()
 		resultat = {"mode": "donjon", "victoire": false}
@@ -1118,12 +1118,12 @@ func _fin_donjon() -> void:
 		var suivant: String = Donjons.NOMS_VAGUE[Donjons.VAGUES[int(Donjons.expedition["vague"])]]
 		resultat = {"mode": "donjon", "victoire": true}
 		Audio.son("or")
-		_texte_centre("Combat %d / %d gagné !  Prochain : %s" % [int(demande["vague"]) + 1, Donjons.VAGUES.size(), suivant], Color("ffd27a"))
+		_texte_centre(UiCommun.t("Combat %d / %d gagné !  Prochain : %s") % [int(demande["vague"]) + 1, Donjons.VAGUES.size(), suivant], Color("ffd27a"))
 		await get_tree().create_timer(1.6).timeout
 		EcranCombat.demande = Donjons.demande_combat()
 		get_tree().change_scene_to_file(SCENE)
 		return
-	lignes.push_front("%s — niveau %d terminé !" % [Donjons.DONJONS[d]["nom"], n])
+	lignes.push_front(UiCommun.t("%s — niveau %d terminé !") % [Donjons.DONJONS[d]["nom"], n])
 	lignes.append_array(Donjons.valider_victoire(d, n))
 	_xp_compte(lignes, "donjon")
 	_donner_xp(lignes, func(niv: int) -> int: return Donjons.xp(n, niv))
@@ -1138,9 +1138,9 @@ func _xp_compte(lignes: Array, cle: String) -> void:
 		return
 	var xp := int(Sauvegarde.XP_COMPTE_VICTOIRE.get(cle, 10))
 	var niveaux := Sauvegarde.ajouter_xp_compte(xp)
-	lignes.append("XP de compte : +%d" % xp)
+	lignes.append(UiCommun.t("XP de compte : +%d") % xp)
 	if niveaux > 0:
-		lignes.append("NIVEAU DE COMPTE %d ! Stamina max %d — stamina rechargée !" % [
+		lignes.append(UiCommun.t("NIVEAU DE COMPTE %d ! Stamina max %d — stamina rechargée !") % [
 			Sauvegarde.get_niveau_compte(), Sauvegarde.get_stamina_max()])
 
 
@@ -1158,9 +1158,9 @@ func _donner_xp(lignes: Array, calcul: Callable) -> void:
 		if _res["pv_final"][i] <= 0.0:
 			xp = int(xp * 0.5)
 		var niveaux := Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp)
-		var txt := "%s : +%d XP" % [UnitesData.get_unite(h["id"])["nom"], xp]
+		var txt := UiCommun.t("%s : +%d XP") % [UnitesData.get_unite(h["id"])["nom"], xp]
 		if niveaux > 0:
-			txt += "   NIVEAU %d !" % int(h["niveau"])
+			txt += UiCommun.t("   NIVEAU %d !") % int(h["niveau"])
 		lignes.append(txt)
 
 

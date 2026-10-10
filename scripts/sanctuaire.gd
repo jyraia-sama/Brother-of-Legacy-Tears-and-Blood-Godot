@@ -152,20 +152,20 @@ static func valider_victoire(ep: String) -> Array:
 	var l: Array = []
 	if ep in e["vaincus"]:
 		Sauvegarde.ajouter_or(OR_REJEU)
-		l.append("Or : +%d" % OR_REJEU)
+		l.append(UiCommun.t("Or : +%d") % OR_REJEU)
 		return l
 	e["vaincus"].append(ep)
 	if ep == "famille":
 		Succes.ajouter_titre(TITRE_FINAL)
-		l.append("Nouveau titre : « %s »" % TITRE_FINAL)
+		l.append(UiCommun.t("Nouveau titre : « %s »") % TITRE_FINAL)
 		Sauvegarde.ajouter_objet("coffre_royal", 1)
 		l.append("Coffre Royal x1")
 	else:
 		var id: String = info["boss"][0]
 		Sauvegarde.ajouter_heros(id)
 		Sauvegarde.decouvrir(id)
-		l.append("%s rejoint ta collection (héros UR) !" % UnitesData.get_unite(id)["nom"])
+		l.append(UiCommun.t("%s rejoint ta collection (héros UR) !") % UnitesData.get_unite(id)["nom"])
 	Sauvegarde.ajouter_gemmes(int(info["gemmes"]))
-	l.append("Gemmes : +%d" % int(info["gemmes"]))
+	l.append(UiCommun.t("Gemmes : +%d") % int(info["gemmes"]))
 	Sauvegarde.sauvegarder()
 	return l

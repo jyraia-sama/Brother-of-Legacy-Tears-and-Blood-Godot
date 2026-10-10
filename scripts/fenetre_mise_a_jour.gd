@@ -43,7 +43,7 @@ func _ready() -> void:
 	match resultat:
 		"a_jour":
 			_titre("TON JEU EST À JOUR")
-			_texte("Tu joues à la dernière version : v%s." % MiseAJour.version_actuelle, UiCommun.C_TEXTE)
+			_texte(UiCommun.t("Tu joues à la dernière version : v%s.") % MiseAJour.version_actuelle, UiCommun.C_TEXTE)
 			_ligne_boutons()
 			_ajouter_bouton("OK", queue_free)
 		"erreur":
@@ -53,14 +53,14 @@ func _ready() -> void:
 			_ajouter_bouton("OK", queue_free)
 		"pret":
 			_titre("MISE À JOUR PRÊTE")
-			_texte("La version v%s est téléchargée. Relance le jeu pour en profiter." % str(MiseAJour.fiche.get("version", "")), UiCommun.C_TEXTE)
+			_texte(UiCommun.t("La version v%s est téléchargée. Relance le jeu pour en profiter.") % str(MiseAJour.fiche.get("version", "")), UiCommun.C_TEXTE)
 			_nouveautes()
 			_ligne_boutons()
 			if not _bloquee:
 				_ajouter_bouton("Plus tard", queue_free)
 			_ajouter_bouton(_texte_redemarrer(), MiseAJour.redemarrer, true)
 		"installation":
-			_titre("NOUVELLE VERSION : v%s" % str(MiseAJour.fiche.get("version", "")))
+			_titre(UiCommun.t("NOUVELLE VERSION : v%s") % str(MiseAJour.fiche.get("version", "")))
 			_texte("Cette version demande de réinstaller le jeu (le moteur ou les réglages ont changé).\nTa partie est conservée : elle est enregistrée sur ton appareil et sur ton compte.", UiCommun.C_TEXTE)
 			_nouveautes()
 			_texte(_aide_installation(), UiCommun.C_DOUX, 15)
@@ -69,11 +69,11 @@ func _ready() -> void:
 				_ajouter_bouton("Plus tard", queue_free)
 			_ajouter_bouton("Télécharger l'installation", MiseAJour.ouvrir_installation, true)
 		_:
-			_titre("MISE À JOUR DISPONIBLE : v%s" % str(MiseAJour.fiche.get("version", "")))
+			_titre(UiCommun.t("MISE À JOUR DISPONIBLE : v%s") % str(MiseAJour.fiche.get("version", "")))
 			var taille := int((MiseAJour.fiche.get("pck", {}) as Dictionary).get("taille", 0))
-			var t := "Tu joues à la version v%s." % MiseAJour.version_actuelle
+			var t := UiCommun.t("Tu joues à la version v%s.") % MiseAJour.version_actuelle
 			if taille > 0:
-				t += " Téléchargement : %.0f Mo." % (taille / 1048576.0)
+				t += UiCommun.t(" Téléchargement : %.0f Mo.") % (taille / 1048576.0)
 			if _bloquee:
 				t += "\nCette mise à jour est obligatoire pour continuer à jouer en ligne."
 			_texte(t, UiCommun.C_TEXTE)
@@ -97,9 +97,9 @@ func _process(_delta: float) -> void:
 	var p := MiseAJour.progression()
 	if p >= 0.0:
 		_barre.value = p
-		_info.text = "Téléchargement… %d %%  (%.1f Mo)" % [int(p * 100), MiseAJour.octets_recus() / 1048576.0]
+		_info.text = UiCommun.t("Téléchargement… %d %%  (%.1f Mo)") % [int(p * 100), MiseAJour.octets_recus() / 1048576.0]
 	else:
-		_info.text = "Téléchargement… %.1f Mo" % (MiseAJour.octets_recus() / 1048576.0)
+		_info.text = UiCommun.t("Téléchargement… %.1f Mo") % (MiseAJour.octets_recus() / 1048576.0)
 
 
 func _lancer() -> void:

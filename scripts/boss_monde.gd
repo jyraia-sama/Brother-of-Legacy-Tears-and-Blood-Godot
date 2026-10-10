@@ -152,7 +152,7 @@ static func valider(index: int, pct: float, tue: bool) -> Array:
 	var id: String = BOSS[index]["id"]
 	var e := etat()
 	var lignes: Array = []
-	lignes.append("Dégâts infligés : %.1f %% des PV%s" % [pct, "  —  BOSS ABATTU !" if tue else ""])
+	lignes.append(UiCommun.t("Dégâts infligés : %.1f %% des PV%s") % [pct, "  —  BOSS ABATTU !" if tue else ""])
 	if pct > float(e["records"].get(id, 0.0)):
 		e["records"][id] = pct
 		lignes.append("Nouveau record contre ce boss !")

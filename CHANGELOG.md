@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.17** (2026-10-10)
+Version actuelle : **0.60.0** (2026-10-10)
+
+## v0.60.0 — Tears and Blood, in English  (2026-10-10)
+
+- CHAT GLOBAL : un nouveau bouton « Chat » en haut à droite du menu principal ouvre une discussion avec tous les joueurs connectés. Une pastille rouge prévient quand il y a de nouveaux messages. (Serveur : fichier supabase/09_chat_global.sql à lancer une fois dans Supabase.)
+- ENGLISH VERSION : nouveau réglage Paramètres → LANGUE · LANGUAGE (Français / English). Les menus, boutons, fenêtres, messages et guides sont traduits en anglais (environ 2 600 textes). Les noms des unités, leurs compétences et l'histoire restent en français pour l'instant (prochaine étape).
 
 ## v0.59.17 — Les clés de l'Admin  (2026-10-10)
 

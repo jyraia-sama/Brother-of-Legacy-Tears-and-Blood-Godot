@@ -24,7 +24,7 @@ static func couleur_rarete(id: String) -> Color:
 
 static func texte_rarete(id: String) -> String:
 	var u := UnitesData.get_unite(id)
-	var t: String = "%s · Légende" % u["rarete"] if u.get("legende", false) else u["rarete"]
+	var t: String = UiCommun.t("%s · Légende") % u["rarete"] if u.get("legende", false) else u["rarete"]
 	return t + (" · Évolué" if UnitesData.est_evolue(id) else "")
 
 
@@ -49,6 +49,13 @@ static func style_carte(bord: Color, eclat := 0.0, epais := 2) -> StyleBoxFlat:
 	s.border_width_top = epais + 2
 	s.set_corner_radius_all(8)
 	return s
+
+
+## TRADUCTION d'un texte à trous (« %d unités ») avant de le remplir : "…" % [...] devient
+## UiCommun.t("…") % [...]. Les textes simples des Label / Button se traduisent tout seuls
+## (fichier langues/en.po, voir LANGUES.md).
+static func t(texte: String) -> String:
+	return str(TranslationServer.translate(texte))
 
 
 static func label(texte: String, taille: int, couleur := C_TEXTE) -> Label:
@@ -401,7 +408,7 @@ static func _carte_heros(h: Dictionary, largeur: float, hauteur: float) -> Butto
 	nom.add_theme_constant_override("outline_size", 5)
 	vb.add_child(nom)
 	var niv := int(h["niveau"])
-	var ligne := label("Nv %d  ·  %s" % [niv, "Légende" if u.get("legende", false) else u["rarete"]], 11 if petit else 12, bord)
+	var ligne := label(UiCommun.t("Nv %d  ·  %s") % [niv, "Légende" if u.get("legende", false) else u["rarete"]], 11 if petit else 12, bord)
 	ligne.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	ligne.add_theme_color_override("font_outline_color", Color.BLACK)
 	ligne.add_theme_constant_override("outline_size", 4)
@@ -561,7 +568,7 @@ static func _carte_heros_simple(h: Dictionary, largeur: float, hauteur: float) -
 	nom.custom_minimum_size = Vector2(largeur - 12, 0)
 	vb.add_child(nom)
 	var niv := int(h["niveau"])
-	var ligne := label("Nv %d  ·  %s" % [niv, "Légende" if u.get("legende", false) else u["rarete"]], 12, bord)
+	var ligne := label(UiCommun.t("Nv %d  ·  %s") % [niv, "Légende" if u.get("legende", false) else u["rarete"]], 12, bord)
 	ligne.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(ligne)
 	var nb_et := Fusion.etoiles(h)

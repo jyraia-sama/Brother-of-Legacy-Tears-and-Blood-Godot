@@ -135,7 +135,7 @@ func _remplir_cartes() -> void:
 		etat.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		vb.add_child(etat)
 		if BossMonde.record(b["id"]) > 0.0:
-			var rec := UiCommun.label("Record : %.1f %%" % BossMonde.record(b["id"]), 13, UiCommun.C_OR)
+			var rec := UiCommun.label(UiCommun.t("Record : %.1f %%") % BossMonde.record(b["id"]), 13, UiCommun.C_OR)
 			rec.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			vb.add_child(rec)
 		if not dispo:
@@ -164,7 +164,7 @@ func _maj_fiche() -> void:
 	gauche.add_theme_constant_override("separation", 6)
 	h.add_child(gauche)
 	gauche.add_child(UiCommun.label(str(b["titre"]).to_upper(), 26, C_SANG))
-	gauche.add_child(UiCommun.label("%s  ·  %s  ·  Niveau %d  ·  agit %d fois par tour" % [UnitesData.ELEMENTS[u["element"]],
+	gauche.add_child(UiCommun.label(UiCommun.t("%s  ·  %s  ·  Niveau %d  ·  agit %d fois par tour") % [UnitesData.ELEMENTS[u["element"]],
 		UnitesData.ROLES[u["role"]], BossMonde.NIVEAU_BOSS, int(b["actions"])], 15, UiCommun.C_DOUX))
 	var t := UiCommun.label(b["texte"], 16, UiCommun.C_TEXTE)
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -183,11 +183,11 @@ func _maj_fiche() -> void:
 	droite.custom_minimum_size = Vector2(430, 0)
 	droite.add_theme_constant_override("separation", 6)
 	h.add_child(droite)
-	droite.add_child(UiCommun.label("PV : %s" % _milliers(int(s["pv"] * float(m["pv"]))), 26, Color("ff7a6a")))
+	droite.add_child(UiCommun.label(UiCommun.t("PV : %s") % _milliers(int(s["pv"] * float(m["pv"]))), 26, Color("ff7a6a")))
 	droite.add_child(UiCommun.label("ATK %d   ·   DEF %d   ·   MAG %d   ·   AGI %d" % [int(s["atk"] * float(m["atk"])),
 		int(s["def"] * float(m["def"])), int(s["mag"] * float(m["mag"])), int(s["agi"] * float(m["agi"]))], 16, UiCommun.C_TEXTE))
-	droite.add_child(UiCommun.label("Durée de l'assaut : %d tours maximum" % BossMonde.TOURS_COMBAT, 15, UiCommun.C_DOUX))
-	droite.add_child(UiCommun.label("Record : %.1f %%   ·   Aujourd'hui : %.1f %%" % [BossMonde.record(b["id"]),
+	droite.add_child(UiCommun.label(UiCommun.t("Durée de l'assaut : %d tours maximum") % BossMonde.TOURS_COMBAT, 15, UiCommun.C_DOUX))
+	droite.add_child(UiCommun.label(UiCommun.t("Record : %.1f %%   ·   Aujourd'hui : %.1f %%") % [BossMonde.record(b["id"]),
 		BossMonde.record_du_jour(b["id"])], 16, UiCommun.C_OR))
 	droite.add_child(UiCommun.label("Récompenses selon les dégâts : or, Fragments Colossaux,\nPoussière d'Écho, coffre (Royal si le boss est abattu).", 14, UiCommun.C_DOUX))
 
@@ -207,7 +207,7 @@ func _maj_fiche() -> void:
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 14)
 	_fiche.add_child(ligne)
-	var info := UiCommun.label("ARMÉE : %d / 20 unités   ·   niveau moyen %.1f   ·   %d avec des Échos   ·   puissance %d" % [
+	var info := UiCommun.label(UiCommun.t("ARMÉE : %d / 20 unités   ·   niveau moyen %.1f   ·   %d avec des Échos   ·   puissance %d") % [
 		armee.size(), niveau_moyen, avec_echos, int(puissance)], 17, UiCommun.C_TEXTE)
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ligne.add_child(info)
@@ -221,7 +221,7 @@ func _maj_fiche() -> void:
 	go.add_theme_color_override("font_color", Color("ff8a6a"))
 	var raison := ""
 	if not BossMonde.est_debloque():
-		raison = "Termine l'Acte %s pour débloquer les Boss de Monde." % ActesData.get_acte(BossMonde.DEBLOCAGE.x).get("romain", str(BossMonde.DEBLOCAGE.x))
+		raison = UiCommun.t("Termine l'Acte %s pour débloquer les Boss de Monde.") % ActesData.get_acte(BossMonde.DEBLOCAGE.x).get("romain", str(BossMonde.DEBLOCAGE.x))
 	elif not dispo:
 		raison = "Ce boss n'apparaît que le " + Calendrier.JOURS[_selection].to_lower() + "."
 	elif BossMonde.essais_restants() <= 0:
@@ -248,8 +248,8 @@ func _lancer() -> void:
 
 
 func _maj_haut() -> void:
-	_lbl_essais.text = "Essais aujourd'hui : %d / %d" % [BossMonde.essais_restants(), BossMonde.ESSAIS_PAR_JOUR]
-	_lbl_decompte.text = "Prochain boss dans %s" % Calendrier.texte_duree(Calendrier.secondes_avant_demain())
+	_lbl_essais.text = UiCommun.t("Essais aujourd'hui : %d / %d") % [BossMonde.essais_restants(), BossMonde.ESSAIS_PAR_JOUR]
+	_lbl_decompte.text = UiCommun.t("Prochain boss dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_demain())
 
 
 func _milliers(n: int) -> String:

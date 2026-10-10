@@ -174,7 +174,7 @@ func _maj_phase() -> void:
 	var reste := maxi(0, fin - int(Time.get_unix_time_from_system()))
 	var phase: String = Guerre.PHASES.get(str(_etat.get("phase", "")), "?")
 	var suite := {"preparation": "les assauts commencent dans", "assaut": "fin des assauts dans", "bilan": "nouvelle guerre dans"}
-	_lbl_phase.text = "Phase : %s  ·  %s %s" % [phase, suite.get(str(_etat.get("phase", "")), ""), _duree(reste)]
+	_lbl_phase.text = UiCommun.t("Phase : %s  ·  %s %s") % [phase, suite.get(str(_etat.get("phase", "")), ""), _duree(reste)]
 
 
 func _maj_bandeau() -> void:
@@ -259,10 +259,10 @@ func _afficher_bataille() -> void:
 		_ecran_sans_guerre()
 		return
 	if not bool(g.get("en_cours", false)):
-		_titre("Dernière guerre : contre %s" % str(g["eux"]["nom"]))
+		_titre(UiCommun.t("Dernière guerre : contre %s") % str(g["eux"]["nom"]))
 		_texte("La prochaine guerre commence mercredi. En attendant, prépare ta défense de guerre.")
 	else:
-		_titre("La forteresse de %s" % str(g["eux"]["nom"]))
+		_titre(UiCommun.t("La forteresse de %s") % str(g["eux"]["nom"]))
 		if bool(g.get("legion", false)):
 			_texte("Aucune guilde à ta mesure cette semaine : la LÉGION DE LA SOIF se dresse devant vous. Ses postes sont les reflets de défenses de vrais joueurs. Elle attaque aussi votre forteresse, chaque jour un peu plus : prenez-lui plus d'étoiles qu'elle ne vous en prend !")
 		_texte("Perce les Remparts, puis les Tours, puis le Donjon : une couche s'ouvre quand chaque poste de la précédente a été pris au moins une étoile. ★ victoire · ★★ 3 unités debout · ★★★ aucune perte.")
@@ -275,7 +275,7 @@ func _afficher_nous() -> void:
 		_ecran_sans_guerre()
 		return
 	_titre("Notre forteresse")
-	_texte("Les étoiles indiquent ce que %s a pris sur chaque poste. Les défenses sont figées pour toute la guerre." % str(g["eux"]["nom"]))
+	_texte(UiCommun.t("Les étoiles indiquent ce que %s a pris sur chaque poste. Les défenses sont figées pour toute la guerre.") % str(g["eux"]["nom"]))
 	_forteresse(g["postes_nous"], true)
 
 
@@ -319,7 +319,7 @@ func _carte_poste(p: Dictionary, la_notre: bool, ouverte: bool) -> Control:
 	nom.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(nom)
 	h.add_child(UiCommun.label(Guerre.texte_etoiles(pris), 22, UiCommun.C_LEGENDE if pris > 0 else UiCommun.C_DOUX))
-	v.add_child(UiCommun.label("Puissance %s" % _nombre(int(p["puissance"])), 15, UiCommun.C_DOUX))
+	v.add_child(UiCommun.label(UiCommun.t("Puissance %s") % _nombre(int(p["puissance"])), 15, UiCommun.C_DOUX))
 	# Éléments (toujours visibles) ou unités (si révélées)
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 6)
@@ -374,7 +374,7 @@ func _ecran_sans_guerre() -> void:
 	else:
 		_texte("C'est le BILAN (dimanche). La prochaine guerre se prépare dès lundi.")
 	var inscrite := bool(gu.get("inscrite", false))
-	_texte("Inscription de la guilde : %s. L'inscription reste valable chaque semaine." % ("OUI ✓" if inscrite else "non"))
+	_texte(UiCommun.t("Inscription de la guilde : %s. L'inscription reste valable chaque semaine.") % ("OUI ✓" if inscrite else "non"))
 	if str(gu.get("mon_role", "")) in ["chef", "officier"]:
 		var b := UiCommun.bouton("Retirer la guilde des guerres" if inscrite else "Inscrire la guilde à la guerre", 18)
 		b.custom_minimum_size = Vector2(380, 48)
@@ -415,7 +415,7 @@ func _afficher_assaut() -> void:
 	var annuler := UiCommun.bouton("← Champ de bataille")
 	annuler.pressed.connect(func(): _changer_onglet("bataille"))
 	h.add_child(annuler)
-	h.add_child(UiCommun.label("Assaut : %s (%s) · puissance %s · %s" % [str(p["nom"]), Guerre.COUCHES[int(p["couche"])],
+	h.add_child(UiCommun.label(UiCommun.t("Assaut : %s (%s) · puissance %s · %s") % [str(p["nom"]), Guerre.COUCHES[int(p["couche"])],
 		_nombre(int(p["puissance"])), Guerre.texte_etoiles(int(p["etoiles"]))], 20, UiCommun.C_OR))
 	_texte("Choisis jusqu'à 5 unités : clique une unité puis une place. Les unités grisées sont ÉPUISÉES (elles ont déjà attaqué aujourd'hui). Celles que tu engages seront épuisées jusqu'à demain.")
 
@@ -431,7 +431,7 @@ func _afficher_assaut() -> void:
 			b = Button.new()
 			b.custom_minimum_size = Vector2(140, 178)
 			b.add_theme_stylebox_override("normal", UiCommun.style_carte(UiCommun.C_DOUX.darkened(0.4)))
-			b.text = "Place %d\n%s\n(vide)" % [i + 1, "Avant" if i < 2 else "Arrière"]
+			b.text = UiCommun.t("Place %d\n%s\n(vide)") % [i + 1, "Avant" if i < 2 else "Arrière"]
 		b.pressed.connect(_clic_place_assaut.bind(i))
 		places.add_child(b)
 		if i == 1:
@@ -452,7 +452,7 @@ func _afficher_assaut() -> void:
 		_slots_assaut = [-1, -1, -1, -1, -1]
 		_changer_onglet("assaut"))
 	bas.add_child(vider)
-	var pu := UiCommun.label("Ta puissance : %s   ·   la sienne : %s" % [_nombre(Arene.puissance(equipe)), _nombre(int(p["puissance"]))], 17, UiCommun.C_DOUX)
+	var pu := UiCommun.label(UiCommun.t("Ta puissance : %s   ·   la sienne : %s") % [_nombre(Arene.puissance(equipe)), _nombre(int(p["puissance"]))], 17, UiCommun.C_DOUX)
 	pu.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	bas.add_child(pu)
 	_grille_collection(_slots_assaut, _fatigue(), "Assaut")
@@ -542,7 +542,7 @@ func _afficher_defense() -> void:
 			b = Button.new()
 			b.custom_minimum_size = Vector2(140, 178)
 			b.add_theme_stylebox_override("normal", UiCommun.style_carte(UiCommun.C_DOUX.darkened(0.4)))
-			b.text = "Place %d\n%s\n(vide)" % [i + 1, "Avant" if i < 2 else "Arrière"]
+			b.text = UiCommun.t("Place %d\n%s\n(vide)") % [i + 1, "Avant" if i < 2 else "Arrière"]
 		b.pressed.connect(_clic_place_def.bind(i))
 		places.add_child(b)
 		if i == 1:
@@ -572,7 +572,7 @@ func _afficher_defense() -> void:
 		else:
 			_message.text = err)
 	boutons.add_child(envoyer)
-	var info := "Puissance %s" % _nombre(Arene.puissance(Arene.equipe_depuis_slots(_slots_def)))
+	var info := UiCommun.t("Puissance %s") % _nombre(Arene.puissance(Arene.equipe_depuis_slots(_slots_def)))
 	info += "   ·   modifications NON enregistrées" if _def_modifiee else ("   ·   enregistrée ✓" if _etat.get("ma_defense") != null else "")
 	var li := UiCommun.label(info, 17, Color(1.0, 0.8, 0.5) if _def_modifiee else UiCommun.C_DOUX)
 	li.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -685,7 +685,7 @@ func _afficher_membres() -> void:
 		grille.add_child(UiCommun.label(str(int(m["attaques"])), 17))
 		grille.add_child(UiCommun.label("%d ★" % int(m["etoiles"]), 17, UiCommun.C_LEGENDE))
 	var r: Dictionary = _etat.get("reglages", {})
-	_texte("Butin (pour chaque membre qui a attaqué au moins une fois) : Sceaux de guilde (victoire %d, égalité %d, défaite %d, +%d par étoile gagnée), or et coffres." % [
+	_texte(UiCommun.t("Butin (pour chaque membre qui a attaqué au moins une fois) : Sceaux de guilde (victoire %d, égalité %d, défaite %d, +%d par étoile gagnée), or et coffres.") % [
 		int(r.get("sceaux", {}).get("victoire", 0)), int(r.get("sceaux", {}).get("egalite", 0)),
 		int(r.get("sceaux", {}).get("defaite", 0)), int(r.get("sceaux_par_etoile", 0))])
 
@@ -714,7 +714,7 @@ func _reclamer() -> void:
 		return
 	var d: Dictionary = r.data
 	var lignes := Quetes.donner(d.get("recompense", {}))
-	lignes.push_front("Sceaux de guilde : +%d" % int(d.get("sceaux", 0)))
+	lignes.push_front(UiCommun.t("Sceaux de guilde : +%d") % int(d.get("sceaux", 0)))
 	var titre: String = {"victoire": "Butin de la victoire", "egalite": "Butin de l'égalité", "defaite": "Butin de guerre"}.get(str(d.get("resultat", "")), "Butin")
 	FenetreSimple.ouvrir(self, titre, "\n".join(lignes), [["Merci !", null]])
 	_charger()
@@ -766,8 +766,8 @@ func _duree(s: int) -> String:
 	if s >= 86400:
 		return "%d j %d h" % [s / 86400, (s % 86400) / 3600]
 	if s >= 3600:
-		return "%d h %02d min" % [s / 3600, (s % 3600) / 60]
-	return "%d min %02d s" % [s / 60, s % 60]
+		return UiCommun.t("%d h %02d min") % [s / 3600, (s % 3600) / 60]
+	return UiCommun.t("%d min %02d s") % [s / 60, s % 60]
 
 
 func _heure(iso: String) -> String:

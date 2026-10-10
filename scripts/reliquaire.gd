@@ -141,7 +141,7 @@ static func texte_cout(cout: Dictionary, or_requis := 0) -> String:
 	for o in cout:
 		morceaux.append("%d %s" % [int(cout[o]), nom(o)])
 	if or_requis > 0:
-		morceaux.append("%d or" % or_requis)
+		morceaux.append(UiCommun.t("%d or") % or_requis)
 	return " + ".join(morceaux)
 
 
@@ -171,7 +171,7 @@ static func donner(butin: Dictionary) -> Array:
 			continue
 		if o == "or":
 			Sauvegarde.ajouter_or(n)
-			lignes.append("Or : +%d" % n)
+			lignes.append(UiCommun.t("Or : +%d") % n)
 		else:
 			Sauvegarde.ajouter_objet(o, n)
 			lignes.append("%s : +%d" % [nom(o), n])

@@ -204,7 +204,7 @@ static func actes_du_jour() -> Array:
 
 static func nom_region(region: int) -> String:
 	var a: Dictionary = ActesData.get_acte(int(actes_du_jour()[region]))
-	return str(a.get("titre", a.get("nom", "Région %d" % (region + 1))))
+	return str(a.get("titre", a.get("nom", UiCommun.t("Région %d") % (region + 1))))
 
 
 static var _cache_cartes := {}
@@ -335,7 +335,7 @@ static func commencer(uids: Array, classee: bool) -> String:
 	if deja_jouee():
 		return "Tu as déjà fait la Marche du jour. Reviens demain !"
 	if uids.is_empty() or uids.size() > TAILLE_EQUIPE:
-		return "Choisis de 1 à %d unités." % TAILLE_EQUIPE
+		return UiCommun.t("Choisis de 1 à %d unités.") % TAILLE_EQUIPE
 	for uid in uids:
 		if Sauvegarde.get_heros(int(uid)).is_empty():
 			return "Unité introuvable."
@@ -359,7 +359,7 @@ static func commencer(uids: Array, classee: bool) -> String:
 		"region": 0, "ligne": -1, "case": -1,
 		"benedictions": [], "maledictions": [], "or": 50, "score": 0, "gloire": 0.0,
 		"attente": {}, "achats": {}, "chemin": [], "combats": 0, "elites": 0, "boss": 0, "pactes": 0,
-		"journal": ["La Marche commence : %s." % nom_region(0)],
+		"journal": [UiCommun.t("La Marche commence : %s.") % nom_region(0)],
 		"resultat": {},
 	}
 	Sauvegarde.ajouter_stat("marches")
@@ -416,7 +416,7 @@ static func avancer(index: int) -> String:
 			var r := _rng("tresor-%d-%d-%d" % [int(p["region"]), int(p["ligne"]), index])
 			var gain := r.randi_range(50, 90)
 			p["or"] = int(p["or"]) + gain
-			journal("Trésor : +%d or." % gain)
+			journal(UiCommun.t("Trésor : +%d or.") % gain)
 			_proposer_benedictions("commune", "tresor")
 		"autel":
 			p["attente"] = {"type": "autel", "pactes": _tirer_pactes()}
@@ -551,7 +551,7 @@ static func apres_combat(res: Dictionary) -> Array:
 			p["equipe"][i]["pv"] = float(res["pv_final"][i])
 	p["attente"] = {}
 	if not res["victoire"]:
-		journal("Défaite face au %s." % TYPES[type]["nom"].to_lower())
+		journal(UiCommun.t("Défaite face au %s.") % TYPES[type]["nom"].to_lower())
 		lignes.append("Ton équipe est tombée. La Marche s'arrête ici.")
 		lignes.append_array(terminer(false))
 		return lignes
@@ -560,7 +560,7 @@ static func apres_combat(res: Dictionary) -> Array:
 	p["score"] = int(p["score"]) + pts
 	var gain := int({"combat": 25, "elite": 50, "boss": 90}[type] * (1.0 + _or_bonus()) * (0.5 if "misere" in p["maledictions"] else 1.0))
 	p["or"] = int(p["or"]) + gain
-	lignes.append("Score +%d   ·   Or de marche +%d" % [pts, gain])
+	lignes.append(UiCommun.t("Score +%d   ·   Or de marche +%d") % [pts, gain])
 	match type:
 		"combat":
 			p["combats"] = int(p["combats"]) + 1
@@ -568,7 +568,7 @@ static func apres_combat(res: Dictionary) -> Array:
 			p["elites"] = int(p["elites"]) + 1
 		"boss":
 			p["boss"] = int(p["boss"]) + 1
-	journal("%s gagné (+%d points)." % [TYPES[type]["nom"], pts])
+	journal(UiCommun.t("%s gagné (+%d points).") % [TYPES[type]["nom"], pts])
 	if type == "boss":
 		if region >= REGIONS - 1:
 			lignes.append("Le dernier boss est tombé : la Marche est accomplie !")
@@ -579,8 +579,8 @@ static func apres_combat(res: Dictionary) -> Array:
 		p["ligne"] = -1
 		p["case"] = -1
 		_soigner(0.3)
-		journal("Nouvelle région : %s. L'équipe reprend son souffle (+30 %% PV)." % nom_region(region + 1))
-		lignes.append("Région suivante : %s. Ton équipe reprend son souffle (+30 %% PV)." % nom_region(region + 1))
+		journal(UiCommun.t("Nouvelle région : %s. L'équipe reprend son souffle (+30 %% PV).") % nom_region(region + 1))
+		lignes.append(UiCommun.t("Région suivante : %s. Ton équipe reprend son souffle (+30 %% PV).") % nom_region(region + 1))
 		_proposer_benedictions("epique", "boss")
 	elif type == "elite":
 		_proposer_benedictions("rare" if not bonus_evt else "rare", "elite")
@@ -659,7 +659,7 @@ static func _appliquer_benediction(id: String) -> void:
 		p["gloire"] = float(p["gloire"]) + float(b["gloire"])
 	if b.has("stats") or b.has("passifs") or b.has("or_bonus"):
 		p["benedictions"].append(id)
-	journal("Bénédiction : %s." % b["nom"])
+	journal(UiCommun.t("Bénédiction : %s.") % b["nom"])
 
 
 static func _soigner(pct: float) -> void:
@@ -698,7 +698,7 @@ static func recruter(index: int) -> void:
 		var ancien: String = UnitesData.get_unite(p["equipe"][index]["id"])["nom"]
 		p["equipe"][index] = {"uid": -1, "id": u["id"], "niveau": int(u["niveau"]), "mult": float(u["mult"]), "pv": 1.0, "recrue": true}
 		Sauvegarde.decouvrir(u["id"])
-		journal("%s rejoint la marche (à la place de %s)." % [UnitesData.get_unite(u["id"])["nom"], ancien])
+		journal(UiCommun.t("%s rejoint la marche (à la place de %s).") % [UnitesData.get_unite(u["id"])["nom"], ancien])
 	p["attente"] = {}
 	Sauvegarde.sauvegarder()
 
@@ -751,29 +751,29 @@ static func _appliquer_effets(e: Dictionary) -> Array:
 	var l: Array = []
 	if e.has("soin"):
 		_soigner(float(e["soin"]))
-		l.append("L'équipe récupère %d %% de ses PV." % int(float(e["soin"]) * 100))
+		l.append(UiCommun.t("L'équipe récupère %d %% de ses PV.") % int(float(e["soin"]) * 100))
 	if e.has("degats"):
 		_blesser(float(e["degats"]))
-		l.append("L'équipe perd %d %% de ses PV." % int(float(e["degats"]) * 100))
+		l.append(UiCommun.t("L'équipe perd %d %% de ses PV.") % int(float(e["degats"]) * 100))
 	if e.has("or"):
 		p["or"] = int(p["or"]) + int(e["or"])
-		l.append("Or de marche +%d." % int(e["or"]))
+		l.append(UiCommun.t("Or de marche +%d.") % int(e["or"]))
 	if e.has("score"):
 		p["score"] = int(p["score"]) + int(e["score"])
 		l.append("Score %s%d." % ["+" if int(e["score"]) >= 0 else "", int(e["score"])])
 	if e.has("gloire"):
 		p["gloire"] = float(p["gloire"]) + float(e["gloire"])
-		l.append("Gloire +%d %% (score final)." % int(float(e["gloire"]) * 100))
+		l.append(UiCommun.t("Gloire +%d %% (score final).") % int(float(e["gloire"]) * 100))
 	if e.has("ranimer"):
 		_ranimer(float(e["ranimer"]))
 	if e.has("malediction"):
 		var m := _malediction_au_hasard()
 		if m != "":
 			p["maledictions"].append(m)
-			l.append("Malédiction : %s — %s" % [MALEDICTIONS[m]["nom"], MALEDICTIONS[m]["desc"]])
+			l.append(UiCommun.t("Malédiction : %s — %s") % [MALEDICTIONS[m]["nom"], MALEDICTIONS[m]["desc"]])
 	if e.has("benediction_id"):
 		_appliquer_benediction(e["benediction_id"])
-		l.append("Bénédiction : %s." % BENEDICTIONS[e["benediction_id"]]["nom"])
+		l.append(UiCommun.t("Bénédiction : %s.") % BENEDICTIONS[e["benediction_id"]]["nom"])
 	# Ces effets ouvrent un nouveau choix (le dernier gagne)
 	if e.has("benediction"):
 		_proposer_benedictions(e["benediction"], "evt")
@@ -807,7 +807,7 @@ static func feu_de_camp(choix: String) -> Array:
 	match choix:
 		"repos":
 			_soigner(0.35)
-			l.append("L'équipe se repose (+%d %% PV)." % (17 if "sans_repos" in p["maledictions"] else 35))
+			l.append(UiCommun.t("L'équipe se repose (+%d %% PV).") % (17 if "sans_repos" in p["maledictions"] else 35))
 		"entrainement":
 			_proposer_benedictions("commune", "feu")
 		"rite":
@@ -877,7 +877,7 @@ static func acheter(index: int) -> String:
 			_ranimer(0.4)
 		"purifier":
 			var m: String = p["maledictions"].pop_back()
-			journal("Malédiction levée : %s." % MALEDICTIONS[m]["nom"])
+			journal(UiCommun.t("Malédiction levée : %s.") % MALEDICTIONS[m]["nom"])
 	Sauvegarde.sauvegarder()
 	return ""
 
@@ -922,8 +922,8 @@ static func pacte(index: int) -> Array:
 	p["maledictions"].append(pa["malediction"])
 	p["pactes"] = int(p["pactes"]) + 1
 	p["gloire"] = float(p["gloire"]) + GLOIRE_PACTE
-	l.append("Malédiction : %s — %s" % [MALEDICTIONS[pa["malediction"]]["nom"], MALEDICTIONS[pa["malediction"]]["desc"]])
-	l.append("Gloire +%d %% (score final)." % int(GLOIRE_PACTE * 100))
+	l.append(UiCommun.t("Malédiction : %s — %s") % [MALEDICTIONS[pa["malediction"]]["nom"], MALEDICTIONS[pa["malediction"]]["desc"]])
+	l.append(UiCommun.t("Gloire +%d %% (score final).") % int(GLOIRE_PACTE * 100))
 	match str(pa["recompense"]):
 		"epique":
 			_proposer_benedictions("epique", "pacte")
@@ -938,7 +938,7 @@ static func pacte(index: int) -> Array:
 		"gloire":
 			p["gloire"] = float(p["gloire"]) + 0.3
 			l.append("Gloire +30 %.")
-	journal("Pacte de Sang : %s." % MALEDICTIONS[pa["malediction"]]["nom"])
+	journal(UiCommun.t("Pacte de Sang : %s.") % MALEDICTIONS[pa["malediction"]]["nom"])
 	Sauvegarde.sauvegarder()
 	return l
 
@@ -975,7 +975,7 @@ static func terminer(complete: bool) -> Array:
 	if score > int(d["record"]):
 		d["record"] = score
 		l.append("Nouveau record personnel !")
-	l.append("SCORE FINAL : %d%s" % [score, ("   (gloire +%d %%)" % int(float(p["gloire"]) * 100)) if float(p["gloire"]) > 0 else ""])
+	l.append(UiCommun.t("SCORE FINAL : %d%s") % [score, (UiCommun.t("   (gloire +%d %%)") % int(float(p["gloire"]) * 100)) if float(p["gloire"]) > 0 else ""])
 	l.append_array(Reliquaire.donner({"sceau_marche": s}))
 	# XP pour les unités du joueur : selon les combats gagnés
 	var victoires := int(p["combats"]) + 2 * int(p["elites"]) + 4 * int(p["boss"])
@@ -984,7 +984,7 @@ static func terminer(complete: bool) -> Array:
 		for m in p["equipe"]:
 			if int(m.get("uid", -1)) >= 0 and not Sauvegarde.get_heros(int(m["uid"])).is_empty():
 				Sauvegarde.ajouter_xp_heros(int(m["uid"]), xp)
-		l.append("Tes unités : +%d XP chacune." % xp)
+		l.append(UiCommun.t("Tes unités : +%d XP chacune.") % xp)
 	Sauvegarde.ajouter_stat("marches_terminees" if complete else "marches_perdues")
 	Sauvegarde.sauvegarder()
 	return l

@@ -45,6 +45,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	process_priority = -100
 	appliquer_taille()
+	appliquer_langue()
 	_creer_calque_portrait()
 	get_tree().root.size_changed.connect(_maj_portrait)
 	_maj_portrait()
@@ -74,6 +75,30 @@ func tactile() -> bool:
 # =====================================================================
 # Taille de l'interface
 # =====================================================================
+
+## LANGUE DU JEU : "fr" (texte d'origine) ou "en" (langues/en.po). Sans choix enregistré :
+## anglais si l'appareil est en anglais, sinon français.
+const LANGUES := {"fr": "Français", "en": "English"}
+
+func langue() -> String:
+	var l := str(Sauvegarde.get_parametre("langue", ""))
+	if LANGUES.has(l):
+		return l
+	return "en" if OS.get_locale_language() == "en" else "fr"
+
+
+func appliquer_langue() -> void:
+	TranslationServer.set_locale(langue())
+
+
+## Change la langue et recharge l'écran en cours pour que tous les textes suivent.
+func changer_langue(l: String) -> void:
+	if not LANGUES.has(l) or l == langue():
+		return
+	Sauvegarde.definir_parametre("langue", l)
+	appliquer_langue()
+	get_tree().reload_current_scene.call_deferred()
+
 
 func reglage_taille() -> String:
 	return str(Sauvegarde.get_parametre("taille_interface", "auto"))

@@ -87,7 +87,7 @@ static func accueil() -> Array:
 	var f := ajouter_familier("chien_galeux")
 	Sauvegarde.ajouter_objet(SCEAU, 5)
 	Sauvegarde.sauvegarder()
-	return ["Familier offert : %s" % FamiliersData.get_familier(f["id"])["nom"], "Sceaux Sauvages : +5"]
+	return [UiCommun.t("Familier offert : %s") % FamiliersData.get_familier(f["id"])["nom"], "Sceaux Sauvages : +5"]
 
 
 # ---------------------------------------------------------------------
@@ -161,7 +161,7 @@ static func eveiller(uid: int, sacrifie: int) -> String:
 	if f["id"] != s["id"]:
 		return "Il faut un doublon du même familier."
 	if int(f["etoiles"]) >= FamiliersData.ETOILES_MAX:
-		return "Ce familier a déjà %d étoiles." % FamiliersData.ETOILES_MAX
+		return UiCommun.t("Ce familier a déjà %d étoiles.") % FamiliersData.ETOILES_MAX
 	if occupe_fam(sacrifie):
 		return "Le doublon est parti en chasse."
 	f["etoiles"] = int(f["etoiles"]) + 1
@@ -440,16 +440,16 @@ static func recolter(index: int) -> Array:
 		f["xp"] = int(f["xp"]) + nb
 		var nf := _monter(f)
 		if nf > 0:
-			l.append("%s passe niveau %d !" % [FamiliersData.get_familier(f["id"])["nom"], int(f["niveau"])])
+			l.append(UiCommun.t("%s passe niveau %d !") % [FamiliersData.get_familier(f["id"])["nom"], int(f["niveau"])])
 	var h := Sauvegarde.get_heros(int(e["heros"]))
 	if not h.is_empty():
 		var xp := int(nb * Sauvegarde.xp_heros_pour_niveau(int(h["niveau"])) / 12.0)
 		if not f.is_empty() and FamiliersData.get_familier(f["id"])["talent"] == "mentor":
 			xp = int(xp * (1.0 + FamiliersData.valeur_talent(f["id"], int(f["etoiles"])) / 100.0))
 		var nh := Sauvegarde.ajouter_xp_heros(int(e["heros"]), xp)
-		var txt := "%s : +%d XP" % [UnitesData.get_unite(h["id"])["nom"], xp]
+		var txt := UiCommun.t("%s : +%d XP") % [UnitesData.get_unite(h["id"])["nom"], xp]
 		if nh > 0:
-			txt += "   NIVEAU %d !" % int(h["niveau"])
+			txt += UiCommun.t("   NIVEAU %d !") % int(h["niveau"])
 		l.append(txt)
 	Sauvegarde._stat("butins_familiers", nb)
 	e["stock"] = {}

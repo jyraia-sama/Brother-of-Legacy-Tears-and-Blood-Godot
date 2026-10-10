@@ -212,7 +212,7 @@ func _maj_bandeau() -> void:
 	_bandeau.add_child(_bloc("RANG", "%d" % int(_etat.get("rang", 0)), UiCommun.C_TEXTE))
 	_bandeau.add_child(_bloc("SAISON", "%d V · %d D" % [int(_etat.get("victoires", 0)), int(_etat.get("defaites", 0))], UiCommun.C_TEXTE))
 	var gratuits := int(_etat.get("essais_gratuits_restants", 0))
-	var txt_essais := "%d gratuits" % gratuits if gratuits > 0 else "%d à %d gemmes" % [int(_etat.get("essais_payants_restants", 0)), int(_etat.get("cout_essai_gemmes", 20))]
+	var txt_essais := UiCommun.t("%d gratuits") % gratuits if gratuits > 0 else UiCommun.t("%d à %d gemmes") % [int(_etat.get("essais_payants_restants", 0)), int(_etat.get("cout_essai_gemmes", 20))]
 	_bandeau.add_child(_bloc("COMBATS AUJOURD'HUI", txt_essais, C_VERT if gratuits > 0 else UiCommun.C_DOUX))
 	_bandeau.add_child(_bloc("INSIGNES D'ARÈNE", str(int(_etat.get("insignes", 0))), Color("e0b35a")))
 	_maj_compte_a_rebours()
@@ -229,7 +229,7 @@ func _maj_compte_a_rebours() -> void:
 	if _etat.is_empty() or _lbl_saison == null:
 		return
 	var reste := EnLigne.date_vers_unix(str(_etat.get("fin_saison", ""))) - int(Time.get_unix_time_from_system())
-	_lbl_saison.text = "   Saison %d · fin dans %s" % [int(_etat.get("saison", 1)), Calendrier.texte_duree(maxi(0, reste))]
+	_lbl_saison.text = UiCommun.t("   Saison %d · fin dans %s") % [int(_etat.get("saison", 1)), Calendrier.texte_duree(maxi(0, reste))]
 
 
 # ---------------------------------------------------------------
@@ -272,7 +272,7 @@ func _afficher_combattre() -> void:
 	var att := Arene.equipe_attaque()
 	for u in att:
 		ligne_att.add_child(_mini_unite(u))
-	var p_att := UiCommun.label("Puissance %s" % _nombre(Arene.puissance(att)), 17, UiCommun.C_DOUX)
+	var p_att := UiCommun.label(UiCommun.t("Puissance %s") % _nombre(Arene.puissance(att)), 17, UiCommun.C_DOUX)
 	p_att.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	ligne_att.add_child(p_att)
 	var deck := UiCommun.bouton("Modifier (Deck)")
@@ -322,10 +322,10 @@ func _carte_adversaire(a: Dictionary) -> Control:
 		infos.add_child(UiCommun.label("Victoire : 10 points max", 15, UiCommun.C_DOUX))
 	else:
 		infos.add_child(UiCommun.label(EnLigne.nom_complet(str(a.get("pseudo", "?"))), 22, UiCommun.C_TEXTE))
-		infos.add_child(UiCommun.label("%s · %d points · Niv. %d" % [Arene.nom_palier(palier), int(a.get("points", 0)), int(a.get("niveau", 1))], 15, Arene.couleur_palier(palier)))
+		infos.add_child(UiCommun.label(UiCommun.t("%s · %d points · Niv. %d") % [Arene.nom_palier(palier), int(a.get("points", 0)), int(a.get("niveau", 1))], 15, Arene.couleur_palier(palier)))
 		if str(a.get("guilde", "")) != "":
 			infos.add_child(UiCommun.label("Guilde : " + str(a.get("guilde")), 15, UiCommun.C_DOUX))
-	infos.add_child(UiCommun.label("Puissance %s" % _nombre(Arene.puissance(equipe)), 15, UiCommun.C_DOUX))
+	infos.add_child(UiCommun.label(UiCommun.t("Puissance %s") % _nombre(Arene.puissance(equipe)), 15, UiCommun.C_DOUX))
 	var equipe_box := HBoxContainer.new()
 	equipe_box.add_theme_constant_override("separation", 6)
 	equipe_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -356,8 +356,8 @@ func _attaquer(a: Dictionary) -> void:
 		return
 	var cout := int(_etat.get("cout_essai_gemmes", 20))
 	FenetreSimple.confirmer(self, "Combat supplémentaire",
-		"Tu as utilisé tes combats gratuits du jour.\nCombattre quand même pour %d gemmes ? (tu en as %d)" % [cout, Sauvegarde.get_gemmes()],
-		"Payer %d gemmes" % cout, func():
+		UiCommun.t("Tu as utilisé tes combats gratuits du jour.\nCombattre quand même pour %d gemmes ? (tu en as %d)") % [cout, Sauvegarde.get_gemmes()],
+		UiCommun.t("Payer %d gemmes") % cout, func():
 			if Sauvegarde.get_gemmes() < cout:
 				_message.text = "Pas assez de gemmes."
 				return
@@ -410,7 +410,7 @@ func _afficher_defense() -> void:
 			b = Button.new()
 			b.custom_minimum_size = Vector2(150, 190)
 			b.add_theme_stylebox_override("normal", UiCommun.style_carte(UiCommun.C_DOUX.darkened(0.4)))
-			b.text = "Place %d\n%s\n(vide)" % [i + 1, "Avant" if i < 2 else "Arrière"]
+			b.text = UiCommun.t("Place %d\n%s\n(vide)") % [i + 1, "Avant" if i < 2 else "Arrière"]
 		b.pressed.connect(_clic_place.bind(i))
 		places.add_child(b)
 		if i == 1:
@@ -430,7 +430,7 @@ func _afficher_defense() -> void:
 	envoyer.pressed.connect(_enregistrer_defense)
 	boutons.add_child(envoyer)
 	var equipe := Arene.equipe_depuis_slots(_slots_def)
-	var info := "Puissance %s" % _nombre(Arene.puissance(equipe))
+	var info := UiCommun.t("Puissance %s") % _nombre(Arene.puissance(equipe))
 	if _def_modifiee:
 		info += "   ·   modifications NON enregistrées"
 	elif not (_etat.get("equipe", []) as Array).is_empty():
@@ -494,7 +494,7 @@ func _enregistrer_defense() -> void:
 # ---------- Classement ----------
 
 func _afficher_classement() -> void:
-	_titre("Classement de la saison %d" % int(_etat.get("saison", 1)))
+	_titre(UiCommun.t("Classement de la saison %d") % int(_etat.get("saison", 1)))
 	_texte("Paliers : Bronze · Argent 1100 · Or 1300 · Platine 1500 · Diamant 1800 · Légende = top 10 avec 1800 points ou plus.")
 	var chargement := UiCommun.label("Chargement…", 16, UiCommun.C_DOUX)
 	_contenu.add_child(chargement)
@@ -528,7 +528,7 @@ func _afficher_classement() -> void:
 		pal.custom_minimum_size = Vector2(120, 0)
 		pal.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		ligne.add_child(pal)
-		var pts := UiCommun.label("%d pts" % int(l.points), 20, UiCommun.C_LEGENDE)
+		var pts := UiCommun.label(UiCommun.t("%d pts") % int(l.points), 20, UiCommun.C_LEGENDE)
 		pts.custom_minimum_size = Vector2(130, 0)
 		pts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		ligne.add_child(pts)
@@ -584,7 +584,7 @@ func _afficher_historique() -> void:
 		infos.add_child(UiCommun.label(texte, 19))
 		infos.add_child(UiCommun.label(_date(str(h.date)), 14, UiCommun.C_DOUX))
 		var pts := int(h.points) if h.points != null else 0
-		var res := UiCommun.label("%s   %s%d pts" % ["VICTOIRE" if victoire else "DÉFAITE", "+" if pts >= 0 else "", pts], 20, C_VERT if victoire else C_ROUGE)
+		var res := UiCommun.label(UiCommun.t("%s   %s%d pts") % ["VICTOIRE" if victoire else "DÉFAITE", "+" if pts >= 0 else "", pts], 20, C_VERT if victoire else C_ROUGE)
 		res.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		ligne.add_child(res)
 		if not attaque and h.autre_id != null:
@@ -634,8 +634,8 @@ func _afficher_boutique() -> void:
 		var noms := VBoxContainer.new()
 		haut.add_child(noms)
 		noms.add_child(UiCommun.label("%s%s" % [Arene.nom_objet(id), " x%d" % int(art.quantite) if int(art.quantite) > 1 else ""], 19))
-		noms.add_child(UiCommun.label("Achetés : %d / %d" % [deja, int(art.limite)], 14, UiCommun.C_DOUX))
-		var b := UiCommun.bouton("Acheter · %d Insignes" % int(art.prix))
+		noms.add_child(UiCommun.label(UiCommun.t("Achetés : %d / %d") % [deja, int(art.limite)], 14, UiCommun.C_DOUX))
+		var b := UiCommun.bouton(UiCommun.t("Acheter · %d Insignes") % int(art.prix))
 		b.disabled = deja >= int(art.limite) or int(_etat.get("insignes", 0)) < int(art.prix)
 		b.pressed.connect(_acheter.bind(id))
 		vb.add_child(b)
@@ -653,7 +653,7 @@ func _acheter(id: String) -> void:
 	if r.ok and r.data is Dictionary and r.data.get("ok", false):
 		Sauvegarde.ajouter_objet(id, int(r.data.quantite))
 		await _charger()
-		_message.text = "%s x%d ajouté au Reliquaire." % [Arene.nom_objet(id), int(r.data.quantite)]
+		_message.text = UiCommun.t("%s x%d ajouté au Reliquaire.") % [Arene.nom_objet(id), int(r.data.quantite)]
 	else:
 		_message.text = r.erreur if not r.ok else Arene.texte_erreur(str(r.data.get("erreur", "")))
 
@@ -666,7 +666,7 @@ func _proposer_recompenses() -> void:
 		return
 	var texte := ""
 	for rec in liste:
-		texte += "Saison %d : %s (rang %d, %d points)\n   → %d Insignes et %d gemmes\n" % [int(rec.saison),
+		texte += UiCommun.t("Saison %d : %s (rang %d, %d points)\n   → %d Insignes et %d gemmes\n") % [int(rec.saison),
 			Arene.nom_palier(str(rec.palier)), int(rec.rang), int(rec.points), int(rec.insignes), int(rec.gemmes)]
 	FenetreSimple.ouvrir(self, "FIN DE SAISON", texte, [["Réclamer", func():
 		var r := await EnLigne.appeler("arene_reclamer")
@@ -674,7 +674,7 @@ func _proposer_recompenses() -> void:
 			Sauvegarde.ajouter_gemmes(int(r.data.gemmes))
 			if is_inside_tree():
 				await _charger()
-				_message.text = "Récompenses reçues : +%d Insignes, +%d gemmes." % [int(r.data.insignes), int(r.data.gemmes)]]])
+				_message.text = UiCommun.t("Récompenses reçues : +%d Insignes, +%d gemmes.") % [int(r.data.insignes), int(r.data.gemmes)]]])
 
 
 # ---------------------------------------------------------------

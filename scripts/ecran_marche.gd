@@ -83,16 +83,16 @@ func _rafraichir() -> void:
 		e.queue_free()
 	var p := Marche.partie()
 	if Marche.en_cours():
-		_lbl_haut.text = "Région %d / %d : %s   ·   Score %d   ·   Or de marche %d%s" % [int(p["region"]) + 1, Marche.REGIONS,
+		_lbl_haut.text = UiCommun.t("Région %d / %d : %s   ·   Score %d   ·   Or de marche %d%s") % [int(p["region"]) + 1, Marche.REGIONS,
 			Marche.nom_region(int(p["region"])), int(p["score"]), int(p["or"]),
-			("   ·   Gloire +%d %%" % int(float(p["gloire"]) * 100)) if float(p["gloire"]) > 0 else ""]
+			(UiCommun.t("   ·   Gloire +%d %%") % int(float(p["gloire"]) * 100)) if float(p["gloire"]) > 0 else ""]
 		_ecran_carte()
 		_afficher_attente()
 	elif p.get("etat", "") == "finie":
-		_lbl_haut.text = "Nouvelle marche dans %s" % Calendrier.texte_duree(Calendrier.secondes_avant_demain())
+		_lbl_haut.text = UiCommun.t("Nouvelle marche dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_demain())
 		_ecran_fin()
 	else:
-		_lbl_haut.text = "Record personnel : %d" % Marche.record()
+		_lbl_haut.text = UiCommun.t("Record personnel : %d") % Marche.record()
 		_ecran_depart()
 
 
@@ -134,7 +134,7 @@ func _ecran_depart() -> void:
 		ligne.add_theme_constant_override("separation", 10)
 		ligne.add_child(UiCommun.portrait(Rencontres.POOLS[int(a["numero"])]["boss"], 56))
 		var vb := VBoxContainer.new()
-		vb.add_child(UiCommun.label("Région %d — %s" % [r + 1, a["titre"]], 17, UiCommun.C_TEXTE))
+		vb.add_child(UiCommun.label(UiCommun.t("Région %d — %s") % [r + 1, a["titre"]], 17, UiCommun.C_TEXTE))
 		vb.add_child(UiCommun.label("Boss : " + UnitesData.get_unite(Rencontres.POOLS[int(a["numero"])]["boss"])["nom"], 13, UiCommun.C_DOUX))
 		ligne.add_child(vb)
 		g.add_child(ligne)
@@ -155,7 +155,7 @@ func _ecran_depart() -> void:
 	if Marche.deja_jouee():
 		d.add_child(UiCommun.label("Tu as déjà fait la Marche du jour.", 18, UiCommun.C_OR))
 		return
-	d.add_child(UiCommun.label("TON ÉQUIPE  (%d / %d)" % [_choix.size(), Marche.TAILLE_EQUIPE], 18, UiCommun.C_OR))
+	d.add_child(UiCommun.label(UiCommun.t("TON ÉQUIPE  (%d / %d)") % [_choix.size(), Marche.TAILLE_EQUIPE], 18, UiCommun.C_OR))
 	var places := HBoxContainer.new()
 	places.add_theme_constant_override("separation", 8)
 	d.add_child(places)
@@ -266,7 +266,7 @@ func _ecran_carte() -> void:
 	for m in p["equipe"]:
 		d.add_child(_ligne_membre(m))
 	d.add_child(HSeparator.new())
-	d.add_child(UiCommun.label("BÉNÉDICTIONS  (%d)" % p["benedictions"].size(), 17, UiCommun.C_OR))
+	d.add_child(UiCommun.label(UiCommun.t("BÉNÉDICTIONS  (%d)") % p["benedictions"].size(), 17, UiCommun.C_OR))
 	if p["benedictions"].is_empty():
 		d.add_child(UiCommun.label("Aucune pour l'instant.", 13, UiCommun.C_DOUX))
 	var flux := HFlowContainer.new()
@@ -305,7 +305,7 @@ func _ligne_membre(m: Dictionary) -> HBoxContainer:
 	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(vb)
 	var u := UnitesData.get_unite(m["id"])
-	vb.add_child(UiCommun.label("%s  Nv %d%s" % [u["nom"], int(m["niveau"]), "   (recrue)" if m.get("recrue", false) else ""], 15,
+	vb.add_child(UiCommun.label(UiCommun.t("%s  Nv %d%s") % [u["nom"], int(m["niveau"]), "   (recrue)" if m.get("recrue", false) else ""], 15,
 		UiCommun.C_DOUX if ko else UiCommun.C_TEXTE))
 	var barre := UiCommun.barre(Color("5ad06a") if float(m["pv"]) > 0.5 else (Color("e0c040") if float(m["pv"]) > 0.25 else C_SANG), 300, 9)
 	barre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -421,7 +421,7 @@ func _fenetre_combat(a: Dictionary) -> void:
 		n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		c.add_child(n)
 		ligne.add_child(c)
-	_texte(vb, "Niveau %d   ·   Les PV de ton équipe sont conservés après le combat." % int(ennemis[0]["niveau"]), 14, UiCommun.C_DOUX)
+	_texte(vb, UiCommun.t("Niveau %d   ·   Les PV de ton équipe sont conservés après le combat.") % int(ennemis[0]["niveau"]), 14, UiCommun.C_DOUX)
 	if "saignee" in Marche.partie()["maledictions"]:
 		_texte(vb, "Saignée : ton équipe perdra 8 % de ses PV au début du combat.", 14, C_SANG)
 	_bouton_choix(vb, "⚔  COMBATTRE", func():
@@ -431,7 +431,7 @@ func _fenetre_combat(a: Dictionary) -> void:
 
 
 func _fenetre_benedictions(a: Dictionary) -> void:
-	var titre := "CHOISIS UNE BÉNÉDICTION" if int(a.get("restants", 1)) <= 1 else "CHOISIS %d BÉNÉDICTIONS" % int(a["restants"])
+	var titre := "CHOISIS UNE BÉNÉDICTION" if int(a.get("restants", 1)) <= 1 else UiCommun.t("CHOISIS %d BÉNÉDICTIONS") % int(a["restants"])
 	var vb := _fenetre(titre, Color("#" + Marche.COULEURS_RARETE[a["rarete"]]), 1100)
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 14)
@@ -495,8 +495,8 @@ func _fenetre_recrue(a: Dictionary) -> void:
 	h.add_child(UiCommun.portrait(u["id"], 110))
 	var v := VBoxContainer.new()
 	v.add_child(UiCommun.label(info["nom"], 24, Color("ffb070")))
-	v.add_child(UiCommun.label("%s · %s · %s · Niveau %d" % [info["rarete"], UnitesData.ELEMENTS[info["element"]], UnitesData.ROLES[info["role"]], int(u["niveau"])], 15, UiCommun.C_DOUX))
-	v.add_child(UiCommun.label("Puissance : %d" % int(Marche.puissance_unite(u)), 15, UiCommun.C_TEXTE))
+	v.add_child(UiCommun.label(UiCommun.t("%s · %s · %s · Niveau %d") % [info["rarete"], UnitesData.ELEMENTS[info["element"]], UnitesData.ROLES[info["role"]], int(u["niveau"])], 15, UiCommun.C_DOUX))
+	v.add_child(UiCommun.label(UiCommun.t("Puissance : %d") % int(Marche.puissance_unite(u)), 15, UiCommun.C_TEXTE))
 	h.add_child(v)
 	_texte(vb, "Cette unité propose de rejoindre ta marche (jusqu'à la fin de la marche seulement).\nChoisis l'unité qu'elle remplace :", 15)
 	var grille := GridContainer.new()
@@ -538,7 +538,7 @@ func _fenetre_feu() -> void:
 	var vb := _fenetre("FEU DE CAMP", Color("ffd060"))
 	_texte(vb, "Les flammes crépitent. Ton équipe peut souffler un instant… ou se préparer à ce qui l'attend.", 16)
 	var repos := 17 if "sans_repos" in Marche.partie()["maledictions"] else 35
-	_bouton_choix(vb, "Se reposer : l'équipe récupère %d %% de ses PV" % repos, func():
+	_bouton_choix(vb, UiCommun.t("Se reposer : l'équipe récupère %d %% de ses PV") % repos, func():
 		_resultat_puis_suite(Marche.feu_de_camp("repos")))
 	_bouton_choix(vb, "S'entraîner : choisis une Bénédiction commune", func():
 		Marche.feu_de_camp("entrainement")
@@ -551,7 +551,7 @@ func _fenetre_feu() -> void:
 func _fenetre_marchand(a: Dictionary) -> void:
 	var vb := _fenetre("LE MARCHAND AMBULANT", Color("8affa0"), 1000)
 	var p := Marche.partie()
-	_texte(vb, "« Tout se vend, voyageur. Même l'espoir. »   —   Or de marche : %d" % int(p["or"]), 16)
+	_texte(vb, UiCommun.t("« Tout se vend, voyageur. Même l'espoir. »   —   Or de marche : %d") % int(p["or"]), 16)
 	for i in a["offres"].size():
 		var o: Dictionary = a["offres"][i]
 		var ligne := HBoxContainer.new()
@@ -581,7 +581,7 @@ func _fenetre_marchand(a: Dictionary) -> void:
 
 func _fenetre_autel(a: Dictionary) -> void:
 	var vb := _fenetre("AUTEL DE SANG", C_SANG, 1000)
-	_texte(vb, "Le sang séché sur la pierre murmure des promesses. Chaque pacte apporte une malédiction… et de la gloire (+%d %% de score)." % int(Marche.GLOIRE_PACTE * 100), 16)
+	_texte(vb, UiCommun.t("Le sang séché sur la pierre murmure des promesses. Chaque pacte apporte une malédiction… et de la gloire (+%d %% de score).") % int(Marche.GLOIRE_PACTE * 100), 16)
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 14)
 	vb.add_child(ligne)
@@ -607,7 +607,7 @@ func _fenetre_autel(a: Dictionary) -> void:
 		v.add_theme_constant_override("separation", 8)
 		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		bt.add_child(v)
-		for t in [["PACTE DE %s" % str(m["nom"]).to_upper(), 20, C_SANG.lightened(0.35)],
+		for t in [[UiCommun.t("PACTE DE %s") % str(m["nom"]).to_upper(), 20, C_SANG.lightened(0.35)],
 			["Malédiction : " + m["desc"], 15, Color("ff9a8a")],
 			["Récompense : " + Marche.RECOMPENSES_PACTE[pa["recompense"]], 15, C_OK]]:
 			var l := UiCommun.label(t[0], t[1], t[2])
@@ -650,14 +650,14 @@ func _ecran_fin() -> void:
 	h.add_child(_envelopper(g))
 	g.add_child(UiCommun.label("MARCHE ACCOMPLIE !" if r.get("complete", false) else "LA MARCHE S'ACHÈVE", 30, UiCommun.C_OR if r.get("complete", false) else C_SANG))
 	g.add_child(UiCommun.label("Score : %d" % int(r.get("score", 0)), 40, UiCommun.C_TEXTE))
-	g.add_child(UiCommun.label("Sceaux de Marche gagnés : %d" % int(r.get("sceaux", 0)), 20, C_SANG.lightened(0.3)))
+	g.add_child(UiCommun.label(UiCommun.t("Sceaux de Marche gagnés : %d") % int(r.get("sceaux", 0)), 20, C_SANG.lightened(0.3)))
 	if r.has("rang"):
-		g.add_child(UiCommun.label("Rang du jour : %d / %d" % [int(r["rang"]), int(r.get("total", 0))], 20, UiCommun.C_OR))
+		g.add_child(UiCommun.label(UiCommun.t("Rang du jour : %d / %d") % [int(r["rang"]), int(r.get("total", 0))], 20, UiCommun.C_OR))
 	elif not p.get("classee", false):
 		g.add_child(UiCommun.label("Marche non classée (hors ligne).", 15, UiCommun.C_DOUX))
-	g.add_child(UiCommun.label("Région atteinte : %d / %d   ·   Combats %d · Élites %d · Boss %d · Pactes %d" % [int(p["region"]) + 1, Marche.REGIONS,
+	g.add_child(UiCommun.label(UiCommun.t("Région atteinte : %d / %d   ·   Combats %d · Élites %d · Boss %d · Pactes %d") % [int(p["region"]) + 1, Marche.REGIONS,
 		int(p["combats"]), int(p["elites"]), int(p["boss"]), int(p["pactes"])], 15, UiCommun.C_DOUX))
-	g.add_child(UiCommun.label("Record personnel : %d" % Marche.record(), 15, UiCommun.C_DOUX))
+	g.add_child(UiCommun.label(UiCommun.t("Record personnel : %d") % Marche.record(), 15, UiCommun.C_DOUX))
 	g.add_child(HSeparator.new())
 	g.add_child(UiCommun.label("ÉQUIPE FINALE", 16, UiCommun.C_OR))
 	for m in p["equipe"]:
@@ -728,11 +728,11 @@ func _remplir_classement(zone: VBoxContainer, decalage: int) -> void:
 		return
 	attente.queue_free()
 	if not r.ok or not r.data is Dictionary:
-		zone.add_child(UiCommun.label("Classement indisponible : %s" % str(r.get("erreur", "?")), 14, C_SANG))
+		zone.add_child(UiCommun.label(UiCommun.t("Classement indisponible : %s") % str(r.get("erreur", "?")), 14, C_SANG))
 		return
 	var d: Dictionary = r.data
 	if d.get("moi") is Dictionary:
-		zone.add_child(UiCommun.label("Ton rang : %d / %d   (score %d)" % [int(d["moi"]["rang"]), int(d["total"]), int(d["moi"]["score"])], 16, C_OK))
+		zone.add_child(UiCommun.label(UiCommun.t("Ton rang : %d / %d   (score %d)") % [int(d["moi"]["rang"]), int(d["total"]), int(d["moi"]["score"])], 16, C_OK))
 	if d["liste"].is_empty():
 		zone.add_child(UiCommun.label("Personne n'a encore terminé cette marche.", 15, UiCommun.C_DOUX))
 	for e in d["liste"]:
@@ -742,12 +742,12 @@ func _remplir_classement(zone: VBoxContainer, decalage: int) -> void:
 		rang.custom_minimum_size = Vector2(46, 0)
 		ligne.add_child(rang)
 		ligne.add_child(UiCommun.avatar(str(e.get("heros_vitrine", "")), str(e["pseudo"]), 34))
-		var n := UiCommun.label("%s  (Nv %d)" % [EnLigne.nom_complet(str(e["pseudo"])), int(e.get("niveau", 1))], 16,
+		var n := UiCommun.label(UiCommun.t("%s  (Nv %d)") % [EnLigne.nom_complet(str(e["pseudo"])), int(e.get("niveau", 1))], 16,
 			C_OK if str(e["id"]) == EnLigne.id_joueur() else UiCommun.C_TEXTE)
 		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ligne.add_child(n)
 		var det: Dictionary = e.get("detail", {}) if e.get("detail") is Dictionary else {}
-		ligne.add_child(UiCommun.label("Région %d%s" % [int(det.get("region", 1)), " ✔" if det.get("complete", false) else ""], 13, UiCommun.C_DOUX))
+		ligne.add_child(UiCommun.label(UiCommun.t("Région %d%s") % [int(det.get("region", 1)), " ✔" if det.get("complete", false) else ""], 13, UiCommun.C_DOUX))
 		ligne.add_child(UiCommun.label(str(int(e["score"])), 18, UiCommun.C_OR))
 		zone.add_child(ligne)
 
@@ -864,7 +864,7 @@ class CarteMarche extends Control:
 					tw.tween_property(b, "modulate", Color(1.25, 1.25, 1.25), 0.6)
 					tw.tween_property(b, "modulate", Color.WHITE, 0.6)
 				add_child(b)
-		var titre := UiCommun.label("Région %d — %s" % [region + 1, Marche.nom_region(region)], 20, UiCommun.C_OR)
+		var titre := UiCommun.label(UiCommun.t("Région %d — %s") % [region + 1, Marche.nom_region(region)], 20, UiCommun.C_OR)
 		titre.position = Vector2(16, 8)
 		add_child(titre)
 		queue_redraw()

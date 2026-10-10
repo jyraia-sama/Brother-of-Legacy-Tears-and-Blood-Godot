@@ -200,13 +200,13 @@ func _ajuster_colonnes() -> void:
 # =====================================================================
 
 func _tout_rafraichir() -> void:
-	_lbl_or.text = "Or : %d" % Sauvegarde.get_or()
+	_lbl_or.text = UiCommun.t("Or : %d") % Sauvegarde.get_or()
 	var puissance := 0
 	for uid in Sauvegarde.get_equipe():
 		var h := Sauvegarde.get_heros(uid)
 		var st := Sauvegarde.stats_heros(uid)
 		puissance += int(st["pv"] * 0.25 + st["atk"] + st["def"] * 0.8 + st["agi"] * 0.5 + st["mag"] * 0.7)
-	_lbl_puissance.text = "Puissance de l'équipe : %d" % puissance
+	_lbl_puissance.text = UiCommun.t("Puissance de l'équipe : %d") % puissance
 	for cle in _boutons_tri:
 		_boutons_tri[cle].button_pressed = (cle == _tri)
 	_remplir_equipe()
@@ -247,7 +247,7 @@ func _remplir_equipe() -> void:
 			carte.focus_mode = Control.FOCUS_NONE
 			carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color(1, 1, 1, 0.15)))
 			carte.add_theme_stylebox_override("hover", UiCommun.style_carte(UiCommun.C_OR, 0.05))
-			carte.text = "+\nPlace %d" % (i + 1)
+			carte.text = UiCommun.t("+\nPlace %d") % (i + 1)
 			carte.add_theme_color_override("font_color", UiCommun.C_DOUX)
 		carte.pressed.connect(_clic_place.bind(i))
 		boite.add_child(carte)
@@ -261,7 +261,7 @@ func _remplir_reserve() -> void:
 	var liste: Array = Sauvegarde.liste_heros().duplicate()
 	liste.sort_custom(_comparer)
 	var equipe := Sauvegarde.get_equipe()
-	_lbl_collection.text = "COLLECTION  (%d unités)" % liste.size()
+	_lbl_collection.text = UiCommun.t("COLLECTION  (%d unités)") % liste.size()
 	for h in liste:
 		var uid := int(h["uid"])
 		var carte := UiCommun.carte_heros(h, TAILLE_CARTE.x, TAILLE_CARTE.y)
@@ -358,7 +358,7 @@ func _vendre_une() -> void:
 		_message("Impossible de vendre", raison)
 		return
 	var h := Sauvegarde.get_heros(uid)
-	_confirmer("Vendre %s (Nv %d) pour %d or ?" % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"]), Sauvegarde.prix_vente(uid)],
+	_confirmer(UiCommun.t("Vendre %s (Nv %d) pour %d or ?") % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"]), Sauvegarde.prix_vente(uid)],
 		func():
 			Sauvegarde.vendre([uid])
 			_selection = -1
@@ -382,7 +382,7 @@ func _maj_barre_vente() -> void:
 	var total := 0
 	for uid in _a_vendre:
 		total += Sauvegarde.prix_vente(uid)
-	_lbl_vente.text = "%d unité(s) sélectionnée(s)  ·  Total : %d or" % [_a_vendre.size(), total] if not _a_vendre.is_empty() \
+	_lbl_vente.text = UiCommun.t("%d unité(s) sélectionnée(s)  ·  Total : %d or") % [_a_vendre.size(), total] if not _a_vendre.is_empty() \
 		else "Clique les unités à vendre (l'équipe et les unités protégées ne peuvent pas être vendues)."
 
 
@@ -392,7 +392,7 @@ func _vendre_selection_multiple() -> void:
 	var total := 0
 	for uid in _a_vendre:
 		total += Sauvegarde.prix_vente(uid)
-	_confirmer("Vendre %d unités pour %d or ?" % [_a_vendre.size(), total], func():
+	_confirmer(UiCommun.t("Vendre %d unités pour %d or ?") % [_a_vendre.size(), total], func():
 		Sauvegarde.vendre(_a_vendre.keys())
 		_a_vendre.clear()
 		_tout_rafraichir())
@@ -433,7 +433,7 @@ func _maj_fiche() -> void:
 	infos.add_child(nom)
 	var nb_et := Fusion.etoiles(h)
 	infos.add_child(UiCommun.label(Fusion.texte_etoiles(nb_et) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else "") \
-		+ ("   (+%d %% stats)" % int(round((Fusion.multiplicateur(nb_et) - 1.0) * 100)) if nb_et > 1 else ""), 16, Color("ffd060")))
+		+ (UiCommun.t("   (+%d %% stats)") % int(round((Fusion.multiplicateur(nb_et) - 1.0) * 100)) if nb_et > 1 else ""), 16, Color("ffd060")))
 	var desc := UiCommun.label("%s · %s · %s · %s" % [UiCommun.texte_rarete(id), UnitesData.ELEMENTS[u["element"]],
 		UnitesData.ROLES[u["role"]], "Avant conseillé" if u["position"] == "avant" else "Arrière conseillé"], 14, UiCommun.C_DOUX)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -443,7 +443,7 @@ func _maj_fiche() -> void:
 
 	# Niveau et XP
 	var besoin := Sauvegarde.xp_heros_pour_niveau(niv)
-	_fiche.add_child(UiCommun.label("Niveau %d / %d" % [niv, UnitesData.niveau_max(h["id"])] + ("" if niv >= UnitesData.niveau_max(h["id"]) else "   ·   XP %d / %d" % [int(h["xp"]), besoin]), 17))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Niveau %d / %d") % [niv, UnitesData.niveau_max(h["id"])] + ("" if niv >= UnitesData.niveau_max(h["id"]) else "   ·   XP %d / %d" % [int(h["xp"]), besoin]), 17))
 	var xp := UiCommun.barre(Color("7ab8ff"), 400, 8)
 	xp.max_value = besoin
 	xp.value = besoin if niv >= UnitesData.niveau_max(h["id"]) else int(h["xp"])
@@ -464,9 +464,9 @@ func _maj_fiche() -> void:
 		c.add_child(n)
 		grille.add_child(c)
 	_fiche.add_child(grille)
-	_fiche.add_child(UiCommun.label("Crit %d %%  ·  Dégâts crit %d %%  ·  RES %d  ·  Précision %d %%" % [s["crit"], s["degats_crit"], s["res"], s["preci"]], 14, UiCommun.C_DOUX))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Crit %d %%  ·  Dégâts crit %d %%  ·  RES %d  ·  Précision %d %%") % [s["crit"], s["degats_crit"], s["res"], s["preci"]], 14, UiCommun.C_DOUX))
 	var nb_echos := Sauvegarde.echos_de(_selection).size()
-	_fiche.add_child(UiCommun.label("Échos Sanguins équipés : %d / 6 (stats incluses)" % nb_echos, 13, Color("d0453a") if nb_echos > 0 else UiCommun.C_DOUX))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Échos Sanguins équipés : %d / 6 (stats incluses)") % nb_echos, 13, Color("d0453a") if nb_echos > 0 else UiCommun.C_DOUX))
 
 	# Actions
 	var actions := HBoxContainer.new()
@@ -478,7 +478,7 @@ func _maj_fiche() -> void:
 		r.pressed.connect(_retirer)
 		actions.add_child(r)
 	var raison := Sauvegarde.raison_invendable(_selection)
-	var v := UiCommun.bouton("Vendre (%d or)" % Sauvegarde.prix_vente(_selection), 15)
+	var v := UiCommun.bouton(UiCommun.t("Vendre (%d or)") % Sauvegarde.prix_vente(_selection), 15)
 	v.disabled = raison != ""
 	v.tooltip_text = raison
 	v.pressed.connect(_vendre_une)
@@ -496,13 +496,13 @@ func _maj_fiche() -> void:
 			get_tree().change_scene_to_file(EcranEvolution.SCENE))
 		actions.add_child(ev)
 	if place >= 0:
-		_fiche.add_child(UiCommun.label("Dans l'équipe : place %d (%s)" % [place + 1, "Avant" if place < 2 else "Arrière"], 14, UiCommun.C_OR))
+		_fiche.add_child(UiCommun.label(UiCommun.t("Dans l'équipe : place %d (%s)") % [place + 1, "Avant" if place < 2 else "Arrière"], 14, UiCommun.C_OR))
 
 	_fiche.add_child(HSeparator.new())
 	_fiche.add_child(UiCommun.label("SKILLS", 16, UiCommun.C_OR))
 	for sk in u["skills"]:
 		var ok: bool = sk["niveau"] <= niv
-		var t := UiCommun.label("Niv. %d · %s (%s)%s" % [sk["niveau"], sk["nom"], sk["type"], "" if ok else "  — verrouillé"], 16, UiCommun.C_OR if ok else UiCommun.C_DOUX)
+		var t := UiCommun.label(UiCommun.t("Niv. %d · %s (%s)%s") % [sk["niveau"], sk["nom"], sk["type"], "" if ok else "  — verrouillé"], 16, UiCommun.C_OR if ok else UiCommun.C_DOUX)
 		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(t)
 		var d := UiCommun.label(sk["description"], 14, UiCommun.C_TEXTE if ok else UiCommun.C_DOUX)

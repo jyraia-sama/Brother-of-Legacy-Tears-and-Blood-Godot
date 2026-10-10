@@ -127,7 +127,7 @@ func _choisir(c: Dictionary) -> Dictionary:
 	_choix_ouvert = true
 	_montrer_halo(int(c["idx"]))
 	_panneau.visible = true
-	_lbl_titre.text = "À toi : %s" % c["nom"]
+	_lbl_titre.text = UiCommun.t("À toi : %s") % c["nom"]
 	_info("Choisis une action.")
 	for b in _zone_boutons.get_children():
 		b.queue_free()
@@ -210,12 +210,12 @@ func _carte_action(c: Dictionary, a: Dictionary) -> Control:
 		if a.get("silence", false):
 			pied = "⛔ Réduit au silence"
 		elif int(a["recharge"]) > 0:
-			pied = "⏳ Prêt dans %d tour%s" % [int(a["recharge"]), "s" if int(a["recharge"]) > 1 else ""]
+			pied = UiCommun.t("⏳ Prêt dans %d tour%s") % [int(a["recharge"]), "s" if int(a["recharge"]) > 1 else ""]
 		elif not dispo:
 			pied = "Inutile pour l'instant"
 		else:
 			var r := CombatMoteur.recharge_sort({"chance": _chance(c, a["nom"])})
-			pied += "  ·  recharge %d tour%s" % [r, "s" if r > 1 else ""]
+			pied += UiCommun.t("  ·  recharge %d tour%s") % [r, "s" if r > 1 else ""]
 	var lp := UiCommun.label(pied, 14, Color("ffd060") if dispo else Color("ff8a6a"))
 	vb.add_child(lp)
 	for l in [nom, eff, lp]:
@@ -271,7 +271,7 @@ func _clic_action(a: Dictionary) -> void:
 		_choix_fait = {"type": a["type"], "skill": a["nom"], "cible": int(cibles[0])}
 		return
 	_action_en_cours = a
-	_info("%s : choisis une cible." % a["nom"])
+	_info(UiCommun.t("%s : choisis une cible.") % a["nom"])
 	for idx in cibles:
 		var carte: Dictionary = ecran._cartes[int(idx)]
 		var racine: Control = carte["racine"]
@@ -317,7 +317,7 @@ func _fermer_choix() -> void:
 func _action_adverse(c: Dictionary) -> Dictionary:
 	_montrer_halo(int(c["idx"]))
 	_panneau.visible = true
-	_lbl_titre.text = "Tour adverse : %s" % c["nom"]
+	_lbl_titre.text = UiCommun.t("Tour adverse : %s") % c["nom"]
 	for b in _zone_boutons.get_children():
 		b.queue_free()
 	_barre_temps.value = 0
@@ -350,7 +350,7 @@ func _action_adverse(c: Dictionary) -> Dictionary:
 					_cache[_n] = j.data["action"]
 					break
 			var s := int((Time.get_ticks_msec() - debut) / 1000.0)
-			_info("L'adversaire réfléchit… %d s" % s if absent < 10 else "L'adversaire ne répond plus (%d s)…" % absent)
+			_info(UiCommun.t("L'adversaire réfléchit… %d s") % s if absent < 10 else UiCommun.t("L'adversaire ne répond plus (%d s)…") % absent)
 		else:
 			_info("Connexion difficile…")
 		await get_tree().create_timer(1.0).timeout
@@ -405,7 +405,7 @@ func _afficher_bilan(d: Dictionary) -> void:
 		lignes.append("Égalité : le temps est écoulé avec autant de PV de chaque côté.")
 	var delta = d.get("delta")
 	if delta != null:
-		lignes.append("Points de classement : %s%d  (total %s)" % ["+" if int(delta) >= 0 else "", int(delta), str(d.get("points", "?"))])
+		lignes.append(UiCommun.t("Points de classement : %s%d  (total %s)") % ["+" if int(delta) >= 0 else "", int(delta), str(d.get("points", "?"))])
 	if d.has("erreur"):
 		lignes.append(str(d["erreur"]))
 	Sauvegarde.ajouter_stat("combats_arene")

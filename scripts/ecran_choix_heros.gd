@@ -136,7 +136,7 @@ func _confirmer(id: String) -> void:
 	var u := UnitesData.get_unite(id)
 	var d := ConfirmationDialog.new()
 	d.title = "Héros de départ"
-	d.dialog_text = "Partir à l'aventure avec %s ?\n\nCe choix est définitif (seule une Nouvelle partie permet de rechoisir)." % u["nom"]
+	d.dialog_text = UiCommun.t("Partir à l'aventure avec %s ?\n\nCe choix est définitif (seule une Nouvelle partie permet de rechoisir).") % u["nom"]
 	d.ok_button_text = "Je le choisis"
 	d.cancel_button_text = "Revenir"
 	d.confirmed.connect(func():

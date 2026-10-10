@@ -34,7 +34,7 @@ func _preparer() -> void:
 		var n := Courrier.supprimer_lues()
 		_ouverte = -1
 		if n > 0:
-			_annoncer(["%d lettre%s supprimée%s" % [n, "s" if n > 1 else "", "s" if n > 1 else ""]], UiCommun.C_DOUX)
+			_annoncer([UiCommun.t("%d lettre%s supprimée%s") % [n, "s" if n > 1 else "", "s" if n > 1 else ""]], UiCommun.C_DOUX)
 		rafraichir())
 	_tete.add_child(vider)
 	_tete.move_child(vider, 4)
@@ -46,7 +46,7 @@ func _remplir() -> void:
 		_titre("Aucune lettre pour l'instant.")
 		_texte("Les cadeaux, les compensations et les récompenses spéciales arrivent ici.")
 		return
-	_titre("%d lettre%s  ·  %d à lire ou à récupérer" % [l.size(), "s" if l.size() > 1 else "", Courrier.a_lire()])
+	_titre(UiCommun.t("%d lettre%s  ·  %d à lire ou à récupérer") % [l.size(), "s" if l.size() > 1 else "", Courrier.a_lire()])
 	for i in l.size():
 		_lettre(i, l[i])
 

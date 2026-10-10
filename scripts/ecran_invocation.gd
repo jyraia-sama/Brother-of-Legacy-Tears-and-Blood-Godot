@@ -115,7 +115,7 @@ func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: Strin
 		nom.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ligne.add_child(nom)
 		var nb := Invocation.pool(tx[0]).size()
-		ligne.add_child(UiCommun.label("%s %%   (%d unités)" % [_pourcent(tx[1]), nb], 18))
+		ligne.add_child(UiCommun.label(UiCommun.t("%s %%   (%d unités)") % [_pourcent(tx[1]), nb], 18))
 		vb.add_child(ligne)
 	if note != "":
 		vb.add_child(UiCommun.label(note, 15, UiCommun.C_DOUX))
@@ -127,7 +127,7 @@ func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: Strin
 		var v := UiCommun.label("VEDETTES : " + ", ".join(noms), 15, UiCommun.C_OR)
 		v.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(v)
-		vb.add_child(UiCommun.label("Quand tu obtiens la rareté d'une vedette : %d %% de chance que ce soit elle." % int(float(ev["chance_vedette"]) * 100), 14, UiCommun.C_DOUX))
+		vb.add_child(UiCommun.label(UiCommun.t("Quand tu obtiens la rareté d'une vedette : %d %% de chance que ce soit elle.") % int(float(ev["chance_vedette"]) * 100), 14, UiCommun.C_DOUX))
 		vb.add_child(UiCommun.label("La garantie SSR est partagée avec le Pacte Supérieur.", 14, UiCommun.C_DOUX))
 	if pacte == "superieur":
 		_lbl_garantie = UiCommun.label("", 15, Color("c8a0ff"))
@@ -143,7 +143,7 @@ func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: Strin
 	for n in [1, 10]:
 		var cout := Invocation.prix(pacte, n)
 		var unite := "or" if monnaie == "Or" else ("Éclats" if cout > 1 else "Éclat")
-		var b := UiCommun.bouton("Invoquer x%d\n%d %s" % [n, cout, unite], 18)
+		var b := UiCommun.bouton(UiCommun.t("Invoquer x%d\n%d %s") % [n, cout, unite], 18)
 		b.custom_minimum_size = Vector2(0, 70)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.pressed.connect(_invoquer.bind(pacte, n))
@@ -158,9 +158,9 @@ func _pourcent(x: float) -> String:
 
 
 func _maj() -> void:
-	_lbl_or.text = "Or : %d" % Sauvegarde.get_or()
-	_lbl_eclats.text = "Éclats : %d" % Sauvegarde.get_objet(Sauvegarde.ECLAT)
-	_lbl_garantie.text = "Garantie : un SSR (ou mieux) au plus tard dans %d invocation(s)." % Invocation.avant_garantie()
+	_lbl_or.text = UiCommun.t("Or : %d") % Sauvegarde.get_or()
+	_lbl_eclats.text = UiCommun.t("Éclats : %d") % Sauvegarde.get_objet(Sauvegarde.ECLAT)
+	_lbl_garantie.text = UiCommun.t("Garantie : un SSR (ou mieux) au plus tard dans %d invocation(s).") % Invocation.avant_garantie()
 	for cle in _boutons.keys():
 		if not is_instance_valid(_boutons[cle]):
 			_boutons.erase(cle)
@@ -168,8 +168,8 @@ func _maj() -> void:
 		var parts: PackedStringArray = cle.split("-")
 		_boutons[cle].disabled = not Invocation.peut_payer(parts[0], int(parts[1]))
 	_maj_banniere()
-	_lbl_sceaux.text = "Sceaux Sauvages : %d" % Sauvegarde.get_objet(Menagerie.SCEAU)
-	_lbl_garantie_sauvage.text = "Garantie : un SSR (ou mieux) au plus tard dans %d invocation(s)." % Menagerie.avant_garantie()
+	_lbl_sceaux.text = UiCommun.t("Sceaux Sauvages : %d") % Sauvegarde.get_objet(Menagerie.SCEAU)
+	_lbl_garantie_sauvage.text = UiCommun.t("Garantie : un SSR (ou mieux) au plus tard dans %d invocation(s).") % Menagerie.avant_garantie()
 	for n in _boutons_sauvage:
 		_boutons_sauvage[n].disabled = not Menagerie.peut_invoquer(n)
 
@@ -200,7 +200,7 @@ func _panneau_sauvage() -> PanelContainer:
 		var nom := UiCommun.label(tx[0], 18, UiCommun.COULEURS_RARETE[tx[0]])
 		nom.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ligne.add_child(nom)
-		ligne.add_child(UiCommun.label("%s %%   (%d familiers)" % [_pourcent(tx[1]), FamiliersData.ids(tx[0]).size()], 18))
+		ligne.add_child(UiCommun.label(UiCommun.t("%s %%   (%d familiers)") % [_pourcent(tx[1]), FamiliersData.ids(tx[0]).size()], 18))
 		vb.add_child(ligne)
 	vb.add_child(UiCommun.label("x10 : au moins un SR garanti.", 15, UiCommun.C_DOUX))
 	_lbl_garantie_sauvage = UiCommun.label("", 15, couleur)
@@ -214,7 +214,7 @@ func _panneau_sauvage() -> PanelContainer:
 	vb.add_child(boutons)
 	for n in [1, 10]:
 		var cout := Menagerie.prix(n)
-		var b := UiCommun.bouton("Invoquer x%d\n%d Sceau%s" % [n, cout, "x" if cout > 1 else ""], 18)
+		var b := UiCommun.bouton(UiCommun.t("Invoquer x%d\n%d Sceau%s") % [n, cout, "x" if cout > 1 else ""], 18)
 		b.custom_minimum_size = Vector2(0, 70)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.pressed.connect(_invoquer_familiers.bind(n))
@@ -295,11 +295,11 @@ func _reveler(res: Array) -> void:
 func _fiche_unite(id: String) -> void:
 	var u := UnitesData.get_unite(id)
 	var s := UnitesData.stats(id, 1)
-	var txt := "%s · %s · %s\n\nPV %d  ATK %d  DEF %d  AGI %d  MAG %d\n\n" % [
+	var txt := UiCommun.t("%s · %s · %s\n\nPV %d  ATK %d  DEF %d  AGI %d  MAG %d\n\n") % [
 		UiCommun.texte_rarete(id), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]],
 		s["pv"], s["atk"], s["def"], s["agi"], s["mag"]]
 	for sk in u["skills"]:
-		txt += "Niv. %d · %s : %s\n" % [sk["niveau"], sk["nom"], sk["description"]]
+		txt += UiCommun.t("Niv. %d · %s : %s\n") % [sk["niveau"], sk["nom"], sk["description"]]
 	var d := AcceptDialog.new()
 	d.title = u["nom"]
 	d.dialog_text = txt
@@ -413,10 +413,10 @@ func _maj_banniere() -> void:
 		return
 	var ev := Evenements.actif()
 	if not ev.is_empty():
-		_lbl_evenement.text = "Se termine dans %s" % Calendrier.texte_duree(Evenements.secondes_restantes(ev))
+		_lbl_evenement.text = UiCommun.t("Se termine dans %s") % Calendrier.texte_duree(Evenements.secondes_restantes(ev))
 	else:
 		var pr := Evenements.prochain()
-		_lbl_evenement.text = "" if pr.is_empty() else "Prochain : %s dans %s" % [pr["titre"], Calendrier.texte_duree(Evenements.secondes_avant_debut(pr))]
+		_lbl_evenement.text = "" if pr.is_empty() else UiCommun.t("Prochain : %s dans %s") % [pr["titre"], Calendrier.texte_duree(Evenements.secondes_avant_debut(pr))]
 
 
 func _ouvrir_evenement() -> void:

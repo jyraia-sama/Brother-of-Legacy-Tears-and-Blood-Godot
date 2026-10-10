@@ -87,7 +87,7 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 	id_col.add_child(UiCommun.label(EnLigne.nom_complet(str(p.get("pseudo", "?"))), 24, UiCommun.C_LEGENDE))
 	if str(vit.get("titre", "")) != "":
 		id_col.add_child(UiCommun.label("« %s »" % vit["titre"], 16, Color("ffb070")))
-	id_col.add_child(UiCommun.label("Niveau de compte %d" % int(p.get("niveau", 1)), 17))
+	id_col.add_child(UiCommun.label(UiCommun.t("Niveau de compte %d") % int(p.get("niveau", 1)), 17))
 	var pres := EnLigne.texte_presence(str(p.get("vu_le", "")))
 	id_col.add_child(UiCommun.label(pres, 15, C_EN_LIGNE if pres == "En ligne" else UiCommun.C_DOUX))
 	var guilde := str(p.get("guilde", ""))
@@ -114,7 +114,7 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 		nom.custom_minimum_size = Vector2(180, 0)
 		hv.add_child(nom)
 		if not h.is_empty():
-			hv.add_child(UiCommun.label("Niv. %d  ·  %s" % [int(h.get("niveau", 1)), Fusion.texte_etoiles(int(h.get("etoiles", 0)), false)], 14, Color("ffd060")))
+			hv.add_child(UiCommun.label(UiCommun.t("Niv. %d  ·  %s") % [int(h.get("niveau", 1)), Fusion.texte_etoiles(int(h.get("etoiles", 0)), false)], 14, Color("ffd060")))
 			var st: Dictionary = h.get("stats", {}) if h.get("stats", {}) is Dictionary else {}
 			for k in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"]]:
 				if st.has(k[0]):
@@ -133,7 +133,7 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 		equipe = arene.get("equipe", [])
 	if not equipe.is_empty():
 		var puiss := int(vit.get("puissance", arene.get("puissance", 0)))
-		d.add_child(UiCommun.label("ÉQUIPE" + ("   ·   Puissance %s" % _nombre(puiss) if puiss > 0 else ""), 16, UiCommun.C_OR))
+		d.add_child(UiCommun.label("ÉQUIPE" + (UiCommun.t("   ·   Puissance %s") % _nombre(puiss) if puiss > 0 else ""), 16, UiCommun.C_OR))
 		var le := HBoxContainer.new()
 		le.add_theme_constant_override("separation", 10)
 		d.add_child(le)
@@ -151,7 +151,7 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 		lignes_comp.append(["Arène classée", "%d pts  ·  %d V / %d D / %d N" % [int(classee.get("points", 0)), int(classee.get("victoires", 0)),
 			int(classee.get("defaites", 0)), int(classee.get("egalites", 0))]])
 	if int(p.get("marche_record", 0)) > 0:
-		lignes_comp.append(["Marche Maudite", "record %s pts" % _nombre(int(p["marche_record"]))])
+		lignes_comp.append(["Marche Maudite", UiCommun.t("record %s pts") % _nombre(int(p["marche_record"]))])
 	if not lignes_comp.is_empty():
 		d.add_child(HSeparator.new())
 		d.add_child(UiCommun.label("COMPÉTITIONS", 16, UiCommun.C_OR))
@@ -166,8 +166,8 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 			["Combats gagnés", _nombre(int(st2.get("combats_gagnes", 0)))],
 			["Bestiaire", "%d unités découvertes" % int(st2.get("bestiaire", 0))],
 			["Invocations", _nombre(int(st2.get("invocations", 0)))],
-			["Tour de l'Enfer", "étage %d" % int(st2.get("tour_enfer", 0))],
-			["Tour du Paradis", "étage %d" % int(st2.get("tour_paradis", 0))],
+			["Tour de l'Enfer", UiCommun.t("étage %d") % int(st2.get("tour_enfer", 0))],
+			["Tour du Paradis", UiCommun.t("étage %d") % int(st2.get("tour_paradis", 0))],
 			["Donjons terminés", _nombre(int(st2.get("donjons", 0)))],
 			["Boss de Monde abattus", _nombre(int(st2.get("boss_monde", 0)))],
 			["Évolutions", _nombre(int(st2.get("evolutions", 0)))],
@@ -177,7 +177,7 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 	var col: Dictionary = vit.get("collection", {}) if vit.get("collection", {}) is Dictionary else {}
 	if not col.is_empty():
 		d.add_child(HSeparator.new())
-		d.add_child(UiCommun.label("COLLECTION  (%d unités)" % int(vit.get("nb_unites", 0)), 16, UiCommun.C_OR))
+		d.add_child(UiCommun.label(UiCommun.t("COLLECTION  (%d unités)") % int(vit.get("nb_unites", 0)), 16, UiCommun.C_OR))
 		var lc := HBoxContainer.new()
 		lc.add_theme_constant_override("separation", 18)
 		d.add_child(lc)

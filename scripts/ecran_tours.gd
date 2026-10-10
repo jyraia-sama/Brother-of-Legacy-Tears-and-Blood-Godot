@@ -128,11 +128,11 @@ func _carte_tour(tour: String, accent: Color, haut: Color, bas: Color) -> Button
 	vb.add_child(st)
 	vb.add_child(HSeparator.new())
 	var atteint := Tours.etage_atteint(tour)
-	var info := UiCommun.label("Étage atteint cette semaine : %d / %d\nRecord absolu : %d\n%s : %d" % [
+	var info := UiCommun.label(UiCommun.t("Étage atteint cette semaine : %d / %d\nRecord absolu : %d\n%s : %d") % [
 		atteint, Tours.ETAGES, Tours.record(tour), Reliquaire.nom(d["monnaie"]), Sauvegarde.get_objet(d["monnaie"])], 20, c_txt)
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(info)
-	var prochain := UiCommun.label("TOUR CONQUISE !" if Tours.tour_terminee(tour) else "Prochain : étage %d — %s" % [
+	var prochain := UiCommun.label("TOUR CONQUISE !" if Tours.tour_terminee(tour) else UiCommun.t("Prochain : étage %d — %s") % [
 		Tours.prochain_etage(tour), Tours.palier(tour, Tours.prochain_etage(tour))["nom"]], 17,
 		accent if sombre else Color("6a4a00"))
 	prochain.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -147,7 +147,7 @@ func _carte_tour(tour: String, accent: Color, haut: Color, bas: Color) -> Button
 
 
 func _maj() -> void:
-	_lbl_decompte.text = "Réinitialisation des tours dans  %s" % Calendrier.texte_duree(Calendrier.secondes_avant_semaine())
+	_lbl_decompte.text = UiCommun.t("Réinitialisation des tours dans  %s") % Calendrier.texte_duree(Calendrier.secondes_avant_semaine())
 	_lbl_stamina.maj()
 
 

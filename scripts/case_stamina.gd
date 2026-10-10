@@ -83,7 +83,7 @@ func maj() -> void:
 	_lbl.text = "%d / %d" % [st, mx]
 	_barre.max_value = maxi(1, mx)
 	_barre.value = mini(st, mx)
-	_recharge.text = "Pleine" if st >= mx else "+1 dans %s" % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
+	_recharge.text = "Pleine" if st >= mx else UiCommun.t("+1 dans %s") % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
 
 
 func _texte(taille: int, couleur: Color) -> Label:

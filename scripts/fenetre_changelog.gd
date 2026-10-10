@@ -54,11 +54,11 @@ func _ready() -> void:
 	var titre := "JOURNAL DES MISES À JOUR"
 	if nouveautes:
 		liste = Version.nouveautes_depuis(vue)
-		titre = "NOUVEAUTÉS — VERSION %s" % Version.NUMERO
+		titre = UiCommun.t("NOUVEAUTÉS — VERSION %s") % Version.NUMERO
 		if liste.is_empty():
 			liste = [Version.HISTORIQUE[0]]
 	vb.add_child(_label(titre, 28, Color(1.0, 0.85, 0.55), true))
-	vb.add_child(_label("%s  ·  version actuelle %s (%s)" % [Version.NOM_JEU, Version.texte(), Version.DATE], 15, Color(0.7, 0.62, 0.58), true))
+	vb.add_child(_label(UiCommun.t("%s  ·  version actuelle %s (%s)") % [Version.NOM_JEU, Version.texte(), Version.DATE], 15, Color(0.7, 0.62, 0.58), true))
 	vb.add_child(HSeparator.new())
 
 	var defil := ScrollContainer.new()

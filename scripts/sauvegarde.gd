@@ -312,7 +312,7 @@ static func resume_partie(d: Dictionary) -> String:
 	var nom_heros := "—"
 	if heros != "" and UnitesData.existe(heros):
 		nom_heros = str(UnitesData.get_unite(heros)["nom"])
-	return "Niveau de compte : %d\nHéros de départ : %s\nChapitres terminés : %d / 72\nUnités : %d\nOr : %d     Gemmes : %d" % [
+	return UiCommun.t("Niveau de compte : %d\nHéros de départ : %s\nChapitres terminés : %d / 72\nUnités : %d\nOr : %d     Gemmes : %d") % [
 		int(compte.get("niveau", 1)), nom_heros, (prog.get("termines", []) as Array).size(),
 		(coll.get("heros", []) as Array).size(), int(res.get("or", 0)), int(res.get("gemmes", 0))]
 
