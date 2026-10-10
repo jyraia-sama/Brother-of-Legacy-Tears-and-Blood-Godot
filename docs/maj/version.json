@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"GALERIE D'ART RANGÉE AUTREMENT : 8 onglets — Héros, Évolution (les 73 versions évoluées, absentes jusqu'ici), Monstres, Figurines, Boss de Monde, Histoire, Décors et Divers (familiers, cases du plateau, effets d'invocation).",
+				"TOUT EST À DÉCOUVRIR : chaque onglet montre le nombre total d'images, et celles pas encore découvertes restent des cases « ? ». Les Boss de Monde se dévoilent une fois affrontés, les champs de bataille avec leur Acte, et les fonds de menus, cases du plateau et effets d'invocation la première fois qu'on les voit en jeu."
+			],
+			"titre": "Une galerie bien rangée",
+			"version": "0.59.16"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE XIII : Morvaël, la Soif Première, a son portrait, sa figurine et son visage dans les dialogues. Tous les ennemis de l'Histoire principale (Actes I à XIII) sont désormais dans la nouvelle direction artistique."
 			],
 			"titre": "La Soif Première",
@@ -113,20 +121,13 @@
 			],
 			"titre": "Le lapin et le frère",
 			"version": "0.59.2"
-		},
-		{
-			"changements": [
-				"MENU ANIMÉ : la lune rouge ne bouge plus. Le menu la prenait pour une flamme à cause de sa couleur et la faisait onduler avec le feu ; elle garde seulement sa lueur douce."
-			],
-			"titre": "La lune immobile",
-			"version": "0.59.1"
 		}
 	],
 	"pck": {
-		"sha256": "bc0a5d24bb3572e49a9378b9c7da81c82664b3f05aa038d7220f86550b1411c1",
-		"taille": 90368184,
+		"sha256": "b7a2f99b2d00bc370a2055d468b8e56c5b4b99038a8c33f1a282bfbd541b355e",
+		"taille": 90370008,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.15",
+	"version": "0.59.16",
 	"version_minimum": "0.37.0"
 }
