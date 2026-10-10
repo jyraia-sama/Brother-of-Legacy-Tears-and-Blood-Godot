@@ -9,25 +9,25 @@
 		{
 			"purpose": "any",
 			"sizes": "144x144",
-			"src": "index.144x144.png?v=0.59.16",
+			"src": "index.144x144.png?v=0.59.17",
 			"type": "image/png"
 		},
 		{
 			"purpose": "any",
 			"sizes": "180x180",
-			"src": "index.180x180.png?v=0.59.16",
+			"src": "index.180x180.png?v=0.59.17",
 			"type": "image/png"
 		},
 		{
 			"purpose": "any",
 			"sizes": "192x192",
-			"src": "index.192x192.png?v=0.59.16",
+			"src": "index.192x192.png?v=0.59.17",
 			"type": "image/png"
 		},
 		{
 			"purpose": "any",
 			"sizes": "512x512",
-			"src": "index.512x512.png?v=0.59.16",
+			"src": "index.512x512.png?v=0.59.17",
 			"type": "image/png"
 		}
 	],

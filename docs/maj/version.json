@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"GALERIE D'ART ET MENU ADMIN : les cases « Bestiaire entièrement débloqué » et « Tous les Actes, chapitres et niveaux de Donjon débloqués » révèlent maintenant TOUTE la galerie (Histoire, personnages, Décors, Sanctuaire, Divers compris)."
+			],
+			"titre": "Les clés de l'Admin",
+			"version": "0.59.17"
+		},
+		{
+			"changements": [
 				"GALERIE D'ART RANGÉE AUTREMENT : 8 onglets — Héros, Évolution (les 73 versions évoluées, absentes jusqu'ici), Monstres, Figurines, Boss de Monde, Histoire, Décors et Divers (familiers, cases du plateau, effets d'invocation).",
 				"TOUT EST À DÉCOUVRIR : chaque onglet montre le nombre total d'images, et celles pas encore découvertes restent des cases « ? ». Les Boss de Monde se dévoilent une fois affrontés, les champs de bataille avec leur Acte, et les fonds de menus, cases du plateau et effets d'invocation la première fois qu'on les voit en jeu."
 			],
@@ -113,21 +120,13 @@
 			],
 			"titre": "Les routes de l'exil",
 			"version": "0.59.3"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS : le Lapin Pyromane et Kaël (invité de l'Acte I) ont un portrait et une figurine entièrement redessinés, peints ensemble dans le style de la nouvelle direction artistique. Les figurines sont en haute définition (plus de 2 fois plus fines) et pensées pour le terrain 3D : vues légèrement d'en haut, pieds bien posés sur le socle.",
-				"Les autres unités suivront, Acte par Acte."
-			],
-			"titre": "Le lapin et le frère",
-			"version": "0.59.2"
 		}
 	],
 	"pck": {
-		"sha256": "b7a2f99b2d00bc370a2055d468b8e56c5b4b99038a8c33f1a282bfbd541b355e",
-		"taille": 90370008,
+		"sha256": "506de11976c744a0754070a57e8fa1f11e3c69522cc9857db30b3e6556a03eb5",
+		"taille": 90370184,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.16",
+	"version": "0.59.17",
 	"version_minimum": "0.37.0"
 }
