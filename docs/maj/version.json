@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE III : 10 créatures redessinées : l'Arbalétrier Noir, l'Assassin de l'Ombre, le Brigand Cagoulé, le Capitaine au Drapeau Noir, le Centaure Guerrier, le Cyclope Borgne, la Hyène des Sables (morte de rire), le Mercenaire Balafré, l'Orc Guerrier et le Receleur de l'Ombre.",
+				"Acte II complet : le Zombie Errant a lui aussi son nouveau portrait et sa figurine (un somnambule qui a marché dans un seau)."
+			],
+			"titre": "Sous les drapeaux noirs",
+			"version": "0.59.5"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS : le Seigneur des Cendres, boss de l'Acte I, a son portrait et sa figurine (toute la galerie de l'Acte I est refaite). Acte II : 9 créatures redessinées : la Banshee Pleureuse, la Chauve-Souris Nocturne, le Corbeau Maudit, l'Esprit Frappeur, le Moine Déchu, le Pestiféré Errant, le Porteur de Lanterne Noire, le Souvenir Spectral et la Veuve aux Lanternes.",
 				"Les fantômes gardent leurs voiles bleus translucides sur le terrain 3D."
 			],
@@ -126,22 +134,13 @@
 			],
 			"titre": "Le Sceau des Frères",
 			"version": "0.54.0"
-		},
-		{
-			"changements": [
-				"STATISTIQUES DU JEU (réservé au créateur) : dans le menu Admin, un bouton « 📊 Statistiques du jeu » apparaît uniquement sur le compte jyraia (c'est le serveur qui vérifie). Vue d'ensemble (comptes, joueurs en ligne et actifs sur 24 h / 7 j / 30 j, nouveaux comptes, appareils, lancements, téléchargements, courbe d'activité des 30 derniers jours, guildes, Arène, Arène classée, Marche Maudite), liste des joueurs (pseudo, statut, inscription, niveau, chapitres, puissance, guilde, version, plateformes) avec recherche et tri, appareils par plateforme et versions utilisées, téléchargements des applications par version. (Serveur : lancer supabase/07_statistiques.sql.)",
-				"COMPTEUR D'APPAREILS : au lancement, le jeu signale anonymement la plateforme (web ordinateur, web Android, iPhone/iPad, Windows, Mac, Android) et la version, avec un identifiant tiré au hasard. Rien de personnel n'est envoyé.",
-				"ANDROID : l'application se télécharge désormais depuis la page des Releases GitHub, comme Windows et Mac, ce qui permet de compter ses téléchargements."
-			],
-			"titre": "Les yeux du créateur",
-			"version": "0.53.0"
 		}
 	],
 	"pck": {
-		"sha256": "f21dbfcce149761117e9cf72b3c196fd746c73139a1ea96d0ccd89afe9c53d58",
-		"taille": 103533112,
+		"sha256": "a46683764c535e9aaf5e0a68f9e4fb397fac2be309e60024fc25a4d70fc0cee9",
+		"taille": 82968068,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.4",
+	"version": "0.59.5",
 	"version_minimum": "0.37.0"
 }

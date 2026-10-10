@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.4** (2026-10-10)
+Version actuelle : **0.59.5** (2026-10-10)
+
+## v0.59.5 — Sous les drapeaux noirs  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE III : 10 créatures redessinées : l'Arbalétrier Noir, l'Assassin de l'Ombre, le Brigand Cagoulé, le Capitaine au Drapeau Noir, le Centaure Guerrier, le Cyclope Borgne, la Hyène des Sables (morte de rire), le Mercenaire Balafré, l'Orc Guerrier et le Receleur de l'Ombre.
+- Acte II complet : le Zombie Errant a lui aussi son nouveau portrait et sa figurine (un somnambule qui a marché dans un seau).
 
 ## v0.59.4 — La cité en deuil  (2026-10-10)
 
