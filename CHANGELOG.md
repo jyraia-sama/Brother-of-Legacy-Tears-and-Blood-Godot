@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.7** (2026-10-10)
+Version actuelle : **0.59.8** (2026-10-10)
+
+## v0.59.8 — Les larmes de pierre  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE VI : 7 créatures redessinées : l'Aberration Cristalline, la Gargouille de Jade, le Golem d'Obsidienne, le Golem de Pierre (et sa petite fleur), le Reflet de l'Âme, le Spectre Glacial et la Statue Hurlante.
 
 ## v0.59.7 — L'aiguillon de la souffrance  (2026-10-10)
 

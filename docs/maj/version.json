@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE VI : 7 créatures redessinées : l'Aberration Cristalline, la Gargouille de Jade, le Golem d'Obsidienne, le Golem de Pierre (et sa petite fleur), le Reflet de l'Âme, le Spectre Glacial et la Statue Hurlante."
+			],
+			"titre": "Les larmes de pierre",
+			"version": "0.59.8"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE V : 7 créatures redessinées : le Cyclope Furieux, le Démon Mineur (en équilibre sur son trident), le Zélote Fanatique, la Harpie Sanglante, l'Inquisiteur Implacable, le Mirage des Vaincus et le Spectre Vengeur."
 			],
 			"titre": "L'aiguillon de la souffrance",
@@ -123,22 +130,13 @@
 			],
 			"titre": "Les applications à jour",
 			"version": "0.56.0"
-		},
-		{
-			"changements": [
-				"ÉCRAN DE CHARGEMENT : les larmes et les gouttes de sang tombent maintenant verticalement du haut de l'écran, comme une pluie, jusque dans les deux moitiés du Sceau (dans le jeu et sur la page web).",
-				"PLEIN ÉCRAN PAR DÉFAUT : les applications Windows et Mac s'ouvrent en plein écran (toujours réglable dans le Menu, ou touche F11). Sur le jeu web, ordinateur compris, le plein écran s'active au premier clic ou appui (réglable dans le Menu).",
-				"MENU : les boutons du bas restent toujours visibles, même quand on fait défiler la fenêtre sur un petit écran. Nouveau bouton « Quitter le jeu » à côté de « Fermer » (applications Windows, Mac et Android), avec confirmation ; la partie est sauvegardée avant de fermer."
-			],
-			"titre": "Plein écran",
-			"version": "0.55.0"
 		}
 	],
 	"pck": {
-		"sha256": "df2a07639e459dcb196d2478170c8ddca38521d079780b37a290d4a70599254d",
-		"taille": 83880152,
+		"sha256": "f663a07587241216e87cf755635db9c7e6590bb4159d8c6e4ab38c9a7f0c4fa2",
+		"taille": 84611212,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.7",
+	"version": "0.59.8",
 	"version_minimum": "0.37.0"
 }
