@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"CORRECTIF : la v0.60.0 demandait par erreur de réinstaller le jeu sur ordinateur et Android (lien de téléchargement introuvable). Une simple mise à jour suffit à nouveau, et la langue anglaise fonctionne aussi dans les applications."
+			],
+			"titre": "Sans réinstaller",
+			"version": "0.60.1"
+		},
+		{
+			"changements": [
 				"CHAT GLOBAL : un nouveau bouton « Chat » en haut à droite du menu principal ouvre une discussion avec tous les joueurs connectés. Une pastille rouge prévient quand il y a de nouveaux messages. (Serveur : fichier supabase/09_chat_global.sql à lancer une fois dans Supabase.)",
 				"ENGLISH VERSION : nouveau réglage Paramètres → LANGUE · LANGUAGE (Français / English). Les menus, boutons, fenêtres, messages et guides sont traduits en anglais (environ 2 600 textes). Les noms des unités, leurs compétences et l'histoire restent en français pour l'instant (prochaine étape)."
 			],
@@ -112,21 +119,13 @@
 			],
 			"titre": "Sous les drapeaux noirs",
 			"version": "0.59.5"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS : le Seigneur des Cendres, boss de l'Acte I, a son portrait et sa figurine (toute la galerie de l'Acte I est refaite). Acte II : 9 créatures redessinées : la Banshee Pleureuse, la Chauve-Souris Nocturne, le Corbeau Maudit, l'Esprit Frappeur, le Moine Déchu, le Pestiféré Errant, le Porteur de Lanterne Noire, le Souvenir Spectral et la Veuve aux Lanternes.",
-				"Les fantômes gardent leurs voiles bleus translucides sur le terrain 3D."
-			],
-			"titre": "La cité en deuil",
-			"version": "0.59.4"
 		}
 	],
 	"pck": {
-		"sha256": "e3de790d70e6dae680b4070d2f0f6b97c44e8d47edc98412c9803f7390f0c058",
-		"taille": 90615400,
+		"sha256": "d0d2e4c81e336b55cf0e5087f3376383cd989133659c32411d42401cd4be8138",
+		"taille": 90615784,
 		"url": "jeu.pck"
 	},
-	"version": "0.60.0",
+	"version": "0.60.1",
 	"version_minimum": "0.37.0"
 }
