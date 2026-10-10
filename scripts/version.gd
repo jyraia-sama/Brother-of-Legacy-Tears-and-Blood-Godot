@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.12"
+const NUMERO := "0.59.13"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.13", "date": "2026-10-10", "titre": "Le jugement des frères",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, ACTE XI : 5 créatures redessinées : l'Archange Noir, le Compagnon Traître, le Dragon d'Ombre, le Frère Masqué (qui ressemble enfin à Kaël sous son masque) et le Garde Fratricide.",
+		"DIALOGUES DE L'HISTOIRE : nouveaux portraits pour Kaël corrompu, Corvin le mercenaire et le Frère Masqué, assortis à leurs cartes et figurines.",
+	]},
 	{"version": "0.59.12", "date": "2026-10-10", "titre": "Les chemins de la désolation",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE X : 6 créatures redessinées : l'Abomination de Laboratoire (un golem d'alchimiste qui fait coucou), le Troll des Cavernes, l'Hydre Bicéphale, le Tortionnaire, la Wyverne Sauvage et le Maître des Supplices.",

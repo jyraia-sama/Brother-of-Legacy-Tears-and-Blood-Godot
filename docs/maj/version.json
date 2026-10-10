@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE XI : 5 créatures redessinées : l'Archange Noir, le Compagnon Traître, le Dragon d'Ombre, le Frère Masqué (qui ressemble enfin à Kaël sous son masque) et le Garde Fratricide.",
+				"DIALOGUES DE L'HISTOIRE : nouveaux portraits pour Kaël corrompu, Corvin le mercenaire et le Frère Masqué, assortis à leurs cartes et figurines."
+			],
+			"titre": "Le jugement des frères",
+			"version": "0.59.13"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE X : 6 créatures redessinées : l'Abomination de Laboratoire (un golem d'alchimiste qui fait coucou), le Troll des Cavernes, l'Hydre Bicéphale, le Tortionnaire, la Wyverne Sauvage et le Maître des Supplices."
 			],
 			"titre": "Les chemins de la désolation",
@@ -114,21 +122,13 @@
 			],
 			"titre": "La nuit des Valcendre",
 			"version": "0.58.2"
-		},
-		{
-			"changements": [
-				"COMBATS EN 3D : les unités se placent maintenant en quinconce. Un boss au premier rang ne cache plus le monstre qui se tient derrière lui, et l'arrière-garde recule d'un pas pour rester visible au-dessus des têtes.",
-				"Plus aucune unité n'est rognée par le bord de l'écran : la place de chaque figurine est calculée d'après l'écran, quelle que soit sa forme (et recalée si on tourne le téléphone ou si on redimensionne la fenêtre)."
-			],
-			"titre": "Chacun à sa place",
-			"version": "0.58.1"
 		}
 	],
 	"pck": {
-		"sha256": "970863be02a0f8185a4d25648db4af48f54beeb73e3d5f781180281a21699fb7",
-		"taille": 88465324,
+		"sha256": "711f67943d9bf8e0f70147c02f508d58b0d7882b84293fd9b1060ec8dd7944f3",
+		"taille": 89199216,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.12",
+	"version": "0.59.13",
 	"version_minimum": "0.37.0"
 }

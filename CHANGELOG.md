@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.12** (2026-10-10)
+Version actuelle : **0.59.13** (2026-10-10)
+
+## v0.59.13 — Le jugement des frères  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE XI : 5 créatures redessinées : l'Archange Noir, le Compagnon Traître, le Dragon d'Ombre, le Frère Masqué (qui ressemble enfin à Kaël sous son masque) et le Garde Fratricide.
+- DIALOGUES DE L'HISTOIRE : nouveaux portraits pour Kaël corrompu, Corvin le mercenaire et le Frère Masqué, assortis à leurs cartes et figurines.
 
 ## v0.59.12 — Les chemins de la désolation  (2026-10-10)
 
