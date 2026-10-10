@@ -1,14 +1,22 @@
 {
 	"date": "2026-10-10",
-	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
+	"empreinte_installation": "95825caae101cb43d0b945709c64150609a23863cb6c35e28c66ae88970e99ef",
 	"godot": "4.7",
-	"installation_minimum": "0.35.0",
+	"installation_minimum": "0.60.0",
 	"installations": {
 		"android": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Android.apk",
-		"macos": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Mac.zip",
-		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
+		"macos": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.60.0/BrothersOfLegacy-Mac.zip",
+		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.60.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"CHAT GLOBAL : un nouveau bouton « Chat » en haut à droite du menu principal ouvre une discussion avec tous les joueurs connectés. Une pastille rouge prévient quand il y a de nouveaux messages. (Serveur : fichier supabase/09_chat_global.sql à lancer une fois dans Supabase.)",
+				"ENGLISH VERSION : nouveau réglage Paramètres → LANGUE · LANGUAGE (Français / English). Les menus, boutons, fenêtres, messages et guides sont traduits en anglais (environ 2 600 textes). Les noms des unités, leurs compétences et l'histoire restent en français pour l'instant (prochaine étape)."
+			],
+			"titre": "Tears and Blood, in English",
+			"version": "0.60.0"
+		},
 		{
 			"changements": [
 				"GALERIE D'ART ET MENU ADMIN : les cases « Bestiaire entièrement débloqué » et « Tous les Actes, chapitres et niveaux de Donjon débloqués » révèlent maintenant TOUTE la galerie (Histoire, personnages, Décors, Sanctuaire, Divers compris)."
@@ -112,21 +120,13 @@
 			],
 			"titre": "La cité en deuil",
 			"version": "0.59.4"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE I : 10 créatures redessinées, portrait et figurine haute définition peints ensemble : le Bandit des Routes, le Brigand Ivre, le Gobelin Maraudeur, le Loup Affamé, le Patrouilleur Vautour, le Pillard Incendiaire, le Profanateur de Tombes, le Rat Corrompu, le Rat Géant et le Vautour Charognard, chacun avec sa propre pose (et quelques-unes pleines d'humour).",
-				"COMBATS EN 3D : les figurines très larges (quadrupèdes, poses étirées) sont légèrement réduites et toujours gardées entières dans le cadre ; le rapprochement de la caméra pendant les sorts est plus doux."
-			],
-			"titre": "Les routes de l'exil",
-			"version": "0.59.3"
 		}
 	],
 	"pck": {
-		"sha256": "506de11976c744a0754070a57e8fa1f11e3c69522cc9857db30b3e6556a03eb5",
-		"taille": 90370184,
+		"sha256": "e3de790d70e6dae680b4070d2f0f6b97c44e8d47edc98412c9803f7390f0c058",
+		"taille": 90615400,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.17",
+	"version": "0.60.0",
 	"version_minimum": "0.37.0"
 }
