@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.1** (2026-10-10)
+Version actuelle : **0.59.2** (2026-10-10)
+
+## v0.59.2 — Le lapin et le frère  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS : le Lapin Pyromane et Kaël (invité de l'Acte I) ont un portrait et une figurine entièrement redessinés, peints ensemble dans le style de la nouvelle direction artistique. Les figurines sont en haute définition (plus de 2 fois plus fines) et pensées pour le terrain 3D : vues légèrement d'en haut, pieds bien posés sur le socle.
+- Les autres unités suivront, Acte par Acte.
 
 ## v0.59.1 — La lune immobile  (2026-10-10)
 

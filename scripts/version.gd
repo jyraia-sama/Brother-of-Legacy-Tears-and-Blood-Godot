@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.1"
+const NUMERO := "0.59.2"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.2", "date": "2026-10-10", "titre": "Le lapin et le frère",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS : le Lapin Pyromane et Kaël (invité de l'Acte I) ont un portrait et une figurine entièrement redessinés, peints ensemble dans le style de la nouvelle direction artistique. Les figurines sont en haute définition (plus de 2 fois plus fines) et pensées pour le terrain 3D : vues légèrement d'en haut, pieds bien posés sur le socle.",
+		"Les autres unités suivront, Acte par Acte.",
+	]},
 	{"version": "0.59.1", "date": "2026-10-10", "titre": "La lune immobile",
 	"changements": [
 		"MENU ANIMÉ : la lune rouge ne bouge plus. Le menu la prenait pour une flamme à cause de sa couleur et la faisait onduler avec le feu ; elle garde seulement sa lueur douce.",

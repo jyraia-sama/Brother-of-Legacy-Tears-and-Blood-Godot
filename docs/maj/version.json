@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS : le Lapin Pyromane et Kaël (invité de l'Acte I) ont un portrait et une figurine entièrement redessinés, peints ensemble dans le style de la nouvelle direction artistique. Les figurines sont en haute définition (plus de 2 fois plus fines) et pensées pour le terrain 3D : vues légèrement d'en haut, pieds bien posés sur le socle.",
+				"Les autres unités suivront, Acte par Acte."
+			],
+			"titre": "Le lapin et le frère",
+			"version": "0.59.2"
+		},
+		{
+			"changements": [
 				"MENU ANIMÉ : la lune rouge ne bouge plus. Le menu la prenait pour une flamme à cause de sa couleur et la faisait onduler avec le feu ; elle garde seulement sa lueur douce."
 			],
 			"titre": "La lune immobile",
@@ -129,20 +137,13 @@
 			],
 			"titre": "Visages et détails",
 			"version": "0.51.0"
-		},
-		{
-			"changements": [
-				"Les cadres de rareté sont arrivés : fer pour N, bronze pour R, argent et améthystes pour SR, or et ambre pour SSR, fer noir et rubis pour UR, or blanc et pierres de lune pour les Légendes. Les coins ornés débordent légèrement de la carte, comme de vraies cartes de collection."
-			],
-			"titre": "Des cadres dignes des héros",
-			"version": "0.50.1"
 		}
 	],
 	"pck": {
-		"sha256": "ea14df48a525b58452feeeee5a9810601aacb38e8bc11c3d92cd5cc4747774f9",
-		"taille": 100284556,
+		"sha256": "f2bf1067393823cbd4b5ea20c817077cb702c8fb7bee97f5c54033c57d378250",
+		"taille": 100425160,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.1",
+	"version": "0.59.2",
 	"version_minimum": "0.37.0"
 }
