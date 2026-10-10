@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.10** (2026-10-10)
+Version actuelle : **0.59.11** (2026-10-10)
+
+## v0.59.11 — Là où meurent les légendes  (2026-10-10)
+
+- NOUVELLES ILLUSTRATIONS, ACTE IX : 6 créatures redessinées : le Champion Déchu, le Chevalier Déchu, la Liche Novice, l'Ombre du Premier Roi, le Pilleur de Tombes Royales et le Séraphin Déchu.
+- DIALOGUES DE L'HISTOIRE : Kaël, Othmar et le Seigneur des Cendres ont dans les dialogues le même visage que leur nouvelle carte et leur figurine.
 
 ## v0.59.10 — L'éclipse du sang  (2026-10-10)
 

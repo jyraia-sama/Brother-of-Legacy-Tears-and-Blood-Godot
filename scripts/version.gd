@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.10"
+const NUMERO := "0.59.11"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.11", "date": "2026-10-10", "titre": "Là où meurent les légendes",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, ACTE IX : 6 créatures redessinées : le Champion Déchu, le Chevalier Déchu, la Liche Novice, l'Ombre du Premier Roi, le Pilleur de Tombes Royales et le Séraphin Déchu.",
+		"DIALOGUES DE L'HISTOIRE : Kaël, Othmar et le Seigneur des Cendres ont dans les dialogues le même visage que leur nouvelle carte et leur figurine.",
+	]},
 	{"version": "0.59.10", "date": "2026-10-10", "titre": "L'éclipse du sang",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE VIII : 7 créatures redessinées : la Vouivre Écarlate, l'Avatar de l'Éclipse, la Chimère Enragée, le Démon de Flamme, le Démon de Siège, le Loup-Garou (en pleine transformation) et le Rôdeur de l'Éclipse.",

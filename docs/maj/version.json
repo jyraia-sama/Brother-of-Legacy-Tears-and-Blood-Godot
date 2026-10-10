@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, ACTE IX : 6 créatures redessinées : le Champion Déchu, le Chevalier Déchu, la Liche Novice, l'Ombre du Premier Roi, le Pilleur de Tombes Royales et le Séraphin Déchu.",
+				"DIALOGUES DE L'HISTOIRE : Kaël, Othmar et le Seigneur des Cendres ont dans les dialogues le même visage que leur nouvelle carte et leur figurine."
+			],
+			"titre": "Là où meurent les légendes",
+			"version": "0.59.11"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, ACTE VIII : 7 créatures redessinées : la Vouivre Écarlate, l'Avatar de l'Éclipse, la Chimère Enragée, le Démon de Flamme, le Démon de Siège, le Loup-Garou (en pleine transformation) et le Rôdeur de l'Éclipse."
 			],
 			"titre": "L'éclipse du sang",
@@ -117,20 +125,13 @@
 			],
 			"titre": "Le champ de bataille en 3D",
 			"version": "0.58.0"
-		},
-		{
-			"changements": [
-				"GUERRE DES BANNIÈRES : la salle de guerre des Valcendre a son décor peint (table de campagne, bannières au phénix, feux de l'armée ennemie sous la lune rouge), et les assauts se livrent au pied des remparts assiégés. Les deux images rejoignent la Galerie d'Art."
-			],
-			"titre": "La salle de guerre",
-			"version": "0.57.1"
 		}
 	],
 	"pck": {
-		"sha256": "c03eee1094f8556eba298bf2a2580d9e24fdf9b9aa4371c796755f1608c06c45",
-		"taille": 86610800,
+		"sha256": "8c74c7cde12cfb1ed73b0c90002595f0e3e0c83c73cb61970576d730f11ed251",
+		"taille": 87479812,
 		"url": "jeu.pck"
 	},
-	"version": "0.59.10",
+	"version": "0.59.11",
 	"version_minimum": "0.37.0"
 }
