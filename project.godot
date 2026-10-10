@@ -31,13 +31,13 @@ window/size/window_width_override=1600
 window/size/window_height_override=900
 window/stretch/mode="canvas_items"
 
-[internationalization]
-
-locale/translations=PackedStringArray("res://langues/en.po")
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/bol_versions/plugin.cfg")
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://langues/en.po")
 
 [physics]
 
