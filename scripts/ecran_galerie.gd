@@ -1,9 +1,10 @@
 class_name EcranGalerie
 extends Control
-## GALERIE D'ART : toutes les illustrations du jeu, rangées par onglets.
-##  - Créatures : portraits de toutes les unités (touche = fiche : portrait, figurine, rareté,
-##    élément, rôle, où la trouver, compétences). Les unités pas encore rencontrées restent cachées.
-##  - Figurines, Familiers, Boss de Monde, Histoire (Actes + personnages), Décors, Plateau.
+## GALERIE D'ART : toutes les illustrations du jeu, rangées par onglets :
+##   Héros, Évolution, Monstres, Figurines, Boss de Monde, Histoire, Décors, Divers.
+## Chaque onglet affiche le NOMBRE TOTAL d'images : celles pas encore découvertes restent
+## des cases « ? » (créatures pas rencontrées, Actes fermés, fonds de menus jamais ouverts…).
+## Touche une créature = sa fiche (portrait, figurine, rareté, élément, rôle, où la trouver, compétences).
 ## Une image touchée s'ouvre en grand ; les flèches (ou ← →) passent à la suivante, Échap ferme.
 ## Les dossiers sont lus avec ResourceLoader.list_directory : ça marche aussi dans le jeu exporté.
 
@@ -15,8 +16,8 @@ const TOUT_REVELER := false
 static var scene_retour := ""
 
 const ONGLETS := [
-	["creatures", "Créatures"], ["figurines", "Figurines"], ["familiers", "Familiers"],
-	["boss_monde", "Boss de Monde"], ["histoire", "Histoire"], ["decors", "Décors"], ["plateau", "Plateau"],
+	["heros", "Héros"], ["evolution", "Évolution"], ["monstres", "Monstres"], ["figurines", "Figurines"],
+	["boss_monde", "Boss de Monde"], ["histoire", "Histoire"], ["decors", "Décors"], ["divers", "Divers"],
 ]
 const CATEGORIES := {"heros": "Héros", "ennemi": "Ennemi", "boss": "Boss", "boss_monde": "Boss de Monde"}
 ## Personnages de l'histoire cachés jusqu'à l'ouverture de leur Acte (pour ne rien dévoiler).
@@ -25,7 +26,7 @@ const SPOILERS := {"frere_masque": 11, "kael_sombre": 11, "kael_valcendre": 10, 
 	"compagnon": 3, "resistante": 10, "veuve": 2, "seigneur_des_cendres": 1}
 const ORDRE_RARETE := {"UR": 0, "SSR": 1, "SR": 2, "R": 3, "N": 4}
 
-var _onglet := "creatures"
+var _onglet := "heros"
 var _boutons_onglets := {}
 var _grille: HFlowContainer
 var _compteur: Label
@@ -115,33 +116,21 @@ func _choisir_onglet(o: String) -> void:
 func _lister(o: String) -> Array:
 	var l: Array = []
 	match o:
-		"creatures", "figurines":
-			var ids: Array = UnitesData.UNITES.keys()
-			ids.sort_custom(_tri_unites)
-			for id in ids:
-				var sid := str(id)
-				var chemin := UiCommun.chemin_portrait(sid) if o == "creatures" else UiCommun.chemin_figurine(sid)
-				if chemin == "":
-					continue
-				l.append({"type": "unite", "id": sid, "titre": str(UnitesData.get_unite(sid)["nom"]), "chemin": chemin,
-					"ouvert": _unite_vue(sid), "figurine": o == "figurines"})
-		"familiers":
-			var possedes := {}
-			for f in Menagerie.familiers():
-				possedes[str(f["id"])] = true
-			for fid in FamiliersData.ids():
-				var ch := FamiliersData.chemin_image(fid)
-				if ch == "":
-					continue
-				var f := FamiliersData.get_familier(fid)
-				l.append({"type": "familier", "id": fid, "titre": str(f["nom"]), "chemin": ch,
-					"ouvert": TOUT_REVELER or Sauvegarde.admin("bestiaire_complet") or possedes.has(fid)})
+		"heros":
+			_ajouter_unites(l, UnitesData.liste_categorie("heros"), false)
+		"evolution":
+			_ajouter_unites(l, EvolutionsData.UNITES.keys(), false)
+		"monstres":
+			_ajouter_unites(l, UnitesData.liste_categorie("ennemi") + UnitesData.liste_categorie("boss"), false)
+		"figurines":
+			_ajouter_unites(l, UnitesData.toutes().keys(), true)
 		"boss_monde":
 			for i in BossMonde.BOSS.size():
 				var b: Dictionary = BossMonde.BOSS[i]
 				var ch := "res://assets/boss_monde/%s.png" % b["id"]
 				if ResourceLoader.exists(ch):
-					l.append({"type": "image", "id": str(b["id"]), "titre": str(b["titre"]), "chemin": ch, "ouvert": true,
+					l.append({"type": "image", "id": str(b["id"]), "titre": str(b["titre"]), "chemin": ch,
+						"ouvert": _unite_vue(str(b["id"])) or Sauvegarde.image_vue(ch),
 						"texte": "%s — %s" % [Calendrier.JOURS[i], b["texte"]]})
 		"histoire":
 			for a in range(1, 14):
@@ -161,18 +150,61 @@ func _lister(o: String) -> Array:
 				var ch := "res://assets/ui/%s.png" % n
 				if ResourceLoader.exists(ch):
 					l.append({"type": "image", "id": n, "titre": noms[n], "chemin": ch, "ouvert": true, "texte": "Décor"})
-			for ch in _fichiers("res://assets/fonds"):
-				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "ouvert": true, "texte": "Fond de menu"})
-			if ResourceLoader.exists(Sanctuaire.FOND) and (TOUT_REVELER or not (Sanctuaire._etat()["vaincus"] as Array).is_empty()):
-				l.append({"type": "image", "id": "sanctuaire", "titre": "Le Sanctuaire du Bélier", "chemin": Sanctuaire.FOND, "ouvert": true, "texte": "Lieu secret"})
-		"plateau":
+			# Champs de bataille : découverts avec leur Acte
 			for ch in _fichiers("res://assets/plateaux"):
-				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "ouvert": true, "texte": "Champ de bataille"})
+				var num: String = str(ch).get_file().get_basename().trim_prefix("fond_")
+				if not num.is_valid_int():
+					continue
+				l.append({"type": "image", "id": ch, "titre": "Champ de bataille de l'Acte %d" % int(num), "chemin": ch,
+					"texte": "Champ de bataille", "ouvert": TOUT_REVELER or ActesData.acte_debloque(int(num)) or Sauvegarde.image_vue(ch)})
+			# Fonds de menus : découverts la première fois que le menu est ouvert
+			for ch in _fichiers("res://assets/fonds"):
+				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": "Fond de menu",
+					"ouvert": _image_vue(ch)})
+			if ResourceLoader.exists(Sanctuaire.FOND):
+				l.append({"type": "image", "id": "sanctuaire", "titre": "Le Sanctuaire du Bélier", "chemin": Sanctuaire.FOND, "texte": "Lieu secret",
+					"ouvert": TOUT_REVELER or not (Sanctuaire._etat()["vaincus"] as Array).is_empty()})
+		"divers":
+			var possedes := {}
+			for f in Menagerie.familiers():
+				possedes[str(f["id"])] = true
+			for fid in FamiliersData.ids():
+				var ch := FamiliersData.chemin_image(fid)
+				if ch == "":
+					continue
+				var f := FamiliersData.get_familier(fid)
+				l.append({"type": "familier", "id": fid, "titre": str(f["nom"]), "chemin": ch,
+					"ouvert": TOUT_REVELER or Sauvegarde.admin("bestiaire_complet") or possedes.has(fid)})
+			for ch in _fichiers("res://assets/plateaux"):
+				if not str(ch).get_file().begins_with("fond_"):
+					l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "ouvert": true, "texte": "Figurine du plateau"})
 			for ch in _fichiers("res://assets/plateaux/cases"):
-				l.append({"type": "image", "id": ch, "titre": "Case : " + _joli_nom(ch), "chemin": ch, "ouvert": true, "texte": "Miniature du plateau"})
+				l.append({"type": "image", "id": ch, "titre": "Case : " + _joli_nom(ch), "chemin": ch, "texte": "Miniature du plateau",
+					"ouvert": _image_vue(ch)})
 			for ch in _fichiers("res://assets/invocation"):
-				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "ouvert": true, "texte": "Autel d'Invocation"})
+				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": "Autel d'Invocation",
+					"ouvert": _image_vue(ch)})
 	return l
+
+
+## Ajoute les unités qui ont une image (portrait, ou figurine pour l'onglet Figurines), triées.
+func _ajouter_unites(l: Array, ids: Array, figurines: bool) -> void:
+	ids = ids.duplicate()
+	ids.sort_custom(_tri_unites)
+	for id in ids:
+		var sid := str(id)
+		var chemin := UiCommun.chemin_figurine(sid) if figurines else UiCommun.chemin_portrait(sid)
+		if chemin == "":
+			continue
+		# Une évolution sans figurine à elle reprend celle de sa base : pas de doublon dans l'onglet
+		if figurines and UnitesData.est_evolue(sid) and chemin != UiCommun.DOSSIER_FIGURINES + sid + ".png":
+			continue
+		l.append({"type": "unite", "id": sid, "titre": str(UnitesData.get_unite(sid)["nom"]), "chemin": chemin,
+			"ouvert": _unite_vue(sid), "figurine": figurines})
+
+
+func _image_vue(chemin: String) -> bool:
+	return TOUT_REVELER or Sauvegarde.image_vue(chemin)
 
 
 func _tri_unites(a, b) -> bool:

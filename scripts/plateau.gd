@@ -1006,6 +1006,8 @@ func _miniature(type: int) -> Texture2D:
 	if not _miniatures.has(type):
 		var chemin := DOSSIER_MINIATURES + str(MINIATURES.get(type, "")) + ".png"
 		_miniatures[type] = load(chemin) if MINIATURES.has(type) and ResourceLoader.exists(chemin) else null
+		if _miniatures[type] != null:
+			Sauvegarde.voir_image(chemin)      # débloque la case dans la Galerie d'Art
 	return _miniatures[type]
 
 

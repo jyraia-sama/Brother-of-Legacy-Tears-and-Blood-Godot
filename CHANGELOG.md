@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.59.15** (2026-10-10)
+Version actuelle : **0.59.16** (2026-10-10)
+
+## v0.59.16 — Une galerie bien rangée  (2026-10-10)
+
+- GALERIE D'ART RANGÉE AUTREMENT : 8 onglets — Héros, Évolution (les 73 versions évoluées, absentes jusqu'ici), Monstres, Figurines, Boss de Monde, Histoire, Décors et Divers (familiers, cases du plateau, effets d'invocation).
+- TOUT EST À DÉCOUVRIR : chaque onglet montre le nombre total d'images, et celles pas encore découvertes restent des cases « ? ». Les Boss de Monde se dévoilent une fois affrontés, les champs de bataille avec leur Acte, et les fonds de menus, cases du plateau et effets d'invocation la première fois qu'on les voit en jeu.
 
 ## v0.59.15 — La Soif Première  (2026-10-10)
 

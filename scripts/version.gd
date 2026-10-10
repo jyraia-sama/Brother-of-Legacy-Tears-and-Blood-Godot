@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.59.15"
+const NUMERO := "0.59.16"
 const DATE := "2026-10-10"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.59.16", "date": "2026-10-10", "titre": "Une galerie bien rangée",
+	"changements": [
+		"GALERIE D'ART RANGÉE AUTREMENT : 8 onglets — Héros, Évolution (les 73 versions évoluées, absentes jusqu'ici), Monstres, Figurines, Boss de Monde, Histoire, Décors et Divers (familiers, cases du plateau, effets d'invocation).",
+		"TOUT EST À DÉCOUVRIR : chaque onglet montre le nombre total d'images, et celles pas encore découvertes restent des cases « ? ». Les Boss de Monde se dévoilent une fois affrontés, les champs de bataille avec leur Acte, et les fonds de menus, cases du plateau et effets d'invocation la première fois qu'on les voit en jeu.",
+	]},
 	{"version": "0.59.15", "date": "2026-10-10", "titre": "La Soif Première",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, ACTE XIII : Morvaël, la Soif Première, a son portrait, sa figurine et son visage dans les dialogues. Tous les ennemis de l'Histoire principale (Actes I à XIII) sont désormais dans la nouvelle direction artistique.",

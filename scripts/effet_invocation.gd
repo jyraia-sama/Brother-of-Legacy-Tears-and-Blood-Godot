@@ -286,7 +286,7 @@ func _creer_dos(taille: Vector2, pos: Vector2) -> Control:
 	var d: Control
 	if ResourceLoader.exists(TEX_DOS):
 		var t := TextureRect.new()
-		t.texture = load(TEX_DOS)
+		t.texture = _tex(TEX_DOS)
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		d = t
@@ -330,7 +330,7 @@ func _creer_cercle(pos: Vector2, diametre: float) -> Control:
 	var c: Control
 	if ResourceLoader.exists(TEX_CERCLE):
 		var t := TextureRect.new()
-		t.texture = load(TEX_CERCLE)
+		t.texture = _tex(TEX_CERCLE)
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		c = t
@@ -358,7 +358,7 @@ func _rayons(pos: Vector2, diametre: float, couleur: Color, nombre: int) -> Cont
 	var r: Control
 	if ResourceLoader.exists(TEX_RAYONS):
 		var t := TextureRect.new()
-		t.texture = load(TEX_RAYONS)
+		t.texture = _tex(TEX_RAYONS)
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		t.modulate = couleur
@@ -379,7 +379,7 @@ func _halo(pos: Vector2, largeur: float) -> Control:
 	var h: Control
 	if ResourceLoader.exists(TEX_HALO):
 		var t := TextureRect.new()
-		t.texture = load(TEX_HALO)
+		t.texture = _tex(TEX_HALO)
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		h = t
@@ -435,7 +435,7 @@ func _particules(couleur: Color, nombre: int) -> CPUParticles2D:
 	var p := CPUParticles2D.new()
 	p.amount = nombre
 	if ResourceLoader.exists(TEX_ETINCELLE):
-		p.texture = load(TEX_ETINCELLE)
+		p.texture = _tex(TEX_ETINCELLE)
 		p.scale_amount_min = 0.04
 		p.scale_amount_max = 0.1
 	else:
@@ -452,7 +452,7 @@ func _particules(couleur: Color, nombre: int) -> CPUParticles2D:
 func _eclair(cible: Vector2, couleur: Color) -> void:
 	if ResourceLoader.exists(TEX_ECLAIR):
 		var t := TextureRect.new()
-		t.texture = load(TEX_ECLAIR)
+		t.texture = _tex(TEX_ECLAIR)
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_SCALE
 		t.size = Vector2(160, cible.y)
@@ -628,3 +628,9 @@ class Halo extends Control:
 				var a := TAU * j / 64.0
 				pts.append(c + Vector2(cos(a) * size.x * 0.45 * k, sin(a) * size.y * 0.4 * k))
 			draw_polyline(pts, Color(1.0, 0.95, 0.7, 0.9 - i * 0.11), 6.0 - i * 0.6, true)
+
+
+## Charge une image de l'effet et la débloque dans la Galerie d'Art.
+func _tex(chemin: String) -> Texture2D:
+	Sauvegarde.voir_image(chemin)
+	return load(chemin)

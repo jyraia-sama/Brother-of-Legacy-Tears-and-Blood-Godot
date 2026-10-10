@@ -80,6 +80,8 @@ static func _defaut() -> Dictionary:
 		"invocation": {"pity_superieur": 0, "total_dore": 0, "total_superieur": 0},
 		# Bestiaire : id des unités découvertes (rencontrées en combat ou obtenues)
 		"bestiaire": [],
+		# Galerie d'Art : images déjà vues en jeu (fonds de menus, cases du plateau, effets d'invocation…)
+		"images_vues": [],
 		# Tours de l'Enfer et du Paradis : dernier étage vaincu cette semaine, record absolu
 		"tours": {
 			"enfer": {"semaine": -1, "etage": 0, "record": 0},
@@ -1039,6 +1041,21 @@ static func decouvrir(id_unite: String) -> bool:
 static func est_decouvert(id_unite: String) -> bool:
 	charger()
 	return admin("bestiaire_complet") or id_unite in donnees["bestiaire"]
+
+
+## Galerie d'Art : note qu'une image a été vue en jeu (sauvegarde seulement si elle est nouvelle).
+static func voir_image(chemin: String) -> void:
+	charger()
+	var l: Array = donnees["images_vues"]
+	if chemin in l:
+		return
+	l.append(chemin)
+	sauvegarder()
+
+
+static func image_vue(chemin: String) -> bool:
+	charger()
+	return admin("bestiaire_complet") or chemin in donnees["images_vues"]
 
 
 static func nombre_decouverts() -> int:

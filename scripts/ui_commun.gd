@@ -619,6 +619,7 @@ const TEINTE_FOND := Color(0.72, 0.68, 0.68)
 static func fond_image(parent: Control, chemin: String, teinte := Color(0.6, 0.6, 0.6)) -> bool:
 	if not ResourceLoader.exists(chemin):
 		return false
+	Sauvegarde.voir_image(chemin)      # débloque l'image dans la Galerie d'Art
 	var img := TextureRect.new()
 	img.texture = load(chemin)
 	img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
