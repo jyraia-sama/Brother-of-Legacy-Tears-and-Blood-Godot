@@ -5,6 +5,7 @@ image paysage coupée en deux par un trait noir vertical.
 
 Usage :  python3 outils/decouper_portrait_figurine.py image.png <identifiant> [--sans-portrait] [--sans-figurine] [--spectre]\n  --boss-monde : Boss de Monde : la moitié gauche entière (sans recadrage carré) devient aussi l'illustration
                  assets/boss_monde/<id>.png (fond du combat, galerie, guilde)
+  --figurine-seule : l'image ne contient QUE la figurine sur fond vert (pas de trait ni de portrait)
   --spectre : créature translucide (fantôme) : retire la teinte verte qui transparaît dans les voiles
 """
 import os
@@ -55,9 +56,14 @@ def main():
         sys.exit(__doc__)
     chemin, ident = args[0], args[1]
     img = Image.open(chemin).convert("RGBA")
-    x = trait_central(img)
-    gauche = img.crop((MARGE, MARGE, x - MARGE, img.height - MARGE))
-    droite = img.crop((x + MARGE, MARGE, img.width - MARGE, img.height - MARGE))
+    if "--figurine-seule" in sys.argv:
+        sys.argv += ["--sans-portrait"]
+        gauche = img
+        droite = img.crop((MARGE, MARGE, img.width - MARGE, img.height - MARGE))
+    else:
+        x = trait_central(img)
+        gauche = img.crop((MARGE, MARGE, x - MARGE, img.height - MARGE))
+        droite = img.crop((x + MARGE, MARGE, img.width - MARGE, img.height - MARGE))
 
     if "--boss-monde" in sys.argv:
         entiere = gauche.crop(bords_noirs(gauche)).convert("RGB")
