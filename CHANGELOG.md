@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.3** (2026-10-11)
+Version actuelle : **0.61.4** (2026-10-11)
+
+## v0.61.4 — Les Cieux au complet  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES CIEUX : les 7 dernières créatures : Sérapheon la Flamme Divine, le Séraphin Ardent, Séraphine d'Aube, Solarius l'Archange Solaire, le Trône Vivant, Valkaria la Reine des Valkyries et la Valkyrie Céleste. Les 25 créatures des Cieux sont maintenant toutes redessinées !
 
 ## v0.61.3 — Orage sur les Cieux  (2026-10-11)
 

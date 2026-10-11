@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES CIEUX : les 7 dernières créatures : Sérapheon la Flamme Divine, le Séraphin Ardent, Séraphine d'Aube, Solarius l'Archange Solaire, le Trône Vivant, Valkaria la Reine des Valkyries et la Valkyrie Céleste. Les 25 créatures des Cieux sont maintenant toutes redessinées !"
+			],
+			"titre": "Les Cieux au complet",
+			"version": "0.61.4"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : la Puissance Céleste, le Gardien des Nuées, la Nuée Vivante (qui boude bras croisés sur sa colonne de pluie), Ophanim la Roue Ardente, Oriel la Lame de l'Aube et la Prêtresse de l'Aube."
 			],
 			"titre": "Orage sur les Cieux",
@@ -111,20 +118,13 @@
 			],
 			"titre": "Une galerie bien rangée",
 			"version": "0.59.16"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE XIII : Morvaël, la Soif Première, a son portrait, sa figurine et son visage dans les dialogues. Tous les ennemis de l'Histoire principale (Actes I à XIII) sont désormais dans la nouvelle direction artistique."
-			],
-			"titre": "La Soif Première",
-			"version": "0.59.15"
 		}
 	],
 	"pck": {
-		"sha256": "f9899b003eb6ab0c8f4f4f8316fed065c7f7ffcf3edbfe8224675c407bf93e7f",
-		"taille": 29380924,
+		"sha256": "c2d4adc039dddaf99b70bc716c7171ebe2418aebf568d525149505a9a6361dab",
+		"taille": 29381116,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.3",
+	"version": "0.61.4",
 	"version_minimum": "0.37.0"
 }

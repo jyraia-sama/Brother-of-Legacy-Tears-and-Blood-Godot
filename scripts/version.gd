@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.3"
+const NUMERO := "0.61.4"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.4", "date": "2026-10-11", "titre": "Les Cieux au complet",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES CIEUX : les 7 dernières créatures : Sérapheon la Flamme Divine, le Séraphin Ardent, Séraphine d'Aube, Solarius l'Archange Solaire, le Trône Vivant, Valkaria la Reine des Valkyries et la Valkyrie Céleste. Les 25 créatures des Cieux sont maintenant toutes redessinées !",
+	]},
 	{"version": "0.61.3", "date": "2026-10-11", "titre": "Orage sur les Cieux",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : la Puissance Céleste, le Gardien des Nuées, la Nuée Vivante (qui boude bras croisés sur sa colonne de pluie), Ophanim la Roue Ardente, Oriel la Lame de l'Aube et la Prêtresse de l'Aube.",
