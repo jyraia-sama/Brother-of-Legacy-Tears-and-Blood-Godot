@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.9** (2026-10-11)
+Version actuelle : **0.61.10** (2026-10-11)
+
+## v0.61.10 — Les Béliers chargent  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LA FAMILLE : la figurine de combat d'Alysse l'Étoile du Bélier (accroupie, prête à bondir, avec un clin d'œil), et Loucas le Bélier Ardent (portrait et figurine : lunettes sur le nez, poings serrés, il charge !).
 
 ## v0.61.9 — Un clin d'œil d'Alysse  (2026-10-11)
 

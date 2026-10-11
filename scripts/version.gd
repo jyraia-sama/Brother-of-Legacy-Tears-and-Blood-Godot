@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.9"
+const NUMERO := "0.61.10"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.10", "date": "2026-10-11", "titre": "Les Béliers chargent",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LA FAMILLE : la figurine de combat d'Alysse l'Étoile du Bélier (accroupie, prête à bondir, avec un clin d'œil), et Loucas le Bélier Ardent (portrait et figurine : lunettes sur le nez, poings serrés, il charge !).",
+	]},
 	{"version": "0.61.9", "date": "2026-10-11", "titre": "Un clin d'œil d'Alysse",
 	"changements": [
 		"NOUVELLE ILLUSTRATION, LA FAMILLE : nouveau portrait d'Alysse, l'Étoile du Bélier (clin d'œil et dague levée). Sa figurine de combat arrive bientôt.",
