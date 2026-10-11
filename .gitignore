@@ -4,3 +4,4 @@
 
 # Installations ordinateur (publiées dans GitHub Releases, pas dans le dépôt)
 build/
+__pycache__/
