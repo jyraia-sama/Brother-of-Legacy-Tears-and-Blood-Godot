@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.60.6"
+const NUMERO := "0.60.7"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.60.7", "date": "2026-10-11", "titre": "Les Enfers au complet",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES ENFERS : les 7 dernières créatures : Nautre le Nocher du Fleuve Rouge, le Passeur du Fleuve Rouge (qui tend la main pour son obole), Nyxara la Succube, la Succube Tentatrice, la Sangsue Abyssale, le Tourmenteur des Âmes et Vorhka la Mère des Tourments. Les 25 créatures des Enfers sont maintenant toutes redessinées !",
+	]},
 	{"version": "0.60.6", "date": "2026-10-11", "titre": "Les forges des Enfers",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : le Forgeron de l'Abîme, le Gardien des Portes de Soufre, le Grand Forgeron Infernal (qui martèle son enclume), Lilithra la Reine des Succubes, Méphistar le Seigneur de l'Abîme (plongé dans son grimoire) et le Molosse des Enfers.",

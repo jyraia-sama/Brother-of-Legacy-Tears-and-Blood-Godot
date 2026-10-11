@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES ENFERS : les 7 dernières créatures : Nautre le Nocher du Fleuve Rouge, le Passeur du Fleuve Rouge (qui tend la main pour son obole), Nyxara la Succube, la Succube Tentatrice, la Sangsue Abyssale, le Tourmenteur des Âmes et Vorhka la Mère des Tourments. Les 25 créatures des Enfers sont maintenant toutes redessinées !"
+			],
+			"titre": "Les Enfers au complet",
+			"version": "0.60.7"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : le Forgeron de l'Abîme, le Gardien des Portes de Soufre, le Grand Forgeron Infernal (qui martèle son enclume), Lilithra la Reine des Succubes, Méphistar le Seigneur de l'Abîme (plongé dans son grimoire) et le Molosse des Enfers."
 			],
 			"titre": "Les forges des Enfers",
@@ -112,20 +119,13 @@
 			],
 			"titre": "Là où meurent les légendes",
 			"version": "0.59.11"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE VIII : 7 créatures redessinées : la Vouivre Écarlate, l'Avatar de l'Éclipse, la Chimère Enragée, le Démon de Flamme, le Démon de Siège, le Loup-Garou (en pleine transformation) et le Rôdeur de l'Éclipse."
-			],
-			"titre": "L'éclipse du sang",
-			"version": "0.59.10"
 		}
 	],
 	"pck": {
-		"sha256": "00e287bd627fc797014b47c904e5d8b8e72286dddf288d83698336a31ccf0425",
-		"taille": 84296132,
+		"sha256": "61ce025ab9056c3c743a352119a584a945de34ab7485f2365741c224fd694c10",
+		"taille": 85920680,
 		"url": "jeu.pck"
 	},
-	"version": "0.60.6",
+	"version": "0.60.7",
 	"version_minimum": "0.37.0"
 }

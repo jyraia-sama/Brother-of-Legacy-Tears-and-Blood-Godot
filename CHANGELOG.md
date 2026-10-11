@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.60.6** (2026-10-11)
+Version actuelle : **0.60.7** (2026-10-11)
+
+## v0.60.7 — Les Enfers au complet  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES ENFERS : les 7 dernières créatures : Nautre le Nocher du Fleuve Rouge, le Passeur du Fleuve Rouge (qui tend la main pour son obole), Nyxara la Succube, la Succube Tentatrice, la Sangsue Abyssale, le Tourmenteur des Âmes et Vorhka la Mère des Tourments. Les 25 créatures des Enfers sont maintenant toutes redessinées !
 
 ## v0.60.6 — Les forges des Enfers  (2026-10-11)
 
