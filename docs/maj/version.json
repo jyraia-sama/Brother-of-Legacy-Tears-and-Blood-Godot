@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-10",
+	"date": "2026-10-11",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,13 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures redessinées : Abaddor le Diable Primordial, l'Âme Damnée, l'Archidémon du Néant, l'Archidiable Écarlate (et son contrat), Avarex le Prince de l'Avidité (sur sa montagne d'or) et Baal'Zeth le Général des Légions."
+			],
+			"titre": "Les portes des Enfers",
+			"version": "0.60.3"
+		},
 		{
 			"changements": [
 				"LANGUE : choisir English (ou Français) dans les Paramètres fonctionne maintenant partout (web, ordinateur, Android) : le jeu se sauvegarde et redémarre dans la nouvelle langue. Le jeu démarre toujours en français (la v0.60.1 s'affichait en anglais par erreur et le bouton Français ne répondait pas).",
@@ -112,20 +119,13 @@
 			],
 			"titre": "L'aiguillon de la souffrance",
 			"version": "0.59.7"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE IV : 11 créatures redessinées : l'Araignée Géante, le Chevalier Rouillé, le Garde d'Os, la Gargouille Ailée (en fontaine), le Golem Fissuré, la Liche Mineure, l'Ombre Rampante, le Prêtre de l'Autel, le Seigneur du Donjon Maudit, le Guerrier Squelette et le Zombie Enragé."
-			],
-			"titre": "Le sépulcre des oubliés",
-			"version": "0.59.6"
 		}
 	],
 	"pck": {
-		"sha256": "9fef3f428488c53c4e4607ed0d786b0f844b37427fc9bff2b2767706904fc91d",
-		"taille": 90754244,
+		"sha256": "d9acac2d8f7be2fb32048c5694f8f07e2a8e67370780008e0e967d441907e2bd",
+		"taille": 92716792,
 		"url": "jeu.pck"
 	},
-	"version": "0.60.2",
+	"version": "0.60.3",
 	"version_minimum": "0.37.0"
 }

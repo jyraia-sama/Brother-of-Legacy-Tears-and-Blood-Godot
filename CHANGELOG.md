@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.60.2** (2026-10-10)
+Version actuelle : **0.60.3** (2026-10-11)
+
+## v0.60.3 — Les portes des Enfers  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures redessinées : Abaddor le Diable Primordial, l'Âme Damnée, l'Archidémon du Néant, l'Archidiable Écarlate (et son contrat), Avarex le Prince de l'Avidité (sur sa montagne d'or) et Baal'Zeth le Général des Légions.
 
 ## v0.60.2 — Une langue au choix  (2026-10-10)
 

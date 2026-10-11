@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.60.2"
-const DATE := "2026-10-10"
+const NUMERO := "0.60.3"
+const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.60.3", "date": "2026-10-11", "titre": "Les portes des Enfers",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures redessinées : Abaddor le Diable Primordial, l'Âme Damnée, l'Archidémon du Néant, l'Archidiable Écarlate (et son contrat), Avarex le Prince de l'Avidité (sur sa montagne d'or) et Baal'Zeth le Général des Légions.",
+	]},
 	{"version": "0.60.2", "date": "2026-10-10", "titre": "Une langue au choix",
 	"changements": [
 		"LANGUE : choisir English (ou Français) dans les Paramètres fonctionne maintenant partout (web, ordinateur, Android) : le jeu se sauvegarde et redémarre dans la nouvelle langue. Le jeu démarre toujours en français (la v0.60.1 s'affichait en anglais par erreur et le bouton Français ne répondait pas).",
