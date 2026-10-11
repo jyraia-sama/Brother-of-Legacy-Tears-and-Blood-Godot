@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.60.7"
+const NUMERO := "0.61.0"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.0", "date": "2026-10-11", "titre": "Le jeu en paquets",
+	"changements": [
+		"JEU EN PLUSIEURS PAQUETS : les illustrations (figurines, portraits, décors des Actes, fonds, Boss de Monde) sont maintenant livrées à part, en petits paquets. Le jeu peut ainsi accueillir toutes les créatures à venir sans perdre en qualité.",
+		"MISES À JOUR PLUS LÉGÈRES : au lancement, seuls les paquets d'illustrations nouveaux ou modifiés sont téléchargés (le Sceau se remplit pendant le téléchargement). La première fois, tout est téléchargé une fois pour toutes.",
+		"Sans connexion, le jeu utilise les illustrations déjà téléchargées ; en cas d'échec, l'écran de chargement propose « Réessayer » ou « Jouer quand même ».",
+	]},
 	{"version": "0.60.7", "date": "2026-10-11", "titre": "Les Enfers au complet",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LES ENFERS : les 7 dernières créatures : Nautre le Nocher du Fleuve Rouge, le Passeur du Fleuve Rouge (qui tend la main pour son obole), Nyxara la Succube, la Succube Tentatrice, la Sangsue Abyssale, le Tourmenteur des Âmes et Vorhka la Mère des Tourments. Les 25 créatures des Enfers sont maintenant toutes redessinées !",

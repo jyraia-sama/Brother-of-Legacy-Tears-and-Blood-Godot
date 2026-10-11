@@ -12,6 +12,9 @@ extends CanvasLayer
 ## pendant le téléchargement du jeu ; ici on enchaîne directement sur la fin (le Sceau se ressoude).
 ## Un clic ou une touche accélère l'animation.
 ##
+## Avant tout, les paquets d'illustrations (voir paquets.gd) sont vérifiés : s'il faut en télécharger,
+## le Sceau se remplit au rythme du téléchargement (« Téléchargement des illustrations… »).
+##
 ##   EcranChargement.lancer(get_tree())     (une seule fois par lancement : main_menu.gd)
 
 const IMAGE := "res://assets/ui/chargement.png"
@@ -39,11 +42,19 @@ static var fait := false
 var _t := 0.0
 var _progres := 0.0           # 0 → 1 (affiché)
 var _charge := 0.0            # 0 → 1 (réel)
-var _phase := "remplir"       # remplir → souder → onde → fin
+var _phase := "paquets"      # paquets → remplir → souder → onde → fin
 var _t_phase := 0.0
 var _rapide := false
 var _web := false
 var _a_charger: Array = []
+## (préchargé par son chemin, sans class_name : une application installée ancienne ne connaît pas encore
+## les nouvelles classes du jeu quand elle charge une mise à jour)
+const PaquetsScript := preload("res://scripts/paquets.gd")
+var _paquets: Node = null
+var _paquets_fini := false
+var _dl_vu := false
+var _paquets_ok := true
+var _boutons: HBoxContainer = null
 
 var _fond: Control
 var _sceau: Sceau
@@ -128,7 +139,52 @@ func _ready() -> void:
 		_charge = 1.0
 	_disposer()
 	get_viewport().size_changed.connect(_disposer)
+	_lancer_paquets()
 	create_tween().tween_property(_phrase, "modulate:a", 1.0, 0.8).set_delay(0.3)
+
+
+func _lancer_paquets() -> void:
+	_paquets_fini = false
+	if _paquets == null:
+		_paquets = PaquetsScript.new()
+		add_child(_paquets)
+	_paquets_ok = await _paquets.preparer()
+	_paquets_fini = true
+	if PaquetsScript.nouveaux:
+		PaquetsScript.nouveaux = false
+		# Le menu a été affiché avant les illustrations : on le réaffiche (caché sous l'écran de chargement)
+		get_tree().reload_current_scene.call_deferred()
+
+
+## Téléchargement raté : message + « Réessayer » / « Jouer quand même ».
+func _afficher_erreur() -> void:
+	_pourcent.text = _paquets.erreur
+	_pourcent.add_theme_color_override("font_color", Color(1.0, 0.7, 0.6))
+	_boutons = HBoxContainer.new()
+	_boutons.alignment = BoxContainer.ALIGNMENT_CENTER
+	_boutons.add_theme_constant_override("separation", 24)
+	var s := get_viewport().get_visible_rect().size
+	_boutons.size = Vector2(s.x, 44)
+	_boutons.position = Vector2(0, s.y * 0.87 - 56)
+	for t in [["Réessayer", true], ["Jouer quand même", false]]:
+		var b := Button.new()
+		b.text = t[0]
+		b.custom_minimum_size = Vector2(200, 40)
+		var reessayer: bool = t[1]
+		b.pressed.connect(func():
+			_boutons.queue_free()
+			_boutons = null
+			_pourcent.remove_theme_color_override("font_color")
+			_pourcent.add_theme_color_override("font_color", Color(0.7, 0.62, 0.58, 0.8))
+			if reessayer:
+				_paquets.queue_free()
+				_paquets = null
+				_progres = 0.0
+				_lancer_paquets()
+			else:
+				_paquets_ok = true)
+		_boutons.add_child(b)
+	_racine.add_child(_boutons)
 
 
 func _label(t: String, taille: int, c: Color) -> Label:
@@ -166,6 +222,27 @@ func _process(delta: float) -> void:
 	_t_phase += delta
 	var vitesse := 3.0 if _rapide else 1.0
 	match _phase:
+		"paquets":
+			if _paquets == null:
+				pass
+			elif _paquets.octets_total > 0:
+				# Téléchargement en cours : le Sceau se remplit au rythme des illustrations reçues
+				if not _dl_vu:
+					_dl_vu = true
+					_progres = 0.0          # (web : la page avait déjà rempli le Sceau) on repart de zéro
+				_progres = move_toward(_progres, _paquets.avancement(), delta * 1.5)
+				if _boutons == null:
+					_pourcent.text = "Téléchargement des illustrations… %.0f / %.0f Mo" % [
+						_paquets.octets_recus() / 1048576.0, _paquets.octets_total / 1048576.0]
+			if _paquets_fini:
+				if not _paquets_ok:
+					if _boutons == null:
+						_afficher_erreur()
+				else:
+					if _paquets.octets_total > 0 or _web:
+						# le spectacle a déjà eu lieu (téléchargement, ou page web) : pas d'attente en plus
+						_t = maxf(_t, DUREE_MIN)
+					_changer("remplir")
 		"remplir":
 			# Avancement réel des images du menu, mais jamais plus vite que DUREE_MIN
 			var ok := 0

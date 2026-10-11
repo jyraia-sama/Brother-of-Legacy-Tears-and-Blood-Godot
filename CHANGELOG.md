@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.60.7** (2026-10-11)
+Version actuelle : **0.61.0** (2026-10-11)
+
+## v0.61.0 — Le jeu en paquets  (2026-10-11)
+
+- JEU EN PLUSIEURS PAQUETS : les illustrations (figurines, portraits, décors des Actes, fonds, Boss de Monde) sont maintenant livrées à part, en petits paquets. Le jeu peut ainsi accueillir toutes les créatures à venir sans perdre en qualité.
+- MISES À JOUR PLUS LÉGÈRES : au lancement, seuls les paquets d'illustrations nouveaux ou modifiés sont téléchargés (le Sceau se remplit pendant le téléchargement). La première fois, tout est téléchargé une fois pour toutes.
+- Sans connexion, le jeu utilise les illustrations déjà téléchargées ; en cas d'échec, l'écran de chargement propose « Réessayer » ou « Jouer quand même ».
 
 ## v0.60.7 — Les Enfers au complet  (2026-10-11)
 

@@ -11,6 +11,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"JEU EN PLUSIEURS PAQUETS : les illustrations (figurines, portraits, décors des Actes, fonds, Boss de Monde) sont maintenant livrées à part, en petits paquets. Le jeu peut ainsi accueillir toutes les créatures à venir sans perdre en qualité.",
+				"MISES À JOUR PLUS LÉGÈRES : au lancement, seuls les paquets d'illustrations nouveaux ou modifiés sont téléchargés (le Sceau se remplit pendant le téléchargement). La première fois, tout est téléchargé une fois pour toutes.",
+				"Sans connexion, le jeu utilise les illustrations déjà téléchargées ; en cas d'échec, l'écran de chargement propose « Réessayer » ou « Jouer quand même »."
+			],
+			"titre": "Le jeu en paquets",
+			"version": "0.61.0"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES ENFERS : les 7 dernières créatures : Nautre le Nocher du Fleuve Rouge, le Passeur du Fleuve Rouge (qui tend la main pour son obole), Nyxara la Succube, la Succube Tentatrice, la Sangsue Abyssale, le Tourmenteur des Âmes et Vorhka la Mère des Tourments. Les 25 créatures des Enfers sont maintenant toutes redessinées !"
 			],
 			"titre": "Les Enfers au complet",
@@ -111,21 +120,13 @@
 			],
 			"titre": "Les chemins de la désolation",
 			"version": "0.59.12"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE IX : 6 créatures redessinées : le Champion Déchu, le Chevalier Déchu, la Liche Novice, l'Ombre du Premier Roi, le Pilleur de Tombes Royales et le Séraphin Déchu.",
-				"DIALOGUES DE L'HISTOIRE : Kaël, Othmar et le Seigneur des Cendres ont dans les dialogues le même visage que leur nouvelle carte et leur figurine."
-			],
-			"titre": "Là où meurent les légendes",
-			"version": "0.59.11"
 		}
 	],
 	"pck": {
-		"sha256": "61ce025ab9056c3c743a352119a584a945de34ab7485f2365741c224fd694c10",
-		"taille": 85920680,
+		"sha256": "1fda0241e85d5114c8af07e6fac4f935c030cff8592204a27acc1852cefab99e",
+		"taille": 29380204,
 		"url": "jeu.pck"
 	},
-	"version": "0.60.7",
+	"version": "0.61.0",
 	"version_minimum": "0.37.0"
 }

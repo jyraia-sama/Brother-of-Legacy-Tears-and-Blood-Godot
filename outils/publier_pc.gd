@@ -13,7 +13,9 @@ extends SceneTree
 ##
 ## Ce que fait l'outil :
 ##   1. recopie le numéro de scripts/version.gd dans les réglages du projet (application/config/version) ;
-##   2. exporte la version web dans docs/ ;
+##   2. exporte la version web dans docs/ (sans les gros dossiers d'images, voir PAQUETS) ;
+##   2b. fabrique les paquets d'images docs/paquets/<nom>.pck + docs/paquets/liste.json
+##       (seuls les paquets dont une image a changé sont refaits : les joueurs ne retéléchargent qu'eux) ;
 ##   3. exporte le contenu du jeu pour ordinateur dans docs/maj/jeu.pck (la mise à jour rapide) ;
 ##   4. écrit la fiche docs/maj/version.json (numéro, nouveautés, taille, empreinte) ;
 ##   5. si besoin, crée les installations complètes dans build/ :
@@ -32,6 +34,17 @@ const PRESET_ANDROID := "Android"
 const SITE := "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/"
 const APK := "BrothersOfLegacy-Android.apk"
 const NB_NOUVEAUTES := 15
+## Gros dossiers d'images sortis du contenu de base et livrés à part (scripts/paquets.gd les télécharge).
+## « seaux » : nombre de paquets entre lesquels le dossier est réparti (chaque image va toujours dans
+## le même seau, d'après son nom). Si un paquet approche 90 Mo, augmente son nombre de seaux.
+## Ces dossiers ne doivent pas être utilisés par l'écran de chargement ni par les scripts lancés au démarrage.
+const PAQUETS := [
+	{"nom": "figurines", "dossier": "assets/figurines", "seaux": 4},
+	{"nom": "portraits", "dossier": "assets/unites", "seaux": 2},
+	{"nom": "fonds", "dossier": "assets/fonds", "seaux": 1},
+	{"nom": "actes", "dossier": "assets/actes", "seaux": 1},
+	{"nom": "boss_monde", "dossier": "assets/boss_monde", "seaux": 1},
+]
 
 var projet := ""
 
@@ -49,6 +62,8 @@ func _init() -> void:
 	if not _ecrire_version_projet(numero):
 		_echec("impossible de modifier project.godot"); return
 
+	if not _exclure_paquets_des_exports():
+		_echec("impossible de modifier export_presets.cfg"); return
 	DirAccess.make_dir_recursive_absolute(projet + "/docs/maj")
 	DirAccess.make_dir_recursive_absolute(projet + "/build/windows")
 	_creer_fichier(projet + "/build/.gdignore", "")
@@ -59,6 +74,12 @@ func _init() -> void:
 		if not _exporter(["--export-release", PRESET_WEB, projet + "/docs/index.html"]):
 			_echec("l'export web a échoué"); return
 		_completer_manifeste(numero)
+
+	# 2b. Paquets d'images (après l'export web, qui a remis à jour les images importées)
+	print("- Paquets d'images…")
+	var poids_paquets := _fabriquer_paquets(numero)
+	if poids_paquets < 0:
+		_echec("la fabrication des paquets a échoué"); return
 
 	# 3. Contenu du jeu pour ordinateur (Windows et Mac utilisent le même fichier)
 	print("- Export du contenu ordinateur (jeu.pck)…")
@@ -118,7 +139,8 @@ func _init() -> void:
 	_creer_fichier(projet + "/docs/maj/version.json", JSON.stringify(fiche, "\t"))
 
 	print("")
-	print("=== v%s publiée localement (contenu : %.1f Mo) ===" % [numero, taille / 1048576.0])
+	print("=== v%s publiée localement (contenu de base : %.1f Mo, paquets d'images : %.1f Mo) ===" % [
+		numero, taille / 1048576.0, poids_paquets / 1048576.0])
 	print("À faire : GitHub Desktop -> Commit « v%s — … » -> Push origin." % numero)
 	if complet:
 		print("INSTALLATION COMPLÈTE CRÉÉE : sur GitHub, crée une Release « v%s » et dépose-y" % numero)
@@ -134,6 +156,114 @@ func _init() -> void:
 
 
 # ---------------------------------------------------------------------
+
+## Range chaque dossier de PAQUETS dans le filtre « exclure » des 4 exports (web, Windows, Mac, Android).
+func _exclure_paquets_des_exports() -> bool:
+	var filtres: Array = []
+	for p in PAQUETS:
+		filtres.append(str(p.dossier) + "/*")
+	var chemin := projet + "/export_presets.cfg"
+	var texte := FileAccess.get_file_as_string(chemin)
+	if texte == "":
+		return false
+	var re := RegEx.new()
+	re.compile("(?m)^exclude_filter=.*$")
+	var nouveau := re.sub(texte, "exclude_filter=\"%s\"" % ", ".join(filtres), true)
+	return nouveau == texte or _creer_fichier(chemin, nouveau)
+
+
+## Fabrique docs/paquets/*.pck et docs/paquets/liste.json. Renvoie le poids total (-1 en cas d'échec).
+## Un paquet n'est refait que si ses images (ou leurs réglages d'import) ont changé : sa « signature »
+## dépend des fichiers sources, pas de l'ordinateur qui publie.
+func _fabriquer_paquets(numero: String) -> int:
+	var dossier := projet + "/docs/paquets"
+	DirAccess.make_dir_recursive_absolute(dossier)
+	var ancienne := _lire_json(dossier + "/liste.json")
+	var anciens := {}
+	for e in ancienne.get("paquets", []):
+		anciens[str(e.get("nom", ""))] = e
+	var liste: Array = []
+	var total := 0
+	for p in PAQUETS:
+		var seaux := int(p.seaux)
+		var groupes: Array = []
+		for i in seaux:
+			groupes.append([])
+		var d := DirAccess.open(projet + "/" + str(p.dossier))
+		if d == null:
+			continue
+		var fichiers := Array(d.get_files())
+		fichiers.sort()
+		for f in fichiers:
+			if not str(f).ends_with(".import"):
+				continue
+			var source: String = str(p.dossier) + "/" + str(f).trim_suffix(".import")
+			var i: int = source.get_file().get_basename().md5_text().substr(0, 2).hex_to_int() % seaux
+			groupes[i].append(source)
+		for i in seaux:
+			if groupes[i].is_empty():
+				continue
+			var nom := str(p.nom) if seaux == 1 else "%s_%d" % [p.nom, i]
+			var signature := _signature(groupes[i])
+			var fichier := nom + ".pck"
+			var a: Dictionary = anciens.get(nom, {})
+			var chemin := dossier + "/" + fichier
+			if str(a.get("signature", "")) == signature and FileAccess.file_exists(chemin) \
+					and FileAccess.get_sha256(chemin) == str(a.get("sha256", "")):
+				liste.append(a)
+				total += int(a.get("taille", 0))
+				continue
+			if not _ecrire_paquet(chemin, groupes[i]):
+				return -1
+			var taille := FileAccess.open(chemin, FileAccess.READ).get_length()
+			print("    paquet %s refait (%d images, %.1f Mo)" % [nom, groupes[i].size(), taille / 1048576.0])
+			if taille > 90 * 1048576:
+				print("ATTENTION : le paquet %s dépasse 90 Mo : augmente ses « seaux » dans PAQUETS." % nom)
+			liste.append({"nom": nom, "fichier": fichier, "taille": taille, "sha256": FileAccess.get_sha256(chemin),
+				"signature": signature, "images": groupes[i].size(), "depuis": numero})
+			total += taille
+	# Efface les paquets qui n'existent plus
+	var garder := {}
+	for e in liste:
+		garder[str(e.fichier)] = true
+	var dd := DirAccess.open(dossier)
+	for f in dd.get_files():
+		if f.ends_with(".pck") and not garder.has(f):
+			dd.remove(f)
+	_creer_fichier(dossier + "/liste.json", JSON.stringify({"version": numero, "paquets": liste}, "\t"))
+	return total
+
+
+func _signature(sources: Array) -> String:
+	var t := ""
+	for s in sources:
+		t += "%s|%s|%s\n" % [s, FileAccess.get_sha256(projet + "/" + s), FileAccess.get_sha256(projet + "/" + s + ".import")]
+	return t.sha256_text()
+
+
+## Écrit un paquet Godot avec, pour chaque image : son fichier .import et l'image importée (.godot/imported).
+func _ecrire_paquet(chemin: String, sources: Array) -> bool:
+	var pk := PCKPacker.new()
+	if pk.pck_start(chemin) != OK:
+		print("    impossible de créer " + chemin)
+		return false
+	for s in sources:
+		var cfg := ConfigFile.new()
+		if cfg.load(projet + "/" + s + ".import") != OK:
+			print("    import illisible : " + s)
+			return false
+		pk.add_file("res://" + s + ".import", projet + "/" + s + ".import")
+		var dest: Array = cfg.get_value("deps", "dest_files", [])
+		if dest.is_empty():
+			dest = [cfg.get_value("remap", "path", "")]
+		for f in dest:
+			var reel := projet + "/" + str(f).trim_prefix("res://")
+			if not FileAccess.file_exists(reel):
+				print("    image pas encore importée : %s (ouvre le projet dans Godot ou lance --import)" % s)
+				return false
+			pk.add_file(str(f), reel)
+	return pk.flush() == OK
+
 
 ## Complète le manifeste de l'appli web écrit par Godot : icône 192 px (exigée par Android pour
 ## « Installer l'application », sinon le jeu s'ouvre dans un onglet avec la barre du navigateur),
