@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, BOSS DE MONDE : tous les géants sont redessinés, à leur vraie taille : le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde Corrompu, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel (portrait, figurine et grande illustration du combat). Et leurs héritiers : le Rejeton du Béhémoth (qui crache une bulle de lave) et l'Enfant de Nidhögr (qui joue avec une étoile)."
+			],
+			"titre": "Les géants du monde",
+			"version": "0.61.8"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, BOSS DE MONDE : le Béhémoth des Cendres est redessiné, gigantesque, une forteresse en ruines à ses pieds et des chevaliers minuscules qui fuient entre ses pattes (portrait, figurine de combat et grande illustration du combat)."
 			],
 			"titre": "Le réveil du Béhémoth",
@@ -109,20 +116,13 @@
 			],
 			"titre": "Une langue au choix",
 			"version": "0.60.2"
-		},
-		{
-			"changements": [
-				"CORRECTIF : la v0.60.0 demandait par erreur de réinstaller le jeu sur ordinateur et Android (lien de téléchargement introuvable). Une simple mise à jour suffit à nouveau, et la langue anglaise fonctionne aussi dans les applications."
-			],
-			"titre": "Sans réinstaller",
-			"version": "0.60.1"
 		}
 	],
 	"pck": {
-		"sha256": "7c4647f46adc53ecd806071b519b2ca0c9ecc43b22e60fe5584084d9943612b1",
-		"taille": 29381644,
+		"sha256": "46ee811504356f6e8fcc4129dce7c0d4579d7cb91545fed0916aad190e7094fc",
+		"taille": 29381868,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.7",
+	"version": "0.61.8",
 	"version_minimum": "0.37.0"
 }

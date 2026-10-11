@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.7** (2026-10-11)
+Version actuelle : **0.61.8** (2026-10-11)
+
+## v0.61.8 — Les géants du monde  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, BOSS DE MONDE : tous les géants sont redessinés, à leur vraie taille : le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde Corrompu, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel (portrait, figurine et grande illustration du combat). Et leurs héritiers : le Rejeton du Béhémoth (qui crache une bulle de lave) et l'Enfant de Nidhögr (qui joue avec une étoile).
 
 ## v0.61.7 — Le réveil du Béhémoth  (2026-10-11)
 
