@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.60.5** (2026-10-11)
+Version actuelle : **0.60.6** (2026-10-11)
+
+## v0.60.6 — Les forges des Enfers  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : le Forgeron de l'Abîme, le Gardien des Portes de Soufre, le Grand Forgeron Infernal (qui martèle son enclume), Lilithra la Reine des Succubes, Méphistar le Seigneur de l'Abîme (plongé dans son grimoire) et le Molosse des Enfers.
 
 ## v0.60.5 — Plus léger  (2026-10-11)
 

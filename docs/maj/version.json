@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : le Forgeron de l'Abîme, le Gardien des Portes de Soufre, le Grand Forgeron Infernal (qui martèle son enclume), Lilithra la Reine des Succubes, Méphistar le Seigneur de l'Abîme (plongé dans son grimoire) et le Molosse des Enfers."
+			],
+			"titre": "Les forges des Enfers",
+			"version": "0.60.6"
+		},
+		{
+			"changements": [
 				"JEU PLUS LÉGER : les figurines de combat sont enregistrées un peu plus légères (toujours nettes en plein écran), pour laisser de la place aux créatures qui arrivent."
 			],
 			"titre": "Plus léger",
@@ -112,20 +119,13 @@
 			],
 			"titre": "L'éclipse du sang",
 			"version": "0.59.10"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE VII : 10 créatures redessinées : le Troll des Marais, le Serpent Cracheur, la Limace Acide, la Liane Vénéneuse (et son arrosoir), la Bête des Tourbières, la Sorcière des Bois, la Harpie Hurlante, la Reine Araignée, le Gardien de la Forêt Maudite et la Dame des Ronciers."
-			],
-			"titre": "Le pacte des ronces",
-			"version": "0.59.9"
 		}
 	],
 	"pck": {
-		"sha256": "288b228e571ba672231daed69da9dd262b0bf8dee21e0d1c3c75a4cb179561d0",
-		"taille": 82910960,
+		"sha256": "00e287bd627fc797014b47c904e5d8b8e72286dddf288d83698336a31ccf0425",
+		"taille": 84296132,
 		"url": "jeu.pck"
 	},
-	"version": "0.60.5",
+	"version": "0.60.6",
 	"version_minimum": "0.37.0"
 }

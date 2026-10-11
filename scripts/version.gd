@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.60.5"
+const NUMERO := "0.60.6"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.60.6", "date": "2026-10-11", "titre": "Les forges des Enfers",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : le Forgeron de l'Abîme, le Gardien des Portes de Soufre, le Grand Forgeron Infernal (qui martèle son enclume), Lilithra la Reine des Succubes, Méphistar le Seigneur de l'Abîme (plongé dans son grimoire) et le Molosse des Enfers.",
+	]},
 	{"version": "0.60.5", "date": "2026-10-11", "titre": "Plus léger",
 	"changements": [
 		"JEU PLUS LÉGER : les figurines de combat sont enregistrées un peu plus légères (toujours nettes en plein écran), pour laisser de la place aux créatures qui arrivent.",
