@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.2"
+const NUMERO := "0.61.3"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.3", "date": "2026-10-11", "titre": "Orage sur les Cieux",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : la Puissance Céleste, le Gardien des Nuées, la Nuée Vivante (qui boude bras croisés sur sa colonne de pluie), Ophanim la Roue Ardente, Oriel la Lame de l'Aube et la Prêtresse de l'Aube.",
+	]},
 	{"version": "0.61.2", "date": "2026-10-11", "titre": "Le Chœur céleste",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : le Faucon Céleste, le Gardien d'Albâtre (et le pigeon posé sur son casque), le Chérubin Espiègle (qui boude après son tir raté), le Chœur Incarné, la Dame d'Albâtre et le Dominion Couronné sur son trône de nuages.",

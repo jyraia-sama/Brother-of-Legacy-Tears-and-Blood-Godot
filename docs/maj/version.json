@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : la Puissance Céleste, le Gardien des Nuées, la Nuée Vivante (qui boude bras croisés sur sa colonne de pluie), Ophanim la Roue Ardente, Oriel la Lame de l'Aube et la Prêtresse de l'Aube."
+			],
+			"titre": "Orage sur les Cieux",
+			"version": "0.61.3"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : le Faucon Céleste, le Gardien d'Albâtre (et le pigeon posé sur son casque), le Chérubin Espiègle (qui boude après son tir raté), le Chœur Incarné, la Dame d'Albâtre et le Dominion Couronné sur son trône de nuages."
 			],
 			"titre": "Le Chœur céleste",
@@ -111,21 +118,13 @@
 			],
 			"titre": "La Soif Première",
 			"version": "0.59.15"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE XII : 6 créatures redessinées : le Héraut de l'Apocalypse, l'Héritier Maudit, la Reine des Liches, le Seigneur Démon, l'Empereur Déchu et le Garde des Cendres Éternelles.",
-				"DIALOGUES DE L'HISTOIRE : l'Héritier Maudit et l'Empereur Déchu ont leur nouveau visage dans les dialogues."
-			],
-			"titre": "L'éternité en héritage",
-			"version": "0.59.14"
 		}
 	],
 	"pck": {
-		"sha256": "92ba51d8a399c29e520be3b9529794597a34e0937fa2c0e771cc5b0d29aabac6",
-		"taille": 29380652,
+		"sha256": "f9899b003eb6ab0c8f4f4f8316fed065c7f7ffcf3edbfe8224675c407bf93e7f",
+		"taille": 29380924,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.2",
+	"version": "0.61.3",
 	"version_minimum": "0.37.0"
 }

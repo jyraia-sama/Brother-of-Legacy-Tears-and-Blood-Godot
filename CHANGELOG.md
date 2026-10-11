@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.2** (2026-10-11)
+Version actuelle : **0.61.3** (2026-10-11)
+
+## v0.61.3 — Orage sur les Cieux  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : la Puissance Céleste, le Gardien des Nuées, la Nuée Vivante (qui boude bras croisés sur sa colonne de pluie), Ophanim la Roue Ardente, Oriel la Lame de l'Aube et la Prêtresse de l'Aube.
 
 ## v0.61.2 — Le Chœur céleste  (2026-10-11)
 
