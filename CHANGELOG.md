@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.4** (2026-10-11)
+Version actuelle : **0.61.5** (2026-10-11)
+
+## v0.61.5 — Les maîtres des Donjons  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES DONJONS : 6 boss redessinés : le Gardien du Brasier, la Chasseuse de la Sylve, le Geôlier de la Crypte (et son trousseau de clés), le Boucher du Puits, Hémoragos le Puits Vivant (colosse de cristal sanglant enchaîné), et le Mimic, qui garde jalousement son trésor.
 
 ## v0.61.4 — Les Cieux au complet  (2026-10-11)
 

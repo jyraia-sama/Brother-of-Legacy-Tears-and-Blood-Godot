@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.4"
+const NUMERO := "0.61.5"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.5", "date": "2026-10-11", "titre": "Les maîtres des Donjons",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES DONJONS : 6 boss redessinés : le Gardien du Brasier, la Chasseuse de la Sylve, le Geôlier de la Crypte (et son trousseau de clés), le Boucher du Puits, Hémoragos le Puits Vivant (colosse de cristal sanglant enchaîné), et le Mimic, qui garde jalousement son trésor.",
+	]},
 	{"version": "0.61.4", "date": "2026-10-11", "titre": "Les Cieux au complet",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LES CIEUX : les 7 dernières créatures : Sérapheon la Flamme Divine, le Séraphin Ardent, Séraphine d'Aube, Solarius l'Archange Solaire, le Trône Vivant, Valkaria la Reine des Valkyries et la Valkyrie Céleste. Les 25 créatures des Cieux sont maintenant toutes redessinées !",
