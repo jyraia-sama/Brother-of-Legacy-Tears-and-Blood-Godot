@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.8"
+const NUMERO := "0.61.9"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.9", "date": "2026-10-11", "titre": "Un clin d'œil d'Alysse",
+	"changements": [
+		"NOUVELLE ILLUSTRATION, LA FAMILLE : nouveau portrait d'Alysse, l'Étoile du Bélier (clin d'œil et dague levée). Sa figurine de combat arrive bientôt.",
+	]},
 	{"version": "0.61.8", "date": "2026-10-11", "titre": "Les géants du monde",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, BOSS DE MONDE : tous les géants sont redessinés, à leur vraie taille : le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde Corrompu, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel (portrait, figurine et grande illustration du combat). Et leurs héritiers : le Rejeton du Béhémoth (qui crache une bulle de lave) et l'Enfant de Nidhögr (qui joue avec une étoile).",

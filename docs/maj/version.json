@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLE ILLUSTRATION, LA FAMILLE : nouveau portrait d'Alysse, l'Étoile du Bélier (clin d'œil et dague levée). Sa figurine de combat arrive bientôt."
+			],
+			"titre": "Un clin d'œil d'Alysse",
+			"version": "0.61.9"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, BOSS DE MONDE : tous les géants sont redessinés, à leur vraie taille : le Léviathan des Abysses Noires, Yggdravor l'Arbre-Monde Corrompu, Golgoth le Colosse de Pierre-Sang, Solgard le Soleil Vivant, Nidhögr le Dévoreur d'Étoiles et l'Avatar du Sang Originel (portrait, figurine et grande illustration du combat). Et leurs héritiers : le Rejeton du Béhémoth (qui crache une bulle de lave) et l'Enfant de Nidhögr (qui joue avec une étoile)."
 			],
 			"titre": "Les géants du monde",
@@ -108,21 +115,13 @@
 			],
 			"titre": "Les portes des Enfers",
 			"version": "0.60.3"
-		},
-		{
-			"changements": [
-				"LANGUE : choisir English (ou Français) dans les Paramètres fonctionne maintenant partout (web, ordinateur, Android) : le jeu se sauvegarde et redémarre dans la nouvelle langue. Le jeu démarre toujours en français (la v0.60.1 s'affichait en anglais par erreur et le bouton Français ne répondait pas).",
-				"NOUVEAU BOUTON « Redémarrer le jeu » en bas des Paramètres (sauvegarde puis redémarrage ; dans le navigateur, la page est rechargée)."
-			],
-			"titre": "Une langue au choix",
-			"version": "0.60.2"
 		}
 	],
 	"pck": {
-		"sha256": "46ee811504356f6e8fcc4129dce7c0d4579d7cb91545fed0916aad190e7094fc",
-		"taille": 29381868,
+		"sha256": "accc06bf46971f93f96fbb6fe15e39db8d05000da35163ff3a534a4862460d8d",
+		"taille": 29382044,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.8",
+	"version": "0.61.9",
 	"version_minimum": "0.37.0"
 }

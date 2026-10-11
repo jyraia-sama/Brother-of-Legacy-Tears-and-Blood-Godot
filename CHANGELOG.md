@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.8** (2026-10-11)
+Version actuelle : **0.61.9** (2026-10-11)
+
+## v0.61.9 — Un clin d'œil d'Alysse  (2026-10-11)
+
+- NOUVELLE ILLUSTRATION, LA FAMILLE : nouveau portrait d'Alysse, l'Étoile du Bélier (clin d'œil et dague levée). Sa figurine de combat arrive bientôt.
 
 ## v0.61.8 — Les géants du monde  (2026-10-11)
 
