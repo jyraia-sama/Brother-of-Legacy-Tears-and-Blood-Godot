@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.5"
+const NUMERO := "0.61.6"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.6", "date": "2026-10-11", "titre": "Les Donjons au complet",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES DONJONS : les 7 derniers boss : Ignaar le Cœur du Brasier, le Kraken des Fosses, la Mère-Racine Putride, Morvena la Liche sans Lune, l'Oracle Profané, la Sentinelle de Corail et le Templier Profané. Tous les boss des Donjons et le Mimic sont maintenant redessinés !",
+	]},
 	{"version": "0.61.5", "date": "2026-10-11", "titre": "Les maîtres des Donjons",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LES DONJONS : 6 boss redessinés : le Gardien du Brasier, la Chasseuse de la Sylve, le Geôlier de la Crypte (et son trousseau de clés), le Boucher du Puits, Hémoragos le Puits Vivant (colosse de cristal sanglant enchaîné), et le Mimic, qui garde jalousement son trésor.",

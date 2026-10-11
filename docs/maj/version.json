@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES DONJONS : les 7 derniers boss : Ignaar le Cœur du Brasier, le Kraken des Fosses, la Mère-Racine Putride, Morvena la Liche sans Lune, l'Oracle Profané, la Sentinelle de Corail et le Templier Profané. Tous les boss des Donjons et le Mimic sont maintenant redessinés !"
+			],
+			"titre": "Les Donjons au complet",
+			"version": "0.61.6"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES DONJONS : 6 boss redessinés : le Gardien du Brasier, la Chasseuse de la Sylve, le Geôlier de la Crypte (et son trousseau de clés), le Boucher du Puits, Hémoragos le Puits Vivant (colosse de cristal sanglant enchaîné), et le Mimic, qui garde jalousement son trésor."
 			],
 			"titre": "Les maîtres des Donjons",
@@ -110,20 +117,13 @@
 			],
 			"titre": "Tears and Blood, in English",
 			"version": "0.60.0"
-		},
-		{
-			"changements": [
-				"GALERIE D'ART ET MENU ADMIN : les cases « Bestiaire entièrement débloqué » et « Tous les Actes, chapitres et niveaux de Donjon débloqués » révèlent maintenant TOUTE la galerie (Histoire, personnages, Décors, Sanctuaire, Divers compris)."
-			],
-			"titre": "Les clés de l'Admin",
-			"version": "0.59.17"
 		}
 	],
 	"pck": {
-		"sha256": "aa3a23e669988321badc827b0e4f2fd94b8d54bd9a1d01118d5495b12688fd7f",
-		"taille": 29381292,
+		"sha256": "2fb32dcb56cbd8346d0353255a6c7875123a776d37234582450e7e9e20232484",
+		"taille": 29381452,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.5",
+	"version": "0.61.6",
 	"version_minimum": "0.37.0"
 }

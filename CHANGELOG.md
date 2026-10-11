@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.5** (2026-10-11)
+Version actuelle : **0.61.6** (2026-10-11)
+
+## v0.61.6 — Les Donjons au complet  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES DONJONS : les 7 derniers boss : Ignaar le Cœur du Brasier, le Kraken des Fosses, la Mère-Racine Putride, Morvena la Liche sans Lune, l'Oracle Profané, la Sentinelle de Corail et le Templier Profané. Tous les boss des Donjons et le Mimic sont maintenant redessinés !
 
 ## v0.61.5 — Les maîtres des Donjons  (2026-10-11)
 
