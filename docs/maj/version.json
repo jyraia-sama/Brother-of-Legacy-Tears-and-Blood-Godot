@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 premières créatures : Azarel l'Archange du Jugement (sa balance et son épée), Aethel le Héraut Doré, l'Archange Justicier, l'Archer des Cieux, Aurelion le Premier Séraphin (et son livre de lumière) et Aurelys la Lumière Primordiale."
+			],
+			"titre": "Les portes du Paradis",
+			"version": "0.61.1"
+		},
+		{
+			"changements": [
 				"JEU EN PLUSIEURS PAQUETS : les illustrations (figurines, portraits, décors des Actes, fonds, Boss de Monde) sont maintenant livrées à part, en petits paquets. Le jeu peut ainsi accueillir toutes les créatures à venir sans perdre en qualité.",
 				"MISES À JOUR PLUS LÉGÈRES : au lancement, seuls les paquets d'illustrations nouveaux ou modifiés sont téléchargés (le Sceau se remplit pendant le téléchargement). La première fois, tout est téléchargé une fois pour toutes.",
 				"Sans connexion, le jeu utilise les illustrations déjà téléchargées ; en cas d'échec, l'écran de chargement propose « Réessayer » ou « Jouer quand même »."
@@ -113,20 +120,13 @@
 			],
 			"titre": "Le jugement des frères",
 			"version": "0.59.13"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE X : 6 créatures redessinées : l'Abomination de Laboratoire (un golem d'alchimiste qui fait coucou), le Troll des Cavernes, l'Hydre Bicéphale, le Tortionnaire, la Wyverne Sauvage et le Maître des Supplices."
-			],
-			"titre": "Les chemins de la désolation",
-			"version": "0.59.12"
 		}
 	],
 	"pck": {
-		"sha256": "1fda0241e85d5114c8af07e6fac4f935c030cff8592204a27acc1852cefab99e",
-		"taille": 29380204,
+		"sha256": "2466b7363e0ef84427442572c4025e0a34b9339342637836f2f3b02fd1d6127d",
+		"taille": 29380428,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.0",
+	"version": "0.61.1",
 	"version_minimum": "0.37.0"
 }

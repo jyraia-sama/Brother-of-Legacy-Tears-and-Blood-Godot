@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.0"
+const NUMERO := "0.61.1"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.1", "date": "2026-10-11", "titre": "Les portes du Paradis",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 premières créatures : Azarel l'Archange du Jugement (sa balance et son épée), Aethel le Héraut Doré, l'Archange Justicier, l'Archer des Cieux, Aurelion le Premier Séraphin (et son livre de lumière) et Aurelys la Lumière Primordiale.",
+	]},
 	{"version": "0.61.0", "date": "2026-10-11", "titre": "Le jeu en paquets",
 	"changements": [
 		"JEU EN PLUSIEURS PAQUETS : les illustrations (figurines, portraits, décors des Actes, fonds, Boss de Monde) sont maintenant livrées à part, en petits paquets. Le jeu peut ainsi accueillir toutes les créatures à venir sans perdre en qualité.",

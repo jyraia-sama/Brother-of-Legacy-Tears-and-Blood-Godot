@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.0** (2026-10-11)
+Version actuelle : **0.61.1** (2026-10-11)
+
+## v0.61.1 — Les portes du Paradis  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 premières créatures : Azarel l'Archange du Jugement (sa balance et son épée), Aethel le Héraut Doré, l'Archange Justicier, l'Archer des Cieux, Aurelion le Premier Séraphin (et son livre de lumière) et Aurelys la Lumière Primordiale.
 
 ## v0.61.0 — Le jeu en paquets  (2026-10-11)
 
