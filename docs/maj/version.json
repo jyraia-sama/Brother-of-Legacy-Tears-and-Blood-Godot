@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, BOSS DE MONDE : le Béhémoth des Cendres est redessiné, gigantesque, une forteresse en ruines à ses pieds et des chevaliers minuscules qui fuient entre ses pattes (portrait, figurine de combat et grande illustration du combat)."
+			],
+			"titre": "Le réveil du Béhémoth",
+			"version": "0.61.7"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES DONJONS : les 7 derniers boss : Ignaar le Cœur du Brasier, le Kraken des Fosses, la Mère-Racine Putride, Morvena la Liche sans Lune, l'Oracle Profané, la Sentinelle de Corail et le Templier Profané. Tous les boss des Donjons et le Mimic sont maintenant redessinés !"
 			],
 			"titre": "Les Donjons au complet",
@@ -109,21 +116,13 @@
 			],
 			"titre": "Sans réinstaller",
 			"version": "0.60.1"
-		},
-		{
-			"changements": [
-				"CHAT GLOBAL : un nouveau bouton « Chat » en haut à droite du menu principal ouvre une discussion avec tous les joueurs connectés. Une pastille rouge prévient quand il y a de nouveaux messages. (Serveur : fichier supabase/09_chat_global.sql à lancer une fois dans Supabase.)",
-				"ENGLISH VERSION : nouveau réglage Paramètres → LANGUE · LANGUAGE (Français / English). Les menus, boutons, fenêtres, messages et guides sont traduits en anglais (environ 2 600 textes). Les noms des unités, leurs compétences et l'histoire restent en français pour l'instant (prochaine étape)."
-			],
-			"titre": "Tears and Blood, in English",
-			"version": "0.60.0"
 		}
 	],
 	"pck": {
-		"sha256": "2fb32dcb56cbd8346d0353255a6c7875123a776d37234582450e7e9e20232484",
-		"taille": 29381452,
+		"sha256": "7c4647f46adc53ecd806071b519b2ca0c9ecc43b22e60fe5584084d9943612b1",
+		"taille": 29381644,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.6",
+	"version": "0.61.7",
 	"version_minimum": "0.37.0"
 }

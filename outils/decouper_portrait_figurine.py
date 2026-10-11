@@ -3,7 +3,9 @@ image paysage coupée en deux par un trait noir vertical.
   - moitié gauche : le portrait -> recadré en carré sur le haut -> assets/unites/<id>.png (384 px)
   - moitié droite : la figurine sur fond vert -> détourée, recadrée -> assets/figurines/<id>.png (768 px de haut max : nettement plus que la taille affichée en combat)
 
-Usage :  python3 outils/decouper_portrait_figurine.py image.png <identifiant> [--sans-portrait] [--sans-figurine] [--spectre]\n  --spectre : créature translucide (fantôme) : retire la teinte verte qui transparaît dans les voiles
+Usage :  python3 outils/decouper_portrait_figurine.py image.png <identifiant> [--sans-portrait] [--sans-figurine] [--spectre]\n  --boss-monde : Boss de Monde : la moitié gauche entière (sans recadrage carré) devient aussi l'illustration
+                 assets/boss_monde/<id>.png (fond du combat, galerie, guilde)
+  --spectre : créature translucide (fantôme) : retire la teinte verte qui transparaît dans les voiles
 """
 import os
 import sys
@@ -56,6 +58,12 @@ def main():
     x = trait_central(img)
     gauche = img.crop((MARGE, MARGE, x - MARGE, img.height - MARGE))
     droite = img.crop((x + MARGE, MARGE, img.width - MARGE, img.height - MARGE))
+
+    if "--boss-monde" in sys.argv:
+        entiere = gauche.crop(bords_noirs(gauche)).convert("RGB")
+        cible = f"assets/boss_monde/{ident}.png"
+        entiere.save(cible, optimize=True)
+        print(f"  boss de monde -> {cible}  ({entiere.width}x{entiere.height})")
 
     if "--sans-portrait" not in sys.argv:
         gauche = gauche.crop(bords_noirs(gauche))

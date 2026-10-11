@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.6"
+const NUMERO := "0.61.7"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.7", "date": "2026-10-11", "titre": "Le réveil du Béhémoth",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, BOSS DE MONDE : le Béhémoth des Cendres est redessiné, gigantesque, une forteresse en ruines à ses pieds et des chevaliers minuscules qui fuient entre ses pattes (portrait, figurine de combat et grande illustration du combat).",
+	]},
 	{"version": "0.61.6", "date": "2026-10-11", "titre": "Les Donjons au complet",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LES DONJONS : les 7 derniers boss : Ignaar le Cœur du Brasier, le Kraken des Fosses, la Mère-Racine Putride, Morvena la Liche sans Lune, l'Oracle Profané, la Sentinelle de Corail et le Templier Profané. Tous les boss des Donjons et le Mimic sont maintenant redessinés !",

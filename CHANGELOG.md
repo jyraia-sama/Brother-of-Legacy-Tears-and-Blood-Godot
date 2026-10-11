@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.6** (2026-10-11)
+Version actuelle : **0.61.7** (2026-10-11)
+
+## v0.61.7 — Le réveil du Béhémoth  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, BOSS DE MONDE : le Béhémoth des Cendres est redessiné, gigantesque, une forteresse en ruines à ses pieds et des chevaliers minuscules qui fuient entre ses pattes (portrait, figurine de combat et grande illustration du combat).
 
 ## v0.61.6 — Les Donjons au complet  (2026-10-11)
 

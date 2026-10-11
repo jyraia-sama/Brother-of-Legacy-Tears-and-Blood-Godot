@@ -12,47 +12,47 @@
 		{
 			"depuis": "0.61.6",
 			"fichier": "figurines_1.pck",
-			"images": 50,
+			"images": 50.0,
 			"nom": "figurines_1",
 			"sha256": "6c620bbadce462bb96d519fe9eb826870cebcb6f7a57f4b20751744ba5f854af",
 			"signature": "75212fdcce8bee1b7477ed13d3ba0609a7bca599730aeb8ae17186f7355c6426",
-			"taille": 8517248
+			"taille": 8517248.0
 		},
 		{
 			"depuis": "0.61.6",
 			"fichier": "figurines_2.pck",
-			"images": 57,
+			"images": 57.0,
 			"nom": "figurines_2",
 			"sha256": "e2c62b5c1333ef0d4289026fce21a3ca88184cbda32ec160c840bb0072951778",
 			"signature": "a3a66e6aec0786a3cd088a925a295c81f14555fe2cc1a5b1eabd027ed4ab6b4c",
-			"taille": 9847452
+			"taille": 9847452.0
 		},
 		{
-			"depuis": "0.61.6",
+			"depuis": "0.61.7",
 			"fichier": "figurines_3.pck",
 			"images": 52,
 			"nom": "figurines_3",
-			"sha256": "e3c7da49c6d0b7b7be38274c2e7580d2fca5997bfadc9419410637492d4df02b",
-			"signature": "e7bc2fa64d10fd150ccbb0ec07dac3ffeca11f1177e347cb93afe646e5ea1b69",
-			"taille": 8871140
+			"sha256": "e398d51b41d73b33cbadbb6476ff29292413a120c407a7c557c5f547cf5815fa",
+			"signature": "06c58841e2c012da31995f1e529f50fa8a5ded5776dfbf1b0b7ba68c254145f0",
+			"taille": 8746692
 		},
 		{
 			"depuis": "0.61.6",
 			"fichier": "portraits_0.pck",
-			"images": 108,
+			"images": 108.0,
 			"nom": "portraits_0",
 			"sha256": "e8f96217ae1680ed6276d6ff0634e9d07225328487c8f79e5d4f52c333b51bfb",
 			"signature": "43855192c83bbd843c42ccc3f390378020fee5bd7941f7544127323d2f730fd2",
-			"taille": 6358428
+			"taille": 6358428.0
 		},
 		{
-			"depuis": "0.61.6",
+			"depuis": "0.61.7",
 			"fichier": "portraits_1.pck",
 			"images": 111,
 			"nom": "portraits_1",
-			"sha256": "03fe4aa26d7beb13b4013b9bcef7fb7408e96db178bccde6babdbf61f25ec7a5",
-			"signature": "c33ac092836492c134c33dfa03b4d89dff10545c5afc2fcdf4836bbf03e5f6d4",
-			"taille": 6467864
+			"sha256": "2743538b0744d058c19a4e7d6c18349e4d5fbba09343a10105176663c559bfab",
+			"signature": "0968ff73f9df56ef03a5aa5d46c687c7a390966a8f0f141ef33ccac30b795c68",
+			"taille": 6468792
 		},
 		{
 			"depuis": "0.60.7",
@@ -73,14 +73,14 @@
 			"taille": 4736104.0
 		},
 		{
-			"depuis": "0.60.7",
+			"depuis": "0.61.7",
 			"fichier": "boss_monde.pck",
-			"images": 7.0,
+			"images": 7,
 			"nom": "boss_monde",
-			"sha256": "a84f2e28364f15d2df8c15a729d18fdd4a0900abe00a7941b82bd354ff2a22a2",
-			"signature": "6282f038bf14a342fa2c784374aad8d5eda0c81475a8f8f047c749507bac6888",
-			"taille": 3177848.0
+			"sha256": "8842145b6aea21b82863ea41bb8ac62a32ce9c335da823c0b862dbcd14262312",
+			"signature": "4e6064ef439e3a86e5f29e398849b2f8c76040d161a4f920016230dce26f6ef9",
+			"taille": 2975832
 		}
 	],
-	"version": "0.61.6"
+	"version": "0.61.7"
 }
