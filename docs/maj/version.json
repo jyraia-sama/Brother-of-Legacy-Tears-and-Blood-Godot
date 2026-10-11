@@ -11,6 +11,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LA FAMILLE : Kaël Valcendre le Héros de Légende (l'épée sur l'épaule), Anaïs la Reine de la Toison d'Or, Laurent le Gardien Gémeau et son Reflet ténébreux : nouveaux portraits et figurines de combat.",
+				"L'AÎNÉ A UN VISAGE : le grand frère, porteur de la Larme bleue, a une toute nouvelle figurine sur le plateau des Actes, sur la carte et dans le menu principal, face à Kaël.",
+				"Toutes les créatures de l'histoire, des Enfers, des Cieux, des Donjons, les Boss de Monde et la famille sont maintenant redessinées dans le nouveau style !"
+			],
+			"titre": "La famille Valcendre",
+			"version": "0.61.11"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LA FAMILLE : la figurine de combat d'Alysse l'Étoile du Bélier (accroupie, prête à bondir, avec un clin d'œil), et Loucas le Bélier Ardent (portrait et figurine : lunettes sur le nez, poings serrés, il charge !)."
 			],
 			"titre": "Les Béliers chargent",
@@ -108,20 +117,13 @@
 			],
 			"titre": "Plus léger",
 			"version": "0.60.5"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : Belzaroth le Prince des Braises, le Bourreau Cornu, Cerbère (et ses trois têtes qui se disputent un os), Cerbérus Tricéphale, le Chevalier Infernal et le Diablotin de Soufre (qui se pince le nez)."
-			],
-			"titre": "Les chiens des Enfers",
-			"version": "0.60.4"
 		}
 	],
 	"pck": {
-		"sha256": "8c96bb8ec7e580be8e5f65666e88b02e03a8ffafed3be9cf613cc92137a9a12d",
-		"taille": 29382236,
+		"sha256": "903f1b60385bb6f3579d06baf7baee47e6e0cd61bca94a7c676ae9546f2828c3",
+		"taille": 29403900,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.10",
+	"version": "0.61.11",
 	"version_minimum": "0.37.0"
 }

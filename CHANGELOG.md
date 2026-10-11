@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.10** (2026-10-11)
+Version actuelle : **0.61.11** (2026-10-11)
+
+## v0.61.11 — La famille Valcendre  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LA FAMILLE : Kaël Valcendre le Héros de Légende (l'épée sur l'épaule), Anaïs la Reine de la Toison d'Or, Laurent le Gardien Gémeau et son Reflet ténébreux : nouveaux portraits et figurines de combat.
+- L'AÎNÉ A UN VISAGE : le grand frère, porteur de la Larme bleue, a une toute nouvelle figurine sur le plateau des Actes, sur la carte et dans le menu principal, face à Kaël.
+- Toutes les créatures de l'histoire, des Enfers, des Cieux, des Donjons, les Boss de Monde et la famille sont maintenant redessinées dans le nouveau style !
 
 ## v0.61.10 — Les Béliers chargent  (2026-10-11)
 

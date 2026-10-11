@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.10"
+const NUMERO := "0.61.11"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.11", "date": "2026-10-11", "titre": "La famille Valcendre",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LA FAMILLE : Kaël Valcendre le Héros de Légende (l'épée sur l'épaule), Anaïs la Reine de la Toison d'Or, Laurent le Gardien Gémeau et son Reflet ténébreux : nouveaux portraits et figurines de combat.",
+		"L'AÎNÉ A UN VISAGE : le grand frère, porteur de la Larme bleue, a une toute nouvelle figurine sur le plateau des Actes, sur la carte et dans le menu principal, face à Kaël.",
+		"Toutes les créatures de l'histoire, des Enfers, des Cieux, des Donjons, les Boss de Monde et la famille sont maintenant redessinées dans le nouveau style !",
+	]},
 	{"version": "0.61.10", "date": "2026-10-11", "titre": "Les Béliers chargent",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LA FAMILLE : la figurine de combat d'Alysse l'Étoile du Bélier (accroupie, prête à bondir, avec un clin d'œil), et Loucas le Bélier Ardent (portrait et figurine : lunettes sur le nez, poings serrés, il charge !).",
