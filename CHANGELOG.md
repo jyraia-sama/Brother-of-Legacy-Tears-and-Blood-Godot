@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.60.3** (2026-10-11)
+Version actuelle : **0.60.4** (2026-10-11)
+
+## v0.60.4 — Les chiens des Enfers  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : Belzaroth le Prince des Braises, le Bourreau Cornu, Cerbère (et ses trois têtes qui se disputent un os), Cerbérus Tricéphale, le Chevalier Infernal et le Diablotin de Soufre (qui se pince le nez).
 
 ## v0.60.3 — Les portes des Enfers  (2026-10-11)
 

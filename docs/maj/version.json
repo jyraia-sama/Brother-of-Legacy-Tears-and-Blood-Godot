@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : Belzaroth le Prince des Braises, le Bourreau Cornu, Cerbère (et ses trois têtes qui se disputent un os), Cerbérus Tricéphale, le Chevalier Infernal et le Diablotin de Soufre (qui se pince le nez)."
+			],
+			"titre": "Les chiens des Enfers",
+			"version": "0.60.4"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures redessinées : Abaddor le Diable Primordial, l'Âme Damnée, l'Archidémon du Néant, l'Archidiable Écarlate (et son contrat), Avarex le Prince de l'Avidité (sur sa montagne d'or) et Baal'Zeth le Général des Légions."
 			],
 			"titre": "Les portes des Enfers",
@@ -112,20 +119,13 @@
 			],
 			"titre": "Les larmes de pierre",
 			"version": "0.59.8"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE V : 7 créatures redessinées : le Cyclope Furieux, le Démon Mineur (en équilibre sur son trident), le Zélote Fanatique, la Harpie Sanglante, l'Inquisiteur Implacable, le Mirage des Vaincus et le Spectre Vengeur."
-			],
-			"titre": "L'aiguillon de la souffrance",
-			"version": "0.59.7"
 		}
 	],
 	"pck": {
-		"sha256": "d9acac2d8f7be2fb32048c5694f8f07e2a8e67370780008e0e967d441907e2bd",
-		"taille": 92716792,
+		"sha256": "230749162b4bfb8fbc1bbb22dd57004b326f354a106f932efbabb4711bae14a0",
+		"taille": 94501984,
 		"url": "jeu.pck"
 	},
-	"version": "0.60.3",
+	"version": "0.60.4",
 	"version_minimum": "0.37.0"
 }

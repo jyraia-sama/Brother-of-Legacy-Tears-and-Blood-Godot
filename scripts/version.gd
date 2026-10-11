@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.60.3"
+const NUMERO := "0.60.4"
 const DATE := "2026-10-11"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.60.4", "date": "2026-10-11", "titre": "Les chiens des Enfers",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : Belzaroth le Prince des Braises, le Bourreau Cornu, Cerbère (et ses trois têtes qui se disputent un os), Cerbérus Tricéphale, le Chevalier Infernal et le Diablotin de Soufre (qui se pince le nez).",
+	]},
 	{"version": "0.60.3", "date": "2026-10-11", "titre": "Les portes des Enfers",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures redessinées : Abaddor le Diable Primordial, l'Âme Damnée, l'Archidémon du Néant, l'Archidiable Écarlate (et son contrat), Avarex le Prince de l'Avidité (sur sa montagne d'or) et Baal'Zeth le Général des Légions.",
