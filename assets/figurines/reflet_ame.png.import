@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/reflet_ame.png-a87918b69201912b99587a270d7584
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

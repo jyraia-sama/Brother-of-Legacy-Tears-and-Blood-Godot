@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/dragon_ombre.png-705dd74b6c64ed55fe7f0af99d1e
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

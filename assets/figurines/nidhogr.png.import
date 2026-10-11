@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/nidhogr.png-a1ceef1d285b130acd18d2982eb02e6f.
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

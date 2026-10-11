@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/baalzeth.png-559082e3450727b813a03e15ff5183f5
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

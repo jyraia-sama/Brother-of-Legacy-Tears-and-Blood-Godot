@@ -1,7 +1,7 @@
 """Découpe une image « portrait + figurine » (méthode v0.59, PROMPTS_FIGURINES_3D.md) :
 image paysage coupée en deux par un trait noir vertical.
   - moitié gauche : le portrait -> recadré en carré sur le haut -> assets/unites/<id>.png (384 px)
-  - moitié droite : la figurine sur fond vert -> détourée, recadrée -> assets/figurines/<id>.png (1024 px de haut max)
+  - moitié droite : la figurine sur fond vert -> détourée, recadrée -> assets/figurines/<id>.png (768 px de haut max : nettement plus que la taille affichée en combat)
 
 Usage :  python3 outils/decouper_portrait_figurine.py image.png <identifiant> [--sans-portrait] [--sans-figurine] [--spectre]\n  --spectre : créature translucide (fantôme) : retire la teinte verte qui transparaît dans les voiles
 """
@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from decouper_miniatures import detourer  # noqa: E402
 
 TAILLE_PORTRAIT = 384
-HAUTEUR_FIGURINE = 1024
+HAUTEUR_FIGURINE = 768
 MARGE = 10
 
 

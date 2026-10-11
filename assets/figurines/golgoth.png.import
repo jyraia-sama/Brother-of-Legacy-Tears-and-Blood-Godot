@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/golgoth.png-6c0fd2814beb7e7fe4c62eb5ce909a5a.
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/limace_acide.png-e3e7830c3f4e30178d1f635e0682
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

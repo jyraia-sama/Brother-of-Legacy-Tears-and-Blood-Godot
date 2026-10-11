@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/pretre_autel.png-75642561688e3728c71d7588a46b
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

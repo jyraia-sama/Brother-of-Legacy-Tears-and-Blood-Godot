@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/lance_doree.png-15a24f058a6d6fe5afd770d85048b
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

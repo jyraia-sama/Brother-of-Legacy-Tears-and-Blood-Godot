@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.60.4** (2026-10-11)
+Version actuelle : **0.60.5** (2026-10-11)
+
+## v0.60.5 — Plus léger  (2026-10-11)
+
+- JEU PLUS LÉGER : les figurines de combat sont enregistrées un peu plus légères (toujours nettes en plein écran), pour laisser de la place aux créatures qui arrivent.
 
 ## v0.60.4 — Les chiens des Enfers  (2026-10-11)
 

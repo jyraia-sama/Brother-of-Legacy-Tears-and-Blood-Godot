@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/barbe_bleue.png-18a72024c540c75e2dde0e1c1611c
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

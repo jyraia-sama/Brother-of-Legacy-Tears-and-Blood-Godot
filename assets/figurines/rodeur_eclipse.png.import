@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/rodeur_eclipse.png-91d8ee4195a77f9c538f9c177a
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

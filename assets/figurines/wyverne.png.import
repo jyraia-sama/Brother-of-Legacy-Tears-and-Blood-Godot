@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/wyverne.png-ed5c1c0f0e2fcc8b11a81c6f98542d16.
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/abaddor.png-c1ef0f7db4ed5b586f72b7b0d8fe2aca.
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

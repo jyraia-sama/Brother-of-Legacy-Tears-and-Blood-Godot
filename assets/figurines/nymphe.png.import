@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/nymphe.png-1c6539712d41795e5b2ee42abcc16ae6.c
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

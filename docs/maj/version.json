@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"JEU PLUS LÉGER : les figurines de combat sont enregistrées un peu plus légères (toujours nettes en plein écran), pour laisser de la place aux créatures qui arrivent."
+			],
+			"titre": "Plus léger",
+			"version": "0.60.5"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : Belzaroth le Prince des Braises, le Bourreau Cornu, Cerbère (et ses trois têtes qui se disputent un os), Cerbérus Tricéphale, le Chevalier Infernal et le Diablotin de Soufre (qui se pince le nez)."
 			],
 			"titre": "Les chiens des Enfers",
@@ -112,20 +119,13 @@
 			],
 			"titre": "Le pacte des ronces",
 			"version": "0.59.9"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE VI : 7 créatures redessinées : l'Aberration Cristalline, la Gargouille de Jade, le Golem d'Obsidienne, le Golem de Pierre (et sa petite fleur), le Reflet de l'Âme, le Spectre Glacial et la Statue Hurlante."
-			],
-			"titre": "Les larmes de pierre",
-			"version": "0.59.8"
 		}
 	],
 	"pck": {
-		"sha256": "230749162b4bfb8fbc1bbb22dd57004b326f354a106f932efbabb4711bae14a0",
-		"taille": 94501984,
+		"sha256": "288b228e571ba672231daed69da9dd262b0bf8dee21e0d1c3c75a4cb179561d0",
+		"taille": 82910960,
 		"url": "jeu.pck"
 	},
-	"version": "0.60.4",
+	"version": "0.60.5",
 	"version_minimum": "0.37.0"
 }

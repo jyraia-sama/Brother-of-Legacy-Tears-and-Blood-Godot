@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/diablotin_soufre.png-fda9ade4f729789b5e19c276
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

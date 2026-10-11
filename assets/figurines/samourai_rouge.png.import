@@ -17,7 +17,7 @@ dest_files=["res://.godot/imported/samourai_rouge.png-aba2a405d0e5663ca36634fc7c
 
 compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.8
+compress/lossy_quality=0.75
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
