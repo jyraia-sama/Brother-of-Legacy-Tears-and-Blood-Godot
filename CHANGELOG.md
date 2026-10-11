@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.1** (2026-10-11)
+Version actuelle : **0.61.2** (2026-10-11)
+
+## v0.61.2 — Le Chœur céleste  (2026-10-11)
+
+- NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : le Faucon Céleste, le Gardien d'Albâtre (et le pigeon posé sur son casque), le Chérubin Espiègle (qui boude après son tir raté), le Chœur Incarné, la Dame d'Albâtre et le Dominion Couronné sur son trône de nuages.
 
 ## v0.61.1 — Les portes du Paradis  (2026-10-11)
 

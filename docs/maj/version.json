@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 créatures de plus : le Faucon Céleste, le Gardien d'Albâtre (et le pigeon posé sur son casque), le Chérubin Espiègle (qui boude après son tir raté), le Chœur Incarné, la Dame d'Albâtre et le Dominion Couronné sur son trône de nuages."
+			],
+			"titre": "Le Chœur céleste",
+			"version": "0.61.2"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LES CIEUX : 6 premières créatures : Azarel l'Archange du Jugement (sa balance et son épée), Aethel le Héraut Doré, l'Archange Justicier, l'Archer des Cieux, Aurelion le Premier Séraphin (et son livre de lumière) et Aurelys la Lumière Primordiale."
 			],
 			"titre": "Les portes du Paradis",
@@ -112,21 +119,13 @@
 			],
 			"titre": "L'éternité en héritage",
 			"version": "0.59.14"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, ACTE XI : 5 créatures redessinées : l'Archange Noir, le Compagnon Traître, le Dragon d'Ombre, le Frère Masqué (qui ressemble enfin à Kaël sous son masque) et le Garde Fratricide.",
-				"DIALOGUES DE L'HISTOIRE : nouveaux portraits pour Kaël corrompu, Corvin le mercenaire et le Frère Masqué, assortis à leurs cartes et figurines."
-			],
-			"titre": "Le jugement des frères",
-			"version": "0.59.13"
 		}
 	],
 	"pck": {
-		"sha256": "2466b7363e0ef84427442572c4025e0a34b9339342637836f2f3b02fd1d6127d",
-		"taille": 29380428,
+		"sha256": "92ba51d8a399c29e520be3b9529794597a34e0937fa2c0e771cc5b0d29aabac6",
+		"taille": 29380652,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.1",
+	"version": "0.61.2",
 	"version_minimum": "0.37.0"
 }
