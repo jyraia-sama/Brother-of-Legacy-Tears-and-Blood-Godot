@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ICÔNES DE SORTS : les 23 familles de sorts ont maintenant leur icône peinte (épées croisées, météores, croix de soin, bouclier d'énergie, taureau de provocation, flocon de gel, fiole de poison, cadenas du silence...). Survole une icône en combat manuel pour voir le détail du sort."
+			],
+			"titre": "Des sorts qui ont de la gueule",
+			"version": "0.63.1"
+		},
+		{
+			"changements": [
 				"COMBATS EN MANUEL : un nouveau bouton « Auto / Manuel » en haut de l'écran de combat. En manuel, tu choisis à chaque tour l'action de tes unités (attaque ou sort, puis la cible) ; les ennemis jouent seuls. Le choix est mémorisé pour les combats suivants (l'automatique reste le mode par défaut). Disponible en Aventure, dans les Tours, les Donjons, la Marche Maudite et le Sanctuaire ; les Boss de Monde, l'Arène et la Guerre des Bannières restent automatiques.",
 				"En manuel, les sorts ne partent plus au hasard : tu les lances quand tu veux, puis ils se rechargent quelques tours. Tu peux repasser en Auto à tout moment, et « Passer » termine le combat en automatique.",
 				"ICÔNES DE SORTS : les actions s'affichent en petites icônes rondes (contour de la couleur de l'élément). Passe la souris sur une icône pour voir le détail du sort (sur téléphone : touche une fois pour voir, une deuxième fois pour lancer). Aussi dans l'Arène classée.",
@@ -113,20 +120,13 @@
 			],
 			"titre": "Les maîtres des Donjons",
 			"version": "0.61.5"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, LES CIEUX : les 7 dernières créatures : Sérapheon la Flamme Divine, le Séraphin Ardent, Séraphine d'Aube, Solarius l'Archange Solaire, le Trône Vivant, Valkaria la Reine des Valkyries et la Valkyrie Céleste. Les 25 créatures des Cieux sont maintenant toutes redessinées !"
-			],
-			"titre": "Les Cieux au complet",
-			"version": "0.61.4"
 		}
 	],
 	"pck": {
-		"sha256": "a709917a65718423c67ab3654b8892a88b5d65f29b0750d6cdc4b0c225663862",
-		"taille": 29833656,
+		"sha256": "7beaf80f22e4de8e19613520d196761624afd9166edc16989ca8cea2b97b1226",
+		"taille": 32998688,
 		"url": "jeu.pck"
 	},
-	"version": "0.63.0",
+	"version": "0.63.1",
 	"version_minimum": "0.37.0"
 }

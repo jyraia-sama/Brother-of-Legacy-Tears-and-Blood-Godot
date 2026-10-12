@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.63.0"
+const NUMERO := "0.63.1"
 const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.63.1", "date": "2026-10-12", "titre": "Des sorts qui ont de la gueule",
+	"changements": [
+		"ICÔNES DE SORTS : les 23 familles de sorts ont maintenant leur icône peinte (épées croisées, météores, croix de soin, bouclier d'énergie, taureau de provocation, flocon de gel, fiole de poison, cadenas du silence...). Survole une icône en combat manuel pour voir le détail du sort.",
+	]},
 	{"version": "0.63.0", "date": "2026-10-12", "titre": "À toi de jouer !",
 	"changements": [
 		"COMBATS EN MANUEL : un nouveau bouton « Auto / Manuel » en haut de l'écran de combat. En manuel, tu choisis à chaque tour l'action de tes unités (attaque ou sort, puis la cible) ; les ennemis jouent seuls. Le choix est mémorisé pour les combats suivants (l'automatique reste le mode par défaut). Disponible en Aventure, dans les Tours, les Donjons, la Marche Maudite et le Sanctuaire ; les Boss de Monde, l'Arène et la Guerre des Bannières restent automatiques.",

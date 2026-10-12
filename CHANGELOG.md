@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.63.0** (2026-10-12)
+Version actuelle : **0.63.1** (2026-10-12)
+
+## v0.63.1 — Des sorts qui ont de la gueule  (2026-10-12)
+
+- ICÔNES DE SORTS : les 23 familles de sorts ont maintenant leur icône peinte (épées croisées, météores, croix de soin, bouclier d'énergie, taureau de provocation, flocon de gel, fiole de poison, cadenas du silence...). Survole une icône en combat manuel pour voir le détail du sort.
 
 ## v0.63.0 — À toi de jouer !  (2026-10-12)
 
