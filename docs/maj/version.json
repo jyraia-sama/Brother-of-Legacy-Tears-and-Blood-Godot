@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : la Brute Noire (qui épluche sa banane), Barbe Bleue (chope levée), l'Elfe Sylvestre, l'Araignée Venimeuse et sa toile en cœur, et le Chat des Abysses qui renverse un gobelet en nous regardant."
+			],
+			"titre": "La ménagerie s'agrandit",
+			"version": "0.61.14"
+		},
+		{
+			"changements": [
 				"ILLUSTRATIONS : nouvelles versions de la Chasseresse de Soie (en plein bond, son fil de soie autour d'elle) et de l'Errant Silencieux (au repos sur son banc de pierre)."
 			],
 			"titre": "Les gardiens des profondeurs",
@@ -110,20 +117,13 @@
 			],
 			"titre": "Le jeu en paquets",
 			"version": "0.61.0"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, LES ENFERS : les 7 dernières créatures : Nautre le Nocher du Fleuve Rouge, le Passeur du Fleuve Rouge (qui tend la main pour son obole), Nyxara la Succube, la Succube Tentatrice, la Sangsue Abyssale, le Tourmenteur des Âmes et Vorhka la Mère des Tourments. Les 25 créatures des Enfers sont maintenant toutes redessinées !"
-			],
-			"titre": "Les Enfers au complet",
-			"version": "0.60.7"
 		}
 	],
 	"pck": {
-		"sha256": "7d1f8a50e9dd533928ded965192a005ddb02e5ce411f92cbb1ceefae67df3c96",
-		"taille": 29404364,
+		"sha256": "c3fd44fdb6ebc8c5dfc3ebac8740b981e667f29ce379647a3b3b04ccb9a20b44",
+		"taille": 29404588,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.13",
+	"version": "0.61.14",
 	"version_minimum": "0.37.0"
 }

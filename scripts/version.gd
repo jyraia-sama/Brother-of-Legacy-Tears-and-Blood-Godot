@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.13"
+const NUMERO := "0.61.14"
 const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.14", "date": "2026-10-12", "titre": "La ménagerie s'agrandit",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : la Brute Noire (qui épluche sa banane), Barbe Bleue (chope levée), l'Elfe Sylvestre, l'Araignée Venimeuse et sa toile en cœur, et le Chat des Abysses qui renverse un gobelet en nous regardant.",
+	]},
 	{"version": "0.61.13", "date": "2026-10-12", "titre": "Les gardiens des profondeurs",
 	"changements": [
 		"ILLUSTRATIONS : nouvelles versions de la Chasseresse de Soie (en plein bond, son fil de soie autour d'elle) et de l'Errant Silencieux (au repos sur son banc de pierre).",

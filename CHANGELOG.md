@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.13** (2026-10-12)
+Version actuelle : **0.61.14** (2026-10-12)
+
+## v0.61.14 — La ménagerie s'agrandit  (2026-10-12)
+
+- NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : la Brute Noire (qui épluche sa banane), Barbe Bleue (chope levée), l'Elfe Sylvestre, l'Araignée Venimeuse et sa toile en cœur, et le Chat des Abysses qui renverse un gobelet en nous regardant.
 
 ## v0.61.13 — Les gardiens des profondeurs  (2026-10-12)
 
