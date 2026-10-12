@@ -147,7 +147,7 @@ func _suivante() -> void:
 func _portrait(perso: String, couleur: Color) -> Control:
 	var id := perso
 	if perso == "toi":
-		# Le joueur : l'aîné n'a pas de visage imposé -> blason de la maison
+		# Le joueur : l'aîné (portrait assets/personnages/aine.png)
 		id = "aine"
 	var chemin := DOSSIER_PORTRAITS + id + ".png"
 	var p := Panel.new()

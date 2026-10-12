@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.62.0"
+const NUMERO := "0.62.1"
 const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.62.1", "date": "2026-10-12", "titre": "L'Arène rouvre ses portes",
+	"changements": [
+		"ARÈNE RÉPARÉE : la fin de saison de l'Arène provoquait « erreur du serveur (400) » et bloquait l'Arène pour tout le monde. C'est corrigé (la nouvelle saison démarre normalement).",
+		"L'AÎNÉ A SON VISAGE DANS LES DIALOGUES : le blason de la maison laisse place au portrait du grand frère, porteur de la Larme.",
+	]},
 	{"version": "0.62.0", "date": "2026-10-12", "titre": "La grande refonte est terminée",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : les 12 derniers héros : la Nymphe qui danse, le Mage Gris (son chapeau a pris feu !), le Samouraï Rouge, le Sorcier Sombre, le Loup Gris qui hurle à la lune, le Sanglier Sauvage, le Slime (une épée plantée sur la tête, pas inquiet du tout), le Jeune Minotaure et sa hache trop lourde, la Jeune Hydre emmêlée, le Titan des Abysses, le Phénix Immortel et le Léviathan Abyssal.",

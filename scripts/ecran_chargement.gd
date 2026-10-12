@@ -20,7 +20,7 @@ extends CanvasLayer
 const IMAGE := "res://assets/ui/chargement.png"
 ## Ce qu'on charge pendant l'animation (les images du menu principal), pour un menu fluide ensuite.
 const A_CHARGER := ["res://assets/ui/menu_freres.png", "res://assets/personnages/kael_valcendre.png",
-	"res://assets/plateaux/pion_aine.png", "res://assets/personnages/aine.png"]
+	"res://assets/plateaux/pion_aine.png", "res://assets/ui/blason_maison.png"]
 const DUREE_MIN := 2.6           # secondes de remplissage au minimum (pour profiter du spectacle)
 const C_LARME := Color("3f9dff")
 const C_SANG := Color("d11426")

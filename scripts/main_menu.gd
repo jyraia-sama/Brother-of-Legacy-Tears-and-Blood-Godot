@@ -20,7 +20,7 @@ extends Control
 const BG_PATH := "res://assets/ui/menu_freres.png"
 const IMG_GRAND_FRERE := "res://assets/plateaux/pion_aine.png"
 const IMG_KAEL := "res://assets/personnages/kael_valcendre.png"
-const IMG_BLASON := "res://assets/personnages/aine.png"
+const IMG_BLASON := "res://assets/ui/blason_maison.png"
 
 const BASE := Vector2(1280, 720)
 

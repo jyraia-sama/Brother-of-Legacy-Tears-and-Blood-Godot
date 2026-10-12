@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.62.0** (2026-10-12)
+Version actuelle : **0.62.1** (2026-10-12)
+
+## v0.62.1 — L'Arène rouvre ses portes  (2026-10-12)
+
+- ARÈNE RÉPARÉE : la fin de saison de l'Arène provoquait « erreur du serveur (400) » et bloquait l'Arène pour tout le monde. C'est corrigé (la nouvelle saison démarre normalement).
+- L'AÎNÉ A SON VISAGE DANS LES DIALOGUES : le blason de la maison laisse place au portrait du grand frère, porteur de la Larme.
 
 ## v0.62.0 — La grande refonte est terminée  (2026-10-12)
 

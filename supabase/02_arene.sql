@@ -172,7 +172,8 @@ begin
 		update public.arene_joueurs set
 			points = depart + (points - depart) / 2,
 			victoires = 0, defaites = 0, achats = '{}'::jsonb,
-			saison = s.numero + 1;
+			saison = s.numero + 1
+		where joueur is not null;      -- (Supabase refuse un UPDATE sans WHERE)
 		insert into public.arene_saisons (numero, debut, fin)
 			values (s.numero + 1, now(), greatest(s.fin + duree, now() + interval '1 day'))
 			returning * into s;
