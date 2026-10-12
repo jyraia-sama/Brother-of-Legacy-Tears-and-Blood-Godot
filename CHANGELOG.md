@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.11** (2026-10-11)
+Version actuelle : **0.61.12** (2026-10-12)
+
+## v0.61.12 — Les héros arrivent  (2026-10-12)
+
+- NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : 10 héros redessinés : le Mercenaire Sans Nom (et son corbeau), la Combattante Ardente (qui casse des briques), la Fleuriste des Ruines, l'Errant Silencieux (un escargot sur la corne), la Chasseresse de Soie, l'Élu de la Lame et son crabe, la Princesse des Sceaux, Arnaud Riff-de-Sang en plein saut, l'Axolotl des Sources qui soigne un escargot, et le majestueux Cheval Céleste.
 
 ## v0.61.11 — La famille Valcendre  (2026-10-11)
 

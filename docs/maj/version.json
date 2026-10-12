@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-11",
+	"date": "2026-10-12",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,13 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : 10 héros redessinés : le Mercenaire Sans Nom (et son corbeau), la Combattante Ardente (qui casse des briques), la Fleuriste des Ruines, l'Errant Silencieux (un escargot sur la corne), la Chasseresse de Soie, l'Élu de la Lame et son crabe, la Princesse des Sceaux, Arnaud Riff-de-Sang en plein saut, l'Axolotl des Sources qui soigne un escargot, et le majestueux Cheval Céleste."
+			],
+			"titre": "Les héros arrivent",
+			"version": "0.61.12"
+		},
 		{
 			"changements": [
 				"NOUVELLES ILLUSTRATIONS, LA FAMILLE : Kaël Valcendre le Héros de Légende (l'épée sur l'épaule), Anaïs la Reine de la Toison d'Or, Laurent le Gardien Gémeau et son Reflet ténébreux : nouveaux portraits et figurines de combat.",
@@ -110,20 +117,13 @@
 			],
 			"titre": "Les forges des Enfers",
 			"version": "0.60.6"
-		},
-		{
-			"changements": [
-				"JEU PLUS LÉGER : les figurines de combat sont enregistrées un peu plus légères (toujours nettes en plein écran), pour laisser de la place aux créatures qui arrivent."
-			],
-			"titre": "Plus léger",
-			"version": "0.60.5"
 		}
 	],
 	"pck": {
-		"sha256": "903f1b60385bb6f3579d06baf7baee47e6e0cd61bca94a7c676ae9546f2828c3",
-		"taille": 29403900,
+		"sha256": "c208c0b5addd7d99e1346b7261f9c31d849308698cde1a5e40f3a5c12347532c",
+		"taille": 29404172,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.11",
+	"version": "0.61.12",
 	"version_minimum": "0.37.0"
 }

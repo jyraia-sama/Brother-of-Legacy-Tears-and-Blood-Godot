@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.11"
-const DATE := "2026-10-11"
+const NUMERO := "0.61.12"
+const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.12", "date": "2026-10-12", "titre": "Les héros arrivent",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : 10 héros redessinés : le Mercenaire Sans Nom (et son corbeau), la Combattante Ardente (qui casse des briques), la Fleuriste des Ruines, l'Errant Silencieux (un escargot sur la corne), la Chasseresse de Soie, l'Élu de la Lame et son crabe, la Princesse des Sceaux, Arnaud Riff-de-Sang en plein saut, l'Axolotl des Sources qui soigne un escargot, et le majestueux Cheval Céleste.",
+	]},
 	{"version": "0.61.11", "date": "2026-10-11", "titre": "La famille Valcendre",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, LA FAMILLE : Kaël Valcendre le Héros de Légende (l'épée sur l'épaule), Anaïs la Reine de la Toison d'Or, Laurent le Gardien Gémeau et son Reflet ténébreux : nouveaux portraits et figurines de combat.",
