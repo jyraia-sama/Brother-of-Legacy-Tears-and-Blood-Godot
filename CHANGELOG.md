@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.63.1** (2026-10-12)
+Version actuelle : **0.63.2** (2026-10-12)
+
+## v0.63.2 — Des icônes bien carrées  (2026-10-12)
+
+- ICÔNES DE SORTS : elles s'affichent maintenant dans des carrés aux angles arrondis (au lieu de ronds).
 
 ## v0.63.1 — Des sorts qui ont de la gueule  (2026-10-12)
 

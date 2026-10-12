@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.63.1"
+const NUMERO := "0.63.2"
 const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.63.2", "date": "2026-10-12", "titre": "Des icônes bien carrées",
+	"changements": [
+		"ICÔNES DE SORTS : elles s'affichent maintenant dans des carrés aux angles arrondis (au lieu de ronds).",
+	]},
 	{"version": "0.63.1", "date": "2026-10-12", "titre": "Des sorts qui ont de la gueule",
 	"changements": [
 		"ICÔNES DE SORTS : les 23 familles de sorts ont maintenant leur icône peinte (épées croisées, météores, croix de soin, bouclier d'énergie, taureau de provocation, flocon de gel, fiole de poison, cadenas du silence...). Survole une icône en combat manuel pour voir le détail du sort.",

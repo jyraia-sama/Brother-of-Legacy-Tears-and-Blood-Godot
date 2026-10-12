@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ICÔNES DE SORTS : elles s'affichent maintenant dans des carrés aux angles arrondis (au lieu de ronds)."
+			],
+			"titre": "Des icônes bien carrées",
+			"version": "0.63.2"
+		},
+		{
+			"changements": [
 				"ICÔNES DE SORTS : les 23 familles de sorts ont maintenant leur icône peinte (épées croisées, météores, croix de soin, bouclier d'énergie, taureau de provocation, flocon de gel, fiole de poison, cadenas du silence...). Survole une icône en combat manuel pour voir le détail du sort."
 			],
 			"titre": "Des sorts qui ont de la gueule",
@@ -113,20 +120,13 @@
 			],
 			"titre": "Les Donjons au complet",
 			"version": "0.61.6"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, LES DONJONS : 6 boss redessinés : le Gardien du Brasier, la Chasseuse de la Sylve, le Geôlier de la Crypte (et son trousseau de clés), le Boucher du Puits, Hémoragos le Puits Vivant (colosse de cristal sanglant enchaîné), et le Mimic, qui garde jalousement son trésor."
-			],
-			"titre": "Les maîtres des Donjons",
-			"version": "0.61.5"
 		}
 	],
 	"pck": {
-		"sha256": "7beaf80f22e4de8e19613520d196761624afd9166edc16989ca8cea2b97b1226",
-		"taille": 32998688,
+		"sha256": "2d3f62c20ea4ad2e58a8724766db6899c17e6308615d502215e229d4aae27ba0",
+		"taille": 32998896,
 		"url": "jeu.pck"
 	},
-	"version": "0.63.1",
+	"version": "0.63.2",
 	"version_minimum": "0.37.0"
 }

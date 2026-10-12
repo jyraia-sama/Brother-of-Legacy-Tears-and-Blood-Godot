@@ -3,9 +3,9 @@ extends RefCounted
 ## ICÔNES DES SORTS (combats manuels : Aventure, Tours, Donjons, Marche, Sanctuaire, Arène classée).
 ##
 ## Chaque sort est rangé dans une « famille » selon ce qu'il fait (frappe, zone, soin, poison...).
-## Une famille = une icône : assets/sorts/<famille>.png (carrée, fond transparent ou rond).
-## Tant que l'image d'une famille n'existe pas, l'icône est dessinée : un médaillon coloré avec un symbole.
-## Le contour du médaillon prend la couleur de l'élément de l'unité.
+## Une famille = une icône : assets/sorts/<famille>.png (carrée, fond transparent).
+## Tant que l'image d'une famille n'existe pas, l'icône est dessinée : un carré arrondi coloré avec un symbole.
+## Le contour du cadre prend la couleur de l'élément de l'unité.
 ##
 ##   SortsIcones.famille(sort)                     -> "poison", "zone", ...
 ##   SortsIcones.bouton(action, sort, element, taille) -> Control (icône cliquable, recharge affichée)
@@ -13,7 +13,7 @@ extends RefCounted
 
 const DOSSIER := "res://assets/sorts/"
 
-## Familles : nom affiché, symbole (secours), couleur du médaillon (secours).
+## Familles : nom affiché, symbole (secours), couleur du cadre (secours).
 const FAMILLES := {
 	"attaque": {"nom": "Attaque", "sym": "⚔", "coul": "b89a6a"},
 	"frappe": {"nom": "Frappe", "sym": "✸", "coul": "d0603a"},
@@ -102,7 +102,7 @@ static func bouton(action: Dictionary, sk: Dictionary, element: String, taille :
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if dispo else Control.CURSOR_ARROW
 	b.set_meta("famille", fam)
 	var anneau := UiCommun.COULEURS_ELEMENT.get(element, Color("c8b8b0")) as Color
-	# Médaillon (fond + contour couleur de l'élément)
+	# Cadre carré arrondi (fond + contour couleur de l'élément)
 	var fond := Panel.new()
 	fond.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fond.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -110,7 +110,7 @@ static func bouton(action: Dictionary, sk: Dictionary, element: String, taille :
 	st.bg_color = Color(info["coul"]).darkened(0.55)
 	st.border_color = anneau if action.get("type") == "skill" else Color("c8b48a")
 	st.set_border_width_all(4)
-	st.set_corner_radius_all(int(taille / 2.0))
+	st.set_corner_radius_all(int(taille * 0.2))      # carré aux angles arrondis
 	st.shadow_color = Color(0, 0, 0, 0.6)
 	st.shadow_size = 6
 	fond.add_theme_stylebox_override("panel", st)
