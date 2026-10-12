@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.62.1** (2026-10-12)
+Version actuelle : **0.63.0** (2026-10-12)
+
+## v0.63.0 — À toi de jouer !  (2026-10-12)
+
+- COMBATS EN MANUEL : un nouveau bouton « Auto / Manuel » en haut de l'écran de combat. En manuel, tu choisis à chaque tour l'action de tes unités (attaque ou sort, puis la cible) ; les ennemis jouent seuls. Le choix est mémorisé pour les combats suivants (l'automatique reste le mode par défaut). Disponible en Aventure, dans les Tours, les Donjons, la Marche Maudite et le Sanctuaire ; les Boss de Monde, l'Arène et la Guerre des Bannières restent automatiques.
+- En manuel, les sorts ne partent plus au hasard : tu les lances quand tu veux, puis ils se rechargent quelques tours. Tu peux repasser en Auto à tout moment, et « Passer » termine le combat en automatique.
+- ICÔNES DE SORTS : les actions s'affichent en petites icônes rondes (contour de la couleur de l'élément). Passe la souris sur une icône pour voir le détail du sort (sur téléphone : touche une fois pour voir, une deuxième fois pour lancer). Aussi dans l'Arène classée.
+- FINI LE MAL DE MER : l'écran ne tremble plus et la caméra ne bouge plus pendant les combats.
 
 ## v0.62.1 — L'Arène rouvre ses portes  (2026-10-12)
 

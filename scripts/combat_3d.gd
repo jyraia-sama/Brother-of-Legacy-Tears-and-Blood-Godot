@@ -26,7 +26,6 @@ var _monde: Node3D
 var _camera: Camera3D
 var _cam_base := Transform3D()
 var _unites := {}               # idx -> {sprite, ombre, pos, hauteur, camp, base_scale}
-var _tw_cam: Tween
 var vitesse := 1.0
 
 
@@ -154,10 +153,7 @@ func construire(chemin_fond: String, teinte_nuit: Color, chemin_sol := "", coupe
 	_monde.add_child(_camera)
 	_camera.look_at(Vector3(0, VISEE_DECOR if tex_sol else 1.0, 1.0))
 	_cam_base = _camera.transform
-	# Lent mouvement de caméra « vivant »
-	var tw := create_tween().set_loops()
-	tw.tween_property(_camera, "position:x", 0.45, 7.0).set_trans(Tween.TRANS_SINE)
-	tw.tween_property(_camera, "position:x", -0.45, 7.0).set_trans(Tween.TRANS_SINE)
+	# Caméra fixe : le balancement, le zoom sur les sorts et les tremblements donnaient la nausée (v0.63)
 
 
 func _torche(pos: Vector3, couleur: Color) -> void:
@@ -434,15 +430,8 @@ func sort(idx: int, couleur: Color) -> void:
 	_approcher(u["pos"])
 
 
-func _approcher(cible: Vector3) -> void:
-	if _tw_cam:
-		_tw_cam.kill()
-	var proche := _cam_base
-	proche.origin = _cam_base.origin.lerp(cible + Vector3(0, 2.5, 6.0), 0.14)
-	_tw_cam = create_tween()
-	_tw_cam.tween_property(_camera, "transform", proche, 0.25 / vitesse).set_trans(Tween.TRANS_SINE)
-	_tw_cam.tween_interval(0.25 / vitesse)
-	_tw_cam.tween_property(_camera, "transform", _cam_base, 0.45 / vitesse).set_trans(Tween.TRANS_SINE)
+func _approcher(_cible: Vector3) -> void:
+	pass       # caméra fixe : plus de zoom ni de tremblement (nausée, v0.63)
 
 
 func _eclats(pos: Vector3, couleur: Color, nombre: int, anneau := false) -> void:
@@ -487,15 +476,8 @@ func revivre(idx: int) -> void:
 	soin(idx)
 
 
-func trembler(force: float) -> void:
-	if _tw_cam and _tw_cam.is_running():
-		return
-	var tw := create_tween()
-	for k in 5:
-		var t := _cam_base
-		t.origin += Vector3(randf_range(-force, force), randf_range(-force, force), 0)
-		tw.tween_property(_camera, "transform", t, 0.03 / vitesse)
-	tw.tween_property(_camera, "transform", _cam_base, 0.05 / vitesse)
+func trembler(_force: float) -> void:
+	pass       # caméra fixe : plus de zoom ni de tremblement (nausée, v0.63)
 
 
 ## Mise à jour immédiate (mode « Passer »).

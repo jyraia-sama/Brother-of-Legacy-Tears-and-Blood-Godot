@@ -15,11 +15,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.62.1"
+const NUMERO := "0.63.0"
 const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.63.0", "date": "2026-10-12", "titre": "À toi de jouer !",
+	"changements": [
+		"COMBATS EN MANUEL : un nouveau bouton « Auto / Manuel » en haut de l'écran de combat. En manuel, tu choisis à chaque tour l'action de tes unités (attaque ou sort, puis la cible) ; les ennemis jouent seuls. Le choix est mémorisé pour les combats suivants (l'automatique reste le mode par défaut). Disponible en Aventure, dans les Tours, les Donjons, la Marche Maudite et le Sanctuaire ; les Boss de Monde, l'Arène et la Guerre des Bannières restent automatiques.",
+		"En manuel, les sorts ne partent plus au hasard : tu les lances quand tu veux, puis ils se rechargent quelques tours. Tu peux repasser en Auto à tout moment, et « Passer » termine le combat en automatique.",
+		"ICÔNES DE SORTS : les actions s'affichent en petites icônes rondes (contour de la couleur de l'élément). Passe la souris sur une icône pour voir le détail du sort (sur téléphone : touche une fois pour voir, une deuxième fois pour lancer). Aussi dans l'Arène classée.",
+		"FINI LE MAL DE MER : l'écran ne tremble plus et la caméra ne bouge plus pendant les combats.",
+	]},
 	{"version": "0.62.1", "date": "2026-10-12", "titre": "L'Arène rouvre ses portes",
 	"changements": [
 		"ARÈNE RÉPARÉE : la fin de saison de l'Arène provoquait « erreur du serveur (400) » et bloquait l'Arène pour tout le monde. C'est corrigé (la nouvelle saison démarre normalement).",

@@ -19,7 +19,9 @@ extends Control
 ##   "classee"    : Arène classée en temps réel, combat MANUEL à deux joueurs ("match", "mon_camp", "retour")
 ##                  -> le déroulement est géré par combat_classe.gd
 ##
-## Boutons : vitesse x1 / x2 / x4, "Passer" (affiche directement le résultat).
+## Boutons : vitesse x1 / x2 / x4, "Passer" (affiche directement le résultat),
+## « Auto / Manuel » (modes de MODES_MANUEL) : en manuel, le joueur choisit l'action de ses unités
+## (combat_manuel.gd). Le choix est mémorisé d'un combat à l'autre ; l'automatique reste le défaut.
 
 const SCENE := "res://scenes/combat.tscn"
 const SCENE_PLATEAU := "res://scenes/plateau.tscn"
@@ -55,6 +57,17 @@ const MODES_3D := ["aventure"]
 ## Hauteur (fraction de l'image) où commence le sol peint de chaque toile de fond 3D
 const COUPES_3D := {1: 0.72}
 var _c3d: Combat3D = null
+## Combats jouables à la main (les Boss de Monde, l'Arène et la Guerre restent automatiques ;
+## l'Arène classée est toujours manuelle, gérée par combat_classe.gd)
+const MODES_MANUEL := ["aventure", "tour", "donjon", "marche", "sanctuaire"]
+var _manuel := false
+var _cm: CombatManuel = null
+var _bouton_manuel: Button
+
+
+## Le joueur choisit-il lui-même les actions de ses unités ?
+func manuel_actif() -> bool:
+	return _manuel
 
 
 ## Camp du joueur (Arène classée : le 2e joueur est le camp 1, affiché à gauche quand même).
@@ -74,6 +87,7 @@ func _ready() -> void:
 	_mode = str(demande.get("mode", "aventure"))
 	demande_combat = demande
 	_mon_camp = int(demande.get("mon_camp", 0)) if _mode == "classee" else 0
+	_manuel = _mode in MODES_MANUEL and bool(Sauvegarde.get_parametre("combat_manuel", false))
 	Audio.musique(_musique_combat())
 	if _mode in MODES_3D and bool(Sauvegarde.get_parametre("combats_3d", true)):
 		_c3d = Combat3D.new()
@@ -92,6 +106,14 @@ func _ready() -> void:
 		cc.ecran = self
 		cc.moteur = moteur
 		add_child(cc)
+		return
+	if _manuel:
+		await get_tree().process_frame
+		_placer_unites()
+		_cm = CombatManuel.new()
+		_cm.ecran = self
+		_cm.moteur = moteur
+		add_child(_cm)
 		return
 	_res = moteur.combattre()
 	await get_tree().process_frame
@@ -229,6 +251,11 @@ func _creer_interface() -> void:
 	h.add_child(titre)
 	_lbl_tour = _label("Tour 1", 20, C_TEXTE)
 	h.add_child(_lbl_tour)
+	_bouton_manuel = _bouton("")
+	_bouton_manuel.pressed.connect(_basculer_manuel)
+	_bouton_manuel.visible = _mode in MODES_MANUEL
+	h.add_child(_bouton_manuel)
+	_maj_bouton_manuel()
 	for v in [1.0, 2.0, 4.0]:
 		var b := _bouton("x%d" % int(v))
 		b.toggle_mode = true
@@ -236,7 +263,10 @@ func _creer_interface() -> void:
 		h.add_child(b)
 		_boutons_vitesse[v] = b
 	var passer := _bouton("Passer ▶▶")
-	passer.pressed.connect(func(): _passer = true)
+	passer.pressed.connect(func():
+		_passer = true
+		if _cm != null:
+			_cm.passer())
 	h.add_child(passer)
 	passer.visible = _mode != "classee"      # combat manuel : on ne saute pas le combat
 	barre_haut = h
@@ -247,6 +277,26 @@ func _creer_interface() -> void:
 	_calque.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_calque.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_calque)
+
+
+## Bouton « Auto / Manuel » : mémorisé pour les combats suivants.
+func _basculer_manuel() -> void:
+	_manuel = not _manuel
+	Sauvegarde.definir_parametre("combat_manuel", _manuel)
+	_maj_bouton_manuel()
+	if _cm != null:
+		if not _manuel:
+			_cm.auto_maintenant()
+	elif _manuel and not _fini:
+		_texte_centre("Mode manuel : actif dès le prochain combat", Color("ffd060"))
+
+
+func _maj_bouton_manuel() -> void:
+	if _bouton_manuel == null:
+		return
+	_bouton_manuel.text = "✋ Manuel" if _manuel else "⟳ Auto"
+	_bouton_manuel.tooltip_text = "Tu choisis les actions de tes unités. Clique pour repasser en automatique." if _manuel \
+		else "Les unités jouent seules. Clique pour choisir toi-même leurs actions."
 
 
 func _cle_vitesse() -> String:
@@ -542,16 +592,10 @@ func _milliers(n: int) -> String:
 
 
 ## Tremblement de tout le champ de bataille (coups du géant).
-func _trembler(force: float) -> void:
-	if _passer:
-		return
-	if _c3d != null:
-		_c3d.trembler(force / 60.0)
-		return
-	var tw := create_tween()
-	for k in 5:
-		tw.tween_property(_arene, "position", Vector2(randf_range(-force, force), randf_range(-force, force)), 0.03 / _vitesse)
-	tw.tween_property(_arene, "position", Vector2.ZERO, 0.04 / _vitesse)
+func _trembler(_force: float) -> void:
+	# Désactivé : faire bouger tout l'écran donnait la nausée (v0.63). Les coups restent visibles
+	# sur les unités elles-mêmes (recul, éclats, chiffres).
+	pass
 
 
 # =====================================================================
