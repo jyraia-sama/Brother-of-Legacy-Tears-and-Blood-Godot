@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.15** (2026-10-12)
+Version actuelle : **0.62.0** (2026-10-12)
+
+## v0.62.0 — La grande refonte est terminée  (2026-10-12)
+
+- NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : les 12 derniers héros : la Nymphe qui danse, le Mage Gris (son chapeau a pris feu !), le Samouraï Rouge, le Sorcier Sombre, le Loup Gris qui hurle à la lune, le Sanglier Sauvage, le Slime (une épée plantée sur la tête, pas inquiet du tout), le Jeune Minotaure et sa hache trop lourde, la Jeune Hydre emmêlée, le Titan des Abysses, le Phénix Immortel et le Léviathan Abyssal.
+- TOUT LE JEU EST REDESSINÉ : les 35 héros d'invocation complètent la grande refonte. Toutes les créatures du jeu ont maintenant leur portrait et leur figurine de combat dans le nouveau style !
 
 ## v0.61.15 — Chevaliers et chenapans  (2026-10-12)
 
