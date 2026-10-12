@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.12"
+const NUMERO := "0.61.13"
 const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.13", "date": "2026-10-12", "titre": "Les gardiens des profondeurs",
+	"changements": [
+		"ILLUSTRATIONS : nouvelles versions de la Chasseresse de Soie (en plein bond, son fil de soie autour d'elle) et de l'Errant Silencieux (au repos sur son banc de pierre).",
+	]},
 	{"version": "0.61.12", "date": "2026-10-12", "titre": "Les héros arrivent",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : 10 héros redessinés : le Mercenaire Sans Nom (et son corbeau), la Combattante Ardente (qui casse des briques), la Fleuriste des Ruines, l'Errant Silencieux (un escargot sur la corne), la Chasseresse de Soie, l'Élu de la Lame et son crabe, la Princesse des Sceaux, Arnaud Riff-de-Sang en plein saut, l'Axolotl des Sources qui soigne un escargot, et le majestueux Cheval Céleste.",

@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ILLUSTRATIONS : nouvelles versions de la Chasseresse de Soie (en plein bond, son fil de soie autour d'elle) et de l'Errant Silencieux (au repos sur son banc de pierre)."
+			],
+			"titre": "Les gardiens des profondeurs",
+			"version": "0.61.13"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : 10 héros redessinés : le Mercenaire Sans Nom (et son corbeau), la Combattante Ardente (qui casse des briques), la Fleuriste des Ruines, l'Errant Silencieux (un escargot sur la corne), la Chasseresse de Soie, l'Élu de la Lame et son crabe, la Princesse des Sceaux, Arnaud Riff-de-Sang en plein saut, l'Axolotl des Sources qui soigne un escargot, et le majestueux Cheval Céleste."
 			],
 			"titre": "Les héros arrivent",
@@ -110,20 +117,13 @@
 			],
 			"titre": "Les Enfers au complet",
 			"version": "0.60.7"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, LES ENFERS : 6 créatures de plus : le Forgeron de l'Abîme, le Gardien des Portes de Soufre, le Grand Forgeron Infernal (qui martèle son enclume), Lilithra la Reine des Succubes, Méphistar le Seigneur de l'Abîme (plongé dans son grimoire) et le Molosse des Enfers."
-			],
-			"titre": "Les forges des Enfers",
-			"version": "0.60.6"
 		}
 	],
 	"pck": {
-		"sha256": "c208c0b5addd7d99e1346b7261f9c31d849308698cde1a5e40f3a5c12347532c",
-		"taille": 29404172,
+		"sha256": "7d1f8a50e9dd533928ded965192a005ddb02e5ce411f92cbb1ceefae67df3c96",
+		"taille": 29404364,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.12",
+	"version": "0.61.13",
 	"version_minimum": "0.37.0"
 }

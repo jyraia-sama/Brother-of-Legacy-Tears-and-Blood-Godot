@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.12** (2026-10-12)
+Version actuelle : **0.61.13** (2026-10-12)
+
+## v0.61.13 — Les gardiens des profondeurs  (2026-10-12)
+
+- ILLUSTRATIONS : nouvelles versions de la Chasseresse de Soie (en plein bond, son fil de soie autour d'elle) et de l'Errant Silencieux (au repos sur son banc de pierre).
 
 ## v0.61.12 — Les héros arrivent  (2026-10-12)
 
