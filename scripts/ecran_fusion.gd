@@ -58,7 +58,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Retour")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("AUTEL DE FUSION", 32, UiCommun.C_OR))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("AUTEL DE FUSION", 32, UiCommun.C_OR)))
 	var espace := Control.new()
 	espace.custom_minimum_size = Vector2(20, 0)
 	tete.add_child(espace)

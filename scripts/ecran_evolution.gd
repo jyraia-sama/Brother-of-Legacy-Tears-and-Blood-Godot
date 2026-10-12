@@ -49,7 +49,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Retour")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("✦ AUTEL D'ÉVOLUTION", 32, C_EVO))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("✦ AUTEL D'ÉVOLUTION", 32, C_EVO)))
 	var esp := Control.new()
 	esp.custom_minimum_size = Vector2(20, 0)
 	tete.add_child(esp)

@@ -48,7 +48,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Aventure")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("DONJONS", 32, UiCommun.C_OR))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("DONJONS", 32, UiCommun.C_OR)))
 	var info := UiCommun.label("4 combats d'affilée, sans soin entre deux : vague, mini-boss, vague, boss.", 15, UiCommun.C_DOUX)
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	info.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

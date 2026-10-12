@@ -204,6 +204,8 @@ func _label(texte: String, taille: int, couleur: Color, centre := false) -> Labe
 	l.add_theme_color_override("font_color", couleur)
 	if centre:
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	if taille >= 24:
+		UiCommun.titre(l)
 	return l
 
 

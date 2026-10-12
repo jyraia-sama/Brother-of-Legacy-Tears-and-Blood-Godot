@@ -46,8 +46,10 @@ func _ready() -> void:
 	retour.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/main_menu.tscn"))
 	tete.add_child(retour)
 	var titre := UiCommun.label("LE SANCTUAIRE DU BÉLIER", 34, C_OR)
-	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	tete.add_child(titre)
+	tete.add_child(UiCommun.plaque_titre(titre))
+	var pousse_titre := Control.new()
+	pousse_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tete.add_child(pousse_titre)
 
 	var sous := UiCommun.label("Trois Béliers et leur gardien Gémeau veillent sur ce foyer caché. Bats-les un par un, puis réunis : chacun vaincu rejoint ton équipe.\nLeur force s'adapte à ton équipe · aucune stamina · rejouable.", 16, UiCommun.C_DOUX)
 	sous.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

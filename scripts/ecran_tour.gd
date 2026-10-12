@@ -55,7 +55,7 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	h.add_child(retour)
 	var titre := UiCommun.label(str(Tours.TOURS[_tour]["nom"]).to_upper(), 30, _accent)
-	h.add_child(titre)
+	h.add_child(UiCommun.plaque_titre(titre))
 	_lbl_decompte = UiCommun.label("", 17, Color("ffb070") if _enfer else Color("7a5a10"))
 	_lbl_decompte.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_lbl_decompte.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -117,7 +117,7 @@ func _creer_fond() -> void:
 	UiCommun.particules(self, Color("ff7a2a") if _enfer else Color("fffae0"), _enfer, 50)
 
 
-func _style_panneau() -> StyleBoxFlat:
+func _style_panneau() -> StyleCadre:
 	var s := UiCommun.style_panneau(_accent.darkened(0.2), Color(0.06, 0.01, 0.01, 0.9) if _enfer else Color(1, 1, 1, 0.82))
 	if not _enfer:
 		s.bg_color.a = 0.86   # thème clair : le texte foncé a besoin d'un panneau bien blanc

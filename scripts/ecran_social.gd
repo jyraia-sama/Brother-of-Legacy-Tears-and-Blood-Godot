@@ -58,8 +58,10 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	entete.add_child(retour)
 	var titre := UiCommun.label("SOCIAL", 36, UiCommun.C_OR)
-	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	entete.add_child(titre)
+	entete.add_child(UiCommun.plaque_titre(titre))
+	var pousse_titre := Control.new()
+	pousse_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	entete.add_child(pousse_titre)
 	if EnLigne.est_connecte():
 		entete.add_child(UiCommun.label(UiCommun.t("%s  (pseudo : %s)") % [EnLigne.nom_complet(), EnLigne.pseudo()], 20, UiCommun.C_LEGENDE))
 		var rafraichir := UiCommun.bouton("↻ Actualiser")

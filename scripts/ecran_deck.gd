@@ -57,7 +57,7 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
 	var titre := UiCommun.label("DECK", 32, UiCommun.C_OR)
-	tete.add_child(titre)
+	tete.add_child(UiCommun.plaque_titre(titre))
 	_lbl_puissance = UiCommun.label("", 17, UiCommun.C_DOUX)
 	_lbl_puissance.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(_lbl_puissance)

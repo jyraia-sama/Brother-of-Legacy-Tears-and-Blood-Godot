@@ -60,8 +60,10 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
 	var titre := UiCommun.label("AUTEL D'INVOCATION", 32, UiCommun.C_OR)
-	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	tete.add_child(titre)
+	tete.add_child(UiCommun.plaque_titre(titre))
+	var pousse_titre := Control.new()
+	pousse_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tete.add_child(pousse_titre)
 	_lbl_or = UiCommun.label("", 20, Color("ffd060"))
 	tete.add_child(_lbl_or)
 	_lbl_eclats = UiCommun.label("", 20, Color("c8a0ff"))

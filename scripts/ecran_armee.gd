@@ -42,7 +42,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Retour")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("ARMÉE — 4 ESCOUADES", 28, C_SANG))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("ARMÉE — 4 ESCOUADES", 28, C_SANG)))
 	_lbl_info = UiCommun.label("", 16, UiCommun.C_DOUX)
 	_lbl_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_lbl_info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

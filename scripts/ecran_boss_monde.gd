@@ -43,7 +43,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Retour")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("BOSS DE MONDE", 34, C_SANG))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("BOSS DE MONDE", 34, C_SANG)))
 	_lbl_decompte = UiCommun.label("", 17, Color("ffb070"))
 	_lbl_decompte.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_lbl_decompte.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

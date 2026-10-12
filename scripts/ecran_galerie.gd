@@ -59,7 +59,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Retour")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("GALERIE D'ART", 32, UiCommun.C_OR))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("GALERIE D'ART", 32, UiCommun.C_OR)))
 	_compteur = UiCommun.label("", 16, UiCommun.C_DOUX)
 	_compteur.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_compteur.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT

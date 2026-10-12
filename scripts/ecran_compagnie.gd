@@ -45,7 +45,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Expéditions")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("LA COMPAGNIE", 32, C_BLEU))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("LA COMPAGNIE", 32, C_BLEU)))
 	var info := UiCommun.label(UiCommun.t("Nouveau tableau dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_demain()), 15, UiCommun.C_DOUX)
 	info.name = "Renouvellement"
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL

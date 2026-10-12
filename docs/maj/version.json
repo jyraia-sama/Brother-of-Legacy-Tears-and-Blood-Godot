@@ -11,6 +11,16 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLE INTERFACE DANS TOUS LES MENUS : un thème commun habille tout le jeu. Boutons forgés (cuir bordeaux, bordure dorée, lueur au survol), onglets, champs de saisie, listes déroulantes, barres de défilement dorées, info-bulles et fenêtres de confirmation aux couleurs du jeu.",
+				"PANNEAUX ORNÉS : les cadres ont maintenant un double filet doré et des ornements dans les coins.",
+				"TITRES : nouvelle police pour les titres, avec contour et ombre ; chaque écran a sa plaque de titre ornée, et les sections sont séparées par des filets dorés avec un losange.",
+				"Les fenêtres de confirmation (choix du héros, etc.) ont un vrai cadre avec leur titre intégré."
+			],
+			"titre": "Un nouvel habit pour le royaume",
+			"version": "0.64.0"
+		},
+		{
+			"changements": [
 				"ICÔNES DE SORTS : elles s'affichent maintenant dans des carrés aux angles arrondis (au lieu de ronds)."
 			],
 			"titre": "Des icônes bien carrées",
@@ -113,20 +123,13 @@
 			],
 			"titre": "Le réveil du Béhémoth",
 			"version": "0.61.7"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, LES DONJONS : les 7 derniers boss : Ignaar le Cœur du Brasier, le Kraken des Fosses, la Mère-Racine Putride, Morvena la Liche sans Lune, l'Oracle Profané, la Sentinelle de Corail et le Templier Profané. Tous les boss des Donjons et le Mimic sont maintenant redessinés !"
-			],
-			"titre": "Les Donjons au complet",
-			"version": "0.61.6"
 		}
 	],
 	"pck": {
-		"sha256": "2d3f62c20ea4ad2e58a8724766db6899c17e6308615d502215e229d4aae27ba0",
-		"taille": 32998896,
+		"sha256": "2dd058762ada08a019b453fcb490a7265ee217b5ef32a937506f657188d7d75b",
+		"taille": 33104352,
 		"url": "jeu.pck"
 	},
-	"version": "0.63.2",
+	"version": "0.64.0",
 	"version_minimum": "0.37.0"
 }

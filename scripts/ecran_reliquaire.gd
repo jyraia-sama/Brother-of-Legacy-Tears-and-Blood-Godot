@@ -51,7 +51,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Retour")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("LE RELIQUAIRE", 32, C_VIOLET))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("LE RELIQUAIRE", 32, C_VIOLET)))
 	var esp := Control.new()
 	esp.custom_minimum_size = Vector2(20, 0)
 	tete.add_child(esp)

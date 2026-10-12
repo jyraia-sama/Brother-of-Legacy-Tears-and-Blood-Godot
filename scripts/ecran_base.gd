@@ -50,7 +50,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Menu")
 	retour.pressed.connect(_retour)
 	_tete.add_child(retour)
-	_tete.add_child(UiCommun.label(_titre_ecran(), 32, _couleur()))
+	_tete.add_child(UiCommun.plaque_titre(UiCommun.label(_titre_ecran(), 32, _couleur())))
 	var pousse := Control.new()
 	pousse.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_tete.add_child(pousse)
@@ -102,7 +102,7 @@ func _maj_ressources() -> void:
 # ---------------------------------------------------------------------
 
 func _titre(texte: String, couleur := UiCommun.C_OR) -> void:
-	_contenu.add_child(UiCommun.label(texte, 20, couleur))
+	_contenu.add_child(UiCommun.titre_section(texte, couleur, 21))
 
 
 func _texte(texte: String, taille := 15, couleur := UiCommun.C_DOUX) -> Label:

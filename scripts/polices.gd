@@ -17,3 +17,5 @@ func _init() -> void:
 		var f := principale.fallbacks.duplicate()
 		f.append(symboles)
 		principale.fallbacks = f
+	# Thème du jeu (boutons, onglets, champs, panneaux...) appliqué à tous les menus
+	ThemeJeu.appliquer()

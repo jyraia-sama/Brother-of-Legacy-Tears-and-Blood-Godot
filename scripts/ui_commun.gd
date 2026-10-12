@@ -31,13 +31,16 @@ static func texte_rarete(id: String) -> String:
 ## Opacité des grands panneaux : un peu transparents pour laisser voir le décor peint derrière.
 const OPACITE_PANNEAUX := 0.6
 
-static func style_panneau(bord := C_OR, fond := Color(0.08, 0.02, 0.03, 0.94)) -> StyleBoxFlat:
-	var s := StyleBoxFlat.new()
+## Panneau orné (StyleCadre) : fond, bordure dorée, filet intérieur et coins ornementaux.
+## Il s'utilise comme un StyleBoxFlat (bg_color, border_color, set_border_width_all...).
+## orne = false : simple panneau arrondi (petites cases, listes).
+static func style_panneau(bord := C_OR, fond := Color(0.08, 0.02, 0.03, 0.94)) -> StyleCadre:
+	var s := StyleCadre.new()
 	s.bg_color = Color(fond, fond.a * OPACITE_PANNEAUX)
 	s.border_color = bord
 	s.set_border_width_all(2)
-	s.set_corner_radius_all(8)
-	s.set_content_margin_all(14)
+	s.set_corner_radius_all(10)
+	s.set_content_margin_all(16)
 	return s
 
 
@@ -47,7 +50,10 @@ static func style_carte(bord: Color, eclat := 0.0, epais := 2) -> StyleBoxFlat:
 	s.border_color = bord
 	s.set_border_width_all(epais)
 	s.border_width_top = epais + 2
-	s.set_corner_radius_all(8)
+	s.set_corner_radius_all(9)
+	s.shadow_color = Color(0, 0, 0, 0.5)
+	s.shadow_size = 6
+	s.shadow_offset = Vector2(0, 2)
 	return s
 
 
@@ -58,21 +64,97 @@ static func t(texte: String) -> String:
 	return str(TranslationServer.translate(texte))
 
 
+## Texte. À partir de 24 px, c'est un TITRE : police des titres (si présente) et contour sombre.
 static func label(texte: String, taille: int, couleur := C_TEXTE) -> Label:
 	var l := Label.new()
 	l.text = texte
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	l.add_theme_font_size_override("font_size", taille)
 	l.add_theme_color_override("font_color", couleur)
+	if taille >= 24:
+		titre(l)
 	return l
+
+
+## Habille un Label en titre : police des titres, contour sombre et légère ombre.
+static func titre(l: Label) -> void:
+	if ThemeJeu.police_titres != null:
+		l.add_theme_font_override("font", ThemeJeu.police_titres)
+	l.add_theme_color_override("font_outline_color", Color(0.05, 0.02, 0.02, 0.9))
+	l.add_theme_constant_override("outline_size", 6)
+	l.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.55))
+	l.add_theme_constant_override("shadow_offset_y", 3)
+	l.add_theme_constant_override("shadow_offset_x", 0)
+
+
+## Plaque ornée derrière un titre d'écran (bande sombre, filets dorés, losanges aux bouts).
+## Renvoie un conteneur à ajouter à la place du Label : tete.add_child(UiCommun.plaque_titre(titre)).
+static func plaque_titre(l: Label) -> Control:
+	var m := MarginContainer.new()
+	m.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	m.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	m.add_theme_constant_override("margin_left", 40)
+	m.add_theme_constant_override("margin_right", 40)
+	m.add_theme_constant_override("margin_top", 4)
+	m.add_theme_constant_override("margin_bottom", 4)
+	var ch := "res://assets/ui/kit/plaque_titre.png"
+	if ResourceLoader.exists(ch):
+		var st := StyleBoxTexture.new()
+		st.texture = load(ch)
+		st.texture_margin_left = 48
+		st.texture_margin_right = 48
+		st.texture_margin_top = 12
+		st.texture_margin_bottom = 12
+		# la plaque déborde dans les marges du conteneur
+		st.expand_margin_left = 40
+		st.expand_margin_right = 40
+		st.expand_margin_top = 4
+		st.expand_margin_bottom = 4
+		var p := Panel.new()
+		p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		p.add_theme_stylebox_override("panel", st)
+		p.show_behind_parent = true
+		l.add_child(p)
+		p.set_anchors_preset(Control.PRESET_FULL_RECT)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	m.add_child(l)
+	return m
+
+
+## Séparateur orné (filet doré avec losange au centre).
+static func separateur() -> HSeparator:
+	var s := HSeparator.new()
+	s.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return s
+
+
+## Titre de section : texte doré centré entre deux filets ornés.
+static func titre_section(texte: String, couleur := C_OR, taille := 20) -> HBoxContainer:
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 12)
+	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var g := separateur()
+	g.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	g.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	h.add_child(g)
+	var l := label(texte, taille, couleur)
+	titre(l)
+	h.add_child(l)
+	var d := separateur()
+	d.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	d.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	h.add_child(d)
+	return h
 
 
 static func bouton(texte: String, taille := 17) -> Button:
 	var b := Button.new()
 	b.text = texte
 	b.focus_mode = Control.FOCUS_NONE
-	b.custom_minimum_size = Vector2(0, 40)
+	b.custom_minimum_size = Vector2(0, 42)
 	b.add_theme_font_size_override("font_size", taille)
+	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	return b
 
 

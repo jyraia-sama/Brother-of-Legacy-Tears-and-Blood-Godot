@@ -15,11 +15,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.63.2"
+const NUMERO := "0.64.0"
 const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.64.0", "date": "2026-10-12", "titre": "Un nouvel habit pour le royaume",
+	"changements": [
+		"NOUVELLE INTERFACE DANS TOUS LES MENUS : un thème commun habille tout le jeu. Boutons forgés (cuir bordeaux, bordure dorée, lueur au survol), onglets, champs de saisie, listes déroulantes, barres de défilement dorées, info-bulles et fenêtres de confirmation aux couleurs du jeu.",
+		"PANNEAUX ORNÉS : les cadres ont maintenant un double filet doré et des ornements dans les coins.",
+		"TITRES : nouvelle police pour les titres, avec contour et ombre ; chaque écran a sa plaque de titre ornée, et les sections sont séparées par des filets dorés avec un losange.",
+		"Les fenêtres de confirmation (choix du héros, etc.) ont un vrai cadre avec leur titre intégré.",
+	]},
 	{"version": "0.63.2", "date": "2026-10-12", "titre": "Des icônes bien carrées",
 	"changements": [
 		"ICÔNES DE SORTS : elles s'affichent maintenant dans des carrés aux angles arrondis (au lieu de ronds).",

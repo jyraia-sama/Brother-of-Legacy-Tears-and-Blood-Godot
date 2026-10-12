@@ -63,7 +63,7 @@ func _ready() -> void:
 	retour.custom_minimum_size = Vector2(140, 44)
 	retour.pressed.connect(_retour)
 	entete.add_child(retour)
-	entete.add_child(UiCommun.label("GUERRE DES BANNIÈRES", 34, UiCommun.C_OR))
+	entete.add_child(UiCommun.plaque_titre(UiCommun.label("GUERRE DES BANNIÈRES", 34, UiCommun.C_OR)))
 	_lbl_phase = UiCommun.label("", 17, UiCommun.C_DOUX)
 	_lbl_phase.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_lbl_phase.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -744,7 +744,7 @@ LA LÉGION DE LA SOIF : sans guilde à votre mesure, vous affrontez cette armée
 # =====================================================================
 
 func _titre(t: String) -> void:
-	_contenu.add_child(UiCommun.label(t, 24, UiCommun.C_OR))
+	_contenu.add_child(UiCommun.titre_section(t, UiCommun.C_OR, 24))
 
 
 func _texte(t: String) -> void:

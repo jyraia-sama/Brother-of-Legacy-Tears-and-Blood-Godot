@@ -79,7 +79,7 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
 	var titre := UiCommun.label("ÉCHOS SANGUINS", 30, Color("d0453a"))
-	tete.add_child(titre)
+	tete.add_child(UiCommun.plaque_titre(titre))
 	# Bouton d'aide « ? » bien en vue : doré, lumineux et qui pulse
 	_btn_aide = UiCommun.bouton("?", 26)
 	_btn_aide.custom_minimum_size = Vector2(52, 46)

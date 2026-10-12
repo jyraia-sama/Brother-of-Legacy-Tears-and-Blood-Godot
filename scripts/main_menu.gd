@@ -1145,6 +1145,8 @@ func _label(texte: String, taille: int, couleur: Color, gras := false) -> Label:
 	l.add_theme_color_override("font_color", couleur)
 	l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
 	l.add_theme_constant_override("outline_size", 4 if gras else 2)
+	if taille >= 24:
+		UiCommun.titre(l)
 	return l
 
 

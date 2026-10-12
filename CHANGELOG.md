@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.63.2** (2026-10-12)
+Version actuelle : **0.64.0** (2026-10-12)
+
+## v0.64.0 — Un nouvel habit pour le royaume  (2026-10-12)
+
+- NOUVELLE INTERFACE DANS TOUS LES MENUS : un thème commun habille tout le jeu. Boutons forgés (cuir bordeaux, bordure dorée, lueur au survol), onglets, champs de saisie, listes déroulantes, barres de défilement dorées, info-bulles et fenêtres de confirmation aux couleurs du jeu.
+- PANNEAUX ORNÉS : les cadres ont maintenant un double filet doré et des ornements dans les coins.
+- TITRES : nouvelle police pour les titres, avec contour et ombre ; chaque écran a sa plaque de titre ornée, et les sections sont séparées par des filets dorés avec un losange.
+- Les fenêtres de confirmation (choix du héros, etc.) ont un vrai cadre avec leur titre intégré.
 
 ## v0.63.2 — Des icônes bien carrées  (2026-10-12)
 

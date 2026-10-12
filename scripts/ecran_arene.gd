@@ -62,7 +62,7 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	entete.add_child(retour)
 	var titre := UiCommun.label("ARÈNE", 36, UiCommun.C_OR)
-	entete.add_child(titre)
+	entete.add_child(UiCommun.plaque_titre(titre))
 	_lbl_saison = UiCommun.label("", 17, UiCommun.C_DOUX)
 	_lbl_saison.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_lbl_saison.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -689,7 +689,7 @@ func _mini_unite(u: Dictionary) -> Control:
 
 
 func _titre(texte: String) -> void:
-	_contenu.add_child(UiCommun.label(texte, 22, UiCommun.C_OR))
+	_contenu.add_child(UiCommun.titre_section(texte, UiCommun.C_OR, 22))
 
 
 func _texte(texte: String) -> void:

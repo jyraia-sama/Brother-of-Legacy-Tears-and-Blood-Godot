@@ -48,7 +48,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Expéditions")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("LA MARCHE MAUDITE", 30, C_SANG.lightened(0.25)))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("LA MARCHE MAUDITE", 30, C_SANG.lightened(0.25))))
 	_lbl_haut = UiCommun.label("", 17, UiCommun.C_TEXTE)
 	_lbl_haut.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_lbl_haut.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

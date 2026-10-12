@@ -41,7 +41,7 @@ func _ready() -> void:
 	var retour := UiCommun.bouton("← Aventure")
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.label("EXPÉDITIONS", 34, UiCommun.C_OR))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label("EXPÉDITIONS", 34, UiCommun.C_OR)))
 	var pousse := Control.new()
 	pousse.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(pousse)

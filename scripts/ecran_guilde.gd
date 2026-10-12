@@ -76,8 +76,10 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	entete.add_child(retour)
 	var titre := UiCommun.label("GUILDE", 36, UiCommun.C_OR)
-	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	entete.add_child(titre)
+	entete.add_child(UiCommun.plaque_titre(titre))
+	var pousse_titre := Control.new()
+	pousse_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	entete.add_child(pousse_titre)
 	if EnLigne.est_connecte():
 		var rafraichir := UiCommun.bouton("↻ Actualiser")
 		rafraichir.pressed.connect(_charger)
@@ -403,7 +405,7 @@ func _changer_onglet(id: String) -> void:
 # ---------------------------------------------------------------
 
 func _titre(texte: String) -> void:
-	_contenu.add_child(UiCommun.label(texte, 22, UiCommun.C_OR))
+	_contenu.add_child(UiCommun.titre_section(texte, UiCommun.C_OR, 22))
 
 
 func _texte(texte: String, taille := 16, couleur := UiCommun.C_TEXTE) -> Label:
