@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.61.14** (2026-10-12)
+Version actuelle : **0.61.15** (2026-10-12)
+
+## v0.61.15 — Chevaliers et chenapans  (2026-10-12)
+
+- NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : le Chevalier Noir, le Chevalier Blanc derrière son bouclier au soleil, le Chien Sylvestre qui rapporte son bâton, le Clerc Sacré, la Dague Violette, le Gardien d'Ombre (qui bâille de s'ennuyer à monter la garde), le Gobelin Pillard et sa poule volée, et la Lance Dorée en équilibre sur une patte.
 
 ## v0.61.14 — La ménagerie s'agrandit  (2026-10-12)
 

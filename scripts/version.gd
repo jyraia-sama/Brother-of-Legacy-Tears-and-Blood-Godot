@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.61.14"
+const NUMERO := "0.61.15"
 const DATE := "2026-10-12"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.61.15", "date": "2026-10-12", "titre": "Chevaliers et chenapans",
+	"changements": [
+		"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : le Chevalier Noir, le Chevalier Blanc derrière son bouclier au soleil, le Chien Sylvestre qui rapporte son bâton, le Clerc Sacré, la Dague Violette, le Gardien d'Ombre (qui bâille de s'ennuyer à monter la garde), le Gobelin Pillard et sa poule volée, et la Lance Dorée en équilibre sur une patte.",
+	]},
 	{"version": "0.61.14", "date": "2026-10-12", "titre": "La ménagerie s'agrandit",
 	"changements": [
 		"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : la Brute Noire (qui épluche sa banane), Barbe Bleue (chope levée), l'Elfe Sylvestre, l'Araignée Venimeuse et sa toile en cœur, et le Chat des Abysses qui renverse un gobelet en nous regardant.",

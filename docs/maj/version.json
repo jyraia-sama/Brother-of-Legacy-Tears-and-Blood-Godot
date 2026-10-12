@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : le Chevalier Noir, le Chevalier Blanc derrière son bouclier au soleil, le Chien Sylvestre qui rapporte son bâton, le Clerc Sacré, la Dague Violette, le Gardien d'Ombre (qui bâille de s'ennuyer à monter la garde), le Gobelin Pillard et sa poule volée, et la Lance Dorée en équilibre sur une patte."
+			],
+			"titre": "Chevaliers et chenapans",
+			"version": "0.61.15"
+		},
+		{
+			"changements": [
 				"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : la Brute Noire (qui épluche sa banane), Barbe Bleue (chope levée), l'Elfe Sylvestre, l'Araignée Venimeuse et sa toile en cœur, et le Chat des Abysses qui renverse un gobelet en nous regardant."
 			],
 			"titre": "La ménagerie s'agrandit",
@@ -108,22 +115,13 @@
 			],
 			"titre": "Les portes du Paradis",
 			"version": "0.61.1"
-		},
-		{
-			"changements": [
-				"JEU EN PLUSIEURS PAQUETS : les illustrations (figurines, portraits, décors des Actes, fonds, Boss de Monde) sont maintenant livrées à part, en petits paquets. Le jeu peut ainsi accueillir toutes les créatures à venir sans perdre en qualité.",
-				"MISES À JOUR PLUS LÉGÈRES : au lancement, seuls les paquets d'illustrations nouveaux ou modifiés sont téléchargés (le Sceau se remplit pendant le téléchargement). La première fois, tout est téléchargé une fois pour toutes.",
-				"Sans connexion, le jeu utilise les illustrations déjà téléchargées ; en cas d'échec, l'écran de chargement propose « Réessayer » ou « Jouer quand même »."
-			],
-			"titre": "Le jeu en paquets",
-			"version": "0.61.0"
 		}
 	],
 	"pck": {
-		"sha256": "c3fd44fdb6ebc8c5dfc3ebac8740b981e667f29ce379647a3b3b04ccb9a20b44",
-		"taille": 29404588,
+		"sha256": "a997a7d9911ba46f8ed501a6686c645d488a7dd7fda43387f51c12784f290217",
+		"taille": 29404812,
 		"url": "jeu.pck"
 	},
-	"version": "0.61.14",
+	"version": "0.61.15",
 	"version_minimum": "0.37.0"
 }
