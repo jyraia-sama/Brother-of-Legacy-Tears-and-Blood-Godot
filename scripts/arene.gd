@@ -70,7 +70,7 @@ static func definir_slots_defense(slots: Array) -> void:
 static func combattant(uid: int, place: int) -> Dictionary:
 	var h := Sauvegarde.get_heros(uid)
 	return {"id": h["id"], "niveau": int(h["niveau"]), "place": place,
-		"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid)}
+		"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "sorts": SortsNiveaux.niveaux(uid)}
 
 
 ## Équipe (tableau de combattants) à partir de 5 places.

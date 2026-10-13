@@ -104,7 +104,7 @@ static func equipe_joueur() -> Array:
 		if h.is_empty():
 			continue
 		equipe.append({"id": h["id"], "niveau": int(h["niveau"]), "uid": uid, "place": Sauvegarde.place_de(uid),
-			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid)})
+			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "sorts": SortsNiveaux.niveaux(uid)})
 	return equipe
 
 

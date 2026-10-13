@@ -114,7 +114,7 @@ static func armee() -> Array:
 			continue
 		var h := Sauvegarde.get_heros(uid)
 		liste.append({"id": h["id"], "niveau": int(h["niveau"]), "uid": uid, "place": i,
-			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid)})
+			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "sorts": SortsNiveaux.niveaux(uid)})
 	return liste
 
 

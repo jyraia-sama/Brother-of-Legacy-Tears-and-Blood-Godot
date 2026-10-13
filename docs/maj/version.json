@@ -11,6 +11,20 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NIVEAUX DE SORTS : chaque sort (actif ou passif) de tes héros monte maintenant du niveau 1 au niveau 10, depuis la fiche du héros (Deck ou Mon héros), bouton « Améliorer ».",
+				"Chaque niveau donne +4 % de puissance au sort (dégâts, soins, boucliers, bonus, chances d'altération...) : +36 % au niveau 10 (un sort à 200 % passe à 272 %).",
+				"RECHARGE : selon la recharge de base du sort, -1 tour au niveau 10 (sorts à 2 tours), au niveau 7 (sorts à 3 tours), ou au niveau 5 et encore au niveau 10 (sorts à 4 tours et plus).",
+				"Niveau maximum des sorts selon les étoiles du héros : 4 à ★1, 5 à ★2... 8 à ★5, et 10 une fois Éveillé ★6.",
+				"Coût : Pages de Grimoire, Grimoires Interdits à partir du niveau 7, et de l'or.",
+				"NOUVEAU DONJON : La Bibliothèque Interdite (10 niveaux), qui rapporte les Pages de Grimoire puis les Grimoires Interdits.",
+				"ARÈNE et GUERRE DES BANNIÈRES : les sorts comptent au plus pour le niveau 7, pour garder des combats équilibrés. Arène classée : tous les sorts restent au niveau 1.",
+				"Les info-bulles des sorts en combat indiquent leur niveau."
+			],
+			"titre": "Les pages oubliées",
+			"version": "0.65.0"
+		},
+		{
+			"changements": [
 				"TITRES DES MENUS : le titre de chaque écran tient maintenant entièrement dans sa plaque ornée (il ne déborde plus sur les embouts ni sur les filets).",
 				"COMBATS : nouvelle disposition des unités sur le champ de bataille, en trois rangées bien distinctes (fond, milieu, devant) disposées en quinconce. Kaël, quand il combat à tes côtés, a sa propre place au milieu et ne chevauche plus aucune autre figurine. Valable dans tous les Actes."
 			],
@@ -118,20 +132,13 @@
 			],
 			"titre": "Les Béliers chargent",
 			"version": "0.61.10"
-		},
-		{
-			"changements": [
-				"NOUVELLE ILLUSTRATION, LA FAMILLE : nouveau portrait d'Alysse, l'Étoile du Bélier (clin d'œil et dague levée). Sa figurine de combat arrive bientôt."
-			],
-			"titre": "Un clin d'œil d'Alysse",
-			"version": "0.61.9"
 		}
 	],
 	"pck": {
-		"sha256": "d0412c13e15e7e6aadbba305a6ea250014e3afc74b7f4f1711b033b66b478fe3",
-		"taille": 33231204,
+		"sha256": "29232093d42f7c9e13da2defa6d2b9b2820eadfaf5d863e202a6257513ff9c1a",
+		"taille": 33240084,
 		"url": "jeu.pck"
 	},
-	"version": "0.64.2",
+	"version": "0.65.0",
 	"version_minimum": "0.37.0"
 }

@@ -498,16 +498,7 @@ func _maj_fiche() -> void:
 	if place >= 0:
 		_fiche.add_child(UiCommun.label(UiCommun.t("Dans l'équipe : place %d (%s)") % [place + 1, "Avant" if place < 2 else "Arrière"], 14, UiCommun.C_OR))
 
-	_fiche.add_child(HSeparator.new())
-	_fiche.add_child(UiCommun.label("SKILLS", 16, UiCommun.C_OR))
-	for sk in u["skills"]:
-		var ok: bool = sk["niveau"] <= niv
-		var t := UiCommun.label(UiCommun.t("Niv. %d · %s (%s)%s") % [sk["niveau"], sk["nom"], sk["type"], "" if ok else "  — verrouillé"], 16, UiCommun.C_OR if ok else UiCommun.C_DOUX)
-		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		_fiche.add_child(t)
-		var d := UiCommun.label(sk["description"], 14, UiCommun.C_TEXTE if ok else UiCommun.C_DOUX)
-		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		_fiche.add_child(d)
+	FicheSorts.remplir(_fiche, _selection, _maj_fiche)
 
 
 # =====================================================================

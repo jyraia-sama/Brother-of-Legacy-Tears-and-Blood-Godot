@@ -71,15 +71,7 @@ func _fiche_heros(g: VBoxContainer) -> void:
 		var bt := UiCommun.bouton(b[0], 15)
 		bt.pressed.connect(_aller.bind(b[2], uid))
 		boutons.add_child(bt)
-	g.add_child(HSeparator.new())
-	g.add_child(UiCommun.label("SORTS", 18, UiCommun.C_OR))
-	for sk in u["skills"]:
-		var ok: bool = int(sk["niveau"]) <= niv
-		var t := UiCommun.label(UiCommun.t("Niv. %d · %s (%s)%s") % [sk["niveau"], sk["nom"], sk["type"], "" if ok else "  — verrouillé"], 16, UiCommun.C_OR if ok else UiCommun.C_DOUX)
-		g.add_child(t)
-		var desc := UiCommun.label(sk["description"], 14, UiCommun.C_TEXTE if ok else UiCommun.C_DOUX)
-		desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		g.add_child(desc)
+	FicheSorts.remplir(g, uid, rafraichir)
 
 
 func _aller(ou: String, uid: int) -> void:

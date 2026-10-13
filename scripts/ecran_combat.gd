@@ -95,9 +95,11 @@ func _ready() -> void:
 	_creer_interface()
 
 	CombatMoteur.ignorer_admin = _mode in ["arene", "classee", "guerre", "guerre_revoir"]
+	CombatMoteur.plafond_sorts = SortsNiveaux.PLAFOND_JCJ if _mode in ["arene", "guerre", "guerre_revoir"] else SortsNiveaux.NIVEAU_MAX
 	var moteur := CombatMoteur.new(demande["equipe"], demande["ennemis"], int(demande.get("graine", 0)),
 		int(demande.get("tours_max", CombatMoteur.TOURS_MAX)))
 	CombatMoteur.ignorer_admin = false
+	CombatMoteur.plafond_sorts = SortsNiveaux.NIVEAU_MAX
 	_infos = moteur.descriptif()
 	if _mode == "classee":
 		await get_tree().process_frame

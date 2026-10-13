@@ -15,11 +15,22 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.64.2"
+const NUMERO := "0.65.0"
 const DATE := "2026-10-13"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.65.0", "date": "2026-10-13", "titre": "Les pages oubliées",
+	"changements": [
+		"NIVEAUX DE SORTS : chaque sort (actif ou passif) de tes héros monte maintenant du niveau 1 au niveau 10, depuis la fiche du héros (Deck ou Mon héros), bouton « Améliorer ».",
+		"Chaque niveau donne +4 % de puissance au sort (dégâts, soins, boucliers, bonus, chances d'altération...) : +36 % au niveau 10 (un sort à 200 % passe à 272 %).",
+		"RECHARGE : selon la recharge de base du sort, -1 tour au niveau 10 (sorts à 2 tours), au niveau 7 (sorts à 3 tours), ou au niveau 5 et encore au niveau 10 (sorts à 4 tours et plus).",
+		"Niveau maximum des sorts selon les étoiles du héros : 4 à ★1, 5 à ★2... 8 à ★5, et 10 une fois Éveillé ★6.",
+		"Coût : Pages de Grimoire, Grimoires Interdits à partir du niveau 7, et de l'or.",
+		"NOUVEAU DONJON : La Bibliothèque Interdite (10 niveaux), qui rapporte les Pages de Grimoire puis les Grimoires Interdits.",
+		"ARÈNE et GUERRE DES BANNIÈRES : les sorts comptent au plus pour le niveau 7, pour garder des combats équilibrés. Arène classée : tous les sorts restent au niveau 1.",
+		"Les info-bulles des sorts en combat indiquent leur niveau.",
+	]},
 	{"version": "0.64.2", "date": "2026-10-13", "titre": "Chacun à sa place",
 	"changements": [
 		"TITRES DES MENUS : le titre de chaque écran tient maintenant entièrement dans sa plaque ornée (il ne déborde plus sur les embouts ni sur les filets).",

@@ -548,7 +548,7 @@ func _lancer_combat(id: int, gratuit := false) -> void:
 		if h.is_empty():
 			continue
 		equipe.append({"id": h["id"], "niveau": int(h["niveau"]), "uid": uid, "place": Sauvegarde.place_de(uid),
-			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid),
+			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "sorts": SortsNiveaux.niveaux(uid),
 			"pv_ratio": _pv_ratio(uid), "bonus_atk": 0.10 if benediction else 0.0})
 	if equipe.is_empty():
 		_message("Aucune équipe", "Ton équipe est vide : ajoute des héros dans le Deck avant de combattre.")

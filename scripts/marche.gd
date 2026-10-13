@@ -516,6 +516,7 @@ static func combattants() -> Array:
 			e["uid"] = int(m["uid"])
 			e["etoiles"] = Fusion.etoiles(h)
 			e["echos"] = Sauvegarde.bonus_echos(int(m["uid"]))
+			e["sorts"] = SortsNiveaux.niveaux(int(m["uid"]))
 		else:
 			e["mult"] = float(m.get("mult", 1.0))
 		var b := bonus_unite(m["id"])

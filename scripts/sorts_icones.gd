@@ -176,7 +176,11 @@ static func detail(action: Dictionary, sk: Dictionary) -> Dictionary:
 		else:
 			var r := CombatMoteur.recharge_sort(sk)
 			pied += UiCommun.t("  ·  recharge %d tour%s") % [r, "s" if r > 1 else ""]
-	return {"titre": str(action.get("nom", "")), "sous_titre": FAMILLES[fam]["nom"], "lignes": lignes, "pied": pied,
+	var sous: String = FAMILLES[fam]["nom"]
+	if est_sort and int(sk.get("niveau_sort", 1)) > 1:
+		sous += UiCommun.t("  ·  niveau %d (effets +%d %%)") % [int(sk["niveau_sort"]),
+			int(round((SortsNiveaux.multiplicateur(int(sk["niveau_sort"])) - 1.0) * 100))]
+	return {"titre": str(action.get("nom", "")), "sous_titre": sous, "lignes": lignes, "pied": pied,
 		"dispo": action.get("dispo", true)}
 
 

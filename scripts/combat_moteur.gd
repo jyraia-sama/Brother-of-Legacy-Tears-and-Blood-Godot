@@ -35,6 +35,8 @@ const BONUS_ELEMENT := 0.25
 const MALUS_ELEMENT := 0.20
 
 const TOURS_MAX := 30
+## Niveau maximum des sorts pris en compte (Arène et Guerre : SortsNiveaux.PLAFOND_JCJ).
+static var plafond_sorts := 10
 const ESQUIVE_AVEUGLE := 35          # Aveuglement : -35 de précision
 const POISON := 0.06                 # % PV max perdus par tour
 const BRULURE := 0.05
@@ -107,7 +109,16 @@ func _creer(e: Dictionary, camp: int, place: int) -> Dictionary:
 		"boss": bool(e.get("boss", false)), "elite": bool(e.get("elite", false)),
 		"phase2": u.get("phase2", {}) if e.get("boss", false) else {}, "phase_faite": false,
 	}
-	for sk in UnitesData.skills_debloques(e["id"], niveau):
+	# Niveaux de sorts du joueur (sorts_niveaux.gd) : {"index du sort": niveau}, plafonnés en JcJ
+	var niv_sorts: Dictionary = e.get("sorts", {}) if e.get("sorts") is Dictionary else {}
+	var liste_sk: Array = u.get("skills", [])
+	for i in liste_sk.size():
+		var sk: Dictionary = liste_sk[i]
+		if int(sk["niveau"]) > niveau:
+			continue
+		var ns := mini(int(niv_sorts.get(str(i), 1)), plafond_sorts)
+		if ns > 1:
+			sk = SortsNiveaux.appliquer(sk, ns)
 		if sk["type"] == "actif":
 			c["actifs"].append(sk)
 		else:

@@ -140,7 +140,7 @@ func _remplir_donjons() -> void:
 		var b := Button.new()
 		b.focus_mode = Control.FOCUS_NONE
 		b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		b.custom_minimum_size = Vector2(0, 134)
+		b.custom_minimum_size = Vector2(0, 96)
 		b.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		var st := UiCommun.style_carte(c if choisi else c.darkened(0.45), 0.02 if choisi else 0.0, 3 if choisi else 2)
 		st.bg_color = c.darkened(0.82 if choisi else 0.9)
@@ -164,7 +164,7 @@ func _remplir_donjons() -> void:
 		h.add_theme_constant_override("separation", 12)
 		h.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(h)
-		var pt := UiCommun.portrait(infos["boss"], 86)
+		var pt := UiCommun.portrait(infos["boss"], 76)
 		pt.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		h.add_child(pt)
 		var vb := VBoxContainer.new()
@@ -173,7 +173,10 @@ func _remplir_donjons() -> void:
 		vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		h.add_child(vb)
 		vb.add_child(UiCommun.label(infos["nom"], 20, c.lightened(0.25)))
-		vb.add_child(UiCommun.label(UiCommun.t("%s  ·  ressources %s") % [UnitesData.ELEMENTS[d], Evolution.ESSENCES[d]["nom"]], 14, UiCommun.C_DOUX))
+		if Donjons.est_special(d):
+			vb.add_child(UiCommun.label("Pages de Grimoire  ·  niveaux de sorts", 14, UiCommun.C_DOUX))
+		else:
+			vb.add_child(UiCommun.label(UiCommun.t("%s  ·  ressources %s") % [UnitesData.ELEMENTS[d], Evolution.ESSENCES[d]["nom"]], 14, UiCommun.C_DOUX))
 		var fait := Donjons.niveau_termine(d)
 		vb.add_child(UiCommun.label(UiCommun.t("Niveau %d / %d terminé%s") % [fait, Donjons.NIVEAUX, "  ✔" if fait >= Donjons.NIVEAUX else ""], 14,
 			UiCommun.C_OR if fait > 0 else UiCommun.C_DOUX))
@@ -200,6 +203,8 @@ func _remplir_niveaux() -> void:
 		b.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		var taille: String = Evolution.TAILLES[[0, 0, 0, 1, 1, 1, 1, 2, 2, 2][n - 1]]
 		var texte := UiCommun.t("Niveau %d   ·   %s") % [n, Evolution.NOMS_TAILLE[taille] + "s"]
+		if Donjons.est_special(d):
+			texte = UiCommun.t("Niveau %d   ·   %s") % [n, "Grimoires" if int(Donjons.BUTIN_SPECIAL[n - 1][1]) > 0 else "Pages"]
 		if n <= fait:
 			texte = "✔  " + texte
 		elif not ouvert:
@@ -294,10 +299,29 @@ func _remplir_fiche() -> void:
 	for o in b:
 		grille.add_child(_ligne_objet(o, "x%d" % int(b[o])))
 	grille.add_child(UiCommun.label(UiCommun.t("+ %d or") % Donjons.or_victoire(n), 15, Color("ffd060")))
-	_fiche.add_child(UiCommun.label(UiCommun.t("%d %% de chance d'une %s en bonus.") % [int(Donjons.CHANCE_BONUS * 100),
-		Reliquaire.nom(Donjons.ressource_principale(d, n))], 13, UiCommun.C_DOUX))
+	if Donjons.est_special(d):
+		var rp := Donjons.ressource_principale(d, n)
+		_fiche.add_child(UiCommun.label(UiCommun.t("%d %% de chance de %s en bonus.") % [int(Donjons.CHANCE_BONUS * 100),
+			("3 Pages de Grimoire" if rp == SortsNiveaux.PAGE else "1 Grimoire Interdit")], 13, UiCommun.C_DOUX))
+	else:
+		_fiche.add_child(UiCommun.label(UiCommun.t("%d %% de chance d'une %s en bonus.") % [int(Donjons.CHANCE_BONUS * 100),
+			Reliquaire.nom(Donjons.ressource_principale(d, n))], 13, UiCommun.C_DOUX))
 
 	# Ressources possédées
+	if Donjons.est_special(d):
+		_fiche.add_child(UiCommun.label("TES GRIMOIRES", 15, UiCommun.C_OR))
+		var pg := HBoxContainer.new()
+		pg.add_theme_constant_override("separation", 22)
+		_fiche.add_child(pg)
+		for r in [SortsNiveaux.PAGE, SortsNiveaux.GRIMOIRE]:
+			pg.add_child(_ligne_objet(r, "%d" % Sauvegarde.get_objet(r)))
+		_fiche.add_child(UiCommun.label("Sert à faire monter le niveau des sorts des héros (fiche du héros, dans le Deck).", 13, UiCommun.C_DOUX))
+	else:
+		_remplir_ressources_element(d)
+	_remplir_depart(n)
+
+
+func _remplir_ressources_element(d: String) -> void:
 	_fiche.add_child(UiCommun.label("TES RESSOURCES " + str(Evolution.ESSENCES[d]["nom"]).to_upper(), 15, UiCommun.C_OR))
 	var poss := HBoxContainer.new()
 	poss.add_theme_constant_override("separation", 22)
@@ -309,6 +333,9 @@ func _remplir_fiche() -> void:
 		else UiCommun.t("faire évoluer les unités %s") % ("de " + UnitesData.ELEMENTS[d] if d != "eau" else "d'Eau")
 	_fiche.add_child(UiCommun.label("Sert à " + usage + ".", 13, UiCommun.C_DOUX))
 
+
+func _remplir_depart(n: int) -> void:
+	var c := _couleur(donjon_courant)
 	# Équipe et départ
 	_fiche.add_child(HSeparator.new())
 	var noms: Array = []

@@ -361,7 +361,7 @@ func _combattre(n: int) -> void:
 	for uid in Sauvegarde.get_equipe():
 		var h := Sauvegarde.get_heros(uid)
 		equipe.append({"id": h["id"], "niveau": int(h["niveau"]), "uid": uid, "place": Sauvegarde.place_de(uid),
-			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid)})
+			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "sorts": SortsNiveaux.niveaux(uid)})
 	if equipe.is_empty():
 		_message("Ton équipe est vide : ajoute des héros dans le Deck.")
 		return

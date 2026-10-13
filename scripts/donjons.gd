@@ -1,6 +1,7 @@
 class_name Donjons
 extends RefCounted
-## DONJONS : 6 donjons (un par élément + le Puits de Sang, neutre), 10 niveaux chacun.
+## DONJONS : 6 donjons (un par élément + le Puits de Sang, neutre) et la Bibliothèque Interdite
+## (Pages de Grimoire et Grimoires Interdits pour les niveaux de sorts), 10 niveaux chacun.
 ##
 ## Une expédition = 4 combats d'affilée, SANS soin entre deux (les PV sont conservés,
 ## une unité K.O. le reste jusqu'à la fin) :
@@ -15,7 +16,9 @@ extends RefCounted
 const SCENE := "res://scenes/donjon.tscn"
 const NIVEAUX := 10
 
-const ORDRE := ["feu", "nature", "eau", "tenebres", "sacre", "neutre"]
+const ORDRE := ["feu", "nature", "eau", "tenebres", "sacre", "neutre", "savoir"]
+## Donjons spéciaux : pas de ressource d'élément, un butin à part (voir BUTIN_SPECIAL).
+const SPECIAUX := ["savoir"]
 const DONJONS := {
 	"feu": {"nom": "Le Brasier Éternel", "sous_titre": "Une forge oubliée où la lave ne refroidit jamais",
 		"couleur": "ff6a2a", "mini_boss": "gardien_brasier", "boss": "ignaar",
@@ -49,6 +52,12 @@ const DONJONS := {
 		"monstres": ["rat_geant", "zombie", "slime", "sanglier_sauvage", "cherubin", "orc_guerrier", "harpie",
 			"chevalier_rouille", "troll_marais", "golem_pierre", "zombie_enrage", "cyclope_furieux", "troll_cavernes",
 			"statue_hurlante", "chimere", "golem_obsidienne", "hydre_bicephale", "demon_mineur", "gargouille_jade"]},
+	"savoir": {"nom": "La Bibliothèque Interdite", "sous_titre": "Des rayonnages sans fin où les sorts oubliés se défendent seuls",
+		"couleur": "d8b070", "mini_boss": "liche_novice", "boss": "reine_liches", "fond": "neutre",
+		"monstres": ["corbeau_maudit", "chauve_souris_vampire", "moine_dechu", "esprit_frappeur", "sorciere_bois",
+			"porteur_lanterne", "souvenir_spectral", "spectre_glacial", "banshee", "gargouille", "fanatique_zelote",
+			"golem_pierre", "liche_mineure", "aberration_cristal", "pretre_autel", "pretresse_aube", "statue_hurlante",
+			"ombre_rampante", "spectre_vengeur", "golem_obsidienne", "gargouille_jade"]},
 }
 
 ## Les 4 combats d'une expédition, dans l'ordre.
@@ -201,8 +210,25 @@ static func or_victoire(niveau: int) -> int:
 	return 300 + 150 * niveau
 
 
+## Bibliothèque Interdite : [Pages de Grimoire, Grimoires Interdits] par niveau (1 à 10).
+const BUTIN_SPECIAL := [
+	[6, 0], [8, 0], [10, 0], [12, 0], [14, 0],
+	[16, 1], [18, 1], [20, 2], [22, 2], [25, 3],
+]
+
+
+static func est_special(donjon: String) -> bool:
+	return donjon in SPECIAUX
+
+
 ## Butin garanti d'une victoire : {id_ressource: quantité}.
 static func butin(donjon: String, niveau: int) -> Dictionary:
+	if est_special(donjon):
+		var q: Array = BUTIN_SPECIAL[niveau - 1]
+		var b := {SortsNiveaux.PAGE: int(q[0])}
+		if int(q[1]) > 0:
+			b[SortsNiveaux.GRIMOIRE] = int(q[1])
+		return b
 	var b := {}
 	var q: Array = BUTIN[niveau - 1]
 	for i in 3:
@@ -213,6 +239,8 @@ static func butin(donjon: String, niveau: int) -> Dictionary:
 
 ## Plus grosse ressource que ce niveau peut donner.
 static func ressource_principale(donjon: String, niveau: int) -> String:
+	if est_special(donjon):
+		return SortsNiveaux.GRIMOIRE if int(BUTIN_SPECIAL[niveau - 1][1]) > 0 else SortsNiveaux.PAGE
 	var q: Array = BUTIN[niveau - 1]
 	for i in [2, 1, 0]:
 		if int(q[i]) > 0:
@@ -227,7 +255,7 @@ static func valider_victoire(donjon: String, niveau: int) -> Array:
 	var b := butin(donjon, niveau)
 	if randf() < CHANCE_BONUS:
 		var r := ressource_principale(donjon, niveau)
-		b[r] = int(b.get(r, 0)) + 1
+		b[r] = int(b.get(r, 0)) + (3 if r == SortsNiveaux.PAGE else 1)
 	b["or"] = or_victoire(niveau)
 	lignes.append_array(Reliquaire.donner(b))
 	e["victoires"] = int(e["victoires"]) + 1
@@ -278,7 +306,7 @@ static func demande_combat() -> Dictionary:
 		if h.is_empty():
 			continue
 		equipe.append({"id": h["id"], "niveau": int(h["niveau"]), "uid": uid, "place": Sauvegarde.place_de(uid),
-			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "pv_ratio": float(expedition["pv"][i])})
+			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "sorts": SortsNiveaux.niveaux(uid), "pv_ratio": float(expedition["pv"][i])})
 	var v := int(expedition["vague"])
 	return {"mode": "donjon", "donjon": expedition["donjon"], "niveau": expedition["niveau"], "vague": v,
 		"type": VAGUES[v], "equipe": equipe, "ennemis": generer(expedition["donjon"], int(expedition["niveau"]), v),

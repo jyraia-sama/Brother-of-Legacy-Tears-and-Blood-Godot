@@ -152,6 +152,10 @@ func _carte_objet(o: String) -> PanelContainer:
 			actions.add_child(_petit_bouton("Voir l'Atelier", true, func():
 				_onglet = "atelier"
 				_rafraichir()))
+		"grimoire":
+			actions.add_child(_petit_bouton("Améliorer des sorts (Deck)", true, func():
+				EcranDeck.scene_retour = SCENE
+				get_tree().change_scene_to_file(EcranDeck.SCENE)))
 		"pierre":
 			if o == "pierre_eveil":
 				actions.add_child(_petit_bouton("Autel de Fusion", true, func():
