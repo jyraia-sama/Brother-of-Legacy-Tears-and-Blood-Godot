@@ -37,7 +37,10 @@ var _defil: ScrollContainer
 
 
 func _ready() -> void:
-	Tutoriel.astuce("fusion", self)      # astuce à la première visite
+	# Première visite : le guide s'ouvre tout seul (il remplace l'ancienne astuce)
+	if Tutoriel.premiere_fois("guide_fusion"):
+		Tutoriel.premiere_fois("fusion")
+		(func(): GuideFusion.ouvrir(self)).call_deferred()
 	Sauvegarde.charger()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_creer_fond()
@@ -59,6 +62,8 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
 	tete.add_child(UiCommun.plaque_titre(UiCommun.label("AUTEL DE FUSION", 32, UiCommun.C_OR)))
+	tete.add_child(FenetreGuide.bouton_aide("Guide de l'Autel de Fusion : étoiles, niveau maximum, XP de mémoire, Absorption.",
+		func(): GuideFusion.ouvrir(self)))
 	var espace := Control.new()
 	espace.custom_minimum_size = Vector2(20, 0)
 	tete.add_child(espace)

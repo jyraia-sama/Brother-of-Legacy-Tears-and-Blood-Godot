@@ -49,6 +49,8 @@ func _ready() -> void:
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
 	tete.add_child(UiCommun.plaque_titre(UiCommun.label("DONJONS", 32, UiCommun.C_OR)))
+	tete.add_child(FenetreGuide.bouton_aide("Guide des Donjons : mécaniques des boss, contres et héros conseillés.",
+		func(): GuideDonjons.ouvrir(self, donjon_courant)))
 	var info := UiCommun.label("4 combats d'affilée, sans soin entre deux : vague, mini-boss, vague, boss.", 15, UiCommun.C_DOUX)
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	info.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -98,6 +100,10 @@ func _ready() -> void:
 	add_child(t)
 	_maj_stamina()
 	_rafraichir()
+
+	# Première visite : le guide s'ouvre tout seul
+	if Tutoriel.premiere_fois("guide_donjons"):
+		(func(): GuideDonjons.ouvrir(self, donjon_courant)).call_deferred()
 
 
 func _couleur(d: String) -> Color:

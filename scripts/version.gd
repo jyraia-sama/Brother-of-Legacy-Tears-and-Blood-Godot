@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.67.1"
+const NUMERO := "0.67.2"
 const DATE := "2026-10-13"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.67.2", "date": "2026-10-13", "titre": "Le mot du sage",
+	"changements": [
+		"GUIDE DES DONJONS : nouveau bouton « ? » sur l'écran des Donjons (il s'ouvre tout seul à la première visite). Il explique les expéditions, les mécaniques des boss, comment composer son équipe, et pour chaque Donjon : boss, mini-boss, monstre, un exemple d'équipe et TOUS les héros qui contrent le boss (en vert ceux que tu possèdes).",
+		"GUIDE DE L'AUTEL DE FUSION : nouveau bouton « ? » : étoiles et niveau maximum, retour au niveau 1 et XP de mémoire, Absorption, doublons et Pierres d'Éveil, liens avec l'Évolution et les niveaux de sorts, conseils.",
+	]},
 	{"version": "0.67.1", "date": "2026-10-13", "titre": "De nouveaux visages",
 	"changements": [
 		"ILLUSTRATIONS : les 7 nouveaux monstres des Donjons (Salamandre Ardente, Racine Nourricière, Crabe-Bouclier, Lanterne Noire, Acolyte Profané, Molosse du Puits, Page Animée) et les 4 nouveaux héros (Sirène Muette, Sœur du Silence, Exorciste Déchu, Brise-Carapace) ont leur portrait et leur figurine.",

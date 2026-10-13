@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.67.1** (2026-10-13)
+Version actuelle : **0.67.2** (2026-10-13)
+
+## v0.67.2 — Le mot du sage  (2026-10-13)
+
+- GUIDE DES DONJONS : nouveau bouton « ? » sur l'écran des Donjons (il s'ouvre tout seul à la première visite). Il explique les expéditions, les mécaniques des boss, comment composer son équipe, et pour chaque Donjon : boss, mini-boss, monstre, un exemple d'équipe et TOUS les héros qui contrent le boss (en vert ceux que tu possèdes).
+- GUIDE DE L'AUTEL DE FUSION : nouveau bouton « ? » : étoiles et niveau maximum, retour au niveau 1 et XP de mémoire, Absorption, doublons et Pierres d'Éveil, liens avec l'Évolution et les niveaux de sorts, conseils.
 
 ## v0.67.1 — De nouveaux visages  (2026-10-13)
 
