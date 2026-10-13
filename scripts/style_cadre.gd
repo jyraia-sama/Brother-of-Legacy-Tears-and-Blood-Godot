@@ -108,11 +108,12 @@ func _draw(ci: RID, rect: Rect2) -> void:
 	_flat.border_blend = border_blend
 	_flat.skew = skew
 	var petit := r.size.x < 120.0 or r.size.y < 72.0
-	if _tex_cadre != null and orne and not petit:
+	var mg := ThemeJeu.marges("cadre")
+	var m := float(mg[0]) if mg.size() >= 4 else 32.0
+	if _tex_cadre != null and orne and r.size.x >= m * 3.0 and r.size.y >= m * 2.6:
 		# Kit peint : fond du StyleBoxFlat (sans bordure) puis le cadre peint en 9-slice par-dessus
 		_flat.set_border_width_all(0)
 		_flat.draw(ci, r)
-		var m := 32.0
 		RenderingServer.canvas_item_add_nine_patch(ci, r.grow(4), Rect2(Vector2.ZERO, _tex_cadre.get_size()), _tex_cadre.get_rid(),
 			Vector2(m, m), Vector2(m, m), RenderingServer.NINE_PATCH_STRETCH, RenderingServer.NINE_PATCH_STRETCH, true,
 			Color(border_color.lerp(Color.WHITE, 0.55), 1.0))

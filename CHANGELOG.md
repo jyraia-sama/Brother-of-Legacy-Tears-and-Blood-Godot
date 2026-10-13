@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.64.0** (2026-10-12)
+Version actuelle : **0.64.1** (2026-10-13)
+
+## v0.64.1 — Forgé à la main  (2026-10-13)
+
+- KIT D'INTERFACE PEINT : les boutons (cuir bordeaux, embouts de bronze sertis de gemmes rouges, version lumineuse au survol, enfoncée au clic, grise quand inactive), les onglets, les champs de saisie, les plaques de titre, les séparateurs, les ornements de coin et les grands cadres de panneau sont maintenant peints à la main, dans tous les menus du jeu.
+- Les textes des boutons inactifs sont plus lisibles.
 
 ## v0.64.0 — Un nouvel habit pour le royaume  (2026-10-12)
 

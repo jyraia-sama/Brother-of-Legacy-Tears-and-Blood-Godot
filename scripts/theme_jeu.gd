@@ -14,7 +14,7 @@ const POLICE_TITRES := "res://assets/polices/titres.ttf"
 const C_OR := Color(0.91, 0.74, 0.42)
 const C_TEXTE := Color(0.95, 0.9, 0.84)
 const C_SURVOL := Color(1.0, 0.95, 0.82)
-const C_INACTIF := Color(0.55, 0.52, 0.5)
+const C_INACTIF := Color(0.78, 0.75, 0.72)
 
 static var police_titres: Font = null
 static var _fait := false
@@ -42,6 +42,23 @@ static func appliquer() -> void:
 	_divers(th)
 
 
+static var _marges: Dictionary = {}
+static var _marges_lues := false
+
+
+## Marges du kit peint (assets/ui/kit/marges.json, écrit par outils/decouper_kit_ui.py) :
+## [gauche, haut, droite, bas] du 9-slice puis, si présentes, les 4 marges du texte. [] = kit dessiné.
+static func marges(nom: String) -> Array:
+	if not _marges_lues:
+		_marges_lues = true
+		var ch := KIT + "marges.json"
+		if FileAccess.file_exists(ch):
+			var d = JSON.parse_string(FileAccess.get_file_as_string(ch))
+			if d is Dictionary:
+				_marges = d
+	return _marges.get(nom, [])
+
+
 static func _tex(nom: String, marge: float, contenu := Vector4(14, 8, 14, 8)) -> StyleBox:
 	var ch := KIT + nom + ".png"
 	if not ResourceLoader.exists(ch):
@@ -49,6 +66,14 @@ static func _tex(nom: String, marge: float, contenu := Vector4(14, 8, 14, 8)) ->
 	var s := StyleBoxTexture.new()
 	s.texture = load(ch)
 	s.set_texture_margin_all(marge)
+	var m := marges(nom)
+	if m.size() >= 4:
+		s.texture_margin_left = m[0]
+		s.texture_margin_top = m[1]
+		s.texture_margin_right = m[2]
+		s.texture_margin_bottom = m[3]
+	if m.size() >= 8:
+		contenu = Vector4(m[4], m[5], m[6], m[7])
 	s.content_margin_left = contenu.x
 	s.content_margin_top = contenu.y
 	s.content_margin_right = contenu.z
@@ -211,15 +236,14 @@ static func _divers(th: Theme) -> void:
 	# Séparateurs : filet doré avec losange
 	var ch := KIT + "separateur.png"
 	if ResourceLoader.exists(ch):
-		var sep := StyleBoxTexture.new()
+		var sep := StyleSeparateur.new()
 		sep.texture = load(ch)
-		sep.texture_margin_left = 240
-		sep.texture_margin_right = 240
-		sep.axis_stretch_horizontal = StyleBoxTexture.AXIS_STRETCH_MODE_STRETCH
-		sep.content_margin_top = 8
-		sep.content_margin_bottom = 8
+		var m := marges("separateur")
+		sep.largeur_centre = (sep.texture.get_width() - m[0] - m[2]) if m.size() >= 4 else 40.0
+		sep.content_margin_top = sep.texture.get_height() / 2.0
+		sep.content_margin_bottom = sep.texture.get_height() / 2.0
 		th.set_stylebox("separator", "HSeparator", sep)
-		th.set_constant("separation", "HSeparator", 16)
+		th.set_constant("separation", "HSeparator", maxi(16, sep.texture.get_height()))
 	# Barres de progression par défaut
 	var fond := StyleBoxFlat.new()
 	fond.bg_color = Color(0, 0, 0, 0.65)

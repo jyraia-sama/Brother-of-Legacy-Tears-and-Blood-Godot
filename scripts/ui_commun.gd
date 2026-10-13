@@ -101,10 +101,11 @@ static func plaque_titre(l: Label) -> Control:
 	if ResourceLoader.exists(ch):
 		var st := StyleBoxTexture.new()
 		st.texture = load(ch)
-		st.texture_margin_left = 48
-		st.texture_margin_right = 48
-		st.texture_margin_top = 12
-		st.texture_margin_bottom = 12
+		var mg := ThemeJeu.marges("plaque_titre")
+		st.texture_margin_left = mg[0] if mg.size() >= 4 else 48
+		st.texture_margin_right = mg[2] if mg.size() >= 4 else 48
+		st.texture_margin_top = mg[1] if mg.size() >= 4 else 12
+		st.texture_margin_bottom = mg[3] if mg.size() >= 4 else 12
 		# la plaque déborde dans les marges du conteneur
 		st.expand_margin_left = 40
 		st.expand_margin_right = 40
