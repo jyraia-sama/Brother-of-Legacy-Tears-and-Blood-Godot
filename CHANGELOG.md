@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.67.0** (2026-10-13)
+Version actuelle : **0.67.1** (2026-10-13)
+
+## v0.67.1 — De nouveaux visages  (2026-10-13)
+
+- ILLUSTRATIONS : les 7 nouveaux monstres des Donjons (Salamandre Ardente, Racine Nourricière, Crabe-Bouclier, Lanterne Noire, Acolyte Profané, Molosse du Puits, Page Animée) et les 4 nouveaux héros (Sirène Muette, Sœur du Silence, Exorciste Déchu, Brise-Carapace) ont leur portrait et leur figurine.
 
 ## v0.67.0 — Chaque boss a son secret  (2026-10-13)
 

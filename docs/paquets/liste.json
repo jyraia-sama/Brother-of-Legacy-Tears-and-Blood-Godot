@@ -1,58 +1,58 @@
 {
 	"paquets": [
 		{
-			"depuis": "0.62.0",
+			"depuis": "0.67.1",
 			"fichier": "figurines_0.pck",
-			"images": 51.0,
+			"images": 53,
 			"nom": "figurines_0",
-			"sha256": "54ef8ab745c498fb90a03c89a0fb081f12f6b8b7a77ad89cdb552cbfc363ef90",
-			"signature": "e781549cf80ccb05c5bfbb586ffc5a8f191c11a804f8df5aafd644b438542e60",
-			"taille": 8676712.0
+			"sha256": "63fbdb5dce24db3c42732346375aa5e8bce892dedb320dce6e0fc27068050edf",
+			"signature": "9f7e86feb3de6ce8c65ae3df7ddf3271725c1e8872b6e463d5f9969b641f2279",
+			"taille": 9013776
 		},
 		{
-			"depuis": "0.62.0",
+			"depuis": "0.67.1",
 			"fichier": "figurines_1.pck",
-			"images": 51.0,
+			"images": 56,
 			"nom": "figurines_1",
-			"sha256": "11a41c91fdf645b079787084c505f0344c3523369bb0f89ff510a7fe7e67abf8",
-			"signature": "00b2c8496f09f6b8048bad747b4c7863063bb89b5742630ed9fff2ab5e7a4480",
-			"taille": 8341700.0
+			"sha256": "f8f3685822c2917cbb419b994407fb4b79edfdd09970c1bc9e9f596d6cab8089",
+			"signature": "22d996c16e4dd5b8cdef05ef2971d2107e88c64b8ba92359da78d70ef5e25543",
+			"taille": 9118820
 		},
 		{
-			"depuis": "0.62.0",
+			"depuis": "0.67.1",
 			"fichier": "figurines_2.pck",
-			"images": 58.0,
+			"images": 59,
 			"nom": "figurines_2",
-			"sha256": "a4ba3762556c8744a0af80a3dca324702c28030c3a2051fd0dea97480572a986",
-			"signature": "d187927427266f60b255ebfaf4ce68f7fcc63b0dc758c731f3b9464b9aeca650",
-			"taille": 9733504.0
+			"sha256": "b25ed875908eabefcea9ad0a9c89a29de815b89951b3d9160080348cdd0363a7",
+			"signature": "01290509ffa75cdfac8bbf6df308ffd3a73bb6d3a7f4b5c7df7b0e70edebe0e3",
+			"taille": 9875908
 		},
 		{
-			"depuis": "0.62.0",
+			"depuis": "0.67.1",
 			"fichier": "figurines_3.pck",
-			"images": 52.0,
+			"images": 55,
 			"nom": "figurines_3",
-			"sha256": "35670de06ffdb3176cc6a9a165f0264542b6a13eaa4c42930b6aad0904e09e0d",
-			"signature": "3c45512332ca31dbb02925f5523daaf263c60366aa2fa8b89ba72bc974a26298",
-			"taille": 8403492.0
+			"sha256": "2a4790b34d54f74aed08a531b81c3bca7903de686daf37e40a98b86e2d86420e",
+			"signature": "154ac9c6f2aa431e94e8594cf5ad2ed52852f504476e11d317bc6f058b49eed1",
+			"taille": 8949208
 		},
 		{
-			"depuis": "0.62.0",
+			"depuis": "0.67.1",
 			"fichier": "portraits_0.pck",
-			"images": 110.0,
+			"images": 113,
 			"nom": "portraits_0",
-			"sha256": "306884aea8574a482bc39427bd38e173fd6cc3bb3f21c93b2ec661a3135b855c",
-			"signature": "b84c532d8ab4b9f9fa84aa5c3e1e6670c3e18be99858e38e1cc5102572d3df46",
-			"taille": 6685284.0
+			"sha256": "c3c5d4a0369e8a3468ba36fc1632c220aea7fd44ae6f1130386cb14e1025533e",
+			"signature": "e7a4536d43e864f6bdf21f8f2c1e2755eb02e9060864dc5560f781c1dd40a2f3",
+			"taille": 6860292
 		},
 		{
-			"depuis": "0.62.0",
+			"depuis": "0.67.1",
 			"fichier": "portraits_1.pck",
-			"images": 112.0,
+			"images": 120,
 			"nom": "portraits_1",
-			"sha256": "d237b46afd02a62750c6d942c63dffd470582766d650e8b330dc10087a5c4efd",
-			"signature": "c95ea80842ff5ca44e9f3b1eb19df71846c0b8492fb0860420208c70cde61981",
-			"taille": 6710504.0
+			"sha256": "13e417141043bb27d3ff5690392307a09d530eb37de7aa1dc6bfb8795082f94c",
+			"signature": "117f00810f4ec5a7e0238a90c6eff659f6531bc2b87c2fb4a52a58f28813ba4b",
+			"taille": 7177500
 		},
 		{
 			"depuis": "0.60.7",
@@ -82,5 +82,5 @@
 			"taille": 1515864.0
 		}
 	],
-	"version": "0.67.0"
+	"version": "0.67.1"
 }

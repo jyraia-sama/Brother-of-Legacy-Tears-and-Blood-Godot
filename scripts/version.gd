@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.67.0"
+const NUMERO := "0.67.1"
 const DATE := "2026-10-13"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.67.1", "date": "2026-10-13", "titre": "De nouveaux visages",
+	"changements": [
+		"ILLUSTRATIONS : les 7 nouveaux monstres des Donjons (Salamandre Ardente, Racine Nourricière, Crabe-Bouclier, Lanterne Noire, Acolyte Profané, Molosse du Puits, Page Animée) et les 4 nouveaux héros (Sirène Muette, Sœur du Silence, Exorciste Déchu, Brise-Carapace) ont leur portrait et leur figurine.",
+	]},
 	{"version": "0.67.0", "date": "2026-10-13", "titre": "Chaque boss a son secret",
 	"changements": [
 		"MÉCANIQUES DE DONJON : à partir du niveau 4, chaque mini-boss et chaque boss de Donjon a une mécanique à contrer (renforcée à partir du niveau 8). Le boss arrive avec 2 gardes et devient plus endurant : il faut une vraie stratégie.",
