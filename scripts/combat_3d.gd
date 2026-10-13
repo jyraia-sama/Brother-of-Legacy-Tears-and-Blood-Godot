@@ -228,24 +228,15 @@ func _particules(couleur: Color, nombre: int, vie: float, taille := 0.035) -> CP
 ## unité proche hors du cadre, et les rangs sont décalés en diagonale pour ne pas se cacher.
 func position_sol(frac: Vector2) -> Vector3:
 	var t := clampf((frac.y - 0.3) / 0.5, 0.0, 1.0)
-	var z := lerpf(-2.6, 4.6, t)
+	var z := lerpf(-4.2, 4.8, t)
 	var cote := signf(frac.x - 0.5)
 	return Vector3(_x_pour_ecran(0.5 + cote * _ecart_centre(frac), z), 0, z)
 
 
-## Formation en quinconce (distance au centre de l'écran, en fraction de largeur) : une unité
-## n'est jamais juste derrière une autre de profondeur voisine, même si celle de devant est un boss.
+## Distance au centre de l'écran (fraction de largeur) d'une position donnée par l'écran de combat.
 func _ecart_centre(frac: Vector2) -> float:
-	var dx := absf(frac.x - 0.5)
-	if dx < 0.2:                       # Avant : fond près du centre, devant un peu en retrait
-		return 0.07 if frac.y < 0.5 else 0.18
-	if dx < 0.3:                       # unité invitée, entre les deux rangs
-		return 0.25
-	if frac.y < 0.45:                  # Arrière, du fond vers le devant
-		return 0.27
-	if frac.y < 0.7:
-		return 0.41
-	return 0.30
+	# la formation (quinconce, couloirs de profondeur) est décidée par l'écran de combat (FORMATION_3D)
+	return absf(frac.x - 0.5)
 
 
 ## Position au sol d'une figurine : comme position_sol, mais recalée pour qu'elle reste entière

@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.64.1"
+const NUMERO := "0.64.2"
 const DATE := "2026-10-13"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.64.2", "date": "2026-10-13", "titre": "Chacun à sa place",
+	"changements": [
+		"TITRES DES MENUS : le titre de chaque écran tient maintenant entièrement dans sa plaque ornée (il ne déborde plus sur les embouts ni sur les filets).",
+		"COMBATS : nouvelle disposition des unités sur le champ de bataille, en trois rangées bien distinctes (fond, milieu, devant) disposées en quinconce. Kaël, quand il combat à tes côtés, a sa propre place au milieu et ne chevauche plus aucune autre figurine. Valable dans tous les Actes.",
+	]},
 	{"version": "0.64.1", "date": "2026-10-13", "titre": "Forgé à la main",
 	"changements": [
 		"KIT D'INTERFACE PEINT : les boutons (cuir bordeaux, embouts de bronze sertis de gemmes rouges, version lumineuse au survol, enfoncée au clic, grise quand inactive), les onglets, les champs de saisie, les plaques de titre, les séparateurs, les ornements de coin et les grands cadres de panneau sont maintenant peints à la main, dans tous les menus du jeu.",

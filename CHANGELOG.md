@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.64.1** (2026-10-13)
+Version actuelle : **0.64.2** (2026-10-13)
+
+## v0.64.2 — Chacun à sa place  (2026-10-13)
+
+- TITRES DES MENUS : le titre de chaque écran tient maintenant entièrement dans sa plaque ornée (il ne déborde plus sur les embouts ni sur les filets).
+- COMBATS : nouvelle disposition des unités sur le champ de bataille, en trois rangées bien distinctes (fond, milieu, devant) disposées en quinconce. Kaël, quand il combat à tes côtés, a sa propre place au milieu et ne chevauche plus aucune autre figurine. Valable dans tous les Actes.
 
 ## v0.64.1 — Forgé à la main  (2026-10-13)
 

@@ -90,37 +90,39 @@ static func titre(l: Label) -> void:
 ## Plaque ornée derrière un titre d'écran (bande sombre, filets dorés, losanges aux bouts).
 ## Renvoie un conteneur à ajouter à la place du Label : tete.add_child(UiCommun.plaque_titre(titre)).
 static func plaque_titre(l: Label) -> Control:
-	var m := MarginContainer.new()
-	m.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	m.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	m.add_theme_constant_override("margin_left", 40)
-	m.add_theme_constant_override("margin_right", 40)
-	m.add_theme_constant_override("margin_top", 4)
-	m.add_theme_constant_override("margin_bottom", 4)
+	# Le texte tient ENTRE les embouts ornés et entre les filets du haut et du bas : la plaque
+	# remplit tout le conteneur, le texte est dans un conteneur intérieur avec ces marges.
+	var mg := ThemeJeu.marges("plaque_titre")
+	var bout := (int(mg[0]) if mg.size() >= 4 else 44) + 14
+	var vert := 12
+	var cadre := MarginContainer.new()
+	cadre.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	cadre.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var ch := "res://assets/ui/kit/plaque_titre.png"
 	if ResourceLoader.exists(ch):
 		var st := StyleBoxTexture.new()
 		st.texture = load(ch)
-		var mg := ThemeJeu.marges("plaque_titre")
 		st.texture_margin_left = mg[0] if mg.size() >= 4 else 48
 		st.texture_margin_right = mg[2] if mg.size() >= 4 else 48
 		st.texture_margin_top = mg[1] if mg.size() >= 4 else 12
 		st.texture_margin_bottom = mg[3] if mg.size() >= 4 else 12
-		# la plaque déborde dans les marges du conteneur
-		st.expand_margin_left = 40
-		st.expand_margin_right = 40
-		st.expand_margin_top = 4
-		st.expand_margin_bottom = 4
-		var p := Panel.new()
-		p.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		p.add_theme_stylebox_override("panel", st)
-		p.show_behind_parent = true
-		l.add_child(p)
-		p.set_anchors_preset(Control.PRESET_FULL_RECT)
+		var fond := Panel.new()
+		fond.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		fond.add_theme_stylebox_override("panel", st)
+		cadre.add_child(fond)
+	if l.get_theme_font_size("font_size") > 30:
+		l.add_theme_font_size_override("font_size", 30)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	m.add_child(l)
-	return m
+	var interieur := MarginContainer.new()
+	interieur.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	interieur.add_theme_constant_override("margin_left", bout)
+	interieur.add_theme_constant_override("margin_right", bout)
+	interieur.add_theme_constant_override("margin_top", vert)
+	interieur.add_theme_constant_override("margin_bottom", vert)
+	interieur.add_child(l)
+	cadre.add_child(interieur)
+	return cadre
 
 
 ## Séparateur orné (filet doré avec losange au centre).

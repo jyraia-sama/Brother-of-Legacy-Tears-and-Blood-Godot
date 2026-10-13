@@ -339,11 +339,31 @@ func _position(camp: int, place: int) -> Vector2:
 	return Vector2(x, y)
 
 
+## FORMATION DES COMBATS 2,5D (par place) : [distance au centre de l'écran, profondeur 0 = fond, 1 = devant].
+## Trois couloirs de profondeur (fond / milieu / devant) et quatre colonnes en QUINCONCE : le couloir
+## du milieu est décalé d'une demi-colonne, aucune figurine n'est juste devant une autre.
+##   0-1 : Avant (fond, devant), près du centre   2-4 : Arrière (fond, milieu, devant)   5 : invité (Kaël)
+const FORMATION_3D := {
+	0: Vector2(0.09, 0.0), 1: Vector2(0.12, 1.0),
+	2: Vector2(0.30, 0.0), 3: Vector2(0.44, 0.50), 4: Vector2(0.30, 1.0),
+	5: Vector2(0.20, 0.50),
+}
+
+
+## Position (fraction de l'écran) d'une unité dans la scène 2,5D, d'après FORMATION_3D.
+func _position_3d(camp: int, place: int) -> Vector2:
+	if mon_camp() == 1:
+		camp = 1 - camp
+	var f: Vector2 = FORMATION_3D.get(place, FORMATION_3D[3])
+	var x := 0.5 - f.x if camp == 0 else 0.5 + f.x
+	return Vector2(x, 0.3 + 0.5 * f.y)
+
+
 func _placer_unites() -> void:
 	for info in _infos:
 		var carte := _creer_carte(info)
 		_arene.add_child(carte["racine"])
-		var p := _position(info["camp"], info["place"])
+		var p := _position_3d(info["camp"], info["place"]) if _c3d != null else _position(info["camp"], info["place"])
 		var taille: Vector2 = carte["racine"].custom_minimum_size
 		carte["racine"].position = Vector2(size.x * p.x, size.y * p.y) - taille / 2.0
 		if _c3d != null:
