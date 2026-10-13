@@ -168,6 +168,33 @@ static func pente(acte: int, chapitre: int) -> float:
 	return 0.88 + PENTE_DIFFICULTE * p / 71.0
 
 
+## FIN DE JEU (v0.66) : force d'une équipe de niveau `niveau` par rapport à l'équipe de référence
+## de la fin de l'Acte XII (niveau 29, ★1). Au-delà du niveau 30, il faut des étoiles pour monter
+## (★2 34 ... ★6 50) : on compte le gain de stats des niveaux ET celui des étoiles attendues.
+## On ajoute un RENFORT réglé par simulation : à partir du niveau 30, les héros ont leur 4e sort,
+## et l'Éveil ★6 pèse plus lourd que ses +10 % de stats (expéditions de Donjon : ~55 % de réussite
+## au niveau 9 pour une équipe Nv 40 ★4, ~45 % au niveau 10 pour une équipe Nv 50 ★6, sans Échos
+## ni niveaux de sorts).
+## Total : niveau 32 -> x1,22 · 40 -> x1,95 · 50 -> x3,03.
+const RENFORT_FIN := [[29.0, 1.0], [32.0, 1.12], [40.0, 1.40], [50.0, 1.55]]
+static func facteur_fin_de_jeu(niveau: float) -> float:
+	if niveau <= 29.0:
+		return 1.0
+	var niv := minf(niveau, float(UnitesData.NIVEAU_MAX))
+	var stats := (1.0 + UnitesData.CROISSANCE_PAR_NIVEAU * (niv - 1.0)) / (1.0 + UnitesData.CROISSANCE_PAR_NIVEAU * 28.0)
+	var e := clampf(1.0 + (niv - 30.0) / 4.0, 1.0, float(Fusion.ETOILES_MAX))
+	var etoiles := 1.0 + Fusion.BONUS_PAR_ETOILE * (e - 1.0) + Fusion.BONUS_EVEIL * maxf(0.0, e - 5.0)
+	var renfort := 1.0
+	for i in range(1, RENFORT_FIN.size()):
+		var a: Array = RENFORT_FIN[i - 1]
+		var b: Array = RENFORT_FIN[i]
+		if niv <= float(b[0]):
+			renfort = lerpf(float(a[1]), float(b[1]), (niv - float(a[0])) / (float(b[0]) - float(a[0])))
+			break
+		renfort = float(b[1])
+	return stats * etoiles * renfort
+
+
 ## Niveau attendu des héros du joueur au début d'un chapitre.
 static func niveau_attendu(acte: int, chapitre: int) -> int:
 	var p := (acte - 1) * 6 + (chapitre - 1)

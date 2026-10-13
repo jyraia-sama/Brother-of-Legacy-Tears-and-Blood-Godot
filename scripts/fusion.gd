@@ -4,7 +4,11 @@ extends RefCounted
 ##
 ## 1) ÉVEIL (étoiles) : on sacrifie des DOUBLONS (même unité) pour faire monter
 ##    les étoiles du héros principal, de ★1 à ★6 (★6 = « Éveillé »).
-##    Chaque étoile augmente PV / ATK / DEF / AGI / MAG.
+##    Chaque étoile augmente PV / ATK / DEF / AGI / MAG et le NIVEAU MAXIMUM du héros
+##    (★1 30, ★2 34, ★3 38, ★4 42, ★5 46, ★6 50).
+##    Il faut que le héros soit à son niveau maximum ; il REPART AU NIVEAU 1 avec sa nouvelle étoile.
+##    « XP de mémoire » : +50 % d'XP tant qu'il n'a pas retrouvé le niveau qu'il avait atteint
+##    (niveau_record), et il garde les sorts déjà appris.
 ## 2) ABSORPTION (XP) : on sacrifie n'importe quelles unités pour donner de l'XP
 ##    au héros principal.
 ##
@@ -25,8 +29,10 @@ const BONUS_EVEIL := 0.10
 
 ## Doublons nécessaires pour passer de ★n à ★n+1 (index = étoiles actuelles).
 const DOUBLONS_REQUIS := {1: 1, 2: 1, 3: 2, 4: 2, 5: 3}
-## Niveau minimum du héros principal pour passer de ★n à ★n+1.
-const NIVEAU_REQUIS := {1: 1, 2: 10, 3: 15, 4: 20, 5: 30}
+## Niveau maximum du héros selon ses étoiles (index = étoiles - 1).
+const NIVEAUX_MAX := [30, 34, 38, 42, 46, 50]
+## Bonus d'XP de mémoire (héros qui remonte après un Éveil).
+const BONUS_MEMOIRE := 0.5
 ## Coût en or de l'Éveil : prix de base selon la rareté × étoiles actuelles.
 const OR_EVEIL := {"N": 300, "R": 800, "SR": 2000, "SSR": 5000, "UR": 10000, "LEG": 12000}
 
@@ -80,8 +86,29 @@ static func doublons_requis(h: Dictionary) -> int:
 	return int(DOUBLONS_REQUIS.get(etoiles(h), 0))
 
 
+## Niveau maximum d'un héros avec ce nombre d'étoiles.
+static func niveau_max_etoiles(nb_etoiles: int) -> int:
+	return int(NIVEAUX_MAX[clampi(nb_etoiles, 1, ETOILES_MAX) - 1])
+
+
+## Niveau maximum de ce héros (selon ses étoiles).
+static func niveau_max(h: Dictionary) -> int:
+	return niveau_max_etoiles(etoiles(h))
+
+
+## Niveau requis pour l'Éveil : le niveau maximum du héros.
 static func niveau_requis(h: Dictionary) -> int:
-	return int(NIVEAU_REQUIS.get(etoiles(h), 0))
+	return niveau_max(h)
+
+
+## Plus haut niveau jamais atteint par ce héros (il le garde après un Éveil).
+static func niveau_record(h: Dictionary) -> int:
+	return maxi(int(h.get("niveau", 1)), int(h.get("niveau_record", 0)))
+
+
+## Le héros remonte-t-il vers un niveau déjà atteint ? (+50 % d'XP de mémoire)
+static func a_memoire(h: Dictionary) -> bool:
+	return int(h.get("niveau", 1)) < int(h.get("niveau_record", 0))
 
 
 static func cout_eveil(h: Dictionary) -> int:
@@ -119,7 +146,7 @@ static func raison_eveil_impossible(uid_principal: int, sacrifices: Array, pierr
 	if est_eveille(h):
 		return "Ce héros est déjà Éveillé (★6) : étoiles au maximum."
 	if int(h["niveau"]) < niveau_requis(h):
-		return UiCommun.t("Niveau %d requis pour passer ★%d (actuellement Nv %d).") % [niveau_requis(h), etoiles(h) + 1, int(h["niveau"])]
+		return UiCommun.t("Le héros doit être à son niveau maximum (%d) pour passer ★%d (actuellement Nv %d).") % [niveau_requis(h), etoiles(h) + 1, int(h["niveau"])]
 	var besoin := doublons_requis(h)
 	if pierres > Sauvegarde.get_objet(PIERRE):
 		return "Pas assez de Pierres d'Éveil."
@@ -151,7 +178,11 @@ static func eveiller(uid_principal: int, sacrifices: Array, pierres := 0) -> boo
 		Sauvegarde.retirer_objet(PIERRE, pierres)
 	Sauvegarde.supprimer_heros(sac)
 	h = Sauvegarde.get_heros(uid_principal)
+	h["niveau_record"] = niveau_record(h)
 	h["etoiles"] = etoiles(h) + 1
+	# Nouvelle étoile : le héros repart au niveau 1 (il garde ses sorts appris et l'XP de mémoire)
+	h["niveau"] = 1
+	h["xp"] = 0
 	Sauvegarde.ajouter_stat("eveils")
 	Sauvegarde.sauvegarder()
 	return true
@@ -184,25 +215,40 @@ static func cout_absorption(uid_principal: int, sacrifices: Array) -> int:
 
 ## Simule l'ajout d'XP : renvoie {"niveau", "xp", "perdue"} sans rien modifier.
 static func apercu_xp(uid_principal: int, xp_gagnee: int) -> Dictionary:
-	var h := Sauvegarde.get_heros(uid_principal)
+	return calcul_xp(Sauvegarde.get_heros(uid_principal), xp_gagnee)
+
+
+## Calcule l'effet d'un gain d'XP sur un héros (XP de mémoire comprise) sans rien modifier :
+## {"niveau", "xp", "perdue"}.
+static func calcul_xp(h: Dictionary, xp_gagnee: int) -> Dictionary:
 	var niv := int(h.get("niveau", 1))
-	var xp := int(h.get("xp", 0)) + xp_gagnee
-	while niv < UnitesData.niveau_max(h["id"]) and xp >= Sauvegarde.xp_heros_pour_niveau(niv):
-		xp -= Sauvegarde.xp_heros_pour_niveau(niv)
-		niv += 1
+	var xp := float(h.get("xp", 0))
+	var reste := float(xp_gagnee)
+	var record := int(h.get("niveau_record", 0))
+	var nmax := niveau_max(h)
+	while reste > 0.0 and niv < nmax:
+		var k := 1.0 + BONUS_MEMOIRE if niv < record else 1.0
+		var besoin := float(Sauvegarde.xp_heros_pour_niveau(niv)) - xp
+		if reste * k >= besoin:
+			reste -= besoin / k
+			xp = 0.0
+			niv += 1
+		else:
+			xp += reste * k
+			reste = 0.0
 	var perdue := 0
-	if niv >= UnitesData.niveau_max(h["id"]):
-		perdue = xp
-		xp = 0
-	return {"niveau": niv, "xp": xp, "perdue": perdue}
+	if niv >= nmax:
+		perdue = int(round(reste))
+		xp = 0.0
+	return {"niveau": niv, "xp": int(xp), "perdue": perdue}
 
 
 static func raison_absorption_impossible(uid_principal: int, sacrifices: Array) -> String:
 	var h := Sauvegarde.get_heros(uid_principal)
 	if h.is_empty():
 		return "Choisis d'abord un héros principal."
-	if int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
-		return UiCommun.t("Ce héros est déjà au niveau maximum (%d).") % UnitesData.niveau_max(h["id"])
+	if int(h["niveau"]) >= niveau_max(h):
+		return UiCommun.t("Ce héros est déjà au niveau maximum (%d) : fais-lui gagner une étoile (Éveil).") % niveau_max(h)
 	if sacrifices.is_empty():
 		return "Choisis au moins une unité à sacrifier."
 	if sacrifices.size() > MAX_SACRIFICES:

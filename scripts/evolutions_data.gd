@@ -5,8 +5,8 @@ extends RefCounted
 ## Une évolution garde l'élément, le rôle, la rareté et les sorts de l'unité de base, avec :
 ##   - des stats plus hautes (N +40 %, R +35 %, SR +30 %, SSR et Légende +28 %, UR +25 %,
 ##     +5 % de plus sur ses 2 stats dominantes) et des stats secondaires un peu meilleures ;
-##   - un sort amélioré (marqué "evolue": true) et parfois un NOUVEAU sort au niveau 40 ;
-##   - un niveau maximum de 40 (au lieu de 30).
+##   - un sort amélioré (marqué "evolue": true) et parfois un NOUVEAU sort au niveau 40
+##     (v0.66 : le niveau maximum dépend des étoiles, il faut donc ★4 — niveau max 42 — pour l'apprendre).
 ## Les évolutions ne sont JAMAIS invocables : on les obtient à l'Autel d'Évolution
 ## (voir evolution.gd) avec les ressources des Donjons.
 ##

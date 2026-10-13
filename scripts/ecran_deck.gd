@@ -443,11 +443,13 @@ func _maj_fiche() -> void:
 
 	# Niveau et XP
 	var besoin := Sauvegarde.xp_heros_pour_niveau(niv)
-	_fiche.add_child(UiCommun.label(UiCommun.t("Niveau %d / %d") % [niv, UnitesData.niveau_max(h["id"])] + ("" if niv >= UnitesData.niveau_max(h["id"]) else "   ·   XP %d / %d" % [int(h["xp"]), besoin]), 17))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Niveau %d / %d") % [niv, Fusion.niveau_max(h)] + ("" if niv >= Fusion.niveau_max(h) else "   ·   XP %d / %d" % [int(h["xp"]), besoin]), 17))
 	var xp := UiCommun.barre(Color("7ab8ff"), 400, 8)
 	xp.max_value = besoin
-	xp.value = besoin if niv >= UnitesData.niveau_max(h["id"]) else int(h["xp"])
+	xp.value = besoin if niv >= Fusion.niveau_max(h) else int(h["xp"])
 	_fiche.add_child(xp)
+	if UiCommun.info_niveau_heros(h) != "":
+		_fiche.add_child(UiCommun.label(UiCommun.info_niveau_heros(h), 13, Color("ffb070")))
 
 	var grille := GridContainer.new()
 	grille.columns = 5

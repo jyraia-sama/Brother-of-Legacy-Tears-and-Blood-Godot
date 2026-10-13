@@ -311,13 +311,9 @@ func _or(n: int) -> void:
 
 
 func _xp_heros(h: Dictionary, xp: int) -> void:
-	h["xp"] += xp
-	var mx := UnitesData.niveau_max(h["id"])
-	while h["niveau"] < mx and h["xp"] >= Sauvegarde.xp_heros_pour_niveau(h["niveau"]):
-		h["xp"] -= Sauvegarde.xp_heros_pour_niveau(h["niveau"])
-		h["niveau"] += 1
-	if h["niveau"] >= mx:
-		h["xp"] = 0
+	var r := Fusion.calcul_xp(h, xp)
+	h["niveau"] = int(r["niveau"])
+	h["xp"] = int(r["xp"])
 
 
 func _xp_compte(xp: int) -> void:
@@ -491,7 +487,7 @@ func _fusion() -> void:
 	for h in _equipe():
 		while h["etoiles"] < Fusion.ETOILES_MAX:
 			var req := int(Fusion.DOUBLONS_REQUIS.get(h["etoiles"], 99))
-			if h["niveau"] < int(Fusion.NIVEAU_REQUIS.get(h["etoiles"], 99)):
+			if h["niveau"] < Fusion.niveau_max_etoiles(int(h["etoiles"])):
 				break
 			var dbl: Array = []
 			for f in roster:
@@ -503,7 +499,10 @@ func _fusion() -> void:
 			or_ -= cout
 			for k in req:
 				roster.erase(dbl[k])
+			h["niveau_record"] = maxi(int(h["niveau"]), int(h.get("niveau_record", 0)))
 			h["etoiles"] += 1
+			h["niveau"] = 1
+			h["xp"] = 0
 
 
 func _score_echo(e: Dictionary) -> float:

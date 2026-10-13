@@ -11,7 +11,6 @@ static func remplir(parent: Control, uid: int, apres_changement: Callable) -> vo
 	if h.is_empty():
 		return
 	var u := UnitesData.get_unite(h["id"])
-	var niv := int(h["niveau"])
 	var maxi := SortsNiveaux.niveau_max(h)
 	parent.add_child(UiCommun.titre_section("SORTS", UiCommun.C_OR, 18))
 	var poss := UiCommun.label(UiCommun.t("Pages de Grimoire : %d   ·   Grimoires Interdits : %d   ·   niveau max des sorts : %d (%s)") % [
@@ -22,7 +21,7 @@ static func remplir(parent: Control, uid: int, apres_changement: Callable) -> vo
 	var skills: Array = u.get("skills", [])
 	for i in skills.size():
 		var sk: Dictionary = skills[i]
-		var appris: bool = int(sk["niveau"]) <= niv
+		var appris := SortsNiveaux.est_appris(h, sk)
 		var n := SortsNiveaux.niveau(h, i)
 		var bloc := VBoxContainer.new()
 		bloc.add_theme_constant_override("separation", 2)

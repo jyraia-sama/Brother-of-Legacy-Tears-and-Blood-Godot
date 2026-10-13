@@ -13,12 +13,13 @@ extends RefCounted
 
 const ESSAIS_PAR_JOUR := 3
 const TOURS_COMBAT := 15
-const NIVEAU_BOSS := 30
+## Niveau des boss (v0.66 : 40, au lieu de 30, avec le niveau maximum des héros passé à 50).
+const NIVEAU_BOSS := 40
 ## Débloqué quand ce chapitre est terminé
 const DEBLOCAGE := Vector2i(3, 6)
 
-## Stats du boss = stats de base niveau 30 x ces multiplicateurs (réglés par simulation :
-## une armée de 20 unités niveau 27 sans Échos inflige 40 à 55 % des PV et tient ~12 tours).
+## Stats du boss = stats de base au niveau NIVEAU_BOSS x ces multiplicateurs (réglés au niveau 30 (réglés par simulation :
+## avant la v0.66 : une armée de 20 unités niveau 27 sans Échos infligeait 40 à 55 % des PV).
 const BOSS := [
 	{"id": "behemoth_cendres", "titre": "Le Béhémoth des Cendres", "faiblesse": "eau", "actions": 3,
 		"texte": "Une montagne de chair et de lave. Chacun de ses pas fait trembler le monde.",

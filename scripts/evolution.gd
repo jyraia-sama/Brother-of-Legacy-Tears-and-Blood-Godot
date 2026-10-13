@@ -6,7 +6,9 @@ extends RefCounted
 ##  - on paie des ressources de SON élément (Donjon de l'élément) + des ressources de Sang
 ##    (Donjon neutre : le Puits de Sang) ; plus l'unité est rare, plus les ressources sont grosses ;
 ##  - l'unité garde ses étoiles, ses Échos Sanguins, son verrou et sa place dans l'équipe ;
-##  - elle repart au NIVEAU 1, avec un niveau maximum de 40.
+##  - elle GARDE SON NIVEAU (pas de retour au niveau 1) et son niveau maximum ne change pas
+##    (il dépend des étoiles : Fusion.niveau_max) ; elle gagne une nouvelle apparence,
+##    de meilleures stats et un sort renforcé.
 ## Les évolutions ne sont jamais invocables.
 
 const NIVEAU_REQUIS := 30
@@ -101,8 +103,6 @@ static func evoluer(uid: int) -> String:
 		Sauvegarde.retirer_objet(r, int(c[r]))
 	var evo := UnitesData.id_evolution(h["id"])
 	h["id"] = evo
-	h["niveau"] = 1
-	h["xp"] = 0
 	Sauvegarde.decouvrir(evo)
 	Sauvegarde.ajouter_stat("evolutions")
 	Sauvegarde.sauvegarder()

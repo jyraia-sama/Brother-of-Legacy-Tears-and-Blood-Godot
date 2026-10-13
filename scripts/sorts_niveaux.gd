@@ -102,11 +102,21 @@ static func resume(sk: Dictionary, n: int, maxi_n: int) -> String:
 # ---------------------------------------------------------------------
 
 ## Niveaux des sorts d'un héros : {"index": niveau} (copie, prête pour le combat).
+## Clé "appris" : plus haut niveau atteint par le héros, s'il est au-dessus de son niveau actuel
+## (après un Éveil, il garde les sorts qu'il avait déjà appris).
 static func niveaux(uid: int) -> Dictionary:
 	var h := Sauvegarde.get_heros(uid)
 	if h.is_empty():
 		return {}
-	return (h.get("sorts", {}) as Dictionary).duplicate()
+	var d := (h.get("sorts", {}) as Dictionary).duplicate()
+	if Fusion.niveau_record(h) > int(h["niveau"]):
+		d["appris"] = Fusion.niveau_record(h)
+	return d
+
+
+## Le héros connaît-il ce sort ? (appris à son niveau actuel ou avant un Éveil)
+static func est_appris(h: Dictionary, sk: Dictionary) -> bool:
+	return int(sk["niveau"]) <= Fusion.niveau_record(h)
 
 
 static func niveau(h: Dictionary, index: int) -> int:
@@ -139,7 +149,7 @@ static func raison_impossible(uid: int, index: int) -> String:
 	var skills: Array = UnitesData.get_unite(h["id"]).get("skills", [])
 	if index < 0 or index >= skills.size():
 		return "Sort introuvable."
-	if int(skills[index]["niveau"]) > int(h["niveau"]):
+	if not est_appris(h, skills[index]):
 		return UiCommun.t("Sort pas encore appris (niveau %d du héros).") % int(skills[index]["niveau"])
 	var n := niveau(h, index)
 	if n >= NIVEAU_MAX:

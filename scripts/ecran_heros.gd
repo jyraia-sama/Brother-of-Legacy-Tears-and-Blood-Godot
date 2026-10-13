@@ -50,10 +50,12 @@ func _fiche_heros(g: VBoxContainer) -> void:
 	vb.add_child(UiCommun.label("%s · %s · %s%s" % [UiCommun.texte_rarete(id), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]],
 		(" · " + str(u["race"])) if str(u.get("race", "")) != "" else ""], 14, UiCommun.C_DOUX))
 	var niv := int(h["niveau"])
-	var nmax := UnitesData.niveau_max(id)
+	var nmax := Fusion.niveau_max(h)
 	vb.add_child(UiCommun.label(UiCommun.t("Niveau %d / %d   ·   %s") % [niv, nmax, Fusion.texte_etoiles(Fusion.etoiles(h))], 17, Color("ffd060")))
 	if niv < nmax:
 		vb.add_child(_barre(int(h["xp"]), Sauvegarde.xp_heros_pour_niveau(niv), Color("7ab8ff"), 300))
+	if UiCommun.info_niveau_heros(h) != "":
+		vb.add_child(UiCommun.label(UiCommun.info_niveau_heros(h), 13, Color("ffb070")))
 	var s := Sauvegarde.stats_heros(uid)
 	var grille := GridContainer.new()
 	grille.columns = 2

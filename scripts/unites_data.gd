@@ -30,10 +30,12 @@ extends RefCounted
 ## POUR MODIFIER UNE UNITÉ : change ses valeurs ci-dessous (les descriptions
 ## des skills sont du texte simple, pense à les ajuster si tu changes un chiffre).
 
-const NIVEAU_MAX := 30
-## Niveau maximum d'une unité ÉVOLUÉE (voir evolutions_data.gd).
-const NIVEAU_MAX_EVOLUE := 40
-## Gain de stats par niveau : +4 % des stats de base (niveau 30 = x2,16)
+## Niveau le plus haut possible (héros Éveillé ★6, et plafond des ennemis).
+## Le niveau maximum d'UN héros dépend de ses étoiles : Fusion.niveau_max(h) (★1 30 ... ★6 50).
+const NIVEAU_MAX := 50
+## Niveau maximum d'un héros ★1 (évolué ou non).
+const NIVEAU_MAX_BASE := 30
+## Gain de stats par niveau : +4 % des stats de base (niveau 30 = x2,16, niveau 50 = x2,96)
 const CROISSANCE_PAR_NIVEAU := 0.04
 const NIVEAUX_SKILLS := [1, 10, 20, 30]
 
@@ -100,9 +102,10 @@ static func lignee(id: String) -> String:
 	return str(EvolutionsData.UNITES[id]["evolution_de"]) if EvolutionsData.UNITES.has(id) else id
 
 
-## Niveau maximum de cette unité : 30, ou 40 pour une évolution.
-static func niveau_max(id: String) -> int:
-	return NIVEAU_MAX_EVOLUE if est_evolue(id) else NIVEAU_MAX
+## Niveau le plus haut que cette unité peut avoir (50). Pour un héros du joueur,
+## le vrai plafond dépend de ses étoiles : Fusion.niveau_max(h).
+static func niveau_max(_id: String) -> int:
+	return NIVEAU_MAX
 
 
 ## Stats principales + secondaires d'une unité à un niveau donné.

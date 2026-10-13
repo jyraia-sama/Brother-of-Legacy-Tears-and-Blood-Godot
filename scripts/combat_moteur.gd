@@ -112,9 +112,10 @@ func _creer(e: Dictionary, camp: int, place: int) -> Dictionary:
 	# Niveaux de sorts du joueur (sorts_niveaux.gd) : {"index du sort": niveau}, plafonnés en JcJ
 	var niv_sorts: Dictionary = e.get("sorts", {}) if e.get("sorts") is Dictionary else {}
 	var liste_sk: Array = u.get("skills", [])
+	var niveau_appris := maxi(niveau, int(niv_sorts.get("appris", 0)))     # sorts gardés après un Éveil
 	for i in liste_sk.size():
 		var sk: Dictionary = liste_sk[i]
-		if int(sk["niveau"]) > niveau:
+		if int(sk["niveau"]) > niveau_appris:
 			continue
 		var ns := mini(int(niv_sorts.get(str(i), 1)), plafond_sorts)
 		if ns > 1:

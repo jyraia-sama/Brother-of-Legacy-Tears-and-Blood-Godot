@@ -217,7 +217,7 @@ func _remplir_principal() -> void:
 		carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color.WHITE, 0.08, 3))
 		carte.tooltip_text = "Clique pour retirer ce héros de l'autel"
 		var u := UnitesData.get_unite(h["id"])
-		var t := "%s\n%s · Nv %d / %d\n%s" % [u["nom"], UiCommun.texte_rarete(h["id"]), int(h["niveau"]), UnitesData.niveau_max(h["id"]),
+		var t := "%s\n%s · Nv %d / %d\n%s" % [u["nom"], UiCommun.texte_rarete(h["id"]), int(h["niveau"]), Fusion.niveau_max(h),
 			Fusion.texte_etoiles(Fusion.etoiles(h)) + ("  ÉVEILLÉ" if Fusion.est_eveille(h) else "")]
 		if Sauvegarde.place_de(_principal) >= 0:
 			t += UiCommun.t("\nDans l'équipe (place %d)") % (Sauvegarde.place_de(_principal) + 1)
@@ -303,20 +303,26 @@ func _remplir_apercu() -> void:
 				"   ÉVEIL !" if et + 1 >= Fusion.ETOILES_MAX else ""], 20, Color("ffd060")))
 			_apercu.add_child(_ligne_condition(UiCommun.t("Doublons + Pierres : %d / %d") % [mini(_sacrifices.size() + _pierres, Fusion.doublons_requis(h)), Fusion.doublons_requis(h)],
 				_sacrifices.size() + _pierres >= Fusion.doublons_requis(h)))
-			_apercu.add_child(_ligne_condition(UiCommun.t("Niveau requis : %d  (actuel : %d)") % [Fusion.niveau_requis(h), int(h["niveau"])],
+			_apercu.add_child(_ligne_condition(UiCommun.t("Niveau maximum atteint : %d  (actuel : %d)") % [Fusion.niveau_requis(h), int(h["niveau"])],
 				int(h["niveau"]) >= Fusion.niveau_requis(h)))
 			_apercu.add_child(_ligne_condition(UiCommun.t("Coût : %d or") % Fusion.cout_eveil(h), Sauvegarde.get_or() >= Fusion.cout_eveil(h)))
-			apres = Fusion.appliquer_etoiles(UnitesData.stats(h["id"], int(h["niveau"])), et + 1)
+			var nmax2 := Fusion.niveau_max_etoiles(et + 1)
+			var info := UiCommun.label(UiCommun.t("Niveau maximum : %d → %d.  Le héros REPART AU NIVEAU 1 : il garde ses sorts appris et gagne +%d %% d'XP (XP de mémoire) jusqu'au niveau %d.") \
+				% [Fusion.niveau_max(h), nmax2, int(Fusion.BONUS_MEMOIRE * 100), Fusion.niveau_record(h)], 14, Color("ffb070"))
+			info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			_apercu.add_child(info)
+			_apercu.add_child(UiCommun.label(UiCommun.t("Stats une fois remonté au niveau %d :") % nmax2, 13, UiCommun.C_DOUX))
+			apres = Fusion.appliquer_etoiles(UnitesData.stats(h["id"], nmax2), et + 1)
 	else:
 		raison = Fusion.raison_absorption_impossible(_principal, _sacrifices)
-		if int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
+		if int(h["niveau"]) >= Fusion.niveau_max(h):
 			_apercu.add_child(UiCommun.label("Niveau maximum atteint : l'absorption n'est plus utile.", 16, Color("ff9a5a")))
 		else:
 			var xp := Fusion.xp_totale(_principal, _sacrifices)
 			var ap := Fusion.apercu_xp(_principal, xp)
 			_apercu.add_child(UiCommun.label(UiCommun.t("XP gagnée : +%d") % xp, 20, Color("7ab8ff")))
 			_apercu.add_child(UiCommun.label(UiCommun.t("Niveau %d   →   %d%s") % [int(h["niveau"]), int(ap["niveau"]),
-				"" if int(ap["niveau"]) >= UnitesData.niveau_max(h["id"]) else "   (XP %d / %d)" % [int(ap["xp"]), Sauvegarde.xp_heros_pour_niveau(int(ap["niveau"]))]],
+				"" if int(ap["niveau"]) >= Fusion.niveau_max(h) else "   (XP %d / %d)" % [int(ap["xp"]), Sauvegarde.xp_heros_pour_niveau(int(ap["niveau"]))]],
 				18, UiCommun.C_TEXTE))
 			if int(ap["perdue"]) > 0:
 				_apercu.add_child(UiCommun.label(UiCommun.t("Attention : %d XP seront perdus (niveau max atteint).") % int(ap["perdue"]), 14, Color("ff8a7a")))
@@ -494,9 +500,10 @@ func _fusionner() -> void:
 			rares = true
 	var texte := ""
 	if _mode == "eveil":
-		texte = UiCommun.t("Éveiller %s (★%d → ★%d) pour %d or ?\n\nSacrifiés : %s%s") % [nom, Fusion.etoiles(h), Fusion.etoiles(h) + 1,
+		texte = UiCommun.t("Éveiller %s (★%d → ★%d) pour %d or ?\n\nSacrifiés : %s%s\n\n%s REPART AU NIVEAU 1 (niveau max %d) avec +%d %% d'XP jusqu'au niveau %d.") % [nom, Fusion.etoiles(h), Fusion.etoiles(h) + 1,
 			Fusion.cout_eveil(h), ", ".join(noms_sac) if not noms_sac.is_empty() else "aucun",
-			UiCommun.t("\nPierres d'Éveil utilisées : %d") % _pierres if _pierres > 0 else ""]
+			UiCommun.t("\nPierres d'Éveil utilisées : %d") % _pierres if _pierres > 0 else "",
+			nom, Fusion.niveau_max_etoiles(Fusion.etoiles(h) + 1), int(Fusion.BONUS_MEMOIRE * 100), Fusion.niveau_record(h)]
 	else:
 		texte = UiCommun.t("Donner %d XP à %s pour %d or ?\n\nSacrifiés (%d) : %s") % [Fusion.xp_totale(_principal, _sacrifices), nom,
 			Fusion.cout_absorption(_principal, _sacrifices), _sacrifices.size(), ", ".join(noms_sac)]
@@ -518,8 +525,8 @@ func _executer() -> void:
 			_effet_reussite()
 			var apres := avant + 1
 			_message("Éveil réussi !" if apres >= Fusion.ETOILES_MAX else "Étoile gagnée !",
-				UiCommun.t("%s passe %s !\nBonus de stats : +%d %%.%s") % [nom, Fusion.texte_etoiles(apres, false),
-				int(round((Fusion.multiplicateur(apres) - 1.0) * 100)),
+				UiCommun.t("%s passe %s !\nBonus de stats : +%d %%.\nNiveau maximum : %d. Il repart au niveau 1, avec +50 %% d'XP de mémoire.%s") % [nom, Fusion.texte_etoiles(apres, false),
+				int(round((Fusion.multiplicateur(apres) - 1.0) * 100)), Fusion.niveau_max_etoiles(apres),
 				"\n\nIl est désormais ÉVEILLÉ." if apres >= Fusion.ETOILES_MAX else ""])
 	else:
 		var niv_avant := int(h["niveau"])

@@ -158,7 +158,7 @@ func _rafraichir() -> void:
 	var liste := _liste()
 	_lbl_compte.text = {"toutes": UiCommun.t("Unités qui peuvent évoluer (niveau %d requis)") % Evolution.NIVEAU_REQUIS,
 		"pretes": UiCommun.t("Unités prêtes : niveau %d et ressources suffisantes") % Evolution.NIVEAU_REQUIS,
-		"evoluees": UiCommun.t("Tes unités évoluées (niveau max %d)") % UnitesData.NIVEAU_MAX_EVOLUE}[_filtre] + "   —   %d" % liste.size()
+		"evoluees": "Tes unités évoluées"}[_filtre] + "   —   %d" % liste.size()
 	if liste.is_empty():
 		var l := UiCommun.label({"toutes": "Aucune unité à faire évoluer pour l'instant.",
 			"pretes": UiCommun.t("Aucune unité prête. Monte une unité au niveau %d et récolte des ressources dans les Donjons.") % Evolution.NIVEAU_REQUIS,
@@ -233,19 +233,20 @@ func _remplir_fiche() -> void:
 	grille.add_theme_constant_override("h_separation", 26)
 	grille.add_theme_constant_override("v_separation", 2)
 	_fiche.add_child(grille)
-	var n_base := UnitesData.NIVEAU_MAX if deja else int(h["niveau"])
+	var n_base := int(h["niveau"])
+	var n_max := Fusion.niveau_max(h)
 	var a := Fusion.appliquer_etoiles(UnitesData.stats(id_base, n_base), et)
-	var b1 := Fusion.appliquer_etoiles(UnitesData.stats(id_evo, 1), et)
-	var b40 := Fusion.appliquer_etoiles(UnitesData.stats(id_evo, UnitesData.NIVEAU_MAX_EVOLUE), et)
-	for t in ["", UiCommun.t("Base Nv %d") % n_base, "Évolution Nv 1", UiCommun.t("Évolution Nv %d") % UnitesData.NIVEAU_MAX_EVOLUE]:
+	var b1 := Fusion.appliquer_etoiles(UnitesData.stats(id_evo, n_base), et)
+	var b40 := Fusion.appliquer_etoiles(UnitesData.stats(id_evo, n_max), et)
+	for t in ["", UiCommun.t("Base Nv %d") % n_base, UiCommun.t("Évolution Nv %d") % n_base, UiCommun.t("Évolution Nv %d") % n_max]:
 		grille.add_child(UiCommun.label(t, 14, UiCommun.C_DOUX))
 	for p in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"], ["crit", "Crit %"], ["res", "RES"]]:
 		grille.add_child(UiCommun.label(p[1], 15, UiCommun.C_TEXTE))
 		grille.add_child(UiCommun.label(str(a[p[0]]), 15, UiCommun.C_TEXTE))
 		grille.add_child(UiCommun.label(str(b1[p[0]]), 15, C_EVO if b1[p[0]] > a[p[0]] else UiCommun.C_TEXTE))
 		grille.add_child(UiCommun.label(str(b40[p[0]]), 15, Color("8affa0")))
-	var note := UiCommun.label("L'unité repart au niveau 1 (niveau max %d) : ses sorts des niveaux 10, 20 et 30 se redébloquent en la remontant." \
-		% UnitesData.NIVEAU_MAX_EVOLUE, 13, UiCommun.C_DOUX)
+	var note := UiCommun.label(UiCommun.t("L'unité garde son niveau : son niveau maximum (%d à %s) dépend de ses étoiles, pas de l'évolution.") \
+		% [n_max, Fusion.texte_etoiles(et, false)], 13, UiCommun.C_DOUX)
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_fiche.add_child(note)
 	_fiche.add_child(HSeparator.new())
@@ -331,7 +332,7 @@ func _bloc_unite(id: String, nom: String, legende: String) -> VBoxContainer:
 func _fiche_ressources() -> void:
 	_fiche.add_child(UiCommun.label("COMMENT ÇA MARCHE", 18, UiCommun.C_OR))
 	for t in ["Choisis une unité à gauche pour voir son évolution.",
-		UiCommun.t("Une unité doit être au niveau %d. Elle garde ses étoiles et ses Échos, repart au niveau 1 et peut monter jusqu'au niveau %d.") % [Evolution.NIVEAU_REQUIS, UnitesData.NIVEAU_MAX_EVOLUE],
+		UiCommun.t("Une unité doit être au niveau %d. Elle garde son niveau, ses étoiles, ses Échos et ses niveaux de sorts : elle change d'apparence, gagne des stats et un sort renforcé. Son niveau maximum dépend de ses étoiles (Éveil).") % Evolution.NIVEAU_REQUIS,
 		"Chaque évolution coûte des ressources de l'élément de l'unité et du Sang (Puits de Sang).",
 		"Plus l'unité est rare, plus il faut de grosses ressources : Gouttes (N, R), Larmes (R, SR, SSR), Cœurs (SR à Légende)."]:
 		var l := UiCommun.label("•  " + t, 14, UiCommun.C_TEXTE)
@@ -374,8 +375,8 @@ func _confirmer_evolution() -> void:
 		return
 	var d := ConfirmationDialog.new()
 	d.title = "Évolution"
-	d.dialog_text = UiCommun.t("Faire évoluer %s en %s ?\n\nL'unité repart au NIVEAU 1 (niveau max %d).\nElle garde ses étoiles, ses Échos et sa place dans l'équipe.\nLes ressources seront dépensées.") % [
-		UnitesData.get_unite(h["id"])["nom"], UnitesData.get_unite(UnitesData.id_evolution(h["id"]))["nom"], UnitesData.NIVEAU_MAX_EVOLUE]
+	d.dialog_text = UiCommun.t("Faire évoluer %s en %s ?\n\nL'unité garde son niveau (Nv %d), ses étoiles, ses Échos et sa place dans l'équipe.\nLes ressources seront dépensées.") % [
+		UnitesData.get_unite(h["id"])["nom"], UnitesData.get_unite(UnitesData.id_evolution(h["id"]))["nom"], int(h["niveau"])]
 	d.ok_button_text = "Évoluer"
 	d.cancel_button_text = "Annuler"
 	d.confirmed.connect(func():

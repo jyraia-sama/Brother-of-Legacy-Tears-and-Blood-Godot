@@ -68,8 +68,9 @@ const NOMS_VAGUE := {"vague": "Vague de monstres", "mini_boss": "Mini-boss", "bo
 const COUT_STAMINA := [4, 4, 4, 6, 6, 6, 8, 8, 10, 10]
 ## Niveau du donjon -> point équivalent de l'Aventure (0 = Acte I ch.1, 71 = Acte XII ch.6).
 const EQUIVALENT := [12, 20, 28, 36, 44, 52, 60, 66, 71, 71]
-## Au-delà de l'Acte XII (niveaux 9 et 10) : ennemis encore plus forts.
-const SURPLUS := [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.12, 1.3]
+## Niveaux 8 à 10 = FIN DE JEU : niveau visé des héros (0 = suit l'Aventure). La force des ennemis
+## suit Rencontres.facteur_fin_de_jeu (niveau 50 ≈ une équipe ★6 Éveillée). Avant la v0.66 : x1,12 et x1,3.
+const NIVEAU_VISE := [0, 0, 0, 0, 0, 0, 0, 32, 40, 50]
 ## Rareté maximale des monstres des vagues selon le niveau (0 = N ... 4 = UR).
 const RARETE_MAX := [1, 1, 2, 2, 2, 3, 3, 3, 4, 4]
 
@@ -136,7 +137,14 @@ static func point(niveau: int) -> Vector2i:
 static func niveau_ennemis(niveau: int, type: String) -> int:
 	var eq := point(niveau)
 	var bonus: int = {"vague": 0, "mini_boss": 1, "boss": 2}[type]
-	return clampi(Rencontres.niveau_attendu(eq.x, eq.y) + bonus + (1 if niveau >= 9 else 0), 1, UnitesData.NIVEAU_MAX)
+	var vise: int = NIVEAU_VISE[clampi(niveau, 1, NIVEAUX) - 1]
+	var base := vise if vise > 0 else Rencontres.niveau_attendu(eq.x, eq.y)
+	return clampi(base + bonus, 1, UnitesData.NIVEAU_MAX)
+
+
+## Renfort des niveaux de fin de jeu (1,0 avant le niveau 8).
+static func surplus(niveau: int) -> float:
+	return Rencontres.facteur_fin_de_jeu(float(NIVEAU_VISE[clampi(niveau, 1, NIVEAUX) - 1]))
 
 
 static func _pool(donjon: String, niveau: int) -> Array:
@@ -171,7 +179,7 @@ static func generer(donjon: String, niveau: int, index_vague: int) -> Array:
 	var eq := point(niveau)
 	var calib: float = calibrage_test.get("%d-%d" % [niveau, index_vague], CALIBRAGE[niveau - 1][index_vague])
 	var cible: float = Rencontres.puissance_reference(eq.x, eq.y) * RATIOS[type] * DIFFICULTE * calib \
-		* Rencontres.pente(eq.x, eq.y) * Rencontres.ECHOS_ATTENDUS[eq.x - 1] * SURPLUS[niveau - 1]
+		* Rencontres.pente(eq.x, eq.y) * Rencontres.ECHOS_ATTENDUS[eq.x - 1] * surplus(niveau)
 	var brut := 0.0
 	for m in membres:
 		brut += UnitesData.puissance(m[0], niv) * m[1]
@@ -189,7 +197,7 @@ static func generer(donjon: String, niveau: int, index_vague: int) -> Array:
 ## Puissance d'équipe conseillée : celle de l'équipe de référence (réussite ~70 %).
 static func puissance_conseillee(niveau: int) -> float:
 	var eq := point(niveau)
-	return Rencontres.puissance_reference(eq.x, eq.y) * Rencontres.ECHOS_ATTENDUS[eq.x - 1] * SURPLUS[niveau - 1]
+	return Rencontres.puissance_reference(eq.x, eq.y) * Rencontres.ECHOS_ATTENDUS[eq.x - 1] * surplus(niveau)
 
 
 # ---------------------------------------------------------------------

@@ -11,6 +11,21 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NIVEAU MAXIMUM SELON LES ÉTOILES : un héros ★1 monte jusqu'au niveau 30, ★2 jusqu'au 34, ★3 jusqu'au 38, ★4 jusqu'au 42, ★5 jusqu'au 46 et Éveillé ★6 jusqu'au niveau 50.",
+				"ÉVEIL : le héros doit être à son niveau maximum pour gagner une étoile, et il REPART AU NIVEAU 1 avec sa nouvelle étoile.",
+				"XP DE MÉMOIRE : après un Éveil, le héros gagne +50 % d'XP jusqu'à retrouver le niveau qu'il avait atteint. Il garde aussi tous les sorts déjà appris (et leurs niveaux).",
+				"ÉVOLUTION : l'unité garde son niveau (plus de retour au niveau 1) ; elle change d'apparence, gagne des stats et un sort renforcé. Son niveau maximum dépend de ses étoiles. Le sort bonus de niveau 40 de certaines évolutions demande donc ★4.",
+				"Les héros déjà au-dessus de leur nouveau plafond (unités évoluées niveau 31 à 40) gardent leur niveau.",
+				"FIN DE JEU RÉÉQUILIBRÉE : Donjons niveaux 8, 9 et 10 = ennemis niveau 32, 40 et 50 ; Tours étages 81 à 100 = ennemis niveau 31 à 50. Ils sont pensés pour des équipes Éveillées.",
+				"BOSS DE MONDE : les boss passent au niveau 40 (au lieu de 30).",
+				"ARÈNE CLASSÉE : comme l'Arène et la Guerre, les sorts comptent au plus pour le niveau 7.",
+				"SERVEUR : l'Arène, l'Arène classée et la Guerre acceptent maintenant les unités jusqu'au niveau 50 (script supabase/11_niveau_50.sql)."
+			],
+			"titre": "Le prix des étoiles",
+			"version": "0.66.0"
+		},
+		{
+			"changements": [
 				"NIVEAUX DE SORTS : chaque sort (actif ou passif) de tes héros monte maintenant du niveau 1 au niveau 10, depuis la fiche du héros (Deck ou Mon héros), bouton « Améliorer ».",
 				"Chaque niveau donne +4 % de puissance au sort (dégâts, soins, boucliers, bonus, chances d'altération...) : +36 % au niveau 10 (un sort à 200 % passe à 272 %).",
 				"RECHARGE : selon la recharge de base du sort, -1 tour au niveau 10 (sorts à 2 tours), au niveau 7 (sorts à 3 tours), ou au niveau 5 et encore au niveau 10 (sorts à 4 tours et plus).",
@@ -125,20 +140,13 @@
 			],
 			"titre": "La famille Valcendre",
 			"version": "0.61.11"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, LA FAMILLE : la figurine de combat d'Alysse l'Étoile du Bélier (accroupie, prête à bondir, avec un clin d'œil), et Loucas le Bélier Ardent (portrait et figurine : lunettes sur le nez, poings serrés, il charge !)."
-			],
-			"titre": "Les Béliers chargent",
-			"version": "0.61.10"
 		}
 	],
 	"pck": {
-		"sha256": "29232093d42f7c9e13da2defa6d2b9b2820eadfaf5d863e202a6257513ff9c1a",
-		"taille": 33240084,
+		"sha256": "d2c8c101864ff025a109fb16950655cc934d91e2089a61c0cd96f71b8351c6f0",
+		"taille": 33241956,
 		"url": "jeu.pck"
 	},
-	"version": "0.65.0",
+	"version": "0.66.0",
 	"version_minimum": "0.37.0"
 }

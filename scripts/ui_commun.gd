@@ -65,6 +65,15 @@ static func t(texte: String) -> String:
 
 
 ## Texte. À partir de 24 px, c'est un TITRE : police des titres (si présente) et contour sombre.
+## Ligne d'info sous le niveau d'un héros : XP de mémoire, ou « prêt pour l'Éveil » ("" = rien).
+static func info_niveau_heros(h: Dictionary) -> String:
+	if Fusion.a_memoire(h):
+		return t("XP de mémoire : +%d %% d'XP jusqu'au niveau %d") % [int(Fusion.BONUS_MEMOIRE * 100), int(h["niveau_record"])]
+	if not Fusion.est_eveille(h) and int(h["niveau"]) >= Fusion.niveau_max(h):
+		return t("Niveau maximum : prêt pour l'Éveil (★%d, niveau max %d)") % [Fusion.etoiles(h) + 1, Fusion.niveau_max_etoiles(Fusion.etoiles(h) + 1)]
+	return ""
+
+
 static func label(texte: String, taille: int, couleur := C_TEXTE) -> Label:
 	var l := Label.new()
 	l.text = texte
@@ -508,7 +517,7 @@ static func _carte_heros(h: Dictionary, largeur: float, hauteur: float) -> Butto
 	var xp := barre(Color("7ab8ff"), largeur - 30 - 2 * bord_cadre(id, largeur), 5)
 	xp.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	xp.max_value = Sauvegarde.xp_heros_pour_niveau(niv)
-	xp.value = int(h["xp"]) if niv < UnitesData.niveau_max(id) else xp.max_value
+	xp.value = int(h["xp"]) if niv < Fusion.niveau_max(h) else xp.max_value
 	vb.add_child(xp)
 	return b
 
@@ -664,7 +673,7 @@ static func _carte_heros_simple(h: Dictionary, largeur: float, hauteur: float) -
 	var xp := barre(Color("7ab8ff"), largeur - 30, 5)
 	xp.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	xp.max_value = Sauvegarde.xp_heros_pour_niveau(niv)
-	xp.value = int(h["xp"]) if niv < UnitesData.niveau_max(id) else xp.max_value
+	xp.value = int(h["xp"]) if niv < Fusion.niveau_max(h) else xp.max_value
 	vb.add_child(xp)
 	return b
 

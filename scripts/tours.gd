@@ -130,16 +130,23 @@ static func equivalent(n: int) -> Vector2i:
 static func niveau_ennemis(n: int) -> int:
 	var eq := equivalent(n)
 	var bonus: int = {"combat": 0, "elite": 1, "boss": 2, "super": 3}[type_etage(n)]
-	return clampi(Rencontres.niveau_attendu(eq.x, eq.y) + bonus, 1, UnitesData.NIVEAU_MAX)
+	var base := niveau_vise(n) if n > 80 else Rencontres.niveau_attendu(eq.x, eq.y)
+	return clampi(base + bonus, 1, UnitesData.NIVEAU_MAX)
 
 
-## Au-delà de l'étage 80 : +1,5 % par étage (x1,30 à l'étage 100).
+## Étages 81 à 100 = FIN DE JEU : niveau visé des héros, de 31 (étage 81) à 50 (étage 100).
+static func niveau_vise(n: int) -> int:
+	return clampi(30 + (n - 80), 30, UnitesData.NIVEAU_MAX)
+
+
+## Tranche de 10 étages (calibrage).
 static func _tranche(n: int) -> int:
 	return clampi(int((n - 1) / 10.0), 0, 9)
 
 
+## Au-delà de l'étage 80 : ennemis d'une équipe de niveau 31 à 50 (Rencontres.facteur_fin_de_jeu, x3 à l'étage 100).
 static func surplus(n: int) -> float:
-	return 1.0 + maxf(0.0, n - 80) * 0.015
+	return 1.0 if n <= 80 else Rencontres.facteur_fin_de_jeu(float(niveau_vise(n)))
 
 
 static func generer(tour: String, n: int) -> Array:

@@ -576,19 +576,18 @@ static func xp_heros_pour_niveau(n: int) -> int:
 	return 100 + 30 * n
 
 
-## Ajoute de l'XP à un héros. Renvoie le nombre de niveaux gagnés (plafond : niveau 30).
+## Ajoute de l'XP à un héros. Renvoie le nombre de niveaux gagnés.
+## Plafond selon les étoiles (Fusion.niveau_max) ; +50 % d'XP de mémoire après un Éveil.
 static func ajouter_xp_heros(uid: int, xp: int) -> int:
 	var h := get_heros(uid)
 	if h.is_empty():
 		return 0
-	var gagnes := 0
-	h["xp"] = int(h["xp"]) + xp * (10 if admin("xp_x10") else 1)
-	while int(h["niveau"]) < UnitesData.niveau_max(h["id"]) and int(h["xp"]) >= xp_heros_pour_niveau(int(h["niveau"])):
-		h["xp"] = int(h["xp"]) - xp_heros_pour_niveau(int(h["niveau"]))
-		h["niveau"] = int(h["niveau"]) + 1
-		gagnes += 1
-	if int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
-		h["xp"] = 0
+	var avant := int(h["niveau"])
+	var r := Fusion.calcul_xp(h, xp * (10 if admin("xp_x10") else 1))
+	var gagnes := maxi(0, int(r["niveau"]) - avant)
+	if gagnes > 0:
+		h["niveau"] = int(r["niveau"])
+	h["xp"] = int(r["xp"])
 	if gagnes > 0:
 		Audio.son("niveau")
 	sauvegarder()

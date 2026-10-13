@@ -15,11 +15,23 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.65.0"
+const NUMERO := "0.66.0"
 const DATE := "2026-10-13"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.66.0", "date": "2026-10-13", "titre": "Le prix des étoiles",
+	"changements": [
+		"NIVEAU MAXIMUM SELON LES ÉTOILES : un héros ★1 monte jusqu'au niveau 30, ★2 jusqu'au 34, ★3 jusqu'au 38, ★4 jusqu'au 42, ★5 jusqu'au 46 et Éveillé ★6 jusqu'au niveau 50.",
+		"ÉVEIL : le héros doit être à son niveau maximum pour gagner une étoile, et il REPART AU NIVEAU 1 avec sa nouvelle étoile.",
+		"XP DE MÉMOIRE : après un Éveil, le héros gagne +50 % d'XP jusqu'à retrouver le niveau qu'il avait atteint. Il garde aussi tous les sorts déjà appris (et leurs niveaux).",
+		"ÉVOLUTION : l'unité garde son niveau (plus de retour au niveau 1) ; elle change d'apparence, gagne des stats et un sort renforcé. Son niveau maximum dépend de ses étoiles. Le sort bonus de niveau 40 de certaines évolutions demande donc ★4.",
+		"Les héros déjà au-dessus de leur nouveau plafond (unités évoluées niveau 31 à 40) gardent leur niveau.",
+		"FIN DE JEU RÉÉQUILIBRÉE : Donjons niveaux 8, 9 et 10 = ennemis niveau 32, 40 et 50 ; Tours étages 81 à 100 = ennemis niveau 31 à 50. Ils sont pensés pour des équipes Éveillées.",
+		"BOSS DE MONDE : les boss passent au niveau 40 (au lieu de 30).",
+		"ARÈNE CLASSÉE : comme l'Arène et la Guerre, les sorts comptent au plus pour le niveau 7.",
+		"SERVEUR : l'Arène, l'Arène classée et la Guerre acceptent maintenant les unités jusqu'au niveau 50 (script supabase/11_niveau_50.sql).",
+	]},
 	{"version": "0.65.0", "date": "2026-10-13", "titre": "Les pages oubliées",
 	"changements": [
 		"NIVEAUX DE SORTS : chaque sort (actif ou passif) de tes héros monte maintenant du niveau 1 au niveau 10, depuis la fiche du héros (Deck ou Mon héros), bouton « Améliorer ».",

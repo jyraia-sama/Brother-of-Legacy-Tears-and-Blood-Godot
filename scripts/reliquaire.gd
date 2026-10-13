@@ -215,7 +215,7 @@ static func utiliser_elixir(elixir: String) -> int:
 ## Utilise un tome sur un héros. Renvoie les niveaux gagnés (-1 si impossible).
 static func utiliser_tome(tome: String, uid: int) -> int:
 	var h := Sauvegarde.get_heros(uid)
-	if h.is_empty() or not XP_TOME.has(tome) or int(h["niveau"]) >= UnitesData.niveau_max(h["id"]):
+	if h.is_empty() or not XP_TOME.has(tome) or int(h["niveau"]) >= Fusion.niveau_max(h):
 		return -1
 	if not Sauvegarde.retirer_objet(tome, 1):
 		return -1
