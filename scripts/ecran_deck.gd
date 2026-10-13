@@ -499,8 +499,24 @@ func _maj_fiche() -> void:
 		actions.add_child(ev)
 	if place >= 0:
 		_fiche.add_child(UiCommun.label(UiCommun.t("Dans l'équipe : place %d (%s)") % [place + 1, "Avant" if place < 2 else "Arrière"], 14, UiCommun.C_OR))
+	# Raccourci bien visible vers la section SORTS (niveaux de sorts, plus bas dans la fiche)
+	var btn_sorts := UiCommun.bouton("✦ Améliorer les sorts", 15)
+	btn_sorts.tooltip_text = "Monter le niveau des sorts de ce héros (Pages de Grimoire de la Bibliothèque Interdite)."
+	UiCommun.bouton_vif(btn_sorts, Color("8a5a1e"))
+	_fiche.add_child(btn_sorts)
 
+	var idx_sorts := _fiche.get_child_count()
 	FicheSorts.remplir(_fiche, _selection, _maj_fiche)
+	btn_sorts.pressed.connect(func():
+		if idx_sorts >= _fiche.get_child_count():
+			return
+		var cible: Control = _fiche.get_child(idx_sorts)
+		var defil := _fiche.get_parent()
+		while defil != null and not defil is ScrollContainer:
+			defil = defil.get_parent()
+		if defil != null:
+			var sc := defil as ScrollContainer
+			sc.create_tween().tween_property(sc, "scroll_vertical", int(cible.position.y), 0.35))
 
 
 # =====================================================================

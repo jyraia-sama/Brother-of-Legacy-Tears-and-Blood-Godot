@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.67.2** (2026-10-13)
+Version actuelle : **0.67.3** (2026-10-13)
+
+## v0.67.3 — Remontada  (2026-10-13)
+
+- NOUVEAU HÉROS : Stéphane, le Buteur d'Outre-Tombe (UR, Ténèbres, Tireur) — un zombie footballeur qui shoote dans des crânes : Frappe du Crâne (étourdit), Esprit d'Équipe (AGI et Crit pour l'équipe), Coup Franc Maudit (3 rebonds) et Remontada (revient d'entre les morts). Évolution : Stéphane, Ballon d'Or d'Outre-Tombe.
+- DECK : nouveau bouton « ✦ Améliorer les sorts » sur la fiche du héros : il descend directement à la section des sorts.
 
 ## v0.67.2 — Le mot du sage  (2026-10-13)
 

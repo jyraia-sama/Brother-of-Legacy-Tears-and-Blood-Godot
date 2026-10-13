@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.67.2"
+const NUMERO := "0.67.3"
 const DATE := "2026-10-13"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.67.3", "date": "2026-10-13", "titre": "Remontada",
+	"changements": [
+		"NOUVEAU HÉROS : Stéphane, le Buteur d'Outre-Tombe (UR, Ténèbres, Tireur) — un zombie footballeur qui shoote dans des crânes : Frappe du Crâne (étourdit), Esprit d'Équipe (AGI et Crit pour l'équipe), Coup Franc Maudit (3 rebonds) et Remontada (revient d'entre les morts). Évolution : Stéphane, Ballon d'Or d'Outre-Tombe.",
+		"DECK : nouveau bouton « ✦ Améliorer les sorts » sur la fiche du héros : il descend directement à la section des sorts.",
+	]},
 	{"version": "0.67.2", "date": "2026-10-13", "titre": "Le mot du sage",
 	"changements": [
 		"GUIDE DES DONJONS : nouveau bouton « ? » sur l'écran des Donjons (il s'ouvre tout seul à la première visite). Il explique les expéditions, les mécaniques des boss, comment composer son équipe, et pour chaque Donjon : boss, mini-boss, monstre, un exemple d'équipe et TOUS les héros qui contrent le boss (en vert ceux que tu possèdes).",

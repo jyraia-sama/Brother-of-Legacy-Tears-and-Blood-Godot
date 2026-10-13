@@ -1,6 +1,6 @@
 class_name EvolutionsData
 extends RefCounted
-## LES VERSIONS ÉVOLUÉES des unités invocables (76 évolutions).
+## LES VERSIONS ÉVOLUÉES des unités invocables (77 évolutions).
 ##
 ## Une évolution garde l'élément, le rôle, la rareté et les sorts de l'unité de base, avec :
 ##   - des stats plus hautes (N +40 %, R +35 %, SR +30 %, SSR et Légende +28 %, UR +25 %,
@@ -982,6 +982,19 @@ const UNITES := {
 			{"nom": "Solo Déchaîné", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "buff", "stat": "atk", "valeur": 0.2, "duree": 2}, {"effet": "buff", "stat": "agi", "valeur": 0.15, "duree": 2}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Un solo endiablé galvanise ses alliés : ATK +20 % et AGI +15 % pour toute l'équipe (2 tours) ; retire les afflictions."},
 			{"nom": "Larsen Assourdissant", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "silence", "chance": 0.35, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Pousse l'ampli à fond : inflige 120 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Silence (1 tour)."},
 			{"nom": "Rappel du Public", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "aura", "stat": "agi", "valeur": 0.08}], "niveau": 40, "evolue": true, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; toute l'équipe : AGI +8 %."},
+		],
+	},
+	"stephane_buteur_evo": {
+		"nom": "Stéphane, Ballon d'Or d'Outre-Tombe", "rarete": "UR", "element": "tenebres", "role": "tireur", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "2a7a3a",
+		"legende": false, "forge": false, "race": "Zombie", "dominantes": ["atk", "agi"], "phase2": {}, "evolution_de": "stephane_buteur",
+		"stats": {"pv": 2060, "atk": 505, "def": 240, "agi": 390, "mag": 275},
+		"secondaires": {"crit": 18, "degats_crit": 190, "res": 28, "preci": 99},
+		"skills": [
+			{"nom": "Frappe de Légende", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.2}, {"effet": "affliction", "nom": "etourdi", "chance": 0.35, "duree": 1}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Le tir parfait, en pleine lucarne : inflige 220 % de puissance de skill à un ennemi ; 35 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Esprit d'Équipe", "type": "passif", "effets": [{"effet": "aura", "stat": "agi", "valeur": 0.08}, {"effet": "stat", "stat": "crit", "valeur": 8}], "niveau": 10, "description": "Toute l'équipe : AGI +8 % ; Crit +8."},
+			{"nom": "Coup Franc Maudit", "type": "actif", "chance": 0.25, "cible": "aleatoire", "effets": [{"effet": "degats", "mult": 0.8, "coups": 3}], "niveau": 20, "description": "(25 % de chance par tour) Le crâne rebondit partout : frappe 3 fois des ennemis au hasard (80 % de puissance de skill par coup)."},
+			{"nom": "Remontada", "type": "passif", "effets": [{"effet": "renaissance", "valeur": 0.4}, {"effet": "vol_vie", "valeur": 0.08}], "niveau": 30, "description": "Revient d'entre les morts avec 40 % de ses PV (1 fois par combat) ; vol de vie de 8 % sur ses attaques."},
+			{"nom": "Capitaine des Morts", "type": "passif", "effets": [{"effet": "aura", "stat": "atk", "valeur": 0.08}, {"effet": "execution", "valeur": 0.1}], "niveau": 40, "evolue": true, "description": "Toute l'équipe : ATK +8 % ; +10 % de dégâts contre les cibles sous 50 % de PV."},
 		],
 	},
 	"fleuriste_ruines_evo": {

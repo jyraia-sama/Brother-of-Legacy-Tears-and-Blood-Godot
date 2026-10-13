@@ -1197,6 +1197,19 @@ const UNITES := {
 			{"nom": "Larsen Assourdissant", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "silence", "chance": 0.35, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Pousse l'ampli à fond : inflige 120 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Silence (1 tour)."},
 		],
 	},
+	"stephane_buteur": {
+		"nom": "Stéphane, le Buteur d'Outre-Tombe", "rarete": "UR", "element": "tenebres", "role": "tireur", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "2a7a3a",
+		"legende": false, "forge": false, "race": "Zombie", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1650, "atk": 390, "def": 190, "agi": 300, "mag": 220},
+		"secondaires": {"crit": 15, "degats_crit": 180, "res": 24, "preci": 99},
+		"skills": [
+			{"nom": "Frappe du Crâne", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.9}, {"effet": "affliction", "nom": "etourdi", "chance": 0.25, "duree": 1}], "niveau": 1, "description": "(35 % de chance par tour) Shoote une tête de squelette en pleine lucarne : inflige 190 % de puissance de skill à un ennemi ; 25 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Esprit d'Équipe", "type": "passif", "effets": [{"effet": "aura", "stat": "agi", "valeur": 0.08}, {"effet": "stat", "stat": "crit", "valeur": 8}], "niveau": 10, "description": "Toute l'équipe : AGI +8 % ; Crit +8."},
+			{"nom": "Coup Franc Maudit", "type": "actif", "chance": 0.25, "cible": "aleatoire", "effets": [{"effet": "degats", "mult": 0.8, "coups": 3}], "niveau": 20, "description": "(25 % de chance par tour) Le crâne rebondit partout : frappe 3 fois des ennemis au hasard (80 % de puissance de skill par coup)."},
+			{"nom": "Remontada", "type": "passif", "effets": [{"effet": "renaissance", "valeur": 0.4}, {"effet": "vol_vie", "valeur": 0.08}], "niveau": 30, "description": "Revient d'entre les morts avec 40 % de ses PV (1 fois par combat) ; vol de vie de 8 % sur ses attaques."},
+		],
+	},
 
 
 	# ============================================================

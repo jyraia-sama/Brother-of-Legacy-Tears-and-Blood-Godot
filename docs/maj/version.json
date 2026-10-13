@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVEAU HÉROS : Stéphane, le Buteur d'Outre-Tombe (UR, Ténèbres, Tireur) — un zombie footballeur qui shoote dans des crânes : Frappe du Crâne (étourdit), Esprit d'Équipe (AGI et Crit pour l'équipe), Coup Franc Maudit (3 rebonds) et Remontada (revient d'entre les morts). Évolution : Stéphane, Ballon d'Or d'Outre-Tombe.",
+				"DECK : nouveau bouton « ✦ Améliorer les sorts » sur la fiche du héros : il descend directement à la section des sorts."
+			],
+			"titre": "Remontada",
+			"version": "0.67.3"
+		},
+		{
+			"changements": [
 				"GUIDE DES DONJONS : nouveau bouton « ? » sur l'écran des Donjons (il s'ouvre tout seul à la première visite). Il explique les expéditions, les mécaniques des boss, comment composer son équipe, et pour chaque Donjon : boss, mini-boss, monstre, un exemple d'équipe et TOUS les héros qui contrent le boss (en vert ceux que tu possèdes).",
 				"GUIDE DE L'AUTEL DE FUSION : nouveau bouton « ? » : étoiles et niveau maximum, retour au niveau 1 et XP de mémoire, Absorption, doublons et Pierres d'Éveil, liens avec l'Évolution et les niveaux de sorts, conseils."
 			],
@@ -145,20 +153,13 @@
 			],
 			"titre": "Chevaliers et chenapans",
 			"version": "0.61.15"
-		},
-		{
-			"changements": [
-				"NOUVELLES ILLUSTRATIONS, HÉROS D'INVOCATION : la Brute Noire (qui épluche sa banane), Barbe Bleue (chope levée), l'Elfe Sylvestre, l'Araignée Venimeuse et sa toile en cœur, et le Chat des Abysses qui renverse un gobelet en nous regardant."
-			],
-			"titre": "La ménagerie s'agrandit",
-			"version": "0.61.14"
 		}
 	],
 	"pck": {
-		"sha256": "d16e82e44d18d15e6cae29df24a669a7d1ad1d18c947903d754bb16595db1d2c",
-		"taille": 33301976,
+		"sha256": "1bec8159ce372133c52bb131b90e20ae3f2d0ebaad3ea6fb4bc488ebf5425169",
+		"taille": 33306024,
 		"url": "jeu.pck"
 	},
-	"version": "0.67.2",
+	"version": "0.67.3",
 	"version_minimum": "0.37.0"
 }
