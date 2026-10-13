@@ -1,6 +1,6 @@
 class_name EvolutionsData
 extends RefCounted
-## LES VERSIONS ÉVOLUÉES des unités invocables (72 évolutions).
+## LES VERSIONS ÉVOLUÉES des unités invocables (76 évolutions).
 ##
 ## Une évolution garde l'élément, le rôle, la rareté et les sorts de l'unité de base, avec :
 ##   - des stats plus hautes (N +40 %, R +35 %, SR +30 %, SSR et Légende +28 %, UR +25 %,
@@ -574,6 +574,56 @@ const UNITES := {
 			{"nom": "Bénédiction", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.9}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Soigne toute l'équipe de 90 % de puissance de skill ; retire les afflictions."},
 			{"nom": "Miracle Divin", "type": "actif", "chance": 0.15, "cible": "allies", "effets": [{"effet": "soin", "mult": 1.2}, {"effet": "ressusciter", "valeur": 0.45}], "niveau": 30, "evolue": true, "description": "(15 % de chance par tour) Soigne toute l'équipe de 120 % de puissance de skill ; ranime un allié K.O. avec 45 % de ses PV."},
 			{"nom": "Sanctuaire", "type": "passif", "effets": [{"effet": "aura", "stat": "res", "valeur": 0.1}, {"effet": "soin_bonus", "valeur": 0.1}], "niveau": 40, "evolue": true, "description": "Toute l'équipe : RES +10 % ; soins prodigués +10 %."},
+		],
+	},
+	"brise_carapace_evo": {
+		"nom": "Le Fracasseur d'Écailles", "rarete": "N", "element": "nature", "role": "guerrier", "position": "avant", "invocable": false, "categorie": "heros", "couleur": "5a7a3a",
+		"legende": false, "forge": false, "race": "", "dominantes": ["atk", "pv"], "phase2": {}, "evolution_de": "brise_carapace",
+		"stats": {"pv": 985, "atk": 175, "def": 100, "agi": 135, "mag": 35},
+		"secondaires": {"crit": 12, "degats_crit": 175, "res": 10, "preci": 96},
+		"skills": [
+			{"nom": "Brise-Écailles", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.6}, {"effet": "debuff", "stat": "def", "valeur": 0.3, "duree": 2}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Inflige 160 % de puissance de skill à un ennemi ; DEF -30 % pour la cible (2 tours)."},
+			{"nom": "Peau Rugueuse", "type": "passif", "effets": [{"effet": "stat", "stat": "pv", "valeur": 0.1}, {"effet": "immunite", "afflictions": ["poison"]}], "niveau": 10, "description": "PV +10 % ; immunisé à Poison."},
+			{"nom": "Lame Rouillée", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.5}, {"effet": "affliction", "nom": "poison", "chance": 0.5, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 150 % de puissance de skill à un ennemi ; 50 % de chance d'infliger Poison (2 tours)."},
+			{"nom": "Fracas", "type": "actif", "chance": 0.2, "cible": "avant", "effets": [{"effet": "degats", "mult": 1.0}, {"effet": "debuff", "stat": "def", "valeur": 0.15, "duree": 2}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 100 % de puissance de skill aux ennemis de l'Avant ; DEF -15 % pour les cibles (2 tours)."},
+		],
+	},
+	"sirene_muette_evo": {
+		"nom": "La Sirène du Grand Silence", "rarete": "R", "element": "eau", "role": "mage", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "2a8aa8",
+		"legende": false, "forge": false, "race": "", "dominantes": ["mag", "agi"], "phase2": {}, "evolution_de": "sirene_muette",
+		"stats": {"pv": 865, "atk": 150, "def": 95, "agi": 170, "mag": 265},
+		"secondaires": {"crit": 9, "degats_crit": 165, "res": 27, "preci": 98},
+		"skills": [
+			{"nom": "Berceuse des Abysses", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.1}, {"effet": "affliction", "nom": "silence", "chance": 0.5, "duree": 2}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 110 % de puissance de skill à un ennemi ; 50 % de chance d'infliger Silence (2 tours)."},
+			{"nom": "Voix Perdue", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["silence"]}], "niveau": 10, "description": "MAG +12 % ; immunisée à Silence."},
+			{"nom": "Chant Glacé", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.4}, {"effet": "affliction", "nom": "gel", "chance": 0.4, "duree": 1}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 140 % de puissance de skill à un ennemi ; 40 % de chance d'infliger Gel (1 tour)."},
+			{"nom": "Grand Silence", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.0}, {"effet": "affliction", "nom": "silence", "chance": 0.4, "duree": 2}], "niveau": 30, "evolue": true, "description": "(20 % de chance par tour) Inflige 100 % de puissance de skill à tous les ennemis ; 40 % de chance d'infliger Silence (2 tours)."},
+			{"nom": "Écho des Profondeurs", "type": "passif", "effets": [{"effet": "stat", "stat": "res", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["gel"]}], "niveau": 40, "evolue": true, "description": "RES +12 % ; immunisée à Gel."},
+		],
+	},
+	"soeur_silence_evo": {
+		"nom": "L'Abbesse du Silence", "rarete": "SR", "element": "sacre", "role": "soutien", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "e8e0c0",
+		"legende": false, "forge": false, "race": "", "dominantes": ["mag", "pv"], "phase2": {}, "evolution_de": "soeur_silence",
+		"stats": {"pv": 970, "atk": 145, "def": 125, "agi": 150, "mag": 295},
+		"secondaires": {"crit": 8, "degats_crit": 160, "res": 33, "preci": 99},
+		"skills": [
+			{"nom": "Prière Muette", "type": "actif", "chance": 0.35, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.7}, {"effet": "purification"}], "niveau": 1, "description": "(35 % de chance par tour) Soigne toute l'équipe de 70 % de puissance de skill ; retire les afflictions."},
+			{"nom": "Vœu de Silence", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.15}, {"effet": "immunite", "afflictions": ["silence", "malediction"]}], "niveau": 10, "description": "Soins prodigués +15 % ; immunisée à Silence, Malédiction."},
+			{"nom": "Sceau Absolu", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "silence", "chance": 0.5, "duree": 2}], "niveau": 20, "evolue": true, "description": "(25 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 50 % de chance d'infliger Silence (2 tours)."},
+			{"nom": "Grâce Silencieuse", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.12}, {"effet": "purification"}], "niveau": 30, "description": "(20 % de chance par tour) Bouclier de 12 % des PV max sur toute l'équipe ; retire les afflictions."},
+			{"nom": "Cloître Sacré", "type": "passif", "effets": [{"effet": "aura", "stat": "res", "valeur": 0.1}], "niveau": 40, "evolue": true, "description": "Toute l'équipe : RES +10 %."},
+		],
+	},
+	"exorciste_dechu_evo": {
+		"nom": "Le Grand Exorciste", "rarete": "SR", "element": "tenebres", "role": "soutien", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "4a2a4a",
+		"legende": false, "forge": false, "race": "", "dominantes": ["mag", "pv"], "phase2": {}, "evolution_de": "exorciste_dechu",
+		"stats": {"pv": 1000, "atk": 170, "def": 115, "agi": 155, "mag": 285},
+		"secondaires": {"crit": 10, "degats_crit": 170, "res": 31, "preci": 99},
+		"skills": [
+			{"nom": "Exorcisme Noir", "type": "actif", "chance": 0.35, "cible": "allie_faible", "effets": [{"effet": "soin", "mult": 1.25}, {"effet": "purification"}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Soigne l'allié le plus blessé de 125 % de puissance de skill ; retire ses afflictions."},
+			{"nom": "Pacte Interdit", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["malediction"]}], "niveau": 10, "description": "MAG +12 % ; immunisé à Malédiction."},
+			{"nom": "Anathème", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "malediction", "chance": 0.45, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 45 % de chance d'infliger Malédiction (2 tours)."},
+			{"nom": "Rite de Délivrance", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.6}, {"effet": "purification"}], "niveau": 30, "description": "(20 % de chance par tour) Soigne toute l'équipe de 60 % de puissance de skill ; retire les afflictions."},
 		],
 	},
 	"demon_inf_evo": {

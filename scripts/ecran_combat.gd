@@ -35,7 +35,8 @@ const C_DOUX := Color(0.66, 0.59, 0.55)
 const NOMS_TYPE := {"combat": "Combat", "elite": "Combat d'Élite", "gardien": "Gardien",
 	"boss_chapitre": "Boss", "boss_acte": "Boss de l'Acte", "mimic": "MIMIC !"}
 const NOMS_AFFL := {"brulure": "Brûlure", "gel": "Gel", "poison": "Poison", "saignement": "Saignement",
-	"etourdi": "Étourdi", "silence": "Silence", "aveugle": "Aveuglé", "malediction": "Maudit"}
+	"etourdi": "Étourdi", "silence": "Silence", "aveugle": "Aveuglé", "malediction": "Maudit",
+	"marque": "MARQUÉ !", "marque_faible": "Marqué", "chaines": "Enchaîné"}
 
 var _vitesse := 1.0
 var _passer := false
@@ -473,8 +474,10 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 			bouclier_f.visible = false
 			pv_f.visible = false
 			_creer_barre_geant(info)
+		var meca_f := _label_meca(racine, info)
 		return {"racine": racine, "portrait": socle_fig["zone"], "figurine": socle_fig["image"], "barre": barre_f,
-			"bouclier": bouclier_f, "pv_label": pv_f, "pv_max": info["pv_max"], "base_pos": Vector2.ZERO}
+			"bouclier": bouclier_f, "pv_label": pv_f, "pv_max": info["pv_max"], "base_pos": Vector2.ZERO,
+			"meca": meca_f, "meca_base": meca_f.text}
 
 	var portrait := Panel.new()
 	portrait.custom_minimum_size = Vector2(diam, diam)
@@ -522,8 +525,32 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 		portrait.pivot_offset = Vector2(diam, diam) / 2.0
 		tw.tween_property(portrait, "scale", Vector2(1.03, 1.03), 1.2)
 		tw.tween_property(portrait, "scale", Vector2.ONE, 1.2)
+	var meca := _label_meca(racine, info)
 	return {"racine": racine, "portrait": portrait, "barre": barre, "bouclier": bouclier,
-		"pv_label": pv, "pv_max": info["pv_max"], "base_pos": Vector2.ZERO}
+		"pv_label": pv, "pv_max": info["pv_max"], "base_pos": Vector2.ZERO, "meca": meca, "meca_base": meca.text}
+
+
+## Ligne d'état de la mécanique de Donjon (« Carapace 6/10 », « INCANTATION », « Marqué : 1 »...).
+## Au repos, un boss / mini-boss affiche le nom de sa mécanique.
+func _label_meca(racine: Control, info: Dictionary) -> Label:
+	var inf := Mecaniques.infos(str(info.get("meca", "")))
+	var l := _label("⚙ " + str(inf["nom"]) if not inf.is_empty() and inf["type"] != "monstre" else "", 13, Color("ffb070"))
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.add_theme_color_override("font_outline_color", Color.BLACK)
+	l.add_theme_constant_override("outline_size", 5)
+	l.visible = l.text != ""
+	racine.add_child(l)
+	return l
+
+
+func _maj_meca(idx: int, texte: String) -> void:
+	if not _cartes.has(idx) or not _cartes[idx].has("meca"):
+		return
+	var c: Dictionary = _cartes[idx]
+	var l: Label = c["meca"]
+	l.text = texte if texte != "" else str(c.get("meca_base", ""))
+	l.add_theme_color_override("font_color", Color("ff5a3a") if texte in ["INCANTATION"] or texte.begins_with("Marqué") else Color("ffb070"))
+	l.visible = l.text != ""
 
 
 const HAUTEUR_FIGURINE := 165.0
@@ -716,6 +743,8 @@ func _jouer(ev: Dictionary) -> void:
 			await _attendre(0.2)
 		"purification":
 			_texte_flottant(ev["c"], "Purifié", Color("ffffff"), 16, -60)
+		"meca":
+			_maj_meca(int(ev["c"]), str(ev["texte"]))
 		"ko":
 			_ko(ev["c"])
 			await _attendre(0.35)
@@ -763,6 +792,7 @@ func _appliquer_sans_animation(ev: Dictionary) -> void:
 		"ko": _ko(ev["c"])
 		"reanimation", "renaissance": _revivre(ev["c"], ev["pv"])
 		"survie": _maj_pv(ev["c"], 1, -1)
+		"meca": _maj_meca(int(ev["c"]), str(ev["texte"]))
 
 
 func _couleur_unite(idx: int) -> Color:

@@ -15,11 +15,28 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.66.0"
+const NUMERO := "0.67.0"
 const DATE := "2026-10-13"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.67.0", "date": "2026-10-13", "titre": "Chaque boss a son secret",
+	"changements": [
+		"MÉCANIQUES DE DONJON : à partir du niveau 4, chaque mini-boss et chaque boss de Donjon a une mécanique à contrer (renforcée à partir du niveau 8). Le boss arrive avec 2 gardes et devient plus endurant : il faut une vraie stratégie.",
+		"Brasier — Ignaar, FOURNAISE : les Brûlures s'aggravent chaque tour et une Éruption frappe toute l'équipe tous les 4 tours. Contres : Purification, immunité Brûlure, boucliers.",
+		"Sylve — Mère-Racine, SÈVE ÉTERNELLE : énorme régénération, coupée en deux par la Brûlure. Contres : Brûlure, exécution, tuer les Racines Nourricières.",
+		"Fosses — Kraken, CARAPACE DES ABYSSES : -80 % de dégâts jusqu'à 18 coups encaissés, puis elle se reforme. Contres : coups multiples, sorts de zone, Poison.",
+		"Crypte — Morvena, MARQUE DU TRÉPAS : un héros marqué tombe K.O. s'il n'est pas purifié à temps. Contres : Purification, immunité Malédiction.",
+		"Sanctuaire — Oracle, JUGEMENT : incantation qui soigne son camp et frappe très fort, sauf si on l'interrompt. Contres : étourdir, geler, réduire au silence.",
+		"Puits — Hémoragos, FRÉNÉSIE SANGLANTE : il gagne de l'ATK chaque tour et vise le héros le plus blessé. Contres : provocation, Épines, baisse d'ATK.",
+		"Bibliothèque — Reine des Liches, PHYLACTÈRE : protégée tant que ses gardes sont debout, elle les ranime. Contres : sorts de zone, Silence.",
+		"MINI-BOSS : Forge Ardente, Remède Sylvestre, Carapace de Corail, Chaînes, Prière, Faim, Lien d'Âme — chacun annonce la mécanique de son boss.",
+		"7 NOUVEAUX MONSTRES : Salamandre Ardente, Racine Nourricière, Crabe-Bouclier, Lanterne Noire, Acolyte Profané, Molosse du Puits, Page Animée (chacun avec sa petite mécanique).",
+		"4 NOUVEAUX HÉROS INVOCABLES (avec leur évolution) : La Sirène Muette (R, Silence), La Sœur du Silence (SR, Silence de zone + Purification), L'Exorciste Déchu (SR, Purification + Malédiction), Le Brise-Carapace (N, DEF -25 % + Poison).",
+		"ÉCRAN DES DONJONS : nouvelle section « Mécaniques » (ce que fait le boss, conseil) et « Tes héros utiles », la liste de tes héros qui contrent le boss.",
+		"COMBATS : une ligne sous chaque unité montre l'état de la mécanique (Carapace 12/18, INCANTATION, Marqué : 1, ATK +30 %...).",
+		"Les Donjons sont rééquilibrés entre eux (certains étaient bien plus durs que d'autres).",
+	]},
 	{"version": "0.66.0", "date": "2026-10-13", "titre": "Le prix des étoiles",
 	"changements": [
 		"NIVEAU MAXIMUM SELON LES ÉTOILES : un héros ★1 monte jusqu'au niveau 30, ★2 jusqu'au 34, ★3 jusqu'au 38, ★4 jusqu'au 42, ★5 jusqu'au 46 et Éveillé ★6 jusqu'au niveau 50.",

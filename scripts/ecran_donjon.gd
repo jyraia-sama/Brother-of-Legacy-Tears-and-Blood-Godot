@@ -279,6 +279,12 @@ func _remplir_fiche() -> void:
 		var ub := UnitesData.get_unite(chef)
 		if type == "boss" and not ub["phase2"].is_empty():
 			vb.add_child(UiCommun.label("Phase 2 : " + str(ub["phase2"]["nom"]), 13, Color("ff9a7a")))
+		for e in ennemis:
+			if str(e.get("meca", "")) != "":
+				var inf := Mecaniques.infos(str(e["meca"]))
+				vb.add_child(UiCommun.label(UiCommun.t("⚙ Mécanique : %s%s") % [inf["nom"], "  (renforcée)" if int(e.get("meca_force", 1)) >= 2 else ""], 13, Color("ffb070")))
+
+	_remplir_mecaniques(d, n)
 
 	# Estimation : ta puissance comparée à celle de l'équipe conseillée pour ce niveau
 	var equipe := _puissance_equipe()
@@ -319,6 +325,55 @@ func _remplir_fiche() -> void:
 	else:
 		_remplir_ressources_element(d)
 	_remplir_depart(n)
+
+
+## Mécaniques du mini-boss et du boss + les héros du joueur qui les contrent.
+func _remplir_mecaniques(d: String, n: int) -> void:
+	_fiche.add_child(HSeparator.new())
+	_fiche.add_child(UiCommun.label("MÉCANIQUES", 17, UiCommun.C_OR))
+	if Mecaniques.force(n) <= 0:
+		var l0 := UiCommun.label(UiCommun.t("Niveaux 1 à %d : pas encore de mécanique. À partir du niveau %d, le mini-boss et le boss en ont une (renforcée à partir du niveau %d).") \
+			% [Mecaniques.NIVEAU_DEBUT - 1, Mecaniques.NIVEAU_DEBUT, Mecaniques.NIVEAU_RENFORCE], 13, UiCommun.C_DOUX)
+		l0.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_fiche.add_child(l0)
+	var element: String = str(UnitesData.get_unite(Donjons.DONJONS[d]["boss"]).get("element", ""))
+	for paire in [["Mini-boss", Mecaniques.mini(d)], ["Boss", Mecaniques.boss(d)]]:
+		var inf := Mecaniques.infos(paire[1])
+		if inf.is_empty():
+			continue
+		var t := UiCommun.label(UiCommun.t("%s — %s") % [paire[0], inf["nom"]], 15, Color("ffb070"))
+		_fiche.add_child(t)
+		var l := UiCommun.label(str(inf["texte"]), 13, UiCommun.C_TEXTE)
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_fiche.add_child(l)
+		var cs := UiCommun.label("Conseil : " + str(inf["conseil"]), 13, Color("8affa0"))
+		cs.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_fiche.add_child(cs)
+	# Héros utiles contre le boss
+	var utiles := Mecaniques.utiles(Mecaniques.boss(d), element)
+	_fiche.add_child(UiCommun.label("TES HÉROS UTILES CONTRE LE BOSS", 15, UiCommun.C_OR))
+	if utiles.is_empty():
+		var v := UiCommun.label("Aucun de tes héros ne contre encore cette mécanique. Cherche : " + ", ".join(
+			(Mecaniques.infos(Mecaniques.boss(d)).get("contres", []) as Array).map(func(x): return Mecaniques.NOMS_CONTRES.get(x, x))) + ".", 13, UiCommun.C_DOUX)
+		v.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_fiche.add_child(v)
+		return
+	var flux := HFlowContainer.new()
+	flux.add_theme_constant_override("h_separation", 14)
+	flux.add_theme_constant_override("v_separation", 6)
+	_fiche.add_child(flux)
+	for k in mini(utiles.size(), 8):
+		var u: Dictionary = utiles[k]
+		var b := HBoxContainer.new()
+		b.add_theme_constant_override("separation", 6)
+		b.add_child(UiCommun.portrait(u["id"], 34))
+		var place := Sauvegarde.place_de(int(u["uid"]))
+		var txt := UiCommun.t("%s Nv %d%s\n%s") % [u["nom"], u["niveau"], "  (équipe)" if place >= 0 else "",
+			", ".join(u["raisons"]) + ("  · fort contre l'élément" if u["element"] else "")]
+		b.add_child(UiCommun.label(txt, 12, Color("ffe6a0") if place >= 0 else UiCommun.C_TEXTE))
+		flux.add_child(b)
+	if utiles.size() > 8:
+		_fiche.add_child(UiCommun.label(UiCommun.t("… et %d autres.") % (utiles.size() - 8), 12, UiCommun.C_DOUX))
 
 
 func _remplir_ressources_element(d: String) -> void:

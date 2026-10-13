@@ -50,6 +50,7 @@ var tour := 0
 var tours_max := TOURS_MAX
 var _invincibles := false       # menu Admin : Héros invincibles
 var _rng := RandomNumberGenerator.new()
+var _coup_zone := false         # le coup en cours vient d'un sort de zone (Pages Animées)
 ## Arène : les options du menu Admin (héros invincibles, ennemis affaiblis) sont ignorées.
 static var ignorer_admin := false
 
@@ -154,6 +155,11 @@ func _creer(e: Dictionary, camp: int, place: int) -> Dictionary:
 			c["p"]["contre_chance"] += echos["contre_chance"]
 		c["etourdir_skill"] = echos["etourdir_skill"]
 		c["immunite_debut"] = echos["immunite_debut"]
+	# Mécanique de Donjon (mecaniques.gd) : donnée par le mode de jeu ("meca") ou par l'unité (monstres)
+	c["meca"] = str(e.get("meca", u.get("meca", "")))
+	c["meca_force"] = clampi(int(e.get("meca_force", 1)), 1, 2)
+	c["meca_etat"] = {}
+	_meca_init(c)
 	return c
 
 
@@ -297,6 +303,11 @@ func _agir(c: Dictionary) -> void:
 	if aff.has("gel") and _rng.randf() < GEL_PERTE_TOUR:
 		_log({"t": "passe", "a": c["idx"], "raison": "Gelé"})
 		return
+	if aff.has("chaines"):
+		_log({"t": "passe", "a": c["idx"], "raison": "Enchaîné"})
+		return
+	if _meca_action(c):
+		return
 
 	var skill := _choisir_skill(c)
 	if not skill.is_empty():
@@ -309,6 +320,9 @@ func _agir(c: Dictionary) -> void:
 
 
 func _debut_de_tour(c: Dictionary) -> void:
+	_meca_debut(c)
+	if not c["vivant"]:
+		return
 	var aff: Dictionary = c["afflictions"]
 	# Dégâts sur la durée
 	for nom in [["poison", POISON], ["brulure", BRULURE], ["saignement", SAIGNEMENT]]:
@@ -395,6 +409,8 @@ func _cible_attaque(c: Dictionary) -> Dictionary:
 	var provoc := ennemis.filter(func(x): return x["provocation"] > 0)
 	if not provoc.is_empty():
 		return provoc[_rng.randi_range(0, provoc.size() - 1)]
+	if c["meca"] == "frenesie":
+		return _plus_blesse(ennemis)
 	if c["melee"]:
 		var devant := ennemis.filter(func(x): return x["avant"])
 		if not devant.is_empty():
@@ -440,6 +456,12 @@ func _lancer_skill(c: Dictionary, sk: Dictionary, forcee: Dictionary = {}) -> vo
 	if sk["cible"] == "ennemi" and not forcee.is_empty() and forcee["vivant"] and forcee["camp"] != c["camp"]:
 		cibles = [forcee]
 	_log({"t": "skill", "a": c["idx"], "nom": sk["nom"], "cibles": cibles.map(func(x): return x["idx"])})
+	_coup_zone = str(sk["cible"]) in ["ennemis", "avant", "arriere"]
+	_lancer_effets(c, sk, cibles)
+	_coup_zone = false
+
+
+func _lancer_effets(c: Dictionary, sk: Dictionary, cibles: Array) -> void:
 	var total_degats := 0.0
 	for e in sk["effets"]:
 		match e["effet"]:
@@ -487,8 +509,12 @@ func _lancer_skill(c: Dictionary, sk: Dictionary, forcee: Dictionary = {}) -> vo
 			"purification":
 				for cible in cibles:
 					if cible["camp"] == c["camp"] and not cible["afflictions"].is_empty():
+						var marque: bool = cible["afflictions"].has("marque") or cible["afflictions"].has("marque_faible") \
+							or cible["afflictions"].has("chaines")
 						cible["afflictions"].clear()
 						_log({"t": "purification", "c": cible["idx"]})
+						if marque:
+							_log({"t": "meca", "c": cible["idx"], "texte": ""})
 			"cout_pv":
 				_perdre_pv(c, c["pv"] * e["valeur"], "cout")
 			"ressusciter":
@@ -539,6 +565,8 @@ func _cible_attaque_skill(c: Dictionary, ennemis: Array) -> Dictionary:
 	var provoc := ennemis.filter(func(x): return x["provocation"] > 0)
 	if not provoc.is_empty():
 		return provoc[_rng.randi_range(0, provoc.size() - 1)]
+	if c["meca"] == "frenesie":
+		return _plus_blesse(ennemis)
 	return ennemis[_rng.randi_range(0, ennemis.size() - 1)]
 
 
@@ -569,6 +597,10 @@ func _tenter_affliction(src: Dictionary, cible: Dictionary, nom: String, chance:
 	if _rng.randf() < reussite:
 		cible["afflictions"][nom] = maxi(int(cible["afflictions"].get(nom, 0)), duree + (0 if nom == "etourdi" else 1))
 		_log({"t": "affliction", "c": cible["idx"], "nom": nom})
+		if nom in ["etourdi", "gel", "silence"] and int(cible["meca_etat"].get("incant", 0)) > 0:
+			cible["meca_etat"]["incant"] = 0
+			_log({"t": "info", "a": cible["idx"], "texte": "Incantation interrompue !"})
+			_log({"t": "meca", "c": cible["idx"], "texte": ""})
 
 
 # =====================================================================
@@ -578,6 +610,8 @@ func _tenter_affliction(src: Dictionary, cible: Dictionary, nom: String, chance:
 ## Applique des dégâts (bouclier d'abord). Renvoie les dégâts réellement infligés.
 func _infliger(att: Dictionary, cible: Dictionary, dmg: float, crit: bool, physique: bool) -> float:
 	dmg = maxf(1.0, dmg)
+	if att["camp"] != cible["camp"]:
+		dmg = _meca_carapace(cible, dmg)
 	if _invincibles and cible["camp"] == 0:
 		dmg = 0.0
 	var absorbe := minf(cible["bouclier"], dmg)
@@ -641,6 +675,8 @@ func _soigner(src: Dictionary, cible: Dictionary, montant: float, skill: bool) -
 func _verifier_ko(c: Dictionary, tueur: Dictionary) -> void:
 	if c["pv"] > 0.0:
 		return
+	if _meca_ko_evite(c):
+		return
 	if c["survie"] > 0:
 		c["survie"] -= 1
 		c["pv"] = 1.0
@@ -661,6 +697,260 @@ func _verifier_ko(c: Dictionary, tueur: Dictionary) -> void:
 		tueur["accum"] += 1
 		_log({"t": "info", "a": tueur["idx"], "texte": "Puissance accrue"})
 
+
+
+# =====================================================================
+# Mécaniques de Donjon (voir mecaniques.gd pour les textes)
+# =====================================================================
+
+## Carapaces : [coups pour la briser, réduction des dégâts] selon la force (1 ou 2).
+const CARAPACES := {"carapace": [[18, 0.8], [24, 0.85]], "carapace_corail": [[6, 0.6], [8, 0.65]],
+	"crabe": [[3, 0.5], [3, 0.5]]}
+const CARAPACE_REFORME := 1
+## Brûlures qui s'aggravent : % des PV max en plus par tour cumulé.
+const AGGRAVATION := {"fournaise": [0.025, 0.035], "forge_ardente": [0.015, 0.025], "salamandre": [0.01, 0.01]}
+## Gain d'ATK par tour.
+const FRENESIES := {"frenesie": [0.10, 0.14], "faim": [0.05, 0.07], "molosse": [0.06, 0.06]}
+## Phylactère : dégâts reçus réduits tant qu'un garde est debout.
+const PROTECTION_GARDES := [0.5, 0.6]
+
+
+func _meca_init(c: Dictionary) -> void:
+	var m: String = c["meca"]
+	var f: int = c["meca_force"] - 1
+	if CARAPACES.has(m):
+		c["meca_etat"] = {"coups": int(CARAPACES[m][f][0]), "max": int(CARAPACES[m][f][0]),
+			"reduc": float(CARAPACES[m][f][1]), "reforme": 0}
+	elif m == "seve_eternelle":
+		c["p"]["regen"] += [0.10, 0.14][f]
+
+
+func _meca_val(c: Dictionary, table: Dictionary) -> float:
+	return float(table[c["meca"]][c["meca_force"] - 1])
+
+
+func _plus_blesse(liste: Array) -> Dictionary:
+	var pire: Dictionary = {}
+	for x in liste:
+		if pire.is_empty() or x["pv"] / x["pv_max"] < pire["pv"] / pire["pv_max"]:
+			pire = x
+	return pire
+
+
+## Taux d'aggravation des Brûlures imposé au camp `camp` par les ennemis encore debout.
+func _aggravation(camp: int) -> float:
+	var t := 0.0
+	for e in _vivants(1 - camp):
+		if AGGRAVATION.has(e["meca"]):
+			t = maxf(t, _meca_val(e, AGGRAVATION))
+	return t
+
+
+## Choisit jusqu'à n héros (camp opposé) pour une marque, sans ceux déjà marqués ni immunisés.
+func _marquer(c: Dictionary, nom: String, n: int, duree: int, texte: String) -> void:
+	var libres := _vivants(1 - c["camp"]).filter(func(x): return not x["afflictions"].has(nom) \
+		and not x["afflictions"].has("marque") and not "malediction" in x["p"]["immunites"])
+	for k in mini(n, libres.size()):
+		var x: Dictionary = libres.pop_at(_rng.randi_range(0, libres.size() - 1))
+		x["afflictions"][nom] = duree
+		_log({"t": "affliction", "c": x["idx"], "nom": nom})
+		_log({"t": "meca", "c": x["idx"], "texte": texte})
+
+
+## Début du tour d'une unité : effets des mécaniques (avant poisons et durées).
+func _meca_debut(c: Dictionary) -> void:
+	var aff: Dictionary = c["afflictions"]
+	# --- Effets subis (héros) ---
+	if aff.has("brulure"):
+		var taux := _aggravation(c["camp"])
+		if taux > 0.0:
+			c["brul_cumul"] = int(c.get("brul_cumul", 0)) + 1
+			_perdre_pv(c, c["pv_max"] * taux * int(c["brul_cumul"]), "brulure")
+			if not c["vivant"]:
+				return
+	else:
+		c["brul_cumul"] = 0
+	if int(aff.get("marque", 0)) == 1:
+		aff.erase("marque")
+		_log({"t": "info", "a": c["idx"], "texte": "Marque du Trépas !"})
+		_log({"t": "meca", "c": c["idx"], "texte": ""})
+		c["survie"] = 0
+		c["renaissance"] = 0.0
+		_perdre_pv(c, c["pv"] + 1.0, "marque")
+		return
+	if int(aff.get("marque_faible", 0)) == 1:
+		aff.erase("marque_faible")
+		_log({"t": "meca", "c": c["idx"], "texte": ""})
+		_perdre_pv(c, c["pv_max"] * 0.35, "marque")
+		if not c["vivant"]:
+			return
+	for nom in ["marque", "marque_faible", "chaines"]:
+		if aff.has(nom) and int(aff[nom]) > 1:
+			_log({"t": "meca", "c": c["idx"], "texte": {"marque": "Marqué : %d", "marque_faible": "Marque : %d",
+				"chaines": "Enchaîné : %d"}[nom] % (int(aff[nom]) - 1)})
+		elif aff.has(nom) and nom == "chaines":
+			_log({"t": "meca", "c": c["idx"], "texte": ""})
+	# --- Mécanique de l'unité ---
+	var m: String = c["meca"]
+	if m == "":
+		return
+	var f: int = c["meca_force"] - 1
+	var et: Dictionary = c["meca_etat"]
+	match m:
+		"seve_eternelle":
+			for a in _vivants(c["camp"]):
+				if a != c:
+					_soigner(c, a, a["pv_max"] * [0.04, 0.05][f], false)
+		"remede_sylvestre":
+			if not aff.has("brulure"):
+				_soigner(c, c, c["pv_max"] * [0.06, 0.08][f], false)
+		"racine":
+			for a in _vivants(c["camp"]):
+				_soigner(c, a, a["pv_max"] * 0.06, false)
+		"frenesie", "faim", "molosse":
+			if tour > 1:
+				c["bonus_atk"] += _meca_val(c, FRENESIES)
+				_log({"t": "meca", "c": c["idx"], "texte": "ATK +%d %%" % int(round(c["bonus_atk"] * 100))})
+		"carapace", "carapace_corail", "crabe":
+			if int(et["coups"]) <= 0:
+				et["reforme"] = int(et["reforme"]) - 1
+				if int(et["reforme"]) <= 0:
+					et["coups"] = et["max"]
+					_log({"t": "info", "a": c["idx"], "texte": "La carapace se reforme !"})
+					_log({"t": "meca", "c": c["idx"], "texte": "Carapace %d/%d" % [int(et["coups"]), int(et["max"])]})
+			elif tour == 1:
+				_log({"t": "meca", "c": c["idx"], "texte": "Carapace %d/%d" % [int(et["coups"]), int(et["max"])]})
+		"phylactere":
+			if tour % 2 == 0 and not aff.has("silence"):
+				var morts := _ko(c["camp"])
+				if not morts.is_empty():
+					var r: Dictionary = morts[_rng.randi_range(0, morts.size() - 1)]
+					r["vivant"] = true
+					r["pv"] = r["pv_max"] * [0.5, 0.7][f]
+					r["afflictions"].clear()
+					_log({"t": "info", "a": c["idx"], "texte": "Phylactère : un garde se relève !"})
+					_log({"t": "reanimation", "c": r["idx"], "pv": int(r["pv"])})
+		"marque":
+			if tour % 2 == 0:
+				_marquer(c, "marque", 1 + f, 3, "Marqué : 2")
+		"lanterne":
+			if tour % 3 == 0:
+				_marquer(c, "marque_faible", 1, 3, "Marque : 2")
+		"chaines":
+			if tour % 3 == 2:
+				var libres := _vivants(1 - c["camp"]).filter(func(x): return not x["afflictions"].has("chaines"))
+				if not libres.is_empty():
+					var x: Dictionary = libres[_rng.randi_range(0, libres.size() - 1)]
+					x["afflictions"]["chaines"] = 3
+					_log({"t": "info", "a": c["idx"], "texte": "Chaînes !"})
+					_log({"t": "affliction", "c": x["idx"], "nom": "chaines"})
+					_log({"t": "meca", "c": x["idx"], "texte": "Enchaîné : 2"})
+
+
+## Action imposée par la mécanique (Éruption, incantations). true = l'action du tour est prise.
+func _meca_action(c: Dictionary) -> bool:
+	var m: String = c["meca"]
+	if not m in ["fournaise", "jugement", "priere", "acolyte"]:
+		return false
+	var f: int = c["meca_force"] - 1
+	var et: Dictionary = c["meca_etat"]
+	if m == "fournaise":
+		if tour % 4 != 0 or int(et.get("eruption", -1)) == tour:
+			return false
+		et["eruption"] = tour
+		var cibles := _vivants(1 - c["camp"])
+		_log({"t": "skill", "a": c["idx"], "nom": "ÉRUPTION", "cibles": cibles.map(func(x): return x["idx"])})
+		_coup_zone = true
+		for x in cibles:
+			if x["vivant"]:
+				_degats_skill(c, x, {"mult": [1.6, 2.0][f]}, false)
+				if x["vivant"]:
+					_tenter_affliction(c, x, "brulure", 0.5, 2)
+		_coup_zone = false
+		return true
+	# Incantations : début (l'action est prise), puis libération à l'action suivante
+	if int(et.get("incant", 0)) > 0:
+		et["incant"] = 0
+		_log({"t": "meca", "c": c["idx"], "texte": ""})
+		_liberer_incantation(c, m, f)
+		return true
+	var debut: bool = {"jugement": tour % 3 == 2, "priere": tour % 3 == 2, "acolyte": tour % 3 == 1}[m]
+	if not debut or c["afflictions"].has("silence") or int(et.get("dernier", -1)) == tour:
+		return false
+	et["dernier"] = tour
+	et["incant"] = 1
+	_log({"t": "info", "a": c["idx"], "texte": {"jugement": "Incantation du Jugement…", "priere": "Prière…",
+		"acolyte": "Incantation…"}[m]})
+	_log({"t": "meca", "c": c["idx"], "texte": "INCANTATION"})
+	return true
+
+
+func _liberer_incantation(c: Dictionary, m: String, f: int) -> void:
+	var allies := _vivants(c["camp"])
+	match m:
+		"jugement":
+			var cibles := _vivants(1 - c["camp"])
+			_log({"t": "skill", "a": c["idx"], "nom": "JUGEMENT", "cibles": cibles.map(func(x): return x["idx"])})
+			for a in allies:
+				_soigner(c, a, a["pv_max"] * [0.3, 0.4][f], false)
+			_coup_zone = true
+			for x in cibles:
+				if x["vivant"]:
+					_degats_skill(c, x, {"mult": [2.0, 2.4][f]}, false)
+			_coup_zone = false
+		"priere":
+			_log({"t": "skill", "a": c["idx"], "nom": "Prière exaucée", "cibles": allies.map(func(x): return x["idx"])})
+			for a in allies:
+				a["bouclier"] += a["pv_max"] * [0.25, 0.35][f]
+				_log({"t": "bouclier", "c": a["idx"], "v": int(a["bouclier"])})
+		"acolyte":
+			_log({"t": "skill", "a": c["idx"], "nom": "Soin incanté", "cibles": allies.map(func(x): return x["idx"])})
+			for a in allies:
+				_soigner(c, a, a["pv_max"] * 0.2, false)
+
+
+## Carapace : réduit les dégâts et compte les coups. Renvoie les dégâts à appliquer.
+func _meca_carapace(cible: Dictionary, dmg: float) -> float:
+	if cible["meca"] == "phylactere":
+		for a in _vivants(cible["camp"]):
+			if a != cible:
+				return maxf(1.0, dmg * (1.0 - PROTECTION_GARDES[cible["meca_force"] - 1]))
+		return dmg
+	if not CARAPACES.has(cible["meca"]):
+		return dmg
+	var et: Dictionary = cible["meca_etat"]
+	if int(et["coups"]) <= 0:
+		return dmg
+	dmg *= 1.0 - float(et["reduc"])
+	et["coups"] = int(et["coups"]) - 1
+	if int(et["coups"]) <= 0:
+		et["reforme"] = CARAPACE_REFORME + 1
+		_log({"t": "info", "a": cible["idx"], "texte": "Carapace brisée !"})
+		_log({"t": "meca", "c": cible["idx"], "texte": "Carapace brisée"})
+	else:
+		_log({"t": "meca", "c": cible["idx"], "texte": "Carapace %d/%d" % [int(et["coups"]), int(et["max"])]})
+	return maxf(1.0, dmg)
+
+
+## Phylactère / Lien d'Âme / Pages Animées : empêche ou annule un K.O. (true = l'unité reste debout).
+func _meca_ko_evite(c: Dictionary) -> bool:
+	match c["meca"]:
+		"phylactere", "lien_ame":
+			for a in _vivants(c["camp"]):
+				if a != c:
+					c["pv"] = 1.0
+					if int(c["meca_etat"].get("lien_tour", -1)) != tour:
+						c["meca_etat"]["lien_tour"] = tour
+						_log({"t": "info", "a": c["idx"], "texte": "Protégé par ses gardes !"})
+					return true
+		"page":
+			if not c["meca_etat"].get("revenue", false) and not _coup_zone:
+				c["meca_etat"]["revenue"] = true
+				c["pv"] = c["pv_max"] * 0.5
+				c["afflictions"].clear()
+				_log({"t": "reanimation", "c": c["idx"], "pv": int(c["pv"])})
+				return true
+	return false
 
 # =====================================================================
 # Stats effectives
@@ -713,7 +1003,8 @@ func descriptif() -> Array:
 	for c in unites:
 		l.append({"idx": c["idx"], "camp": c["camp"], "place": c["place"], "id": c["id"], "nom": c["nom"],
 			"niveau": c["niveau"], "pv": int(c["pv"]), "pv_max": int(c["pv_max"]), "element": c["element"],
-			"avant": c["avant"], "boss": c["boss"], "elite": c["elite"], "vivant": c["vivant"], "geant": c["geant"]})
+			"avant": c["avant"], "boss": c["boss"], "elite": c["elite"], "vivant": c["vivant"], "geant": c["geant"],
+			"meca": c["meca"]})
 	return l
 
 
@@ -772,6 +1063,9 @@ func prochain_acteur() -> Dictionary:
 			continue
 		if aff.has("gel") and _rng.randf() < GEL_PERTE_TOUR:
 			_log({"t": "passe", "a": c["idx"], "raison": "Gelé"})
+			continue
+		if aff.has("chaines"):
+			_log({"t": "passe", "a": c["idx"], "raison": "Enchaîné"})
 			continue
 		return c
 	return {}
@@ -843,6 +1137,8 @@ func jouer_action(c: Dictionary, action: Dictionary) -> void:
 
 
 func _executer(c: Dictionary, action: Dictionary) -> void:
+	if _meca_action(c):
+		return
 	var a := action
 	if str(a.get("type", "auto")) == "auto":
 		a = choix_auto(c)

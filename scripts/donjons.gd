@@ -22,39 +22,39 @@ const SPECIAUX := ["savoir"]
 const DONJONS := {
 	"feu": {"nom": "Le Brasier Éternel", "sous_titre": "Une forge oubliée où la lave ne refroidit jamais",
 		"couleur": "ff6a2a", "mini_boss": "gardien_brasier", "boss": "ignaar",
-		"monstres": ["sanglier_sauvage", "hyene_des_sables", "pillard_incendiaire", "diablotin_soufre", "orc_guerrier",
+		"monstres": ["salamandre_ardente", "sanglier_sauvage", "hyene_des_sables", "pillard_incendiaire", "diablotin_soufre", "orc_guerrier",
 			"loup_garou", "cyclope", "minotaure_jeune", "centaure_guerrier", "mercenaire_balafre", "molosse_enfers",
 			"cyclope_furieux", "demon_flamme", "bourreau_cornu", "forgeron_abime", "demon_mineur", "vouivre_ecarlate"]},
 	"nature": {"nom": "La Sylve Putride", "sous_titre": "Une forêt malade où chaque racine a faim",
 		"couleur": "6ad04a", "mini_boss": "chasseuse_sylve", "boss": "mere_racine",
-		"monstres": ["rat_geant", "gobelin", "loup_gris", "bandit", "araignee_venin", "brigand", "vautour_charognard",
+		"monstres": ["racine_nourriciere", "rat_geant", "gobelin", "loup_gris", "bandit", "araignee_venin", "brigand", "vautour_charognard",
 			"gobelin_maraudeur", "loup_affame", "patrouilleur_vautour", "pestifere_errant", "harpie", "sorciere_bois",
 			"brigand_cagoule", "araignee_geante", "receleur_ombre", "golem_fissure", "liane_venimeuse", "chimere",
 			"wyverne", "reine_araignee"]},
 	"eau": {"nom": "Les Fosses Englouties", "sous_titre": "Une cité noyée au fond de l'océan noir",
 		"couleur": "4aa8ff", "mini_boss": "sentinelle_corail", "boss": "kraken_fosses",
-		"monstres": ["limace_acide", "slime", "serpent_crache", "spectre_glacial", "troll_marais", "gargouille", "banshee",
+		"monstres": ["crabe_bouclier", "limace_acide", "slime", "serpent_crache", "spectre_glacial", "troll_marais", "gargouille", "banshee",
 			"souvenir_spectral", "passeur_styx", "nuee_vivante", "troll_cavernes", "aberration_cristal",
 			"bete_tourbieres", "sangsue_abyssale", "hydre_jeune", "hydre_bicephale"]},
 	"tenebres": {"nom": "La Crypte sans Lune", "sous_titre": "Des catacombes où aucune lumière n'est jamais entrée",
 		"couleur": "a06ae0", "mini_boss": "geolier_crypte", "boss": "morvena",
-		"monstres": ["squelette", "zombie", "chauve_souris_vampire", "corbeau_maudit", "moine_dechu", "esprit_frappeur",
+		"monstres": ["lanterne_noire", "squelette", "zombie", "chauve_souris_vampire", "corbeau_maudit", "moine_dechu", "esprit_frappeur",
 			"rat_corrompu", "profanateur_tombes", "ame_damnee", "chevalier_rouille", "assassin_ombre", "porteur_lanterne",
 			"arbaletrier_noir", "garde_os", "zombie_enrage", "ombre_rampante", "spectre_vengeur", "harpie_sanglante",
 			"pretre_autel", "pilleur_royal", "golem_obsidienne", "liche_mineure"]},
 	"sacre": {"nom": "Le Sanctuaire Profané", "sous_titre": "Un temple céleste souillé par un culte oublié",
 		"couleur": "ffe070", "mini_boss": "templier_profane", "boss": "oracle_profane",
-		"monstres": ["cherubin", "faucon_celeste", "golem_pierre", "gardien_albatre", "fanatique_zelote", "archer_cieux",
+		"monstres": ["acolyte_profane", "cherubin", "faucon_celeste", "golem_pierre", "gardien_albatre", "fanatique_zelote", "archer_cieux",
 			"pretresse_aube", "mirage_vaincu", "statue_hurlante", "clerc", "gargouille_jade", "champion_dechu",
 			"valkyrie_celeste", "trone_vivant"]},
 	"neutre": {"nom": "Le Puits de Sang", "sous_titre": "Un gouffre sans fond où tout le sang du monde finit par couler",
 		"couleur": "d02a2a", "mini_boss": "boucher_puits", "boss": "hemoragos",
-		"monstres": ["rat_geant", "zombie", "slime", "sanglier_sauvage", "cherubin", "orc_guerrier", "harpie",
+		"monstres": ["molosse_puits", "rat_geant", "zombie", "slime", "sanglier_sauvage", "cherubin", "orc_guerrier", "harpie",
 			"chevalier_rouille", "troll_marais", "golem_pierre", "zombie_enrage", "cyclope_furieux", "troll_cavernes",
 			"statue_hurlante", "chimere", "golem_obsidienne", "hydre_bicephale", "demon_mineur", "gargouille_jade"]},
 	"savoir": {"nom": "La Bibliothèque Interdite", "sous_titre": "Des rayonnages sans fin où les sorts oubliés se défendent seuls",
 		"couleur": "d8b070", "mini_boss": "liche_novice", "boss": "reine_liches", "fond": "neutre",
-		"monstres": ["corbeau_maudit", "chauve_souris_vampire", "moine_dechu", "esprit_frappeur", "sorciere_bois",
+		"monstres": ["page_animee", "corbeau_maudit", "chauve_souris_vampire", "moine_dechu", "esprit_frappeur", "sorciere_bois",
 			"porteur_lanterne", "souvenir_spectral", "spectre_glacial", "banshee", "gargouille", "fanatique_zelote",
 			"golem_pierre", "liche_mineure", "aberration_cristal", "pretre_autel", "pretresse_aube", "statue_hurlante",
 			"ombre_rampante", "spectre_vengeur", "golem_obsidienne", "gargouille_jade"]},
@@ -79,6 +79,22 @@ const DIFFICULTE := 1.0
 const RATIOS := {"vague": 0.8, "mini_boss": 0.55, "boss": 0.26}
 const POIDS_MINI_BOSS := 1.8
 const POIDS_BOSS := 2.6
+## Boss avec sa mécanique (niveau 4 et plus) : il partage la force du combat avec 2 gardes.
+const POIDS_BOSS_MECA := 2.6
+const POIDS_GARDE_BOSS := 0.7
+## Avec leur mécanique, boss et mini-boss sont plus ENDURANTS mais frappent moins fort :
+## le combat dure assez longtemps pour que la mécanique compte (un boss tombait en 2 ou 3 tours).
+static var endurance_test := {}
+const ENDURANCE := {"boss": {"pv": 3.0, "atk": 0.6, "mag": 0.6}, "mini_boss": {"pv": 1.8, "atk": 0.8, "mag": 0.8}}
+## Exceptions : la Frénésie doit rester menaçante (elle monte en puissance).
+const ENDURANCE_MECA := {"frenesie": {"pv": 2.4, "atk": 0.8, "mag": 0.8}, "faim": {"pv": 1.6, "atk": 0.9, "mag": 0.9}}
+## Réglage par Donjon (v0.67, simulation) : les Donjons n'avaient pas tous la même difficulté.
+const CALIBRAGE_DONJON := {"feu": 0.95, "nature": 0.85, "eau": 0.85, "tenebres": 0.88, "sacre": 0.95, "neutre": 0.8, "savoir": 0.95}
+static var calibrage_donjon_test := {}
+
+
+static func calib_donjon(donjon: String) -> float:
+	return float(calibrage_donjon_test.get(donjon, CALIBRAGE_DONJON.get(donjon, 1.0)))
 ## Réglage fin par niveau (index 0 = niveau 1) et par combat (vague, mini-boss, vague, boss),
 ## réglé par simulation. Réussite visée d'une expédition complète avec l'équipe de référence
 ## (sans Échos) : ~70 % aux niveaux 1 à 8, ~55 % au niveau 9, ~40 % au niveau 10.
@@ -164,21 +180,29 @@ static func generer(donjon: String, niveau: int, index_vague: int) -> Array:
 	rng.seed = hash("BoL-donjon-%s-%d-%d-%d" % [donjon, niveau, index_vague, Calendrier.jour_absolu()])
 	var pool := _pool(donjon, niveau)
 	var niv := niveau_ennemis(niveau, type)
-	var membres: Array = []      # [id, poids, nom, boss, elite]
+	var force_meca := Mecaniques.force(niveau)
+	var membres: Array = []      # [id, poids, nom, boss, elite, mécanique]
 	match type:
 		"vague":
 			for i in 5:
 				membres.append([pool[rng.randi_range(0, pool.size() - 1)], 1.0, "", false, false])
 		"mini_boss":
-			membres.append([d["mini_boss"], POIDS_MINI_BOSS, "", false, true])
+			membres.append([d["mini_boss"], POIDS_MINI_BOSS, "", false, true, Mecaniques.mini(donjon) if force_meca > 0 else ""])
 			for i in 2:
 				var g: String = pool[rng.randi_range(0, pool.size() - 1)]
 				membres.append([g, 1.0, "Garde : " + UnitesData.get_unite(g)["nom"], false, false])
 		"boss":
-			membres.append([d["boss"], POIDS_BOSS, "", true, false])
+			if force_meca > 0:
+				# Avec sa mécanique, le boss arrive avec 2 gardes (le monstre du Donjon)
+				membres.append([d["boss"], POIDS_BOSS_MECA, "", true, false, Mecaniques.boss(donjon)])
+				var g2 := Mecaniques.garde(donjon)
+				for i in 2:
+					membres.append([g2, POIDS_GARDE_BOSS, "Garde : " + UnitesData.get_unite(g2)["nom"], false, false])
+			else:
+				membres.append([d["boss"], POIDS_BOSS, "", true, false])
 	var eq := point(niveau)
 	var calib: float = calibrage_test.get("%d-%d" % [niveau, index_vague], CALIBRAGE[niveau - 1][index_vague])
-	var cible: float = Rencontres.puissance_reference(eq.x, eq.y) * RATIOS[type] * DIFFICULTE * calib \
+	var cible: float = Rencontres.puissance_reference(eq.x, eq.y) * RATIOS[type] * DIFFICULTE * calib * calib_donjon(donjon) \
 		* Rencontres.pente(eq.x, eq.y) * Rencontres.ECHOS_ATTENDUS[eq.x - 1] * surplus(niveau)
 	var brut := 0.0
 	for m in membres:
@@ -190,6 +214,10 @@ static func generer(donjon: String, niveau: int, index_vague: int) -> Array:
 		var e := {"id": m[0], "niveau": niv, "mult": facteur * m[1], "boss": m[3], "elite": m[4]}
 		if m[2] != "":
 			e["nom"] = m[2]
+		if m.size() > 5 and str(m[5]) != "":
+			e["meca"] = m[5]
+			e["meca_force"] = force_meca
+			e["mult_stats"] = endurance_test.get(type, ENDURANCE_MECA.get(str(m[5]), ENDURANCE[type]))
 		equipe.append(e)
 	return equipe
 

@@ -328,6 +328,59 @@ const UNITES := {
 			{"nom": "Miracle", "type": "actif", "chance": 0.15, "cible": "allies", "effets": [{"effet": "soin", "mult": 1.0}, {"effet": "ressusciter", "valeur": 0.3}], "niveau": 30, "description": "(15 % de chance par tour) Soigne toute l'équipe de 100 % de puissance de skill ; ranime un allié K.O. avec 30 % de ses PV."},
 		],
 	},
+	# --- Héros ajoutés en v0.67 (contres des mécaniques de Donjon) ---
+	"brise_carapace": {
+		"nom": "Le Brise-Carapace", "rarete": "N", "element": "nature", "role": "guerrier", "position": "avant",
+		"invocable": true, "categorie": "heros", "couleur": "5a7a3a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 680, "atk": 120, "def": 70, "agi": 95, "mag": 25},
+		"secondaires": {"crit": 9, "degats_crit": 165, "res": 8, "preci": 94},
+		"skills": [
+			{"nom": "Coup Brise-Armure", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "debuff", "stat": "def", "valeur": 0.25, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 130 % de puissance de skill à un ennemi ; DEF -25 % pour la cible (2 tours)."},
+			{"nom": "Peau Rugueuse", "type": "passif", "effets": [{"effet": "stat", "stat": "pv", "valeur": 0.1}, {"effet": "immunite", "afflictions": ["poison"]}], "niveau": 10, "description": "PV +10 % ; immunisé à Poison."},
+			{"nom": "Lame Rouillée", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.5}, {"effet": "affliction", "nom": "poison", "chance": 0.5, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 150 % de puissance de skill à un ennemi ; 50 % de chance d'infliger Poison (2 tours)."},
+			{"nom": "Fracas", "type": "actif", "chance": 0.2, "cible": "avant", "effets": [{"effet": "degats", "mult": 1.0}, {"effet": "debuff", "stat": "def", "valeur": 0.15, "duree": 2}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 100 % de puissance de skill aux ennemis de l'Avant ; DEF -15 % pour les cibles (2 tours)."},
+		],
+	},
+	"sirene_muette": {
+		"nom": "La Sirène Muette", "rarete": "R", "element": "eau", "role": "mage", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "2a8aa8",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 640, "atk": 110, "def": 70, "agi": 120, "mag": 190},
+		"secondaires": {"crit": 7, "degats_crit": 160, "res": 24, "preci": 96},
+		"skills": [
+			{"nom": "Berceuse des Abysses", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.1}, {"effet": "affliction", "nom": "silence", "chance": 0.5, "duree": 2}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 110 % de puissance de skill à un ennemi ; 50 % de chance d'infliger Silence (2 tours)."},
+			{"nom": "Voix Perdue", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["silence"]}], "niveau": 10, "description": "MAG +12 % ; immunisée à Silence."},
+			{"nom": "Chant Glacé", "type": "actif", "chance": 0.25, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.4}, {"effet": "affliction", "nom": "gel", "chance": 0.4, "duree": 1}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 140 % de puissance de skill à un ennemi ; 40 % de chance d'infliger Gel (1 tour)."},
+			{"nom": "Chœur Muet", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.8}, {"effet": "affliction", "nom": "silence", "chance": 0.3, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 80 % de puissance de skill à tous les ennemis ; 30 % de chance d'infliger Silence (1 tour)."},
+		],
+	},
+	"soeur_silence": {
+		"nom": "La Sœur du Silence", "rarete": "SR", "element": "sacre", "role": "soutien", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "e8e0c0",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 720, "atk": 110, "def": 95, "agi": 115, "mag": 220},
+		"secondaires": {"crit": 6, "degats_crit": 155, "res": 30, "preci": 97},
+		"skills": [
+			{"nom": "Prière Muette", "type": "actif", "chance": 0.35, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.7}, {"effet": "purification"}], "niveau": 1, "description": "(35 % de chance par tour) Soigne toute l'équipe de 70 % de puissance de skill ; retire les afflictions."},
+			{"nom": "Vœu de Silence", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.15}, {"effet": "immunite", "afflictions": ["silence", "malediction"]}], "niveau": 10, "description": "Soins prodigués +15 % ; immunisée à Silence, Malédiction."},
+			{"nom": "Sceau du Silence", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.7}, {"effet": "affliction", "nom": "silence", "chance": 0.4, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 70 % de puissance de skill à tous les ennemis ; 40 % de chance d'infliger Silence (2 tours)."},
+			{"nom": "Grâce Silencieuse", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.12}, {"effet": "purification"}], "niveau": 30, "description": "(20 % de chance par tour) Bouclier de 12 % des PV max sur toute l'équipe ; retire les afflictions."},
+		],
+	},
+	"exorciste_dechu": {
+		"nom": "L'Exorciste Déchu", "rarete": "SR", "element": "tenebres", "role": "soutien", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "4a2a4a",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 740, "atk": 130, "def": 90, "agi": 120, "mag": 210},
+		"secondaires": {"crit": 8, "degats_crit": 160, "res": 28, "preci": 97},
+		"skills": [
+			{"nom": "Exorcisme", "type": "actif", "chance": 0.35, "cible": "allie_faible", "effets": [{"effet": "soin", "mult": 1.0}, {"effet": "purification"}], "niveau": 1, "description": "(35 % de chance par tour) Soigne l'allié le plus blessé de 100 % de puissance de skill ; retire ses afflictions."},
+			{"nom": "Pacte Interdit", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["malediction"]}], "niveau": 10, "description": "MAG +12 % ; immunisé à Malédiction."},
+			{"nom": "Anathème", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "malediction", "chance": 0.45, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 45 % de chance d'infliger Malédiction (2 tours)."},
+			{"nom": "Rite de Délivrance", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.6}, {"effet": "purification"}], "niveau": 30, "description": "(20 % de chance par tour) Soigne toute l'équipe de 60 % de puissance de skill ; retire les afflictions."},
+		],
+	},
 	"squelette": {
 		"nom": "Guerrier Squelette", "rarete": "N", "element": "tenebres", "role": "guerrier", "position": "avant",
 		"invocable": true, "categorie": "heros", "couleur": "888888",
@@ -1329,6 +1382,89 @@ const UNITES := {
 			{"nom": "Grâce Protectrice", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.22}, {"effet": "stat", "stat": "res", "valeur": 0.14}], "niveau": 10, "description": "Soins prodigués +22 % ; RES +14 %."},
 			{"nom": "Pacte de Sang", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "buff", "stat": "atk", "valeur": 0.2, "duree": 3}, {"effet": "buff", "stat": "mag", "valeur": 0.2, "duree": 3}, {"effet": "cout_pv", "valeur": 0.1}], "niveau": 20, "description": "(25 % de chance par tour) ATK +20 % pour toute l'équipe (3 tours) ; MAG +20 % pour toute l'équipe (3 tours) ; coûte 10 % de ses PV au lanceur."},
 			{"nom": "Soif de Sang", "type": "passif", "effets": [{"effet": "vol_vie", "valeur": 0.17}, {"effet": "immunite", "afflictions": ["malediction"]}], "niveau": 30, "description": "Vol de vie de 17 % sur ses attaques ; immunisé à Malédiction."},
+		],
+	},
+	# ============================================================
+	# MONSTRES DES DONJONS À MÉCANIQUE (v0.67, voir mecaniques.gd)
+	# ============================================================
+	"salamandre_ardente": {
+		"nom": "Salamandre Ardente", "rarete": "R", "element": "feu", "role": "mage", "position": "arriere",
+		"invocable": false, "categorie": "ennemi", "couleur": "e8502a", "meca": "salamandre",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 680, "atk": 140, "def": 70, "agi": 125, "mag": 150},
+		"secondaires": {"crit": 8, "degats_crit": 165, "res": 20, "preci": 96},
+		"skills": [
+			{"nom": "Crachat de Lave", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.5}, {"effet": "affliction", "nom": "brulure", "chance": 0.6, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 150 % de puissance de skill à un ennemi ; 60 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Peau Brûlante", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.1}, {"effet": "immunite", "afflictions": ["brulure"]}], "niveau": 10, "description": "MAG +10 % ; immunisée à Brûlure."},
+			{"nom": "Souffle Ardent", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.8}, {"effet": "affliction", "nom": "brulure", "chance": 0.35, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 80 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Brûlure (2 tours)."},
+		],
+	},
+	"racine_nourriciere": {
+		"nom": "Racine Nourricière", "rarete": "R", "element": "nature", "role": "soutien", "position": "arriere",
+		"invocable": false, "categorie": "ennemi", "couleur": "4a7a2a", "meca": "racine",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 900, "atk": 80, "def": 110, "agi": 70, "mag": 120},
+		"secondaires": {"crit": 5, "degats_crit": 150, "res": 24, "preci": 92},
+		"skills": [
+			{"nom": "Fouet de Ronces", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.0}, {"effet": "affliction", "nom": "poison", "chance": 0.3, "duree": 2}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 100 % de puissance de skill à un ennemi ; 30 % de chance d'infliger Poison (2 tours)."},
+			{"nom": "Racines Profondes", "type": "passif", "effets": [{"effet": "stat", "stat": "pv", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["poison"]}], "niveau": 10, "description": "PV +12 % ; immunisée à Poison."},
+		],
+	},
+	"crabe_bouclier": {
+		"nom": "Crabe-Bouclier", "rarete": "R", "element": "eau", "role": "tank", "position": "avant",
+		"invocable": false, "categorie": "ennemi", "couleur": "3a7ab0", "meca": "crabe",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1000, "atk": 130, "def": 150, "agi": 70, "mag": 40},
+		"secondaires": {"crit": 6, "degats_crit": 155, "res": 18, "preci": 92},
+		"skills": [
+			{"nom": "Pince Broyeuse", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.4}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 140 % de puissance de skill à un ennemi."},
+			{"nom": "Dos Blindé", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.1}, {"effet": "epines", "valeur": 0.08}], "niveau": 10, "description": "DEF +10 % ; renvoie 8 % des dégâts physiques reçus."},
+			{"nom": "Repli", "type": "actif", "chance": 0.2, "cible": "soi", "effets": [{"effet": "bouclier", "valeur": 0.15, "cible": "soi"}, {"effet": "provocation", "duree": 1}], "niveau": 20, "description": "(20 % de chance par tour) Bouclier de 15 % des PV max sur lui-même ; attire les attaques ennemies (1 tour)."},
+		],
+	},
+	"lanterne_noire": {
+		"nom": "Lanterne Noire", "rarete": "R", "element": "tenebres", "role": "mage", "position": "arriere",
+		"invocable": false, "categorie": "ennemi", "couleur": "3a2a5a", "meca": "lanterne",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 620, "atk": 120, "def": 60, "agi": 125, "mag": 155},
+		"secondaires": {"crit": 8, "degats_crit": 165, "res": 26, "preci": 96},
+		"skills": [
+			{"nom": "Flamme Spectrale", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.4}, {"effet": "affliction", "nom": "malediction", "chance": 0.35, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 140 % de puissance de skill à un ennemi ; 35 % de chance d'infliger Malédiction (2 tours)."},
+			{"nom": "Lueur Funeste", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.1}, {"effet": "immunite", "afflictions": ["malediction"]}], "niveau": 10, "description": "MAG +10 % ; immunisée à Malédiction."},
+			{"nom": "Nuit Tombante", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.8}, {"effet": "affliction", "nom": "aveugle", "chance": 0.25, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 80 % de puissance de skill à tous les ennemis ; 25 % de chance d'infliger Aveuglement (2 tours)."},
+		],
+	},
+	"acolyte_profane": {
+		"nom": "Acolyte Profané", "rarete": "R", "element": "sacre", "role": "soutien", "position": "arriere",
+		"invocable": false, "categorie": "ennemi", "couleur": "c8b060", "meca": "acolyte",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 760, "atk": 110, "def": 90, "agi": 110, "mag": 150},
+		"secondaires": {"crit": 6, "degats_crit": 155, "res": 28, "preci": 96},
+		"skills": [
+			{"nom": "Châtiment", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "affliction", "nom": "aveugle", "chance": 0.25, "duree": 1}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 130 % de puissance de skill à un ennemi ; 25 % de chance d'infliger Aveuglement (1 tour)."},
+			{"nom": "Foi Corrompue", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.15}, {"effet": "stat", "stat": "res", "valeur": 0.1}], "niveau": 10, "description": "Soins prodigués +15 % ; RES +10 %."},
+		],
+	},
+	"molosse_puits": {
+		"nom": "Molosse du Puits", "rarete": "R", "element": "neutre", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "ennemi", "couleur": "7a1a1a", "meca": "molosse",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 860, "atk": 185, "def": 90, "agi": 130, "mag": 30},
+		"secondaires": {"crit": 10, "degats_crit": 170, "res": 12, "preci": 94},
+		"skills": [
+			{"nom": "Morsure Sanglante", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.5}, {"effet": "affliction", "nom": "saignement", "chance": 0.4, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 150 % de puissance de skill à un ennemi ; 40 % de chance d'infliger Saignement (2 tours)."},
+			{"nom": "Odeur du Sang", "type": "passif", "effets": [{"effet": "vol_vie", "valeur": 0.1}, {"effet": "execution", "valeur": 0.15}], "niveau": 10, "description": "Vol de vie de 10 % sur ses attaques ; +15 % de dégâts contre les cibles sous 50 % de PV."},
+		],
+	},
+	"page_animee": {
+		"nom": "Page Animée", "rarete": "R", "element": "neutre", "role": "mage", "position": "arriere",
+		"invocable": false, "categorie": "ennemi", "couleur": "d8c890", "meca": "page",
+		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"stats": {"pv": 560, "atk": 110, "def": 55, "agi": 140, "mag": 140},
+		"secondaires": {"crit": 10, "degats_crit": 165, "res": 22, "preci": 97},
+		"skills": [
+			{"nom": "Tranchant de Papier", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "saignement", "chance": 0.3, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 120 % de puissance de skill à un ennemi ; 30 % de chance d'infliger Saignement (2 tours)."},
+			{"nom": "Tourbillon de Pages", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.7}], "niveau": 10, "description": "(25 % de chance par tour) Inflige 70 % de puissance de skill à tous les ennemis."},
 		],
 	},
 	"gargouille_jade": {
