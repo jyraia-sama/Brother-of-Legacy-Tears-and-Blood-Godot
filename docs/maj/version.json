@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"10 héros ont maintenant leur propre image d'évolution (portrait et figurine) : Phénix Solaire Éternel, Dragon du Néant, L'Empereur Ressuscité, Léviathan Primordial, Destrier Divin, La Tisseuse Souveraine, Le Mercenaire Sans Limites, La Maîtresse du Poing de Braise, La Voix de la Terre et L'Archidruidesse des Ronces.",
+				"Elles apparaissent dans le Deck, en combat, dans le Bestiaire et dans la Galerie d'art."
+			],
+			"titre": "Évolutions : premier lot",
+			"version": "0.68.4"
+		},
+		{
+			"changements": [
 				"CORRECTIF : la Salamandre des Donjons avait le même identifiant qu'un familier de la Ménagerie (la Salamandre Ardente) : elle s'affichait avec l'image et la rareté du familier dans le Bestiaire et la Galerie. Elle a maintenant son propre identifiant ; elle garde son nom et son image."
 			],
 			"titre": "Deux salamandres",
@@ -142,20 +150,13 @@
 			],
 			"titre": "Des icônes bien carrées",
 			"version": "0.63.2"
-		},
-		{
-			"changements": [
-				"ICÔNES DE SORTS : les 23 familles de sorts ont maintenant leur icône peinte (épées croisées, météores, croix de soin, bouclier d'énergie, taureau de provocation, flocon de gel, fiole de poison, cadenas du silence...). Survole une icône en combat manuel pour voir le détail du sort."
-			],
-			"titre": "Des sorts qui ont de la gueule",
-			"version": "0.63.1"
 		}
 	],
 	"pck": {
-		"sha256": "0060c4a82a464b878776e1ee83ae762ad851a90bc7f8fabba8e198d7b0ee4043",
-		"taille": 33316712,
+		"sha256": "c4262f30db48576ba16ba7f815b1a18f4582f68c6e06ca261cf05c4a3baa9403",
+		"taille": 33316760,
 		"url": "jeu.pck"
 	},
-	"version": "0.68.3",
+	"version": "0.68.4",
 	"version_minimum": "0.37.0"
 }

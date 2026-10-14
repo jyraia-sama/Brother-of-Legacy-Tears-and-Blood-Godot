@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.68.3** (2026-10-14)
+Version actuelle : **0.68.4** (2026-10-14)
+
+## v0.68.4 — Évolutions : premier lot  (2026-10-14)
+
+- 10 héros ont maintenant leur propre image d'évolution (portrait et figurine) : Phénix Solaire Éternel, Dragon du Néant, L'Empereur Ressuscité, Léviathan Primordial, Destrier Divin, La Tisseuse Souveraine, Le Mercenaire Sans Limites, La Maîtresse du Poing de Braise, La Voix de la Terre et L'Archidruidesse des Ronces.
+- Elles apparaissent dans le Deck, en combat, dans le Bestiaire et dans la Galerie d'art.
 
 ## v0.68.3 — Deux salamandres  (2026-10-14)
 

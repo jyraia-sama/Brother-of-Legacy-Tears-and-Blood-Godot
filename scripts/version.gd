@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.68.3"
+const NUMERO := "0.68.4"
 const DATE := "2026-10-14"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.68.4", "date": "2026-10-14", "titre": "Évolutions : premier lot",
+	"changements": [
+		"10 héros ont maintenant leur propre image d'évolution (portrait et figurine) : Phénix Solaire Éternel, Dragon du Néant, L'Empereur Ressuscité, Léviathan Primordial, Destrier Divin, La Tisseuse Souveraine, Le Mercenaire Sans Limites, La Maîtresse du Poing de Braise, La Voix de la Terre et L'Archidruidesse des Ronces.",
+		"Elles apparaissent dans le Deck, en combat, dans le Bestiaire et dans la Galerie d'art.",
+	]},
 	{"version": "0.68.3", "date": "2026-10-14", "titre": "Deux salamandres",
 	"changements": [
 		"CORRECTIF : la Salamandre des Donjons avait le même identifiant qu'un familier de la Ménagerie (la Salamandre Ardente) : elle s'affichait avec l'image et la rareté du familier dans le Bestiaire et la Galerie. Elle a maintenant son propre identifiant ; elle garde son nom et son image.",
