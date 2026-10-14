@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.67.3"
-const DATE := "2026-10-13"
+const NUMERO := "0.68.0"
+const DATE := "2026-10-14"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.68.0", "date": "2026-10-14", "titre": "Huit nouvelles recrues",
+	"changements": [
+		"8 NOUVEAUX HÉROS INVOCABLES (avec leur évolution) : la Novice de l'Aube (N, Sacré, Purification), l'Écuyer du Temple (N, Sacré, Provocation + Épines), l'Arbalétrière Céleste (R, Sacré, Volée de carreaux), l'Ondine des Récifs (SR, Eau, soins + Purification), le Chasseur de Primes (SR, Feu, exécution + Brûlure), la Forgeronne Écarlate (SSR, Feu, brise-armure + Brûlure), le Cerf-Roi des Bois (SSR, Nature, tank à Épines) et la Druidesse des Ronces (UR, Nature, Poison et Silence de zone).",
+		"La collection passe à 86 héros invocables : le Sacré a enfin des héros N et R, et le Feu comme la Nature ont leurs SSR.",
+	]},
 	{"version": "0.67.3", "date": "2026-10-13", "titre": "Remontada",
 	"changements": [
 		"NOUVEAU HÉROS : Stéphane, le Buteur d'Outre-Tombe (UR, Ténèbres, Tireur) — un zombie footballeur qui shoote dans des crânes : Frappe du Crâne (étourdit), Esprit d'Équipe (AGI et Crit pour l'équipe), Coup Franc Maudit (3 rebonds) et Remontada (revient d'entre les morts). Évolution : Stéphane, Ballon d'Or d'Outre-Tombe.",

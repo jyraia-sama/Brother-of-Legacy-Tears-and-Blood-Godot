@@ -1,6 +1,6 @@
 class_name EvolutionsData
 extends RefCounted
-## LES VERSIONS ÉVOLUÉES des unités invocables (77 évolutions).
+## LES VERSIONS ÉVOLUÉES des unités invocables (85 évolutions).
 ##
 ## Une évolution garde l'élément, le rôle, la rareté et les sorts de l'unité de base, avec :
 ##   - des stats plus hautes (N +40 %, R +35 %, SR +30 %, SSR et Légende +28 %, UR +25 %,
@@ -624,6 +624,107 @@ const UNITES := {
 			{"nom": "Pacte Interdit", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["malediction"]}], "niveau": 10, "description": "MAG +12 % ; immunisé à Malédiction."},
 			{"nom": "Anathème", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "malediction", "chance": 0.45, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 45 % de chance d'infliger Malédiction (2 tours)."},
 			{"nom": "Rite de Délivrance", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.6}, {"effet": "purification"}], "niveau": 30, "description": "(20 % de chance par tour) Soigne toute l'équipe de 60 % de puissance de skill ; retire les afflictions."},
+		],
+	},
+	"novice_aube_evo": {
+		"nom": "La Prêtresse de l'Aube Nouvelle", "rarete": "N", "element": "sacre", "role": "soutien", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "f0e0a0",
+		"legende": false, "forge": false, "race": "Humaine", "dominantes": ["mag", "pv"], "phase2": {}, "evolution_de": "novice_aube",
+		"stats": {"pv": 870, "atk": 110, "def": 110, "agi": 120, "mag": 140},
+		"secondaires": {"crit": 8, "degats_crit": 160, "res": 29, "preci": 97},
+		"skills": [
+			{"nom": "Prière Timide", "type": "actif", "chance": 0.4, "cible": "allie_faible", "effets": [{"effet": "soin", "mult": 0.9}], "niveau": 1, "description": "(40 % de chance par tour) Soigne l'allié le plus blessé de 90 % de puissance de skill."},
+			{"nom": "Cœur Pur", "type": "passif", "effets": [{"effet": "soin_bonus", "valeur": 0.15}, {"effet": "stat", "stat": "res", "valeur": 0.1}], "niveau": 10, "description": "Soins prodigués +15 % ; RES +10 %."},
+			{"nom": "Aurore Purifiante", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.6}, {"effet": "purification"}], "niveau": 20, "evolue": true, "description": "(25 % de chance par tour) Soigne toute l'équipe de 60 % de puissance de skill ; retire les afflictions."},
+			{"nom": "Halo Protecteur", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.08}], "niveau": 30, "description": "(20 % de chance par tour) Bouclier de 8 % des PV max sur toute l'équipe."},
+		],
+	},
+	"ecuyer_temple_evo": {
+		"nom": "Le Chevalier du Temple", "rarete": "N", "element": "sacre", "role": "tank", "position": "avant", "invocable": false, "categorie": "heros", "couleur": "c8c0a0",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": ["pv", "def"], "phase2": {}, "evolution_de": "ecuyer_temple",
+		"stats": {"pv": 1015, "atk": 125, "def": 125, "agi": 85, "mag": 30},
+		"secondaires": {"crit": 7, "degats_crit": 160, "res": 23, "preci": 93},
+		"skills": [
+			{"nom": "Coup de Bouclier", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.2}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 120 % de puissance de skill à un ennemi."},
+			{"nom": "Serment de l'Écuyer", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["aveugle"]}], "niveau": 10, "description": "DEF +12 % ; immunisé à Aveuglement."},
+			{"nom": "Rempart Sacré", "type": "actif", "chance": 0.25, "cible": "soi", "effets": [{"effet": "bouclier", "valeur": 0.22, "cible": "soi"}, {"effet": "provocation", "duree": 2}], "niveau": 20, "evolue": true, "description": "(25 % de chance par tour) Bouclier de 22 % des PV max sur lui-même ; attire les attaques ennemies (2 tours)."},
+			{"nom": "Bouclier à Pointes", "type": "passif", "effets": [{"effet": "epines", "valeur": 0.1}], "niveau": 30, "description": "Renvoie 10 % des dégâts physiques reçus."},
+		],
+	},
+	"arbaletriere_celeste_evo": {
+		"nom": "La Sentinelle Céleste", "rarete": "R", "element": "sacre", "role": "tireur", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "d8c070",
+		"legende": false, "forge": false, "race": "Humaine", "dominantes": ["atk", "agi"], "phase2": {}, "evolution_de": "arbaletriere_celeste",
+		"stats": {"pv": 970, "atk": 280, "def": 110, "agi": 215, "mag": 95},
+		"secondaires": {"crit": 16, "degats_crit": 185, "res": 15, "preci": 99},
+		"skills": [
+			{"nom": "Carreau Éblouissant", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.4}, {"effet": "affliction", "nom": "aveugle", "chance": 0.35, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 140 % de puissance de skill à un ennemi ; 35 % de chance d'infliger Aveuglement (2 tours)."},
+			{"nom": "Œil de Faucon", "type": "passif", "effets": [{"effet": "stat", "stat": "preci", "valeur": 5}, {"effet": "stat", "stat": "crit", "valeur": 8}], "niveau": 10, "description": "Précision +5 ; Crit +8."},
+			{"nom": "Pluie Céleste", "type": "actif", "chance": 0.25, "cible": "aleatoire", "effets": [{"effet": "degats", "mult": 0.75, "coups": 4}], "niveau": 20, "evolue": true, "description": "(25 % de chance par tour) Frappe 4 fois des ennemis au hasard (75 % de puissance de skill par coup)."},
+			{"nom": "Carreau Perforant", "type": "actif", "chance": 0.2, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.8, "ignore_res": 0.4}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 180 % de puissance de skill à un ennemi, en ignorant 40 % de la RES."},
+		],
+	},
+	"ondine_recifs_evo": {
+		"nom": "La Reine des Récifs", "rarete": "SR", "element": "eau", "role": "soutien", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "3ab0c8",
+		"legende": false, "forge": false, "race": "Ondine", "dominantes": ["mag", "pv"], "phase2": {}, "evolution_de": "ondine_recifs",
+		"stats": {"pv": 970, "atk": 145, "def": 125, "agi": 155, "mag": 305},
+		"secondaires": {"crit": 9, "degats_crit": 165, "res": 32, "preci": 99},
+		"skills": [
+			{"nom": "Vague Apaisante", "type": "actif", "chance": 0.35, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.75}], "niveau": 1, "description": "(35 % de chance par tour) Soigne toute l'équipe de 75 % de puissance de skill."},
+			{"nom": "Marée Douce", "type": "passif", "effets": [{"effet": "regen", "valeur": 0.03}, {"effet": "soin_bonus", "valeur": 0.15}], "niveau": 10, "description": "Régénère 3 % de ses PV max à chaque tour ; soins prodigués +15 %."},
+			{"nom": "Source Éternelle", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.8}, {"effet": "purification"}], "niveau": 20, "evolue": true, "description": "(25 % de chance par tour) Soigne toute l'équipe de 80 % de puissance de skill ; retire les afflictions."},
+			{"nom": "Bouclier d'Écume", "type": "actif", "chance": 0.2, "cible": "allies", "effets": [{"effet": "bouclier", "valeur": 0.12}], "niveau": 30, "description": "(20 % de chance par tour) Bouclier de 12 % des PV max sur toute l'équipe."},
+			{"nom": "Chant des Marées", "type": "passif", "effets": [{"effet": "aura", "stat": "res", "valeur": 0.1}], "niveau": 40, "evolue": true, "description": "Toute l'équipe : RES +10 %."},
+		],
+	},
+	"chasseur_primes_evo": {
+		"nom": "Le Traqueur Légendaire", "rarete": "SR", "element": "feu", "role": "tireur", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "a04a2a",
+		"legende": false, "forge": false, "race": "Humain", "dominantes": ["atk", "agi"], "phase2": {}, "evolution_de": "chasseur_primes",
+		"stats": {"pv": 1300, "atk": 350, "def": 170, "agi": 230, "mag": 115},
+		"secondaires": {"crit": 18, "degats_crit": 190, "res": 15, "preci": 99},
+		"skills": [
+			{"nom": "Tir Précis", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.7}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 170 % de puissance de skill à un ennemi."},
+			{"nom": "Contrat Rempli", "type": "passif", "effets": [{"effet": "execution", "valeur": 0.25}], "niveau": 10, "description": "+25 % de dégâts contre les cibles sous 50 % de PV."},
+			{"nom": "Double Détente", "type": "passif", "effets": [{"effet": "double_attaque", "chance": 0.25}, {"effet": "stat", "stat": "crit", "valeur": 6}], "niveau": 20, "description": "25 % de chance d'attaquer deux fois ; Crit +6."},
+			{"nom": "Balle de Phosphore", "type": "actif", "chance": 0.2, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.8}, {"effet": "affliction", "nom": "brulure", "chance": 0.7, "duree": 3}], "niveau": 30, "evolue": true, "description": "(20 % de chance par tour) Inflige 180 % de puissance de skill à un ennemi ; 70 % de chance d'infliger Brûlure (3 tours)."},
+			{"nom": "Prime sur sa Tête", "type": "passif", "effets": [{"effet": "stat", "stat": "degats_crit", "valeur": 20}, {"effet": "execution", "valeur": 0.1}], "niveau": 40, "evolue": true, "description": "Dégâts crit +20 % ; +10 % de dégâts contre les cibles sous 50 % de PV."},
+		],
+	},
+	"forgeronne_ecarlate_evo": {
+		"nom": "La Maîtresse des Forges", "rarete": "SSR", "element": "feu", "role": "guerrier", "position": "avant", "invocable": false, "categorie": "heros", "couleur": "c83a1a",
+		"legende": false, "forge": false, "race": "Naine", "dominantes": ["atk", "pv"], "phase2": {}, "evolution_de": "forgeronne_ecarlate",
+		"stats": {"pv": 1795, "atk": 410, "def": 270, "agi": 245, "mag": 190},
+		"secondaires": {"crit": 15, "degats_crit": 185, "res": 21, "preci": 97},
+		"skills": [
+			{"nom": "Marteau Fendeur", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.1}, {"effet": "debuff", "stat": "def", "valeur": 0.3, "duree": 2}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Inflige 210 % de puissance de skill à un ennemi ; DEF -30 % pour la cible (2 tours)."},
+			{"nom": "Peau de Forge", "type": "passif", "effets": [{"effet": "stat", "stat": "pv", "valeur": 0.12}, {"effet": "immunite", "afflictions": ["brulure"]}], "niveau": 10, "description": "PV +12 % ; immunisée à Brûlure."},
+			{"nom": "Gerbe de Métal en Fusion", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "brulure", "chance": 0.5, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 50 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Coup d'Enclume", "type": "actif", "chance": 0.2, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.0}, {"effet": "affliction", "nom": "etourdi", "chance": 0.4, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 200 % de puissance de skill à un ennemi ; 40 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Cœur de Forge", "type": "passif", "effets": [{"effet": "aura", "stat": "atk", "valeur": 0.08}, {"effet": "stat", "stat": "def", "valeur": 0.1}], "niveau": 40, "evolue": true, "description": "Toute l'équipe : ATK +8 % ; DEF +10 %."},
+		],
+	},
+	"cerf_roi_evo": {
+		"nom": "Le Grand Cerf Ancestral", "rarete": "SSR", "element": "nature", "role": "tank", "position": "avant", "invocable": false, "categorie": "heros", "couleur": "5a8a3a",
+		"legende": false, "forge": false, "race": "Esprit sylvestre", "dominantes": ["pv", "def"], "phase2": {}, "evolution_de": "cerf_roi",
+		"stats": {"pv": 2130, "atk": 345, "def": 315, "agi": 210, "mag": 180},
+		"secondaires": {"crit": 10, "degats_crit": 175, "res": 27, "preci": 95},
+		"skills": [
+			{"nom": "Charge des Bois", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.5}, {"effet": "affliction", "nom": "etourdi", "chance": 0.3, "duree": 1}], "niveau": 1, "description": "(30 % de chance par tour) Inflige 150 % de puissance de skill à un ennemi ; 30 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Bois Millénaire", "type": "passif", "effets": [{"effet": "epines", "valeur": 0.2}, {"effet": "regen", "valeur": 0.04}], "niveau": 10, "evolue": true, "description": "Renvoie 20 % des dégâts physiques reçus ; régénère 4 % de ses PV max à chaque tour."},
+			{"nom": "Brame du Roi", "type": "actif", "chance": 0.25, "cible": "soi", "effets": [{"effet": "bouclier", "valeur": 0.2, "cible": "soi"}, {"effet": "provocation", "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Bouclier de 20 % des PV max sur lui-même ; attire les attaques ennemies (2 tours)."},
+			{"nom": "Forêt Protectrice", "type": "passif", "effets": [{"effet": "aura", "stat": "pv", "valeur": 0.08}], "niveau": 30, "description": "Toute l'équipe : PV +8 %."},
+			{"nom": "Gardien des Âges", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "stat", "stat": "def", "valeur": 0.1}], "niveau": 40, "evolue": true, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; DEF +10 %."},
+		],
+	},
+	"druidesse_ronces_evo": {
+		"nom": "L'Archidruidesse des Ronces", "rarete": "UR", "element": "nature", "role": "mage", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "3a6a2a",
+		"legende": false, "forge": false, "race": "Elfe", "dominantes": ["mag", "agi"], "phase2": {}, "evolution_de": "druidesse_ronces",
+		"stats": {"pv": 2060, "atk": 375, "def": 250, "agi": 325, "mag": 495},
+		"secondaires": {"crit": 13, "degats_crit": 185, "res": 35, "preci": 99},
+		"skills": [
+			{"nom": "Tempête de Spores", "type": "actif", "chance": 0.4, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.05}, {"effet": "affliction", "nom": "poison", "chance": 0.6, "duree": 3}], "niveau": 1, "evolue": true, "description": "(40 % de chance par tour) Inflige 105 % de puissance de skill à tous les ennemis ; 60 % de chance d'infliger Poison (3 tours)."},
+			{"nom": "Sève Ancienne", "type": "passif", "effets": [{"effet": "stat", "stat": "mag", "valeur": 0.15}, {"effet": "immunite", "afflictions": ["poison"]}], "niveau": 10, "description": "MAG +15 % ; immunisée à Poison."},
+			{"nom": "Silence des Bois", "type": "actif", "chance": 0.25, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.8}, {"effet": "affliction", "nom": "silence", "chance": 0.4, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Inflige 80 % de puissance de skill à tous les ennemis ; 40 % de chance d'infliger Silence (2 tours)."},
+			{"nom": "Ronces Étrangleuses", "type": "actif", "chance": 0.2, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.4}, {"effet": "affliction", "nom": "poison", "chance": 0.7, "duree": 3}], "niveau": 30, "description": "(20 % de chance par tour) Inflige 240 % de puissance de skill à un ennemi ; 70 % de chance d'infliger Poison (3 tours)."},
+			{"nom": "Cœur de la Forêt", "type": "passif", "effets": [{"effet": "aura", "stat": "mag", "valeur": 0.1}, {"effet": "stat", "stat": "res", "valeur": 0.1}], "niveau": 40, "evolue": true, "description": "Toute l'équipe : MAG +10 % ; RES +10 %."},
 		],
 	},
 	"demon_inf_evo": {

@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.67.3** (2026-10-13)
+Version actuelle : **0.68.0** (2026-10-14)
+
+## v0.68.0 — Huit nouvelles recrues  (2026-10-14)
+
+- 8 NOUVEAUX HÉROS INVOCABLES (avec leur évolution) : la Novice de l'Aube (N, Sacré, Purification), l'Écuyer du Temple (N, Sacré, Provocation + Épines), l'Arbalétrière Céleste (R, Sacré, Volée de carreaux), l'Ondine des Récifs (SR, Eau, soins + Purification), le Chasseur de Primes (SR, Feu, exécution + Brûlure), la Forgeronne Écarlate (SSR, Feu, brise-armure + Brûlure), le Cerf-Roi des Bois (SSR, Nature, tank à Épines) et la Druidesse des Ronces (UR, Nature, Poison et Silence de zone).
+- La collection passe à 86 héros invocables : le Sacré a enfin des héros N et R, et le Feu comme la Nature ont leurs SSR.
 
 ## v0.67.3 — Remontada  (2026-10-13)
 
