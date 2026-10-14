@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.68.4** (2026-10-14)
+Version actuelle : **0.68.5** (2026-10-14)
+
+## v0.68.5 — Évolutions : deuxième lot  (2026-10-14)
+
+- 10 nouvelles images d'évolution (portrait et figurine) : La Maîtresse des Forges, Le Grand Cerf Ancestral, Archange du Crépuscule, Titan des Fosses, Impératrice des Liches, Félin du Gouffre, Grand Chien des Bois Sacrés, L'Errant des Abîmes, La Reine des Sceaux et Le Héros de la Lame Éveillée.
+- Toutes les évolutions UR et SSR ont maintenant leur propre image.
 
 ## v0.68.4 — Évolutions : premier lot  (2026-10-14)
 

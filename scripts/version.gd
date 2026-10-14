@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.68.4"
+const NUMERO := "0.68.5"
 const DATE := "2026-10-14"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.68.5", "date": "2026-10-14", "titre": "Évolutions : deuxième lot",
+	"changements": [
+		"10 nouvelles images d'évolution (portrait et figurine) : La Maîtresse des Forges, Le Grand Cerf Ancestral, Archange du Crépuscule, Titan des Fosses, Impératrice des Liches, Félin du Gouffre, Grand Chien des Bois Sacrés, L'Errant des Abîmes, La Reine des Sceaux et Le Héros de la Lame Éveillée.",
+		"Toutes les évolutions UR et SSR ont maintenant leur propre image.",
+	]},
 	{"version": "0.68.4", "date": "2026-10-14", "titre": "Évolutions : premier lot",
 	"changements": [
 		"10 héros ont maintenant leur propre image d'évolution (portrait et figurine) : Phénix Solaire Éternel, Dragon du Néant, L'Empereur Ressuscité, Léviathan Primordial, Destrier Divin, La Tisseuse Souveraine, Le Mercenaire Sans Limites, La Maîtresse du Poing de Braise, La Voix de la Terre et L'Archidruidesse des Ronces.",
