@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ÉVOLUTIONS EN IMAGE : Arnaud, Roi du Chaos Écarlate, et Stéphane, Ballon d'Or d'Outre-Tombe, ont maintenant leur propre portrait et leur propre figurine (les autres évolutions gardent l'image de leur héros de base en attendant)."
+			],
+			"titre": "Le rappel du public",
+			"version": "0.68.2"
+		},
+		{
+			"changements": [
 				"ILLUSTRATIONS : Stéphane, le Buteur d'Outre-Tombe, et les 8 nouveaux héros (Novice de l'Aube, Écuyer du Temple, Arbalétrière Céleste, Ondine des Récifs, Chasseur de Primes, Forgeronne Écarlate, Cerf-Roi des Bois, Druidesse des Ronces) ont leur portrait et leur figurine."
 			],
 			"titre": "Les recrues prennent forme",
@@ -145,21 +152,13 @@
 			],
 			"titre": "À toi de jouer !",
 			"version": "0.63.0"
-		},
-		{
-			"changements": [
-				"ARÈNE RÉPARÉE : la fin de saison de l'Arène provoquait « erreur du serveur (400) » et bloquait l'Arène pour tout le monde. C'est corrigé (la nouvelle saison démarre normalement).",
-				"L'AÎNÉ A SON VISAGE DANS LES DIALOGUES : le blason de la maison laisse place au portrait du grand frère, porteur de la Larme."
-			],
-			"titre": "L'Arène rouvre ses portes",
-			"version": "0.62.1"
 		}
 	],
 	"pck": {
-		"sha256": "b3733c64f01ec0d13b90a112df49dde529d655a30ebe4c4fe4e406ed274fc39f",
-		"taille": 33316792,
+		"sha256": "fced7c98ef801f5572853439050550eace43ab4e413fc32869d91d503fba38a1",
+		"taille": 33316872,
 		"url": "jeu.pck"
 	},
-	"version": "0.68.1",
+	"version": "0.68.2",
 	"version_minimum": "0.37.0"
 }

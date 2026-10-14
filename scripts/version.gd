@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.68.1"
+const NUMERO := "0.68.2"
 const DATE := "2026-10-14"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.68.2", "date": "2026-10-14", "titre": "Le rappel du public",
+	"changements": [
+		"ÉVOLUTIONS EN IMAGE : Arnaud, Roi du Chaos Écarlate, et Stéphane, Ballon d'Or d'Outre-Tombe, ont maintenant leur propre portrait et leur propre figurine (les autres évolutions gardent l'image de leur héros de base en attendant).",
+	]},
 	{"version": "0.68.1", "date": "2026-10-14", "titre": "Les recrues prennent forme",
 	"changements": [
 		"ILLUSTRATIONS : Stéphane, le Buteur d'Outre-Tombe, et les 8 nouveaux héros (Novice de l'Aube, Écuyer du Temple, Arbalétrière Céleste, Ondine des Récifs, Chasseur de Primes, Forgeronne Écarlate, Cerf-Roi des Bois, Druidesse des Ronces) ont leur portrait et leur figurine.",

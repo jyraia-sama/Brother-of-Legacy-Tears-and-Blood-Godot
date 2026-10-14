@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.68.1** (2026-10-14)
+Version actuelle : **0.68.2** (2026-10-14)
+
+## v0.68.2 — Le rappel du public  (2026-10-14)
+
+- ÉVOLUTIONS EN IMAGE : Arnaud, Roi du Chaos Écarlate, et Stéphane, Ballon d'Or d'Outre-Tombe, ont maintenant leur propre portrait et leur propre figurine (les autres évolutions gardent l'image de leur héros de base en attendant).
 
 ## v0.68.1 — Les recrues prennent forme  (2026-10-14)
 
