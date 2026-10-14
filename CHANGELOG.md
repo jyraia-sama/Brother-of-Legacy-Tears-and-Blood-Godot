@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.68.0** (2026-10-14)
+Version actuelle : **0.68.1** (2026-10-14)
+
+## v0.68.1 — Les recrues prennent forme  (2026-10-14)
+
+- ILLUSTRATIONS : Stéphane, le Buteur d'Outre-Tombe, et les 8 nouveaux héros (Novice de l'Aube, Écuyer du Temple, Arbalétrière Céleste, Ondine des Récifs, Chasseur de Primes, Forgeronne Écarlate, Cerf-Roi des Bois, Druidesse des Ronces) ont leur portrait et leur figurine.
 
 ## v0.68.0 — Huit nouvelles recrues  (2026-10-14)
 

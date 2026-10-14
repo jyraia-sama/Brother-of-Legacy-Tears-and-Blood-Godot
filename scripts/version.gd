@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.68.0"
+const NUMERO := "0.68.1"
 const DATE := "2026-10-14"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.68.1", "date": "2026-10-14", "titre": "Les recrues prennent forme",
+	"changements": [
+		"ILLUSTRATIONS : Stéphane, le Buteur d'Outre-Tombe, et les 8 nouveaux héros (Novice de l'Aube, Écuyer du Temple, Arbalétrière Céleste, Ondine des Récifs, Chasseur de Primes, Forgeronne Écarlate, Cerf-Roi des Bois, Druidesse des Ronces) ont leur portrait et leur figurine.",
+	]},
 	{"version": "0.68.0", "date": "2026-10-14", "titre": "Huit nouvelles recrues",
 	"changements": [
 		"8 NOUVEAUX HÉROS INVOCABLES (avec leur évolution) : la Novice de l'Aube (N, Sacré, Purification), l'Écuyer du Temple (N, Sacré, Provocation + Épines), l'Arbalétrière Céleste (R, Sacré, Volée de carreaux), l'Ondine des Récifs (SR, Eau, soins + Purification), le Chasseur de Primes (SR, Feu, exécution + Brûlure), la Forgeronne Écarlate (SSR, Feu, brise-armure + Brûlure), le Cerf-Roi des Bois (SSR, Nature, tank à Épines) et la Druidesse des Ronces (UR, Nature, Poison et Silence de zone).",
