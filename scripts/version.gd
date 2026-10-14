@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.68.5"
+const NUMERO := "0.68.6"
 const DATE := "2026-10-14"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.68.6", "date": "2026-10-14", "titre": "Deck sans zoom",
+	"changements": [
+		"CORRECTIF : dans le Deck, mettre ou retirer un héros de l'équipe faisait rétrécir puis réagrandir tout l'écran (effet de zoom). La fiche de droite garde maintenant toujours la même largeur ; ses boutons passent à la ligne s'ils manquent de place.",
+	]},
 	{"version": "0.68.5", "date": "2026-10-14", "titre": "Évolutions : deuxième lot",
 	"changements": [
 		"10 nouvelles images d'évolution (portrait et figurine) : La Maîtresse des Forges, Le Grand Cerf Ancestral, Archange du Crépuscule, Titan des Fosses, Impératrice des Liches, Félin du Gouffre, Grand Chien des Bois Sacrés, L'Errant des Abîmes, La Reine des Sceaux et Le Héros de la Lame Éveillée.",

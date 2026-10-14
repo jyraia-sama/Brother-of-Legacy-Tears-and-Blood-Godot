@@ -81,7 +81,9 @@ func _ready() -> void:
 	droite.add_theme_stylebox_override("panel", UiCommun.style_panneau())
 	corps.add_child(droite)
 	var defil := ScrollContainer.new()
-	defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	# SHOW_NEVER (et pas DISABLED) : la largeur de la fiche ne peut jamais élargir le panneau
+	# (sinon l'écran entier se réduisait puis revenait à chaque changement d'équipe).
+	defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	droite.add_child(defil)
 	_fiche = VBoxContainer.new()
 	_fiche.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -471,8 +473,9 @@ func _maj_fiche() -> void:
 	_fiche.add_child(UiCommun.label(UiCommun.t("Échos Sanguins équipés : %d / 6 (stats incluses)") % nb_echos, 13, Color("d0453a") if nb_echos > 0 else UiCommun.C_DOUX))
 
 	# Actions
-	var actions := HBoxContainer.new()
-	actions.add_theme_constant_override("separation", 8)
+	var actions := HFlowContainer.new()       # passe à la ligne si les boutons ne tiennent pas
+	actions.add_theme_constant_override("h_separation", 8)
+	actions.add_theme_constant_override("v_separation", 8)
 	_fiche.add_child(actions)
 	var place := Sauvegarde.place_de(_selection)
 	if place >= 0:

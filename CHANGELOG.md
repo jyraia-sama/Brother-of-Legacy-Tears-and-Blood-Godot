@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.68.5** (2026-10-14)
+Version actuelle : **0.68.6** (2026-10-14)
+
+## v0.68.6 — Deck sans zoom  (2026-10-14)
+
+- CORRECTIF : dans le Deck, mettre ou retirer un héros de l'équipe faisait rétrécir puis réagrandir tout l'écran (effet de zoom). La fiche de droite garde maintenant toujours la même largeur ; ses boutons passent à la ligne s'ils manquent de place.
 
 ## v0.68.5 — Évolutions : deuxième lot  (2026-10-14)
 

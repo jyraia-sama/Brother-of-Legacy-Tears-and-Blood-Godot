@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"CORRECTIF : dans le Deck, mettre ou retirer un héros de l'équipe faisait rétrécir puis réagrandir tout l'écran (effet de zoom). La fiche de droite garde maintenant toujours la même largeur ; ses boutons passent à la ligne s'ils manquent de place."
+			],
+			"titre": "Deck sans zoom",
+			"version": "0.68.6"
+		},
+		{
+			"changements": [
 				"10 nouvelles images d'évolution (portrait et figurine) : La Maîtresse des Forges, Le Grand Cerf Ancestral, Archange du Crépuscule, Titan des Fosses, Impératrice des Liches, Félin du Gouffre, Grand Chien des Bois Sacrés, L'Errant des Abîmes, La Reine des Sceaux et Le Héros de la Lame Éveillée.",
 				"Toutes les évolutions UR et SSR ont maintenant leur propre image."
 			],
@@ -141,23 +148,13 @@
 			],
 			"titre": "Forgé à la main",
 			"version": "0.64.1"
-		},
-		{
-			"changements": [
-				"NOUVELLE INTERFACE DANS TOUS LES MENUS : un thème commun habille tout le jeu. Boutons forgés (cuir bordeaux, bordure dorée, lueur au survol), onglets, champs de saisie, listes déroulantes, barres de défilement dorées, info-bulles et fenêtres de confirmation aux couleurs du jeu.",
-				"PANNEAUX ORNÉS : les cadres ont maintenant un double filet doré et des ornements dans les coins.",
-				"TITRES : nouvelle police pour les titres, avec contour et ombre ; chaque écran a sa plaque de titre ornée, et les sections sont séparées par des filets dorés avec un losange.",
-				"Les fenêtres de confirmation (choix du héros, etc.) ont un vrai cadre avec leur titre intégré."
-			],
-			"titre": "Un nouvel habit pour le royaume",
-			"version": "0.64.0"
 		}
 	],
 	"pck": {
-		"sha256": "1bd946992cda03e85b01aa433119284b6bf8db805da467cdc5bb17c6d02af6b3",
-		"taille": 33317096,
+		"sha256": "d955d19162592ac34be2cd863fb4d90b07ce0ca81e95de661a18a048b5b5cfb5",
+		"taille": 33317320,
 		"url": "jeu.pck"
 	},
-	"version": "0.68.5",
+	"version": "0.68.6",
 	"version_minimum": "0.37.0"
 }
