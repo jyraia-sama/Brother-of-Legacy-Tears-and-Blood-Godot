@@ -1505,7 +1505,7 @@ const UNITES := {
 	# ============================================================
 	# MONSTRES DES DONJONS À MÉCANIQUE (v0.67, voir mecaniques.gd)
 	# ============================================================
-	"salamandre_ardente": {
+	"salamandre_lave": {
 		"nom": "Salamandre Ardente", "rarete": "R", "element": "feu", "role": "mage", "position": "arriere",
 		"invocable": false, "categorie": "ennemi", "couleur": "e8502a", "meca": "salamandre",
 		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},

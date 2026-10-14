@@ -22,7 +22,7 @@ const SPECIAUX := ["savoir"]
 const DONJONS := {
 	"feu": {"nom": "Le Brasier Éternel", "sous_titre": "Une forge oubliée où la lave ne refroidit jamais",
 		"couleur": "ff6a2a", "mini_boss": "gardien_brasier", "boss": "ignaar",
-		"monstres": ["salamandre_ardente", "sanglier_sauvage", "hyene_des_sables", "pillard_incendiaire", "diablotin_soufre", "orc_guerrier",
+		"monstres": ["salamandre_lave", "sanglier_sauvage", "hyene_des_sables", "pillard_incendiaire", "diablotin_soufre", "orc_guerrier",
 			"loup_garou", "cyclope", "minotaure_jeune", "centaure_guerrier", "mercenaire_balafre", "molosse_enfers",
 			"cyclope_furieux", "demon_flamme", "bourreau_cornu", "forgeron_abime", "demon_mineur", "vouivre_ecarlate"]},
 	"nature": {"nom": "La Sylve Putride", "sous_titre": "Une forêt malade où chaque racine a faim",

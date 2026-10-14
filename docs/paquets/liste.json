@@ -1,13 +1,13 @@
 {
 	"paquets": [
 		{
-			"depuis": "0.68.2",
+			"depuis": "0.68.3",
 			"fichier": "figurines_0.pck",
-			"images": 55,
+			"images": 56,
 			"nom": "figurines_0",
-			"sha256": "44f7546fc2cd9d698d91400199596ab5b734e70735c48ff6306c1709a32ad0e2",
-			"signature": "3b16be5a2a8b186026fd94cc2a843d79e5f3145cbd85a483efc91d75cd0045c1",
-			"taille": 9329128
+			"sha256": "84d09d0484cea6ae75fdbe6dbda59a4bb8d643c7db7d24fbe4533b93698094e4",
+			"signature": "80cac4c0d276adf5ed77fea2d00deb1de35b69badc1ea80f17c8d397bee6a250",
+			"taille": 9512272
 		},
 		{
 			"depuis": "0.68.1",
@@ -28,31 +28,31 @@
 			"taille": 10264700.0
 		},
 		{
-			"depuis": "0.68.1",
+			"depuis": "0.68.3",
 			"fichier": "figurines_3.pck",
-			"images": 57.0,
+			"images": 56,
 			"nom": "figurines_3",
-			"sha256": "20eb325324014f4b84ea8165d7003662522e7584c606c8e9b14f4b137475d27f",
-			"signature": "3c9a0dfe3fc44acc576d93ab24c8dd74558ccbc35b3ca48bb686bfc33e99781b",
-			"taille": 9252484.0
+			"sha256": "c34b2291856407991cb618309a9e37ccb26ec7dcd9295839682477a943b30bba",
+			"signature": "bd18e7ea779f99b5a7a53eca1c9be69251bf110c0ec4d8925cb72b602c3a28e6",
+			"taille": 9069336
 		},
 		{
-			"depuis": "0.68.2",
+			"depuis": "0.68.3",
 			"fichier": "portraits_0.pck",
-			"images": 118,
+			"images": 119,
 			"nom": "portraits_0",
-			"sha256": "7d4adee9591fdb5b6340e9f5442e66dc9033636c32a3c1686b856072193c1ad4",
-			"signature": "5cdde8b4aefff85303c21f5a2fddfb024d2aafeb6af7be35a89b5ee68f94228c",
-			"taille": 7136324
+			"sha256": "206ca9e7b757c55e3ec4ec648bdb807832f8b34aa3012dd3aa2edcf798e5be9c",
+			"signature": "b82baab37f8272918dcb89de75ca3758e27aa2bb408d920577c94f38688e0fe5",
+			"taille": 7196200
 		},
 		{
-			"depuis": "0.68.1",
+			"depuis": "0.68.3",
 			"fichier": "portraits_1.pck",
-			"images": 126.0,
+			"images": 125,
 			"nom": "portraits_1",
-			"sha256": "9160356695c83fa03daeecb614c43ea841399a1b8c3cb90a92ec20880add6243",
-			"signature": "1ebe494826a0b7c0b60a9e100a3e17037d14b3c5b0dd3ca554a2cb445d0fb5c4",
-			"taille": 7531180.0
+			"sha256": "cbe1ccda45014f9b276f0354196240a3e6370c72d5bdacd5ddc9146e138247a6",
+			"signature": "368be8b2c4af3a95fa8f128ac6283197c67a18161a999af2e47196309f3615c0",
+			"taille": 7471300
 		},
 		{
 			"depuis": "0.60.7",
@@ -82,5 +82,5 @@
 			"taille": 1515864.0
 		}
 	],
-	"version": "0.68.2"
+	"version": "0.68.3"
 }

@@ -19,7 +19,7 @@ const BOSS := {"feu": "fournaise", "nature": "seve_eternelle", "eau": "carapace"
 	"sacre": "jugement", "neutre": "frenesie", "savoir": "phylactere"}
 const MINI := {"feu": "forge_ardente", "nature": "remede_sylvestre", "eau": "carapace_corail", "tenebres": "chaines",
 	"sacre": "priere", "neutre": "faim", "savoir": "lien_ame"}
-const GARDES := {"feu": "salamandre_ardente", "nature": "racine_nourriciere", "eau": "crabe_bouclier",
+const GARDES := {"feu": "salamandre_lave", "nature": "racine_nourriciere", "eau": "crabe_bouclier",
 	"tenebres": "lanterne_noire", "sacre": "acolyte_profane", "neutre": "molosse_puits", "savoir": "page_animee"}
 
 ## Contres possibles (clés de _tags) :

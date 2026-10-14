@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.68.2"
+const NUMERO := "0.68.3"
 const DATE := "2026-10-14"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.68.3", "date": "2026-10-14", "titre": "Deux salamandres",
+	"changements": [
+		"CORRECTIF : la Salamandre des Donjons avait le même identifiant qu'un familier de la Ménagerie (la Salamandre Ardente) : elle s'affichait avec l'image et la rareté du familier dans le Bestiaire et la Galerie. Elle a maintenant son propre identifiant ; elle garde son nom et son image.",
+	]},
 	{"version": "0.68.2", "date": "2026-10-14", "titre": "Le rappel du public",
 	"changements": [
 		"ÉVOLUTIONS EN IMAGE : Arnaud, Roi du Chaos Écarlate, et Stéphane, Ballon d'Or d'Outre-Tombe, ont maintenant leur propre portrait et leur propre figurine (les autres évolutions gardent l'image de leur héros de base en attendant).",

@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.68.2** (2026-10-14)
+Version actuelle : **0.68.3** (2026-10-14)
+
+## v0.68.3 — Deux salamandres  (2026-10-14)
+
+- CORRECTIF : la Salamandre des Donjons avait le même identifiant qu'un familier de la Ménagerie (la Salamandre Ardente) : elle s'affichait avec l'image et la rareté du familier dans le Bestiaire et la Galerie. Elle a maintenant son propre identifiant ; elle garde son nom et son image.
 
 ## v0.68.2 — Le rappel du public  (2026-10-14)
 
