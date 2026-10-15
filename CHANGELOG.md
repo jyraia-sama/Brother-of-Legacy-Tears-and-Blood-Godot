@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.68.6** (2026-10-14)
+Version actuelle : **0.69.0** (2026-10-15)
+
+## v0.69.0 — Démantèlement au choix et enregistreur de partie  (2026-10-15)
+
+- RELIQUAIRE : nouveau bouton « ✦ Choisir les Échos à démanteler » dans l'Atelier d'Échos. Il montre tous tes Échos libres (toutes raretés), avec des filtres par rareté, set et emplacement, et leurs stats secondaires. Clique ceux à démanteler (ils passent en rouge) : le total de Poussière s'affiche, puis un seul bouton les démantèle. Une alerte prévient si la sélection contient des Échos Héroïques ou Légendaires. Les Échos équipés ou verrouillés restent toujours protégés.
+- MENU ADMIN : nouvel « 🎥 Enregistreur de partie » (outil pour le développeur). Une fois activé, il note les écrans ouverts, les boutons cliqués, les combats (équipe, ennemis, résultat) et toutes les erreurs du jeu, même dans la version publiée. Le bouton « 🐞 Marquer un bug » (ou la touche F8 sur PC, avec capture d'écran) ajoute un repère. Le journal se copie en un clic (ou s'enregistre / se télécharge) pour être transmis. Il est écrit au fur et à mesure : si le jeu plante, le journal du lancement précédent reste disponible. Aucune adresse e-mail n'y figure.
 
 ## v0.68.6 — Deck sans zoom  (2026-10-14)
 

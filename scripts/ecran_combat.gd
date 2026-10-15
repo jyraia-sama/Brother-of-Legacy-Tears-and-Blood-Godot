@@ -87,6 +87,9 @@ func _ready() -> void:
 		demande = _demande_test()
 	_mode = str(demande.get("mode", "aventure"))
 	demande_combat = demande
+	if Enregistreur.actif():
+		Enregistreur.note("Combat « %s » · graine %s · équipe : %s · ennemis : %s" % [_mode, str(demande.get("graine", 0)),
+			_resume_camp(demande.get("equipe", [])), _resume_camp(demande.get("ennemis", []))], "COMBAT")
 	_mon_camp = int(demande.get("mon_camp", 0)) if _mode == "classee" else 0
 	_manuel = _mode in MODES_MANUEL and bool(Sauvegarde.get_parametre("combat_manuel", false))
 	Audio.musique(_musique_combat())
@@ -127,6 +130,15 @@ func _ready() -> void:
 # =====================================================================
 # Construction
 # =====================================================================
+
+## Résumé lisible d'un camp pour l'enregistreur de partie : « id Nv ».
+func _resume_camp(camp: Array) -> String:
+	var r: Array = []
+	for u in camp:
+		if u is Dictionary:
+			r.append("%s Nv%s" % [str(u.get("id", "?")), str(u.get("niveau", "?"))])
+	return ", ".join(r)
+
 
 func _creer_fond() -> void:
 	var noir := ColorRect.new()
@@ -1285,6 +1297,11 @@ func _eclats_boss(type: String, acte: int, chapitre: int) -> int:
 
 
 func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "", texte_bouton := "Continuer", action := Callable()) -> void:
+	if Enregistreur.actif():
+		var detail := ""
+		for l in lignes:
+			detail += str(l).replace("\n", " ") + " / "
+		Enregistreur.note("Fin du combat « %s » : %s · %s" % [_mode, "VICTOIRE" if victoire else "DÉFAITE", detail.left(300)], "COMBAT")
 	if action.is_valid():
 		Audio.son("or")
 	else:

@@ -162,6 +162,11 @@ func _ready() -> void:
 	bas.add_child(_bouton("Tout cocher", func(): _tout(true)))
 	bas.add_child(_bouton("Tout décocher", func(): _tout(false)))
 	bas.add_child(_bouton("Fermer", _fermer))
+	var enr := _bouton("🎥 Enregistreur de partie", func(): FenetreEnregistreur.ouvrir(get_parent()))
+	enr.custom_minimum_size = Vector2(260, 42)
+	enr.tooltip_text = "Enregistre les écrans, les clics, les combats et les erreurs pour retrouver un bug."
+	UiCommun.bouton_vif(enr, Color("8a3a2a"))
+	bas.add_child(enr)
 
 	# Statistiques du jeu : réservé au compte du créateur. Le bouton n'apparaît que si le serveur
 	# confirme l'accès (et le serveur refuse de toute façon les données aux autres comptes).

@@ -47,6 +47,7 @@ func _ready() -> void:
 	appliquer_taille()
 	appliquer_langue()
 	_creer_calque_portrait()
+	Enregistreur.installer(self)          # enregistreur de partie (outil développeur, Menu Admin)
 	get_tree().root.size_changed.connect(_maj_portrait)
 	_maj_portrait()
 	if est_application_pc():

@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-14",
+	"date": "2026-10-15",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,14 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"RELIQUAIRE : nouveau bouton « ✦ Choisir les Échos à démanteler » dans l'Atelier d'Échos. Il montre tous tes Échos libres (toutes raretés), avec des filtres par rareté, set et emplacement, et leurs stats secondaires. Clique ceux à démanteler (ils passent en rouge) : le total de Poussière s'affiche, puis un seul bouton les démantèle. Une alerte prévient si la sélection contient des Échos Héroïques ou Légendaires. Les Échos équipés ou verrouillés restent toujours protégés.",
+				"MENU ADMIN : nouvel « 🎥 Enregistreur de partie » (outil pour le développeur). Une fois activé, il note les écrans ouverts, les boutons cliqués, les combats (équipe, ennemis, résultat) et toutes les erreurs du jeu, même dans la version publiée. Le bouton « 🐞 Marquer un bug » (ou la touche F8 sur PC, avec capture d'écran) ajoute un repère. Le journal se copie en un clic (ou s'enregistre / se télécharge) pour être transmis. Il est écrit au fur et à mesure : si le jeu plante, le journal du lancement précédent reste disponible. Aucune adresse e-mail n'y figure."
+			],
+			"titre": "Démantèlement au choix et enregistreur de partie",
+			"version": "0.69.0"
+		},
 		{
 			"changements": [
 				"CORRECTIF : dans le Deck, mettre ou retirer un héros de l'équipe faisait rétrécir puis réagrandir tout l'écran (effet de zoom). La fiche de droite garde maintenant toujours la même largeur ; ses boutons passent à la ligne s'ils manquent de place."
@@ -140,21 +148,13 @@
 			],
 			"titre": "Chacun à sa place",
 			"version": "0.64.2"
-		},
-		{
-			"changements": [
-				"KIT D'INTERFACE PEINT : les boutons (cuir bordeaux, embouts de bronze sertis de gemmes rouges, version lumineuse au survol, enfoncée au clic, grise quand inactive), les onglets, les champs de saisie, les plaques de titre, les séparateurs, les ornements de coin et les grands cadres de panneau sont maintenant peints à la main, dans tous les menus du jeu.",
-				"Les textes des boutons inactifs sont plus lisibles."
-			],
-			"titre": "Forgé à la main",
-			"version": "0.64.1"
 		}
 	],
 	"pck": {
-		"sha256": "d955d19162592ac34be2cd863fb4d90b07ce0ca81e95de661a18a048b5b5cfb5",
-		"taille": 33317320,
+		"sha256": "c913f8b58116ff117ebf2ff4fb9f81d2106b2015225bd31179540d7736b5b61e",
+		"taille": 33344164,
 		"url": "jeu.pck"
 	},
-	"version": "0.68.6",
+	"version": "0.69.0",
 	"version_minimum": "0.37.0"
 }

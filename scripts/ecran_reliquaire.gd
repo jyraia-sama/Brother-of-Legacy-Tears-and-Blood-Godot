@@ -439,7 +439,12 @@ func _atelier() -> void:
 				_rafraichir()
 				_message("Démantèlement", UiCommun.t("+%d Poussière d'Écho") % g))))
 		_contenu.add_child(hh)
-	_contenu.add_child(UiCommun.label("Pour démanteler un Écho Rare ou mieux, vends-le ou verrouille ceux à garder dans le menu Échos Sanguins.", 13, UiCommun.C_DOUX))
+	var choix_d := UiCommun.bouton("✦ Choisir les Échos à démanteler", 16)
+	choix_d.tooltip_text = "Voir tous tes Échos libres (toutes raretés), les filtrer et cocher ceux à démanteler un par un."
+	UiCommun.bouton_vif(choix_d, Color("6a3a9a"))
+	choix_d.pressed.connect(func(): FenetreDemantelement.ouvrir(self, _rafraichir))
+	_contenu.add_child(choix_d)
+	_contenu.add_child(UiCommun.label("« Tout démanteler » ne touche que les Échos Normaux, Magiques et Rares. Pour les autres, utilise le choix un par un ci-dessus (les Échos équipés ou verrouillés sont toujours protégés).", 13, UiCommun.C_DOUX))
 
 
 # =====================================================================

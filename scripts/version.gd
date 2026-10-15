@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.68.6"
-const DATE := "2026-10-14"
+const NUMERO := "0.69.0"
+const DATE := "2026-10-15"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.69.0", "date": "2026-10-15", "titre": "Démantèlement au choix et enregistreur de partie",
+	"changements": [
+		"RELIQUAIRE : nouveau bouton « ✦ Choisir les Échos à démanteler » dans l'Atelier d'Échos. Il montre tous tes Échos libres (toutes raretés), avec des filtres par rareté, set et emplacement, et leurs stats secondaires. Clique ceux à démanteler (ils passent en rouge) : le total de Poussière s'affiche, puis un seul bouton les démantèle. Une alerte prévient si la sélection contient des Échos Héroïques ou Légendaires. Les Échos équipés ou verrouillés restent toujours protégés.",
+		"MENU ADMIN : nouvel « 🎥 Enregistreur de partie » (outil pour le développeur). Une fois activé, il note les écrans ouverts, les boutons cliqués, les combats (équipe, ennemis, résultat) et toutes les erreurs du jeu, même dans la version publiée. Le bouton « 🐞 Marquer un bug » (ou la touche F8 sur PC, avec capture d'écran) ajoute un repère. Le journal se copie en un clic (ou s'enregistre / se télécharge) pour être transmis. Il est écrit au fur et à mesure : si le jeu plante, le journal du lancement précédent reste disponible. Aucune adresse e-mail n'y figure.",
+	]},
 	{"version": "0.68.6", "date": "2026-10-14", "titre": "Deck sans zoom",
 	"changements": [
 		"CORRECTIF : dans le Deck, mettre ou retirer un héros de l'équipe faisait rétrécir puis réagrandir tout l'écran (effet de zoom). La fiche de droite garde maintenant toujours la même largeur ; ses boutons passent à la ligne s'ils manquent de place.",
