@@ -175,9 +175,12 @@ func _creer_fond() -> void:
 		var d3 := "res://assets/combat3d/acte_%02d" % int(demande.get("acte", 1))
 		if _mode == "aventure" and ResourceLoader.exists(d3 + "_fond.png") and ResourceLoader.exists(d3 + "_sol.png"):
 			_c3d.construire(d3 + "_fond.png", noir.color, d3 + "_sol.png", COUPES_3D.get(int(demande.get("acte", 1)), 0.72))
+			Enregistreur.note("Affichage 3D · décor 3D de l'Acte : %s" % d3.get_file(), "COMBAT")
 		else:
 			_c3d.construire(chemin, noir.color)
+			Enregistreur.note("Affichage 3D · décor de secours : %s" % chemin.get_file(), "COMBAT")
 		return
+	Enregistreur.note("Affichage 2D (%s) · fond : %s" % ["combats en 3D décochés" if _mode in MODES_3D else "mode sans 3D", chemin.get_file()], "COMBAT")
 	if ResourceLoader.exists(chemin):
 		var img := TextureRect.new()
 		img.texture = load(chemin)

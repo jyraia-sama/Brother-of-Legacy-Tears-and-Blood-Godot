@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.70.2"
+const NUMERO := "0.70.3"
 const DATE := "2026-10-16"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.70.3", "date": "2026-10-16", "titre": "Enregistreur : affichage des combats",
+	"changements": [
+		"Enregistreur de partie : le journal indique maintenant si l'option « Combats en 3D » est cochée, la carte graphique utilisée, et pour chaque combat le type d'affichage (3D ou 2D) et le décor chargé.",
+	]},
 	{"version": "0.70.2", "date": "2026-10-16", "titre": "Récapitulatif plus compact",
 	"changements": [
 		"RÉCAPITULATIF DE COMBAT : quand il y a beaucoup d'informations, le butin passe sur deux colonnes (à gauche les RÉSULTATS : dégâts infligés, records, XP de l'armée et du compte… ; à droite le BUTIN : or, objets, Échos et le reste). Au Boss de Monde, les 20 héros s'affichent en cartes compactes sur 5 colonnes, sans ascenseur supplémentaire.",

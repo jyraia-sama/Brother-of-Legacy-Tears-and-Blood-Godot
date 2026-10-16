@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.70.2** (2026-10-16)
+Version actuelle : **0.70.3** (2026-10-16)
+
+## v0.70.3 — Enregistreur : affichage des combats  (2026-10-16)
+
+- Enregistreur de partie : le journal indique maintenant si l'option « Combats en 3D » est cochée, la carte graphique utilisée, et pour chaque combat le type d'affichage (3D ou 2D) et le décor chargé.
 
 ## v0.70.2 — Récapitulatif plus compact  (2026-10-16)
 

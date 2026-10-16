@@ -190,7 +190,10 @@ static func _construire_entete() -> String:
 	t += "Système : %s %s · %s · %s\n" % [OS.get_name(), OS.get_version(), OS.get_model_name(), Engine.get_version_info().get("string", "")]
 	t += "Plateforme : %s\n" % ("web" if OS.has_feature("web") else ("mobile" if OS.has_feature("mobile") else "ordinateur"))
 	t += "Écran : %s · fenêtre %s · langue %s\n" % [str(DisplayServer.screen_get_size()), str(DisplayServer.window_get_size()), OS.get_locale()]
-	t += "Taille d'interface : %s\n" % str(Sauvegarde.get_parametre("taille_interface", "auto"))
+	t += "Taille d'interface : %s · Combats en 3D : %s · Combat manuel : %s\n" % [str(Sauvegarde.get_parametre("taille_interface", "auto")),
+		"oui" if bool(Sauvegarde.get_parametre("combats_3d", true)) else "NON (décoché)", "oui" if bool(Sauvegarde.get_parametre("combat_manuel", false)) else "non"]
+	t += "Carte graphique : %s · %s · %s (%s)\n" % [RenderingServer.get_video_adapter_name(), RenderingServer.get_video_adapter_vendor(),
+		RenderingServer.get_current_rendering_driver_name(), RenderingServer.get_video_adapter_api_version()]
 	var equipe: Array = []
 	for uid in Sauvegarde.get_equipe():
 		var h := Sauvegarde.get_heros(uid)
