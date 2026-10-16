@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.70.0** (2026-10-16)
+Version actuelle : **0.70.1** (2026-10-16)
+
+## v0.70.1 — Ménagerie verrouillée  (2026-10-16)
+
+- CORRECTIF : après une invocation au Pacte Sauvage, le bouton « Voir la Ménagerie » ouvrait la Ménagerie même avant la fin de l'Acte IV. Il n'apparaît plus tant qu'elle n'est pas débloquée (un message indique quand elle s'ouvrira ; les familiers obtenus sont bien gardés). Même vérification ajoutée sur l'écran Aventure pour la Ménagerie et les autres modes.
 
 ## v0.70.0 — Récapitulatif de combat et tri par classe  (2026-10-16)
 

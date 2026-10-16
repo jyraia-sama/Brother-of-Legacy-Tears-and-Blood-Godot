@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.70.0"
+const NUMERO := "0.70.1"
 const DATE := "2026-10-16"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.70.1", "date": "2026-10-16", "titre": "Ménagerie verrouillée",
+	"changements": [
+		"CORRECTIF : après une invocation au Pacte Sauvage, le bouton « Voir la Ménagerie » ouvrait la Ménagerie même avant la fin de l'Acte IV. Il n'apparaît plus tant qu'elle n'est pas débloquée (un message indique quand elle s'ouvrira ; les familiers obtenus sont bien gardés). Même vérification ajoutée sur l'écran Aventure pour la Ménagerie et les autres modes.",
+	]},
 	{"version": "0.70.0", "date": "2026-10-16", "titre": "Récapitulatif de combat et tri par classe",
 	"changements": [
 		"FIN DE COMBAT : nouveau récapitulatif. Le MVP du combat est mis en avant (plus gros dégâts, meilleur soigneur ou rempart de l'équipe). Chaque héros a sa carte avec une barre d'XP qui se remplit sous tes yeux (avec un effet à chaque niveau gagné), l'XP gagnée, les dégâts infligés, les soins donnés, les dégâts encaissés et les ennemis vaincus. Le butin (or, Échos, Éclats, Bestiaire…) est regroupé en dessous.",

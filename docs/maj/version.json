@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"CORRECTIF : après une invocation au Pacte Sauvage, le bouton « Voir la Ménagerie » ouvrait la Ménagerie même avant la fin de l'Acte IV. Il n'apparaît plus tant qu'elle n'est pas débloquée (un message indique quand elle s'ouvrira ; les familiers obtenus sont bien gardés). Même vérification ajoutée sur l'écran Aventure pour la Ménagerie et les autres modes."
+			],
+			"titre": "Ménagerie verrouillée",
+			"version": "0.70.1"
+		},
+		{
+			"changements": [
 				"FIN DE COMBAT : nouveau récapitulatif. Le MVP du combat est mis en avant (plus gros dégâts, meilleur soigneur ou rempart de l'équipe). Chaque héros a sa carte avec une barre d'XP qui se remplit sous tes yeux (avec un effet à chaque niveau gagné), l'XP gagnée, les dégâts infligés, les soins donnés, les dégâts encaissés et les ennemis vaincus. Le butin (or, Échos, Éclats, Bestiaire…) est regroupé en dessous.",
 				"DECK : tri « Classe » (Tank, Guerrier, Assassin, Tireur, Mage, Soutien) et filtre par classe pour n'afficher, par exemple, que tes soigneurs."
 			],
@@ -134,27 +141,13 @@
 			],
 			"titre": "Le prix des étoiles",
 			"version": "0.66.0"
-		},
-		{
-			"changements": [
-				"NIVEAUX DE SORTS : chaque sort (actif ou passif) de tes héros monte maintenant du niveau 1 au niveau 10, depuis la fiche du héros (Deck ou Mon héros), bouton « Améliorer ».",
-				"Chaque niveau donne +4 % de puissance au sort (dégâts, soins, boucliers, bonus, chances d'altération...) : +36 % au niveau 10 (un sort à 200 % passe à 272 %).",
-				"RECHARGE : selon la recharge de base du sort, -1 tour au niveau 10 (sorts à 2 tours), au niveau 7 (sorts à 3 tours), ou au niveau 5 et encore au niveau 10 (sorts à 4 tours et plus).",
-				"Niveau maximum des sorts selon les étoiles du héros : 4 à ★1, 5 à ★2... 8 à ★5, et 10 une fois Éveillé ★6.",
-				"Coût : Pages de Grimoire, Grimoires Interdits à partir du niveau 7, et de l'or.",
-				"NOUVEAU DONJON : La Bibliothèque Interdite (10 niveaux), qui rapporte les Pages de Grimoire puis les Grimoires Interdits.",
-				"ARÈNE et GUERRE DES BANNIÈRES : les sorts comptent au plus pour le niveau 7, pour garder des combats équilibrés. Arène classée : tous les sorts restent au niveau 1.",
-				"Les info-bulles des sorts en combat indiquent leur niveau."
-			],
-			"titre": "Les pages oubliées",
-			"version": "0.65.0"
 		}
 	],
 	"pck": {
-		"sha256": "fecf59f74ad2285ca69d9558596db17e08c82ced7e7a2176666d7b1ab23f6556",
-		"taille": 33358076,
+		"sha256": "a21887db221f27445c9e7f8cb053a7d8c6d9394b7418b3562154e49cd280d9a7",
+		"taille": 33359452,
 		"url": "jeu.pck"
 	},
-	"version": "0.70.0",
+	"version": "0.70.1",
 	"version_minimum": "0.37.0"
 }

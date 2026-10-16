@@ -263,9 +263,24 @@ func _invoquer_familiers(nombre: int) -> void:
 	f.largeur = 780.0 if res.size() > 1 else 420.0
 	f.titre = "Pacte Sauvage"
 	f.contenu = g
-	f.boutons = [["Fermer", null], ["Voir la Ménagerie", func():
-		EcranBase.scene_retour = SCENE
-		get_tree().change_scene_to_file(EcranMenagerie.SCENE)]]
+	# Le raccourci vers la Ménagerie n'existe que si elle est débloquée (fin de l'Acte IV)
+	if Deblocages.est_ouvert("menagerie"):
+		f.boutons = [["Fermer", null], ["Voir la Ménagerie", func():
+			EcranBase.scene_retour = SCENE
+			get_tree().change_scene_to_file(EcranMenagerie.SCENE)]]
+	else:
+		var cond := Deblocages.texte_condition("menagerie")
+		cond = cond.left(1).to_lower() + cond.substr(1)        # « se débloque à la fin de l'Acte IV »
+		var info := UiCommun.label(UiCommun.t("Tes familiers t'attendront : la Ménagerie (chasse avec tes héros N et R) %s.") % cond, 15, UiCommun.C_DOUX)
+		info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		info.custom_minimum_size = Vector2(minf(f.largeur - 60.0, 700.0), 0)
+		var bloc := VBoxContainer.new()
+		bloc.add_theme_constant_override("separation", 12)
+		bloc.add_child(g)
+		bloc.add_child(info)
+		f.contenu = bloc
+		f.boutons = [["Fermer", null]]
 	add_child(f)
 
 

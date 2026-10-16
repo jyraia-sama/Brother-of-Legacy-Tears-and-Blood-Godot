@@ -46,7 +46,9 @@ func _creer_bouton_menagerie() -> void:
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	b.text = "LA MÉNAGERIE  ·  familiers et chasse"
 	var n := Menagerie.a_recolter()
-	if n > 0:
+	if not Deblocages.est_ouvert("menagerie"):
+		b.text = "🔒 LA MÉNAGERIE  ·  " + Deblocages.texte_condition("menagerie")
+	elif n > 0:
 		b.text += UiCommun.t("   (%d à récolter)") % n
 	b.add_theme_font_size_override("font_size", 24)
 	b.add_theme_color_override("font_color", Color("c8f0a0"))
@@ -68,8 +70,18 @@ func _creer_bouton_menagerie() -> void:
 
 # ---------- Actions ----------
 
+## id d'un bouton de cet écran -> id du mode dans Deblocages
+const IDS_DEBLOCAGE := {"tour": "tours", "expedition": "expedition", "boss_monde": "boss_monde",
+	"donjon": "donjon", "arene": "arene", "menagerie": "menagerie"}
+
+
 func _on_bouton(id: String, titre: String) -> void:
 	print("Clic : ", id)
+	var mode: String = IDS_DEBLOCAGE.get(id, "")
+	if mode != "" and not Deblocages.est_ouvert(mode):
+		var pres: Array = Deblocages.PRESENTATIONS.get(mode, [titre, ""])
+		FenetreSimple.ouvrir(self, "🔒 " + str(pres[0]), "%s.\n\n%s" % [Deblocages.texte_condition(mode), pres[1]], [["Compris", null]])
+		return
 	match id:
 		"retour":
 			_retour_menu()
