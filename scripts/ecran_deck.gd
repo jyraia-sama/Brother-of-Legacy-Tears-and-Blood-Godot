@@ -10,7 +10,10 @@ extends Control
 
 const SCENE := "res://scenes/deck.tscn"
 const FOND := "res://assets/fonds/deck.png"
-const TRIS := [["rarete", "Rareté"], ["niveau", "Niveau"], ["nom", "Nom"], ["element", "Élément"]]
+const TRIS := [["rarete", "Rareté"], ["niveau", "Niveau"], ["classe", "Classe"], ["nom", "Nom"], ["element", "Élément"]]
+## Ordre des classes pour le tri « Classe » et le filtre (de l'Avant vers l'Arrière)
+const ORDRE_CLASSES := ["tank", "guerrier", "assassin", "tireur", "mage", "soutien"]
+const ICONES_CLASSES := {"tank": "🛡", "guerrier": "⚔", "assassin": "🗡", "tireur": "🏹", "mage": "✨", "soutien": "✚"}
 const TAILLE_CARTE := Vector2(150, 200)
 const ORDRE_RARETE := {"UR": 0, "SSR": 1, "SR": 2, "R": 3, "N": 4}
 
@@ -18,6 +21,7 @@ static var scene_retour := ""
 
 var _selection := -1            # uid sélectionné
 var _tri := "rarete"
+var _filtre_classe := ""        # "" = toutes les classes
 var _vente_multiple := false
 var _a_vendre := {}             # uid -> true
 
@@ -147,12 +151,28 @@ func _creer_panneau_reserve() -> PanelContainer:
 	vb.add_theme_constant_override("separation", 8)
 	p.add_child(vb)
 
-	var h := HBoxContainer.new()
-	h.add_theme_constant_override("separation", 8)
-	vb.add_child(h)
+	var h1 := HBoxContainer.new()
+	h1.add_theme_constant_override("separation", 8)
+	vb.add_child(h1)
 	_lbl_collection = UiCommun.label("", 18, UiCommun.C_OR)
 	_lbl_collection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	h.add_child(_lbl_collection)
+	h1.add_child(_lbl_collection)
+	# Filtre par classe (Tank, Guerrier, Assassin, Tireur, Mage, Soutien)
+	h1.add_child(UiCommun.label("Classe :", 14, UiCommun.C_DOUX))
+	var o_classe := OptionButton.new()
+	o_classe.focus_mode = Control.FOCUS_NONE
+	o_classe.add_theme_font_size_override("font_size", 14)
+	o_classe.add_item("Toutes", 0)
+	for i in ORDRE_CLASSES.size():
+		o_classe.add_item("%s %s" % [ICONES_CLASSES[ORDRE_CLASSES[i]], UnitesData.ROLES[ORDRE_CLASSES[i]]], i + 1)
+	o_classe.item_selected.connect(func(i: int):
+		_filtre_classe = "" if i == 0 else str(ORDRE_CLASSES[i - 1])
+		_remplir_reserve())
+	h1.add_child(o_classe)
+	var h := HFlowContainer.new()        # passe à la ligne si l'écran est étroit
+	h.add_theme_constant_override("h_separation", 8)
+	h.add_theme_constant_override("v_separation", 6)
+	vb.add_child(h)
 	h.add_child(UiCommun.label("Trier :", 14, UiCommun.C_DOUX))
 	for t in TRIS:
 		var b := UiCommun.bouton(t[1], 14)
@@ -261,9 +281,13 @@ func _remplir_reserve() -> void:
 	for e in _grille.get_children():
 		e.queue_free()
 	var liste: Array = Sauvegarde.liste_heros().duplicate()
+	var nb_total := liste.size()
+	if _filtre_classe != "":
+		liste = liste.filter(func(x): return str(UnitesData.get_unite(x["id"]).get("role", "")) == _filtre_classe)
 	liste.sort_custom(_comparer)
 	var equipe := Sauvegarde.get_equipe()
-	_lbl_collection.text = UiCommun.t("COLLECTION  (%d unités)") % liste.size()
+	_lbl_collection.text = UiCommun.t("COLLECTION  (%d unités)") % nb_total if _filtre_classe == "" \
+		else UiCommun.t("COLLECTION  (%d %s sur %d)") % [liste.size(), UnitesData.ROLES[_filtre_classe], nb_total]
 	for h in liste:
 		var uid := int(h["uid"])
 		var carte := UiCommun.carte_heros(h, TAILLE_CARTE.x, TAILLE_CARTE.y)
@@ -294,6 +318,11 @@ func _comparer(a: Dictionary, b: Dictionary) -> bool:
 		"element":
 			if ua["element"] != ub["element"]:
 				return ua["element"] < ub["element"]
+		"classe":
+			var ca := ORDRE_CLASSES.find(str(ua.get("role", "")))
+			var cb := ORDRE_CLASSES.find(str(ub.get("role", "")))
+			if ca != cb:
+				return ca < cb
 	var ra: int = -1 if ua.get("legende", false) else ORDRE_RARETE[ua["rarete"]]
 	var rb: int = -1 if ub.get("legende", false) else ORDRE_RARETE[ub["rarete"]]
 	if ra != rb:

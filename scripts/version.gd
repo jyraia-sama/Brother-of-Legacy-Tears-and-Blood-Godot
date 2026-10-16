@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.69.0"
-const DATE := "2026-10-15"
+const NUMERO := "0.70.0"
+const DATE := "2026-10-16"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.70.0", "date": "2026-10-16", "titre": "Récapitulatif de combat et tri par classe",
+	"changements": [
+		"FIN DE COMBAT : nouveau récapitulatif. Le MVP du combat est mis en avant (plus gros dégâts, meilleur soigneur ou rempart de l'équipe). Chaque héros a sa carte avec une barre d'XP qui se remplit sous tes yeux (avec un effet à chaque niveau gagné), l'XP gagnée, les dégâts infligés, les soins donnés, les dégâts encaissés et les ennemis vaincus. Le butin (or, Échos, Éclats, Bestiaire…) est regroupé en dessous.",
+		"DECK : tri « Classe » (Tank, Guerrier, Assassin, Tireur, Mage, Soutien) et filtre par classe pour n'afficher, par exemple, que tes soigneurs.",
+	]},
 	{"version": "0.69.0", "date": "2026-10-15", "titre": "Démantèlement au choix et enregistreur de partie",
 	"changements": [
 		"RELIQUAIRE : nouveau bouton « ✦ Choisir les Échos à démanteler » dans l'Atelier d'Échos. Il montre tous tes Échos libres (toutes raretés), avec des filtres par rareté, set et emplacement, et leurs stats secondaires. Clique ceux à démanteler (ils passent en rouge) : le total de Poussière s'affiche, puis un seul bouton les démantèle. Une alerte prévient si la sélection contient des Échos Héroïques ou Légendaires. Les Échos équipés ou verrouillés restent toujours protégés.",

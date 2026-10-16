@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-15",
+	"date": "2026-10-16",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,14 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"FIN DE COMBAT : nouveau récapitulatif. Le MVP du combat est mis en avant (plus gros dégâts, meilleur soigneur ou rempart de l'équipe). Chaque héros a sa carte avec une barre d'XP qui se remplit sous tes yeux (avec un effet à chaque niveau gagné), l'XP gagnée, les dégâts infligés, les soins donnés, les dégâts encaissés et les ennemis vaincus. Le butin (or, Échos, Éclats, Bestiaire…) est regroupé en dessous.",
+				"DECK : tri « Classe » (Tank, Guerrier, Assassin, Tireur, Mage, Soutien) et filtre par classe pour n'afficher, par exemple, que tes soigneurs."
+			],
+			"titre": "Récapitulatif de combat et tri par classe",
+			"version": "0.70.0"
+		},
 		{
 			"changements": [
 				"RELIQUAIRE : nouveau bouton « ✦ Choisir les Échos à démanteler » dans l'Atelier d'Échos. Il montre tous tes Échos libres (toutes raretés), avec des filtres par rareté, set et emplacement, et leurs stats secondaires. Clique ceux à démanteler (ils passent en rouge) : le total de Poussière s'affiche, puis un seul bouton les démantèle. Une alerte prévient si la sélection contient des Échos Héroïques ou Légendaires. Les Échos équipés ou verrouillés restent toujours protégés.",
@@ -140,21 +148,13 @@
 			],
 			"titre": "Les pages oubliées",
 			"version": "0.65.0"
-		},
-		{
-			"changements": [
-				"TITRES DES MENUS : le titre de chaque écran tient maintenant entièrement dans sa plaque ornée (il ne déborde plus sur les embouts ni sur les filets).",
-				"COMBATS : nouvelle disposition des unités sur le champ de bataille, en trois rangées bien distinctes (fond, milieu, devant) disposées en quinconce. Kaël, quand il combat à tes côtés, a sa propre place au milieu et ne chevauche plus aucune autre figurine. Valable dans tous les Actes."
-			],
-			"titre": "Chacun à sa place",
-			"version": "0.64.2"
 		}
 	],
 	"pck": {
-		"sha256": "c913f8b58116ff117ebf2ff4fb9f81d2106b2015225bd31179540d7736b5b61e",
-		"taille": 33344164,
+		"sha256": "fecf59f74ad2285ca69d9558596db17e08c82ced7e7a2176666d7b1ab23f6556",
+		"taille": 33358076,
 		"url": "jeu.pck"
 	},
-	"version": "0.69.0",
+	"version": "0.70.0",
 	"version_minimum": "0.37.0"
 }

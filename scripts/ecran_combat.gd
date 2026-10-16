@@ -64,6 +64,8 @@ const MODES_MANUEL := ["aventure", "tour", "donjon", "marche", "sanctuaire"]
 var _manuel := false
 var _cm: CombatManuel = null
 var _bouton_manuel: Button
+var _xp_avant := {}           # uid -> {niveau, xp} au début du combat (barres d'XP du récapitulatif)
+var _lignes_xp: Array = []    # lignes « héros : +XP » (affichées sous forme de barres, pas en texte)
 
 
 ## Le joueur choisit-il lui-même les actions de ses unités ?
@@ -87,6 +89,11 @@ func _ready() -> void:
 		demande = _demande_test()
 	_mode = str(demande.get("mode", "aventure"))
 	demande_combat = demande
+	for e in demande.get("equipe", []):
+		if e is Dictionary and e.has("uid"):
+			var hx := Sauvegarde.get_heros(int(e["uid"]))
+			if not hx.is_empty():
+				_xp_avant[int(e["uid"])] = {"niveau": int(hx["niveau"]), "xp": int(hx["xp"])}
 	if Enregistreur.actif():
 		Enregistreur.note("Combat « %s » · graine %s · équipe : %s · ennemis : %s" % [_mode, str(demande.get("graine", 0)),
 			_resume_camp(demande.get("equipe", [])), _resume_camp(demande.get("ennemis", []))], "COMBAT")
@@ -1041,6 +1048,7 @@ func _fin() -> void:
 			if niveaux > 0:
 				txt += UiCommun.t("   NIVEAU %d !") % int(h["niveau"])
 			lignes.append(txt)
+			_lignes_xp.append(txt)
 	else:
 		Sauvegarde.ajouter_stat("combats_perdus")
 		lignes.append("L'équipe se replie pour reprendre des forces.")
@@ -1270,6 +1278,7 @@ func _donner_xp(lignes: Array, calcul: Callable) -> void:
 		if niveaux > 0:
 			txt += UiCommun.t("   NIVEAU %d !") % int(h["niveau"])
 		lignes.append(txt)
+		_lignes_xp.append(txt)
 
 
 func _decouvrir(lignes: Array) -> void:
@@ -1324,10 +1333,31 @@ func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "", texte_
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(t)
 	vb.add_child(HSeparator.new())
+	# Récapitulatif : MVP, barres d'XP par héros, statistiques du combat et butin
+	var vp := get_viewport().get_visible_rect().size
+	panneau.custom_minimum_size = Vector2(minf(980.0, vp.x - 40.0), 0)
+	var butin: Array = []
 	for l in lignes:
-		var lab := _label(l, 18, C_TEXTE)
-		lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		vb.add_child(lab)
+		if not l in _lignes_xp:
+			butin.append(l)
+	var mon_equipe: Array = demande.get("equipe", [])
+	var decalage := 0
+	var pv_final: Array = _res.get("pv_final", [])
+	if _mon_camp == 1:
+		decalage = mon_equipe.size()
+		mon_equipe = demande.get("ennemis", [])
+		pv_final = []
+	var recap := RecapCombat.new()
+	recap.preparer(mon_equipe, _res.get("journal", []), pv_final, decalage, _xp_avant, butin, int(_res.get("tours", 0)))
+	var defil := ScrollContainer.new()
+	defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	recap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	defil.add_child(recap)
+	vb.add_child(defil)
+	var h_max := maxf(220.0, vp.y - 230.0)
+	recap.minimum_size_changed.connect(func():
+		defil.custom_minimum_size.y = minf(recap.get_combined_minimum_size().y, h_max))
+	defil.custom_minimum_size.y = minf(recap.get_combined_minimum_size().y, h_max)
 	var b := _bouton(texte_bouton)
 	b.custom_minimum_size = Vector2(200, 44)
 	b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER

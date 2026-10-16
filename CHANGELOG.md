@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.69.0** (2026-10-15)
+Version actuelle : **0.70.0** (2026-10-16)
+
+## v0.70.0 — Récapitulatif de combat et tri par classe  (2026-10-16)
+
+- FIN DE COMBAT : nouveau récapitulatif. Le MVP du combat est mis en avant (plus gros dégâts, meilleur soigneur ou rempart de l'équipe). Chaque héros a sa carte avec une barre d'XP qui se remplit sous tes yeux (avec un effet à chaque niveau gagné), l'XP gagnée, les dégâts infligés, les soins donnés, les dégâts encaissés et les ennemis vaincus. Le butin (or, Échos, Éclats, Bestiaire…) est regroupé en dessous.
+- DECK : tri « Classe » (Tank, Guerrier, Assassin, Tireur, Mage, Soutien) et filtre par classe pour n'afficher, par exemple, que tes soigneurs.
 
 ## v0.69.0 — Démantèlement au choix et enregistreur de partie  (2026-10-15)
 

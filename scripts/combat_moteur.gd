@@ -669,7 +669,7 @@ func _soigner(src: Dictionary, cible: Dictionary, montant: float, skill: bool) -
 	cible["pv"] = minf(cible["pv_max"], cible["pv"] + montant)
 	var gain := int(cible["pv"] - avant)
 	if gain > 0:
-		_log({"t": "soin", "c": cible["idx"], "v": gain, "pv": int(cible["pv"])})
+		_log({"t": "soin", "a": src["idx"], "c": cible["idx"], "v": gain, "pv": int(cible["pv"])})
 
 
 func _verifier_ko(c: Dictionary, tueur: Dictionary) -> void:
