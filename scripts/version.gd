@@ -15,11 +15,19 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.70.3"
+const NUMERO := "0.71.0"
 const DATE := "2026-10-16"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.71.0", "date": "2026-10-16", "titre": "Les pions prennent vie",
+	"changements": [
+		"COMBATS EN 3D — LES PIONS : chaque unité se tient sur un socle 3D cerclé de la couleur de son élément (le liseré respire doucement). Au début du combat, les pions tombent sur le plateau et se posent ; le boss arrive en dernier, plus lourd, dans un nuage de poussière.",
+		"FIGURINES VIVANTES ET ÉCLAIRÉES : le relief de chaque figurine est calculé à partir de son image ; les torches, les sorts et les coups l'éclairent vraiment. Elles se balancent au repos, se ramassent puis s'étirent pour attaquer, vacillent sous les coups, et au K.O. la figurine tombe de son socle et s'étend au sol.",
+		"SORTS PAR ÉLÉMENT : sur une cible, boule de feu, éclat de glace, spirale d'épines, orbe d'ombre ou rayon sacré venu du ciel ; sur plusieurs cibles, colonnes de flammes, pics de glace, ronces, flaques d'ombre ou piliers de lumière ; sur les alliés, anneaux de lumière qui montent.",
+		"AMBIANCE DE CHAQUE ACTE : couleurs, torches, brume et météo propres à chaque Acte (braises, pluie, orage, lucioles, neige, spores, cendres, poussière d'or…).",
+		"MENU : nouvelle case « Caméra cinéma en 3D » (décochée par défaut) : ralenti et léger rapprochement à l'arrivée d'un boss et sur le coup fatal. Jamais de tremblement.",
+	]},
 	{"version": "0.70.3", "date": "2026-10-16", "titre": "Enregistreur : affichage des combats",
 	"changements": [
 		"Enregistreur de partie : le journal indique maintenant si l'option « Combats en 3D » est cochée, la carte graphique utilisée, et pour chaque combat le type d'affichage (3D ou 2D) et le décor chargé.",

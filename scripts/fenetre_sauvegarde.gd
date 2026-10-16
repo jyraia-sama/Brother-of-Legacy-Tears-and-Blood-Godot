@@ -107,6 +107,14 @@ func _ready() -> void:
 	c3.button_pressed = bool(Sauvegarde.get_parametre("combats_3d", true))
 	c3.toggled.connect(func(v: bool): Sauvegarde.definir_parametre("combats_3d", v))
 	vb.add_child(c3)
+	var cc := CheckBox.new()
+	UiCommun.habiller_case(cc)
+	cc.text = "Caméra cinéma en 3D (ralenti et léger rapprochement sur les moments forts)"
+	cc.focus_mode = Control.FOCUS_NONE
+	cc.add_theme_font_size_override("font_size", 17)
+	cc.button_pressed = bool(Sauvegarde.get_parametre("camera_cinema", false))
+	cc.toggled.connect(func(v: bool): Sauvegarde.definir_parametre("camera_cinema", v))
+	vb.add_child(cc)
 	if OS.has_feature("web"):
 		var pe := CheckBox.new()
 		UiCommun.habiller_case(pe)

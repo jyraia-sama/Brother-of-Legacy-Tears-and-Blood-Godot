@@ -102,6 +102,8 @@ func _ready() -> void:
 	Audio.musique(_musique_combat())
 	if _mode in MODES_3D and bool(Sauvegarde.get_parametre("combats_3d", true)):
 		_c3d = Combat3D.new()
+		_c3d.acte = int(demande.get("acte", 1))
+		_c3d.camera_cinema = bool(Sauvegarde.get_parametre("camera_cinema", false))
 	_creer_fond()
 	_creer_interface()
 
@@ -718,7 +720,7 @@ func _jouer(ev: Dictionary) -> void:
 				_trembler(14.0)
 			_texte_flottant(ev["a"], ev["nom"], Color("ffd27a"), 22, -70)
 			if _c3d != null and _c3d.a(ev["a"]):
-				_c3d.sort(ev["a"], _couleur_unite(ev["a"]))
+				_c3d.sort(ev["a"], _couleur_unite(ev["a"]), _element_unite(ev["a"]), ev.get("cibles", []))
 			else:
 				_pulser(ev["a"])
 			await _attendre(0.45)
@@ -815,6 +817,13 @@ func _appliquer_sans_animation(ev: Dictionary) -> void:
 		"reanimation", "renaissance": _revivre(ev["c"], ev["pv"])
 		"survie": _maj_pv(ev["c"], 1, -1)
 		"meca": _maj_meca(int(ev["c"]), str(ev["texte"]))
+
+
+func _element_unite(idx: int) -> String:
+	for info in _infos:
+		if int(info["idx"]) == idx:
+			return str(UnitesData.get_unite(info["id"]).get("element", "neutre"))
+	return "neutre"
 
 
 func _couleur_unite(idx: int) -> Color:

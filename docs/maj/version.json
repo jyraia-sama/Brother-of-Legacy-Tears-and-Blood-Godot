@@ -11,6 +11,17 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"COMBATS EN 3D — LES PIONS : chaque unité se tient sur un socle 3D cerclé de la couleur de son élément (le liseré respire doucement). Au début du combat, les pions tombent sur le plateau et se posent ; le boss arrive en dernier, plus lourd, dans un nuage de poussière.",
+				"FIGURINES VIVANTES ET ÉCLAIRÉES : le relief de chaque figurine est calculé à partir de son image ; les torches, les sorts et les coups l'éclairent vraiment. Elles se balancent au repos, se ramassent puis s'étirent pour attaquer, vacillent sous les coups, et au K.O. la figurine tombe de son socle et s'étend au sol.",
+				"SORTS PAR ÉLÉMENT : sur une cible, boule de feu, éclat de glace, spirale d'épines, orbe d'ombre ou rayon sacré venu du ciel ; sur plusieurs cibles, colonnes de flammes, pics de glace, ronces, flaques d'ombre ou piliers de lumière ; sur les alliés, anneaux de lumière qui montent.",
+				"AMBIANCE DE CHAQUE ACTE : couleurs, torches, brume et météo propres à chaque Acte (braises, pluie, orage, lucioles, neige, spores, cendres, poussière d'or…).",
+				"MENU : nouvelle case « Caméra cinéma en 3D » (décochée par défaut) : ralenti et léger rapprochement à l'arrivée d'un boss et sur le coup fatal. Jamais de tremblement."
+			],
+			"titre": "Les pions prennent vie",
+			"version": "0.71.0"
+		},
+		{
+			"changements": [
 				"Enregistreur de partie : le journal indique maintenant si l'option « Combats en 3D » est cochée, la carte graphique utilisée, et pour chaque combat le type d'affichage (3D ou 2D) et le décor chargé."
 			],
 			"titre": "Enregistreur : affichage des combats",
@@ -113,20 +124,13 @@
 			],
 			"titre": "Le mot du sage",
 			"version": "0.67.2"
-		},
-		{
-			"changements": [
-				"ILLUSTRATIONS : les 7 nouveaux monstres des Donjons (Salamandre Ardente, Racine Nourricière, Crabe-Bouclier, Lanterne Noire, Acolyte Profané, Molosse du Puits, Page Animée) et les 4 nouveaux héros (Sirène Muette, Sœur du Silence, Exorciste Déchu, Brise-Carapace) ont leur portrait et leur figurine."
-			],
-			"titre": "De nouveaux visages",
-			"version": "0.67.1"
 		}
 	],
 	"pck": {
-		"sha256": "2f494ea476660772b9cdf21a8d2b75b56e34c21fbc70aeb5de3856d526f76148",
-		"taille": 33363420,
+		"sha256": "0da088f83041d619392bc8a0c4ba44d19ec00e766f8f6ba9a47df9a34645ab03",
+		"taille": 33390640,
 		"url": "jeu.pck"
 	},
-	"version": "0.70.3",
+	"version": "0.71.0",
 	"version_minimum": "0.37.0"
 }

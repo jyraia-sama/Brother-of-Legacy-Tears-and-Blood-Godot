@@ -1,6 +1,14 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.70.3** (2026-10-16)
+Version actuelle : **0.71.0** (2026-10-16)
+
+## v0.71.0 — Les pions prennent vie  (2026-10-16)
+
+- COMBATS EN 3D — LES PIONS : chaque unité se tient sur un socle 3D cerclé de la couleur de son élément (le liseré respire doucement). Au début du combat, les pions tombent sur le plateau et se posent ; le boss arrive en dernier, plus lourd, dans un nuage de poussière.
+- FIGURINES VIVANTES ET ÉCLAIRÉES : le relief de chaque figurine est calculé à partir de son image ; les torches, les sorts et les coups l'éclairent vraiment. Elles se balancent au repos, se ramassent puis s'étirent pour attaquer, vacillent sous les coups, et au K.O. la figurine tombe de son socle et s'étend au sol.
+- SORTS PAR ÉLÉMENT : sur une cible, boule de feu, éclat de glace, spirale d'épines, orbe d'ombre ou rayon sacré venu du ciel ; sur plusieurs cibles, colonnes de flammes, pics de glace, ronces, flaques d'ombre ou piliers de lumière ; sur les alliés, anneaux de lumière qui montent.
+- AMBIANCE DE CHAQUE ACTE : couleurs, torches, brume et météo propres à chaque Acte (braises, pluie, orage, lucioles, neige, spores, cendres, poussière d'or…).
+- MENU : nouvelle case « Caméra cinéma en 3D » (décochée par défaut) : ralenti et léger rapprochement à l'arrivée d'un boss et sur le coup fatal. Jamais de tremblement.
 
 ## v0.70.3 — Enregistreur : affichage des combats  (2026-10-16)
 
