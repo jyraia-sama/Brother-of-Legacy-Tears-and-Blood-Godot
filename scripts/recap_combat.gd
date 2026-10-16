@@ -37,33 +37,71 @@ func preparer(equipe: Array, journal: Array, pv_final: Array, decalage: int, xp_
 	if tours > 0:
 		titre.add_child(_label(UiCommun.t("Combat en %d tours") % tours, 15, C_DOUX))
 	add_child(titre)
+	# Grande armée (Boss de Monde : 20 héros) : cartes compactes sur 5 colonnes, sans ascenseur interne.
+	var compact := equipe.size() > 5
 	var grille := GridContainer.new()
 	grille.columns = clampi(equipe.size(), 1, 5)
-	grille.add_theme_constant_override("h_separation", 10)
-	grille.add_theme_constant_override("v_separation", 10)
-	if equipe.size() > 5:
-		var defil := ScrollContainer.new()
-		defil.custom_minimum_size = Vector2(0, 330)
-		defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		defil.add_child(grille)
-		add_child(defil)
-	else:
-		grille.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		add_child(grille)
+	grille.add_theme_constant_override("h_separation", 8 if compact else 10)
+	grille.add_theme_constant_override("v_separation", 6 if compact else 10)
+	grille.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	add_child(grille)
 	for i in equipe.size():
 		var ko: bool = i < pv_final.size() and float(pv_final[i]) <= 0.0
-		grille.add_child(_carte_heros(equipe[i], stats[i], xp_avant, i == mvp, ko))
+		if compact:
+			grille.add_child(_carte_compacte(equipe[i], stats[i], xp_avant, i == mvp, ko))
+		else:
+			grille.add_child(_carte_heros(equipe[i], stats[i], xp_avant, i == mvp, ko))
 
 	# --- Butin ---
 	if not butin.is_empty():
 		add_child(HSeparator.new())
-		add_child(_label("BUTIN ET RÉSULTATS", 18, C_OR))
+		var resultats: Array = []
+		var objets: Array = []
 		for l in butin:
-			var lab := _label(_icone_ligne(str(l)) + str(l), 17, C_TEXTE)
-			lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			add_child(lab)
+			if _est_resultat(str(l)):
+				resultats.append(l)
+			else:
+				objets.append(l)
+		# Beaucoup de lignes : deux colonnes (à gauche les résultats, à droite le butin)
+		if butin.size() > 4 and not resultats.is_empty() and not objets.is_empty():
+			var cols := HBoxContainer.new()
+			cols.add_theme_constant_override("separation", 24)
+			add_child(cols)
+			cols.add_child(_colonne("RÉSULTATS", resultats))
+			cols.add_child(VSeparator.new())
+			cols.add_child(_colonne("BUTIN", objets))
+		else:
+			add_child(_colonne("BUTIN ET RÉSULTATS", butin))
 
 	_lancer_animations.call_deferred()
+
+
+## Une colonne de lignes de butin / résultats avec son titre.
+func _colonne(titre: String, lignes: Array) -> VBoxContainer:
+	var vb := VBoxContainer.new()
+	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vb.size_flags_stretch_ratio = 1.0
+	vb.add_theme_constant_override("separation", 4)
+	vb.add_child(_label(titre, 18, C_OR))
+	for l in lignes:
+		var lab := _label(_icone_ligne(str(l)) + str(l), 16, C_TEXTE)
+		lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		lab.custom_minimum_size = Vector2(200, 0)
+		vb.add_child(lab)
+	return vb
+
+
+## Ligne de « résultat » (dégâts, XP, record, classement…) plutôt que d'objet gagné ?
+func _est_resultat(l: String) -> bool:
+	var b := l.to_lower()
+	for objet in ["tome", "élixir", "elixir", "coffre", "pierre", "écho obtenu"]:
+		if objet in b:
+			return false
+	for mot in ["dégâts", "degats", "xp", "record", "points", "rang", "étage", "etage", "vaincu", "abattu",
+			"classement", "victoire", "défaite", "repli", "repouss", "étoile", "score", "niveau", "%"]:
+		if mot in b:
+			return true
+	return false
 
 
 # =====================================================================
@@ -229,6 +267,71 @@ func _carte_heros(e: Dictionary, st: Dictionary, xp_avant: Dictionary, est_mvp: 
 	if int(st["kills"]) > 0:
 		vb.add_child(_ligne_stat("☠ Vaincus", int(st["kills"]), Color("e0c0ff")))
 	return p
+
+
+## Carte compacte (grandes armées) : portrait à gauche ; nom, niveau, barre d'XP et stats à droite.
+func _carte_compacte(e: Dictionary, st: Dictionary, xp_avant: Dictionary, est_mvp: bool, ko: bool) -> PanelContainer:
+	var id := str(e.get("id", ""))
+	var p := PanelContainer.new()
+	p.custom_minimum_size = Vector2(178, 0)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.1, 0.04, 0.05, 0.9)
+	style.border_color = C_OR if est_mvp else Color(1, 1, 1, 0.12)
+	style.set_border_width_all(2 if est_mvp else 1)
+	style.set_corner_radius_all(5)
+	style.set_content_margin_all(5)
+	p.add_theme_stylebox_override("panel", style)
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 6)
+	p.add_child(h)
+	var por := UiCommun.portrait(id, 40)
+	por.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	if ko:
+		por.modulate = Color(0.5, 0.45, 0.45)
+	h.add_child(por)
+	var vb := VBoxContainer.new()
+	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vb.add_theme_constant_override("separation", 1)
+	h.add_child(vb)
+	var nom := _label(_nom(e) + ("  K.O." if ko else ""), 12, Color("ff7a6a") if ko else UiCommun.couleur_rarete(id))
+	nom.clip_text = true
+	nom.custom_minimum_size = Vector2(118, 0)
+	vb.add_child(nom)
+	var uid := int(e.get("uid", -1))
+	var hh := Sauvegarde.get_heros(uid) if uid >= 0 else {}
+	if not hh.is_empty() and xp_avant.has(uid):
+		var av: Dictionary = xp_avant[uid]
+		var etapes := _etapes_xp(int(av["niveau"]), int(av["xp"]), int(hh["niveau"]), int(hh["xp"]), Fusion.niveau_max(hh))
+		var total := 0
+		for et in etapes:
+			total += int(et["gain"])
+		var lbl_niv := _label(UiCommun.t("Niveau %d") % int(av["niveau"]), 11, C_TEXTE)
+		vb.add_child(lbl_niv)
+		var barre := _barre(118)
+		barre.custom_minimum_size.y = 7
+		var besoin0 := Sauvegarde.xp_heros_pour_niveau(int(av["niveau"]))
+		barre.max_value = maxi(1, besoin0)
+		barre.value = besoin0 if int(av["niveau"]) >= Fusion.niveau_max(hh) else int(av["xp"])
+		vb.add_child(barre)
+		_cartes_xp.append({"barre": barre, "niv": lbl_niv, "etapes": etapes, "carte": p})
+		if total > 0:
+			lbl_niv.tooltip_text = UiCommun.t("+%d XP") % total
+	var ligne := "⚔ %s" % _court(int(st["degats"]))
+	if int(st["soins"]) > 0:
+		ligne += "  ✚ %s" % _court(int(st["soins"]))
+	vb.add_child(_label(ligne, 11, C_DOUX))
+	return p
+
+
+## 12345 -> « 12,3 k », 2500000 -> « 2,5 M »
+func _court(n: int) -> String:
+	if n >= 1000000:
+		return ("%.1f M" % (n / 1000000.0)).replace(".", ",")
+	if n >= 10000:
+		return "%d k" % int(n / 1000.0)
+	if n >= 1000:
+		return ("%.1f k" % (n / 1000.0)).replace(".", ",")
+	return str(n)
 
 
 ## Découpe l'XP gagnée en étapes : [{niveau, de, a, max, gain}] (une par niveau traversé).

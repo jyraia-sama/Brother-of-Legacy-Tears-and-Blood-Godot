@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.70.1"
+const NUMERO := "0.70.2"
 const DATE := "2026-10-16"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.70.2", "date": "2026-10-16", "titre": "Récapitulatif plus compact",
+	"changements": [
+		"RÉCAPITULATIF DE COMBAT : quand il y a beaucoup d'informations, le butin passe sur deux colonnes (à gauche les RÉSULTATS : dégâts infligés, records, XP de l'armée et du compte… ; à droite le BUTIN : or, objets, Échos et le reste). Au Boss de Monde, les 20 héros s'affichent en cartes compactes sur 5 colonnes, sans ascenseur supplémentaire.",
+	]},
 	{"version": "0.70.1", "date": "2026-10-16", "titre": "Ménagerie verrouillée",
 	"changements": [
 		"CORRECTIF : après une invocation au Pacte Sauvage, le bouton « Voir la Ménagerie » ouvrait la Ménagerie même avant la fin de l'Acte IV. Il n'apparaît plus tant qu'elle n'est pas débloquée (un message indique quand elle s'ouvrira ; les familiers obtenus sont bien gardés). Même vérification ajoutée sur l'écran Aventure pour la Ménagerie et les autres modes.",

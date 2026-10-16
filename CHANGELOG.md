@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.70.1** (2026-10-16)
+Version actuelle : **0.70.2** (2026-10-16)
+
+## v0.70.2 — Récapitulatif plus compact  (2026-10-16)
+
+- RÉCAPITULATIF DE COMBAT : quand il y a beaucoup d'informations, le butin passe sur deux colonnes (à gauche les RÉSULTATS : dégâts infligés, records, XP de l'armée et du compte… ; à droite le BUTIN : or, objets, Échos et le reste). Au Boss de Monde, les 20 héros s'affichent en cartes compactes sur 5 colonnes, sans ascenseur supplémentaire.
 
 ## v0.70.1 — Ménagerie verrouillée  (2026-10-16)
 
