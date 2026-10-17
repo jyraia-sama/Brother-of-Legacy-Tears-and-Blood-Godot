@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.72.0** (2026-10-17)
+Version actuelle : **0.72.1** (2026-10-17)
+
+## v0.72.1 — Fenêtres et clavier sur téléphone  (2026-10-17)
+
+- CORRECTIF TÉLÉPHONE : le clavier ne surgit plus tout seul au lancement. La fenêtre de connexion plaçait le curseur dans le champ e-mail dès son ouverture (même cachée derrière l'écran de chargement), ce qui ouvrait le clavier. Sur téléphone, il s'ouvre maintenant seulement quand tu touches un champ.
+- CORRECTIF TÉLÉPHONE : la fenêtre « Nouveautés » ne dépasse plus de l'écran ; le bouton « Fermer » est de nouveau visible. Toutes les fenêtres (compte, astuces, journal…) trop grandes pour l'écran sont maintenant réduites juste assez pour tenir entièrement.
 
 ## v0.72.0 — Lisible sur téléphone  (2026-10-17)
 

@@ -221,7 +221,7 @@ func _afficher_ajout() -> void:
 			_charger()
 	envoyer.pressed.connect(action)
 	champ.text_submitted.connect(func(_t): action.call())
-	champ.grab_focus.call_deferred()
+	UiCommun.focus_auto(champ)
 
 
 # ---------------------------------------------------------------

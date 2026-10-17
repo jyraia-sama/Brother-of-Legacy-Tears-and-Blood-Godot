@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"CORRECTIF TÉLÉPHONE : le clavier ne surgit plus tout seul au lancement. La fenêtre de connexion plaçait le curseur dans le champ e-mail dès son ouverture (même cachée derrière l'écran de chargement), ce qui ouvrait le clavier. Sur téléphone, il s'ouvre maintenant seulement quand tu touches un champ.",
+				"CORRECTIF TÉLÉPHONE : la fenêtre « Nouveautés » ne dépasse plus de l'écran ; le bouton « Fermer » est de nouveau visible. Toutes les fenêtres (compte, astuces, journal…) trop grandes pour l'écran sont maintenant réduites juste assez pour tenir entièrement."
+			],
+			"titre": "Fenêtres et clavier sur téléphone",
+			"version": "0.72.1"
+		},
+		{
+			"changements": [
 				"TÉLÉPHONE — PLUS GRAND : nouvelle taille d'interface « Géante », choisie automatiquement sur les téléphones (les tablettes restent en « Très grande »). Sur les écrans allongés (20:9, comme les Xiaomi), le jeu occupe maintenant toute la largeur au lieu de laisser deux bandes noires sur les côtés.",
 				"TAILLE DU TEXTE : nouveau réglage dans les Paramètres (Normal, Grand, Très grand). Les petits textes (descriptions, stats, boutons) grossissent ; les titres ne bougent pas. « Automatique » : Grand sur téléphone, Normal sur ordinateur.",
 				"LOUPE : sur téléphone, un appui long sur une image (portrait, carte, illustration) l'affiche en grand, en entier. Toucher l'écran pour fermer."
@@ -117,21 +125,13 @@
 			],
 			"titre": "Huit nouvelles recrues",
 			"version": "0.68.0"
-		},
-		{
-			"changements": [
-				"NOUVEAU HÉROS : Stéphane, le Buteur d'Outre-Tombe (UR, Ténèbres, Tireur) — un zombie footballeur qui shoote dans des crânes : Frappe du Crâne (étourdit), Esprit d'Équipe (AGI et Crit pour l'équipe), Coup Franc Maudit (3 rebonds) et Remontada (revient d'entre les morts). Évolution : Stéphane, Ballon d'Or d'Outre-Tombe.",
-				"DECK : nouveau bouton « ✦ Améliorer les sorts » sur la fiche du héros : il descend directement à la section des sorts."
-			],
-			"titre": "Remontada",
-			"version": "0.67.3"
 		}
 	],
 	"pck": {
-		"sha256": "f15e9c757ac870b2775083029a7c7f2bc6aa8f04ea037d0640d645d94c5cbc12",
-		"taille": 33396432,
+		"sha256": "03ff5ba7c6798054df3a19667ecb3902fa2bea30cc25249750fc7d95bba9622d",
+		"taille": 33398448,
 		"url": "jeu.pck"
 	},
-	"version": "0.72.0",
+	"version": "0.72.1",
 	"version_minimum": "0.37.0"
 }

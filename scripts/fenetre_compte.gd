@@ -148,9 +148,9 @@ func _construire_formulaire() -> void:
 	# Adresse de la dernière connexion déjà remplie : il ne reste que le mot de passe
 	if EnLigne.dernier_email != "" and _email.text == "":
 		_email.text = EnLigne.dernier_email
-		_mdp.grab_focus.call_deferred()
+		UiCommun.focus_auto(_mdp)
 	else:
-		_email.grab_focus.call_deferred()
+		UiCommun.focus_auto(_email)
 
 
 func _changer_mode(creation: bool) -> void:
@@ -223,7 +223,7 @@ func _construire_nouveau_mdp() -> void:
 	_ligne_boutons([["Enregistrer", _enregistrer_mdp], ["Plus tard", func():
 		EnLigne.lien_mot_de_passe = false
 		_fermer()]])
-	_mdp.grab_focus.call_deferred()
+	UiCommun.focus_auto(_mdp)
 
 
 func _enregistrer_mdp() -> void:

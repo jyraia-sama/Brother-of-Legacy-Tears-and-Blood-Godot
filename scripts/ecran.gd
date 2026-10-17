@@ -236,6 +236,8 @@ func taille_texte(s: int) -> int:
 
 
 func _noeud_ajoute(n: Node) -> void:
+	if n is CanvasLayer:
+		_prochain_ajustement = minf(_prochain_ajustement, 0.05)     # nouvelle fenêtre : ajustée tout de suite
 	if float(_texte[0]) == 1.0:
 		return
 	if n is Label or n is Button or n is RichTextLabel or n is LineEdit or n is TextEdit:
@@ -363,6 +365,42 @@ func ajuster_scene() -> void:
 	scene.position = Vector2.ZERO
 	scene.scale = Vector2(echelle, echelle)
 	scene.size = vp / echelle
+
+
+## Fenêtres par-dessus l'écran (CanvasLayer : journal, compte, astuces…) : même ajustement. Si leur
+## contenu ne tient pas dans la surface de jeu, le calque est réduit juste assez, et ses contrôles
+## plein écran sont agrandis d'autant pour couvrir tout l'écran (voile, centrage).
+func ajuster_calques() -> void:
+	var vp := get_viewport().get_visible_rect().size
+	for n in get_tree().root.find_children("*", "CanvasLayer", true, false):
+		var calque := n as CanvasLayer
+		if calque == null or not calque.visible or calque.get_parent() == self or calque.is_in_group("sans_ajustement"):
+			continue
+		var besoin := Vector2.ZERO
+		var pleins: Array = []
+		for c in calque.get_children():
+			if c is Control and c.visible:
+				var ctl := c as Control
+				if ctl.anchor_right >= 1.0 and ctl.anchor_bottom >= 1.0 and ctl.anchor_left <= 0.0 and ctl.anchor_top <= 0.0 or ctl.has_meta("_plein"):
+					pleins.append(ctl)
+					besoin = besoin.max(ctl.get_combined_minimum_size())
+		if pleins.is_empty():
+			continue
+		var echelle := 1.0
+		if besoin.x > vp.x + 1.0:
+			echelle = minf(echelle, vp.x / besoin.x)
+		if besoin.y > vp.y + 1.0:
+			echelle = minf(echelle, vp.y / besoin.y)
+		echelle = snappedf(echelle, 0.01)
+		if absf(calque.scale.x - echelle) < 0.005 and (echelle < 1.0 or not calque.has_meta("_ajuste")):
+			continue
+		calque.set_meta("_ajuste", true)
+		calque.scale = Vector2(echelle, echelle)
+		for ctl in pleins:
+			ctl.set_meta("_plein", true)
+			ctl.set_anchors_preset(Control.PRESET_TOP_LEFT)
+			ctl.position = Vector2.ZERO
+			ctl.size = vp / echelle
 
 
 func _creer_calque_portrait() -> void:
@@ -588,6 +626,7 @@ func _process(delta: float) -> void:
 		_scene_suivie = scene
 		_prochain_ajustement = 0.4
 		ajuster_scene()
+		ajuster_calques()
 	if _elan == null:
 		return
 	if not is_instance_valid(_elan) or _elan_vitesse.length() < 0.5:

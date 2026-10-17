@@ -43,7 +43,9 @@ func _ready() -> void:
 	style.set_corner_radius_all(8)
 	style.set_content_margin_all(22)
 	panneau.add_theme_stylebox_override("panel", style)
-	panneau.custom_minimum_size = Vector2(900, 700)
+	# jamais plus grande que l'écran (le bouton Fermer doit rester visible, même sur téléphone)
+	var vp := get_viewport().get_visible_rect().size
+	panneau.custom_minimum_size = Vector2(minf(900.0, vp.x - 40.0), minf(700.0, vp.y - 30.0))
 	centre.add_child(panneau)
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 10)

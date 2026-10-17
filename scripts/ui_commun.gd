@@ -74,6 +74,14 @@ static func info_niveau_heros(h: Dictionary) -> String:
 	return ""
 
 
+## Place le curseur dans un champ de texte à l'ouverture d'une fenêtre, SAUF sur écran tactile :
+## sur téléphone, cela ferait surgir le clavier sans que le joueur ait touché le champ.
+static func focus_auto(champ: Control) -> void:
+	if champ == null or DisplayServer.is_touchscreen_available() or Ecran.est_mobile():
+		return
+	champ.grab_focus.call_deferred()
+
+
 static func label(texte: String, taille: int, couleur := C_TEXTE) -> Label:
 	var l := Label.new()
 	l.text = texte

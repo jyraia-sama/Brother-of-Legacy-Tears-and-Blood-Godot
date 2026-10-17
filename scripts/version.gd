@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.72.0"
+const NUMERO := "0.72.1"
 const DATE := "2026-10-17"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.72.1", "date": "2026-10-17", "titre": "Fenêtres et clavier sur téléphone",
+	"changements": [
+		"CORRECTIF TÉLÉPHONE : le clavier ne surgit plus tout seul au lancement. La fenêtre de connexion plaçait le curseur dans le champ e-mail dès son ouverture (même cachée derrière l'écran de chargement), ce qui ouvrait le clavier. Sur téléphone, il s'ouvre maintenant seulement quand tu touches un champ.",
+		"CORRECTIF TÉLÉPHONE : la fenêtre « Nouveautés » ne dépasse plus de l'écran ; le bouton « Fermer » est de nouveau visible. Toutes les fenêtres (compte, astuces, journal…) trop grandes pour l'écran sont maintenant réduites juste assez pour tenir entièrement.",
+	]},
 	{"version": "0.72.0", "date": "2026-10-17", "titre": "Lisible sur téléphone",
 	"changements": [
 		"TÉLÉPHONE — PLUS GRAND : nouvelle taille d'interface « Géante », choisie automatiquement sur les téléphones (les tablettes restent en « Très grande »). Sur les écrans allongés (20:9, comme les Xiaomi), le jeu occupe maintenant toute la largeur au lieu de laisser deux bandes noires sur les côtés.",
