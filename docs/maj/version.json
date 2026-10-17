@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-16",
+	"date": "2026-10-17",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,15 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"TÉLÉPHONE — PLUS GRAND : nouvelle taille d'interface « Géante », choisie automatiquement sur les téléphones (les tablettes restent en « Très grande »). Sur les écrans allongés (20:9, comme les Xiaomi), le jeu occupe maintenant toute la largeur au lieu de laisser deux bandes noires sur les côtés.",
+				"TAILLE DU TEXTE : nouveau réglage dans les Paramètres (Normal, Grand, Très grand). Les petits textes (descriptions, stats, boutons) grossissent ; les titres ne bougent pas. « Automatique » : Grand sur téléphone, Normal sur ordinateur.",
+				"LOUPE : sur téléphone, un appui long sur une image (portrait, carte, illustration) l'affiche en grand, en entier. Toucher l'écran pour fermer."
+			],
+			"titre": "Lisible sur téléphone",
+			"version": "0.72.0"
+		},
 		{
 			"changements": [
 				"COMBATS EN 3D — LES PIONS : chaque unité se tient sur un socle 3D cerclé de la couleur de son élément (le liseré respire doucement). Au début du combat, les pions tombent sur le plateau et se posent ; le boss arrive en dernier, plus lourd, dans un nuage de poussière.",
@@ -116,21 +125,13 @@
 			],
 			"titre": "Remontada",
 			"version": "0.67.3"
-		},
-		{
-			"changements": [
-				"GUIDE DES DONJONS : nouveau bouton « ? » sur l'écran des Donjons (il s'ouvre tout seul à la première visite). Il explique les expéditions, les mécaniques des boss, comment composer son équipe, et pour chaque Donjon : boss, mini-boss, monstre, un exemple d'équipe et TOUS les héros qui contrent le boss (en vert ceux que tu possèdes).",
-				"GUIDE DE L'AUTEL DE FUSION : nouveau bouton « ? » : étoiles et niveau maximum, retour au niveau 1 et XP de mémoire, Absorption, doublons et Pierres d'Éveil, liens avec l'Évolution et les niveaux de sorts, conseils."
-			],
-			"titre": "Le mot du sage",
-			"version": "0.67.2"
 		}
 	],
 	"pck": {
-		"sha256": "0da088f83041d619392bc8a0c4ba44d19ec00e766f8f6ba9a47df9a34645ab03",
-		"taille": 33390640,
+		"sha256": "f15e9c757ac870b2775083029a7c7f2bc6aa8f04ea037d0640d645d94c5cbc12",
+		"taille": 33396432,
 		"url": "jeu.pck"
 	},
-	"version": "0.71.0",
+	"version": "0.72.0",
 	"version_minimum": "0.37.0"
 }

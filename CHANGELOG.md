@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.71.0** (2026-10-16)
+Version actuelle : **0.72.0** (2026-10-17)
+
+## v0.72.0 — Lisible sur téléphone  (2026-10-17)
+
+- TÉLÉPHONE — PLUS GRAND : nouvelle taille d'interface « Géante », choisie automatiquement sur les téléphones (les tablettes restent en « Très grande »). Sur les écrans allongés (20:9, comme les Xiaomi), le jeu occupe maintenant toute la largeur au lieu de laisser deux bandes noires sur les côtés.
+- TAILLE DU TEXTE : nouveau réglage dans les Paramètres (Normal, Grand, Très grand). Les petits textes (descriptions, stats, boutons) grossissent ; les titres ne bougent pas. « Automatique » : Grand sur téléphone, Normal sur ordinateur.
+- LOUPE : sur téléphone, un appui long sur une image (portrait, carte, illustration) l'affiche en grand, en entier. Toucher l'écran pour fermer.
 
 ## v0.71.0 — Les pions prennent vie  (2026-10-16)
 

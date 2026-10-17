@@ -87,18 +87,31 @@ func _ready() -> void:
 
 	# Affichage : taille de l'interface (grande sur téléphone) et plein écran
 	vb.add_child(_label("AFFICHAGE", 20, Color(1.0, 0.85, 0.55)))
-	vb.add_child(_label("Taille de l'interface (« Très grande » conseillée sur téléphone) :", 16, Color(0.85, 0.7, 0.6)))
+	vb.add_child(_label("Taille de l'interface (« Très grande » ou « Géante » conseillée sur téléphone) :", 16, Color(0.85, 0.7, 0.6)))
 	var tailles := HBoxContainer.new()
 	tailles.add_theme_constant_override("separation", 8)
 	vb.add_child(tailles)
 	var groupe := ButtonGroup.new()
-	for t in ["auto", "normale", "grande", "tres_grande"]:
+	for t in ["auto", "normale", "grande", "tres_grande", "geante"]:
 		var b := _bouton(Ecran.NOMS_TAILLES[t], func(): Ecran.changer_taille(t))
 		b.toggle_mode = true
 		b.button_group = groupe
 		b.button_pressed = Ecran.reglage_taille() == t
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		tailles.add_child(b)
+	vb.add_child(_label("Taille du texte (s'applique en changeant d'écran) :", 16, Color(0.85, 0.7, 0.6)))
+	var textes := HBoxContainer.new()
+	textes.add_theme_constant_override("separation", 8)
+	vb.add_child(textes)
+	var groupe_t := ButtonGroup.new()
+	for t in ["auto", "normal", "grand", "tres_grand"]:
+		var bt := _bouton(Ecran.NOMS_TEXTES[t], func(): Ecran.changer_texte(t))
+		bt.toggle_mode = true
+		bt.button_group = groupe_t
+		bt.button_pressed = Ecran.reglage_texte() == t
+		bt.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		textes.add_child(bt)
+	vb.add_child(_label("Astuce : sur téléphone, un appui long sur une image l'affiche en grand.", 15, Color(0.75, 0.68, 0.6)))
 	var c3 := CheckBox.new()
 	UiCommun.habiller_case(c3)
 	c3.text = "Combats en 3D (décoche si ton téléphone chauffe ou ralentit)"

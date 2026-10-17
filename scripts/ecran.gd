@@ -14,13 +14,33 @@ extends Node
 ##  - ORDINATEUR (application Windows / Mac) : plein écran par défaut ; réglable dans les Paramètres ou touche F11.
 ##  - AJUSTEMENT : si un écran est trop large ou trop haut pour la taille choisie, il est
 ##    réduit juste assez pour tenir entièrement (rien n'est jamais coupé sur le bord).
+##  - ÉCRANS ALLONGÉS (téléphones 20:9…) : sur mobile, le jeu occupe toute la largeur de l'écran
+##    au lieu de laisser deux bandes noires sur les côtés.
+##  - TAILLE DU TEXTE : réglage séparé (Normale / Grande / Très grande). Les petits textes sont
+##    agrandis, les titres déjà gros ne bougent pas. « Automatique » : Grande sur téléphone.
+##  - LOUPE : un appui long (environ une demi-seconde) sur une image l'affiche en grand.
 
 const TAILLES := {
 	"normale": Vector2i(1920, 1080),
 	"grande": Vector2i(1600, 900),
 	"tres_grande": Vector2i(1280, 720),
+	"geante": Vector2i(1120, 630),
 }
-const NOMS_TAILLES := {"auto": "Automatique", "normale": "Normale", "grande": "Grande", "tres_grande": "Très grande"}
+const NOMS_TAILLES := {"auto": "Automatique", "normale": "Normale", "grande": "Grande", "tres_grande": "Très grande", "geante": "Géante"}
+
+## TAILLE DU TEXTE : [multiplicateur, taille minimale]. Les textes de 26 px et plus (titres) ne changent pas.
+const TEXTES := {
+	"normal": [1.0, 0],
+	"grand": [1.15, 17],
+	"tres_grand": [1.3, 19],
+}
+const NOMS_TEXTES := {"auto": "Automatique", "normal": "Normal", "grand": "Grand", "tres_grand": "Très grand"}
+const TITRE_INCHANGE := 26
+## Appui long (ms) qui ouvre la loupe sur une image
+const DUREE_LOUPE := 520
+
+## Essais sur ordinateur : se comporter comme un téléphone (outils de capture)
+static var simuler_mobile := false
 
 ## Distance (en pixels de l'écran du jeu) au-delà de laquelle un appui devient un glissement.
 const SEUIL_GLISSER := 14.0
@@ -39,12 +59,19 @@ var _plein_ecran_demande := false
 var _calque_portrait: CanvasLayer
 var _scene_suivie: Node = null
 var _prochain_ajustement := 0.0
+var _texte := [1.0, 0]           # réglage de taille du texte en cours
+var _appui_ms := -1              # début de l'appui en cours (loupe), -1 = aucun
+var _appui_pos := Vector2.ZERO
+var _calque_loupe: CanvasLayer
+var _image_loupe: TextureRect
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	process_priority = -100
 	appliquer_taille()
+	appliquer_texte()
+	get_tree().node_added.connect(_noeud_ajoute)
 	appliquer_langue()
 	_creer_calque_portrait()
 	Enregistreur.installer(self)          # enregistreur de partie (outil développeur, Menu Admin)
@@ -64,7 +91,7 @@ func _ready() -> void:
 
 ## Téléphone ou tablette (appli, ou navigateur sur mobile).
 func est_mobile() -> bool:
-	if OS.has_feature("android") or OS.has_feature("ios") or OS.has_feature("web_android") or OS.has_feature("web_ios"):
+	if simuler_mobile or OS.has_feature("android") or OS.has_feature("ios") or OS.has_feature("web_android") or OS.has_feature("web_ios"):
 		return true
 	return OS.has_feature("web") and DisplayServer.is_touchscreen_available()
 
@@ -139,24 +166,171 @@ func reglage_taille() -> String:
 	return str(Sauvegarde.get_parametre("taille_interface", "auto"))
 
 
-## Taille réellement utilisée ("auto" : très grande sur mobile, normale sur ordinateur).
+## Taille réellement utilisée ("auto" : géante sur téléphone, très grande sur tablette,
+## normale sur ordinateur).
 func taille_effective() -> String:
 	var t := reglage_taille()
 	if not TAILLES.has(t):
-		t = "tres_grande" if est_mobile() else "normale"
+		if not est_mobile():
+			t = "normale"
+		else:
+			t = "geante" if diagonale_ecran() < 7.5 else "tres_grande"
 	return t
+
+
+## Diagonale de l'écran en pouces (99 si inconnue : on suppose une tablette).
+func diagonale_ecran() -> float:
+	if simuler_mobile:
+		return 6.7
+	var dpi := DisplayServer.screen_get_dpi()
+	if dpi <= 0 or OS.has_feature("web"):
+		return 99.0
+	var px := Vector2(DisplayServer.screen_get_size())
+	return px.length() / float(dpi)
 
 
 func appliquer_taille() -> void:
 	var fenetre := get_tree().root
 	fenetre.content_scale_size = TAILLES[taille_effective()]
 	fenetre.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
-	fenetre.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	# Téléphone : on garde la hauteur et on prend toute la largeur (écrans 20:9 sans bandes noires)
+	fenetre.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND if est_mobile() else Window.CONTENT_SCALE_ASPECT_KEEP
 
 
 func changer_taille(t: String) -> void:
 	Sauvegarde.definir_parametre("taille_interface", t)
 	appliquer_taille()
+
+
+# =====================================================================
+# Taille du texte
+# =====================================================================
+
+func reglage_texte() -> String:
+	return str(Sauvegarde.get_parametre("taille_texte", "auto"))
+
+
+## Réglage réellement utilisé ("auto" : Grand sur téléphone, Normal sur ordinateur).
+func texte_effectif() -> String:
+	var t := reglage_texte()
+	if not TEXTES.has(t):
+		t = "grand" if est_mobile() else "normal"
+	return t
+
+
+func appliquer_texte() -> void:
+	_texte = TEXTES[texte_effectif()]
+
+
+## Change la taille du texte ; l'écran ouvert est rechargé pour en profiter tout de suite.
+func changer_texte(t: String) -> void:
+	Sauvegarde.definir_parametre("taille_texte", t)
+	appliquer_texte()
+
+
+## Taille d'un texte après agrandissement.
+func taille_texte(s: int) -> int:
+	if s >= TITRE_INCHANGE or float(_texte[0]) == 1.0:
+		return s
+	return mini(maxi(roundi(s * float(_texte[0])), int(_texte[1])), maxi(s, TITRE_INCHANGE - 1))
+
+
+func _noeud_ajoute(n: Node) -> void:
+	if float(_texte[0]) == 1.0:
+		return
+	if n is Label or n is Button or n is RichTextLabel or n is LineEdit or n is TextEdit:
+		_agrandir_texte.call_deferred(n)
+
+
+## Agrandit le texte d'un contrôle (une seule fois), après que son écran l'a configuré.
+func _agrandir_texte(c: Control) -> void:
+	if not is_instance_valid(c) or c.has_meta("_texte_agrandi"):
+		return
+	c.set_meta("_texte_agrandi", true)
+	var cles := ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size", "mono_font_size"] if c is RichTextLabel else ["font_size"]
+	for cle in cles:
+		var s := c.get_theme_font_size(cle)
+		var n := taille_texte(s)
+		if n != s:
+			c.add_theme_font_size_override(cle, n)
+
+
+# =====================================================================
+# Loupe : appui long sur une image
+# =====================================================================
+
+## Image (TextureRect) sous le doigt : la plus grande qui contient le point, en partant du contrôle
+## touché et en remontant de quelques parents (les portraits sont souvent dans une carte-bouton).
+func _image_sous(pos: Vector2) -> Texture2D:
+	var c := get_viewport().gui_get_hovered_control()
+	var vp := get_viewport().get_visible_rect().size
+	var meilleure: TextureRect = null
+	var aire := 0.0
+	var k := 0
+	while c != null and k < 4:
+		for t in c.find_children("*", "TextureRect", true, false) + ([c] if c is TextureRect else []):
+			var tr := t as TextureRect
+			if tr == null or tr.texture == null or not tr.is_visible_in_tree():
+				continue
+			# seulement de vraies images (pas les dégradés ni les textures dessinées en code)
+			if tr.texture is GradientTexture1D or tr.texture is GradientTexture2D or tr.texture is NoiseTexture2D:
+				continue
+			if tr.texture.get_width() < 96 or tr.texture.get_height() < 96:
+				continue
+			var r := tr.get_global_rect()
+			var a := r.size.x * r.size.y
+			if not r.has_point(pos) or a > vp.x * vp.y * 0.45 or a < 900.0:
+				continue      # trop grande (fond d'écran) ou minuscule (icône)
+			if a > aire:
+				aire = a
+				meilleure = tr
+		if meilleure != null:
+			break
+		c = c.get_parent() as Control
+		k += 1
+	return meilleure.texture if meilleure else null
+
+
+func _ouvrir_loupe(tex: Texture2D) -> void:
+	if _calque_loupe == null:
+		_calque_loupe = CanvasLayer.new()
+		_calque_loupe.layer = 127
+		add_child(_calque_loupe)
+		var fond := ColorRect.new()
+		fond.color = Color(0.03, 0.01, 0.02, 0.9)
+		fond.mouse_filter = Control.MOUSE_FILTER_STOP
+		fond.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		fond.gui_input.connect(func(e: InputEvent):
+			if (e is InputEventMouseButton or e is InputEventScreenTouch) and e.pressed:
+				_calque_loupe.visible = false
+				get_viewport().set_input_as_handled())
+		_calque_loupe.add_child(fond)
+		_image_loupe = TextureRect.new()
+		_image_loupe.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		_image_loupe.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		_image_loupe.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_image_loupe.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_image_loupe.offset_left = 30
+		_image_loupe.offset_top = 24
+		_image_loupe.offset_right = -30
+		_image_loupe.offset_bottom = -54
+		_calque_loupe.add_child(_image_loupe)
+		var aide := Label.new()
+		aide.text = UiCommun.t("Touche l'écran pour fermer")
+		aide.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		aide.add_theme_font_size_override("font_size", 20)
+		aide.add_theme_color_override("font_color", Color(0.85, 0.78, 0.7))
+		aide.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+		aide.offset_top = -44
+		aide.offset_bottom = -10
+		aide.set_meta("_texte_agrandi", true)
+		_calque_loupe.add_child(aide)
+	# portrait recadré (AtlasTexture) : on montre l'image entière
+	_image_loupe.texture = tex.atlas if tex is AtlasTexture and tex.atlas != null else tex
+	_calque_loupe.visible = true
+	_image_loupe.scale = Vector2(0.9, 0.9)
+	_image_loupe.pivot_offset = get_viewport().get_visible_rect().size / 2.0
+	create_tween().tween_property(_image_loupe, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 # =====================================================================
@@ -330,11 +504,14 @@ func _input(event: InputEvent) -> void:
 			_glisse = false
 			_vitesse = Vector2.ZERO
 			_annuler_clic = false
+			_appui_ms = Time.get_ticks_msec()
+			_appui_pos = event.position
 		else:
+			_appui_ms = -1
 			if _glisse and is_instance_valid(_conteneur):
 				_elan = _conteneur
 				_elan_vitesse = _vitesse
-			_annuler_clic = _glisse
+			_annuler_clic = _glisse or _annuler_clic
 			_glisse = false
 			_passer_plein_ecran()
 		return
@@ -349,6 +526,7 @@ func _input(event: InputEvent) -> void:
 		_total += event.relative.length()
 		if not _glisse and _total > SEUIL_GLISSER:
 			_glisse = true
+			_appui_ms = -1
 		if _glisse:
 			_defiler(_conteneur, event.relative)
 			_vitesse = _vitesse.lerp(event.relative, 0.5)
@@ -397,6 +575,14 @@ func _defiler(sc: ScrollContainer, delta: Vector2) -> void:
 
 func _process(delta: float) -> void:
 	_prochain_ajustement -= delta
+	# Loupe : appui long immobile sur une image
+	if _appui_ms >= 0 and not _glisse and Time.get_ticks_msec() - _appui_ms > DUREE_LOUPE:
+		_appui_ms = -1
+		if _calque_loupe == null or not _calque_loupe.visible:
+			var tex := _image_sous(_appui_pos)
+			if tex != null:
+				_annuler_clic = true          # le relâchement ne doit pas appuyer sur la carte
+				_ouvrir_loupe(tex)
 	var scene := get_tree().current_scene
 	if scene != _scene_suivie or _prochain_ajustement <= 0.0:
 		_scene_suivie = scene

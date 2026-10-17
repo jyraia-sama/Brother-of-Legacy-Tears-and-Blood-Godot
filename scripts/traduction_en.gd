@@ -2404,6 +2404,7 @@ const TEXTES := {
 	"%s · %s · %s\n\nPV %d  ATK %d  DEF %d  AGI %d  MAG %d\n\n": "%s · %s · %s\n\nHP %d  ATK %d  DEF %d  AGI %d  MAG %d\n\n",
 	"Niv. %d · %s : %s\n": "Lv. %d · %s: %s\n",
 	"Se termine dans %s": "Ends in %s",
+	"Touche l'écran pour fermer": "Tap the screen to close",
 	"Prochain : %s dans %s": "Next: %s in %s",
 	"Région %d / %d : %s   ·   Score %d   ·   Or de marche %d%s": "Region %d / %d: %s   ·   Score %d   ·   March gold %d%s",
 	"   ·   Gloire +%d %%": "   ·   Glory +%d %%",

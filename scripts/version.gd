@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.71.0"
-const DATE := "2026-10-16"
+const NUMERO := "0.72.0"
+const DATE := "2026-10-17"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.72.0", "date": "2026-10-17", "titre": "Lisible sur téléphone",
+	"changements": [
+		"TÉLÉPHONE — PLUS GRAND : nouvelle taille d'interface « Géante », choisie automatiquement sur les téléphones (les tablettes restent en « Très grande »). Sur les écrans allongés (20:9, comme les Xiaomi), le jeu occupe maintenant toute la largeur au lieu de laisser deux bandes noires sur les côtés.",
+		"TAILLE DU TEXTE : nouveau réglage dans les Paramètres (Normal, Grand, Très grand). Les petits textes (descriptions, stats, boutons) grossissent ; les titres ne bougent pas. « Automatique » : Grand sur téléphone, Normal sur ordinateur.",
+		"LOUPE : sur téléphone, un appui long sur une image (portrait, carte, illustration) l'affiche en grand, en entier. Toucher l'écran pour fermer.",
+	]},
 	{"version": "0.71.0", "date": "2026-10-16", "titre": "Les pions prennent vie",
 	"changements": [
 		"COMBATS EN 3D — LES PIONS : chaque unité se tient sur un socle 3D cerclé de la couleur de son élément (le liseré respire doucement). Au début du combat, les pions tombent sur le plateau et se posent ; le boss arrive en dernier, plus lourd, dans un nuage de poussière.",
