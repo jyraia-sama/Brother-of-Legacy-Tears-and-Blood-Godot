@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"CORRECTIF SORTS : dans la fiche d'un héros (Deck, Mon héros), le bouton « Améliorer » des sorts était trop long (le coût était écrit dedans) et poussait la fiche hors du cadre : le bouton pouvait être coupé ou invisible, surtout sur téléphone. Le bouton dit maintenant juste « Améliorer » et le coût est écrit en dessous.",
+				"SORTS : quand un sort ne peut pas monter, la raison est écrite en clair sous son nom (ressources manquantes, étoile requise, sort pas encore appris avec le niveau où le héros l'apprendra). Avant, elle n'apparaissait qu'en survolant le bouton à la souris, donc jamais sur téléphone."
+			],
+			"titre": "Des sorts à portée de main",
+			"version": "0.72.2"
+		},
+		{
+			"changements": [
 				"CORRECTIF TÉLÉPHONE : le clavier ne surgit plus tout seul au lancement. La fenêtre de connexion plaçait le curseur dans le champ e-mail dès son ouverture (même cachée derrière l'écran de chargement), ce qui ouvrait le clavier. Sur téléphone, il s'ouvre maintenant seulement quand tu touches un champ.",
 				"CORRECTIF TÉLÉPHONE : la fenêtre « Nouveautés » ne dépasse plus de l'écran ; le bouton « Fermer » est de nouveau visible. Toutes les fenêtres (compte, astuces, journal…) trop grandes pour l'écran sont maintenant réduites juste assez pour tenir entièrement."
 			],
@@ -117,21 +125,13 @@
 			],
 			"titre": "Les recrues prennent forme",
 			"version": "0.68.1"
-		},
-		{
-			"changements": [
-				"8 NOUVEAUX HÉROS INVOCABLES (avec leur évolution) : la Novice de l'Aube (N, Sacré, Purification), l'Écuyer du Temple (N, Sacré, Provocation + Épines), l'Arbalétrière Céleste (R, Sacré, Volée de carreaux), l'Ondine des Récifs (SR, Eau, soins + Purification), le Chasseur de Primes (SR, Feu, exécution + Brûlure), la Forgeronne Écarlate (SSR, Feu, brise-armure + Brûlure), le Cerf-Roi des Bois (SSR, Nature, tank à Épines) et la Druidesse des Ronces (UR, Nature, Poison et Silence de zone).",
-				"La collection passe à 86 héros invocables : le Sacré a enfin des héros N et R, et le Feu comme la Nature ont leurs SSR."
-			],
-			"titre": "Huit nouvelles recrues",
-			"version": "0.68.0"
 		}
 	],
 	"pck": {
-		"sha256": "03ff5ba7c6798054df3a19667ecb3902fa2bea30cc25249750fc7d95bba9622d",
-		"taille": 33398448,
+		"sha256": "85a4358e39de3836d90fed4ed89e5221c3216df0cc8255d6090da04c2d855bd1",
+		"taille": 33399136,
 		"url": "jeu.pck"
 	},
-	"version": "0.72.1",
+	"version": "0.72.2",
 	"version_minimum": "0.37.0"
 }

@@ -2405,6 +2405,8 @@ const TEXTES := {
 	"Niv. %d · %s : %s\n": "Lv. %d · %s: %s\n",
 	"Se termine dans %s": "Ends in %s",
 	"Touche l'écran pour fermer": "Tap the screen to close",
+	"Niveau %d → %d : %s": "Level %d → %d: %s",
+	"Pas encore appris : le héros l'apprend au niveau %d (il est niveau %d)": "Not learned yet: the hero learns it at level %d (currently level %d)",
 	"Prochain : %s dans %s": "Next: %s in %s",
 	"Région %d / %d : %s   ·   Score %d   ·   Or de marche %d%s": "Region %d / %d: %s   ·   Score %d   ·   March gold %d%s",
 	"   ·   Gloire +%d %%": "   ·   Glory +%d %%",

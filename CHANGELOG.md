@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.72.1** (2026-10-17)
+Version actuelle : **0.72.2** (2026-10-17)
+
+## v0.72.2 — Des sorts à portée de main  (2026-10-17)
+
+- CORRECTIF SORTS : dans la fiche d'un héros (Deck, Mon héros), le bouton « Améliorer » des sorts était trop long (le coût était écrit dedans) et poussait la fiche hors du cadre : le bouton pouvait être coupé ou invisible, surtout sur téléphone. Le bouton dit maintenant juste « Améliorer » et le coût est écrit en dessous.
+- SORTS : quand un sort ne peut pas monter, la raison est écrite en clair sous son nom (ressources manquantes, étoile requise, sort pas encore appris avec le niveau où le héros l'apprendra). Avant, elle n'apparaissait qu'en survolant le bouton à la souris, donc jamais sur téléphone.
 
 ## v0.72.1 — Fenêtres et clavier sur téléphone  (2026-10-17)
 

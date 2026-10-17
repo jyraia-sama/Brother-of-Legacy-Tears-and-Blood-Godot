@@ -42,7 +42,7 @@ static func remplir(parent: Control, uid: int, apres_changement: Callable) -> vo
 			elif n >= maxi:
 				b.text = UiCommun.t("Étoile requise")
 			else:
-				b.text = UiCommun.t("Améliorer : %s") % Reliquaire.texte_cout(SortsNiveaux.cout(n), SortsNiveaux.cout_or(n))
+				b.text = UiCommun.t("Améliorer")
 			b.disabled = raison != ""
 			b.tooltip_text = raison if raison != "" else UiCommun.t("Passer au niveau %d : effets +%d %%.") % [n + 1,
 				int(round((SortsNiveaux.multiplicateur(n + 1) - 1.0) * 100))]
@@ -54,8 +54,19 @@ static func remplir(parent: Control, uid: int, apres_changement: Callable) -> vo
 					Audio.son("coffre")
 					apres_changement.call())
 			tete.add_child(b)
-		var ligne := UiCommun.label(SortsNiveaux.resume(sk, n, maxi) if appris else UiCommun.t("Appris au niveau %d du héros") % int(sk["niveau"]),
+			if n < maxi:
+				var cout := UiCommun.label(UiCommun.t("Niveau %d → %d : %s") % [n, n + 1,
+					Reliquaire.texte_cout(SortsNiveaux.cout(n), SortsNiveaux.cout_or(n))], 13, UiCommun.C_DOUX)
+				cout.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+				bloc.add_child(cout)
+			# Raison écrite en clair sous le titre (sur téléphone, les info-bulles n'existent pas)
+			if raison != "" and n < SortsNiveaux.NIVEAU_MAX:
+				var pourquoi := UiCommun.label("⚠ " + raison, 13, Color("ff9a6a"))
+				pourquoi.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+				bloc.add_child(pourquoi)
+		var ligne := UiCommun.label(SortsNiveaux.resume(sk, n, maxi) if appris else UiCommun.t("Pas encore appris : le héros l'apprend au niveau %d (il est niveau %d)") % [int(sk["niveau"]), int(h["niveau"])],
 			14, Color("ffd060") if appris else UiCommun.C_DOUX)
+		ligne.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		bloc.add_child(ligne)
 		var d := UiCommun.label(str(sk["description"]), 14, UiCommun.C_TEXTE if appris else UiCommun.C_DOUX)
 		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

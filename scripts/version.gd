@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.72.1"
+const NUMERO := "0.72.2"
 const DATE := "2026-10-17"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.72.2", "date": "2026-10-17", "titre": "Des sorts à portée de main",
+	"changements": [
+		"CORRECTIF SORTS : dans la fiche d'un héros (Deck, Mon héros), le bouton « Améliorer » des sorts était trop long (le coût était écrit dedans) et poussait la fiche hors du cadre : le bouton pouvait être coupé ou invisible, surtout sur téléphone. Le bouton dit maintenant juste « Améliorer » et le coût est écrit en dessous.",
+		"SORTS : quand un sort ne peut pas monter, la raison est écrite en clair sous son nom (ressources manquantes, étoile requise, sort pas encore appris avec le niveau où le héros l'apprendra). Avant, elle n'apparaissait qu'en survolant le bouton à la souris, donc jamais sur téléphone.",
+	]},
 	{"version": "0.72.1", "date": "2026-10-17", "titre": "Fenêtres et clavier sur téléphone",
 	"changements": [
 		"CORRECTIF TÉLÉPHONE : le clavier ne surgit plus tout seul au lancement. La fenêtre de connexion plaçait le curseur dans le champ e-mail dès son ouverture (même cachée derrière l'écran de chargement), ce qui ouvrait le clavier. Sur téléphone, il s'ouvre maintenant seulement quand tu touches un champ.",
