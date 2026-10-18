@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.72.2"
-const DATE := "2026-10-17"
+const NUMERO := "0.73.0"
+const DATE := "2026-10-18"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.73.0", "date": "2026-10-18", "titre": "Le guide des sorts",
+	"changements": [
+		"GUIDE DES SORTS : nouveau bouton « ? » doré dans la section SORTS de la fiche d'un héros (Deck et Mon héros). Il s'ouvre aussi tout seul la première fois que tu touches « ✦ Améliorer les sorts ». 7 pages : pas à pas, apprendre un sort (niveaux 1, 10, 20, 30), ce que donne chaque niveau (+4 % et recharge plus courte), tableau des coûts du niveau 1 au niveau 10, niveau max selon les étoiles, où trouver les Pages et les Grimoires (tableau de la Bibliothèque Interdite niveau par niveau) et conseils.",
+	]},
 	{"version": "0.72.2", "date": "2026-10-17", "titre": "Des sorts à portée de main",
 	"changements": [
 		"CORRECTIF SORTS : dans la fiche d'un héros (Deck, Mon héros), le bouton « Améliorer » des sorts était trop long (le coût était écrit dedans) et poussait la fiche hors du cadre : le bouton pouvait être coupé ou invisible, surtout sur téléphone. Le bouton dit maintenant juste « Améliorer » et le coût est écrit en dessous.",

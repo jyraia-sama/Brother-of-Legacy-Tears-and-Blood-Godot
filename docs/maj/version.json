@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-17",
+	"date": "2026-10-18",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -9,6 +9,13 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"GUIDE DES SORTS : nouveau bouton « ? » doré dans la section SORTS de la fiche d'un héros (Deck et Mon héros). Il s'ouvre aussi tout seul la première fois que tu touches « ✦ Améliorer les sorts ». 7 pages : pas à pas, apprendre un sort (niveaux 1, 10, 20, 30), ce que donne chaque niveau (+4 % et recharge plus courte), tableau des coûts du niveau 1 au niveau 10, niveau max selon les étoiles, où trouver les Pages et les Grimoires (tableau de la Bibliothèque Interdite niveau par niveau) et conseils."
+			],
+			"titre": "Le guide des sorts",
+			"version": "0.73.0"
+		},
 		{
 			"changements": [
 				"CORRECTIF SORTS : dans la fiche d'un héros (Deck, Mon héros), le bouton « Améliorer » des sorts était trop long (le coût était écrit dedans) et poussait la fiche hors du cadre : le bouton pouvait être coupé ou invisible, surtout sur téléphone. Le bouton dit maintenant juste « Améliorer » et le coût est écrit en dessous.",
@@ -118,20 +125,13 @@
 			],
 			"titre": "Le rappel du public",
 			"version": "0.68.2"
-		},
-		{
-			"changements": [
-				"ILLUSTRATIONS : Stéphane, le Buteur d'Outre-Tombe, et les 8 nouveaux héros (Novice de l'Aube, Écuyer du Temple, Arbalétrière Céleste, Ondine des Récifs, Chasseur de Primes, Forgeronne Écarlate, Cerf-Roi des Bois, Druidesse des Ronces) ont leur portrait et leur figurine."
-			],
-			"titre": "Les recrues prennent forme",
-			"version": "0.68.1"
 		}
 	],
 	"pck": {
-		"sha256": "85a4358e39de3836d90fed4ed89e5221c3216df0cc8255d6090da04c2d855bd1",
-		"taille": 33399136,
+		"sha256": "fb5b96427816e9faeb0cea83ec8b0794bbe1b964878a0ca74116a67b488ec29b",
+		"taille": 33406852,
 		"url": "jeu.pck"
 	},
-	"version": "0.72.2",
+	"version": "0.73.0",
 	"version_minimum": "0.37.0"
 }

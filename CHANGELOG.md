@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.72.2** (2026-10-17)
+Version actuelle : **0.73.0** (2026-10-18)
+
+## v0.73.0 — Le guide des sorts  (2026-10-18)
+
+- GUIDE DES SORTS : nouveau bouton « ? » doré dans la section SORTS de la fiche d'un héros (Deck et Mon héros). Il s'ouvre aussi tout seul la première fois que tu touches « ✦ Améliorer les sorts ». 7 pages : pas à pas, apprendre un sort (niveaux 1, 10, 20, 30), ce que donne chaque niveau (+4 % et recharge plus courte), tableau des coûts du niveau 1 au niveau 10, niveau max selon les étoiles, où trouver les Pages et les Grimoires (tableau de la Bibliothèque Interdite niveau par niveau) et conseils.
 
 ## v0.72.2 — Des sorts à portée de main  (2026-10-17)
 

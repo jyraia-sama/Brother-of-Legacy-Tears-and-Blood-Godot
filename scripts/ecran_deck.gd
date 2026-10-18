@@ -540,6 +540,8 @@ func _maj_fiche() -> void:
 	var idx_sorts := _fiche.get_child_count()
 	FicheSorts.remplir(_fiche, _selection, _maj_fiche)
 	btn_sorts.pressed.connect(func():
+		if Tutoriel.premiere_fois("guide_sorts"):       # première fois : le guide s'ouvre tout seul
+			GuideSorts.ouvrir(self)
 		if idx_sorts >= _fiche.get_child_count():
 			return
 		var cible: Control = _fiche.get_child(idx_sorts)

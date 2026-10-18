@@ -12,7 +12,14 @@ static func remplir(parent: Control, uid: int, apres_changement: Callable) -> vo
 		return
 	var u := UnitesData.get_unite(h["id"])
 	var maxi := SortsNiveaux.niveau_max(h)
-	parent.add_child(UiCommun.titre_section("SORTS", UiCommun.C_OR, 18))
+	var tete_sorts := HBoxContainer.new()
+	tete_sorts.add_theme_constant_override("separation", 8)
+	parent.add_child(tete_sorts)
+	var titre_sorts := UiCommun.titre_section("SORTS", UiCommun.C_OR, 18)
+	titre_sorts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tete_sorts.add_child(titre_sorts)
+	tete_sorts.add_child(FenetreGuide.bouton_aide("Guide des sorts : niveaux, coûts, étoiles, où trouver les Pages de Grimoire.",
+		func(): GuideSorts.ouvrir(parent.get_tree().current_scene)))
 	var poss := UiCommun.label(UiCommun.t("Pages de Grimoire : %d   ·   Grimoires Interdits : %d   ·   niveau max des sorts : %d (%s)") % [
 		Sauvegarde.get_objet(SortsNiveaux.PAGE), Sauvegarde.get_objet(SortsNiveaux.GRIMOIRE), maxi,
 		Fusion.texte_etoiles(Fusion.etoiles(h))], 13, UiCommun.C_DOUX)

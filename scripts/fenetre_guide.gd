@@ -5,7 +5,7 @@ extends CanvasLayer
 ##
 ##   FenetreGuide.ouvrir(parent, "GUIDE DES DONJONS", couleur, sections)
 ## sections : [[nom de la section, texte BBCode], ...]
-## Les guides : guide_donjons.gd, guide_fusion.gd.
+## Les guides : guide_donjons.gd, guide_fusion.gd, guide_sorts.gd.
 ##
 ## Aussi : FenetreGuide.bouton_aide(parent, tooltip, action) — le bouton « ? » doré qui pulse.
 
