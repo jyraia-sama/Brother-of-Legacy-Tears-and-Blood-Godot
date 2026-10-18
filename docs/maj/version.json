@@ -11,6 +11,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"SORTS — DEUX RESSOURCES : les Grimoires Interdits servent maintenant dès le niveau 3 → 4 d'un sort (1 Grimoire par niveau jusqu'au niveau 7, puis 2, 3 et 5). Les niveaux 1 → 3 ne coûtent toujours que des Pages. Les coûts en Pages et en or ne changent pas, et les sorts déjà améliorés gardent leur niveau.",
+				"BIBLIOTHÈQUE INTERDITE : les Grimoires Interdits tombent dès le niveau 3 (1 Grimoire aux niveaux 3 à 5, 2 aux niveaux 6-7, 3 aux niveaux 8-9, 4 au niveau 10). Le butin bonus donne alors un Grimoire de plus.",
+				"GUIDE DES SORTS mis à jour avec ces nouveaux coûts (tableau des Grimoires nécessaires selon les étoiles du héros)."
+			],
+			"titre": "Pages et Grimoires",
+			"version": "0.74.0"
+		},
+		{
+			"changements": [
 				"GUIDE DES SORTS : nouveau bouton « ? » doré dans la section SORTS de la fiche d'un héros (Deck et Mon héros). Il s'ouvre aussi tout seul la première fois que tu touches « ✦ Améliorer les sorts ». 7 pages : pas à pas, apprendre un sort (niveaux 1, 10, 20, 30), ce que donne chaque niveau (+4 % et recharge plus courte), tableau des coûts du niveau 1 au niveau 10, niveau max selon les étoiles, où trouver les Pages et les Grimoires (tableau de la Bibliothèque Interdite niveau par niveau) et conseils."
 			],
 			"titre": "Le guide des sorts",
@@ -118,20 +127,13 @@
 			],
 			"titre": "Deux salamandres",
 			"version": "0.68.3"
-		},
-		{
-			"changements": [
-				"ÉVOLUTIONS EN IMAGE : Arnaud, Roi du Chaos Écarlate, et Stéphane, Ballon d'Or d'Outre-Tombe, ont maintenant leur propre portrait et leur propre figurine (les autres évolutions gardent l'image de leur héros de base en attendant)."
-			],
-			"titre": "Le rappel du public",
-			"version": "0.68.2"
 		}
 	],
 	"pck": {
-		"sha256": "fb5b96427816e9faeb0cea83ec8b0794bbe1b964878a0ca74116a67b488ec29b",
-		"taille": 33406852,
+		"sha256": "d80ff1259c0dbcc08d9d28ad12997039467902a422e1c1c41588a9183efaaaf3",
+		"taille": 33407252,
 		"url": "jeu.pck"
 	},
-	"version": "0.73.0",
+	"version": "0.74.0",
 	"version_minimum": "0.37.0"
 }

@@ -247,9 +247,10 @@ static func or_victoire(niveau: int) -> int:
 
 
 ## Bibliothèque Interdite : [Pages de Grimoire, Grimoires Interdits] par niveau (1 à 10).
+## Depuis la v0.74, les Grimoires servent dès le niveau 3 → 4 des sorts : ils tombent dès le niveau 3.
 const BUTIN_SPECIAL := [
-	[6, 0], [8, 0], [10, 0], [12, 0], [14, 0],
-	[16, 1], [18, 1], [20, 2], [22, 2], [25, 3],
+	[6, 0], [8, 0], [10, 1], [12, 1], [14, 1],
+	[16, 2], [18, 2], [20, 3], [22, 3], [25, 4],
 ]
 
 

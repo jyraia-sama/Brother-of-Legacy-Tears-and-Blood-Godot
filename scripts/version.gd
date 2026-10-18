@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.73.0"
+const NUMERO := "0.74.0"
 const DATE := "2026-10-18"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.74.0", "date": "2026-10-18", "titre": "Pages et Grimoires",
+	"changements": [
+		"SORTS — DEUX RESSOURCES : les Grimoires Interdits servent maintenant dès le niveau 3 → 4 d'un sort (1 Grimoire par niveau jusqu'au niveau 7, puis 2, 3 et 5). Les niveaux 1 → 3 ne coûtent toujours que des Pages. Les coûts en Pages et en or ne changent pas, et les sorts déjà améliorés gardent leur niveau.",
+		"BIBLIOTHÈQUE INTERDITE : les Grimoires Interdits tombent dès le niveau 3 (1 Grimoire aux niveaux 3 à 5, 2 aux niveaux 6-7, 3 aux niveaux 8-9, 4 au niveau 10). Le butin bonus donne alors un Grimoire de plus.",
+		"GUIDE DES SORTS mis à jour avec ces nouveaux coûts (tableau des Grimoires nécessaires selon les étoiles du héros).",
+	]},
 	{"version": "0.73.0", "date": "2026-10-18", "titre": "Le guide des sorts",
 	"changements": [
 		"GUIDE DES SORTS : nouveau bouton « ? » doré dans la section SORTS de la fiche d'un héros (Deck et Mon héros). Il s'ouvre aussi tout seul la première fois que tu touches « ✦ Améliorer les sorts ». 7 pages : pas à pas, apprendre un sort (niveaux 1, 10, 20, 30), ce que donne chaque niveau (+4 % et recharge plus courte), tableau des coûts du niveau 1 au niveau 10, niveau max selon les étoiles, où trouver les Pages et les Grimoires (tableau de la Bibliothèque Interdite niveau par niveau) et conseils.",

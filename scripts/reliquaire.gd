@@ -48,7 +48,7 @@ const OBJETS := {
 	"page_grimoire": {"nom": "Page de Grimoire", "cat": "grimoire", "couleur": "e8d8a8",
 		"desc": "Tombe dans la Bibliothèque Interdite (Donjons). Sert à faire monter le niveau des sorts des héros (fiche du héros, dans le Deck)."},
 	"grimoire_interdit": {"nom": "Grimoire Interdit", "cat": "grimoire", "couleur": "b06ae0",
-		"desc": "Rare. Tombe dans les niveaux élevés de la Bibliothèque Interdite. Nécessaire pour monter un sort du niveau 6 au niveau 10."},
+		"desc": "Tombe dans la Bibliothèque Interdite (Donjons) à partir du niveau 3. Nécessaire, avec les Pages, pour monter un sort à partir du niveau 3 → 4."},
 	"sceau_marche": {"nom": "Sceau de Marche", "cat": "marche", "couleur": "c0303a",
 		"desc": "Gagné dans la Marche Maudite (selon le score). Se dépense à la boutique des Expéditions."},
 	# Ressources des Donjons (évolution des unités, voir evolution.gd)

@@ -8,7 +8,7 @@ extends RefCounted
 ##      2 tours -> -1 au niveau 10 ; 3 tours -> -1 au niveau 7 ; 4 tours et plus -> -1 au niveau 5 et au niveau 10.
 ##    En combat automatique, la chance de lancer le sort augmente d'autant.
 ##  - Niveau maximum selon les étoiles (Éveil) : 3 + étoiles (★1 -> 4 ... ★5 -> 8), 10 à ★6 Éveillé.
-##  - Coût : Pages de Grimoire (+ Grimoires Interdits à partir du niveau 7) et de l'or ;
+##  - Coût : Pages de Grimoire + Grimoires Interdits (à partir du niveau 3 → 4, v0.74) et de l'or ;
 ##    on les gagne dans la Bibliothèque Interdite (Donjons).
 ##  - Arène et Guerre des Bannières : les sorts comptent au plus pour le niveau 7 (PLAFOND_JCJ).
 ##
@@ -23,7 +23,7 @@ const GRIMOIRE := "grimoire_interdit"
 
 ## Coût pour passer du niveau n au niveau n+1 (index = n - 1).
 const PAGES := [3, 5, 8, 12, 16, 20, 25, 30, 40]
-const GRIMOIRES := [0, 0, 0, 0, 0, 1, 2, 3, 5]
+const GRIMOIRES := [0, 0, 1, 1, 1, 1, 2, 3, 5]
 const OR_PAR_NIVEAU := 1000
 
 ## Effets dont la valeur grandit avec le niveau du sort (clé de la valeur dans l'effet).

@@ -66,7 +66,7 @@ static func _gains() -> String:
 
 static func _cout() -> String:
 	var s := FenetreGuide.titre("Le coût")
-	s += "Chaque niveau coûte des [b]Pages de Grimoire[/b], de l'[b]or[/b], et à partir du niveau 6 → 7 des [b]Grimoires Interdits[/b].\n\n"
+	s += "Chaque niveau coûte des [b]Pages de Grimoire[/b], de l'[b]or[/b], et à partir du niveau 3 → 4 des [b]Grimoires Interdits[/b].\n\n"
 	var lignes: Array = []
 	var total_p := 0
 	var total_g := 0
@@ -82,8 +82,8 @@ static func _cout() -> String:
 		lignes.append(["%d → %d" % [n, n + 1], str(p), str(g) if g > 0 else "-", "%d" % o])
 	lignes.append(["[b]Total 1 → 10[/b]", "[b]%d[/b]" % total_p, "[b]%d[/b]" % total_g, "[b]%d[/b]" % total_o])
 	s += FenetreGuide.tableau(["Niveau", "Pages de Grimoire", "Grimoires Interdits", "Or"], lignes)
-	s += FenetreGuide.sous_titre("Pourquoi je n'utilise que des Pages ?")
-	s += "C'est normal au début : les Grimoires Interdits ne servent qu'à partir du niveau 6 → 7, et un sort ne peut aller aussi haut qu'avec un héros [b]★4 ou plus[/b] (voir « Niveau max et étoiles »). Garde-les précieusement : ils serviront pour tes héros éveillés.\n"
+	s += FenetreGuide.sous_titre("Deux ressources à gérer")
+	s += "Les [b]Pages[/b] servent à chaque niveau ; les [b]Grimoires Interdits[/b], plus rares, à partir du niveau 3 → 4. Les niveaux 1 → 3 ne coûtent que des Pages : idéal pour monter tous les sorts d'un héros un peu. Ensuite, chaque Grimoire compte : choisis bien les sorts à pousser plus haut.\n"
 	return s
 
 
@@ -93,8 +93,8 @@ static func _etoiles() -> String:
 	var lignes: Array = []
 	for e in range(1, Fusion.ETOILES_MAX + 1):
 		var m := SortsNiveaux.max_pour_etoiles(e)
-		lignes.append([Fusion.texte_etoiles(e, false), "Niveau %d" % m, "oui" if m >= 7 else "non"])
-	s += FenetreGuide.tableau(["Étoiles du héros", "Niveau max des sorts", "Utilise des Grimoires Interdits"], lignes)
+		lignes.append([Fusion.texte_etoiles(e, false), "Niveau %d" % m, "%d" % _grimoires_jusqua(m)])
+	s += FenetreGuide.tableau(["Étoiles du héros", "Niveau max des sorts", "Grimoires pour monter un sort au max"], lignes)
 	s += FenetreGuide.sous_titre("Comment gagner une étoile ?")
 	s += "À l'[b]Autel de Fusion[/b] (Éveil) : le héros doit être à son niveau maximum, puis tu sacrifies des doublons ou des Pierres d'Éveil. Le bouton « ? » de l'Autel de Fusion explique tout.\n"
 	s += FenetreGuide.sous_titre("Quand la fiche affiche « Étoile requise »")
@@ -113,7 +113,7 @@ static func _ressources() -> String:
 			str(int(Donjons.COUT_STAMINA[niv - 1])), str(Donjons.or_victoire(niv))])
 	s += FenetreGuide.tableau(["Niveau", "Pages", "Grimoires", "Stamina", "Or gagné"], lignes)
 	s += "\n%s de chance d'un [b]butin bonus[/b] : +3 Pages, ou +1 Grimoire Interdit aux niveaux qui en donnent.\n" % (str(int(Donjons.CHANCE_BONUS * 100)) + " %")
-	s += "Les Grimoires Interdits ne tombent qu'à partir du [b]niveau 6[/b] de la Bibliothèque.\n"
+	s += "Les Grimoires Interdits tombent à partir du [b]niveau 3[/b] de la Bibliothèque.\n"
 	s += FenetreGuide.sous_titre("L'or")
 	s += "L'Aventure, les Tours, les Donjons (y compris la Bibliothèque), les coffres d'or du Reliquaire et les quêtes.\n"
 	s += FenetreGuide.sous_titre("Voir ce que tu possèdes")
@@ -121,12 +121,20 @@ static func _ressources() -> String:
 	return s
 
 
+## Grimoires Interdits nécessaires pour monter un sort du niveau 1 au niveau m.
+static func _grimoires_jusqua(m: int) -> int:
+	var t := 0
+	for n in range(1, m):
+		t += int(SortsNiveaux.cout(n).get(SortsNiveaux.GRIMOIRE, 0))
+	return t
+
+
 static func _conseils() -> String:
 	var s := FenetreGuide.titre("Conseils")
 	s += FenetreGuide.puce("Monte d'abord le [b]sort actif principal[/b] de tes meilleurs héros : c'est lui qui fait le plus de dégâts ou de soins.")
-	s += FenetreGuide.puce("Les premiers niveaux coûtent peu (3, 5, 8 Pages) : monter tous les sorts au niveau 3 ou 4 est très rentable.")
+	s += FenetreGuide.puce("Les niveaux 1 → 3 ne coûtent que des Pages (3 puis 5) : monte tous les sorts de tes héros au niveau 3, c'est très rentable.")
 	s += FenetreGuide.puce("Les sorts à longue recharge (4 tours ou plus) gagnent beaucoup au [b]niveau 5[/b] : un tour de recharge en moins.")
 	s += FenetreGuide.puce("Ne garde pas tes Pages pour plus tard : un sort amélioré profite à tous les combats dès maintenant.")
 	s += FenetreGuide.puce("Prépare la Bibliothèque avec [b]un tank et des héros à sorts de zone[/b] : le guide des Donjons (bouton « ? ») donne une équipe conseillée.")
-	s += FenetreGuide.puce("Garde tes Grimoires Interdits pour les héros que tu comptes éveiller à ★4 et plus.")
+	s += FenetreGuide.puce("Les Grimoires Interdits sont la ressource rare : réserve-les aux sorts de tes héros principaux.")
 	return s
