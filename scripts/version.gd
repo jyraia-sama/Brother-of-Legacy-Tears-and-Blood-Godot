@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.74.0"
+const NUMERO := "0.74.1"
 const DATE := "2026-10-18"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.74.1", "date": "2026-10-18", "titre": "La Lanterne des Os",
+	"changements": [
+		"NOUVELLE HÉROÏNE : Sam, la Lanterne des Os (UR, Sacré, Soutien) — une guérisseuse qui voit à travers la chair grâce à sa lanterne de cristal : Rayon Révélateur (ignore 25 % de RES, Malédiction), Œil du Diagnostic (DEF -10 % à tous les ennemis, soins +15 %), Cliché Salvateur (soin de groupe et purification) et Grand Scanner (frappe tous les ennemis, DEF -20 %). Évolution : Sam, l'Oracle des Rayons. Son portrait et sa figurine arrivent bientôt.",
+	]},
 	{"version": "0.74.0", "date": "2026-10-18", "titre": "Pages et Grimoires",
 	"changements": [
 		"SORTS — DEUX RESSOURCES : les Grimoires Interdits servent maintenant dès le niveau 3 → 4 d'un sort (1 Grimoire par niveau jusqu'au niveau 7, puis 2, 3 et 5). Les niveaux 1 → 3 ne coûtent toujours que des Pages. Les coûts en Pages et en or ne changent pas, et les sorts déjà améliorés gardent leur niveau.",

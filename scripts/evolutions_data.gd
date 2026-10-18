@@ -1085,6 +1085,19 @@ const UNITES := {
 			{"nom": "Rappel du Public", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "aura", "stat": "agi", "valeur": 0.08}], "niveau": 40, "evolue": true, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; toute l'équipe : AGI +8 %."},
 		],
 	},
+	"sam_radiologue_evo": {
+		"nom": "Sam, l'Oracle des Rayons", "rarete": "UR", "element": "sacre", "role": "soutien", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "7ab8d8",
+		"legende": false, "forge": false, "race": "Humaine", "dominantes": ["mag", "pv"], "phase2": {}, "evolution_de": "sam_radiologue",
+		"stats": {"pv": 2200, "atk": 375, "def": 290, "agi": 325, "mag": 420},
+		"secondaires": {"crit": 12, "degats_crit": 175, "res": 38, "preci": 100},
+		"skills": [
+			{"nom": "Rayon de Vérité", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.9, "ignore_res": 0.35}, {"effet": "affliction", "nom": "malediction", "chance": 0.65, "duree": 2}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Plus rien ne lui est caché : inflige 190 % de puissance de skill à un ennemi en ignorant 35 % de sa RES ; 65 % de chance d'infliger Malédiction (2 tours)."},
+			{"nom": "Œil du Diagnostic", "type": "passif", "effets": [{"effet": "aura_ennemis", "stat": "def", "valeur": 0.1}, {"effet": "soin_bonus", "valeur": 0.15}], "niveau": 10, "description": "Rien ne lui échappe : tous les ennemis ont DEF -10 % ; soins prodigués +15 %."},
+			{"nom": "Cliché Salvateur", "type": "actif", "chance": 0.3, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.9}, {"effet": "purification"}], "niveau": 20, "description": "(30 % de chance par tour) Elle voit le mal et l'extirpe : soigne toute l'équipe de 90 % de puissance de skill et retire les afflictions."},
+			{"nom": "Grand Scanner", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.1, "ignore_res": 0.4}, {"effet": "debuff", "stat": "def", "valeur": 0.2, "duree": 2}], "niveau": 30, "description": "(20 % de chance par tour) Un éclair de lumière bleue balaie le champ de bataille : inflige 110 % de puissance de skill à tous les ennemis en ignorant 40 % de leur RES ; DEF -20 % (2 tours)."},
+			{"nom": "Seconde Lecture", "type": "passif", "effets": [{"effet": "aura", "stat": "res", "valeur": 0.1}, {"effet": "aura", "stat": "pv", "valeur": 0.06}], "niveau": 40, "evolue": true, "description": "Elle relit chaque cliché deux fois : toute l'équipe : RES +10 % ; PV +6 %."},
+		],
+	},
 	"stephane_buteur_evo": {
 		"nom": "Stéphane, Ballon d'Or d'Outre-Tombe", "rarete": "UR", "element": "tenebres", "role": "tireur", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "2a7a3a",
 		"legende": false, "forge": false, "race": "Zombie", "dominantes": ["atk", "agi"], "phase2": {}, "evolution_de": "stephane_buteur",

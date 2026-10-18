@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.74.0** (2026-10-18)
+Version actuelle : **0.74.1** (2026-10-18)
+
+## v0.74.1 — La Lanterne des Os  (2026-10-18)
+
+- NOUVELLE HÉROÏNE : Sam, la Lanterne des Os (UR, Sacré, Soutien) — une guérisseuse qui voit à travers la chair grâce à sa lanterne de cristal : Rayon Révélateur (ignore 25 % de RES, Malédiction), Œil du Diagnostic (DEF -10 % à tous les ennemis, soins +15 %), Cliché Salvateur (soin de groupe et purification) et Grand Scanner (frappe tous les ennemis, DEF -20 %). Évolution : Sam, l'Oracle des Rayons. Son portrait et sa figurine arrivent bientôt.
 
 ## v0.74.0 — Pages et Grimoires  (2026-10-18)
 

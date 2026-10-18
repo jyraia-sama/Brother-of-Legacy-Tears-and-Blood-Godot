@@ -11,6 +11,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVELLE HÉROÏNE : Sam, la Lanterne des Os (UR, Sacré, Soutien) — une guérisseuse qui voit à travers la chair grâce à sa lanterne de cristal : Rayon Révélateur (ignore 25 % de RES, Malédiction), Œil du Diagnostic (DEF -10 % à tous les ennemis, soins +15 %), Cliché Salvateur (soin de groupe et purification) et Grand Scanner (frappe tous les ennemis, DEF -20 %). Évolution : Sam, l'Oracle des Rayons. Son portrait et sa figurine arrivent bientôt."
+			],
+			"titre": "La Lanterne des Os",
+			"version": "0.74.1"
+		},
+		{
+			"changements": [
 				"SORTS — DEUX RESSOURCES : les Grimoires Interdits servent maintenant dès le niveau 3 → 4 d'un sort (1 Grimoire par niveau jusqu'au niveau 7, puis 2, 3 et 5). Les niveaux 1 → 3 ne coûtent toujours que des Pages. Les coûts en Pages et en or ne changent pas, et les sorts déjà améliorés gardent leur niveau.",
 				"BIBLIOTHÈQUE INTERDITE : les Grimoires Interdits tombent dès le niveau 3 (1 Grimoire aux niveaux 3 à 5, 2 aux niveaux 6-7, 3 aux niveaux 8-9, 4 au niveau 10). Le butin bonus donne alors un Grimoire de plus.",
 				"GUIDE DES SORTS mis à jour avec ces nouveaux coûts (tableau des Grimoires nécessaires selon les étoiles du héros)."
@@ -120,20 +127,13 @@
 			],
 			"titre": "Évolutions : premier lot",
 			"version": "0.68.4"
-		},
-		{
-			"changements": [
-				"CORRECTIF : la Salamandre des Donjons avait le même identifiant qu'un familier de la Ménagerie (la Salamandre Ardente) : elle s'affichait avec l'image et la rareté du familier dans le Bestiaire et la Galerie. Elle a maintenant son propre identifiant ; elle garde son nom et son image."
-			],
-			"titre": "Deux salamandres",
-			"version": "0.68.3"
 		}
 	],
 	"pck": {
-		"sha256": "06a00416f71b12539f754b8b877862bcc7696b9eef9fea24735e40f9331aa2b6",
-		"taille": 33407252,
+		"sha256": "8dd8ced0e21c0784934be9a35688389948b21547617297ed214d82cf5b29feb6",
+		"taille": 33410404,
 		"url": "jeu.pck"
 	},
-	"version": "0.74.0",
+	"version": "0.74.1",
 	"version_minimum": "0.37.0"
 }

@@ -1315,6 +1315,19 @@ const UNITES := {
 			{"nom": "Remontada", "type": "passif", "effets": [{"effet": "renaissance", "valeur": 0.4}, {"effet": "vol_vie", "valeur": 0.08}], "niveau": 30, "description": "Revient d'entre les morts avec 40 % de ses PV (1 fois par combat) ; vol de vie de 8 % sur ses attaques."},
 		],
 	},
+	"sam_radiologue": {
+		"nom": "Sam, la Lanterne des Os", "rarete": "UR", "element": "sacre", "role": "soutien", "position": "arriere",
+		"invocable": true, "categorie": "heros", "couleur": "7ab8d8",
+		"legende": false, "forge": false, "race": "Humaine", "dominantes": [], "phase2": {},
+		"stats": {"pv": 1760, "atk": 300, "def": 230, "agi": 260, "mag": 335},
+		"secondaires": {"crit": 10, "degats_crit": 170, "res": 34, "preci": 100},
+		"skills": [
+			{"nom": "Rayon Révélateur", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.6, "ignore_res": 0.25}, {"effet": "affliction", "nom": "malediction", "chance": 0.5, "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Sa lanterne traverse la chair et révèle les os : inflige 160 % de puissance de skill à un ennemi en ignorant 25 % de sa RES ; 50 % de chance d'infliger Malédiction (2 tours)."},
+			{"nom": "Œil du Diagnostic", "type": "passif", "effets": [{"effet": "aura_ennemis", "stat": "def", "valeur": 0.1}, {"effet": "soin_bonus", "valeur": 0.15}], "niveau": 10, "description": "Rien ne lui échappe : tous les ennemis ont DEF -10 % ; soins prodigués +15 %."},
+			{"nom": "Cliché Salvateur", "type": "actif", "chance": 0.3, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.9}, {"effet": "purification"}], "niveau": 20, "description": "(30 % de chance par tour) Elle voit le mal et l'extirpe : soigne toute l'équipe de 90 % de puissance de skill et retire les afflictions."},
+			{"nom": "Grand Scanner", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.1, "ignore_res": 0.4}, {"effet": "debuff", "stat": "def", "valeur": 0.2, "duree": 2}], "niveau": 30, "description": "(20 % de chance par tour) Un éclair de lumière bleue balaie le champ de bataille : inflige 110 % de puissance de skill à tous les ennemis en ignorant 40 % de leur RES ; DEF -20 % (2 tours)."},
+		],
+	},
 
 
 	# ============================================================
