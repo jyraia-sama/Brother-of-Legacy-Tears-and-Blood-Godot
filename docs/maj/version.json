@@ -11,6 +11,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ILLUSTRATION : Sam, la Lanterne des Os, a son portrait et sa figurine (son évolution, l'Oracle des Rayons, les utilise en attendant la sienne).",
+				"OUTIL DE VERSIONS (éditeur Godot) : le compte rendu de publication affiche de nouveau correctement les accents (« publiée », « … ») sous Windows."
+			],
+			"titre": "Sam entre en scène",
+			"version": "0.74.2"
+		},
+		{
+			"changements": [
 				"NOUVELLE HÉROÏNE : Sam, la Lanterne des Os (UR, Sacré, Soutien) — une guérisseuse qui voit à travers la chair grâce à sa lanterne de cristal : Rayon Révélateur (ignore 25 % de RES, Malédiction), Œil du Diagnostic (DEF -10 % à tous les ennemis, soins +15 %), Cliché Salvateur (soin de groupe et purification) et Grand Scanner (frappe tous les ennemis, DEF -20 %). Évolution : Sam, l'Oracle des Rayons. Son portrait et sa figurine arrivent bientôt."
 			],
 			"titre": "La Lanterne des Os",
@@ -119,21 +127,13 @@
 			],
 			"titre": "Évolutions : deuxième lot",
 			"version": "0.68.5"
-		},
-		{
-			"changements": [
-				"10 héros ont maintenant leur propre image d'évolution (portrait et figurine) : Phénix Solaire Éternel, Dragon du Néant, L'Empereur Ressuscité, Léviathan Primordial, Destrier Divin, La Tisseuse Souveraine, Le Mercenaire Sans Limites, La Maîtresse du Poing de Braise, La Voix de la Terre et L'Archidruidesse des Ronces.",
-				"Elles apparaissent dans le Deck, en combat, dans le Bestiaire et dans la Galerie d'art."
-			],
-			"titre": "Évolutions : premier lot",
-			"version": "0.68.4"
 		}
 	],
 	"pck": {
-		"sha256": "8dd8ced0e21c0784934be9a35688389948b21547617297ed214d82cf5b29feb6",
-		"taille": 33410404,
+		"sha256": "5d9278ebc5b188605136cbdf0724a9dc2ef986bea9c64887762df80e764cbf2a",
+		"taille": 33411188,
 		"url": "jeu.pck"
 	},
-	"version": "0.74.1",
+	"version": "0.74.2",
 	"version_minimum": "0.37.0"
 }

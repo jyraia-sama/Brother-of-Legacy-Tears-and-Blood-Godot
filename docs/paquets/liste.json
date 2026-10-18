@@ -19,13 +19,13 @@
 			"taille": 10114336.0
 		},
 		{
-			"depuis": "0.68.5",
+			"depuis": "0.74.2",
 			"fichier": "figurines_2.pck",
-			"images": 70.0,
+			"images": 71,
 			"nom": "figurines_2",
-			"sha256": "3c799ece3b876ff07fb484892aeca3fece2e9172ca730a64a0c75007667fa4b5",
-			"signature": "4dd8b1ca44df86de3cfcfc916bd5d40ae65326b0d09095d732a7b672b1be1aa6",
-			"taille": 11978852.0
+			"sha256": "36f4d6266dd97145a1e5d6dcb8476e7201167f823f306c342f6780e2edb308b4",
+			"signature": "3cd60248d1d038ee37ec919c45c01ec12e916e2941acbdd226b9ac1382a803b2",
+			"taille": 12387720
 		},
 		{
 			"depuis": "0.68.5",
@@ -37,13 +37,13 @@
 			"taille": 9857700.0
 		},
 		{
-			"depuis": "0.68.5",
+			"depuis": "0.74.2",
 			"fichier": "portraits_0.pck",
-			"images": 133.0,
+			"images": 134,
 			"nom": "portraits_0",
-			"sha256": "efb9ee96c12ce04487948a9330d6bba6ce7b8274f4424d93faf646b34eaa805d",
-			"signature": "5974199dd55c9688ed4a34ea86930447582b891fe7bca5b6b52eb8b59f874b8c",
-			"taille": 8208848.0
+			"sha256": "591c40d475fd7929c45184ffd3f02cfd047b16b1a8fa921415c7db523f5f3ae0",
+			"signature": "d9f2bead3438d38fa138712074ac5e3b807442973847d410c6f2689a26cb72c1",
+			"taille": 8457712
 		},
 		{
 			"depuis": "0.68.5",
@@ -82,5 +82,5 @@
 			"taille": 1515864.0
 		}
 	],
-	"version": "0.74.1"
+	"version": "0.74.2"
 }

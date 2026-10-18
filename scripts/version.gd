@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.74.1"
+const NUMERO := "0.74.2"
 const DATE := "2026-10-18"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.74.2", "date": "2026-10-18", "titre": "Sam entre en scène",
+	"changements": [
+		"ILLUSTRATION : Sam, la Lanterne des Os, a son portrait et sa figurine (son évolution, l'Oracle des Rayons, les utilise en attendant la sienne).",
+		"OUTIL DE VERSIONS (éditeur Godot) : le compte rendu de publication affiche de nouveau correctement les accents (« publiée », « … ») sous Windows.",
+	]},
 	{"version": "0.74.1", "date": "2026-10-18", "titre": "La Lanterne des Os",
 	"changements": [
 		"NOUVELLE HÉROÏNE : Sam, la Lanterne des Os (UR, Sacré, Soutien) — une guérisseuse qui voit à travers la chair grâce à sa lanterne de cristal : Rayon Révélateur (ignore 25 % de RES, Malédiction), Œil du Diagnostic (DEF -10 % à tous les ennemis, soins +15 %), Cliché Salvateur (soin de groupe et purification) et Grand Scanner (frappe tous les ennemis, DEF -20 %). Évolution : Sam, l'Oracle des Rayons. Son portrait et sa figurine arrivent bientôt.",

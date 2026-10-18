@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.74.1** (2026-10-18)
+Version actuelle : **0.74.2** (2026-10-18)
+
+## v0.74.2 — Sam entre en scène  (2026-10-18)
+
+- ILLUSTRATION : Sam, la Lanterne des Os, a son portrait et sa figurine (son évolution, l'Oracle des Rayons, les utilise en attendant la sienne).
+- OUTIL DE VERSIONS (éditeur Godot) : le compte rendu de publication affiche de nouveau correctement les accents (« publiée », « … ») sous Windows.
 
 ## v0.74.1 — La Lanterne des Os  (2026-10-18)
 
