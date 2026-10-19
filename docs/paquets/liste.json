@@ -21,11 +21,11 @@
 		{
 			"depuis": "0.74.2",
 			"fichier": "figurines_2.pck",
-			"images": 71,
+			"images": 71.0,
 			"nom": "figurines_2",
 			"sha256": "36f4d6266dd97145a1e5d6dcb8476e7201167f823f306c342f6780e2edb308b4",
 			"signature": "3cd60248d1d038ee37ec919c45c01ec12e916e2941acbdd226b9ac1382a803b2",
-			"taille": 12387720
+			"taille": 12387720.0
 		},
 		{
 			"depuis": "0.68.5",
@@ -39,11 +39,11 @@
 		{
 			"depuis": "0.74.2",
 			"fichier": "portraits_0.pck",
-			"images": 134,
+			"images": 134.0,
 			"nom": "portraits_0",
 			"sha256": "591c40d475fd7929c45184ffd3f02cfd047b16b1a8fa921415c7db523f5f3ae0",
 			"signature": "d9f2bead3438d38fa138712074ac5e3b807442973847d410c6f2689a26cb72c1",
-			"taille": 8457712
+			"taille": 8457712.0
 		},
 		{
 			"depuis": "0.68.5",
