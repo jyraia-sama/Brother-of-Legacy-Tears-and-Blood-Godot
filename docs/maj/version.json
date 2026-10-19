@@ -1,14 +1,24 @@
 {
-	"date": "2026-10-18",
+	"date": "2026-10-19",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
 	"installations": {
 		"android": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Android.apk",
+		"linux": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Linux.tar.gz",
 		"macos": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Mac.zip",
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"LE JEU SUR LINUX : Brothers of Legacy existe maintenant en application Linux (fichier BrothersOfLegacy-Linux.tar.gz dans la page de téléchargement). Elle se met à jour toute seule comme les versions Windows et Mac, et ta partie te suit grâce à ton compte.",
+				"MISE À JOUR SUR ANDROID : une fois la mise à jour téléchargée, tu peux choisir « Continuer à jouer » (elle sera active la prochaine fois que tu ouvriras le jeu) ou « Fermer maintenant ». Android ne permet pas à un jeu de se relancer tout seul, d'où ce choix.",
+				"STATISTIQUES DU JEU (menu Admin) : les téléchargements Linux sont comptés à part, à côté de Windows, Mac et Android."
+			],
+			"titre": "Le jeu sur Linux",
+			"version": "0.75.0"
+		},
 		{
 			"changements": [
 				"ILLUSTRATION : Sam, la Lanterne des Os, a son portrait et sa figurine (son évolution, l'Oracle des Rayons, les utilise en attendant la sienne).",
@@ -119,21 +129,13 @@
 			],
 			"titre": "Deck sans zoom",
 			"version": "0.68.6"
-		},
-		{
-			"changements": [
-				"10 nouvelles images d'évolution (portrait et figurine) : La Maîtresse des Forges, Le Grand Cerf Ancestral, Archange du Crépuscule, Titan des Fosses, Impératrice des Liches, Félin du Gouffre, Grand Chien des Bois Sacrés, L'Errant des Abîmes, La Reine des Sceaux et Le Héros de la Lame Éveillée.",
-				"Toutes les évolutions UR et SSR ont maintenant leur propre image."
-			],
-			"titre": "Évolutions : deuxième lot",
-			"version": "0.68.5"
 		}
 	],
 	"pck": {
-		"sha256": "cbeabfb36926af22173f194bd35540e31d5ee6299b3d4e3986ac2a64c6e82912",
-		"taille": 33411188,
+		"sha256": "ae2c9826e27aa506969107b1c5aea8bfa99e1776232f5cc01f2881a684c29cbf",
+		"taille": 33415076,
 		"url": "jeu.pck"
 	},
-	"version": "0.74.2",
+	"version": "0.75.0",
 	"version_minimum": "0.37.0"
 }
