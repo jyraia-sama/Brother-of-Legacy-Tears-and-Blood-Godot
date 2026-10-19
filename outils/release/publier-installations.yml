@@ -16,11 +16,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           VERSION="${GITHUB_REF_NAME#installations-}"
-          for f in BrothersOfLegacy-Android.apk BrothersOfLegacy-Windows.zip BrothersOfLegacy-Mac.zip; do
-            cat "$f".part-* > "$f"
+          FICHIERS=""
+          for f in BrothersOfLegacy-Android.apk BrothersOfLegacy-Windows.zip BrothersOfLegacy-Mac.zip BrothersOfLegacy-Linux.tar.gz; do
+            if ls "$f".part-* >/dev/null 2>&1; then
+              cat "$f".part-* > "$f"
+              FICHIERS="$FICHIERS $f"
+            fi
           done
           sha256sum -c sommes.sha256
-          gh release create "$VERSION" BrothersOfLegacy-Android.apk BrothersOfLegacy-Windows.zip BrothersOfLegacy-Mac.zip \
+          gh release create "$VERSION" $FICHIERS \
             --repo "$GITHUB_REPOSITORY" --target main --latest \
             --title "$VERSION — Les applications à jour" \
             --notes-file NOTES.md

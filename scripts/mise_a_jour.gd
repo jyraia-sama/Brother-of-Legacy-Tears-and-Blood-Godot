@@ -1,5 +1,5 @@
 extends Node
-## MISE À JOUR AUTOMATIQUE (applications installées : Windows, Mac et Android).
+## MISE À JOUR AUTOMATIQUE (applications installées : Windows, Mac, Linux et Android).
 ## Chargé automatiquement au démarrage, EN PREMIER (Projet > Paramètres > Globals : « MiseAJour »).
 ##
 ## Comment ça marche :
@@ -33,6 +33,7 @@ const URL_FICHE := "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Bl
 const URL_INSTALL := {
 	"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Windows.zip",
 	"macos": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Mac.zip",
+	"linux": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Linux.tar.gz",
 	"android": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Android.apk",
 }
 const PAGE_TELECHARGEMENT := "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest"
@@ -87,7 +88,11 @@ func actif() -> bool:
 func plateforme() -> String:
 	if OS.has_feature("android"):
 		return "android"
-	return "macos" if OS.has_feature("macos") else "windows"
+	if OS.has_feature("macos"):
+		return "macos"
+	if OS.has_feature("linuxbsd"):
+		return "linux"
+	return "windows"
 
 
 ## Android ne permet pas à une application de se relancer elle-même : on la ferme

@@ -16,7 +16,7 @@ const URL_RELEASES := "https://api.github.com/repos/jyraia-sama/Brother-of-Legac
 const NOMS_PLATEFORMES := {
 	"windows": "Windows (application)", "macos": "Mac (application)", "android": "Android (application)",
 	"web-pc": "Web — ordinateur", "web-android": "Web — téléphone Android", "web-iphone": "Web — iPhone / iPad",
-	"linux": "Linux", "autre": "Autre",
+	"linux": "Linux (application)", "autre": "Autre",
 }
 const ONGLETS := [["ensemble", "Vue d'ensemble"], ["joueurs", "Joueurs"], ["appareils", "Appareils"], ["telechargements", "Téléchargements"]]
 const TRIS := [["vu_le", "Dernière connexion"], ["cree_le", "Inscription"], ["niveau", "Niveau"],
@@ -132,7 +132,7 @@ func _charger() -> void:
 		_afficher()
 
 
-## Nombre de téléchargements des fichiers des Releases GitHub (Windows, Mac, Android).
+## Nombre de téléchargements des fichiers des Releases GitHub (Windows, Mac, Linux, Android).
 func _charger_releases() -> void:
 	var h := HTTPRequest.new()
 	h.timeout = 20.0
@@ -229,7 +229,7 @@ func _vue_ensemble() -> void:
 	_tuiles([[int(a.get("total", 0)), "appareils qui ont lancé le jeu", C_BLEU], [int(a.get("actifs_jour", 0)), "appareils actifs (24 h)", C_BLEU],
 		[int(a.get("actifs_mois", 0)), "appareils actifs (30 jours)", C_BLEU], [int(a.get("sans_compte", 0)), "appareils sans compte", C_BLEU],
 		[_n(int(a.get("lancements", 0))), "lancements du jeu", C_BLEU],
-		[("…" if _releases.is_empty() and _erreur_releases == "" else str(dl["total"])), "téléchargements\n(Windows, Mac, Android)", C_BLEU]])
+		[("…" if _releases.is_empty() and _erreur_releases == "" else str(dl["total"])), "téléchargements\n(Windows, Mac, Linux, Android)", C_BLEU]])
 	_titre("Activité des 30 derniers jours")
 	var leg := HBoxContainer.new()
 	leg.add_theme_constant_override("separation", 18)
@@ -365,30 +365,30 @@ func _vue_telechargements() -> void:
 		_note(_erreur_releases if _erreur_releases != "" else "Chargement…")
 		return
 	var d := _totaux_telechargements()
-	_tuiles([[d["total"], "téléchargements au total", C_BLEU], [d["windows"], "Windows"], [d["mac"], "Mac"], [d["android"], "Android"]])
+	_tuiles([[d["total"], "téléchargements au total", C_BLEU], [d["windows"], "Windows"], [d["mac"], "Mac"], [d["linux"], "Linux"], [d["android"], "Android"]])
 	_note("Le jeu web (ordinateur, Android, iPhone) ne se télécharge pas : ses joueurs sont comptés dans l'onglet Appareils.")
 	_titre("Détail par version")
 	var g := GridContainer.new()
-	g.columns = 5
+	g.columns = 6
 	g.add_theme_constant_override("h_separation", 26)
 	g.add_theme_constant_override("v_separation", 4)
 	_contenu.add_child(g)
-	for e in ["Version", "Publiée le", "Windows", "Mac", "Android"]:
+	for e in ["Version", "Publiée le", "Windows", "Mac", "Linux", "Android"]:
 		g.add_child(UiCommun.label(e, 14, UiCommun.C_OR))
 	for r in _releases:
-		var par := {"windows": 0, "mac": 0, "android": 0}
+		var par := {"windows": 0, "mac": 0, "linux": 0, "android": 0}
 		for asset in r.get("assets", []):
 			var k := _type_fichier(str(asset.get("name", "")))
 			if k != "":
 				par[k] += int(asset.get("download_count", 0))
 		g.add_child(UiCommun.label(str(r.get("tag_name", "?")), 15, UiCommun.C_LEGENDE))
 		g.add_child(UiCommun.label(_date(str(r.get("published_at", ""))), 14))
-		for k in ["windows", "mac", "android"]:
+		for k in ["windows", "mac", "linux", "android"]:
 			g.add_child(UiCommun.label(str(par[k]), 15))
 
 
 func _totaux_telechargements() -> Dictionary:
-	var d := {"total": 0, "windows": 0, "mac": 0, "android": 0}
+	var d := {"total": 0, "windows": 0, "mac": 0, "linux": 0, "android": 0}
 	for r in _releases:
 		for asset in r.get("assets", []):
 			var k := _type_fichier(str(asset.get("name", "")))
@@ -404,6 +404,8 @@ func _type_fichier(nom: String) -> String:
 		return "android"
 	if n.contains("windows"):
 		return "windows"
+	if n.contains("linux"):
+		return "linux"
 	if n.contains("mac"):
 		return "mac"
 	return ""

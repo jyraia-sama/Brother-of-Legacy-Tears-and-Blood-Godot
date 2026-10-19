@@ -4,10 +4,11 @@ extends SceneTree
 ##   godot --headless --path . -s res://outils/publier_pc.gd
 ## Options (après « -- ») :
 ##   --obligatoire  : les joueurs doivent installer cette version pour continuer (Arène, etc.)
-##   --complet      : refait aussi les installations complètes Windows et Mac (sinon : automatique
+##   --complet      : refait aussi les installations complètes Windows, Mac et Linux (sinon : automatique
 ##                    quand le moteur Godot ou les réglages du projet ont changé)
 ##   --sans-web     : ne réexporte pas la version web (docs/index.*)
 ##   --android      : refait l'application Android (.apk) même sans installation complète
+##   --linux        : refait l'installation Linux (.tar.gz) même sans installation complète
 ##   --garder-installation : n'impose pas de réinstallation même si l'empreinte a changé
 ##                    (à n'utiliser que si on est sûr que les applications déjà installées restent compatibles)
 ##
@@ -19,7 +20,7 @@ extends SceneTree
 ##   3. exporte le contenu du jeu pour ordinateur dans docs/maj/jeu.pck (la mise à jour rapide) ;
 ##   4. écrit la fiche docs/maj/version.json (numéro, nouveautés, taille, empreinte) ;
 ##   5. si besoin, crée les installations complètes dans build/ :
-##        build/BrothersOfLegacy-Windows.zip et build/BrothersOfLegacy-Mac.zip
+##        build/BrothersOfLegacy-Windows.zip, build/BrothersOfLegacy-Mac.zip et build/BrothersOfLegacy-Linux.tar.gz
 ##      (à déposer dans une « Release » GitHub nommée vX.Y.Z, voir GUIDE_VERSIONS.md) ;
 ##      et l'application Android dans build/BrothersOfLegacy-Android.apk (plus de 100 Mo : trop gros pour le
 ##      dépôt, elle se dépose dans la Release GitHub, à côté des fichiers Windows et Mac).
@@ -31,6 +32,8 @@ const PRESET_WEB := "Web"
 const PRESET_WINDOWS := "Windows Desktop"
 const PRESET_MAC := "macOS"
 const PRESET_ANDROID := "Android"
+const PRESET_LINUX := "Linux"
+const LINUX := "BrothersOfLegacy-Linux.tar.gz"
 const SITE := "https://jyraia-sama.github.io/Brother-of-Legacy-Tears-and-Blood-Godot/"
 const APK := "BrothersOfLegacy-Android.apk"
 const NB_NOUVEAUTES := 15
@@ -66,6 +69,7 @@ func _init() -> void:
 		_echec("impossible de modifier export_presets.cfg"); return
 	DirAccess.make_dir_recursive_absolute(projet + "/docs/maj")
 	DirAccess.make_dir_recursive_absolute(projet + "/build/windows")
+	DirAccess.make_dir_recursive_absolute(projet + "/build/linux")
 	_creer_fichier(projet + "/build/.gdignore", "")
 
 	# 2. Version web
@@ -81,7 +85,7 @@ func _init() -> void:
 	if poids_paquets < 0:
 		_echec("la fabrication des paquets a échoué"); return
 
-	# 3. Contenu du jeu pour ordinateur (Windows et Mac utilisent le même fichier)
+	# 3. Contenu du jeu pour ordinateur (Windows, Mac et Linux utilisent le même fichier)
 	print("- Export du contenu ordinateur (jeu.pck)…")
 	var pck := projet + "/docs/maj/jeu.pck"
 	if not _exporter(["--export-pack", PRESET_WINDOWS, pck]):
@@ -108,6 +112,13 @@ func _init() -> void:
 		if not _exporter(["--export-release", PRESET_MAC, projet + "/build/BrothersOfLegacy-Mac.zip"]):
 			_echec("l'export Mac a échoué (modèles d'export installés ?)"); return
 
+	var linux_refait := false
+	if complet or "--linux" in args:
+		print("- Installation complète Linux…")
+		linux_refait = _exporter_linux()
+		if not linux_refait:
+			print("ATTENTION : installation Linux non refaite (modèles d'export Linux absents ?).")
+
 	var apk_refait := false
 	if complet or "--android" in args:
 		print("- Application Android…")
@@ -132,6 +143,7 @@ func _init() -> void:
 		"installations": {
 			"windows": "%s/releases/download/v%s/BrothersOfLegacy-Windows.zip" % [DEPOT, installation_minimum],
 			"macos": "%s/releases/download/v%s/BrothersOfLegacy-Mac.zip" % [DEPOT, installation_minimum],
+			"linux": "%s/releases/latest/download/%s" % [DEPOT, LINUX],
 			"android": "%s/releases/latest/download/%s" % [DEPOT, APK],
 		},
 		"nouveautes": nouveautes,
@@ -148,6 +160,8 @@ func _init() -> void:
 		print("  (les joueurs devront réinstaller : le jeu leur proposera le téléchargement).")
 	else:
 		print("Mise à jour rapide : les joueurs la recevront au prochain lancement du jeu.")
+	if linux_refait:
+		print("Installation Linux prête : build/%s -> à déposer dans la Release GitHub." % LINUX)
 	if apk_refait:
 		print("Application Android prête : build/%s -> à déposer dans la Release GitHub." % APK)
 	if version_minimum == numero:
@@ -157,7 +171,7 @@ func _init() -> void:
 
 # ---------------------------------------------------------------------
 
-## Range chaque dossier de PAQUETS dans le filtre « exclure » des 4 exports (web, Windows, Mac, Android).
+## Range chaque dossier de PAQUETS dans le filtre « exclure » des 5 exports (web, Windows, Mac, Android, Linux).
 func _exclure_paquets_des_exports() -> bool:
 	var filtres: Array = []
 	for p in PAQUETS:
@@ -355,6 +369,79 @@ func _ecrire_version_projet(numero: String) -> bool:
 	else:
 		texte = texte.replace("[application]\n", "[application]\n\n" + ligne + "\n").replace("[application]\n\n\n", "[application]\n\n")
 	return _creer_fichier(chemin, texte)
+
+
+## Exporte le jeu Linux et l'emballe dans build/BrothersOfLegacy-Linux.tar.gz.
+## Un .tar.gz (et pas un .zip) : c'est le seul format qui garde le droit « exécutable » du jeu,
+## le joueur n'a ainsi qu'à décompresser puis double-cliquer.
+func _exporter_linux() -> bool:
+	var bin := projet + "/build/linux/BrothersOfLegacy.x86_64"
+	if FileAccess.file_exists(bin):
+		DirAccess.remove_absolute(bin)
+	if not _exporter(["--export-release", PRESET_LINUX, bin]) or not FileAccess.file_exists(bin):
+		return false
+	return _tar_gz(bin, projet + "/build/" + LINUX, "Brothers of Legacy/BrothersOfLegacy.x86_64")
+
+
+## Archive .tar.gz d'un seul fichier, marqué exécutable (droits 755).
+func _tar_gz(source: String, archive: String, nom_dans_archive: String) -> bool:
+	var donnees := FileAccess.get_file_as_bytes(source)
+	if donnees.is_empty():
+		return false
+	var dossier := nom_dans_archive.get_base_dir() + "/"
+	var tar := PackedByteArray()
+	tar.append_array(_entete_tar(dossier, 0, "5"))
+	tar.append_array(_entete_tar(nom_dans_archive, donnees.size(), "0"))
+	tar.append_array(donnees)
+	var reste := donnees.size() % 512
+	if reste != 0:
+		var bourrage := PackedByteArray()
+		bourrage.resize(512 - reste)
+		tar.append_array(bourrage)
+	var fin := PackedByteArray()
+	fin.resize(1024)
+	tar.append_array(fin)
+	var gz := tar.compress(FileAccess.COMPRESSION_GZIP)
+	var f := FileAccess.open(archive, FileAccess.WRITE)
+	if f == null or gz.is_empty():
+		return false
+	f.store_buffer(gz)
+	f.close()
+	return true
+
+
+## En-tête « ustar » de 512 octets (les cases non écrites restent à zéro). type "0" = fichier, "5" = dossier.
+func _entete_tar(nom: String, taille: int, type: String) -> PackedByteArray:
+	var h := PackedByteArray()
+	h.resize(512)
+	h = _poser(h, 0, nom)
+	h = _poser(h, 100, "0000755")
+	h = _poser(h, 108, "0000000")
+	h = _poser(h, 116, "0000000")
+	h = _poser(h, 124, "%011o" % taille)
+	h = _poser(h, 136, "%011o" % int(Time.get_unix_time_from_system()))
+	h = _poser(h, 148, "        ")
+	h = _poser(h, 156, type)
+	h = _poser(h, 257, "ustar")
+	h = _poser(h, 263, "00")
+	h = _poser(h, 265, "joueur")
+	h = _poser(h, 297, "joueur")
+	var somme := 0
+	for o in h:
+		somme += o
+	h = _poser(h, 148, "%06o" % somme)
+	h[154] = 0
+	h[155] = 32
+	return h
+
+
+## Écrit un texte dans l'en-tête à partir de la case « debut » (un tableau d'octets se copie :
+## on renvoie le tableau modifié).
+func _poser(h: PackedByteArray, debut: int, texte: String) -> PackedByteArray:
+	var o := texte.to_utf8_buffer()
+	for i in o.size():
+		h[debut + i] = o[i]
+	return h
 
 
 func _zipper(source: String, zip: String, nom_dans_zip: String) -> bool:

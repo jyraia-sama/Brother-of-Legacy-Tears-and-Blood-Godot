@@ -1,6 +1,6 @@
 class_name FenetreMiseAJour
 extends CanvasLayer
-## Fenêtre « Mise à jour disponible » (version ordinateur).
+## Fenêtre « Mise à jour disponible » (applications ordinateur et Android).
 ## Ouverte par l'autoload MiseAJour au lancement, ou depuis les Paramètres (« Rechercher une mise à jour »).
 ## resultat : "maj" (mise à jour rapide), "installation" (installation complète nécessaire),
 ##            "pret" (déjà téléchargée, il reste à redémarrer), "a_jour" ou "erreur" (recherche manuelle).
@@ -53,11 +53,14 @@ func _ready() -> void:
 			_ajouter_bouton("OK", queue_free)
 		"pret":
 			_titre("MISE À JOUR PRÊTE")
-			_texte(UiCommun.t("La version v%s est téléchargée. Relance le jeu pour en profiter.") % str(MiseAJour.fiche.get("version", "")), UiCommun.C_TEXTE)
+			if _peut_redemarrer():
+				_texte(UiCommun.t("La version v%s est téléchargée. Relance le jeu pour en profiter.") % str(MiseAJour.fiche.get("version", "")), UiCommun.C_TEXTE)
+			else:
+				_texte(UiCommun.t("La version v%s est téléchargée. Ferme le jeu puis rouvre-le pour en profiter.") % str(MiseAJour.fiche.get("version", "")), UiCommun.C_TEXTE)
 			_nouveautes()
 			_ligne_boutons()
 			if not _bloquee:
-				_ajouter_bouton("Plus tard", queue_free)
+				_ajouter_bouton("Plus tard" if _peut_redemarrer() else "Continuer à jouer", queue_free)
 			_ajouter_bouton(_texte_redemarrer(), MiseAJour.redemarrer, true)
 		"installation":
 			_titre(UiCommun.t("NOUVELLE VERSION : v%s") % str(MiseAJour.fiche.get("version", "")))
@@ -118,10 +121,17 @@ func _fin(ok: bool, message: String) -> void:
 	_boutons.visible = true
 	if ok:
 		_barre.value = 1.0
-		_info.text = "Mise à jour installée ! " + ("Le jeu va redémarrer pour l'appliquer." if _peut_redemarrer() else "Le jeu va se fermer : rouvre-le pour jouer à la nouvelle version.")
 		_info.add_theme_color_override("font_color", UiCommun.C_LEGENDE)
-		if not _bloquee:
-			_ajouter_bouton("Plus tard", queue_free)
+		if _peut_redemarrer():
+			_info.text = UiCommun.t("Mise à jour installée ! ") + UiCommun.t("Le jeu va redémarrer pour l'appliquer.")
+			if not _bloquee:
+				_ajouter_bouton("Plus tard", queue_free)
+		else:
+			# Android interdit à une application de se relancer toute seule : on laisse le choix
+			# entre continuer la partie (la mise à jour sera prise au prochain lancement) et fermer tout de suite.
+			_info.text = UiCommun.t("Mise à jour installée ! ") + UiCommun.t("Elle sera active la prochaine fois que tu ouvriras le jeu. Android ne permet pas à un jeu de se relancer tout seul : ferme-le puis rouvre-le pour l'avoir tout de suite.")
+			if not _bloquee:
+				_ajouter_bouton("Continuer à jouer", queue_free)
 		_ajouter_bouton(_texte_redemarrer(), MiseAJour.redemarrer, true)
 	else:
 		_barre.visible = false
@@ -191,18 +201,20 @@ func _nouveautes() -> void:
 		defil.custom_minimum_size.y = minf(rt.get_content_height() + 4.0, hauteur_max)
 
 
-## Windows et Mac relancent le jeu tout seuls ; Android le ferme (le joueur le rouvre).
+## Windows, Mac et Linux relancent le jeu tout seuls ; Android le ferme (le joueur le rouvre).
 func _peut_redemarrer() -> bool:
 	return MiseAJour.peut_redemarrer()
 
 
 func _texte_redemarrer() -> String:
-	return "Redémarrer maintenant" if _peut_redemarrer() else "Fermer le jeu"
+	return "Redémarrer maintenant" if _peut_redemarrer() else "Fermer maintenant"
 
 
 func _aide_installation() -> String:
 	if MiseAJour.plateforme() == "android":
 		return "Sur Android : ouvre le fichier .apk téléchargé et choisis « Installer » (ou « Mettre à jour »). Si le téléphone le demande, autorise ton navigateur à installer des applications. Ta partie est conservée."
+	if MiseAJour.plateforme() == "linux":
+		return "Sur Linux : décompresse le fichier .tar.gz téléchargé et remplace l'ancien dossier du jeu par le nouveau, puis lance BrothersOfLegacy.x86_64."
 	if MiseAJour.plateforme() == "macos":
 		return "Sur Mac : ouvre le fichier .zip téléchargé, glisse l'application dans « Applications » à la place de l'ancienne, puis lance-la (si le Mac la bloque : Réglages Système → Confidentialité et sécurité → « Ouvrir quand même »)."
 	return "Sur Windows : décompresse le fichier .zip téléchargé et remplace l'ancien dossier du jeu par le nouveau, puis lance BrothersOfLegacy.exe."

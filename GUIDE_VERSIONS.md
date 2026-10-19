@@ -38,6 +38,7 @@ Une simple mise à jour ne suffit pas quand **Godot** change de version (4.7 →
 
 - `BrothersOfLegacy-Windows.zip`
 - `BrothersOfLegacy-Mac.zip`
+- `BrothersOfLegacy-Linux.tar.gz`
 - `BrothersOfLegacy-Android.apk` (si Claude l'a refait ; sinon il te le donnera)
 
 Ces fichiers sont trop gros pour le dépôt : on les dépose dans une **Release** GitHub.
@@ -45,7 +46,7 @@ Ces fichiers sont trop gros pour le dépôt : on les dépose dans une **Release*
 1. Fais d'abord le Commit, le Push et le tag (étape 5 ci-dessus).
 2. Sur github.com, ouvre ton dépôt, puis **Releases** (colonne de droite) → **Draft a new release**.
 3. **Choose a tag** : choisis le tag de la version (par exemple `v0.40.0`). Titre : le même.
-4. Glisse les deux fichiers `.zip` **et l'APK Android** dans la zone « Attach binaries », puis clique sur **Publish release**.
+4. Glisse les deux fichiers `.zip`, le `.tar.gz` Linux **et l'APK Android** dans la zone « Attach binaries », puis clique sur **Publish release**.
 
 Les joueurs verront « Nouvelle version : réinstallation nécessaire » avec un bouton qui télécharge directement le bon fichier. Leur partie n'est pas perdue (elle est sur leur ordinateur et sur leur compte).
 
@@ -59,6 +60,7 @@ Lien à envoyer : **https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-B
 - **Mac** : télécharger `BrothersOfLegacy-Mac.zip` (le Mac le décompresse tout seul), glisser l'application dans **Applications** puis l'ouvrir. Le Mac la bloque la première fois : **Réglages Système → Confidentialité et sécurité**, tout en bas, **Ouvrir quand même**. Si le Mac dit que l'application est « endommagée », ouvrir le Terminal et taper :
   `xattr -cr "/Applications/Brother of Legacy - Tears and Blood.app"`
   puis relancer. Ces manipulations ne sont à faire qu'une fois.
+- **Linux** : télécharger `BrothersOfLegacy-Linux.tar.gz`, clic droit → **Extraire ici**, puis double-cliquer sur `BrothersOfLegacy.x86_64` dans le dossier « Brothers of Legacy » (si rien ne se passe : clic droit → **Propriétés** → **Permissions** → cocher **Autoriser l'exécution**, ou dans un terminal `chmod +x BrothersOfLegacy.x86_64`). Pour Linux 64 bits (Ubuntu, Mint, Fedora…).
 
 - **Android** : ouvrir sur le téléphone le lien
   **https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/latest/download/BrothersOfLegacy-Android.apk**

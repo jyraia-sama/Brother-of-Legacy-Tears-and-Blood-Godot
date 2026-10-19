@@ -8,18 +8,24 @@ extends RefCounted
 ##   3. recopie-la dans CHANGELOG.md (à la racine du projet) ;
 ##   4. dans GitHub Desktop : Commit « vX.Y.Z — titre », puis crée l'étiquette (tag) vX.Y.Z ;
 ##   5. dans Godot : onglet « Versions » -> « Sauvegarder cette version », puis « Publier cette version »
-##      (exporte le web + la mise à jour Windows/Mac, voir GUIDE_VERSIONS.md).
+##      (exporte le web + la mise à jour Windows/Mac/Linux, voir GUIDE_VERSIONS.md).
 ##
 ## Numérotation  MAJEUR.MINEUR.CORRECTIF :
 ##   0.x.y  = jeu en développement (1.0.0 = première version complète)
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.74.2"
-const DATE := "2026-10-18"
+const NUMERO := "0.75.0"
+const DATE := "2026-10-19"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.75.0", "date": "2026-10-19", "titre": "Le jeu sur Linux",
+	"changements": [
+		"LE JEU SUR LINUX : Brothers of Legacy existe maintenant en application Linux (fichier BrothersOfLegacy-Linux.tar.gz dans la page de téléchargement). Elle se met à jour toute seule comme les versions Windows et Mac, et ta partie te suit grâce à ton compte.",
+		"MISE À JOUR SUR ANDROID : une fois la mise à jour téléchargée, tu peux choisir « Continuer à jouer » (elle sera active la prochaine fois que tu ouvriras le jeu) ou « Fermer maintenant ». Android ne permet pas à un jeu de se relancer tout seul, d'où ce choix.",
+		"STATISTIQUES DU JEU (menu Admin) : les téléchargements Linux sont comptés à part, à côté de Windows, Mac et Android.",
+	]},
 	{"version": "0.74.2", "date": "2026-10-18", "titre": "Sam entre en scène",
 	"changements": [
 		"ILLUSTRATION : Sam, la Lanterne des Os, a son portrait et sa figurine (son évolution, l'Oracle des Rayons, les utilise en attendant la sienne).",

@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.74.2** (2026-10-18)
+Version actuelle : **0.75.0** (2026-10-19)
+
+## v0.75.0 — Le jeu sur Linux  (2026-10-19)
+
+- LE JEU SUR LINUX : Brothers of Legacy existe maintenant en application Linux (fichier BrothersOfLegacy-Linux.tar.gz dans la page de téléchargement). Elle se met à jour toute seule comme les versions Windows et Mac, et ta partie te suit grâce à ton compte.
+- MISE À JOUR SUR ANDROID : une fois la mise à jour téléchargée, tu peux choisir « Continuer à jouer » (elle sera active la prochaine fois que tu ouvriras le jeu) ou « Fermer maintenant ». Android ne permet pas à un jeu de se relancer tout seul, d'où ce choix.
+- STATISTIQUES DU JEU (menu Admin) : les téléchargements Linux sont comptés à part, à côté de Windows, Mac et Android.
 
 ## v0.74.2 — Sam entre en scène  (2026-10-18)
 
