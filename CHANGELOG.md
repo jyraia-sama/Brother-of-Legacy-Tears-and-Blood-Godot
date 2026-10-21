@@ -1,6 +1,14 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.75.2** (2026-10-21)
+Version actuelle : **0.76.0** (2026-10-21)
+
+## v0.76.0 — Tous les modes en 3D  (2026-10-21)
+
+- COMBATS EN 3D DANS TOUS LES MODES : les Tours de l'Enfer et du Paradis, les 7 Donjons (dont le Puits de Sang et la Bibliothèque Interdite), la Marche Maudite, le Sanctuaire du Bélier, l'Arène (JcJ et Classé) et la Guerre des Bannières passent en 2,5D, avec les pions sur socles, les sorts par élément et la météo. Seul le Boss de Monde reste en 2D.
+- MARCHE MAUDITE : chaque région prend le décor 3D de son Acte.
+- DÉCORS EN ATTENDANT : les autres modes empruntent pour l'instant le décor de l'Acte le plus proche (la Tour de l'Enfer celui du Trône de Cendres, le Brasier Éternel les Terres Brûlées, la Sylve Putride le Marais aux Murmures, la Guerre le bastion de l'éclipse…). Chaque mode aura bientôt son propre décor peint, qui prendra la place de l'emprunt tout seul.
+- AMBIANCES : chaque mode a déjà son ambiance prête (lumière, brume, météo) ; nouvelles météos : bulles des Fosses Englouties, plumes dorées de la Tour du Paradis, poussière de parchemin de la Bibliothèque.
+- La case « Combats en 3D » des Paramètres s'applique maintenant à tous ces modes.
 
 ## v0.75.2 — Les treize champs de bataille  (2026-10-21)
 

@@ -48,6 +48,19 @@ const AMBIANCES := {
 	11: {"meteo": "orage", "amb": Color(0.58, 0.48, 0.7), "torche": Color(0.8, 0.5, 1.0), "sat": 1.0, "contraste": 1.1, "brume": 0.009, "c_brume": Color(0.16, 0.1, 0.16), "sol": Color(0.72, 0.8, 0.68)},
 	12: {"meteo": "etincelles_or", "amb": Color(0.72, 0.58, 0.45), "torche": Color(1.0, 0.65, 0.25), "sat": 1.1, "contraste": 1.1, "brume": 0.0},
 	13: {"meteo": "etincelles_violettes", "amb": Color(0.6, 0.5, 0.72), "torche": Color(0.75, 0.45, 1.0), "sat": 1.05, "contraste": 1.1, "brume": 0.0},
+	# Décors des autres modes (utilisés dès que leur toile et leur sol sont dans assets/combat3d)
+	"tour_enfer": {"meteo": "cendres_rouges", "amb": Color(0.74, 0.44, 0.4), "torche": Color(1.0, 0.35, 0.15), "sat": 1.15, "contraste": 1.12, "brume": 0.0},
+	"tour_paradis": {"meteo": "plumes", "amb": Color(0.8, 0.76, 0.68), "torche": Color(1.0, 0.88, 0.6), "sat": 0.95, "contraste": 1.04, "brume": 0.009, "c_brume": Color(0.55, 0.52, 0.45)},
+	"donjon_feu": {"meteo": "cendres", "amb": Color(0.72, 0.5, 0.42), "torche": Color(1.0, 0.45, 0.15), "sat": 1.12, "contraste": 1.1, "brume": 0.0},
+	"donjon_nature": {"meteo": "spores", "amb": Color(0.52, 0.64, 0.46), "torche": Color(0.65, 1.0, 0.4), "sat": 0.95, "contraste": 1.06, "brume": 0.0113, "c_brume": Color(0.08, 0.12, 0.06)},
+	"donjon_eau": {"meteo": "bulles", "amb": Color(0.45, 0.58, 0.72), "torche": Color(0.45, 0.85, 1.0), "sat": 0.9, "contraste": 1.05, "brume": 0.0135, "c_brume": Color(0.06, 0.14, 0.2)},
+	"donjon_tenebres": {"meteo": "etincelles_violettes", "amb": Color(0.5, 0.46, 0.62), "torche": Color(0.65, 0.4, 1.0), "sat": 0.85, "contraste": 1.1, "brume": 0.0113, "c_brume": Color(0.08, 0.06, 0.12)},
+	"donjon_sacre": {"meteo": "poussiere_or", "amb": Color(0.72, 0.66, 0.58), "torche": Color(1.0, 0.82, 0.5), "sat": 0.95, "contraste": 1.06, "brume": 0.009, "c_brume": Color(0.25, 0.2, 0.16)},
+	"donjon_neutre": {"meteo": "cendres_rouges", "amb": Color(0.7, 0.42, 0.42), "torche": Color(1.0, 0.2, 0.18), "sat": 1.1, "contraste": 1.12, "brume": 0.009, "c_brume": Color(0.18, 0.04, 0.05)},
+	"donjon_savoir": {"meteo": "poussiere_parchemin", "amb": Color(0.62, 0.56, 0.62), "torche": Color(0.6, 0.75, 1.0), "sat": 0.9, "contraste": 1.06, "brume": 0.009, "c_brume": Color(0.12, 0.1, 0.16)},
+	"sanctuaire": {"meteo": "etincelles_or", "amb": Color(0.72, 0.62, 0.55), "torche": Color(1.0, 0.7, 0.35), "sat": 1.05, "contraste": 1.06, "brume": 0.0},
+	"arene": {"meteo": "poussiere_or", "amb": Color(0.72, 0.6, 0.52), "torche": Color(1.0, 0.6, 0.3), "sat": 1.05, "contraste": 1.08, "brume": 0.0},
+	"guerre": {"meteo": "cendres", "amb": Color(0.66, 0.52, 0.5), "torche": Color(1.0, 0.45, 0.2), "sat": 1.05, "contraste": 1.1, "brume": 0.009, "c_brume": Color(0.16, 0.1, 0.1)},
 }
 
 var _vp: SubViewport
@@ -58,7 +71,7 @@ var _unites := {}               # idx -> {pion, fig, mat, socle, lisere, ombre, 
 var _tw_cam: Tween
 var _env: Environment
 var vitesse := 1.0
-var acte := 1                   # ambiance (à régler avant construire)
+var acte: Variant = 1           # ambiance : numéro d'Acte ou clé de décor d'un mode (à régler avant construire)
 var camera_cinema := false      # ralenti et rapprochement sur les moments forts
 var _n_poses := 0
 
@@ -293,8 +306,28 @@ func _meteo(type: String) -> void:
 			g.position = Vector3(0, 4.5, 1)
 			g.emission_box_extents = Vector3(15, 3.5, 7)
 			_braises(Color(1.0, 0.5, 0.25), 40)
-		"poussiere_or":
-			var d := _boite_flottante(Color(1.0, 0.85, 0.55), 90, 7.0, 0.022)
+		"bulles":
+			var b := _boite_flottante(Color(0.55, 0.82, 1.0), 70, 6.0, 0.03)
+			b.direction = Vector3.UP
+			b.spread = 15.0
+			b.initial_velocity_min = 0.3
+			b.initial_velocity_max = 0.7
+			b.gravity = Vector3(0, 0.05, 0)
+			b.position = Vector3(0, 2.0, 0)
+			b.emission_box_extents = Vector3(13, 2.0, 5)
+		"plumes":
+			var f := _boite_flottante(Color(1.0, 0.95, 0.8), 70, 9.0, 0.04)
+			f.direction = Vector3(0.3, -1, 0)
+			f.spread = 35.0
+			f.initial_velocity_min = 0.2
+			f.initial_velocity_max = 0.5
+			f.gravity = Vector3(0.05, -0.06, 0)
+			f.position = Vector3(0, 4.5, 1)
+			f.emission_box_extents = Vector3(15, 3.5, 7)
+			f.scale_amount_curve = null
+			_braises(Color(1.0, 0.9, 0.6), 40)
+		"poussiere_or", "poussiere_parchemin":
+			var d := _boite_flottante(Color(1.0, 0.85, 0.55) if type == "poussiere_or" else Color(0.85, 0.78, 0.62), 90, 7.0, 0.022)
 			d.direction = Vector3(1, 0.2, 0)
 			d.spread = 60.0
 			d.initial_velocity_min = 0.1

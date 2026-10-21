@@ -15,11 +15,19 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.75.2"
+const NUMERO := "0.76.0"
 const DATE := "2026-10-21"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.76.0", "date": "2026-10-21", "titre": "Tous les modes en 3D",
+	"changements": [
+		"COMBATS EN 3D DANS TOUS LES MODES : les Tours de l'Enfer et du Paradis, les 7 Donjons (dont le Puits de Sang et la Bibliothèque Interdite), la Marche Maudite, le Sanctuaire du Bélier, l'Arène (JcJ et Classé) et la Guerre des Bannières passent en 2,5D, avec les pions sur socles, les sorts par élément et la météo. Seul le Boss de Monde reste en 2D.",
+		"MARCHE MAUDITE : chaque région prend le décor 3D de son Acte.",
+		"DÉCORS EN ATTENDANT : les autres modes empruntent pour l'instant le décor de l'Acte le plus proche (la Tour de l'Enfer celui du Trône de Cendres, le Brasier Éternel les Terres Brûlées, la Sylve Putride le Marais aux Murmures, la Guerre le bastion de l'éclipse…). Chaque mode aura bientôt son propre décor peint, qui prendra la place de l'emprunt tout seul.",
+		"AMBIANCES : chaque mode a déjà son ambiance prête (lumière, brume, météo) ; nouvelles météos : bulles des Fosses Englouties, plumes dorées de la Tour du Paradis, poussière de parchemin de la Bibliothèque.",
+		"La case « Combats en 3D » des Paramètres s'applique maintenant à tous ces modes.",
+	]},
 	{"version": "0.75.2", "date": "2026-10-21", "titre": "Les treize champs de bataille",
 	"changements": [
 		"COMBATS EN 3D, ACTES VII À XIII : tous les Actes ont maintenant leur décor peint pour la 3D : le Marais aux Murmures et son trône de ronces (VII), le bastion en flammes sous l'éclipse de sang (VIII), le Val des Héros Déchus et son mausolée doré (IX), la Citadelle des Supplices et sa porte rougeoyante (X), les Champs du Jugement sous le ciel coupé en deux, bleu et rouge (XI), le Trône de Cendres sous l'éclipse (XII) et, pour l'Acte caché, l'intérieur du Sceau des Frères, moitié cristal bleu, moitié cristal rouge (XIII).",

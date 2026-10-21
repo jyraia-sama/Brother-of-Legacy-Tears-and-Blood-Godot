@@ -53,11 +53,24 @@ var _barre_geant: ProgressBar
 var _lbl_geant: Label
 var _idx_geant := -1
 var barre_haut: HBoxContainer   # barre du haut (le combat classé y ajoute « Abandonner »)
-## Combats en 2,5D (scène 3D + figurines) : modes concernés et scène 3D (null en 2D)
-const MODES_3D := ["aventure"]
+## Combats en 2,5D (scène 3D + figurines) : modes concernés et scène 3D (null en 2D).
+## Le Boss de Monde (20 héros contre un géant) reste en 2D.
+const MODES_3D := ["aventure", "tour", "donjon", "marche", "sanctuaire", "arene", "classee", "guerre", "guerre_revoir"]
 ## Hauteur (fraction de l'image) où commence le sol peint de chaque toile de fond 3D
 const COUPES_3D := {1: 0.72, 2: 0.76, 3: 0.69, 4: 0.74, 5: 0.72, 6: 0.73, 7: 0.75, 8: 0.71, 9: 0.70, 10: 0.70, 11: 0.70, 12: 0.71, 13: 0.72}
+## DÉCORS 3D DES AUTRES MODES : chaque décor a sa clé (assets/combat3d/<clé>_fond.png + <clé>_sol.png).
+## Tant que son décor n'est pas peint, le mode emprunte celui de l'Acte indiqué ici (le plus proche
+## en ambiance). La Marche Maudite traverse les régions des Actes : elle prend toujours leurs décors.
+const DECORS_EMPRUNTES := {
+	"tour_enfer": 12, "tour_paradis": 9,
+	"donjon_feu": 5, "donjon_nature": 7, "donjon_eau": 2, "donjon_tenebres": 4,
+	"donjon_sacre": 9, "donjon_neutre": 8, "donjon_savoir": 4,
+	"sanctuaire": 13, "arene": 3, "guerre": 8,
+}
+## Coupe des décors des modes (à régler quand chaque décor arrive ; 0.72 par défaut)
+const COUPES_MODES := {}
 var _c3d: Combat3D = null
+var _decor: Dictionary = {}
 ## Combats jouables à la main (les Boss de Monde, l'Arène et la Guerre restent automatiques ;
 ## l'Arène classée est toujours manuelle, gérée par combat_classe.gd)
 const MODES_MANUEL := ["aventure", "tour", "donjon", "marche", "sanctuaire"]
@@ -102,7 +115,8 @@ func _ready() -> void:
 	Audio.musique(_musique_combat())
 	if _mode in MODES_3D and bool(Sauvegarde.get_parametre("combats_3d", true)):
 		_c3d = Combat3D.new()
-		_c3d.acte = int(demande.get("acte", 1))
+		_decor = _decor_3d()
+		_c3d.acte = _decor["ambiance"]
 		_c3d.camera_cinema = bool(Sauvegarde.get_parametre("camera_cinema", false))
 	_creer_fond()
 	_creer_interface()
@@ -149,6 +163,45 @@ func _resume_camp(camp: Array) -> String:
 	return ", ".join(r)
 
 
+## Clé du décor 3D de ce combat : « acte_07 », « tour_enfer », « donjon_feu », « arene »…
+func _cle_decor() -> String:
+	match _mode:
+		"marche":
+			return "acte_%02d" % int(Marche.actes_du_jour()[int(demande.get("region", 0))])
+		"tour":
+			return "tour_" + str(demande.get("tour", "enfer"))
+		"donjon":
+			return "donjon_" + str(demande.get("donjon", "feu"))
+		"sanctuaire":
+			return "sanctuaire"
+		"arene", "classee":
+			return "arene"
+		"guerre", "guerre_revoir":
+			return "guerre"
+	return "acte_%02d" % int(demande.get("acte", 1))
+
+
+## Décor 3D du combat : {cle, ambiance, emprunte, fond, sol, coupe} ; sans « fond » si aucun décor 3D
+## n'existe (le combat découpe alors son image 2D, comme avant).
+func _decor_3d() -> Dictionary:
+	var cle := _cle_decor()
+	var d := {"cle": cle, "ambiance": int(demande.get("acte", 1)), "emprunte": false}
+	var base := "res://assets/combat3d/" + cle
+	if cle.begins_with("acte_"):
+		d["ambiance"] = int(cle.trim_prefix("acte_"))
+	elif ResourceLoader.exists(base + "_fond.png") and ResourceLoader.exists(base + "_sol.png"):
+		d["ambiance"] = cle
+	elif DECORS_EMPRUNTES.has(cle):
+		d["ambiance"] = int(DECORS_EMPRUNTES[cle])
+		d["emprunte"] = true
+		base = "res://assets/combat3d/acte_%02d" % int(d["ambiance"])
+	if ResourceLoader.exists(base + "_fond.png") and ResourceLoader.exists(base + "_sol.png"):
+		d["fond"] = base + "_fond.png"
+		d["sol"] = base + "_sol.png"
+		d["coupe"] = COUPES_3D.get(d["ambiance"], 0.72) if d["ambiance"] is int else COUPES_MODES.get(cle, 0.72)
+	return d
+
+
 func _creer_fond() -> void:
 	var noir := ColorRect.new()
 	noir.color = Color("0e0a0b")
@@ -173,11 +226,11 @@ func _creer_fond() -> void:
 		noir.color = Color("#" + str(Donjons.DONJONS[demande.get("donjon", "feu")]["couleur"])).darkened(0.88)
 	if _c3d != null:
 		add_child(_c3d)
-		# Décor fait pour la 3D (toile de fond + sol raccordable), s'il existe pour cet Acte
-		var d3 := "res://assets/combat3d/acte_%02d" % int(demande.get("acte", 1))
-		if _mode == "aventure" and ResourceLoader.exists(d3 + "_fond.png") and ResourceLoader.exists(d3 + "_sol.png"):
-			_c3d.construire(d3 + "_fond.png", noir.color, d3 + "_sol.png", COUPES_3D.get(int(demande.get("acte", 1)), 0.72))
-			Enregistreur.note("Affichage 3D · décor 3D de l'Acte : %s" % d3.get_file(), "COMBAT")
+		# Décor fait pour la 3D (toile de fond + sol raccordable) : celui du mode, ou celui d'un Acte emprunté
+		if _decor.has("fond"):
+			_c3d.construire(_decor["fond"], noir.color, _decor["sol"], float(_decor["coupe"]))
+			Enregistreur.note("Affichage 3D · décor 3D : %s%s" % [str(_decor["fond"]).get_file().trim_suffix("_fond.png"),
+				" (emprunté pour « %s »)" % _decor["cle"] if _decor["emprunte"] else ""], "COMBAT")
 		else:
 			_c3d.construire(chemin, noir.color)
 			Enregistreur.note("Affichage 3D · décor de secours : %s" % chemin.get_file(), "COMBAT")
