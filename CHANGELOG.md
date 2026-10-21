@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.75.1** (2026-10-21)
+Version actuelle : **0.75.2** (2026-10-21)
+
+## v0.75.2 — Les treize champs de bataille  (2026-10-21)
+
+- COMBATS EN 3D, ACTES VII À XIII : tous les Actes ont maintenant leur décor peint pour la 3D : le Marais aux Murmures et son trône de ronces (VII), le bastion en flammes sous l'éclipse de sang (VIII), le Val des Héros Déchus et son mausolée doré (IX), la Citadelle des Supplices et sa porte rougeoyante (X), les Champs du Jugement sous le ciel coupé en deux, bleu et rouge (XI), le Trône de Cendres sous l'éclipse (XII) et, pour l'Acte caché, l'intérieur du Sceau des Frères, moitié cristal bleu, moitié cristal rouge (XIII).
+- AMBIANCE : la brume des Actes VII, IX, X et XI prend la couleur de leur nouveau décor ; le sol ne paraît plus délavé par rapport au fond.
 
 ## v0.75.1 — Cinq nouveaux champs de bataille  (2026-10-21)
 

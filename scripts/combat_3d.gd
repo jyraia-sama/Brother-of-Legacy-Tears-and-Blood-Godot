@@ -41,11 +41,11 @@ const AMBIANCES := {
 	4: {"meteo": "lucioles", "amb": Color(0.45, 0.62, 0.6), "torche": Color(0.4, 1.0, 0.8), "sat": 0.95, "contraste": 1.06, "brume": 0.009, "c_brume": Color(0.1, 0.28, 0.25)},
 	5: {"meteo": "cendres", "amb": Color(0.68, 0.52, 0.45), "torche": Color(1.0, 0.45, 0.2), "sat": 1.08, "contraste": 1.1, "brume": 0.0},
 	6: {"meteo": "neige", "amb": Color(0.62, 0.66, 0.78), "torche": Color(0.75, 0.85, 1.0), "sat": 0.75, "contraste": 1.04, "brume": 0.0135, "c_brume": Color(0.3, 0.32, 0.4)},
-	7: {"meteo": "spores", "amb": Color(0.5, 0.65, 0.48), "torche": Color(0.6, 1.0, 0.45), "sat": 0.95, "contraste": 1.06, "brume": 0.0113, "c_brume": Color(0.12, 0.25, 0.12)},
+	7: {"meteo": "spores", "amb": Color(0.5, 0.65, 0.48), "torche": Color(0.6, 1.0, 0.45), "sat": 0.95, "contraste": 1.06, "brume": 0.0113, "c_brume": Color(0.06, 0.1, 0.06), "sol": Color(0.9, 0.82, 1.0)},
 	8: {"meteo": "cendres_rouges", "amb": Color(0.72, 0.45, 0.45), "torche": Color(1.0, 0.25, 0.2), "sat": 1.15, "contraste": 1.12, "brume": 0.0},
-	9: {"meteo": "poussiere_or", "amb": Color(0.66, 0.58, 0.62), "torche": Color(1.0, 0.7, 0.45), "sat": 0.9, "contraste": 1.05, "brume": 0.0135, "c_brume": Color(0.4, 0.32, 0.38)},
-	10: {"meteo": "cendres", "amb": Color(0.58, 0.58, 0.58), "torche": Color(1.0, 0.7, 0.5), "sat": 0.6, "contraste": 1.08, "brume": 0.0158, "c_brume": Color(0.35, 0.35, 0.36)},
-	11: {"meteo": "orage", "amb": Color(0.58, 0.48, 0.7), "torche": Color(0.8, 0.5, 1.0), "sat": 1.0, "contraste": 1.1, "brume": 0.009, "c_brume": Color(0.2, 0.12, 0.3)},
+	9: {"meteo": "poussiere_or", "amb": Color(0.66, 0.58, 0.62), "torche": Color(1.0, 0.7, 0.45), "sat": 0.9, "contraste": 1.05, "brume": 0.0135, "c_brume": Color(0.2, 0.13, 0.15)},
+	10: {"meteo": "cendres", "amb": Color(0.58, 0.58, 0.58), "torche": Color(1.0, 0.7, 0.5), "sat": 0.6, "contraste": 1.08, "brume": 0.0158, "c_brume": Color(0.17, 0.09, 0.08)},
+	11: {"meteo": "orage", "amb": Color(0.58, 0.48, 0.7), "torche": Color(0.8, 0.5, 1.0), "sat": 1.0, "contraste": 1.1, "brume": 0.009, "c_brume": Color(0.16, 0.1, 0.16), "sol": Color(0.72, 0.8, 0.68)},
 	12: {"meteo": "etincelles_or", "amb": Color(0.72, 0.58, 0.45), "torche": Color(1.0, 0.65, 0.25), "sat": 1.1, "contraste": 1.1, "brume": 0.0},
 	13: {"meteo": "etincelles_violettes", "amb": Color(0.6, 0.5, 0.72), "torche": Color(0.75, 0.45, 1.0), "sat": 1.05, "contraste": 1.1, "brume": 0.0},
 }
@@ -172,7 +172,9 @@ func construire(chemin_fond: String, teinte_nuit: Color, chemin_sol := "", coupe
 		ms.uv1_scale = Vector3(LARGEUR / TUILE_SOL, (Z_PRES - Z_FOND) / TUILE_SOL, 1)
 		ms.texture_repeat = true
 		ms.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
-		ms.albedo_color = Color(0.95, 0.88, 0.85)
+		# « sol » (AMBIANCES) : teinte du sol 3D pour qu'il garde la couleur du sol peint de la toile
+		# (la lumière et la brume de l'Acte l'éclaircissent ou le colorent sinon).
+		ms.albedo_color = Color(0.95, 0.88, 0.85) * (amb.get("sol", Color.WHITE) as Color)
 	elif tex:
 		ms.albedo_texture = tex
 		ms.uv1_scale = Vector3(1, 1.0 - COUPE, 1)

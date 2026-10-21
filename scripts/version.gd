@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.75.1"
+const NUMERO := "0.75.2"
 const DATE := "2026-10-21"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.75.2", "date": "2026-10-21", "titre": "Les treize champs de bataille",
+	"changements": [
+		"COMBATS EN 3D, ACTES VII À XIII : tous les Actes ont maintenant leur décor peint pour la 3D : le Marais aux Murmures et son trône de ronces (VII), le bastion en flammes sous l'éclipse de sang (VIII), le Val des Héros Déchus et son mausolée doré (IX), la Citadelle des Supplices et sa porte rougeoyante (X), les Champs du Jugement sous le ciel coupé en deux, bleu et rouge (XI), le Trône de Cendres sous l'éclipse (XII) et, pour l'Acte caché, l'intérieur du Sceau des Frères, moitié cristal bleu, moitié cristal rouge (XIII).",
+		"AMBIANCE : la brume des Actes VII, IX, X et XI prend la couleur de leur nouveau décor ; le sol ne paraît plus délavé par rapport au fond.",
+	]},
 	{"version": "0.75.1", "date": "2026-10-21", "titre": "Cinq nouveaux champs de bataille",
 	"changements": [
 		"COMBATS EN 3D, ACTES II À VI : chaque Acte a maintenant son décor peint spécialement pour la 3D, avec un sol net jusqu'aux pieds des figurines : la Cité en Deuil sous la pluie et ses lanternes (II), le camp des mercenaires au Drapeau Noir (III), le Sépulcre des Rois et son trône à la lueur verte (IV), les Terres Brûlées et le bûcher de l'Inquisiteur (V), la Forêt Pétrifiée et son lac de verre noir sous la lune (VI).",
