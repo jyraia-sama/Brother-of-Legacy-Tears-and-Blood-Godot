@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-19",
+	"date": "2026-10-21",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -10,6 +10,22 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"COMBATS EN 3D, ACTES VII À XIII : tous les Actes ont maintenant leur décor peint pour la 3D : le Marais aux Murmures et son trône de ronces (VII), le bastion en flammes sous l'éclipse de sang (VIII), le Val des Héros Déchus et son mausolée doré (IX), la Citadelle des Supplices et sa porte rougeoyante (X), les Champs du Jugement sous le ciel coupé en deux, bleu et rouge (XI), le Trône de Cendres sous l'éclipse (XII) et, pour l'Acte caché, l'intérieur du Sceau des Frères, moitié cristal bleu, moitié cristal rouge (XIII).",
+				"AMBIANCE : la brume des Actes VII, IX, X et XI prend la couleur de leur nouveau décor ; le sol ne paraît plus délavé par rapport au fond."
+			],
+			"titre": "Les treize champs de bataille",
+			"version": "0.75.2"
+		},
+		{
+			"changements": [
+				"COMBATS EN 3D, ACTES II À VI : chaque Acte a maintenant son décor peint spécialement pour la 3D, avec un sol net jusqu'aux pieds des figurines : la Cité en Deuil sous la pluie et ses lanternes (II), le camp des mercenaires au Drapeau Noir (III), le Sépulcre des Rois et son trône à la lueur verte (IV), les Terres Brûlées et le bûcher de l'Inquisiteur (V), la Forêt Pétrifiée et son lac de verre noir sous la lune (VI).",
+				"Les Actes VII à XIII gardent leur décor actuel en attendant le leur."
+			],
+			"titre": "Cinq nouveaux champs de bataille",
+			"version": "0.75.1"
+		},
 		{
 			"changements": [
 				"LE JEU SUR LINUX : Brothers of Legacy existe maintenant en application Linux (fichier BrothersOfLegacy-Linux.tar.gz dans la page de téléchargement). Elle se met à jour toute seule comme les versions Windows et Mac, et ta partie te suit grâce à ton compte.",
@@ -114,28 +130,13 @@
 			],
 			"titre": "Récapitulatif de combat et tri par classe",
 			"version": "0.70.0"
-		},
-		{
-			"changements": [
-				"RELIQUAIRE : nouveau bouton « ✦ Choisir les Échos à démanteler » dans l'Atelier d'Échos. Il montre tous tes Échos libres (toutes raretés), avec des filtres par rareté, set et emplacement, et leurs stats secondaires. Clique ceux à démanteler (ils passent en rouge) : le total de Poussière s'affiche, puis un seul bouton les démantèle. Une alerte prévient si la sélection contient des Échos Héroïques ou Légendaires. Les Échos équipés ou verrouillés restent toujours protégés.",
-				"MENU ADMIN : nouvel « 🎥 Enregistreur de partie » (outil pour le développeur). Une fois activé, il note les écrans ouverts, les boutons cliqués, les combats (équipe, ennemis, résultat) et toutes les erreurs du jeu, même dans la version publiée. Le bouton « 🐞 Marquer un bug » (ou la touche F8 sur PC, avec capture d'écran) ajoute un repère. Le journal se copie en un clic (ou s'enregistre / se télécharge) pour être transmis. Il est écrit au fur et à mesure : si le jeu plante, le journal du lancement précédent reste disponible. Aucune adresse e-mail n'y figure."
-			],
-			"titre": "Démantèlement au choix et enregistreur de partie",
-			"version": "0.69.0"
-		},
-		{
-			"changements": [
-				"CORRECTIF : dans le Deck, mettre ou retirer un héros de l'équipe faisait rétrécir puis réagrandir tout l'écran (effet de zoom). La fiche de droite garde maintenant toujours la même largeur ; ses boutons passent à la ligne s'ils manquent de place."
-			],
-			"titre": "Deck sans zoom",
-			"version": "0.68.6"
 		}
 	],
 	"pck": {
-		"sha256": "ae2c9826e27aa506969107b1c5aea8bfa99e1776232f5cc01f2881a684c29cbf",
-		"taille": 33415076,
+		"sha256": "6bf5fec12299c7e88558344725885e614e8b95dc1a09453b43e0f7685628c273",
+		"taille": 48998500,
 		"url": "jeu.pck"
 	},
-	"version": "0.75.0",
+	"version": "0.75.2",
 	"version_minimum": "0.37.0"
 }
