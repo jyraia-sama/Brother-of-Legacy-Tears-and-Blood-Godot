@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.75.0"
-const DATE := "2026-10-19"
+const NUMERO := "0.75.1"
+const DATE := "2026-10-21"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.75.1", "date": "2026-10-21", "titre": "Cinq nouveaux champs de bataille",
+	"changements": [
+		"COMBATS EN 3D, ACTES II À VI : chaque Acte a maintenant son décor peint spécialement pour la 3D, avec un sol net jusqu'aux pieds des figurines : la Cité en Deuil sous la pluie et ses lanternes (II), le camp des mercenaires au Drapeau Noir (III), le Sépulcre des Rois et son trône à la lueur verte (IV), les Terres Brûlées et le bûcher de l'Inquisiteur (V), la Forêt Pétrifiée et son lac de verre noir sous la lune (VI).",
+		"Les Actes VII à XIII gardent leur décor actuel en attendant le leur.",
+	]},
 	{"version": "0.75.0", "date": "2026-10-19", "titre": "Le jeu sur Linux",
 	"changements": [
 		"LE JEU SUR LINUX : Brothers of Legacy existe maintenant en application Linux (fichier BrothersOfLegacy-Linux.tar.gz dans la page de téléchargement). Elle se met à jour toute seule comme les versions Windows et Mac, et ta partie te suit grâce à ton compte.",

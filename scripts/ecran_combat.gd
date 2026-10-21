@@ -56,7 +56,7 @@ var barre_haut: HBoxContainer   # barre du haut (le combat classé y ajoute « A
 ## Combats en 2,5D (scène 3D + figurines) : modes concernés et scène 3D (null en 2D)
 const MODES_3D := ["aventure"]
 ## Hauteur (fraction de l'image) où commence le sol peint de chaque toile de fond 3D
-const COUPES_3D := {1: 0.72}
+const COUPES_3D := {1: 0.72, 2: 0.76, 3: 0.69, 4: 0.74, 5: 0.72, 6: 0.73}
 var _c3d: Combat3D = null
 ## Combats jouables à la main (les Boss de Monde, l'Arène et la Guerre restent automatiques ;
 ## l'Arène classée est toujours manuelle, gérée par combat_classe.gd)

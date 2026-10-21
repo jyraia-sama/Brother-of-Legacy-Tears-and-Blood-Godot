@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.75.0** (2026-10-19)
+Version actuelle : **0.75.1** (2026-10-21)
+
+## v0.75.1 — Cinq nouveaux champs de bataille  (2026-10-21)
+
+- COMBATS EN 3D, ACTES II À VI : chaque Acte a maintenant son décor peint spécialement pour la 3D, avec un sol net jusqu'aux pieds des figurines : la Cité en Deuil sous la pluie et ses lanternes (II), le camp des mercenaires au Drapeau Noir (III), le Sépulcre des Rois et son trône à la lueur verte (IV), les Terres Brûlées et le bûcher de l'Inquisiteur (V), la Forêt Pétrifiée et son lac de verre noir sous la lune (VI).
+- Les Actes VII à XIII gardent leur décor actuel en attendant le leur.
 
 ## v0.75.0 — Le jeu sur Linux  (2026-10-19)
 
