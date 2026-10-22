@@ -59,6 +59,7 @@ var camera_libre := false
 var _temps := 0.0
 var _plongee := false
 var _bornes := Rect2()
+var _bornes_vues := Rect2()     # partie découverte du chapitre (cadrage de la vue Carte)
 
 
 func _init() -> void:
@@ -429,6 +430,18 @@ func _creer_pion() -> void:
 
 ## reveles / visites / termines : dictionnaires d'ids ; accessibles : cases où l'on peut aller.
 func maj(courant: int, reveles: Dictionary, visites: Dictionary, termines: Dictionary, accessibles: Array) -> void:
+	var premier := true
+	for id in reveles:
+		if id == _boss and not _voisin_de(id, visites):
+			continue
+		var p3 := pos(id)
+		var p2 := Vector2(p3.x, p3.z)
+		if premier:
+			_bornes_vues = Rect2(p2, Vector2.ZERO)
+			premier = false
+		else:
+			_bornes_vues = _bornes_vues.expand(p2)
+	_bornes_vues = _bornes_vues.grow(3.0)
 	for id in _cases:
 		var c: Dictionary = _cases[id]
 		var visible := reveles.has(id)
@@ -590,10 +603,12 @@ func _tourner_vers(n: Node3D, cam: Vector3) -> void:
 
 func _maj_camera(_delta: float) -> void:
 	if _vue_carte:
-		var c := _bornes.get_center()
-		var h := maxf(_bornes.size.x * 0.55, 22.0)
+		var c := _bornes_vues.get_center()
+		# Assez haut pour voir tout le chapitre (longueur et largeur), légèrement incliné
+		var aspect := size.x / maxf(1.0, size.y)
+		var h := maxf(maxf(_bornes_vues.size.x * 0.95 / aspect, _bornes_vues.size.y * 1.25), 18.0)
 		var but := Vector3(c.x, 0, c.y)
-		_camera.position = _camera.position.lerp(but + Vector3(-h * 0.15, h, h * 0.55), 0.12)
+		_camera.position = _camera.position.lerp(but + Vector3(0, h, h * 0.42), 0.12)
 		_camera.look_at(but, Vector3.UP)
 		return
 	var d := Vector3(-6.2, 4.6, 6.4) * _zoom
