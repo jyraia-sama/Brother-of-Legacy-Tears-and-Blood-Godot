@@ -54,8 +54,8 @@ var _lbl_geant: Label
 var _idx_geant := -1
 var barre_haut: HBoxContainer   # barre du haut (le combat classé y ajoute « Abandonner »)
 ## Combats en 2,5D (scène 3D + figurines) : modes concernés et scène 3D (null en 2D).
-## Le Boss de Monde (20 héros contre un géant) reste en 2D.
-const MODES_3D := ["aventure", "tour", "donjon", "marche", "sanctuaire", "arene", "classee", "guerre", "guerre_revoir"]
+## Boss de Monde : 20 héros (4 escouades) en formation devant le géant (FORMATION_GEANT).
+const MODES_3D := ["aventure", "tour", "donjon", "marche", "sanctuaire", "arene", "classee", "guerre", "guerre_revoir", "boss_monde"]
 ## Hauteur (fraction de l'image) où commence le sol peint de chaque toile de fond 3D
 const COUPES_3D := {1: 0.72, 2: 0.76, 3: 0.69, 4: 0.74, 5: 0.72, 6: 0.73, 7: 0.75, 8: 0.71, 9: 0.70, 10: 0.70, 11: 0.70, 12: 0.71, 13: 0.72}
 ## DÉCORS 3D DES AUTRES MODES : chaque décor a sa clé (assets/combat3d/<clé>_fond.png + <clé>_sol.png).
@@ -66,7 +66,12 @@ const DECORS_EMPRUNTES := {
 	"donjon_feu": 5, "donjon_nature": 7, "donjon_eau": 2, "donjon_tenebres": 4,
 	"donjon_sacre": 9, "donjon_neutre": 8, "donjon_savoir": 4,
 	"sanctuaire": 13, "arene": 3, "guerre": 8,
+	# Boss de Monde (prototype) : décor d'Acte ou de mode le plus proche de chaque géant
+	"boss_behemoth_cendres": 5, "boss_leviathan_noir": "donjon_eau", "boss_yggdravor": "donjon_nature",
+	"boss_golgoth": "donjon_neutre", "boss_solgard": "tour_paradis", "boss_nidhogr": 13, "boss_avatar_sang": 8,
 }
+## Boss de Monde en 3D : taille des héros par rapport à l'Aventure (20 héros doivent tenir dans le cadre)
+const ECHELLE_HEROS_GEANT := 0.72
 ## Coupe des décors des modes (à régler quand chaque décor arrive ; 0.72 par défaut)
 const COUPES_MODES := {"arene": 0.73, "donjon_eau": 0.72, "donjon_feu": 0.73, "donjon_nature": 0.71, "donjon_neutre": 0.74, "donjon_sacre": 0.73,
 	"donjon_savoir": 0.75, "donjon_tenebres": 0.76, "guerre": 0.70, "sanctuaire": 0.73, "tour_enfer": 0.74, "tour_paradis": 0.73}
@@ -119,6 +124,8 @@ func _ready() -> void:
 		_decor = _decor_3d()
 		_c3d.acte = _decor["ambiance"]
 		_c3d.camera_cinema = bool(Sauvegarde.get_parametre("camera_cinema", false))
+		if _mode == "boss_monde":
+			_c3d.echelle_unites = ECHELLE_HEROS_GEANT
 	_creer_fond()
 	_creer_interface()
 
@@ -179,6 +186,8 @@ func _cle_decor() -> String:
 			return "arene"
 		"guerre", "guerre_revoir":
 			return "guerre"
+		"boss_monde":
+			return "boss_" + str(demande["ennemis"][0]["id"])
 	return "acte_%02d" % int(demande.get("acte", 1))
 
 
@@ -193,13 +202,14 @@ func _decor_3d() -> Dictionary:
 	elif ResourceLoader.exists(base + "_fond.png") and ResourceLoader.exists(base + "_sol.png"):
 		d["ambiance"] = cle
 	elif DECORS_EMPRUNTES.has(cle):
-		d["ambiance"] = int(DECORS_EMPRUNTES[cle])
+		var e: Variant = DECORS_EMPRUNTES[cle]
+		d["ambiance"] = e if e is String else int(e)
 		d["emprunte"] = true
-		base = "res://assets/combat3d/acte_%02d" % int(d["ambiance"])
+		base = "res://assets/combat3d/" + (str(e) if e is String else "acte_%02d" % int(e))
 	if ResourceLoader.exists(base + "_fond.png") and ResourceLoader.exists(base + "_sol.png"):
 		d["fond"] = base + "_fond.png"
 		d["sol"] = base + "_sol.png"
-		d["coupe"] = COUPES_3D.get(d["ambiance"], 0.72) if d["ambiance"] is int else COUPES_MODES.get(cle, 0.72)
+		d["coupe"] = COUPES_3D.get(d["ambiance"], 0.72) if d["ambiance"] is int else COUPES_MODES.get(str(d["ambiance"]), 0.72)
 	return d
 
 
@@ -260,7 +270,7 @@ func _creer_interface() -> void:
 	_arene.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_arene)
 
-	for camp in ([] if _mode == "boss_monde" else [0, 1]):
+	for camp in ([] if _mode == "boss_monde" or _c3d != null else [0, 1]):
 		for ligne in [["AVANT", 0.36 if camp == 0 else 0.64], ["ARRIÈRE", 0.14 if camp == 0 else 0.86]]:
 			var l := _label(ligne[0], 14, Color(1, 1, 1, 0.35))
 			l.anchor_left = ligne[1]
@@ -271,7 +281,7 @@ func _creer_interface() -> void:
 			l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			_arene.add_child(l)
 
-	if _mode == "boss_monde":
+	if _mode == "boss_monde" and _c3d == null:
 		for k in 4:
 			var le := _label(UiCommun.t("ESCOUADE %d") % (k + 1), 13, Color(1, 1, 1, 0.4))
 			le.anchor_left = 0.005
@@ -431,8 +441,22 @@ const FORMATION_3D := {
 }
 
 
+## BOSS DE MONDE EN 2,5D : le géant au fond à droite ; les 4 escouades sur 4 rangs de profondeur à
+## gauche (escouade 1 au fond, 4 devant). Dans chaque rang : 3 places d'Arrière puis 2 d'Avant (vers le
+## géant), et un rang sur deux décalé d'une demi-place pour qu'aucune figurine n'en cache une autre.
+const GEANT_3D := Vector2(0.74, 0.34)
+const RANGS_GEANT := [0.30, 0.47, 0.64, 0.81]
+const COLONNES_GEANT := [0.05, 0.13, 0.21, 0.32, 0.40]
+
+
 ## Position (fraction de l'écran) d'une unité dans la scène 2,5D, d'après FORMATION_3D.
 func _position_3d(camp: int, place: int) -> Vector2:
+	if _mode == "boss_monde":
+		if camp == 1:
+			return GEANT_3D
+		var esc := clampi(int(place / 5.0), 0, 3)
+		var x: float = COLONNES_GEANT[place % 5] + (0.04 if esc % 2 == 1 else 0.0)
+		return Vector2(x, RANGS_GEANT[esc])
 	if mon_camp() == 1:
 		camp = 1 - camp
 	var f: Vector2 = FORMATION_3D.get(place, FORMATION_3D[3])
@@ -523,7 +547,7 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 	racine.add_child(nom)
 
 	# Figurine (pion) de l'unité si elle existe : elle remplace le portrait rond
-	var fig := "" if petit else UiCommun.chemin_figurine(info["id"])
+	var fig := "" if petit and _c3d == null else UiCommun.chemin_figurine(info["id"])
 	if fig != "":
 		var h_fig := HAUTEUR_FIGURINE_BOSS if grand else HAUTEUR_FIGURINE
 		if geant:
@@ -533,12 +557,12 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 		racine.size = racine.custom_minimum_size
 		var socle_fig := _creer_figurine(fig, u, h_fig, largeur, info["camp"] != mon_camp())
 		racine.add_child(socle_fig["zone"])
-		var barre_f := _barre(Color("c0392b") if info["camp"] != mon_camp() else Color("3fae5a"), 150.0, 12.0)
+		var barre_f := _barre(Color("c0392b") if info["camp"] != mon_camp() else Color("3fae5a"), 70.0 if petit else 150.0, 7.0 if petit else 12.0)
 		barre_f.max_value = info["pv_max"]
 		barre_f.value = info["pv"]
 		barre_f.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		racine.add_child(barre_f)
-		var bouclier_f := _barre(Color("6ab0ff"), 150.0, 5.0)
+		var bouclier_f := _barre(Color("6ab0ff"), 70.0 if petit else 150.0, 3.0 if petit else 5.0)
 		bouclier_f.max_value = info["pv_max"]
 		bouclier_f.value = 0
 		bouclier_f.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -546,6 +570,10 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 		var pv_f := _label("%d / %d" % [info["pv"], info["pv_max"]], 12, C_DOUX)
 		pv_f.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		racine.add_child(pv_f)
+		if petit:
+			# Boss de Monde en 3D : 20 héros, on ne garde que leur petite barre de vie
+			nom.visible = false
+			pv_f.visible = false
 		if geant:
 			# Boss de Monde : sa grande barre de vie est en haut de l'écran
 			barre_f.visible = false

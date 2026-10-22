@@ -73,6 +73,7 @@ var _env: Environment
 var vitesse := 1.0
 var acte: Variant = 1           # ambiance : numéro d'Acte ou clé de décor d'un mode (à régler avant construire)
 var camera_cinema := false      # ralenti et rapprochement sur les moments forts
+var echelle_unites := 1.0        # taille des figurines (hors géant) : < 1 au Boss de Monde (20 héros)
 var _n_poses := 0
 
 
@@ -471,6 +472,7 @@ func ajouter(idx: int, chemin_figurine: String, frac: Vector2, boss: bool, geant
 	var ratio := float(tex.get_width()) / float(tex.get_height())
 	if not geant:
 		h = minf(h, h * LARGEUR_MAX / maxf(0.01, h * ratio))
+		h *= echelle_unites
 	var largeur := h * ratio
 	var pos := _pos_unite(frac, largeur)
 	var rayon := clampf(largeur * 0.42, 0.55, 2.4 if geant else 1.15)
