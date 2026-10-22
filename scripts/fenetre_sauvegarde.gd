@@ -114,7 +114,7 @@ func _ready() -> void:
 	vb.add_child(_label("Astuce : sur téléphone, un appui long sur une image l'affiche en grand.", 15, Color(0.75, 0.68, 0.6)))
 	var c3 := CheckBox.new()
 	UiCommun.habiller_case(c3)
-	c3.text = "Combats en 3D (décoche si ton téléphone chauffe ou ralentit)"
+	c3.text = "Combats et plateaux en 3D (décoche si ton téléphone chauffe ou ralentit)"
 	c3.focus_mode = Control.FOCUS_NONE
 	c3.add_theme_font_size_override("font_size", 17)
 	c3.button_pressed = bool(Sauvegarde.get_parametre("combats_3d", true))

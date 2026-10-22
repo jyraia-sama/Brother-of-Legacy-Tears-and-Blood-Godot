@@ -1443,7 +1443,7 @@ const TEXTES := {
 	"Muet (coupe la musique et les bruitages)": "Mute (turns off music and sound effects)",
 	"AFFICHAGE": "DISPLAY",
 	"Taille de l'interface (« Très grande » conseillée sur téléphone) :": "Interface size (\"Very large\" recommended on phone):",
-	"Combats en 3D (décoche si ton téléphone chauffe ou ralentit)": "3D fights (uncheck if your phone heats up or slows down)",
+	"Combats et plateaux en 3D (décoche si ton téléphone chauffe ou ralentit)": "3D fights and boards (uncheck if your phone heats up or slows down)",
 	"Plein écran automatique au premier appui": "Automatic fullscreen on first tap",
 	"Plein écran automatique au premier clic": "Automatic fullscreen on first click",
 	"Plein écran (touche F11)": "Fullscreen (F11 key)",

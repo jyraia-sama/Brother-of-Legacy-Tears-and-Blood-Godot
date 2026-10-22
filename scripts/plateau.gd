@@ -102,6 +102,11 @@ var glisse := false
 var appui_pos := Vector2.ZERO
 
 var accent := Color.WHITE
+## Plateau en 3D (case « Combats et plateaux en 3D » des Paramètres) : affichage dans plateau_3d.gd
+var _p3d: Plateau3D = null
+var _etat_3d := ""
+var _btn_avancer: Button
+var _btn_carte: Button
 var police: Font
 
 # HUD
@@ -137,8 +142,14 @@ func _ready() -> void:
 		and int(retour_combat.get("chapitre", 0)) == chapitre and int(retour_combat.get("noeud", -1)) == courant
 	_maj_brouillard()
 
-	_creer_fond()
+	if bool(Sauvegarde.get_parametre("combats_3d", true)):
+		_creer_3d()
+	else:
+		_creer_fond()
 	_creer_calques()
+	if _p3d != null:
+		_sous.visible = false
+		_dessus.visible = false
 	camera = Camera2D.new()
 	add_child(camera)
 	camera.make_current()
@@ -232,6 +243,9 @@ func _reprendre_case() -> void:
 
 func _process(delta: float) -> void:
 	temps += delta
+	if _p3d != null:
+		_maj_3d()
+		return
 	_ecrase = maxf(0.0, _ecrase - delta * 5.0)
 	for i in range(_poussiere.size() - 1, -1, -1):
 		var d: Dictionary = _poussiere[i]
@@ -270,9 +284,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			_retour()
 		elif event.keycode == KEY_SPACE:
 			camera_libre = false
+			if _p3d != null:
+				_p3d.recentrer()
+		elif _p3d != null and event.keycode in [KEY_ENTER, KEY_KP_ENTER, KEY_RIGHT, KEY_UP]:
+			_avancer()
 		return
 
 	if bloque:
+		return
+
+	if _p3d != null:
+		_entree_3d(event)
 		return
 
 	if event is InputEventMouseButton:
@@ -313,7 +335,10 @@ func _zoom(facteur: float) -> void:
 # ---------------------------------------------------------------
 
 func _clic(p: Vector2) -> void:
-	var id := _noeud_a(p)
+	_clic_id(_noeud_a(p))
+
+
+func _clic_id(id: int) -> void:
 	if id < 0 or en_mouvement:
 		return
 	if id == courant:
@@ -326,6 +351,25 @@ func _clic(p: Vector2) -> void:
 		if PlateauGenerateur.est_combat(int(noeuds[id]["type"])) and not _assez_de_stamina(id):
 			return
 		_deplacer(id)
+
+
+## Bouton « Avancer » (et touche Entrée) : s'il n'y a qu'une route, on la prend.
+func _avancer() -> void:
+	if en_mouvement or bloque:
+		return
+	var choix := _accessibles()
+	if choix.size() == 1:
+		_clic_id(choix[0])
+	elif choix.is_empty() and PlateauGenerateur.est_combat(int(noeuds[courant]["type"])) and not termines.has(courant):
+		_clic_id(courant)
+
+
+func _accessibles() -> Array:
+	var r: Array = []
+	for v in noeuds[courant]["voisins"]:
+		if _accessible(v):
+			r.append(v)
+	return r
 
 
 ## Règle de déplacement : on avance seulement vers une case voisine NON terminée
@@ -372,10 +416,17 @@ func _rebrousser(etapes: Array) -> void:
 	camera_libre = false
 	var tw := create_tween()
 	var a := pion_pos
+	var de := courant
 	for id in etapes:
 		var b := _pos(id)
-		tw.tween_method(_anim_pion.bind(a, b), 0.0, 1.0, 0.3).set_trans(Tween.TRANS_SINE)
+		if _p3d != null:
+			tw.tween_method(_p3d.marcher.bind(de, id), 0.0, 1.0, _p3d.duree_marche(de, id) * 0.75)
+			de = id
+		else:
+			tw.tween_method(_anim_pion.bind(a, b), 0.0, 1.0, 0.3).set_trans(Tween.TRANS_SINE)
 		a = b
+	if _p3d != null:
+		pion_pos = a
 	var fin: int = etapes[-1]
 	tw.finished.connect(func():
 		courant = fin
@@ -394,7 +445,12 @@ func _deplacer(id: int, apres_defaite := false) -> void:
 	var a := pion_pos
 	var b := _pos(id)
 	var tw := create_tween()
-	tw.tween_method(_anim_pion.bind(a, b), 0.0, 1.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	if _p3d != null:
+		_p3d.recentrer()
+		tw.tween_method(_p3d.marcher.bind(courant, id), 0.0, 1.0, _p3d.duree_marche(courant, id))
+		pion_pos = b
+	else:
+		tw.tween_method(_anim_pion.bind(a, b), 0.0, 1.0, 0.38).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tw.finished.connect(_arrivee.bind(id, apres_defaite))
 
 
@@ -570,6 +626,9 @@ func _lancer_combat(id: int, gratuit := false) -> void:
 		"equipe": equipe,
 		"ennemis": Rencontres.generer(acte, chapitre, n),
 	}
+	if _p3d != null:
+		bloque = true
+		await _p3d.plongee(id)
 	get_tree().change_scene_to_file(EcranCombat.SCENE)
 
 
@@ -735,7 +794,10 @@ func _noeud_a(p: Vector2) -> int:
 
 
 func _maj_survol(p: Vector2) -> void:
-	var id := _noeud_a(p)
+	_maj_survol_id(_noeud_a(p))
+
+
+func _maj_survol_id(id: int) -> void:
 	if id == survol:
 		return
 	survol = id
@@ -767,6 +829,8 @@ func _maj_survol(p: Vector2) -> void:
 # ---------------------------------------------------------------
 
 func _draw() -> void:
+	if _p3d != null:
+		return
 	# DÉCOR FIXE : chemins pavés et cases (redessiné seulement quand il change, voir _process)
 	for n in noeuds:
 		var a: int = n["id"]
@@ -1231,12 +1295,38 @@ func _creer_hud() -> void:
 	var centrer := Button.new()
 	centrer.text = "Recentrer"
 	centrer.focus_mode = Control.FOCUS_NONE
-	centrer.pressed.connect(func(): camera_libre = false)
+	centrer.pressed.connect(func():
+		camera_libre = false
+		if _p3d != null:
+			_p3d.recentrer())
 	ligne.add_child(centrer)
+
+	if _p3d != null:
+		_btn_carte = Button.new()
+		_btn_carte.text = "Carte"
+		_btn_carte.focus_mode = Control.FOCUS_NONE
+		_btn_carte.tooltip_text = "Voir tout le chapitre d'en haut"
+		_btn_carte.pressed.connect(func(): _btn_carte.text = "Retour au héros" if _p3d.basculer_carte() else "Carte")
+		ligne.add_child(_btn_carte)
+		# Gros bouton « Avancer » en bas au centre (une seule route) ; flèches au sol aux embranchements
+		_btn_avancer = Button.new()
+		_btn_avancer.text = "Avancer  ▶"
+		_btn_avancer.focus_mode = Control.FOCUS_NONE
+		_btn_avancer.add_theme_font_size_override("font_size", 26)
+		_btn_avancer.custom_minimum_size = Vector2(230, 64)
+		_btn_avancer.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+		_btn_avancer.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		_btn_avancer.grow_vertical = Control.GROW_DIRECTION_BEGIN
+		_btn_avancer.offset_bottom = -46
+		_btn_avancer.pressed.connect(_avancer)
+		_btn_avancer.visible = false
+		hud.add_child(_btn_avancer)
 
 	# Aide en bas
 	var aide := Label.new()
 	aide.text = "Clique sur une case qui brille pour avancer  ·  Glisse pour regarder  ·  Molette : zoom  ·  Espace : recentrer"
+	if _p3d != null:
+		aide.text = "Touche une flèche dorée (ou « Avancer ») pour marcher  ·  Glisse pour regarder  ·  Molette : zoom"
 	aide.add_theme_color_override("font_color", Color(1, 0.9, 0.8, 0.7))
 	aide.add_theme_color_override("font_outline_color", Color.BLACK)
 	aide.add_theme_constant_override("outline_size", 5)
@@ -1324,3 +1414,72 @@ func _label(taille: int, couleur: Color) -> Label:
 	if taille >= 24:
 		UiCommun.titre(l)
 	return l
+
+
+# ---------------------------------------------------------------
+# Plateau en 3D
+# ---------------------------------------------------------------
+
+func _creer_3d() -> void:
+	var couche := CanvasLayer.new()
+	couche.layer = -10
+	add_child(couche)
+	_p3d = Plateau3D.new()
+	couche.add_child(_p3d)
+	# Sur les cases de combat, on voit l'ennemi le plus fort qui attend
+	var figurines := {}
+	for n in noeuds:
+		if not PlateauGenerateur.est_combat(int(n["type"])) or n["type"] == T.DEPART:
+			continue
+		var ens: Array = Rencontres.generer(acte, chapitre, n)
+		if ens.is_empty():
+			continue
+		var choix: Dictionary = ens[0]
+		for e in ens:
+			if bool(e.get("boss", false)):
+				choix = e
+				break
+		figurines[n["id"]] = UiCommun.chemin_figurine(str(choix["id"]))
+	_p3d.construire(acte, noeuds, courant, plateau["boss"], figurines, accent)
+
+
+func _maj_3d() -> void:
+	var acc: Array = [] if (en_mouvement or bloque) else _accessibles()
+	var etat := "%d|%d|%d|%d|%s" % [courant, reveles.size(), visites.size(), termines.size(), str(acc)]
+	if etat != _etat_3d:
+		_etat_3d = etat
+		_p3d.maj(courant, reveles, visites, termines, acc)
+	if _btn_avancer:
+		var combat_en_attente: bool = PlateauGenerateur.est_combat(int(noeuds[courant]["type"])) and not termines.has(courant) \
+			and courant != plateau.get("depart", -1)
+		_btn_avancer.visible = not en_mouvement and not bloque and (acc.size() == 1 or (acc.is_empty() and combat_en_attente))
+		_btn_avancer.text = "Combattre  ⚔" if acc.is_empty() else "Avancer  ▶"
+
+
+func _entree_3d(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		if mb.button_index == MOUSE_BUTTON_LEFT:
+			if mb.pressed:
+				appui = true
+				glisse = false
+				appui_pos = mb.position
+			else:
+				if appui and not glisse:
+					_clic_id(_p3d.noeud_a_ecran(mb.position, reveles))
+				appui = false
+				glisse = false
+		elif mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_p3d.zoomer(1.1)
+		elif mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_p3d.zoomer(1.0 / 1.1)
+	elif event is InputEventMouseMotion:
+		var mm := event as InputEventMouseMotion
+		if appui and (mm.position - appui_pos).length() > 12.0:
+			glisse = true
+		if glisse:
+			_p3d.glisser(mm.relative)
+		else:
+			_maj_survol_id(_p3d.noeud_a_ecran(mm.position, reveles))
+	elif event is InputEventMagnifyGesture:
+		_p3d.zoomer((event as InputEventMagnifyGesture).factor)
