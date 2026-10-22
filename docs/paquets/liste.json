@@ -84,21 +84,21 @@
 		{
 			"depuis": "0.76.1",
 			"fichier": "decors3d_0.pck",
-			"images": 26,
+			"images": 26.0,
 			"nom": "decors3d_0",
 			"sha256": "b1f74d288ea60fb079f2af7bd88ba14489226235c2910d885ace16e1ea8a0e04",
 			"signature": "5ca35f6e1c139014f42ca75ed1597578005c9ead443f6c5d3c242f67c81d55dc",
-			"taille": 38096444
+			"taille": 38096444.0
 		},
 		{
 			"depuis": "0.76.1",
 			"fichier": "decors3d_1.pck",
-			"images": 24,
+			"images": 24.0,
 			"nom": "decors3d_1",
 			"sha256": "fdf4cd0c232e7ac919e4f5ea27003fd614d66f811afedc7d5caa802f56a7cbd0",
 			"signature": "ca09e13970bcc06c55f044ff79fa1a3b6418b52d5b45aa3b2d24fd4e618fba81",
-			"taille": 30303144
+			"taille": 30303144.0
 		}
 	],
-	"version": "0.76.1"
+	"version": "0.77.0"
 }

@@ -12,6 +12,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"BOSS DE MONDE EN 3D : le géant se dresse au milieu du champ de bataille, face à tes 4 escouades rangées sur 4 rangs (escouade 1 au fond, escouade 4 devant). Chaque héros a sa figurine sur son socle, avec une petite barre de vie ; la grande barre du géant reste en haut de l'écran.",
+				"En attendant leurs propres décors, les géants combattent dans le décor le plus proche : le Béhémoth dans les Terres Brûlées, le Léviathan dans les Fosses Englouties, Yggdravor dans la Sylve Putride, Golgoth au Puits de Sang, Solgard au Paradis, Nidhögr dans le Sceau des Frères et l'Avatar du Sang dans le bastion de l'éclipse.",
+				"Si le combat ralentit sur ton téléphone, décoche « Combats en 3D » dans les Paramètres pour revenir au Boss de Monde en 2D."
+			],
+			"titre": "Les géants en 3D",
+			"version": "0.77.0"
+		},
+		{
+			"changements": [
 				"DÉCORS 3D DES MODES : chaque mode a maintenant son propre décor peint, avec un sol net jusqu'aux pieds des figurines : la Tour de l'Enfer et son portail en gueule au-dessus de la lave, la Tour du Paradis et son escalier vers la lumière au-dessus des nuages, le Brasier Éternel et son enclume géante, la Sylve Putride et son arbre-mère suintant, les Fosses Englouties et leur temple turquoise, la Crypte sans Lune et sa sphère de ténèbres, le Sanctuaire Profané et son ange brisé, le Puits de Sang et ses cascades rouges, la Bibliothèque Interdite et son grimoire enchaîné, le Sanctuaire du Bélier et sa tête de bélier dorée, l'Arène sous la lune et la forteresse assiégée de la Guerre des Bannières.",
 				"Ces décors remplacent les emprunts aux Actes de la version précédente. La Marche Maudite garde les décors de ses régions."
 			],
@@ -127,20 +136,13 @@
 			],
 			"titre": "Enregistreur : affichage des combats",
 			"version": "0.70.3"
-		},
-		{
-			"changements": [
-				"RÉCAPITULATIF DE COMBAT : quand il y a beaucoup d'informations, le butin passe sur deux colonnes (à gauche les RÉSULTATS : dégâts infligés, records, XP de l'armée et du compte… ; à droite le BUTIN : or, objets, Échos et le reste). Au Boss de Monde, les 20 héros s'affichent en cartes compactes sur 5 colonnes, sans ascenseur supplémentaire."
-			],
-			"titre": "Récapitulatif plus compact",
-			"version": "0.70.2"
 		}
 	],
 	"pck": {
-		"sha256": "63c49b95ca71d12c6e3c3e2212909ebd808c9be6bfdb065a872311407288a93e",
-		"taille": 32259236,
+		"sha256": "f4deda7f5a9b22389e62d4fd92486639b4d8f8792a719e12fb82515d01c7e5ea",
+		"taille": 32255428,
 		"url": "jeu.pck"
 	},
-	"version": "0.76.1",
+	"version": "0.77.0",
 	"version_minimum": "0.37.0"
 }
