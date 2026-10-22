@@ -3,29 +3,29 @@
 		{
 			"depuis": "0.77.5",
 			"fichier": "figurines_0.pck",
-			"images": 75,
+			"images": 75.0,
 			"nom": "figurines_0",
 			"sha256": "a5a17c27eef1ed378e754472b3f0d14b5c6f9e97120a05820f9d34927b344c90",
 			"signature": "bd47d77af6252eb688a1fb3b99723cdc652aa46427651a183a2086c58895b165",
-			"taille": 18571596
+			"taille": 18571596.0
 		},
 		{
 			"depuis": "0.77.5",
 			"fichier": "figurines_1.pck",
-			"images": 70,
+			"images": 70.0,
 			"nom": "figurines_1",
 			"sha256": "99dcf35a03bbfee6c1cc0fb0d2659a11be2f280b9c7ce370f26d69b17eca5ff9",
 			"signature": "3ad72c517aa4416b92912584ca60d8af2e0da126854cc3ba4a601d27ebb07178",
-			"taille": 14651756
+			"taille": 14651756.0
 		},
 		{
 			"depuis": "0.77.5",
 			"fichier": "figurines_2.pck",
-			"images": 82,
+			"images": 82.0,
 			"nom": "figurines_2",
 			"sha256": "069ccba5799157108456e2af1b76342799492f0e109b383ab5c95392366d04b4",
 			"signature": "de3019ce7fc7afead32acb595a1e5fa4e231358207bce2a53918e0633f9db6ba",
-			"taille": 18776768
+			"taille": 18776768.0
 		},
 		{
 			"depuis": "0.77.4",
@@ -39,20 +39,20 @@
 		{
 			"depuis": "0.77.5",
 			"fichier": "portraits_0.pck",
-			"images": 158,
+			"images": 158.0,
 			"nom": "portraits_0",
 			"sha256": "c78c0ef3ce6e05da2acd16e1c7dea98087159d0b41bb094a4064b52011b43ea7",
 			"signature": "09e8fda1ce70774f7bc1e4bd6b4a4eefe3d18bb5a1eb36c6683e6e47381cd08f",
-			"taille": 15006656
+			"taille": 15006656.0
 		},
 		{
 			"depuis": "0.77.5",
 			"fichier": "portraits_1.pck",
-			"images": 149,
+			"images": 149.0,
 			"nom": "portraits_1",
 			"sha256": "7eba181e017878bd39ee52814b4decc64b4c60c3e16b472775f3687a35ac82d6",
 			"signature": "bacc3c399c8fcf588801dde43fefaaa31212294001b6a974fb5231f30d0b7b66",
-			"taille": 12727064
+			"taille": 12727064.0
 		},
 		{
 			"depuis": "0.60.7",
