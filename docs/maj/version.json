@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-21",
+	"date": "2026-10-22",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -10,6 +10,14 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"DÉCORS 3D DES MODES : chaque mode a maintenant son propre décor peint, avec un sol net jusqu'aux pieds des figurines : la Tour de l'Enfer et son portail en gueule au-dessus de la lave, la Tour du Paradis et son escalier vers la lumière au-dessus des nuages, le Brasier Éternel et son enclume géante, la Sylve Putride et son arbre-mère suintant, les Fosses Englouties et leur temple turquoise, la Crypte sans Lune et sa sphère de ténèbres, le Sanctuaire Profané et son ange brisé, le Puits de Sang et ses cascades rouges, la Bibliothèque Interdite et son grimoire enchaîné, le Sanctuaire du Bélier et sa tête de bélier dorée, l'Arène sous la lune et la forteresse assiégée de la Guerre des Bannières.",
+				"Ces décors remplacent les emprunts aux Actes de la version précédente. La Marche Maudite garde les décors de ses régions."
+			],
+			"titre": "Douze nouveaux champs de bataille",
+			"version": "0.76.1"
+		},
 		{
 			"changements": [
 				"COMBATS EN 3D DANS TOUS LES MODES : les Tours de l'Enfer et du Paradis, les 7 Donjons (dont le Puits de Sang et la Bibliothèque Interdite), la Marche Maudite, le Sanctuaire du Bélier, l'Arène (JcJ et Classé) et la Guerre des Bannières passent en 2,5D, avec les pions sur socles, les sorts par élément et la météo. Seul le Boss de Monde reste en 2D.",
@@ -126,20 +134,13 @@
 			],
 			"titre": "Récapitulatif plus compact",
 			"version": "0.70.2"
-		},
-		{
-			"changements": [
-				"CORRECTIF : après une invocation au Pacte Sauvage, le bouton « Voir la Ménagerie » ouvrait la Ménagerie même avant la fin de l'Acte IV. Il n'apparaît plus tant qu'elle n'est pas débloquée (un message indique quand elle s'ouvrira ; les familiers obtenus sont bien gardés). Même vérification ajoutée sur l'écran Aventure pour la Ménagerie et les autres modes."
-			],
-			"titre": "Ménagerie verrouillée",
-			"version": "0.70.1"
 		}
 	],
 	"pck": {
-		"sha256": "95d9fde6cecc679e3dd423f3c417431ed4f776de117e752da370abb542025994",
-		"taille": 49001812,
+		"sha256": "95902cdaba3db74d0de471acf1fc93afbb7c93a86778003414efe89f57ca1a58",
+		"taille": 100622288,
 		"url": "jeu.pck"
 	},
-	"version": "0.76.0",
+	"version": "0.76.1",
 	"version_minimum": "0.37.0"
 }

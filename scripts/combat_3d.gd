@@ -50,7 +50,7 @@ const AMBIANCES := {
 	13: {"meteo": "etincelles_violettes", "amb": Color(0.6, 0.5, 0.72), "torche": Color(0.75, 0.45, 1.0), "sat": 1.05, "contraste": 1.1, "brume": 0.0},
 	# Décors des autres modes (utilisés dès que leur toile et leur sol sont dans assets/combat3d)
 	"tour_enfer": {"meteo": "cendres_rouges", "amb": Color(0.74, 0.44, 0.4), "torche": Color(1.0, 0.35, 0.15), "sat": 1.15, "contraste": 1.12, "brume": 0.0},
-	"tour_paradis": {"meteo": "plumes", "amb": Color(0.8, 0.76, 0.68), "torche": Color(1.0, 0.88, 0.6), "sat": 0.95, "contraste": 1.04, "brume": 0.009, "c_brume": Color(0.55, 0.52, 0.45)},
+	"tour_paradis": {"meteo": "plumes", "amb": Color(0.8, 0.76, 0.68), "torche": Color(1.0, 0.88, 0.6), "sat": 0.95, "contraste": 1.04, "brume": 0.009, "c_brume": Color(0.55, 0.52, 0.45), "sol": Color(0.7, 0.66, 0.62)},
 	"donjon_feu": {"meteo": "cendres", "amb": Color(0.72, 0.5, 0.42), "torche": Color(1.0, 0.45, 0.15), "sat": 1.12, "contraste": 1.1, "brume": 0.0},
 	"donjon_nature": {"meteo": "spores", "amb": Color(0.52, 0.64, 0.46), "torche": Color(0.65, 1.0, 0.4), "sat": 0.95, "contraste": 1.06, "brume": 0.0113, "c_brume": Color(0.08, 0.12, 0.06)},
 	"donjon_eau": {"meteo": "bulles", "amb": Color(0.45, 0.58, 0.72), "torche": Color(0.45, 0.85, 1.0), "sat": 0.9, "contraste": 1.05, "brume": 0.0135, "c_brume": Color(0.06, 0.14, 0.2)},
