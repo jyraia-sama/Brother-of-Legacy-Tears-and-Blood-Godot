@@ -242,9 +242,11 @@ func _creer_sentier(a: int, b: int, accent: Color) -> void:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var nb := 18
+	var tuile := longueur_tuile(acte, LARGEUR_SENTIER)
 	var prec_g := Vector3.ZERO
 	var prec_d := Vector3.ZERO
 	var v_cumul := 0.0
+	var v_prec := 0.0
 	var prec_p := point_sentier(a, b, 0.0)
 	for i in nb + 1:
 		var t := float(i) / nb
@@ -254,13 +256,14 @@ func _creer_sentier(a: int, b: int, accent: Color) -> void:
 			q = p + (p - point_sentier(a, b, 0.98))
 		var dir := (q - p).normalized()
 		var perp := Vector3(-dir.z, 0, dir.x) * LARGEUR_SENTIER * 0.5
+		v_prec = v_cumul
 		v_cumul += p.distance_to(prec_p)
 		prec_p = p
 		var g := p + perp + Vector3(0, 0.025, 0)
 		var d := p - perp + Vector3(0, 0.025, 0)
 		if i > 0:
-			var v0 := (v_cumul - 0.3) / 1.6
-			var v1 := v_cumul / 1.6
+			var v0 := v_prec / tuile
+			var v1 := v_cumul / tuile
 			st.set_uv(Vector2(0, v0)); st.add_vertex(prec_g)
 			st.set_uv(Vector2(1, v0)); st.add_vertex(prec_d)
 			st.set_uv(Vector2(1, v1)); st.add_vertex(d)
@@ -272,16 +275,69 @@ func _creer_sentier(a: int, b: int, accent: Color) -> void:
 	st.generate_normals()
 	var mi := MeshInstance3D.new()
 	mi.mesh = st.commit()
-	var m := StandardMaterial3D.new()
-	m.albedo_texture = _texture_paves()
-	m.albedo_color = Color(0.5, 0.45, 0.42).lerp(accent, 0.1)
-	m.roughness = 0.9
-	m.cull_mode = BaseMaterial3D.CULL_DISABLED
-	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	var m := materiau_chemin(acte)
+	m.set_shader_parameter("teinte", Color(0.5, 0.45, 0.42).lerp(accent, 0.1))
 	mi.material_override = m
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	_monde.add_child(mi)
 	_sentiers["%d-%d" % [a, b]] = {"mesh": mi, "mat": m}
+
+
+const DOSSIER_CHEMINS := "res://assets/plateaux/chemins/"
+const SHADER_CHEMIN := """shader_type spatial;
+render_mode cull_disabled, depth_draw_opaque;
+uniform sampler2D tex : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform vec4 teinte : source_color = vec4(1.0);
+uniform float bord = 0.16;
+uniform vec3 c_emission : source_color = vec3(0.0);
+uniform float emission = 0.0;
+void fragment() {
+	vec4 c = texture(tex, UV);
+	float dent = 0.05 * sin(UV.y * 23.0) + 0.04 * sin(UV.y * 57.0 + 1.3);
+	float e = smoothstep(0.0, bord, UV.x + dent) * smoothstep(1.0, 1.0 - bord, UV.x - dent);
+	ALBEDO = c.rgb * teinte.rgb;
+	ALPHA = c.a * e * teinte.a;
+	ROUGHNESS = 0.9;
+	EMISSION = c_emission * emission * c.rgb;
+}
+"""
+
+static var _shader_chemin: Shader = null
+
+
+## Image du chemin de l'Acte (assets/plateaux/chemins/chemin_XX.png, carrée, qui se répète), "" si absente.
+static func image_chemin(n: int) -> String:
+	var p := DOSSIER_CHEMINS + "chemin_%02d.png" % n
+	return p if ResourceLoader.exists(p) else ""
+
+
+## Matériau du chemin : l'image de l'Acte si elle existe, sinon des pavés dessinés par le jeu.
+static func materiau_chemin(n: int) -> ShaderMaterial:
+	return materiau_chemin_image(image_chemin(n))
+
+
+## Même chose à partir d'un chemin d'image ("" = pavés dessinés).
+static func materiau_chemin_image(img: String) -> ShaderMaterial:
+	if _shader_chemin == null:
+		_shader_chemin = Shader.new()
+		_shader_chemin.code = SHADER_CHEMIN
+	var m := ShaderMaterial.new()
+	m.shader = _shader_chemin
+	var ok := img != "" and ResourceLoader.exists(img)
+	m.set_shader_parameter("tex", load(img) if ok else _texture_paves())
+	return m
+
+
+## Longueur (mètres) couverte par une répétition de l'image le long du chemin.
+static func longueur_tuile(n: int, largeur: float) -> float:
+	return longueur_tuile_image(image_chemin(n), largeur)
+
+
+static func longueur_tuile_image(img: String, largeur: float) -> float:
+	if img == "" or not ResourceLoader.exists(img):
+		return 1.6 * largeur / LARGEUR_SENTIER
+	var t: Texture2D = load(img)
+	return largeur * float(t.get_height()) / float(t.get_width())
 
 
 static var _paves: Texture2D = null
@@ -470,11 +526,13 @@ func maj(courant: int, reveles: Dictionary, visites: Dictionary, termines: Dicti
 		var va := reveles.has(a)
 		var vb := reveles.has(b)
 		(s["mesh"] as MeshInstance3D).visible = va or vb
-		var m: StandardMaterial3D = s["mat"]
+		var m: ShaderMaterial = s["mat"]
 		var parcouru := visites.has(a) and visites.has(b)
 		var alpha := 1.0 if (va and vb) else 0.35
 		var base := Color(0.62, 0.56, 0.5) if parcouru else Color(0.46, 0.42, 0.4)
-		m.albedo_color = Color(base, alpha)
+		if image_chemin(acte) != "":
+			base = Color(1.0, 0.95, 0.9) if parcouru else Color(0.78, 0.74, 0.72)
+		m.set_shader_parameter("teinte", Color(base, alpha))
 	_creer_fleches(courant, accessibles)
 
 

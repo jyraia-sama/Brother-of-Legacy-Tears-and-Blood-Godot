@@ -12,6 +12,18 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"CARTE DU MONDE EN 3D : la carte peinte des Terres des Valcendre devient un grand plateau posé sur la table, vu de biais. Chaque Acte est une dalle de pierre gravée de son numéro, gardée par la figurine de son boss (assombrie une fois vaincu). La route qui relie les Actes est un tracé doré lumineux là où le grand frère est déjà passé.",
+				"LE GRAND FRÈRE VOYAGE : touche un Acte déjà ouvert et son pion marche jusqu'à lui le long de la route, Acte après Acte. Quand tu lances un chapitre, la caméra plonge vers l'Acte avant d'ouvrir le plateau.",
+				"Les terres pas encore atteintes restent sous une brume qui ondule, et se dévoilent au fil de l'histoire. Glisse le doigt pour parcourir la carte, molette ou pincement pour zoomer.",
+				"PLATEAU DES CHAPITRES : le sentier peut maintenant recevoir une vraie texture peinte, propre à chaque Acte (elle s'affichera dès que les images seront ajoutées) ; ses bords sont irréguliers, comme un vrai chemin.",
+				"La barre du haut de la carte du monde va maintenant d'un bord à l'autre sur les téléphones larges.",
+				"La case « Combats et plateaux en 3D » des Paramètres ramène aussi l'ancienne carte du monde."
+			],
+			"titre": "La carte en relief",
+			"version": "0.79.0"
+		},
+		{
+			"changements": [
 				"Le héros marche plus vite entre deux cases, avec des pas moins nombreux et plus amples.",
 				"Mobile : sur le plateau 3D, les boutons « Carte » et « Recentrer » sont maintenant sous la barre du haut, toujours visibles (la Carte se referme avec « Retour »). Les titres trop longs sont raccourcis au lieu de déborder.",
 				"Le menu principal et la carte du monde occupent tout l'écran comme le plateau : plus de bandes noires sur les côtés des téléphones larges.",
@@ -131,20 +143,13 @@
 			],
 			"titre": "Sam entre en scène",
 			"version": "0.74.2"
-		},
-		{
-			"changements": [
-				"NOUVELLE HÉROÏNE : Sam, la Lanterne des Os (UR, Sacré, Soutien) — une guérisseuse qui voit à travers la chair grâce à sa lanterne de cristal : Rayon Révélateur (ignore 25 % de RES, Malédiction), Œil du Diagnostic (DEF -10 % à tous les ennemis, soins +15 %), Cliché Salvateur (soin de groupe et purification) et Grand Scanner (frappe tous les ennemis, DEF -20 %). Évolution : Sam, l'Oracle des Rayons. Son portrait et sa figurine arrivent bientôt."
-			],
-			"titre": "La Lanterne des Os",
-			"version": "0.74.1"
 		}
 	],
 	"pck": {
-		"sha256": "561d018c8a1058aa9f2dd7d95430da7a50bed388edf3f64d63aa0008361d2b1c",
-		"taille": 32280344,
+		"sha256": "9c86d1618482c3aad5f6995b9510ba260b6e657b3465e6aae9f844da41f62f87",
+		"taille": 32302620,
 		"url": "jeu.pck"
 	},
-	"version": "0.78.1",
+	"version": "0.79.0",
 	"version_minimum": "0.37.0"
 }

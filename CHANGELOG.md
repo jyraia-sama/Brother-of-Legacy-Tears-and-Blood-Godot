@@ -1,6 +1,15 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.78.1** (2026-10-22)
+Version actuelle : **0.79.0** (2026-10-22)
+
+## v0.79.0 — La carte en relief  (2026-10-22)
+
+- CARTE DU MONDE EN 3D : la carte peinte des Terres des Valcendre devient un grand plateau posé sur la table, vu de biais. Chaque Acte est une dalle de pierre gravée de son numéro, gardée par la figurine de son boss (assombrie une fois vaincu). La route qui relie les Actes est un tracé doré lumineux là où le grand frère est déjà passé.
+- LE GRAND FRÈRE VOYAGE : touche un Acte déjà ouvert et son pion marche jusqu'à lui le long de la route, Acte après Acte. Quand tu lances un chapitre, la caméra plonge vers l'Acte avant d'ouvrir le plateau.
+- Les terres pas encore atteintes restent sous une brume qui ondule, et se dévoilent au fil de l'histoire. Glisse le doigt pour parcourir la carte, molette ou pincement pour zoomer.
+- PLATEAU DES CHAPITRES : le sentier peut maintenant recevoir une vraie texture peinte, propre à chaque Acte (elle s'affichera dès que les images seront ajoutées) ; ses bords sont irréguliers, comme un vrai chemin.
+- La barre du haut de la carte du monde va maintenant d'un bord à l'autre sur les téléphones larges.
+- La case « Combats et plateaux en 3D » des Paramètres ramène aussi l'ancienne carte du monde.
 
 ## v0.78.1 — Retouches du plateau  (2026-10-22)
 

@@ -89,6 +89,11 @@ var _panneau: PanelContainer
 var _fenetre: Control = null
 var _lbl_stamina: CaseStamina
 var _lbl_or: Label
+var _c3d: Carte3D = null
+var _appui := false
+var _glisse := false
+var _appui_pos := Vector2.ZERO
+var _lancement := false
 
 
 func _ready() -> void:
@@ -127,15 +132,19 @@ func _ready() -> void:
 		_sel = acte_choisi
 	_image_fond = ResourceLoader.exists(BG_PATH)
 
-	_creer_fond()
-	_creer_brume()
-	_creer_route()
-	_creer_noeuds()
+	if _image_fond and bool(Sauvegarde.get_parametre("combats_3d", true)):
+		_creer_3d()
+	else:
+		_creer_fond()
+		_creer_brume()
+		_creer_route()
+		_creer_noeuds()
 	_creer_hud()
 	_creer_legende()
 	_panneau = PanelContainer.new()
 	_placer(_panneau, Rect2(904, 76, 356, 628))
 	_afficher_acte(_sel)
+	_ajuster_ui()
 
 	var minuterie := Timer.new()
 	minuterie.wait_time = 1.0
@@ -152,6 +161,10 @@ func _ajuster_ui() -> void:
 	var e := minf(vp.x / BASE.x, vp.y / BASE.y)
 	_ui.scale = Vector2(e, e)
 	_ui.position = ((vp - BASE * e) / 2.0).floor()
+	# En 3D, l'Acte choisi se place au milieu de la partie de l'écran à gauche de la fiche
+	if _c3d and is_instance_valid(_panneau):
+		var gauche := _ui.position.x + 904.0 * e
+		_c3d.centre_ecran = clampf(gauche / 2.0 / maxf(1.0, vp.x), 0.25, 0.5)
 
 
 # =====================================================================
@@ -396,6 +409,85 @@ func _choisir(a: int) -> void:
 	_sel = a
 	_maj_noeuds()
 	_afficher_acte(a)
+	if _c3d:
+		_c3d.viser(a)
+		if ActesData.acte_debloque(a):
+			_c3d.marcher_vers(a)
+
+
+# =====================================================================
+# Carte en 3D (« Combats et plateaux en 3D » coché)
+# =====================================================================
+
+func _creer_3d() -> void:
+	_c3d = Carte3D.new()
+	_c3d.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_c3d)
+	move_child(_c3d, _ui.get_index())
+	_c3d.gui_input.connect(_entree_3d)
+	var largeur := BASE.y * 1.5
+	var uv := {}
+	var etats := {}
+	var figurines := {}
+	for a in range(1, _nb + 1):
+		var p: Vector2 = POS_IMAGE[a - 1]
+		uv[a] = Vector2(p.x / largeur, (p.y - IMAGE_DECALAGE_Y) / BASE.y)
+		etats[a] = _etat_acte(a)
+		figurines[a] = _figurine_boss(a)
+	_c3d.construire(uv, etats, figurines, _courant, _nb, _sel)
+
+
+func _etat_acte(a: int) -> String:
+	if ActesData.est_termine(a, 6):
+		return "fait"
+	if not ActesData.acte_debloque(a):
+		return "ferme"
+	return "cours" if a == _courant else "ouvert"
+
+
+## Figurine du boss de l'Acte (celui du dernier chapitre), "" s'il n'en a pas.
+func _figurine_boss(a: int) -> String:
+	var plateau := PlateauGenerateur.generer(a, 6)
+	var boss := int(plateau.get("boss", -1))
+	for n in plateau.get("noeuds", []):
+		if int(n["id"]) != boss:
+			continue
+		var ens: Array = Rencontres.generer(a, 6, n)
+		for e in ens:
+			if bool(e.get("boss", false)):
+				return UiCommun.chemin_figurine(str(e["id"]))
+		if not ens.is_empty():
+			return UiCommun.chemin_figurine(str(ens[0]["id"]))
+	return ""
+
+
+func _entree_3d(event: InputEvent) -> void:
+	if _lancement:
+		return
+	if event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		if mb.button_index == MOUSE_BUTTON_LEFT:
+			if mb.pressed:
+				_appui = true
+				_glisse = false
+				_appui_pos = mb.position
+			else:
+				if _appui and not _glisse:
+					var a := _c3d.acte_a_ecran(mb.position)
+					if a >= 1:
+						_choisir(a)
+				_appui = false
+		elif mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_c3d.zoomer(1.12)
+		elif mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_c3d.zoomer(1.0 / 1.12)
+	elif event is InputEventMouseMotion and _appui:
+		var mm := event as InputEventMouseMotion
+		if _glisse or mm.position.distance_to(_appui_pos) > 10.0:
+			_glisse = true
+			_c3d.glisser(mm.relative)
+	elif event is InputEventMagnifyGesture:
+		_c3d.zoomer((event as InputEventMagnifyGesture).factor)
 
 
 # =====================================================================
@@ -556,9 +648,10 @@ func _ligne_chapitre(a: int, c: int, titre: String, courant: bool) -> Button:
 # =====================================================================
 
 func _creer_hud() -> void:
-	var barre := _boite(Rect2(0, 0, 1280, 60), Color(0.04, 0.024, 0.027, 0.85))
+	# Barre plus large que la surface : elle va d'un bord à l'autre sur les écrans larges (20:9)
+	var barre := _boite(Rect2(-640, 0, 2560, 60), Color(0.04, 0.024, 0.027, 0.85))
 	barre.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_boite(Rect2(0, 60, 1280, 1), Color(C_OR, 0.35)).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_boite(Rect2(-640, 60, 2560, 1), Color(C_OR, 0.35)).mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var retour := Button.new()
 	retour.text = "← Menu"
 	retour.focus_mode = Control.FOCUS_NONE
@@ -630,6 +723,15 @@ func _lancer(a: int, c: int) -> void:
 	ActesData.chapitre_courant = c
 	ActesData.scene_precedente = scene_file_path
 	acte_choisi = a
+	if _c3d:
+		if _lancement:
+			return
+		_lancement = true
+		_fermer_chapitre()
+		_c3d.viser(a)
+		if _c3d.pion_acte() != a:
+			await _c3d.marcher_vers(a)
+		await _c3d.plongee(a)
 	get_tree().change_scene_to_file(SCENE_PLATEAU)
 
 

@@ -15,11 +15,20 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.78.1"
+const NUMERO := "0.79.0"
 const DATE := "2026-10-22"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.79.0", "date": "2026-10-22", "titre": "La carte en relief",
+	"changements": [
+		"CARTE DU MONDE EN 3D : la carte peinte des Terres des Valcendre devient un grand plateau posé sur la table, vu de biais. Chaque Acte est une dalle de pierre gravée de son numéro, gardée par la figurine de son boss (assombrie une fois vaincu). La route qui relie les Actes est un tracé doré lumineux là où le grand frère est déjà passé.",
+		"LE GRAND FRÈRE VOYAGE : touche un Acte déjà ouvert et son pion marche jusqu'à lui le long de la route, Acte après Acte. Quand tu lances un chapitre, la caméra plonge vers l'Acte avant d'ouvrir le plateau.",
+		"Les terres pas encore atteintes restent sous une brume qui ondule, et se dévoilent au fil de l'histoire. Glisse le doigt pour parcourir la carte, molette ou pincement pour zoomer.",
+		"PLATEAU DES CHAPITRES : le sentier peut maintenant recevoir une vraie texture peinte, propre à chaque Acte (elle s'affichera dès que les images seront ajoutées) ; ses bords sont irréguliers, comme un vrai chemin.",
+		"La barre du haut de la carte du monde va maintenant d'un bord à l'autre sur les téléphones larges.",
+		"La case « Combats et plateaux en 3D » des Paramètres ramène aussi l'ancienne carte du monde.",
+	]},
 	{"version": "0.78.1", "date": "2026-10-22", "titre": "Retouches du plateau",
 	"changements": [
 		"Le héros marche plus vite entre deux cases, avec des pas moins nombreux et plus amples.",
