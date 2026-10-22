@@ -55,11 +55,11 @@ const AMBIANCES := {
 	"donjon_nature": {"meteo": "spores", "amb": Color(0.52, 0.64, 0.46), "torche": Color(0.65, 1.0, 0.4), "sat": 0.95, "contraste": 1.06, "brume": 0.0113, "c_brume": Color(0.08, 0.12, 0.06)},
 	"donjon_eau": {"meteo": "bulles", "amb": Color(0.45, 0.58, 0.72), "torche": Color(0.45, 0.85, 1.0), "sat": 0.9, "contraste": 1.05, "brume": 0.0135, "c_brume": Color(0.06, 0.14, 0.2)},
 	"donjon_tenebres": {"meteo": "etincelles_violettes", "amb": Color(0.5, 0.46, 0.62), "torche": Color(0.65, 0.4, 1.0), "sat": 0.85, "contraste": 1.1, "brume": 0.0113, "c_brume": Color(0.08, 0.06, 0.12)},
-	"donjon_sacre": {"meteo": "poussiere_or", "amb": Color(0.72, 0.66, 0.58), "torche": Color(1.0, 0.82, 0.5), "sat": 0.95, "contraste": 1.06, "brume": 0.009, "c_brume": Color(0.25, 0.2, 0.16)},
-	"donjon_neutre": {"meteo": "cendres_rouges", "amb": Color(0.7, 0.42, 0.42), "torche": Color(1.0, 0.2, 0.18), "sat": 1.1, "contraste": 1.12, "brume": 0.009, "c_brume": Color(0.18, 0.04, 0.05)},
+	"donjon_sacre": {"meteo": "poussiere_or", "amb": Color(0.72, 0.66, 0.58), "torche": Color(1.0, 0.82, 0.5), "sat": 0.95, "contraste": 1.06, "brume": 0.009, "c_brume": Color(0.25, 0.2, 0.16), "sol": Color(0.68, 0.62, 0.58)},
+	"donjon_neutre": {"meteo": "cendres_rouges", "amb": Color(0.7, 0.42, 0.42), "torche": Color(1.0, 0.2, 0.18), "sat": 1.0, "contraste": 1.12, "brume": 0.009, "c_brume": Color(0.18, 0.04, 0.05), "sol": Color(0.62, 0.55, 0.55)},
 	"donjon_savoir": {"meteo": "poussiere_parchemin", "amb": Color(0.62, 0.56, 0.62), "torche": Color(0.6, 0.75, 1.0), "sat": 0.9, "contraste": 1.06, "brume": 0.009, "c_brume": Color(0.12, 0.1, 0.16)},
 	"sanctuaire": {"meteo": "etincelles_or", "amb": Color(0.72, 0.62, 0.55), "torche": Color(1.0, 0.7, 0.35), "sat": 1.05, "contraste": 1.06, "brume": 0.0},
-	"arene": {"meteo": "poussiere_or", "amb": Color(0.72, 0.6, 0.52), "torche": Color(1.0, 0.6, 0.3), "sat": 1.05, "contraste": 1.08, "brume": 0.0},
+	"arene": {"meteo": "poussiere_or", "amb": Color(0.62, 0.6, 0.66), "torche": Color(1.0, 0.6, 0.3), "sat": 1.05, "contraste": 1.08, "brume": 0.0, "sol": Color(0.55, 0.52, 0.55)},
 	"guerre": {"meteo": "cendres", "amb": Color(0.66, 0.52, 0.5), "torche": Color(1.0, 0.45, 0.2), "sat": 1.05, "contraste": 1.1, "brume": 0.009, "c_brume": Color(0.16, 0.1, 0.1)},
 }
 
