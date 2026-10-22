@@ -47,6 +47,7 @@ const PAQUETS := [
 	{"nom": "fonds", "dossier": "assets/fonds", "seaux": 1},
 	{"nom": "actes", "dossier": "assets/actes", "seaux": 1},
 	{"nom": "boss_monde", "dossier": "assets/boss_monde", "seaux": 1},
+	{"nom": "decors3d", "dossier": "assets/combat3d", "seaux": 2},
 ]
 
 var projet := ""
