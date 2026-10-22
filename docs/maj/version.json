@@ -12,6 +12,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ILLUSTRATIONS D'ÉVOLUTION : le Rat-Roi Pestilent, le Champion Squelette, le Chef Pillard Gobelin et le Loup Alpha ont leur propre portrait et leur propre figurine. Toutes les évolutions des héros N ont maintenant leur image.",
+				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
+			],
+			"titre": "Les premiers de la liste",
+			"version": "0.77.5"
+		},
+		{
+			"changements": [
 				"ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Colosse Putride, le Seigneur des Routes, l'Araignée Nécrotoxique, le Seigneur Chiroptère, la Limace Dévoreuse, le Corbeau Funeste, le Sanglier des Braises, le Cogneur des Tavernes, le Slime Royal, la Hyène Ardente, la Naga Cracheuse et l'Abbé Maudit.",
 				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
 			],
@@ -125,21 +133,13 @@
 			],
 			"titre": "Le guide des sorts",
 			"version": "0.73.0"
-		},
-		{
-			"changements": [
-				"CORRECTIF SORTS : dans la fiche d'un héros (Deck, Mon héros), le bouton « Améliorer » des sorts était trop long (le coût était écrit dedans) et poussait la fiche hors du cadre : le bouton pouvait être coupé ou invisible, surtout sur téléphone. Le bouton dit maintenant juste « Améliorer » et le coût est écrit en dessous.",
-				"SORTS : quand un sort ne peut pas monter, la raison est écrite en clair sous son nom (ressources manquantes, étoile requise, sort pas encore appris avec le niveau où le héros l'apprendra). Avant, elle n'apparaissait qu'en survolant le bouton à la souris, donc jamais sur téléphone."
-			],
-			"titre": "Des sorts à portée de main",
-			"version": "0.72.2"
 		}
 	],
 	"pck": {
-		"sha256": "a6749cc9efb36b15b6d3530a1d416866f4bbcf493f3237a7d2ac4b127ad3eb18",
-		"taille": 32256308,
+		"sha256": "fe1a87b57896a06fcffd999862eaf1957d32ff78940ecbe26d05eb2c9f7f6d81",
+		"taille": 32256388,
 		"url": "jeu.pck"
 	},
-	"version": "0.77.4",
+	"version": "0.77.5",
 	"version_minimum": "0.37.0"
 }

@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.77.4"
+const NUMERO := "0.77.5"
 const DATE := "2026-10-22"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.77.5", "date": "2026-10-22", "titre": "Les premiers de la liste",
+	"changements": [
+		"ILLUSTRATIONS D'ÉVOLUTION : le Rat-Roi Pestilent, le Champion Squelette, le Chef Pillard Gobelin et le Loup Alpha ont leur propre portrait et leur propre figurine. Toutes les évolutions des héros N ont maintenant leur image.",
+		"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art.",
+	]},
 	{"version": "0.77.4", "date": "2026-10-22", "titre": "La meute évolue",
 	"changements": [
 		"ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Colosse Putride, le Seigneur des Routes, l'Araignée Nécrotoxique, le Seigneur Chiroptère, la Limace Dévoreuse, le Corbeau Funeste, le Sanglier des Braises, le Cogneur des Tavernes, le Slime Royal, la Hyène Ardente, la Naga Cracheuse et l'Abbé Maudit.",

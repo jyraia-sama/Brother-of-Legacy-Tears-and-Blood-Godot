@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.77.4** (2026-10-22)
+Version actuelle : **0.77.5** (2026-10-22)
+
+## v0.77.5 — Les premiers de la liste  (2026-10-22)
+
+- ILLUSTRATIONS D'ÉVOLUTION : le Rat-Roi Pestilent, le Champion Squelette, le Chef Pillard Gobelin et le Loup Alpha ont leur propre portrait et leur propre figurine. Toutes les évolutions des héros N ont maintenant leur image.
+- Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art.
 
 ## v0.77.4 — La meute évolue  (2026-10-22)
 
