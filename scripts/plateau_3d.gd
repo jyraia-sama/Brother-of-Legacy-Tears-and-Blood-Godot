@@ -545,9 +545,9 @@ func placer_pion(id: int) -> void:
 ## Le pion marche de a vers b (t de 0 à 1) : petits pas sautillés le long du sentier.
 func marcher(t: float, a: int, b: int) -> void:
 	var p := point_sentier(a, b, t)
-	var nb_pas := maxi(3, int(round(longueur_sentier(a, b) / 0.9)))
+	var nb_pas := maxi(2, int(round(longueur_sentier(a, b) / 1.6)))
 	var phase := t * nb_pas
-	var saut := absf(sin(phase * PI)) * 0.28
+	var saut := absf(sin(phase * PI)) * 0.34
 	_pion.position = p + Vector3(0, H_DALLE * (1.0 if t < 0.12 or t > 0.88 else 0.2) + saut, 0)
 	if _mat_pion:
 		var dir := point_sentier(a, b, minf(1.0, t + 0.03)) - point_sentier(a, b, maxf(0.0, t - 0.03))
@@ -562,7 +562,7 @@ func marcher(t: float, a: int, b: int) -> void:
 
 ## Durée de marche entre deux cases (secondes).
 func duree_marche(a: int, b: int) -> float:
-	return clampf(longueur_sentier(a, b) / 3.6, 0.7, 1.6)
+	return clampf(longueur_sentier(a, b) / 5.5, 0.5, 1.05)
 
 
 # ---------------------------------------------------------------
