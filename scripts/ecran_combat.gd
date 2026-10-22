@@ -76,7 +76,9 @@ const ECHELLE_HEROS_GEANT := 0.66
 const HAUTEUR_GEANT_3D := 5.0
 ## Coupe des décors des modes (à régler quand chaque décor arrive ; 0.72 par défaut)
 const COUPES_MODES := {"arene": 0.73, "donjon_eau": 0.72, "donjon_feu": 0.73, "donjon_nature": 0.71, "donjon_neutre": 0.74, "donjon_sacre": 0.73,
-	"donjon_savoir": 0.75, "donjon_tenebres": 0.76, "guerre": 0.70, "sanctuaire": 0.73, "tour_enfer": 0.74, "tour_paradis": 0.73}
+	"donjon_savoir": 0.75, "donjon_tenebres": 0.76, "guerre": 0.70, "sanctuaire": 0.73, "tour_enfer": 0.74, "tour_paradis": 0.73,
+	"boss_avatar_sang": 0.69, "boss_behemoth_cendres": 0.69, "boss_golgoth": 0.68, "boss_leviathan_noir": 0.68,
+	"boss_nidhogr": 0.69, "boss_solgard": 0.68, "boss_yggdravor": 0.67}
 var _c3d: Combat3D = null
 var _decor: Dictionary = {}
 ## Combats jouables à la main (les Boss de Monde, l'Arène et la Guerre restent automatiques ;
