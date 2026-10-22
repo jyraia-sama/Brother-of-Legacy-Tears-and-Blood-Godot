@@ -578,7 +578,8 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 			nom.visible = false
 			pv_f.visible = false
 		if geant:
-			# Boss de Monde : sa grande barre de vie est en haut de l'écran
+			# Boss de Monde : sa grande barre de vie (et son nom) sont en haut de l'écran
+			nom.visible = _c3d == null
 			barre_f.visible = false
 			bouclier_f.visible = false
 			pv_f.visible = false

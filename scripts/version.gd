@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.76.1"
+const NUMERO := "0.77.0"
 const DATE := "2026-10-22"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.77.0", "date": "2026-10-22", "titre": "Les géants en 3D",
+	"changements": [
+		"BOSS DE MONDE EN 3D : le géant se dresse au milieu du champ de bataille, face à tes 4 escouades rangées sur 4 rangs (escouade 1 au fond, escouade 4 devant). Chaque héros a sa figurine sur son socle, avec une petite barre de vie ; la grande barre du géant reste en haut de l'écran.",
+		"En attendant leurs propres décors, les géants combattent dans le décor le plus proche : le Béhémoth dans les Terres Brûlées, le Léviathan dans les Fosses Englouties, Yggdravor dans la Sylve Putride, Golgoth au Puits de Sang, Solgard au Paradis, Nidhögr dans le Sceau des Frères et l'Avatar du Sang dans le bastion de l'éclipse.",
+		"Si le combat ralentit sur ton téléphone, décoche « Combats en 3D » dans les Paramètres pour revenir au Boss de Monde en 2D.",
+	]},
 	{"version": "0.76.1", "date": "2026-10-22", "titre": "Douze nouveaux champs de bataille",
 	"changements": [
 		"DÉCORS 3D DES MODES : chaque mode a maintenant son propre décor peint, avec un sol net jusqu'aux pieds des figurines : la Tour de l'Enfer et son portail en gueule au-dessus de la lave, la Tour du Paradis et son escalier vers la lumière au-dessus des nuages, le Brasier Éternel et son enclume géante, la Sylve Putride et son arbre-mère suintant, les Fosses Englouties et leur temple turquoise, la Crypte sans Lune et sa sphère de ténèbres, le Sanctuaire Profané et son ange brisé, le Puits de Sang et ses cascades rouges, la Bibliothèque Interdite et son grimoire enchaîné, le Sanctuaire du Bélier et sa tête de bélier dorée, l'Arène sous la lune et la forteresse assiégée de la Guerre des Bannières.",

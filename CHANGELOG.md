@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.76.1** (2026-10-22)
+Version actuelle : **0.77.0** (2026-10-22)
+
+## v0.77.0 — Les géants en 3D  (2026-10-22)
+
+- BOSS DE MONDE EN 3D : le géant se dresse au milieu du champ de bataille, face à tes 4 escouades rangées sur 4 rangs (escouade 1 au fond, escouade 4 devant). Chaque héros a sa figurine sur son socle, avec une petite barre de vie ; la grande barre du géant reste en haut de l'écran.
+- En attendant leurs propres décors, les géants combattent dans le décor le plus proche : le Béhémoth dans les Terres Brûlées, le Léviathan dans les Fosses Englouties, Yggdravor dans la Sylve Putride, Golgoth au Puits de Sang, Solgard au Paradis, Nidhögr dans le Sceau des Frères et l'Avatar du Sang dans le bastion de l'éclipse.
+- Si le combat ralentit sur ton téléphone, décoche « Combats en 3D » dans les Paramètres pour revenir au Boss de Monde en 2D.
 
 ## v0.76.1 — Douze nouveaux champs de bataille  (2026-10-22)
 
