@@ -12,6 +12,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ILLUSTRATIONS D'ÉVOLUTION : 14 évolutions ont maintenant leur propre portrait et leur propre figurine : la Grande Druidesse des Bois, le Troll Ancestral des Marais, la Gargouille des Tempêtes, le Maître Assassin, le Cyclope Titan, le Seigneur Minotaure, la Reine des Lamentations, le Centaure Seigneur de Guerre, la Sirène du Grand Silence, la Sentinelle Céleste, l'Archisorcier des Ombres, le Hiérophante Sacré, l'Abbesse du Silence et le Grand Exorciste.",
+				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
+			],
+			"titre": "Quatorze évolutions prennent forme",
+			"version": "0.77.2"
+		},
+		{
+			"changements": [
 				"BOSS DE MONDE — DÉCORS : chaque géant a maintenant son propre champ de bataille peint pour la 3D : la plaine volcanique en ruine du Béhémoth des Cendres, le port englouti sous la tempête du Léviathan, le royaume étouffé par les racines d'Yggdravor, le canyon de cristaux rouges de Golgoth, le désert vitrifié de Solgard, le sommet sous les étoiles brisées de Nidhögr et le lac rubis sous la lune rouge de l'Avatar du Sang Originel.",
 				"Ces décors remplacent les emprunts aux Actes de la version précédente, avec chacun son ambiance (cendres, pluie et éclairs, spores, poussière, étincelles…)."
 			],
@@ -126,24 +134,13 @@
 			],
 			"titre": "Lisible sur téléphone",
 			"version": "0.72.0"
-		},
-		{
-			"changements": [
-				"COMBATS EN 3D — LES PIONS : chaque unité se tient sur un socle 3D cerclé de la couleur de son élément (le liseré respire doucement). Au début du combat, les pions tombent sur le plateau et se posent ; le boss arrive en dernier, plus lourd, dans un nuage de poussière.",
-				"FIGURINES VIVANTES ET ÉCLAIRÉES : le relief de chaque figurine est calculé à partir de son image ; les torches, les sorts et les coups l'éclairent vraiment. Elles se balancent au repos, se ramassent puis s'étirent pour attaquer, vacillent sous les coups, et au K.O. la figurine tombe de son socle et s'étend au sol.",
-				"SORTS PAR ÉLÉMENT : sur une cible, boule de feu, éclat de glace, spirale d'épines, orbe d'ombre ou rayon sacré venu du ciel ; sur plusieurs cibles, colonnes de flammes, pics de glace, ronces, flaques d'ombre ou piliers de lumière ; sur les alliés, anneaux de lumière qui montent.",
-				"AMBIANCE DE CHAQUE ACTE : couleurs, torches, brume et météo propres à chaque Acte (braises, pluie, orage, lucioles, neige, spores, cendres, poussière d'or…).",
-				"MENU : nouvelle case « Caméra cinéma en 3D » (décochée par défaut) : ralenti et léger rapprochement à l'arrivée d'un boss et sur le coup fatal. Jamais de tremblement."
-			],
-			"titre": "Les pions prennent vie",
-			"version": "0.71.0"
 		}
 	],
 	"pck": {
-		"sha256": "2584863087950aae6dc2a2223de3851e8bb580f17c9a3d13a4fe9fbefe11df65",
-		"taille": 32255492,
+		"sha256": "e5ef1b89dc297d3d66bda8b5c1684e312cb9eeb714a4be5c1a4387b658c7536f",
+		"taille": 32255796,
 		"url": "jeu.pck"
 	},
-	"version": "0.77.1",
+	"version": "0.77.2",
 	"version_minimum": "0.37.0"
 }

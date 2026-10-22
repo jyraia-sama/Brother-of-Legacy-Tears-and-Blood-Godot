@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.77.1** (2026-10-22)
+Version actuelle : **0.77.2** (2026-10-22)
+
+## v0.77.2 — Quatorze évolutions prennent forme  (2026-10-22)
+
+- ILLUSTRATIONS D'ÉVOLUTION : 14 évolutions ont maintenant leur propre portrait et leur propre figurine : la Grande Druidesse des Bois, le Troll Ancestral des Marais, la Gargouille des Tempêtes, le Maître Assassin, le Cyclope Titan, le Seigneur Minotaure, la Reine des Lamentations, le Centaure Seigneur de Guerre, la Sirène du Grand Silence, la Sentinelle Céleste, l'Archisorcier des Ombres, le Hiérophante Sacré, l'Abbesse du Silence et le Grand Exorciste.
+- Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art.
 
 ## v0.77.1 — Sept terres pour sept géants  (2026-10-22)
 

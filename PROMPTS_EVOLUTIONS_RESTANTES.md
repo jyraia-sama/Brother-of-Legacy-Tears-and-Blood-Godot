@@ -740,7 +740,7 @@ PORTRAIT : à mi-corps, il lève lentement la visière de son heaume : à l'int�
 FIGURINE : il charge vers l'avant à pied, la lance noire pointée devant lui sous le bras, le bouclier levé.
 ```
 
-### Grande Druidesse des Bois (R) → `sorciere_bois_evo.png`
+### ✅ FAIT — Grande Druidesse des Bois (R) → `sorciere_bois_evo.png`
 > Joins `sorciere_bois.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -766,7 +766,7 @@ PORTRAIT : en buste, elle tient une fiole d'élixir vert lumineux devant son vis
 FIGURINE : elle remue un grand chaudron posé sur le socle avec son bâton fleuri, de l'autre main elle y jette une poignée d'herbes.
 ```
 
-### Troll Ancestral des Marais (R) → `troll_marais_evo.png`
+### ✅ FAIT — Troll Ancestral des Marais (R) → `troll_marais_evo.png`
 > Joins `troll_marais.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -792,7 +792,7 @@ PORTRAIT : en buste, il se gratte la barbe de mousse d'un air pensif, une grenou
 FIGURINE : il pose son gros tronc sur l'épaule et s'avance dans une flaque du socle, un pied en avant, l'air menaçant.
 ```
 
-### Gargouille des Tempêtes (R) → `gargouille_evo.png`
+### ✅ FAIT — Gargouille des Tempêtes (R) → `gargouille_evo.png`
 > Joins `gargouille.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -818,7 +818,7 @@ PORTRAIT : de PROFIL tourné vers la gauche, accroupie, elle tourne la tête ver
 FIGURINE : elle se dresse sur un petit morceau de toit de cathédrale du socle, ailes grandes ouvertes, elle hurle vers le ciel.
 ```
 
-### Maître Assassin (R) → `assassin_ombre_evo.png`
+### ✅ FAIT — Maître Assassin (R) → `assassin_ombre_evo.png`
 > Joins `assassin_ombre.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -844,7 +844,7 @@ PORTRAIT : en buste, seuls ses yeux dépassent entre la capuche et le masque d'a
 FIGURINE : il atterrit accroupi sur le socle juste après un saut, une main au sol, l'autre lame tendue sur le côté, la cape qui retombe.
 ```
 
-### Cyclope Titan (R) → `cyclope_evo.png`
+### ✅ FAIT — Cyclope Titan (R) → `cyclope_evo.png`
 > Joins `cyclope.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -870,7 +870,7 @@ PORTRAIT : en contre-plongée, il se penche vers le spectateur et le regarde ave
 FIGURINE : il soulève sa colonne-massue à deux mains au-dessus de sa tête, prêt à frapper, une jambe en avant.
 ```
 
-### Seigneur Minotaure (R) → `minotaure_jeune_evo.png`
+### ✅ FAIT — Seigneur Minotaure (R) → `minotaure_jeune_evo.png`
 > Joins `minotaure_jeune.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -896,7 +896,7 @@ PORTRAIT : en buste, il souffle par les naseaux et nous fixe, l'air vraiment ter
 FIGURINE : il fait tournoyer sa grande hache d'une seule main au-dessus de sa tête, facilement, l'autre main sur la hanche.
 ```
 
-### Reine des Lamentations (R) → `banshee_evo.png`
+### ✅ FAIT — Reine des Lamentations (R) → `banshee_evo.png`
 > Joins `banshee.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -922,7 +922,7 @@ PORTRAIT : en buste, elle porte ses mains à ses joues et pleure, les larmes de 
 FIGURINE : elle flotte au-dessus du socle, les bras grands ouverts, et pousse un cri, la bouche grande ouverte, les cheveux qui flottent.
 ```
 
-### Centaure Seigneur de Guerre (R) → `centaure_guerrier_evo.png`
+### ✅ FAIT — Centaure Seigneur de Guerre (R) → `centaure_guerrier_evo.png`
 > Joins `centaure_guerrier.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -948,7 +948,7 @@ PORTRAIT : à mi-corps (le torse), il tient son arc en travers de sa poitrine et
 FIGURINE : cabré sur ses pattes arrière, il tire une flèche vers l'avant et vers le haut, la cape rouge qui flotte.
 ```
 
-### La Sirène du Grand Silence (R) → `sirene_muette_evo.png`
+### ✅ FAIT — La Sirène du Grand Silence (R) → `sirene_muette_evo.png`
 > Joins `sirene_muette.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -974,7 +974,7 @@ PORTRAIT : en buste, elle porte la conque à son oreille, les yeux fermés, comm
 FIGURINE : dressée sur sa queue au sommet d'une vague de pierre bleue du socle, elle lève sa conque devant elle comme pour lancer un chant silencieux.
 ```
 
-### La Sentinelle Céleste (R) → `arbaletriere_celeste_evo.png`
+### ✅ FAIT — La Sentinelle Céleste (R) → `arbaletriere_celeste_evo.png`
 > Joins `arbaletriere_celeste.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -1004,7 +1004,7 @@ FIGURINE : debout sur un créneau de pierre du socle, elle vise vers l'avant et 
 
 ## Lot C — les SR et l'UR (17)
 
-### Archisorcier des Ombres (SR) → `mage_evo.png`
+### ✅ FAIT — Archisorcier des Ombres (SR) → `mage_evo.png`
 > Joins `mage.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -1030,7 +1030,7 @@ PORTRAIT : en buste, la capuche abaissée sur les yeux, il sourit, un orbe de t�
 FIGURINE : il lévite légèrement au-dessus du socle, les bras écartés, un orbe dans chaque main, son grimoire ouvert flottant devant lui (collé à sa ceinture par la chaîne).
 ```
 
-### Hiérophante Sacré (SR) → `clerc_evo.png`
+### ✅ FAIT — Hiérophante Sacré (SR) → `clerc_evo.png`
 > Joins `clerc.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -1056,7 +1056,7 @@ PORTRAIT : en buste, elle lève son livre saint ouvert devant elle et lit une pr
 FIGURINE : debout, elle lève sa masse sacrée bien haut vers le ciel pour bénir ses alliés, le livre serré contre son cœur.
 ```
 
-### L'Abbesse du Silence (SR) → `soeur_silence_evo.png`
+### ✅ FAIT — L'Abbesse du Silence (SR) → `soeur_silence_evo.png`
 > Joins `soeur_silence.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -1082,7 +1082,7 @@ PORTRAIT : en buste, elle pose son grand sceau doré sur son cœur, les yeux fer
 FIGURINE : elle frappe le socle de sa crosse d'abbesse et lève son sceau doré vers l'avant pour imposer le silence.
 ```
 
-### Le Grand Exorciste (SR) → `exorciste_dechu_evo.png`
+### ✅ FAIT — Le Grand Exorciste (SR) → `exorciste_dechu_evo.png`
 > Joins `exorciste_dechu.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
