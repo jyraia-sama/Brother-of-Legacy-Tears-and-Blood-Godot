@@ -27,7 +27,7 @@ Fichiers à me rendre :
 Le Boss de Monde est en 3D depuis la v0.77.0 ; chaque géant emprunte un décor proche (Béhémoth → Terres Brûlées, Léviathan → Fosses Englouties, Yggdravor → Sylve Putride, Golgoth → Puits de Sang, Solgard → Paradis, Nidhögr → Sceau des Frères, Avatar → Bastion de l'éclipse). Dès qu'un décor arrive, il remplace l'emprunt tout seul.
 
 ## État
-- Aucun décor de géant encore peint.
+- Les 7 décors sont faits en v0.77.1 (coupes : Avatar 0.69, Béhémoth 0.69, Golgoth 0.68, Léviathan 0.68, Nidhögr 0.69, Solgard 0.68, Yggdravor 0.67).
 
 ---
 

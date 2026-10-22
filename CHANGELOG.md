@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.77.0** (2026-10-22)
+Version actuelle : **0.77.1** (2026-10-22)
+
+## v0.77.1 — Sept terres pour sept géants  (2026-10-22)
+
+- BOSS DE MONDE — DÉCORS : chaque géant a maintenant son propre champ de bataille peint pour la 3D : la plaine volcanique en ruine du Béhémoth des Cendres, le port englouti sous la tempête du Léviathan, le royaume étouffé par les racines d'Yggdravor, le canyon de cristaux rouges de Golgoth, le désert vitrifié de Solgard, le sommet sous les étoiles brisées de Nidhögr et le lac rubis sous la lune rouge de l'Avatar du Sang Originel.
+- Ces décors remplacent les emprunts aux Actes de la version précédente, avec chacun son ambiance (cendres, pluie et éclairs, spores, poussière, étincelles…).
 
 ## v0.77.0 — Les géants en 3D  (2026-10-22)
 

@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.77.0"
+const NUMERO := "0.77.1"
 const DATE := "2026-10-22"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.77.1", "date": "2026-10-22", "titre": "Sept terres pour sept géants",
+	"changements": [
+		"BOSS DE MONDE — DÉCORS : chaque géant a maintenant son propre champ de bataille peint pour la 3D : la plaine volcanique en ruine du Béhémoth des Cendres, le port englouti sous la tempête du Léviathan, le royaume étouffé par les racines d'Yggdravor, le canyon de cristaux rouges de Golgoth, le désert vitrifié de Solgard, le sommet sous les étoiles brisées de Nidhögr et le lac rubis sous la lune rouge de l'Avatar du Sang Originel.",
+		"Ces décors remplacent les emprunts aux Actes de la version précédente, avec chacun son ambiance (cendres, pluie et éclairs, spores, poussière, étincelles…).",
+	]},
 	{"version": "0.77.0", "date": "2026-10-22", "titre": "Les géants en 3D",
 	"changements": [
 		"BOSS DE MONDE EN 3D : le géant se dresse au milieu du champ de bataille, face à tes 4 escouades rangées sur 4 rangs (escouade 1 au fond, escouade 4 devant). Chaque héros a sa figurine sur son socle, avec une petite barre de vie ; la grande barre du géant reste en haut de l'écran.",
