@@ -1,6 +1,14 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.77.5** (2026-10-22)
+Version actuelle : **0.78.0** (2026-10-22)
+
+## v0.78.0 — En route sur le plateau  (2026-10-22)
+
+- PLATEAU DES CHAPITRES EN 3D : le chapitre devient un sentier pavé qui serpente sur le sol de l'Acte, avec son décor peint au loin. Chaque case est une dalle de pierre entourée de sa couleur (rouge combat, orange élite, or coffre, vert soin, violet mystère…).
+- LES ENNEMIS T'ATTENDENT : sur chaque case de combat, la figurine du monstre le plus fort de la rencontre attend ton arrivée. Une fois battu, il disparaît du chemin.
+- VRAIE MARCHE : ton héros avance à petits pas le long du sentier, éclairé par la lueur bleue de la Larme. Des flèches dorées au sol montrent les routes possibles (une par route aux embranchements) ; quand il n'y a qu'un chemin, le bouton « Avancer ▶ » (ou la touche Entrée) suffit.
+- CARTE DU CHAPITRE : le bouton « Carte » montre d'en haut toute la partie déjà découverte, pour choisir ta route. Avant chaque combat, la caméra plonge vers l'ennemi.
+- La case « Combats et plateaux en 3D » des Paramètres permet de revenir au plateau 2D si ton téléphone chauffe ou ralentit.
 
 ## v0.77.5 — Les premiers de la liste  (2026-10-22)
 

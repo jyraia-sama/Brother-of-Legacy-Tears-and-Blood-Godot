@@ -15,11 +15,19 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.77.5"
+const NUMERO := "0.78.0"
 const DATE := "2026-10-22"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.78.0", "date": "2026-10-22", "titre": "En route sur le plateau",
+	"changements": [
+		"PLATEAU DES CHAPITRES EN 3D : le chapitre devient un sentier pavé qui serpente sur le sol de l'Acte, avec son décor peint au loin. Chaque case est une dalle de pierre entourée de sa couleur (rouge combat, orange élite, or coffre, vert soin, violet mystère…).",
+		"LES ENNEMIS T'ATTENDENT : sur chaque case de combat, la figurine du monstre le plus fort de la rencontre attend ton arrivée. Une fois battu, il disparaît du chemin.",
+		"VRAIE MARCHE : ton héros avance à petits pas le long du sentier, éclairé par la lueur bleue de la Larme. Des flèches dorées au sol montrent les routes possibles (une par route aux embranchements) ; quand il n'y a qu'un chemin, le bouton « Avancer ▶ » (ou la touche Entrée) suffit.",
+		"CARTE DU CHAPITRE : le bouton « Carte » montre d'en haut toute la partie déjà découverte, pour choisir ta route. Avant chaque combat, la caméra plonge vers l'ennemi.",
+		"La case « Combats et plateaux en 3D » des Paramètres permet de revenir au plateau 2D si ton téléphone chauffe ou ralentit.",
+	]},
 	{"version": "0.77.5", "date": "2026-10-22", "titre": "Les premiers de la liste",
 	"changements": [
 		"ILLUSTRATIONS D'ÉVOLUTION : le Rat-Roi Pestilent, le Champion Squelette, le Chef Pillard Gobelin et le Loup Alpha ont leur propre portrait et leur propre figurine. Toutes les évolutions des héros N ont maintenant leur image.",
