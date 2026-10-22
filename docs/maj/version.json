@@ -12,6 +12,16 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"Le héros marche plus vite entre deux cases, avec des pas moins nombreux et plus amples.",
+				"Mobile : sur le plateau 3D, les boutons « Carte » et « Recentrer » sont maintenant sous la barre du haut, toujours visibles (la Carte se referme avec « Retour »). Les titres trop longs sont raccourcis au lieu de déborder.",
+				"Le menu principal et la carte du monde occupent tout l'écran comme le plateau : plus de bandes noires sur les côtés des téléphones larges.",
+				"Carte du monde : tous ses boutons (← Menu, Journal, Continuer, Fermer, Jouer) ont le même style peint que les autres menus."
+			],
+			"titre": "Retouches du plateau",
+			"version": "0.78.1"
+		},
+		{
+			"changements": [
 				"PLATEAU DES CHAPITRES EN 3D : le chapitre devient un sentier pavé qui serpente sur le sol de l'Acte, avec son décor peint au loin. Chaque case est une dalle de pierre entourée de sa couleur (rouge combat, orange élite, or coffre, vert soin, violet mystère…).",
 				"LES ENNEMIS T'ATTENDENT : sur chaque case de combat, la figurine du monstre le plus fort de la rencontre attend ton arrivée. Une fois battu, il disparaît du chemin.",
 				"VRAIE MARCHE : ton héros avance à petits pas le long du sentier, éclairé par la lueur bleue de la Larme. Des flèches dorées au sol montrent les routes possibles (une par route aux embranchements) ; quand il n'y a qu'un chemin, le bouton « Avancer ▶ » (ou la touche Entrée) suffit.",
@@ -128,22 +138,13 @@
 			],
 			"titre": "La Lanterne des Os",
 			"version": "0.74.1"
-		},
-		{
-			"changements": [
-				"SORTS — DEUX RESSOURCES : les Grimoires Interdits servent maintenant dès le niveau 3 → 4 d'un sort (1 Grimoire par niveau jusqu'au niveau 7, puis 2, 3 et 5). Les niveaux 1 → 3 ne coûtent toujours que des Pages. Les coûts en Pages et en or ne changent pas, et les sorts déjà améliorés gardent leur niveau.",
-				"BIBLIOTHÈQUE INTERDITE : les Grimoires Interdits tombent dès le niveau 3 (1 Grimoire aux niveaux 3 à 5, 2 aux niveaux 6-7, 3 aux niveaux 8-9, 4 au niveau 10). Le butin bonus donne alors un Grimoire de plus.",
-				"GUIDE DES SORTS mis à jour avec ces nouveaux coûts (tableau des Grimoires nécessaires selon les étoiles du héros)."
-			],
-			"titre": "Pages et Grimoires",
-			"version": "0.74.0"
 		}
 	],
 	"pck": {
-		"sha256": "91b59749c20467ac5f1616f69d20e67273999ef3fd44e0ece0bad980ae180415",
-		"taille": 32277320,
+		"sha256": "561d018c8a1058aa9f2dd7d95430da7a50bed388edf3f64d63aa0008361d2b1c",
+		"taille": 32280344,
 		"url": "jeu.pck"
 	},
-	"version": "0.78.0",
+	"version": "0.78.1",
 	"version_minimum": "0.37.0"
 }

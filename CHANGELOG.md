@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.78.0** (2026-10-22)
+Version actuelle : **0.78.1** (2026-10-22)
+
+## v0.78.1 — Retouches du plateau  (2026-10-22)
+
+- Le héros marche plus vite entre deux cases, avec des pas moins nombreux et plus amples.
+- Mobile : sur le plateau 3D, les boutons « Carte » et « Recentrer » sont maintenant sous la barre du haut, toujours visibles (la Carte se referme avec « Retour »). Les titres trop longs sont raccourcis au lieu de déborder.
+- Le menu principal et la carte du monde occupent tout l'écran comme le plateau : plus de bandes noires sur les côtés des téléphones larges.
+- Carte du monde : tous ses boutons (← Menu, Journal, Continuer, Fermer, Jouer) ont le même style peint que les autres menus.
 
 ## v0.78.0 — En route sur le plateau  (2026-10-22)
 

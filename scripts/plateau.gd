@@ -1264,6 +1264,8 @@ func _creer_hud() -> void:
 	lbl_titre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl_titre.add_theme_font_size_override("font_size", 22)
 	lbl_titre.add_theme_color_override("font_color", Color(1.0, 0.85, 0.55))
+	lbl_titre.clip_text = true
+	lbl_titre.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	var centre := VBoxContainer.new()
 	centre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	centre.add_theme_constant_override("separation", 0)
@@ -1274,6 +1276,8 @@ func _creer_hud() -> void:
 	loot.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	loot.add_theme_font_size_override("font_size", 15)
 	loot.add_theme_color_override("font_color", Color("ff8a7a"))
+	loot.clip_text = true
+	loot.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	centre.add_child(loot)
 	ligne.add_child(centre)
 
@@ -1299,15 +1303,26 @@ func _creer_hud() -> void:
 		camera_libre = false
 		if _p3d != null:
 			_p3d.recentrer())
-	ligne.add_child(centrer)
-
-	if _p3d != null:
+	if _p3d == null:
+		ligne.add_child(centrer)
+	else:
+		# En 3D : « Recentrer » et « Carte » sous la barre, à droite (la barre reste lisible sur téléphone)
+		var cote := VBoxContainer.new()
+		cote.add_theme_constant_override("separation", 8)
+		cote.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+		cote.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+		cote.offset_right = -16
+		cote.offset_top = 104
+		hud.add_child(cote)
 		_btn_carte = Button.new()
 		_btn_carte.text = "Carte"
 		_btn_carte.focus_mode = Control.FOCUS_NONE
+		_btn_carte.custom_minimum_size = Vector2(170, 0)
 		_btn_carte.tooltip_text = "Voir tout le chapitre d'en haut"
-		_btn_carte.pressed.connect(func(): _btn_carte.text = "Retour au héros" if _p3d.basculer_carte() else "Carte")
-		ligne.add_child(_btn_carte)
+		_btn_carte.pressed.connect(func(): _btn_carte.text = "Retour" if _p3d.basculer_carte() else "Carte")
+		cote.add_child(_btn_carte)
+		centrer.custom_minimum_size = Vector2(170, 0)
+		cote.add_child(centrer)
 		# Gros bouton « Avancer » en bas au centre (une seule route) ; flèches au sol aux embranchements
 		_btn_avancer = Button.new()
 		_btn_avancer.text = "Avancer  ▶"

@@ -103,6 +103,16 @@ func _ready() -> void:
 	noir.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
+	# Écrans plus larges que 16:9 (téléphones 20:9) : l'illustration assombrie remplit les côtés
+	if ResourceLoader.exists(BG_PATH):
+		var bords := TextureRect.new()
+		bords.texture = load(BG_PATH)
+		bords.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		bords.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		bords.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		bords.modulate = Color(0.3, 0.27, 0.29)
+		bords.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		add_child(bords)
 	_ui = Control.new()
 	_ui.size = BASE
 	_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -549,8 +559,11 @@ func _creer_hud() -> void:
 	var barre := _boite(Rect2(0, 0, 1280, 60), Color(0.04, 0.024, 0.027, 0.85))
 	barre.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_boite(Rect2(0, 60, 1280, 1), Color(C_OR, 0.35)).mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var retour := _bouton("←  Menu", 15, false)
-	_placer(retour, Rect2(14, 10, 104, 40))
+	var retour := Button.new()
+	retour.text = "← Menu"
+	retour.focus_mode = Control.FOCUS_NONE
+	retour.add_theme_font_size_override("font_size", 15)
+	_placer(retour, Rect2(10, 8, 128, 44))
 	retour.pressed.connect(_retour)
 	var t := _label("LES TERRES DES VALCENDRE", 20, C_OR, true)
 	_placer(t, Rect2(132, 6, 420, 26))
@@ -1057,12 +1070,7 @@ func _bouton(texte: String, taille: int, principal: bool) -> Button:
 	b.focus_mode = Control.FOCUS_NONE
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	b.add_theme_font_size_override("font_size", taille)
-	b.add_theme_color_override("font_color", Color.WHITE if principal else C_TEXTE)
-	b.add_theme_color_override("font_hover_color", Color("ffd27a") if not principal else Color.WHITE)
-	var fond := C_ROUGE if principal else Color(0.12, 0.08, 0.086, 0.95)
-	var bord := C_OR if principal else Color("4a3638")
-	b.add_theme_stylebox_override("normal", _style(fond, bord, 22, 1))
-	b.add_theme_stylebox_override("hover", _style(fond.lightened(0.12), Color("ffd27a"), 22, 1))
-	b.add_theme_stylebox_override("pressed", _style(fond.lightened(0.18), Color("ffd27a"), 22, 1))
-	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	# Même bouton peint que les autres écrans (thème du jeu) ; le bouton principal en lettres dorées
+	if principal:
+		b.add_theme_color_override("font_color", Color("ffd27a"))
 	return b

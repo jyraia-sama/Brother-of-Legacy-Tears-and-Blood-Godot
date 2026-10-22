@@ -15,11 +15,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.78.0"
+const NUMERO := "0.78.1"
 const DATE := "2026-10-22"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.78.1", "date": "2026-10-22", "titre": "Retouches du plateau",
+	"changements": [
+		"Le héros marche plus vite entre deux cases, avec des pas moins nombreux et plus amples.",
+		"Mobile : sur le plateau 3D, les boutons « Carte » et « Recentrer » sont maintenant sous la barre du haut, toujours visibles (la Carte se referme avec « Retour »). Les titres trop longs sont raccourcis au lieu de déborder.",
+		"Le menu principal et la carte du monde occupent tout l'écran comme le plateau : plus de bandes noires sur les côtés des téléphones larges.",
+		"Carte du monde : tous ses boutons (← Menu, Journal, Continuer, Fermer, Jouer) ont le même style peint que les autres menus.",
+	]},
 	{"version": "0.78.0", "date": "2026-10-22", "titre": "En route sur le plateau",
 	"changements": [
 		"PLATEAU DES CHAPITRES EN 3D : le chapitre devient un sentier pavé qui serpente sur le sol de l'Acte, avec son décor peint au loin. Chaque case est une dalle de pierre entourée de sa couleur (rouge combat, orange élite, or coffre, vert soin, violet mystère…).",

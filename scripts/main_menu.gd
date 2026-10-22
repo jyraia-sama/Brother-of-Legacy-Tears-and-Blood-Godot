@@ -189,6 +189,16 @@ func _ready() -> void:
 	noir.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
+	# Écrans plus larges que 16:9 (téléphones 20:9) : l'illustration assombrie remplit les côtés
+	if ResourceLoader.exists(BG_PATH):
+		var bords := TextureRect.new()
+		bords.texture = load(BG_PATH)
+		bords.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		bords.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		bords.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		bords.modulate = Color(0.3, 0.27, 0.29)
+		bords.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		add_child(bords)
 	_ui = Control.new()
 	_ui.size = BASE
 	_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
