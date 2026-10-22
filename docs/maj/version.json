@@ -12,6 +12,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"BOSS DE MONDE — DÉCORS : chaque géant a maintenant son propre champ de bataille peint pour la 3D : la plaine volcanique en ruine du Béhémoth des Cendres, le port englouti sous la tempête du Léviathan, le royaume étouffé par les racines d'Yggdravor, le canyon de cristaux rouges de Golgoth, le désert vitrifié de Solgard, le sommet sous les étoiles brisées de Nidhögr et le lac rubis sous la lune rouge de l'Avatar du Sang Originel.",
+				"Ces décors remplacent les emprunts aux Actes de la version précédente, avec chacun son ambiance (cendres, pluie et éclairs, spores, poussière, étincelles…)."
+			],
+			"titre": "Sept terres pour sept géants",
+			"version": "0.77.1"
+		},
+		{
+			"changements": [
 				"BOSS DE MONDE EN 3D : le géant se dresse au milieu du champ de bataille, face à tes 4 escouades rangées sur 4 rangs (escouade 1 au fond, escouade 4 devant). Chaque héros a sa figurine sur son socle, avec une petite barre de vie ; la grande barre du géant reste en haut de l'écran.",
 				"En attendant leurs propres décors, les géants combattent dans le décor le plus proche : le Béhémoth dans les Terres Brûlées, le Léviathan dans les Fosses Englouties, Yggdravor dans la Sylve Putride, Golgoth au Puits de Sang, Solgard au Paradis, Nidhögr dans le Sceau des Frères et l'Avatar du Sang dans le bastion de l'éclipse.",
 				"Si le combat ralentit sur ton téléphone, décoche « Combats en 3D » dans les Paramètres pour revenir au Boss de Monde en 2D."
@@ -129,20 +137,13 @@
 			],
 			"titre": "Les pions prennent vie",
 			"version": "0.71.0"
-		},
-		{
-			"changements": [
-				"Enregistreur de partie : le journal indique maintenant si l'option « Combats en 3D » est cochée, la carte graphique utilisée, et pour chaque combat le type d'affichage (3D ou 2D) et le décor chargé."
-			],
-			"titre": "Enregistreur : affichage des combats",
-			"version": "0.70.3"
 		}
 	],
 	"pck": {
-		"sha256": "f4deda7f5a9b22389e62d4fd92486639b4d8f8792a719e12fb82515d01c7e5ea",
-		"taille": 32255428,
+		"sha256": "191a42ef2fb6e77ab2eae6d4fe7add811401edff513706acf3e7dd8b17c0c722",
+		"taille": 32255492,
 		"url": "jeu.pck"
 	},
-	"version": "0.77.0",
+	"version": "0.77.1",
 	"version_minimum": "0.37.0"
 }
