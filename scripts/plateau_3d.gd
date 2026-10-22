@@ -96,7 +96,7 @@ func construire(acte_: int, noeuds: Array, depart: int, boss: int, figurines: Di
 	# Ambiance (mêmes réglages que les combats de l'Acte, un peu plus de brume au loin)
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
-	env.background_color = Color(0.03, 0.025, 0.03)
+	env.background_color = (amb.get("c_brume", Color(0.08, 0.06, 0.07)) as Color).darkened(0.3)
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = amb["amb"]
 	env.ambient_light_energy = 0.7
@@ -180,7 +180,7 @@ func _creer_toile() -> void:
 		return
 	var tex: Texture2D = load(chemin)
 	var coupe := 0.72
-	var largeur := maxf(190.0, _bornes.size.y + 120.0)
+	var largeur := 300.0
 	var h := largeur * float(tex.get_height()) / float(tex.get_width()) * coupe
 	var q := QuadMesh.new()
 	q.size = Vector2(largeur, h)
@@ -193,8 +193,10 @@ func _creer_toile() -> void:
 	m.albedo_color = Color(0.6, 0.56, 0.56)
 	m.disable_fog = true
 	mi.material_override = m
-	mi.position = Vector3(_bornes.end.x + 60.0, h / 2.0 - 4.0, _bornes.get_center().y)
-	mi.rotation_degrees = Vector3(0, -90, 0)
+	# Face à la caméra (elle regarde vers +X et un peu vers -Z), loin derrière le boss
+	var regard := Vector3(0.83, 0, -0.56).normalized()
+	mi.position = Vector3(_bornes.end.x, 0, _bornes.get_center().y) + regard * 70.0 + Vector3(0, h / 2.0 - 6.0, 0)
+	mi.rotation.y = atan2(-regard.x, -regard.z)
 	_monde.add_child(mi)
 
 
