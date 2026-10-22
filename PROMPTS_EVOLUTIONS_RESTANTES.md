@@ -112,7 +112,7 @@ PORTRAIT : de face, en légère contre-plongée, la tête haute, il nous fixe de
 FIGURINE : debout sur un rocher du socle, une patte avant posée en avant sur le bord, il montre les crocs vers l'avant en grondant, le poil hérissé.
 ```
 
-### Colosse Putride (N) → `zombie_evo.png`
+### ✅ FAIT — Colosse Putride (N) → `zombie_evo.png`
 > Joins `zombie.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -138,7 +138,7 @@ PORTRAIT : en buste, il se gratte la tête d'un air perdu, une chaîne qui pend 
 FIGURINE : il fait tournoyer sa chaîne au-dessus de sa tête en avançant d'un pas lourd, le boulet traîné derrière lui sur le socle.
 ```
 
-### Seigneur des Routes (N) → `bandit_evo.png`
+### ✅ FAIT — Seigneur des Routes (N) → `bandit_evo.png`
 > Joins `bandit.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -164,7 +164,7 @@ PORTRAIT : à mi-corps, il baisse son foulard et sourit d'un sourire cruel, un c
 FIGURINE : il lance ses deux couteaux vers l'avant (ils restent dans ses mains, en pleine détente), le manteau noir qui s'ouvre derrière lui, un pied sur une borne de chemin posée sur le socle.
 ```
 
-### Araignée Nécrotoxique (N) → `araignee_venin_evo.png`
+### ✅ FAIT — Araignée Nécrotoxique (N) → `araignee_venin_evo.png`
 > Joins `araignee_venin.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -190,7 +190,7 @@ PORTRAIT : vue de face et de près, ses huit yeux brillent et ses crochets s'ouv
 FIGURINE : dressée sur ses pattes arrière au milieu d'une toile tendue entre deux petites branches du socle, les pattes avant levées, prête à fondre sur sa proie.
 ```
 
-### Seigneur Chiroptère (N) → `chauve_souris_vampire_evo.png`
+### ✅ FAIT — Seigneur Chiroptère (N) → `chauve_souris_vampire_evo.png`
 > Joins `chauve_souris_vampire.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -216,7 +216,7 @@ PORTRAIT : suspendue la tête en bas, enveloppée dans ses ailes comme dans une 
 FIGURINE : ailes grandes ouvertes, elle se pose sur une petite gargouille de pierre du socle, les griffes agrippées à la pierre, la tête tendue vers l'avant.
 ```
 
-### Limace Dévoreuse (N) → `limace_acide_evo.png`
+### ✅ FAIT — Limace Dévoreuse (N) → `limace_acide_evo.png`
 > Joins `limace_acide.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -242,7 +242,7 @@ PORTRAIT : de PROFIL tourné vers la gauche, elle penche une antenne vers le spe
 FIGURINE : elle se dresse en avant de tout son corps, la bouche grande ouverte pour avaler quelque chose devant elle, sa traînée de bave fumante sur le socle.
 ```
 
-### Corbeau Funeste (N) → `corbeau_maudit_evo.png`
+### ✅ FAIT — Corbeau Funeste (N) → `corbeau_maudit_evo.png`
 > Joins `corbeau_maudit.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -268,7 +268,7 @@ PORTRAIT : de face, ses trois yeux violets nous fixent, la tête penchée sur le
 FIGURINE : ailes déployées, il est perché sur une petite pierre tombale fendue du socle et croasse la tête levée vers le ciel ; la fumée reste collée à ses plumes.
 ```
 
-### Sanglier des Braises (N) → `sanglier_sauvage_evo.png`
+### ✅ FAIT — Sanglier des Braises (N) → `sanglier_sauvage_evo.png`
 > Joins `sanglier_sauvage.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -294,7 +294,7 @@ PORTRAIT : de trois quarts vers la gauche, la tête basse, il souffle deux jets 
 FIGURINE : en pleine charge vers l'avant, les quatre pattes en mouvement, la tête baissée, les défenses incandescentes pointées devant lui.
 ```
 
-### Cogneur des Tavernes (N) → `brigand_evo.png`
+### ✅ FAIT — Cogneur des Tavernes (N) → `brigand_evo.png`
 > Joins `brigand.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -320,7 +320,7 @@ PORTRAIT : à mi-corps, il trinque vers le spectateur avec sa chope en riant de 
 FIGURINE : il frappe son gourdin dans sa paume ouverte, l'air de dire « qui veut se battre ? », un pied posé sur un tabouret renversé du socle.
 ```
 
-### Slime Royal (N) → `slime_evo.png`
+### ✅ FAIT — Slime Royal (N) → `slime_evo.png`
 > Joins `slime.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -346,7 +346,7 @@ PORTRAIT : il gonfle les joues avec un air très digne de petit roi, la couronne
 FIGURINE : il fait une révérence royale en s'aplatissant à moitié, la cape étalée derrière lui sur le socle, la couronne qui tient miraculeusement.
 ```
 
-### Hyène Ardente (N) → `hyene_des_sables_evo.png`
+### ✅ FAIT — Hyène Ardente (N) → `hyene_des_sables_evo.png`
 > Joins `hyene_des_sables.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -372,7 +372,7 @@ PORTRAIT : de PROFIL tourné vers la droite, elle ricane la gueule ouverte, les 
 FIGURINE : accroupie sur un rocher de grès du socle, prête à bondir, elle rit en nous regardant, la crinière de flammes dressée.
 ```
 
-### Naga Cracheuse (N) → `serpent_crache_evo.png`
+### ✅ FAIT — Naga Cracheuse (N) → `serpent_crache_evo.png`
 > Joins `serpent_crache.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -398,7 +398,7 @@ PORTRAIT : de face, capuchon déployé en éventail derrière la tête, elle nou
 FIGURINE : dressée haut au-dessus de ses anneaux enroulés sur le socle, la tête rejetée en arrière, prête à cracher vers l'avant, la gueule ouverte.
 ```
 
-### Abbé Maudit (N) → `moine_dechu_evo.png`
+### ✅ FAIT — Abbé Maudit (N) → `moine_dechu_evo.png`
 > Joins `moine_dechu.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.

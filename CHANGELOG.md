@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.77.3** (2026-10-22)
+Version actuelle : **0.77.4** (2026-10-22)
+
+## v0.77.4 — La meute évolue  (2026-10-22)
+
+- ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Colosse Putride, le Seigneur des Routes, l'Araignée Nécrotoxique, le Seigneur Chiroptère, la Limace Dévoreuse, le Corbeau Funeste, le Sanglier des Braises, le Cogneur des Tavernes, le Slime Royal, la Hyène Ardente, la Naga Cracheuse et l'Abbé Maudit.
+- Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art.
 
 ## v0.77.3 — Douze évolutions de plus  (2026-10-22)
 

@@ -12,6 +12,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Colosse Putride, le Seigneur des Routes, l'Araignée Nécrotoxique, le Seigneur Chiroptère, la Limace Dévoreuse, le Corbeau Funeste, le Sanglier des Braises, le Cogneur des Tavernes, le Slime Royal, la Hyène Ardente, la Naga Cracheuse et l'Abbé Maudit.",
+				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
+			],
+			"titre": "La meute évolue",
+			"version": "0.77.4"
+		},
+		{
+			"changements": [
 				"ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Vautour Nécrophage, le Poltergeist Furieux, le Fracasseur d'Écailles, la Prêtresse de l'Aube Nouvelle, le Chevalier du Temple, l'Archère des Bois Anciens, le Chef de Guerre Orc, le Lycan de la Lune Rouge, le Spectre de l'Hiver Éternel, le Golem Sanctifié, la Harpie Reine des Vents et le Chevalier de Fer Maudit.",
 				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
 			],
@@ -125,21 +133,13 @@
 			],
 			"titre": "Des sorts à portée de main",
 			"version": "0.72.2"
-		},
-		{
-			"changements": [
-				"CORRECTIF TÉLÉPHONE : le clavier ne surgit plus tout seul au lancement. La fenêtre de connexion plaçait le curseur dans le champ e-mail dès son ouverture (même cachée derrière l'écran de chargement), ce qui ouvrait le clavier. Sur téléphone, il s'ouvre maintenant seulement quand tu touches un champ.",
-				"CORRECTIF TÉLÉPHONE : la fenêtre « Nouveautés » ne dépasse plus de l'écran ; le bouton « Fermer » est de nouveau visible. Toutes les fenêtres (compte, astuces, journal…) trop grandes pour l'écran sont maintenant réduites juste assez pour tenir entièrement."
-			],
-			"titre": "Fenêtres et clavier sur téléphone",
-			"version": "0.72.1"
 		}
 	],
 	"pck": {
-		"sha256": "41d4eb9be4ab09fdd2684137077c7823ef0240285e022e60f4767c70fb21fc81",
-		"taille": 32256100,
+		"sha256": "a6749cc9efb36b15b6d3530a1d416866f4bbcf493f3237a7d2ac4b127ad3eb18",
+		"taille": 32256308,
 		"url": "jeu.pck"
 	},
-	"version": "0.77.3",
+	"version": "0.77.4",
 	"version_minimum": "0.37.0"
 }
