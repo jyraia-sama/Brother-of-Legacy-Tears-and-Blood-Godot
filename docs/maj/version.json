@@ -12,6 +12,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Vautour Nécrophage, le Poltergeist Furieux, le Fracasseur d'Écailles, la Prêtresse de l'Aube Nouvelle, le Chevalier du Temple, l'Archère des Bois Anciens, le Chef de Guerre Orc, le Lycan de la Lune Rouge, le Spectre de l'Hiver Éternel, le Golem Sanctifié, la Harpie Reine des Vents et le Chevalier de Fer Maudit.",
+				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
+			],
+			"titre": "Douze évolutions de plus",
+			"version": "0.77.3"
+		},
+		{
+			"changements": [
 				"ILLUSTRATIONS D'ÉVOLUTION : 14 évolutions ont maintenant leur propre portrait et leur propre figurine : la Grande Druidesse des Bois, le Troll Ancestral des Marais, la Gargouille des Tempêtes, le Maître Assassin, le Cyclope Titan, le Seigneur Minotaure, la Reine des Lamentations, le Centaure Seigneur de Guerre, la Sirène du Grand Silence, la Sentinelle Céleste, l'Archisorcier des Ombres, le Hiérophante Sacré, l'Abbesse du Silence et le Grand Exorciste.",
 				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
 			],
@@ -125,22 +133,13 @@
 			],
 			"titre": "Fenêtres et clavier sur téléphone",
 			"version": "0.72.1"
-		},
-		{
-			"changements": [
-				"TÉLÉPHONE — PLUS GRAND : nouvelle taille d'interface « Géante », choisie automatiquement sur les téléphones (les tablettes restent en « Très grande »). Sur les écrans allongés (20:9, comme les Xiaomi), le jeu occupe maintenant toute la largeur au lieu de laisser deux bandes noires sur les côtés.",
-				"TAILLE DU TEXTE : nouveau réglage dans les Paramètres (Normal, Grand, Très grand). Les petits textes (descriptions, stats, boutons) grossissent ; les titres ne bougent pas. « Automatique » : Grand sur téléphone, Normal sur ordinateur.",
-				"LOUPE : sur téléphone, un appui long sur une image (portrait, carte, illustration) l'affiche en grand, en entier. Toucher l'écran pour fermer."
-			],
-			"titre": "Lisible sur téléphone",
-			"version": "0.72.0"
 		}
 	],
 	"pck": {
-		"sha256": "e5ef1b89dc297d3d66bda8b5c1684e312cb9eeb714a4be5c1a4387b658c7536f",
-		"taille": 32255796,
+		"sha256": "41d4eb9be4ab09fdd2684137077c7823ef0240285e022e60f4767c70fb21fc81",
+		"taille": 32256100,
 		"url": "jeu.pck"
 	},
-	"version": "0.77.2",
+	"version": "0.77.3",
 	"version_minimum": "0.37.0"
 }

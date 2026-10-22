@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.77.2** (2026-10-22)
+Version actuelle : **0.77.3** (2026-10-22)
+
+## v0.77.3 — Douze évolutions de plus  (2026-10-22)
+
+- ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Vautour Nécrophage, le Poltergeist Furieux, le Fracasseur d'Écailles, la Prêtresse de l'Aube Nouvelle, le Chevalier du Temple, l'Archère des Bois Anciens, le Chef de Guerre Orc, le Lycan de la Lune Rouge, le Spectre de l'Hiver Éternel, le Golem Sanctifié, la Harpie Reine des Vents et le Chevalier de Fer Maudit.
+- Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art.
 
 ## v0.77.2 — Quatorze évolutions prennent forme  (2026-10-22)
 

@@ -424,7 +424,7 @@ PORTRAIT : en buste, il lit à voix basse dans son livre de fer, un sourire inqu
 FIGURINE : il lève sa crosse noire bien haut d'une main comme pour bénir (ou maudire) la foule, le livre ouvert serré contre lui de l'autre main.
 ```
 
-### Vautour Nécrophage (N) → `vautour_charognard_evo.png`
+### ✅ FAIT — Vautour Nécrophage (N) → `vautour_charognard_evo.png`
 > Joins `vautour_charognard.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -450,7 +450,7 @@ PORTRAIT : de PROFIL tourné vers la gauche, il penche la tête de côté et nou
 FIGURINE : perché sur un vieux squelette de cheval couché sur le socle, ailes à demi ouvertes en manteau, il nous regarde la tête basse.
 ```
 
-### Poltergeist Furieux (N) → `esprit_frappeur_evo.png`
+### ✅ FAIT — Poltergeist Furieux (N) → `esprit_frappeur_evo.png`
 > Joins `esprit_frappeur.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -476,7 +476,7 @@ PORTRAIT : en gros plan, il grimace en tirant la langue au spectateur, les joues
 FIGURINE : il flotte au-dessus d'une petite commode renversée posée sur le socle, les bras levés pour tout faire voler, les objets hantés collés à son corps.
 ```
 
-### Le Fracasseur d'Écailles (N) → `brise_carapace_evo.png`
+### ✅ FAIT — Le Fracasseur d'Écailles (N) → `brise_carapace_evo.png`
 > Joins `brise_carapace.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -502,7 +502,7 @@ PORTRAIT : à mi-corps, il montre fièrement son biceps bandé, la masse posée 
 FIGURINE : il soulève sa masse à deux mains au-dessus de sa tête en grognant, prêt à l'abattre, une jambe posée sur une grosse carapace fendue sur le socle.
 ```
 
-### La Prêtresse de l'Aube Nouvelle (N) → `novice_aube_evo.png`
+### ✅ FAIT — La Prêtresse de l'Aube Nouvelle (N) → `novice_aube_evo.png`
 > Joins `novice_aube.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -528,7 +528,7 @@ PORTRAIT : en buste, elle tient son livre ouvert contre elle et sourit au specta
 FIGURINE : debout bien droite, elle lève les deux mains au-dessus d'elle vers le ciel pour bénir ses alliés, son livre attaché à la ceinture, sa natte dans le dos.
 ```
 
-### Le Chevalier du Temple (N) → `ecuyer_temple_evo.png`
+### ✅ FAIT — Le Chevalier du Temple (N) → `ecuyer_temple_evo.png`
 > Joins `ecuyer_temple.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -558,7 +558,7 @@ FIGURINE : un genou à terre, il plante son épée longue devant lui et s'y appu
 
 ## Lot B — les R (17)
 
-### Archère des Bois Anciens (R) → `archer_evo.png`
+### ✅ FAIT — Archère des Bois Anciens (R) → `archer_evo.png`
 > Joins `archer.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -584,7 +584,7 @@ PORTRAIT : en buste, elle retire sa capuche et regarde au loin, une flèche aux 
 FIGURINE : un genou à terre sur une grosse racine du socle, elle bande son arc fleuri vers l'avant et vise droit devant elle, la cape de mousse qui retombe derrière.
 ```
 
-### Chef de Guerre Orc (R) → `orc_guerrier_evo.png`
+### ✅ FAIT — Chef de Guerre Orc (R) → `orc_guerrier_evo.png`
 > Joins `orc_guerrier.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -610,7 +610,7 @@ PORTRAIT : à mi-corps, il pousse un cri de guerre la bouche grande ouverte, la 
 FIGURINE : il plante sa grande hache dans le socle et s'appuie dessus d'une main, l'autre poing levé pour rallier ses troupes.
 ```
 
-### Lycan de la Lune Rouge (R) → `loup_garou_evo.png`
+### ✅ FAIT — Lycan de la Lune Rouge (R) → `loup_garou_evo.png`
 > Joins `loup_garou.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -636,7 +636,7 @@ PORTRAIT : en contre-plongée, il lève la tête vers une lune rouge (dans le fo
 FIGURINE : à quatre pattes sur le socle, prêt à bondir en avant, les épaules voûtées, le poil hérissé, il grogne vers nous.
 ```
 
-### Spectre de l'Hiver Éternel (R) → `spectre_glacial_evo.png`
+### ✅ FAIT — Spectre de l'Hiver Éternel (R) → `spectre_glacial_evo.png`
 > Joins `spectre_glacial.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -662,7 +662,7 @@ PORTRAIT : en buste, elle souffle doucement vers le spectateur, son souffle givr
 FIGURINE : elle flotte au-dessus d'un petit bloc de glace du socle, le sceptre de glace levé, l'autre main tendue vers l'avant pour geler son ennemi.
 ```
 
-### Golem Sanctifié (R) → `golem_pierre_evo.png`
+### ✅ FAIT — Golem Sanctifié (R) → `golem_pierre_evo.png`
 > Joins `golem_pierre.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -688,7 +688,7 @@ PORTRAIT : de face en légère contre-plongée, il croise ses deux poings énorm
 FIGURINE : il frappe le socle d'un seul poing, un genou à terre, la tête levée vers nous, des runes dorées qui s'illuminent sur ses bras.
 ```
 
-### Harpie Reine des Vents (R) → `harpie_evo.png`
+### ✅ FAIT — Harpie Reine des Vents (R) → `harpie_evo.png`
 > Joins `harpie.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -714,7 +714,7 @@ PORTRAIT : en buste, ses ailes repliées comme un manteau autour d'elle, elle no
 FIGURINE : elle se pose sur un rocher pointu du socle, ailes grandes ouvertes, ses serres agrippées à la pierre, la tête tendue vers l'avant dans un cri.
 ```
 
-### Chevalier de Fer Maudit (R) → `chevalier_rouille_evo.png`
+### ✅ FAIT — Chevalier de Fer Maudit (R) → `chevalier_rouille_evo.png`
 > Joins `chevalier_rouille.jpg`.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.

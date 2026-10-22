@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.77.2"
+const NUMERO := "0.77.3"
 const DATE := "2026-10-22"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.77.3", "date": "2026-10-22", "titre": "Douze évolutions de plus",
+	"changements": [
+		"ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Vautour Nécrophage, le Poltergeist Furieux, le Fracasseur d'Écailles, la Prêtresse de l'Aube Nouvelle, le Chevalier du Temple, l'Archère des Bois Anciens, le Chef de Guerre Orc, le Lycan de la Lune Rouge, le Spectre de l'Hiver Éternel, le Golem Sanctifié, la Harpie Reine des Vents et le Chevalier de Fer Maudit.",
+		"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art.",
+	]},
 	{"version": "0.77.2", "date": "2026-10-22", "titre": "Quatorze évolutions prennent forme",
 	"changements": [
 		"ILLUSTRATIONS D'ÉVOLUTION : 14 évolutions ont maintenant leur propre portrait et leur propre figurine : la Grande Druidesse des Bois, le Troll Ancestral des Marais, la Gargouille des Tempêtes, le Maître Assassin, le Cyclope Titan, le Seigneur Minotaure, la Reine des Lamentations, le Centaure Seigneur de Guerre, la Sirène du Grand Silence, la Sentinelle Céleste, l'Archisorcier des Ombres, le Hiérophante Sacré, l'Abbesse du Silence et le Grand Exorciste.",
