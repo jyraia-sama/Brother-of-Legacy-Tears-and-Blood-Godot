@@ -32,6 +32,7 @@ Tous ces modes sont déjà en 3D (v0.76.0). Tant que leur décor n'est pas peint
 
 ## État
 - Aucun décor de mode encore peint.
+- Sol du Puits de Sang : le premier prompt était refusé par ChatGPT (« contenus violents ») ; réécrit sans le mot « sang » (nouvelle conversation, sans image jointe si le refus persiste).
 
 ---
 
@@ -242,10 +243,10 @@ Lumière : lueur rouge qui monte du gouffre, brume rouge. Pas trop gore : du san
 ```
 Texture de sol de dark fantasy peinte, vue exactement du dessus (vue zénithale, à plat, sans perspective),
 format carré 1024x1024, RACCORDABLE SANS COUTURE sur les quatre bords (seamless tileable texture).
-Roche rouge sombre et rugueuse, petites rigoles et flaques de sang séché presque noir, gravillons, fines fissures.
+Roche volcanique rouge sombre et rugueuse, comme du grès rouge ou du jaspe, avec de petites rigoles et des flaques peu profondes d'eau minérale rouge rubis très foncée, presque noire, à la surface brillante. Gravillons, fines fissures, quelques veines de minerai couleur grenat.
 Éclairage neutre et uniforme, sans ombre portée marquée et sans point lumineux dominant.
-Aucun objet gros, aucun personnage, aucune arme, aucun os, aucun motif qui se remarque quand on répète l'image.
-Palette : rouge sombre, bordeaux, brun-noir.
+Aucun objet gros, aucun personnage, aucun motif qui se remarque quand on répète l'image.
+Palette : rouge grenat, bordeaux, brun-noir, reflets rubis.
 Pas de texte, pas de cadre.
 ```
 
