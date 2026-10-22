@@ -73,6 +73,7 @@ var _env: Environment
 var vitesse := 1.0
 var acte: Variant = 1           # ambiance : numéro d'Acte ou clé de décor d'un mode (à régler avant construire)
 var camera_cinema := false      # ralenti et rapprochement sur les moments forts
+var hauteur_geant := HAUTEUR_GEANT   # taille du géant (Boss de Monde)
 var echelle_unites := 1.0        # taille des figurines (hors géant) : < 1 au Boss de Monde (20 héros)
 var _n_poses := 0
 
@@ -467,7 +468,7 @@ func _x_pour_ecran(sx: float, z: float) -> float:
 
 func ajouter(idx: int, chemin_figurine: String, frac: Vector2, boss: bool, geant: bool, vers_gauche: bool, couleur_element: Color) -> void:
 	var tex: Texture2D = load(chemin_figurine)
-	var h := HAUTEUR_GEANT if geant else (HAUTEUR_BOSS if boss else HAUTEUR_UNITE)
+	var h := hauteur_geant if geant else (HAUTEUR_BOSS if boss else HAUTEUR_UNITE)
 	# Figurines très larges (quadrupèdes, poses étirées) : on limite leur largeur en réduisant la hauteur
 	var ratio := float(tex.get_width()) / float(tex.get_height())
 	if not geant:
