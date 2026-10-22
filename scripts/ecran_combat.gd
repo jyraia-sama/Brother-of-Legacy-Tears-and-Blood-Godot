@@ -73,7 +73,7 @@ const DECORS_EMPRUNTES := {
 ## Boss de Monde en 3D : taille des héros par rapport à l'Aventure (20 héros doivent tenir dans le cadre)
 const ECHELLE_HEROS_GEANT := 0.66
 ## Hauteur (mètres) du géant : assez grand pour écraser la scène, assez petit pour rester entier à l'écran
-const HAUTEUR_GEANT_3D := 6.2
+const HAUTEUR_GEANT_3D := 5.0
 ## Coupe des décors des modes (à régler quand chaque décor arrive ; 0.72 par défaut)
 const COUPES_MODES := {"arene": 0.73, "donjon_eau": 0.72, "donjon_feu": 0.73, "donjon_nature": 0.71, "donjon_neutre": 0.74, "donjon_sacre": 0.73,
 	"donjon_savoir": 0.75, "donjon_tenebres": 0.76, "guerre": 0.70, "sanctuaire": 0.73, "tour_enfer": 0.74, "tour_paradis": 0.73}
@@ -447,7 +447,7 @@ const FORMATION_3D := {
 ## BOSS DE MONDE EN 2,5D : le géant au fond à droite ; les 4 escouades sur 4 rangs de profondeur à
 ## gauche (escouade 1 au fond, 4 devant). Dans chaque rang : 3 places d'Arrière puis 2 d'Avant (vers le
 ## géant), et un rang sur deux décalé d'une demi-place pour qu'aucune figurine n'en cache une autre.
-const GEANT_3D := Vector2(0.77, 0.3)
+const GEANT_3D := Vector2(0.76, 0.55)
 const RANGS_GEANT := [0.30, 0.47, 0.64, 0.81]
 const COLONNES_GEANT := [0.04, 0.13, 0.22, 0.34, 0.44]
 
