@@ -67,8 +67,8 @@ const AMBIANCES := {
 	"boss_yggdravor": {"meteo": "spores", "amb": Color(0.52, 0.64, 0.46), "torche": Color(0.65, 1.0, 0.4), "sat": 0.95, "contraste": 1.06, "brume": 0.0113, "c_brume": Color(0.08, 0.12, 0.06)},
 	"boss_golgoth": {"meteo": "poussiere_or", "amb": Color(0.68, 0.5, 0.46), "torche": Color(1.0, 0.35, 0.25), "sat": 1.0, "contraste": 1.1, "brume": 0.009, "c_brume": Color(0.16, 0.08, 0.07)},
 	"boss_solgard": {"meteo": "etincelles_or", "amb": Color(0.78, 0.7, 0.6), "torche": Color(1.0, 0.85, 0.5), "sat": 1.0, "contraste": 1.06, "brume": 0.0, "sol": Color(0.72, 0.68, 0.62)},
-	"boss_nidhogr": {"meteo": "etincelles_violettes", "amb": Color(0.52, 0.48, 0.68), "torche": Color(0.6, 0.5, 1.0), "sat": 0.95, "contraste": 1.1, "brume": 0.009, "c_brume": Color(0.08, 0.06, 0.14)},
-	"boss_avatar_sang": {"meteo": "cendres_rouges", "amb": Color(0.7, 0.42, 0.42), "torche": Color(1.0, 0.2, 0.18), "sat": 1.0, "contraste": 1.12, "brume": 0.009, "c_brume": Color(0.18, 0.04, 0.05), "sol": Color(0.7, 0.6, 0.6)},
+	"boss_nidhogr": {"meteo": "etincelles_violettes", "amb": Color(0.52, 0.48, 0.68), "torche": Color(0.6, 0.5, 1.0), "sat": 0.95, "contraste": 1.1, "brume": 0.009, "c_brume": Color(0.08, 0.06, 0.14), "sol": Color(0.72, 0.7, 0.78)},
+	"boss_avatar_sang": {"meteo": "cendres_rouges", "amb": Color(0.7, 0.42, 0.42), "torche": Color(1.0, 0.2, 0.18), "sat": 1.0, "contraste": 1.12, "brume": 0.009, "c_brume": Color(0.18, 0.04, 0.05), "sol": Color(0.58, 0.5, 0.52)},
 }
 
 var _vp: SubViewport
