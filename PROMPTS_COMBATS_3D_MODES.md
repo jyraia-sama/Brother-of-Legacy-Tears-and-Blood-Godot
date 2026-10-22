@@ -31,7 +31,7 @@ La **Marche Maudite** n'a besoin d'aucune image : elle traverse les régions des
 Tous ces modes sont déjà en 3D (v0.76.0). Tant que leur décor n'est pas peint, chacun emprunte celui d'un Acte proche : Tour de l'Enfer → Acte XII, Tour du Paradis → Acte IX, Feu → V, Nature → VII, Eau → II, Ténèbres → IV, Sacré → IX, Puits de Sang → VIII, Bibliothèque → IV, Sanctuaire → XIII, Arène → III, Guerre → VIII. Dès qu'un décor arrive, il remplace l'emprunt tout seul.
 
 ## État
-- Aucun décor de mode encore peint.
+- Les 12 décors sont faits en v0.76.1 (coupes : Arène 0.73, Eau 0.72, Feu 0.73, Nature 0.71, Puits de Sang 0.74, Sacré 0.73, Bibliothèque 0.75, Ténèbres 0.76, Guerre 0.70, Sanctuaire 0.73, Enfer 0.74, Paradis 0.73).
 - Sol du Puits de Sang : le premier prompt était refusé par ChatGPT (« contenus violents ») ; réécrit sans le mot « sang » (nouvelle conversation, sans image jointe si le refus persiste).
 
 ---

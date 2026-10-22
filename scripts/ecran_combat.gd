@@ -68,7 +68,8 @@ const DECORS_EMPRUNTES := {
 	"sanctuaire": 13, "arene": 3, "guerre": 8,
 }
 ## Coupe des décors des modes (à régler quand chaque décor arrive ; 0.72 par défaut)
-const COUPES_MODES := {"arene": 0.73, "donjon_eau": 0.72, "donjon_feu": 0.73, "donjon_nature": 0.71, "donjon_neutre": 0.74, "donjon_sacre": 0.73}
+const COUPES_MODES := {"arene": 0.73, "donjon_eau": 0.72, "donjon_feu": 0.73, "donjon_nature": 0.71, "donjon_neutre": 0.74, "donjon_sacre": 0.73,
+	"donjon_savoir": 0.75, "donjon_tenebres": 0.76, "guerre": 0.70, "sanctuaire": 0.73, "tour_enfer": 0.74, "tour_paradis": 0.73}
 var _c3d: Combat3D = null
 var _decor: Dictionary = {}
 ## Combats jouables à la main (les Boss de Monde, l'Arène et la Guerre restent automatiques ;

@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.76.0** (2026-10-21)
+Version actuelle : **0.76.1** (2026-10-22)
+
+## v0.76.1 — Douze nouveaux champs de bataille  (2026-10-22)
+
+- DÉCORS 3D DES MODES : chaque mode a maintenant son propre décor peint, avec un sol net jusqu'aux pieds des figurines : la Tour de l'Enfer et son portail en gueule au-dessus de la lave, la Tour du Paradis et son escalier vers la lumière au-dessus des nuages, le Brasier Éternel et son enclume géante, la Sylve Putride et son arbre-mère suintant, les Fosses Englouties et leur temple turquoise, la Crypte sans Lune et sa sphère de ténèbres, le Sanctuaire Profané et son ange brisé, le Puits de Sang et ses cascades rouges, la Bibliothèque Interdite et son grimoire enchaîné, le Sanctuaire du Bélier et sa tête de bélier dorée, l'Arène sous la lune et la forteresse assiégée de la Guerre des Bannières.
+- Ces décors remplacent les emprunts aux Actes de la version précédente. La Marche Maudite garde les décors de ses régions.
 
 ## v0.76.0 — Tous les modes en 3D  (2026-10-21)
 
