@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.79.0** (2026-10-22)
+Version actuelle : **0.79.1** (2026-10-23)
+
+## v0.79.1 — Les chemins de l'aîné  (2026-10-23)
+
+- CHEMINS PEINTS : sur le plateau 3D des chapitres, chaque Acte a maintenant son propre chemin : pavés de la cour en cendres du Domaine, allée de procession et cire de bougies de la Cité en Deuil, caillebotis de planches dans la boue des Camps, dalles funéraires dorées du Sépulcre, passerelle de rondins du Marais, plaques de fer rivetées de la Citadelle, marbre noir veiné d'or du Trône, cristal bleu et rouge du Sceau…
+- Le sentier est un peu plus large et mieux éclairé, pour qu'on le suive facilement de l'œil.
+- CARTE DU MONDE EN 3D : la carte est désormais posée sur une vieille table de cartographe en bois sombre.
 
 ## v0.79.0 — La carte en relief  (2026-10-22)
 

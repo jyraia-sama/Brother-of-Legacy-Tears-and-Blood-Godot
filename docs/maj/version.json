@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-22",
+	"date": "2026-10-23",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -10,6 +10,15 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"CHEMINS PEINTS : sur le plateau 3D des chapitres, chaque Acte a maintenant son propre chemin : pavés de la cour en cendres du Domaine, allée de procession et cire de bougies de la Cité en Deuil, caillebotis de planches dans la boue des Camps, dalles funéraires dorées du Sépulcre, passerelle de rondins du Marais, plaques de fer rivetées de la Citadelle, marbre noir veiné d'or du Trône, cristal bleu et rouge du Sceau…",
+				"Le sentier est un peu plus large et mieux éclairé, pour qu'on le suive facilement de l'œil.",
+				"CARTE DU MONDE EN 3D : la carte est désormais posée sur une vieille table de cartographe en bois sombre."
+			],
+			"titre": "Les chemins de l'aîné",
+			"version": "0.79.1"
+		},
 		{
 			"changements": [
 				"CARTE DU MONDE EN 3D : la carte peinte des Terres des Valcendre devient un grand plateau posé sur la table, vu de biais. Chaque Acte est une dalle de pierre gravée de son numéro, gardée par la figurine de son boss (assombrie une fois vaincu). La route qui relie les Actes est un tracé doré lumineux là où le grand frère est déjà passé.",
@@ -135,21 +144,13 @@
 			],
 			"titre": "Le jeu sur Linux",
 			"version": "0.75.0"
-		},
-		{
-			"changements": [
-				"ILLUSTRATION : Sam, la Lanterne des Os, a son portrait et sa figurine (son évolution, l'Oracle des Rayons, les utilise en attendant la sienne).",
-				"OUTIL DE VERSIONS (éditeur Godot) : le compte rendu de publication affiche de nouveau correctement les accents (« publiée », « … ») sous Windows."
-			],
-			"titre": "Sam entre en scène",
-			"version": "0.74.2"
 		}
 	],
 	"pck": {
-		"sha256": "4fd0f6e80f35b8463c171607d498893243ac6865a98de1be9bd49cd26c964d89",
-		"taille": 32301704,
+		"sha256": "b89ef9b7e66a6d0f61ff28ad575490a1ff5a8ded93564e06c0c711ee6df939f3",
+		"taille": 32301992,
 		"url": "jeu.pck"
 	},
-	"version": "0.79.0",
+	"version": "0.79.1",
 	"version_minimum": "0.37.0"
 }

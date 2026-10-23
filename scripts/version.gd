@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.79.0"
-const DATE := "2026-10-22"
+const NUMERO := "0.79.1"
+const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.79.1", "date": "2026-10-23", "titre": "Les chemins de l'aîné",
+	"changements": [
+		"CHEMINS PEINTS : sur le plateau 3D des chapitres, chaque Acte a maintenant son propre chemin : pavés de la cour en cendres du Domaine, allée de procession et cire de bougies de la Cité en Deuil, caillebotis de planches dans la boue des Camps, dalles funéraires dorées du Sépulcre, passerelle de rondins du Marais, plaques de fer rivetées de la Citadelle, marbre noir veiné d'or du Trône, cristal bleu et rouge du Sceau…",
+		"Le sentier est un peu plus large et mieux éclairé, pour qu'on le suive facilement de l'œil.",
+		"CARTE DU MONDE EN 3D : la carte est désormais posée sur une vieille table de cartographe en bois sombre.",
+	]},
 	{"version": "0.79.0", "date": "2026-10-22", "titre": "La carte en relief",
 	"changements": [
 		"CARTE DU MONDE EN 3D : la carte peinte des Terres des Valcendre devient un grand plateau posé sur la table, vu de biais. Chaque Acte est une dalle de pierre gravée de son numéro, gardée par la figurine de son boss (assombrie une fois vaincu). La route qui relie les Actes est un tracé doré lumineux là où le grand frère est déjà passé.",

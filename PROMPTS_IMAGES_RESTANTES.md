@@ -17,10 +17,10 @@ Tant qu'une image manque, le jeu garde ce qu'il affiche aujourd'hui : rien ne ca
 
 ---
 
-## Partie 1 — Chemins des plateaux (13)
+## Partie 1 — Chemins des plateaux (13) — ✅ tous faits (v0.79.1)
 Chaque chemin se répète tout le long du sentier du plateau 3D. Joins le **sol de l'Acte** (pour que les couleurs se répondent), puis colle la bulle.
 
-#### Acte 1 — Domaine Valcendre → `chemin_01.png`
+#### ✅ FAIT — Acte 1 — Domaine Valcendre → `chemin_01.png`
 > Joins `acte_01_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -35,7 +35,7 @@ Acte 1 (Domaine Valcendre) : Allée pavée d'une cour seigneuriale : pavés de p
 Palette : beige chaud, ocre, gris cendre, touches d'orange braise.
 ```
 
-#### Acte 2 — la Cité en Deuil → `chemin_02.png`
+#### ✅ FAIT — Acte 2 — la Cité en Deuil → `chemin_02.png`
 > Joins `acte_02_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -50,7 +50,7 @@ Acte 2 (la Cité en Deuil) : Allée de procession funéraire : grandes dalles de
 Palette : gris perle, blanc cassé, reflets bleu pâle, touches ambrées.
 ```
 
-#### Acte 3 — les Camps du Drapeau Noir → `chemin_03.png`
+#### ✅ FAIT — Acte 3 — les Camps du Drapeau Noir → `chemin_03.png`
 > Joins `acte_03_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -65,7 +65,7 @@ Acte 3 (les Camps du Drapeau Noir) : Caillebotis de planches de bois brut posée
 Palette : brun bois, ocre paille, gris-brun de boue sèche.
 ```
 
-#### Acte 4 — le Sépulcre des Rois → `chemin_04.png`
+#### ✅ FAIT — Acte 4 — le Sépulcre des Rois → `chemin_04.png`
 > Joins `acte_04_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -80,7 +80,7 @@ Acte 4 (le Sépulcre des Rois) : Allée funéraire royale : dalles de pierre gri
 Palette : gris pierre, or terni, touches de vert spectral.
 ```
 
-#### Acte 5 — les Terres Brûlées → `chemin_05.png`
+#### ✅ FAIT — Acte 5 — les Terres Brûlées → `chemin_05.png`
 > Joins `acte_05_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -95,7 +95,7 @@ Acte 5 (les Terres Brûlées) : Ancienne route de guerre : grandes pierres plate
 Palette : gris charbon, ocre, brun, touches de rouge sale.
 ```
 
-#### Acte 6 — la Forêt Pétrifiée → `chemin_06.png`
+#### ✅ FAIT — Acte 6 — la Forêt Pétrifiée → `chemin_06.png`
 > Joins `acte_06_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -110,7 +110,7 @@ Acte 6 (la Forêt Pétrifiée) : Dalles de pierre lisse gris bleuté veinées de
 Palette : gris bleu, blanc lunaire, touches de violet cristal.
 ```
 
-#### Acte 7 — le Marais aux Murmures → `chemin_07.png`
+#### ✅ FAIT — Acte 7 — le Marais aux Murmures → `chemin_07.png`
 > Joins `acte_07_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -125,7 +125,7 @@ Acte 7 (le Marais aux Murmures) : Passerelle de rondins et de planches de bois s
 Palette : brun sombre, vert mousse, touches de violet.
 ```
 
-#### Acte 8 — le Bastion de l'Éclipse → `chemin_08.png`
+#### ✅ FAIT — Acte 8 — le Bastion de l'Éclipse → `chemin_08.png`
 > Joins `acte_08_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -140,7 +140,7 @@ Acte 8 (le Bastion de l'Éclipse) : Chemin de ronde d'un rempart : grosses dalle
 Palette : rouge brique sombre, brun, touches d'or terni.
 ```
 
-#### Acte 9 — le Val des Héros Déchus → `chemin_09.png`
+#### ✅ FAIT — Acte 9 — le Val des Héros Déchus → `chemin_09.png`
 > Joins `acte_09_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -155,7 +155,7 @@ Acte 9 (le Val des Héros Déchus) : Allée antique de dalles de marbre gris cla
 Palette : gris clair, gris-vert, touches de violet et d'or terni.
 ```
 
-#### Acte 10 — la Citadelle des Supplices → `chemin_10.png`
+#### ✅ FAIT — Acte 10 — la Citadelle des Supplices → `chemin_10.png`
 > Joins `acte_10_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -170,7 +170,7 @@ Acte 10 (la Citadelle des Supplices) : Route de fer : plaques de fer noir rivet�
 Palette : noir, gris fer, rouille, touches de rouge braise.
 ```
 
-#### Acte 11 — les Champs du Jugement → `chemin_11.png`
+#### ✅ FAIT — Acte 11 — les Champs du Jugement → `chemin_11.png`
 > Joins `acte_11_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -185,7 +185,7 @@ Acte 11 (les Champs du Jugement) : Chemin de pierres plates grises posées sur u
 Palette : gris acier, beige, touches de bleu nuit et de rouge sang.
 ```
 
-#### Acte 12 — le Trône de Cendres → `chemin_12.png`
+#### ✅ FAIT — Acte 12 — le Trône de Cendres → `chemin_12.png`
 > Joins `acte_12_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -200,7 +200,7 @@ Acte 12 (le Trône de Cendres) : Larges marches et dalles de marbre noir veiné 
 Palette : noir brillant, or sombre, gris cendre.
 ```
 
-#### Acte 13 — le Sceau des Frères → `chemin_13.png`
+#### ✅ FAIT — Acte 13 — le Sceau des Frères → `chemin_13.png`
 > Joins `acte_13_sol.jpg` (dans le zip).
 ```
 Texture de chemin pour un jeu de plateau dark fantasy, peinte, très détaillée, dans le même univers que l'image jointe (le sol de cet Acte).
@@ -217,10 +217,10 @@ Palette : bleu cristal, rouge sang, or, violet sombre.
 
 ---
 
-## Partie 2 — Table de la carte du monde (1)
+## Partie 2 — Table de la carte du monde (1) — ✅ faite (v0.79.1)
 En 3D, la carte du monde est posée sur une table : on la voit autour de la carte quand on dézoome ou qu'on la glisse vers un bord. Rien à joindre.
 
-#### Table du cartographe → `table_carte.png`
+#### ✅ FAIT — Table du cartographe → `table_carte.png`
 ```
 Texture de table pour un jeu dark fantasy, peinte, très détaillée.
 Vue EXACTEMENT du dessus (vue zénithale, à plat, sans perspective), format carré 1024x1024.

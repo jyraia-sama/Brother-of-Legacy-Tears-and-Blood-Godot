@@ -16,7 +16,7 @@ extends SubViewportContainer
 const SHADER_FIGURINE := preload("res://scripts/figurine_3d.gdshader")
 const PAS_X := 4.2          # mètres entre deux cases successives
 const PAS_Z := 3.6          # mètres entre deux voies
-const LARGEUR_SENTIER := 1.35
+const LARGEUR_SENTIER := 1.7
 const R_DALLE := 0.95
 const H_DALLE := 0.16
 const H_PION := 2.1
@@ -283,7 +283,7 @@ func _creer_sentier(a: int, b: int, accent: Color) -> void:
 	_sentiers["%d-%d" % [a, b]] = {"mesh": mi, "mat": m}
 
 
-const DOSSIER_CHEMINS := "res://assets/plateaux/chemins/"
+const DOSSIER_CHEMINS := "res://assets/combat3d/"
 const SHADER_CHEMIN := """shader_type spatial;
 render_mode cull_disabled, depth_draw_opaque;
 uniform sampler2D tex : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
@@ -291,21 +291,22 @@ uniform vec4 teinte : source_color = vec4(1.0);
 uniform float bord = 0.16;
 uniform vec3 c_emission : source_color = vec3(0.0);
 uniform float emission = 0.0;
+uniform float lumiere = 1.0;
 void fragment() {
 	vec4 c = texture(tex, UV);
 	float dent = 0.05 * sin(UV.y * 23.0) + 0.04 * sin(UV.y * 57.0 + 1.3);
 	float e = smoothstep(0.0, bord, UV.x + dent) * smoothstep(1.0, 1.0 - bord, UV.x - dent);
-	ALBEDO = c.rgb * teinte.rgb;
+	ALBEDO = c.rgb * teinte.rgb * lumiere;
 	ALPHA = c.a * e * teinte.a;
 	ROUGHNESS = 0.9;
-	EMISSION = c_emission * emission * c.rgb;
+	EMISSION = c_emission * emission * c.rgb + c.rgb * teinte.rgb * 0.08 * lumiere;
 }
 """
 
 static var _shader_chemin: Shader = null
 
 
-## Image du chemin de l'Acte (assets/plateaux/chemins/chemin_XX.png, carrée, qui se répète), "" si absente.
+## Image du chemin de l'Acte (assets/combat3d/chemin_XX.png, carrée, qui se répète), "" si absente.
 static func image_chemin(n: int) -> String:
 	var p := DOSSIER_CHEMINS + "chemin_%02d.png" % n
 	return p if ResourceLoader.exists(p) else ""
@@ -325,6 +326,8 @@ static func materiau_chemin_image(img: String) -> ShaderMaterial:
 	m.shader = _shader_chemin
 	var ok := img != "" and ResourceLoader.exists(img)
 	m.set_shader_parameter("tex", load(img) if ok else _texture_paves())
+	# Les chemins peints sont plus sombres que les pavés dessinés : on les éclaire un peu
+	m.set_shader_parameter("lumiere", 1.3 if ok else 1.0)
 	return m
 
 

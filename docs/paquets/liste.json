@@ -82,23 +82,23 @@
 			"taille": 1515864.0
 		},
 		{
-			"depuis": "0.77.1",
+			"depuis": "0.79.1",
 			"fichier": "decors3d_0.pck",
-			"images": 31.0,
+			"images": 39,
 			"nom": "decors3d_0",
-			"sha256": "7c1e3a94a8a5084d07c8ce5a90bb7f3c86cc4b012a8f60d5e9aaa58a00825be7",
-			"signature": "052974931b987d61dff3851afdaea23d2a0c9a4fb93ac26cd612f4e00efcd1dd",
-			"taille": 49454564.0
+			"sha256": "4720e4cbc5403a26c61939db167f223b4902972f874b3ff42e4f34d2240401ab",
+			"signature": "263e0050d18359809d79c6a24d579d49b2da1da6041f944d3609a17e289be970",
+			"taille": 51820204
 		},
 		{
-			"depuis": "0.77.1",
+			"depuis": "0.79.1",
 			"fichier": "decors3d_1.pck",
-			"images": 33.0,
+			"images": 39,
 			"nom": "decors3d_1",
-			"sha256": "416fb06bcc7e2e5a7628ee7a61f050458ab4ad082a1c4a6be766d67c685e8b8a",
-			"signature": "b76e1f576ceaa81d224e37e78cbd715f048b53d147bc9d5d2470aefab8365389",
-			"taille": 49974608.0
+			"sha256": "d542f2d58b4667fa868e83e7d8d58a46fbef1d38f4d50d1abcb386154226fc07",
+			"signature": "3249cba31e11be47eeaf50414355a7d456896e4cb07ab5d4f8e9d59ab991a4be",
+			"taille": 51762848
 		}
 	],
-	"version": "0.79.0"
+	"version": "0.79.1"
 }

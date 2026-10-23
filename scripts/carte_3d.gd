@@ -11,7 +11,7 @@ extends SubViewportContainer
 
 const SHADER_FIGURINE := preload("res://scripts/figurine_3d.gdshader")
 const IMAGE_CARTE := "res://assets/ui/carte_monde.png"
-const IMAGE_SOL_AUTOUR := "res://assets/plateaux/table_carte.png"
+const IMAGE_SOL_AUTOUR := "res://assets/combat3d/table_carte.png"
 const IMAGE_PION := "res://assets/plateaux/pion_aine.png"
 const LARGEUR := 48.0              # largeur de la carte (mètres)
 const LARGEUR_ROUTE := 0.34
@@ -143,7 +143,7 @@ func _creer_table() -> void:
 	m.roughness = 0.85
 	if ResourceLoader.exists(IMAGE_SOL_AUTOUR):
 		m.albedo_texture = load(IMAGE_SOL_AUTOUR)
-		m.uv1_scale = Vector3(6, 6 * _hauteur / LARGEUR, 1)
+		m.uv1_scale = Vector3(16, 16 * _hauteur / LARGEUR, 1)
 		m.albedo_color = Color(0.55, 0.5, 0.48)
 		m.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
 	else:

@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1792693973|3255517';
+const CACHE_VERSION = '1792738518|16619499';
 /** @type {string} */
 const CACHE_PREFIX = 'Brother of Legac-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
