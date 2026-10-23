@@ -221,6 +221,20 @@ func _ready() -> void:
 	journal.size_flags_horizontal = Control.SIZE_SHRINK_END
 	journal.custom_minimum_size = Vector2(230, 40)
 	lv.add_child(journal)
+	# Signaler un bug / donner son avis : pour tout le monde
+	var avis := _bouton("✉ Signaler un bug / Donner mon avis", func(): FenetreSignalement.ouvrir(get_parent()))
+	avis.size_flags_horizontal = Control.SIZE_SHRINK_END
+	avis.custom_minimum_size = Vector2(300, 40)
+	lv.add_child(avis)
+	# Espace créateur (statistiques + messages des joueurs) : n'apparaît que si le serveur confirme
+	# que c'est le compte du créateur (et le serveur refuse les données à tout autre compte).
+	var createur := _bouton("✦ Espace créateur", func(): FenetreStatsJeu.ouvrir(get_parent()))
+	createur.size_flags_horizontal = Control.SIZE_SHRINK_END
+	createur.custom_minimum_size = Vector2(200, 40)
+	createur.add_theme_color_override("font_color", Color("ffd27a"))
+	createur.visible = false
+	lv.add_child(createur)
+	_montrer_createur(createur)
 	# Menu Admin : toujours visible ; demande le code Admin hors de Godot
 	if Sauvegarde.admin_visible():
 		var adm := _bouton("Menu Admin" + ("  (actif)" if Sauvegarde.admin_actif() else ""), func(): FenetreAdmin.ouvrir(get_parent()))
@@ -247,6 +261,12 @@ func _ready() -> void:
 		quitter.custom_minimum_size = Vector2(200, 46)
 		quitter.add_theme_color_override("font_color", Color("ff7a6a"))
 		bas.add_child(quitter)
+
+
+func _montrer_createur(b: Button) -> void:
+	var ok: bool = await EnLigne.est_admin_stats()
+	if is_instance_valid(b):
+		b.visible = ok
 
 
 func _demander_quitter() -> void:

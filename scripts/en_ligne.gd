@@ -689,6 +689,8 @@ func plateforme() -> String:
 func signaler_appareil(lancement: bool) -> void:
 	if not configure() or OS.has_feature("editor"):      # pas les essais depuis Godot ni l'outil de publication
 		return
+	if lancement:
+		FenetreSignalement.envoyer_en_attente()      # messages au créateur restés hors ligne
 	var params := {"p_id": id_appareil(), "p_plateforme": plateforme(), "p_version": Version.NUMERO, "p_lancement": lancement}
 	if est_connecte():
 		await appeler("signaler_installation", params)

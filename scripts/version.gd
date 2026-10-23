@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.80.7"
+const NUMERO := "0.81.0"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.81.0", "date": "2026-10-23", "titre": "Une lettre au créateur",
+	"changements": [
+		"ÉCRIRE AU CRÉATEUR : nouveau bouton « ✉ Signaler un bug / Donner mon avis » dans le Menu. Choisis Bug, Difficulté, Idée ou Autre et écris ton message : le jeu y joint tout seul la version, l'appareil, l'écran et ta progression. Sans connexion, le message attend et part au prochain lancement.",
+		"ESPACE CRÉATEUR : les statistiques du jeu et les messages des joueurs sont réunis dans le Menu, sur le seul compte du créateur (le serveur le vérifie) ; ils ne passent plus par le menu Admin.",
+		"SÉCURITÉ : nouveau code Admin, et les fonctions internes du serveur ne peuvent plus être appelées directement par les joueurs (anti-triche).",
+	]},
 	{"version": "0.80.7", "date": "2026-10-23", "titre": "Les icônes du haut",
 	"changements": [
 		"ICÔNES PEINTES DE LA BARRE DU HAUT : stamina, or, gemmes, Chat, Aide, Nouveautés et Menu ont leur vraie icône (la stamina aussi sur la carte du monde et le plateau).",

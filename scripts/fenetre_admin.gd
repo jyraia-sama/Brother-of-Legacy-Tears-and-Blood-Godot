@@ -168,20 +168,6 @@ func _ready() -> void:
 	UiCommun.bouton_vif(enr, Color("8a3a2a"))
 	bas.add_child(enr)
 
-	# Statistiques du jeu : réservé au compte du créateur. Le bouton n'apparaît que si le serveur
-	# confirme l'accès (et le serveur refuse de toute façon les données aux autres comptes).
-	var stats := _bouton("📊 Statistiques du jeu", func(): FenetreStatsJeu.ouvrir(get_parent()))
-	stats.custom_minimum_size = Vector2(240, 42)
-	stats.visible = false
-	UiCommun.bouton_vif(stats, Color("b8402f"))
-	bas.add_child(stats)
-	_montrer_stats(stats)
-
-
-func _montrer_stats(b: Button) -> void:
-	var ok: bool = await EnLigne.est_admin_stats()
-	if is_instance_valid(b):
-		b.visible = ok
 
 
 func _basculer(actif: bool, id: String) -> void:

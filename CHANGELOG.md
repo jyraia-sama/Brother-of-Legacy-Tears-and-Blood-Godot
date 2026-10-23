@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.80.7** (2026-10-23)
+Version actuelle : **0.81.0** (2026-10-23)
+
+## v0.81.0 — Une lettre au créateur  (2026-10-23)
+
+- ÉCRIRE AU CRÉATEUR : nouveau bouton « ✉ Signaler un bug / Donner mon avis » dans le Menu. Choisis Bug, Difficulté, Idée ou Autre et écris ton message : le jeu y joint tout seul la version, l'appareil, l'écran et ta progression. Sans connexion, le message attend et part au prochain lancement.
+- ESPACE CRÉATEUR : les statistiques du jeu et les messages des joueurs sont réunis dans le Menu, sur le seul compte du créateur (le serveur le vérifie) ; ils ne passent plus par le menu Admin.
+- SÉCURITÉ : nouveau code Admin, et les fonctions internes du serveur ne peuvent plus être appelées directement par les joueurs (anti-triche).
 
 ## v0.80.7 — Les icônes du haut  (2026-10-23)
 

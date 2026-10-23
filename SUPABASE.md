@@ -63,6 +63,18 @@ tous les joueurs connectés peuvent y écrire. Les 500 derniers messages sont ga
 - **Modération** : le compte « jyraia » (celui des statistiques, fichier 07) voit une croix ✕ à côté de chaque message pour le supprimer,
   et ses messages s'affichent avec une couronne ♛.
 
+### 2 decies. Messages des joueurs (v0.81)
+Même chose avec le fichier `supabase/12_signalements.sql` : **New query** → colle tout → **Run** → « Success ».
+(À faire une fois, après le fichier 07.) Ajoute le bouton **✉ Signaler un bug / Donner mon avis** du Menu : les joueurs
+t'écrivent (bug, difficulté, idée), avec ou sans compte, 10 messages par jour au plus. Tu les lis dans
+**Menu → ✦ Espace créateur → Messages des joueurs**, visible seulement sur ton compte (le serveur vérifie).
+
+### 2 undecies. Renforcement de la sécurité (v0.81) — IMPORTANT
+Même chose avec le fichier `supabase/13_securite.sql` : **New query** → colle tout → **Run** → « Success ».
+**À relancer après chaque nouveau fichier SQL.** Il interdit aux joueurs d'appeler directement les fonctions internes
+du serveur (celles qui commencent par `_` : donner de l'XP à une guilde, clore un match, finir une guerre…), et réserve
+toutes les autres aux joueurs connectés. Sans lui, un tricheur un peu malin pouvait les appeler à la main.
+
 ## 3. Comptes par e-mail
 Les joueurs créent leur compte avec **un pseudo, leur adresse e-mail et un mot de passe**, et se connectent avec **e-mail + mot de passe**.
 

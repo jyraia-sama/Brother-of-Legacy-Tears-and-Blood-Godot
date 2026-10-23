@@ -1,6 +1,7 @@
 class_name FenetreStatsJeu
 extends CanvasLayer
-## STATISTIQUES DU JEU (menu Admin) : réservé au compte du créateur.
+## ESPACE CRÉATEUR (bouton du Menu, visible seulement sur le compte du créateur) : statistiques du jeu
+## et messages des joueurs (bugs, avis). Réservé au compte du créateur.
 ## Le bouton n'apparaît que si le serveur confirme l'accès (EnLigne.est_admin_stats()), et le
 ## serveur refuse de toute façon d'envoyer les données à un autre compte (supabase/07_statistiques.sql).
 ##
@@ -18,14 +19,17 @@ const NOMS_PLATEFORMES := {
 	"web-pc": "Web — ordinateur", "web-android": "Web — téléphone Android", "web-iphone": "Web — iPhone / iPad",
 	"linux": "Linux (application)", "autre": "Autre",
 }
-const ONGLETS := [["ensemble", "Vue d'ensemble"], ["joueurs", "Joueurs"], ["appareils", "Appareils"], ["telechargements", "Téléchargements"]]
+const ONGLETS := [["signalements", "✉ Messages des joueurs"], ["ensemble", "Vue d'ensemble"], ["joueurs", "Joueurs"], ["appareils", "Appareils"], ["telechargements", "Téléchargements"]]
 const TRIS := [["vu_le", "Dernière connexion"], ["cree_le", "Inscription"], ["niveau", "Niveau"],
 	["chapitres", "Chapitres"], ["puissance", "Puissance"], ["pseudo", "Pseudo"]]
 
 var _stats: Dictionary = {}
 var _releases: Array = []
 var _erreur_releases := ""
-var _onglet := "ensemble"
+var _onglet := "signalements"
+var _signalements: Array = []
+var _filtre_sig := "nouveau"
+const NOMS_CAT := {"bug": "🐞 Bug", "difficulte": "⚔ Difficulté", "idee": "💡 Idée", "autre": "✉ Autre"}
 var _tri := "vu_le"
 var _recherche := ""
 
@@ -60,7 +64,7 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 10)
 	vb.add_child(tete)
-	var t := UiCommun.label("📊  STATISTIQUES DU JEU", 28, C_ROUGE)
+	var t := UiCommun.label("✦  ESPACE CRÉATEUR", 28, C_ROUGE)
 	tete.add_child(t)
 	_etat = UiCommun.label("", 14, UiCommun.C_DOUX)
 	_etat.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -124,12 +128,22 @@ func _charger() -> void:
 		_etat.text = ""
 		return
 	_stats = r.data
+	await _charger_signalements()
+	if not is_instance_valid(self):
+		return
 	var h := Time.get_time_dict_from_system()
 	_etat.text = UiCommun.t("à jour à %02d:%02d") % [h.hour, h.minute]
 	_afficher()
 	await _charger_releases()
 	if is_instance_valid(self) and _onglet in ["ensemble", "telechargements"]:
 		_afficher()
+
+
+func _charger_signalements() -> void:
+	var r: Dictionary = await EnLigne.appeler("lister_signalements", {"p_etat": "", "p_limite": 300})
+	_signalements = r.data if r.ok and r.data is Array else []
+	if not r.ok:
+		_signalements = [{"erreur": str(r.get("erreur", ""))}]
 
 
 ## Nombre de téléchargements des fichiers des Releases GitHub (Windows, Mac, Linux, Android).
@@ -174,10 +188,76 @@ func _afficher() -> void:
 		return
 	_vider()
 	match _onglet:
+		"signalements": _vue_signalements()
 		"ensemble": _vue_ensemble()
 		"joueurs": _vue_joueurs()
 		"appareils": _vue_appareils()
 		"telechargements": _vue_telechargements()
+
+
+func _vue_signalements() -> void:
+	if not _signalements.is_empty() and _signalements[0].has("erreur"):
+		_note(UiCommun.t("Impossible de charger les messages : %s\nVérifie que le fichier supabase/12_signalements.sql a bien été lancé dans Supabase.") % _signalements[0]["erreur"])
+		return
+	var compte := {"nouveau": 0, "lu": 0, "corrige": 0}
+	for m in _signalements:
+		compte[str(m["etat"])] = int(compte.get(str(m["etat"]), 0)) + 1
+	var filtres := HBoxContainer.new()
+	filtres.add_theme_constant_override("separation", 6)
+	_contenu.add_child(filtres)
+	for f in [["nouveau", "Nouveaux"], ["lu", "Lus"], ["corrige", "Corrigés"], ["", "Tous"]]:
+		var n: int = _signalements.size() if f[0] == "" else int(compte.get(f[0], 0))
+		var b := UiCommun.bouton("%s (%d)" % [f[1], n], 15)
+		b.add_theme_color_override("font_color", UiCommun.C_LEGENDE if _filtre_sig == f[0] else UiCommun.C_DOUX)
+		b.pressed.connect(func():
+			_filtre_sig = f[0]
+			_afficher())
+		filtres.add_child(b)
+	var vus := 0
+	for m in _signalements:
+		if _filtre_sig != "" and str(m["etat"]) != _filtre_sig:
+			continue
+		vus += 1
+		_contenu.add_child(_carte_signalement(m))
+	if vus == 0:
+		_note("Aucun message ici pour l'instant.")
+
+
+func _carte_signalement(m: Dictionary) -> Control:
+	var p := PanelContainer.new()
+	var st := UiCommun.style_panneau(Color(0.85, 0.65, 0.3, 0.6) if str(m["etat"]) == "nouveau" else Color(1, 1, 1, 0.15), Color(0.06, 0.03, 0.03, 0.95))
+	st.orne = false
+	st.set_content_margin_all(12)
+	p.add_theme_stylebox_override("panel", st)
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 6)
+	p.add_child(v)
+	var qui := str(m.get("pseudo", ""))
+	var tete := UiCommun.label("%s   ·   %s   ·   %s   ·   v%s · %s · %s" % [NOMS_CAT.get(str(m["categorie"]), "✉"),
+		qui if qui != "" else "joueur sans compte", _date(str(m["cree"])), str(m["version"]), _plateforme_courte(str(m["plateforme"])), str(m["ecran"])], 14, UiCommun.C_OR)
+	v.add_child(tete)
+	var msg := UiCommun.label(str(m["message"]), 16)
+	msg.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(msg)
+	if str(m.get("details", "")) != "":
+		var d := UiCommun.label(str(m["details"]), 12, UiCommun.C_DOUX)
+		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		v.add_child(d)
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 8)
+	v.add_child(h)
+	for a in [["lu", "Marquer lu"], ["corrige", "✓ Corrigé"], ["nouveau", "Remettre en nouveau"], ["supprime", "Supprimer"]]:
+		if a[0] == str(m["etat"]):
+			continue
+		var b := UiCommun.bouton(a[1], 13)
+		b.pressed.connect(func():
+			await EnLigne.appeler("ranger_signalement", {"p_id": int(m["id"]), "p_etat": a[0]})
+			if not is_instance_valid(self):
+				return
+			await _charger_signalements()
+			_afficher())
+		h.add_child(b)
+	return p
 
 
 func _titre(t: String) -> void:

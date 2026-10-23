@@ -721,9 +721,10 @@ const ADMIN_OPTIONS := [
 ## Le bouton « Menu Admin » est visible partout (Paramètres).
 ## Depuis Godot (version de débogage), il s'ouvre directement ; dans la version publiée
 ## (web), il demande le code Admin. Le code n'est demandé qu'une fois par session.
-## Code actuel : admin123. Pour le changer, remplace l'empreinte ci-dessous par
+## Code actuel : connu du créateur seulement (jamais écrit en clair ici : le code du jeu est public).
+## Pour le changer, remplace l'empreinte ci-dessous par
 ## l'empreinte SHA-256 du nouveau code (ex. site « sha256 online »).
-const ADMIN_CODE_SHA256 := "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9"
+const ADMIN_CODE_SHA256 := "9595ee4d2a8129236688746741db94113d37ca639a3db0de0e0e98825fb9229e"
 static var _admin_deverrouille := false
 
 
