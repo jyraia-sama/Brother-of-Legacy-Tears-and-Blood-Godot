@@ -714,6 +714,7 @@ const ADMIN_OPTIONS := [
 	["xp_x10", "XP x10", "XP des unités et du compte multipliée par 10."],
 	["compagnie_instantanee", "Missions de la Compagnie instantanées", "Les missions se terminent tout de suite (butin normal)."],
 	["marche_illimitee", "Marche Maudite illimitée", "Rejouer la Marche du jour autant de fois qu'on veut (score non envoyé au classement)."],
+	["ruines_ouvertes", "Ruines Oubliées ouvertes", "Les 3 fragments du Sceau de l'Aube comptent comme trouvés : la stèle de la carte du monde est ouverte."],
 	["echos_garantis", "Amélioration d'Échos toujours réussie", "Chaque amélioration d'Écho réussit (le coût en or reste dû, sauf avec Or infini)."],
 ]
 

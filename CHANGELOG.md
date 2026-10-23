@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.80.0** (2026-10-23)
+Version actuelle : **0.80.1** (2026-10-23)
+
+## v0.80.1 — La clé de la stèle  (2026-10-23)
+
+- Menu Admin : nouvelle option « Ruines Oubliées ouvertes » pour tester les Ruines sans chercher les trois fragments (décocher la remet comme avant).
 
 ## v0.80.0 — Les Ruines Oubliées  (2026-10-23)
 

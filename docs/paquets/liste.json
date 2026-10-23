@@ -3,56 +3,56 @@
 		{
 			"depuis": "0.80.0",
 			"fichier": "figurines_0.pck",
-			"images": 80,
+			"images": 80.0,
 			"nom": "figurines_0",
 			"sha256": "4150650ac6ccae6e607b471216f799099dc4290d3163ee5a59fa9175f3e53c4f",
 			"signature": "686f69330cf10e1e2ddcc43027cefa8e6fb25fb0b45af34ad4636c53b5a6b99b",
-			"taille": 21524416
+			"taille": 21524416.0
 		},
 		{
 			"depuis": "0.80.0",
 			"fichier": "figurines_1.pck",
-			"images": 81,
+			"images": 81.0,
 			"nom": "figurines_1",
 			"sha256": "936abfd50299f3f440afd5f116f27d95fb404317cce94758cfcf2c0ae51319d9",
 			"signature": "dd4746974e94538703cf4044fb12e3fe30c0acfd213637253152d317f11f403f",
-			"taille": 20917240
+			"taille": 20917240.0
 		},
 		{
 			"depuis": "0.80.0",
 			"fichier": "figurines_2.pck",
-			"images": 85,
+			"images": 85.0,
 			"nom": "figurines_2",
 			"sha256": "c43d231a0ed51a5e5567401b24504cdc75a7bd3b91be58810e6aa8c3afae2d6e",
 			"signature": "fd279ec498bf68a6cc7fe62681a69408e358ad88a0434b214273393a36952764",
-			"taille": 20583836
+			"taille": 20583836.0
 		},
 		{
 			"depuis": "0.80.0",
 			"fichier": "figurines_3.pck",
-			"images": 80,
+			"images": 80.0,
 			"nom": "figurines_3",
 			"sha256": "728727d665e08c272214928b46633421767d50381a9cdcc42f4804ac78c32093",
 			"signature": "b4ab2208e1bb0df85886e708e9a6d22f55a7054e6d4616b3b11808a662454aaa",
-			"taille": 20843072
+			"taille": 20843072.0
 		},
 		{
 			"depuis": "0.80.0",
 			"fichier": "portraits_0.pck",
-			"images": 165,
+			"images": 165.0,
 			"nom": "portraits_0",
 			"sha256": "fddcb4388e79273baf285e9109b0a7af1f2c12ddb935b3465c3101ab16ab89fc",
 			"signature": "7d12ec9ace3ee4e6cdd7206d1b199ffeccd7112991cf3ea5e7b5885e6796a12c",
-			"taille": 16977172
+			"taille": 16977172.0
 		},
 		{
 			"depuis": "0.80.0",
 			"fichier": "portraits_1.pck",
-			"images": 162,
+			"images": 162.0,
 			"nom": "portraits_1",
 			"sha256": "f2dec537a46abd9d1d41ed8f33a062daedaea0bce0845c2aece1f1e63cc0fc6b",
 			"signature": "676b3ac694f4eb90ebaf207ec3ccf93d69a97389b92966135f5321458be5a7f9",
-			"taille": 16314968
+			"taille": 16314968.0
 		},
 		{
 			"depuis": "0.60.7",
@@ -100,5 +100,5 @@
 			"taille": 51762848.0
 		}
 	],
-	"version": "0.80.0"
+	"version": "0.80.1"
 }

@@ -89,6 +89,8 @@ static func _etat() -> Dictionary:
 # ---------------------------------------------------------------------
 
 static func nb_fragments() -> int:
+	if Sauvegarde.admin("ruines_ouvertes"):
+		return ACTES_FRAGMENTS.size()
 	return (_etat()["fragments"] as Array).size()
 
 
@@ -98,7 +100,7 @@ static func a_fragment(acte: int) -> bool:
 
 ## Le plateau de cet Acte cache-t-il encore un fragment ?
 static func fragment_a_trouver(acte: int) -> bool:
-	return acte in ACTES_FRAGMENTS and not a_fragment(acte)
+	return acte in ACTES_FRAGMENTS and not a_fragment(acte) and not Sauvegarde.admin("ruines_ouvertes")
 
 
 static func donner_fragment(acte: int) -> void:

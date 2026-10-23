@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.80.0"
+const NUMERO := "0.80.1"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.80.1", "date": "2026-10-23", "titre": "La clé de la stèle",
+	"changements": [
+		"Menu Admin : nouvelle option « Ruines Oubliées ouvertes » pour tester les Ruines sans chercher les trois fragments (décocher la remet comme avant).",
+	]},
 	{"version": "0.80.0", "date": "2026-10-23", "titre": "Les Ruines Oubliées",
 	"changements": [
 		"SECRET : LES RUINES OUBLIÉES. Trois fragments du Sceau de l'Aube dorment dans l'histoire, sous des cases Mystère de trois Actes… Dès le premier trouvé, une vieille stèle se met à luire quelque part sur la carte du monde. Réunis les trois pour l'ouvrir.",

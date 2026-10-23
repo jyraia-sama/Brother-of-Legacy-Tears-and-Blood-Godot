@@ -12,6 +12,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"Menu Admin : nouvelle option « Ruines Oubliées ouvertes » pour tester les Ruines sans chercher les trois fragments (décocher la remet comme avant)."
+			],
+			"titre": "La clé de la stèle",
+			"version": "0.80.1"
+		},
+		{
+			"changements": [
 				"SECRET : LES RUINES OUBLIÉES. Trois fragments du Sceau de l'Aube dorment dans l'histoire, sous des cases Mystère de trois Actes… Dès le premier trouvé, une vieille stèle se met à luire quelque part sur la carte du monde. Réunis les trois pour l'ouvrir.",
 				"TROIS ÉTAGES, TROIS RÈGLES : la Sève Rouge (endurance : 3 combats d'affilée, les PV ne remontent pas), le Serment de l'Aube (protéger : ton héros le plus en arrière porte la cloche d'Ombeline, s'il tombe c'est perdu) et les Oubliés de la Fosse (obscurité : moins de précision, et l'Armure Creuse tout au fond).",
 				"TROIS LÉGENDES CACHÉES, des cartes de groupe : la Compagnie de la Sève Rouge (Varn, Maëlis et Ysolde), le Serment de l'Aube (Ilan et Ombeline) et les Oubliés de la Fosse (le Petit Chevalier et Ronce). Chaque étage vaincu offre son groupe, avec son évolution à l'Autel.",
@@ -138,21 +145,13 @@
 			],
 			"titre": "Tous les modes en 3D",
 			"version": "0.76.0"
-		},
-		{
-			"changements": [
-				"COMBATS EN 3D, ACTES VII À XIII : tous les Actes ont maintenant leur décor peint pour la 3D : le Marais aux Murmures et son trône de ronces (VII), le bastion en flammes sous l'éclipse de sang (VIII), le Val des Héros Déchus et son mausolée doré (IX), la Citadelle des Supplices et sa porte rougeoyante (X), les Champs du Jugement sous le ciel coupé en deux, bleu et rouge (XI), le Trône de Cendres sous l'éclipse (XII) et, pour l'Acte caché, l'intérieur du Sceau des Frères, moitié cristal bleu, moitié cristal rouge (XIII).",
-				"AMBIANCE : la brume des Actes VII, IX, X et XI prend la couleur de leur nouveau décor ; le sol ne paraît plus délavé par rapport au fond."
-			],
-			"titre": "Les treize champs de bataille",
-			"version": "0.75.2"
 		}
 	],
 	"pck": {
-		"sha256": "a7edb2a7cb9ba565a5debd4de362ac73f64d890b69432708b232e1b6bb4bf2da",
-		"taille": 38079080,
+		"sha256": "41416815691745176b389c58bb1e2c8d61ed8ef38adeea9f38a3e3e39f45fa1f",
+		"taille": 38079416,
 		"url": "jeu.pck"
 	},
-	"version": "0.80.0",
+	"version": "0.80.1",
 	"version_minimum": "0.37.0"
 }
