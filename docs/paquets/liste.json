@@ -57,11 +57,11 @@
 		{
 			"depuis": "0.80.5",
 			"fichier": "fonds.pck",
-			"images": 26,
+			"images": 26.0,
 			"nom": "fonds",
 			"sha256": "e9683a733b0e981ea9d5551e8c6183029d20ae0ac0ad95a008feca90e5cb5915",
 			"signature": "518009cf4d1baf1da221c1d37b55123cd638fe1d94136ea1c85ab116aa9a626a",
-			"taille": 13369652
+			"taille": 13369652.0
 		},
 		{
 			"depuis": "0.60.7",
