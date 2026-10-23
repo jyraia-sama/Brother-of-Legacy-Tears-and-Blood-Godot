@@ -237,7 +237,7 @@ Pas de texte, pas de cadre.
 ## Partie 3 — Évolutions : la fin du lot C (13)
 Même méthode qu'avant : joins l'image de la base (portrait et figurine côte à côte), puis colle la bulle. Rends-moi `<base>_evo.png`.
 
-#### La Reine des Récifs (SR) → `ondine_recifs_evo.png`
+#### ✅ FAIT — La Reine des Récifs (SR) → `ondine_recifs_evo.png`
 > Joins `ondine_recifs.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -263,7 +263,7 @@ PORTRAIT : en buste, elle tient une perle lumineuse près de son visage et nous 
 FIGURINE : debout sur un grand coquillage ouvert posé sur le socle, elle lève son bâton de corail vers le ciel, la traîne de sa robe qui coule sur le coquillage.
 ```
 
-#### Le Traqueur Légendaire (SR) → `chasseur_primes_evo.png`
+#### ✅ FAIT — Le Traqueur Légendaire (SR) → `chasseur_primes_evo.png`
 > Joins `chasseur_primes.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -289,7 +289,7 @@ PORTRAIT : en buste, il remonte le bord de son chapeau du bout d'un pistolet et 
 FIGURINE : il fait tourner ses deux pistolets autour de ses doigts, de dos à moitié, en nous regardant par-dessus son épaule, le manteau qui flotte.
 ```
 
-#### Gardiens de l'Abîme (SR) → `demon_inf_evo.png`
+#### ✅ FAIT — Gardiens de l'Abîme (SR) → `demon_inf_evo.png`
 > Joins `demon_inf.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -315,7 +315,7 @@ PORTRAIT : à mi-corps, il pose son bouclier-gueule devant lui et nous défie du
 FIGURINE : il plante sa hallebarde dans le socle d'un côté et lève son bouclier-gueule de l'autre, bien campé, prêt à bloquer le passage.
 ```
 
-#### Titan d'Obsidienne (SR) → `golem_obsidienne_evo.png`
+#### ✅ FAIT — Titan d'Obsidienne (SR) → `golem_obsidienne_evo.png`
 > Joins `golem_obsidienne.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -341,7 +341,7 @@ PORTRAIT : en contre-plongée, il lève un poing tranchant devant son visage, so
 FIGURINE : il frappe ses deux poings l'un contre l'autre au-dessus de sa tête, des fissures violettes qui s'illuminent sur tout son corps.
 ```
 
-#### Liche Majeure (SR) → `liche_mineure_evo.png`
+#### ✅ FAIT — Liche Majeure (SR) → `liche_mineure_evo.png`
 > Joins `liche_mineure.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -367,7 +367,7 @@ PORTRAIT : en buste, il tient son phylactère vert dans sa main osseuse et le co
 FIGURINE : debout, il lève son grand bâton à crâne au-dessus de lui pour réveiller les morts, l'autre main ouverte vers le bas ; son grimoire ouvert reste collé à sa main.
 ```
 
-#### Chimère Primordiale (SR) → `chimere_evo.png`
+#### ✅ FAIT — Chimère Primordiale (SR) → `chimere_evo.png`
 > Joins `chimere.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -419,7 +419,7 @@ PORTRAIT : en buste, il couvre la moitié de son visage d'une aile noire, une la
 FIGURINE : il descend du ciel, ailes noires grandes ouvertes, et pointe son épée de ténèbres vers l'avant.
 ```
 
-#### Hydre des Abysses (SR) → `hydre_jeune_evo.png`
+#### ✅ FAIT — Hydre des Abysses (SR) → `hydre_jeune_evo.png`
 > Joins `hydre_jeune.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -445,7 +445,7 @@ PORTRAIT : de face, les trois têtes adultes nous fixent ensemble, gueules entro
 FIGURINE : son corps enroulé sur un rocher du socle, les trois têtes dressées et écartées vers l'avant, prêtes à mordre.
 ```
 
-#### Seigneur des Flammes (SR) → `demon_flamme_evo.png`
+#### ✅ FAIT — Seigneur des Flammes (SR) → `demon_flamme_evo.png`
 > Joins `demon_flamme.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -523,7 +523,7 @@ PORTRAIT : de PROFIL tourné vers la gauche, elle rugit la gueule grande ouverte
 FIGURINE : perchée sur un éperon rocheux du socle, ailes grandes ouvertes, la queue levée au-dessus d'elle avec le dard pointé vers l'avant.
 ```
 
-#### Lapin Apocalyptique (SR) → `lapin_pyromane_evo.png`
+#### ✅ FAIT — Lapin Apocalyptique (SR) → `lapin_pyromane_evo.png`
 > Joins `lapin_pyromane.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -581,7 +581,7 @@ FIGURINE : debout, elle lève sa grande lanterne de cristal au-dessus d'elle pou
 Ces 9 évolutions avaient un portrait dans l'ancien style (très lumineux) et pas de figurine ; l'Axolotl Ancestral n'avait rien. On les refait comme les autres (portrait + figurine), pour qu'elles aient la même patte que tout le reste.
 > Si tu préfères garder un ancien portrait, dis-le-moi : je ne prendrai que la figurine de l'image.
 
-#### Axolotl Ancestral (SSR) → `axolotl_sources_evo.png`
+#### ✅ FAIT — Axolotl Ancestral (SSR) → `axolotl_sources_evo.png`
 > Joins `axolotl_sources.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -607,7 +607,7 @@ PORTRAIT : en buste, il tient une petite goutte d'eau lumineuse au creux de ses 
 FIGURINE : debout, il lève son bâton de corail vers le ciel pour soigner l'équipe, l'autre main posée sur la coquille de son escargot compagnon à ses pieds.
 ```
 
-#### La Brute Primordiale (SSR) → `brute_noire_evo.png`
+#### ✅ FAIT — La Brute Primordiale (SSR) → `brute_noire_evo.png`
 > Joins `brute_noire.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -633,7 +633,7 @@ PORTRAIT : en buste, de trois quarts, il frappe sa poitrine d'un poing et rugit,
 FIGURINE : debout sur ses jambes arrière, les deux poings joints levés au-dessus de la tête, prêt à les abattre sur le sol, les chaînes brisées qui pendent de ses poignets.
 ```
 
-#### Barbe-Abysse, Roi Runique (SSR) → `barbe_bleue_evo.png`
+#### ✅ FAIT — Barbe-Abysse, Roi Runique (SSR) → `barbe_bleue_evo.png`
 > Joins `barbe_bleue.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -659,7 +659,7 @@ PORTRAIT : en buste, il caresse fièrement sa barbe bleue tressée d'une main, l
 FIGURINE : debout, bien campé sur ses jambes, il plante son grand bouclier runique devant lui et lève son marteau runique au-dessus de sa tête.
 ```
 
-#### La Lance Solaire (SSR) → `lance_doree_evo.png`
+#### ✅ FAIT — La Lance Solaire (SSR) → `lance_doree_evo.png`
 > Joins `lance_doree.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -685,7 +685,7 @@ PORTRAIT : en buste, de PROFIL tourné vers la droite, il tient sa lance solaire
 FIGURINE : en plein élan, il projette sa lance vers l'avant d'un grand geste, une jambe tendue en arrière, la crête de plumes au vent.
 ```
 
-#### La Dryade Éternelle (SSR) → `nymphe_evo.png`
+#### ✅ FAIT — La Dryade Éternelle (SSR) → `nymphe_evo.png`
 > Joins `nymphe.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -711,7 +711,7 @@ PORTRAIT : en buste, les yeux mi-clos, elle souffle doucement sur une fleur blan
 FIGURINE : debout sur la pointe des pieds, elle lève son bâton fleuri au-dessus d'elle, l'autre main ouverte vers l'avant comme pour bénir l'équipe, la robe qui tourne autour de ses jambes.
 ```
 
-#### L'Archimage Cendré (SSR) → `mage_gris_evo.png`
+#### ✅ FAIT — L'Archimage Cendré (SSR) → `mage_gris_evo.png`
 > Joins `mage_gris.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -737,7 +737,7 @@ PORTRAIT : en buste, il fait flotter une petite boule de feu au-dessus de sa pau
 FIGURINE : debout, il pointe son grand bâton vers l'avant comme pour lancer un sort, l'autre main levée qui tient une boule de feu, la robe et la barbe soulevées.
 ```
 
-#### La Dague Crépusculaire (SSR) → `dague_violette_evo.png`
+#### ✅ FAIT — La Dague Crépusculaire (SSR) → `dague_violette_evo.png`
 > Joins `dague_violette.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -789,7 +789,7 @@ PORTRAIT : à mi-corps, il dégaine lentement son katana devant son masque de d�
 FIGURINE : en garde, les deux mains sur le katana levé au-dessus de la tête, un pied en avant, la cape rouge qui flotte derrière lui.
 ```
 
-#### Le Paladin Immaculé (SSR) → `chevalier_blanc_evo.png`
+#### ✅ FAIT — Le Paladin Immaculé (SSR) → `chevalier_blanc_evo.png`
 > Joins `chevalier_blanc.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -815,7 +815,7 @@ PORTRAIT : à mi-corps, il pose la main sur le soleil doré de son plastron, la 
 FIGURINE : debout, il plante son épée dans le socle devant lui, les deux mains posées sur la garde, le grand bouclier dans le dos, le manteau qui tombe derrière lui.
 ```
 
-#### Chevalier du Néant (R) → `chevalier_evo.png`
+#### ✅ FAIT — Chevalier du Néant (R) → `chevalier_evo.png`
 > Joins `chevalier.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
