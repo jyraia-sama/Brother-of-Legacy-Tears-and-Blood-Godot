@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.79.1"
+const NUMERO := "0.79.2"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.79.2", "date": "2026-10-23", "titre": "La galerie complète",
+	"changements": [
+		"ÉVOLUTIONS : TOUTES ONT LEUR IMAGE. 23 nouvelles évolutions ont leur propre portrait et leur propre figurine de combat, dont les 8 héros de légende (la Brute Primordiale, Barbe-Abysse, la Lance Solaire, la Dryade Éternelle, l'Archimage Cendré, la Dague Crépusculaire, le Shogun Écarlate, le Paladin Immaculé), le Chevalier du Néant, l'Axolotl Ancestral, Sam l'Oracle des Rayons, la Wyverne Ancestrale, l'Impératrice Arachnide, le Séraphin des Ténèbres, l'Hydre des Abysses, la Liche Majeure…",
+		"MÉNAGERIE : les 40 familiers ont leur portrait. Les 22 qui n'en avaient pas (du Lynx des Neiges Noires à l'Ombre de Léviathan) en ont un, et les 18 premiers ont été repeints dans le même style, plus détaillé.",
+		"Les nouvelles images apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire, la Ménagerie et la Galerie d'art.",
+	]},
 	{"version": "0.79.1", "date": "2026-10-23", "titre": "Les chemins de l'aîné",
 	"changements": [
 		"CHEMINS PEINTS : sur le plateau 3D des chapitres, chaque Acte a maintenant son propre chemin : pavés de la cour en cendres du Domaine, allée de procession et cire de bougies de la Cité en Deuil, caillebotis de planches dans la boue des Camps, dalles funéraires dorées du Sépulcre, passerelle de rondins du Marais, plaques de fer rivetées de la Citadelle, marbre noir veiné d'or du Trône, cristal bleu et rouge du Sceau…",

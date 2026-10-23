@@ -8,7 +8,7 @@ Mêmes créatures, mêmes places dans la grille qu'avant : rien ne change dans l
 
 ---
 
-## Planche 31 → `planche_31.png`
+## ✅ FAIT — Planche 31 → `planche_31.png`
 > Joins `planche_33.png`.
 ```
 Crée une planche de portraits d'ANIMAUX FAMILIERS pour les cartes d'un jeu mobile dark fantasy.
@@ -42,7 +42,7 @@ Commande : `python3 outils/decouper_planche.py planche_31.png rat_cryptes corbea
 
 ---
 
-## Planche 32 → `planche_32.png`
+## ✅ FAIT — Planche 32 → `planche_32.png`
 > Joins `planche_33.png`.
 ```
 Crée une planche de portraits d'ANIMAUX FAMILIERS pour les cartes d'un jeu mobile dark fantasy.

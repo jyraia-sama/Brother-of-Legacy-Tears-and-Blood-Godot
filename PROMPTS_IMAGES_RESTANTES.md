@@ -1,4 +1,6 @@
 # Prompts ChatGPT : TOUTES LES IMAGES QUI RESTENT À FAIRE
+
+> ✅ **Tout est fait** (v0.79.2, 2026-10-23).
 Un seul fichier pour tout ce qui manque encore au jeu. **Toutes les images à joindre sont dans `images_a_joindre.zip`.**
 Une image par message ; une nouvelle conversation par partie de préférence. Rends-moi chaque image sous le nom indiqué : je la découpe et je la range.
 Si ChatGPT refuse une image (« contenus violents »), nouvelle conversation, et dis-le-moi : je réécris la fiche.
@@ -393,7 +395,7 @@ PORTRAIT : de face, les trois têtes nous regardent en même temps : le lion rug
 FIGURINE : dressée sur ses pattes arrière sur un rocher du socle, les pattes avant griffues levées, les trois têtes tournées vers l'avant.
 ```
 
-#### Séraphin des Ténèbres (SR) → `seraphin_dechu_evo.png`
+#### ✅ FAIT — Séraphin des Ténèbres (SR) → `seraphin_dechu_evo.png`
 > Joins `seraphin_dechu.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -471,7 +473,7 @@ PORTRAIT : à mi-corps, il tient une boule de feu dans sa main et la contemple a
 FIGURINE : il lève son épée de feu bien haut au-dessus de sa tête, un pied posé sur un rocher fumant du socle.
 ```
 
-#### Impératrice Arachnide (SR) → `reine_araignee_evo.png`
+#### ✅ FAIT — Impératrice Arachnide (SR) → `reine_araignee_evo.png`
 > Joins `reine_araignee.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -497,7 +499,7 @@ PORTRAIT : en buste, elle tire délicatement un fil de soie entre ses doigts ave
 FIGURINE : elle se dresse sur ses pattes arrière, les pattes avant levées, les bras écartés comme une reine qui accueille sa cour.
 ```
 
-#### Wyverne Ancestrale (SR) → `wyverne_evo.png`
+#### ✅ FAIT — Wyverne Ancestrale (SR) → `wyverne_evo.png`
 > Joins `wyverne.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -549,7 +551,7 @@ PORTRAIT : en buste, il allume la mèche d'une bombe ronde avec un briquet, un s
 FIGURINE : il court vers l'avant avec une bombe allumée dans chaque main, une oreille au vent, le baril de poudre sur le dos qui rebondit ; la petite flamme des mèches reste collée aux mèches.
 ```
 
-#### Sam, l'Oracle des Rayons (UR) → `sam_radiologue_evo.png`
+#### ✅ FAIT — Sam, l'Oracle des Rayons (UR) → `sam_radiologue_evo.png`
 > Joins `sam_radiologue.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -763,7 +765,7 @@ PORTRAIT : en buste, à moitié dans l'ombre de sa capuche, elle pose la lame d'
 FIGURINE : accroupie sur une petite pierre du socle, prête à bondir, une dague dans chaque main, la cape étalée derrière elle.
 ```
 
-#### Le Shogun Écarlate (SSR) → `samourai_rouge_evo.png`
+#### ✅ FAIT — Le Shogun Écarlate (SSR) → `samourai_rouge_evo.png`
 > Joins `samourai_rouge.jpg` (dans le zip).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -846,7 +848,7 @@ FIGURINE : il avance d'un pas lourd, la grande épée posée sur l'épaule, la c
 ## Partie 5 — Familiers de la Ménagerie (22, en 3 planches)
 Même méthode que les planches 31 et 32 : une bulle = une planche de 9 cases. Joins `reference_familiers.jpg` (des familiers déjà faits, pour garder le même style), puis colle la bulle.
 
-#### Planche 33 → `planche_33.png`
+#### ✅ FAIT — Planche 33 → `planche_33.png`
 > Joins `reference_familiers.jpg` (dans le zip).
 ```
 Crée une planche de portraits d'ANIMAUX FAMILIERS pour les cartes d'un jeu mobile dark fantasy.
@@ -878,7 +880,7 @@ Fichiers : 1 = `lynx_neiges_noires` (Lynx des Neiges Noires), 2 = `tortue_moussu
 
 Commande : `python3 outils/decouper_planche.py planche_33.png lynx_neiges_noires tortue_moussue mouette_spectrale belette_sang bouc_maudit chouette_sepulcrale salamandre_ardente golem_poche feu_follet --familiers`
 
-#### Planche 34 → `planche_34.png`
+#### ✅ FAIT — Planche 34 → `planche_34.png`
 > Joins `reference_familiers.jpg` (dans le zip).
 ```
 Crée une planche de portraits d'ANIMAUX FAMILIERS pour les cartes d'un jeu mobile dark fantasy.
@@ -910,7 +912,7 @@ Fichiers : 1 = `kelpie_marais` (Kelpie des Marais), 2 = `corneille_prophetesse` 
 
 Commande : `python3 outils/decouper_planche.py planche_34.png kelpie_marais corneille_prophetesse mimic_apprivoise chat_sphinx ours_mort_vivant wyverneau_ecarlate licorne_dechue cerbere_nain phenix_cendre --familiers`
 
-#### Planche 35 → `planche_35.png`
+#### ✅ FAIT — Planche 35 → `planche_35.png`
 > Joins `reference_familiers.jpg` (dans le zip).
 ```
 Crée une planche de portraits d'ANIMAUX FAMILIERS pour les cartes d'un jeu mobile dark fantasy.

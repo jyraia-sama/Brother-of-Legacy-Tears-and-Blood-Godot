@@ -12,6 +12,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ÉVOLUTIONS : TOUTES ONT LEUR IMAGE. 23 nouvelles évolutions ont leur propre portrait et leur propre figurine de combat, dont les 8 héros de légende (la Brute Primordiale, Barbe-Abysse, la Lance Solaire, la Dryade Éternelle, l'Archimage Cendré, la Dague Crépusculaire, le Shogun Écarlate, le Paladin Immaculé), le Chevalier du Néant, l'Axolotl Ancestral, Sam l'Oracle des Rayons, la Wyverne Ancestrale, l'Impératrice Arachnide, le Séraphin des Ténèbres, l'Hydre des Abysses, la Liche Majeure…",
+				"MÉNAGERIE : les 40 familiers ont leur portrait. Les 22 qui n'en avaient pas (du Lynx des Neiges Noires à l'Ombre de Léviathan) en ont un, et les 18 premiers ont été repeints dans le même style, plus détaillé.",
+				"Les nouvelles images apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire, la Ménagerie et la Galerie d'art."
+			],
+			"titre": "La galerie complète",
+			"version": "0.79.2"
+		},
+		{
+			"changements": [
 				"CHEMINS PEINTS : sur le plateau 3D des chapitres, chaque Acte a maintenant son propre chemin : pavés de la cour en cendres du Domaine, allée de procession et cire de bougies de la Cité en Deuil, caillebotis de planches dans la boue des Camps, dalles funéraires dorées du Sépulcre, passerelle de rondins du Marais, plaques de fer rivetées de la Citadelle, marbre noir veiné d'or du Trône, cristal bleu et rouge du Sceau…",
 				"Le sentier est un peu plus large et mieux éclairé, pour qu'on le suive facilement de l'œil.",
 				"CARTE DU MONDE EN 3D : la carte est désormais posée sur une vieille table de cartographe en bois sombre."
@@ -135,22 +144,13 @@
 			],
 			"titre": "Cinq nouveaux champs de bataille",
 			"version": "0.75.1"
-		},
-		{
-			"changements": [
-				"LE JEU SUR LINUX : Brothers of Legacy existe maintenant en application Linux (fichier BrothersOfLegacy-Linux.tar.gz dans la page de téléchargement). Elle se met à jour toute seule comme les versions Windows et Mac, et ta partie te suit grâce à ton compte.",
-				"MISE À JOUR SUR ANDROID : une fois la mise à jour téléchargée, tu peux choisir « Continuer à jouer » (elle sera active la prochaine fois que tu ouvriras le jeu) ou « Fermer maintenant ». Android ne permet pas à un jeu de se relancer tout seul, d'où ce choix.",
-				"STATISTIQUES DU JEU (menu Admin) : les téléchargements Linux sont comptés à part, à côté de Windows, Mac et Android."
-			],
-			"titre": "Le jeu sur Linux",
-			"version": "0.75.0"
 		}
 	],
 	"pck": {
-		"sha256": "b89ef9b7e66a6d0f61ff28ad575490a1ff5a8ded93564e06c0c711ee6df939f3",
-		"taille": 32301992,
+		"sha256": "8b0f95f318bf51620a12ca599da56f6ea15f7ca87a3604203d8e0f4e7e37ed48",
+		"taille": 38056992,
 		"url": "jeu.pck"
 	},
-	"version": "0.79.1",
+	"version": "0.79.2",
 	"version_minimum": "0.37.0"
 }
