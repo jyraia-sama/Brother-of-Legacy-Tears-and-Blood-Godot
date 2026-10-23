@@ -763,23 +763,18 @@ func _maj_stamina() -> void:
 
 func _message(titre: String, texte: String, ensuite := Callable()) -> void:
 	bloque = true
-	var d := AcceptDialog.new()
-	d.title = titre
-	d.dialog_text = texte
 	var fermer := func():
-		d.hide()
-		d.queue_free()
 		bloque = false
 		if ensuite.is_valid():
 			ensuite.call()
-	d.confirmed.connect(fermer)
-	d.canceled.connect(fermer)
-	hud.add_child(d)
-	if texte.length() > 300:          # textes longs (épilogues) : retour à la ligne automatique
-		d.dialog_autowrap = true
-		d.popup_centered(Vector2i(760, 0))
-	else:
-		d.popup_centered(Vector2i(420, 0))
+	# Fenêtre peinte du jeu (même cadre que les autres écrans) ; plus large pour les longs textes
+	var f := FenetreSimple.new()
+	f.titre = titre
+	f.texte = texte
+	f.boutons = [["Continuer", fermer]]
+	if texte.length() > 300:
+		f.largeur = 760.0
+	hud.add_child(f)
 
 
 func _retour() -> void:
@@ -1237,13 +1232,11 @@ func _creer_fond() -> void:
 		couche.add_child(img)
 
 
-func _style_panneau() -> StyleBoxFlat:
-	var s := StyleBoxFlat.new()
-	s.bg_color = Color(0.08, 0.02, 0.03, 0.92)
-	s.border_color = Color(0.85, 0.65, 0.3)
-	s.set_border_width_all(2)
-	s.set_corner_radius_all(6)
-	s.set_content_margin_all(12)
+## Panneaux du plateau : le même cadre peint que le reste du jeu (StyleCadre du kit).
+func _style_panneau() -> StyleBox:
+	var s := UiCommun.style_panneau(Color(0.85, 0.65, 0.3), Color(0.08, 0.02, 0.03, 1.0))
+	s.bg_color.a = 0.9
+	s.set_content_margin_all(14)
 	return s
 
 

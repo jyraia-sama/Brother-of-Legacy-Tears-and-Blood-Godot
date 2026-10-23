@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.80.1** (2026-10-23)
+Version actuelle : **0.80.2** (2026-10-23)
+
+## v0.80.2 — Le plateau habillé  (2026-10-23)
+
+- PLATEAU : les fenêtres (trésor, mystère, piège, soin…) ont maintenant le même cadre peint que le reste du jeu, comme la barre du haut, la bulle d'info des cases et le panneau d'équipe.
+- PLATEAU 3D : les dalles des cases sont taillées dans la pierre peinte du chemin de l'Acte, au lieu d'un gris uni.
+- Les petites fenêtres à un seul bouton se ferment aussi avec Entrée, Espace ou Échap.
 
 ## v0.80.1 — La clé de la stèle  (2026-10-23)
 

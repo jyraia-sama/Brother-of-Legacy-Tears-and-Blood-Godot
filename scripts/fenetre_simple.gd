@@ -81,6 +81,13 @@ func _clic(action) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+	if not (event is InputEventKey and event.pressed and not event.echo):
+		return
+	var k := (event as InputEventKey).keycode
+	if k == KEY_ESCAPE or (boutons.size() == 1 and k in [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]):
 		get_viewport().set_input_as_handled()
-		queue_free()
+		# Une seule action (« Continuer », « Fermer ») : Échap ou Entrée la déclenche, comme un clic
+		if boutons.size() == 1:
+			_clic(boutons[0][1] if boutons[0].size() > 1 else null)
+		else:
+			queue_free()

@@ -12,6 +12,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"PLATEAU : les fenêtres (trésor, mystère, piège, soin…) ont maintenant le même cadre peint que le reste du jeu, comme la barre du haut, la bulle d'info des cases et le panneau d'équipe.",
+				"PLATEAU 3D : les dalles des cases sont taillées dans la pierre peinte du chemin de l'Acte, au lieu d'un gris uni.",
+				"Les petites fenêtres à un seul bouton se ferment aussi avec Entrée, Espace ou Échap."
+			],
+			"titre": "Le plateau habillé",
+			"version": "0.80.2"
+		},
+		{
+			"changements": [
 				"Menu Admin : nouvelle option « Ruines Oubliées ouvertes » pour tester les Ruines sans chercher les trois fragments (décocher la remet comme avant)."
 			],
 			"titre": "La clé de la stèle",
@@ -134,24 +143,13 @@
 			],
 			"titre": "Douze nouveaux champs de bataille",
 			"version": "0.76.1"
-		},
-		{
-			"changements": [
-				"COMBATS EN 3D DANS TOUS LES MODES : les Tours de l'Enfer et du Paradis, les 7 Donjons (dont le Puits de Sang et la Bibliothèque Interdite), la Marche Maudite, le Sanctuaire du Bélier, l'Arène (JcJ et Classé) et la Guerre des Bannières passent en 2,5D, avec les pions sur socles, les sorts par élément et la météo. Seul le Boss de Monde reste en 2D.",
-				"MARCHE MAUDITE : chaque région prend le décor 3D de son Acte.",
-				"DÉCORS EN ATTENDANT : les autres modes empruntent pour l'instant le décor de l'Acte le plus proche (la Tour de l'Enfer celui du Trône de Cendres, le Brasier Éternel les Terres Brûlées, la Sylve Putride le Marais aux Murmures, la Guerre le bastion de l'éclipse…). Chaque mode aura bientôt son propre décor peint, qui prendra la place de l'emprunt tout seul.",
-				"AMBIANCES : chaque mode a déjà son ambiance prête (lumière, brume, météo) ; nouvelles météos : bulles des Fosses Englouties, plumes dorées de la Tour du Paradis, poussière de parchemin de la Bibliothèque.",
-				"La case « Combats en 3D » des Paramètres s'applique maintenant à tous ces modes."
-			],
-			"titre": "Tous les modes en 3D",
-			"version": "0.76.0"
 		}
 	],
 	"pck": {
-		"sha256": "bc36e6ba81523be60d22c28f0f12bf198a8ddb554e6f00aeff08977a268eeb7a",
-		"taille": 38079416,
+		"sha256": "b09a117b52d5bfa2ae429c70e40c3fa537a84f261c803930fc408c7c7b67817e",
+		"taille": 38080072,
 		"url": "jeu.pck"
 	},
-	"version": "0.80.1",
+	"version": "0.80.2",
 	"version_minimum": "0.37.0"
 }

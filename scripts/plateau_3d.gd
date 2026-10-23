@@ -395,6 +395,14 @@ func _creer_case(n: Dictionary, chemin_ennemi: String) -> void:
 	md.albedo_color = Color(0.2, 0.18, 0.17)
 	md.roughness = 0.75
 	md.metallic = 0.2
+	# Dalle taillée dans la pierre du chemin de l'Acte (texture peinte), un peu plus sombre
+	var img_dalle := image_chemin(acte)
+	if img_dalle != "":
+		md.albedo_texture = load(img_dalle)
+		md.uv1_scale = Vector3(0.9, 0.9, 1)
+		md.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
+		md.metallic = 0.05
+		md.roughness = 0.85
 	dalle.material_override = md
 	dalle.position.y = H_DALLE / 2.0
 	racine.add_child(dalle)
@@ -517,7 +525,10 @@ func maj(courant: int, reveles: Dictionary, visites: Dictionary, termines: Dicti
 				mat.set_shader_parameter("sombre", 0.85 if silhouette else (0.45 if fini else 0.0))
 				mat.set_shader_parameter("opacite", 0.55 if silhouette else 1.0)
 		var md: StandardMaterial3D = c["mat_dalle"]
-		md.albedo_color = Color(0.1, 0.09, 0.09) if silhouette else Color(0.2, 0.18, 0.17)
+		if md.albedo_texture:
+			md.albedo_color = Color(0.25, 0.23, 0.22) if silhouette else Color(0.78, 0.74, 0.7)
+		else:
+			md.albedo_color = Color(0.1, 0.09, 0.09) if silhouette else Color(0.2, 0.18, 0.17)
 		var ml: StandardMaterial3D = c["mat_lis"]
 		ml.emission_energy_multiplier = 0.0 if silhouette else (0.35 if fini else 1.6)
 		ml.albedo_color = Color(0.12, 0.1, 0.1) if silhouette else (COULEURS.get(c["type"], Color.GRAY) as Color).darkened(0.5 if fini else 0.0)
