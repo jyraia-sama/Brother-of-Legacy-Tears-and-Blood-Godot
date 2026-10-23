@@ -53,6 +53,8 @@ const LIEUX := [
 ## Positions des lieux sur la carte PEINTE (assets/ui/carte_monde.png, surface 1280 x 720) :
 ## l'image 3:2 est montrée sur toute la hauteur, calée à gauche et descendue de IMAGE_DECALAGE_Y.
 const IMAGE_DECALAGE_Y := 50.0
+## Stèle du Sceau de l'Aube (Ruines Oubliées), sur la carte peinte : au bord de la mer, à l'ouest
+const POS_STELE := Vector2(112, 452)
 const POS_IMAGE := [
 	Vector2(162, 605), Vector2(232, 486), Vector2(450, 648), Vector2(534, 542),
 	Vector2(506, 430), Vector2(211, 352), Vector2(260, 261), Vector2(541, 303),
@@ -342,6 +344,18 @@ func _creer_noeuds() -> void:
 		nom.position.x = pos.x - largeur / 2.0
 		nom.size.x = largeur
 	_maj_noeuds()
+	# Carte 2D : la stèle du Sceau de l'Aube (Ruines Oubliées)
+	if _image_fond and Ruines.stele_visible():
+		var st := Button.new()
+		st.text = "☀"
+		st.focus_mode = Control.FOCUS_NONE
+		st.tooltip_text = "Une vieille stèle"
+		st.add_theme_font_size_override("font_size", 18)
+		var lueur := 0.35 + 0.2 * Ruines.nb_fragments()
+		st.add_theme_stylebox_override("normal", _style(Color(0.2, 0.17, 0.12, 0.9), Color(1.0, 0.8, 0.4, lueur), 18, 2))
+		st.add_theme_color_override("font_color", Color(1.0, 0.85, 0.45, lueur + 0.2))
+		_placer(st, Rect2(POS_STELE - Vector2(18, 18), Vector2(36, 36)))
+		st.pressed.connect(_stele)
 	# La figurine du grand frère sur l'Acte en cours
 	if not _tout_fini and ResourceLoader.exists(IMG_PION):
 		var pion := TextureRect.new()
@@ -435,6 +449,21 @@ func _creer_3d() -> void:
 		etats[a] = _etat_acte(a)
 		figurines[a] = _figurine_boss(a)
 	_c3d.construire(uv, etats, figurines, _courant, _nb, _sel)
+	if Ruines.stele_visible():
+		_c3d.creer_stele(Vector2(POS_STELE.x / largeur, (POS_STELE.y - IMAGE_DECALAGE_Y) / BASE.y), Ruines.nb_fragments())
+
+
+## La stèle du Sceau de l'Aube : fermée tant que les trois fragments ne sont pas réunis.
+func _stele() -> void:
+	Audio.son("clic")
+	var n := Ruines.nb_fragments()
+	if Ruines.ouvertes():
+		FenetreSimple.ouvrir(self, "La stèle du Sceau de l'Aube",
+			"Les trois fragments ont repris leur place. Le soleil gravé brille, et la pierre a glissé de côté : un escalier descend sous la terre.",
+			[["Descendre dans les Ruines", func(): get_tree().change_scene_to_file(Ruines.SCENE)], ["Plus tard", null]])
+	else:
+		FenetreSimple.ouvrir(self, "Une vieille stèle",
+			UiCommun.t("Une stèle couverte de mousse, au bord de la mer. On y devine un soleil levant derrière une cloche, et trois creux en forme d'éclats de pierre.\n\nFragments du Sceau de l'Aube : %d / 3.\nIls dorment quelque part dans l'histoire, sous des cases Mystère…") % n)
 
 
 func _etat_acte(a: int) -> String:
@@ -474,7 +503,10 @@ func _entree_3d(event: InputEvent) -> void:
 			else:
 				if _appui and not _glisse:
 					var a := _c3d.acte_a_ecran(mb.position)
-					if a >= 1:
+					if a == Carte3D.STELE:
+						_c3d.viser_stele()
+						_stele()
+					elif a >= 1:
 						_choisir(a)
 				_appui = false
 		elif mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_UP:

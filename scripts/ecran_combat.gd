@@ -14,6 +14,7 @@ extends Control
 ##   "donjon"     : un des 4 combats d'une expédition de Donjon   ("donjon", "niveau", "vague", "retour")
 ##   "marche"     : un combat de la Marche Maudite   ("type", "region", "retour")
 ##   "sanctuaire" : Sanctuaire du Bélier (secret), la famille du Bélier   ("epreuve", "retour")
+##   "ruines"     : Ruines Oubliées (secret), une vague d'un étage   ("etage", "vague", "retour")
 ##   "guerre"     : Guerre des Bannières, assaut d'un poste ennemi ("attaque", "graine", "adversaire", "poste", "retour")
 ##   "guerre_revoir" : rediffusion d'un assaut de guerre (même graine, mêmes équipes : combat identique)
 ##   "classee"    : Arène classée en temps réel, combat MANUEL à deux joueurs ("match", "mon_camp", "retour")
@@ -55,7 +56,7 @@ var _idx_geant := -1
 var barre_haut: HBoxContainer   # barre du haut (le combat classé y ajoute « Abandonner »)
 ## Combats en 2,5D (scène 3D + figurines) : modes concernés et scène 3D (null en 2D).
 ## Boss de Monde : 20 héros (4 escouades) en formation devant le géant (FORMATION_GEANT).
-const MODES_3D := ["aventure", "tour", "donjon", "marche", "sanctuaire", "arene", "classee", "guerre", "guerre_revoir", "boss_monde"]
+const MODES_3D := ["aventure", "tour", "donjon", "marche", "sanctuaire", "ruines", "arene", "classee", "guerre", "guerre_revoir", "boss_monde"]
 ## Hauteur (fraction de l'image) où commence le sol peint de chaque toile de fond 3D
 const COUPES_3D := {1: 0.72, 2: 0.76, 3: 0.69, 4: 0.74, 5: 0.72, 6: 0.73, 7: 0.75, 8: 0.71, 9: 0.70, 10: 0.70, 11: 0.70, 12: 0.71, 13: 0.72}
 ## DÉCORS 3D DES AUTRES MODES : chaque décor a sa clé (assets/combat3d/<clé>_fond.png + <clé>_sol.png).
@@ -83,7 +84,7 @@ var _c3d: Combat3D = null
 var _decor: Dictionary = {}
 ## Combats jouables à la main (les Boss de Monde, l'Arène et la Guerre restent automatiques ;
 ## l'Arène classée est toujours manuelle, gérée par combat_classe.gd)
-const MODES_MANUEL := ["aventure", "tour", "donjon", "marche", "sanctuaire"]
+const MODES_MANUEL := ["aventure", "tour", "donjon", "marche", "sanctuaire", "ruines"]
 var _manuel := false
 var _cm: CombatManuel = null
 var _bouton_manuel: Button
@@ -187,6 +188,8 @@ func _cle_decor() -> String:
 			return "donjon_" + str(demande.get("donjon", "feu"))
 		"sanctuaire":
 			return "sanctuaire"
+		"ruines":
+			return str(Ruines.ETAGES[str(demande.get("etage", "seve"))]["decor"])
 		"arene", "classee":
 			return "arene"
 		"guerre", "guerre_revoir":
@@ -338,6 +341,10 @@ func _creer_interface() -> void:
 			str(Guerre.COUCHES[int(demande.get("couche", 0))]).to_upper(), str(demande.get("adversaire", "?"))]
 	elif _mode == "sanctuaire":
 		texte_titre = "LE SANCTUAIRE DU BÉLIER — " + str(Sanctuaire.EPREUVES[demande["epreuve"]]["titre"]).to_upper()
+	elif _mode == "ruines":
+		var et_r := str(demande.get("etage", "seve"))
+		texte_titre = UiCommun.t("RUINES OUBLIÉES — %s — VAGUE %d / %d") % [str(Ruines.ETAGES[et_r]["titre"]).to_upper(),
+			int(demande.get("vague", 0)) + 1, Ruines.nb_vagues(et_r)]
 	elif _mode == "donjon":
 		var v := int(demande.get("vague", 0))
 		texte_titre = UiCommun.t("%s · NIVEAU %d — COMBAT %d / %d : %s") % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),
@@ -784,6 +791,9 @@ func _musique_combat() -> String:
 		return "boss_monde"
 	if _mode == "sanctuaire":
 		return "boss"
+	if _mode == "ruines":
+		var et_m := str(demande.get("etage", "seve"))
+		return "boss" if int(demande.get("vague", 0)) == Ruines.nb_vagues(et_m) - 1 else "combat"
 	var type: String = demande.get("type", "combat")
 	if _mode == "tour":
 		type = Tours.type_etage(int(demande.get("etage", 1)))
@@ -1096,6 +1106,9 @@ func _fin() -> void:
 	if _mode == "sanctuaire":
 		_fin_sanctuaire()
 		return
+	if _mode == "ruines":
+		_fin_ruines()
+		return
 	if _mode == "donjon":
 		_fin_donjon()
 		return
@@ -1198,6 +1211,20 @@ func _fin_sanctuaire() -> void:
 	_decouvrir(lignes)
 	resultat = {"mode": "sanctuaire", "victoire": victoire, "epreuve": ep}
 	_afficher_resultat(victoire, lignes, Sanctuaire.EPREUVES[ep]["titre_victoire"] if victoire else "")
+
+
+func _fin_ruines() -> void:
+	var victoire: bool = _res["victoire"]
+	var r := Ruines.apres_combat(victoire, demande["equipe"], _res.get("pv_final", []))
+	var lignes: Array = r["lignes"]
+	if victoire:
+		_xp_compte(lignes, "boss_acte" if r["fini"] else "elite")
+		_donner_xp(lignes, Sanctuaire.xp)
+	elif Ruines.porteur_cloche(demande["equipe"]) >= 0:
+		lignes.push_front("Le porteur de la cloche est tombé : Ombeline est emmenée…")
+	_decouvrir(lignes)
+	resultat = {"mode": "ruines", "victoire": victoire, "fini": r["fini"], "etage": demande.get("etage", "")}
+	_afficher_resultat(victoire, lignes, str(r["titre"]))
 
 
 func _fin_boss_monde() -> void:

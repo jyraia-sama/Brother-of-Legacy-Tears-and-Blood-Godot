@@ -564,6 +564,21 @@ func _evenement(id: int) -> void:
 
 
 func _mystere(id: int) -> void:
+	# Ruines Oubliées : la première case Mystère des Actes IV, VIII et XI cache un fragment du Sceau de l'Aube
+	if Ruines.fragment_a_trouver(acte):
+		Ruines.donner_fragment(acte)
+		_terminer(id)
+		Audio.son("coffre")
+		var n := Ruines.nb_fragments()
+		var txt := "Sous une dalle fendue, un éclat de pierre tiède, gravé d'un soleil levant derrière une cloche.\nC'est un FRAGMENT DU SCEAU DE L'AUBE (%d / 3)." % n
+		if n == 1:
+			txt += "\n\nAu même instant, loin à l'ouest, au bord de la mer, une vieille stèle se met à luire faiblement sur la carte du monde…"
+		elif n < 3:
+			txt += "\n\nLa stèle de la carte du monde brille un peu plus fort. Il manque encore un fragment."
+		else:
+			txt += "\n\nLes trois fragments vibrent ensemble. Sur la carte du monde, la stèle s'illumine : les RUINES OUBLIÉES sont ouvertes."
+		_message("Mystère : un fragment !", txt, _verifier_impasse)
+		return
 	var r := randf()
 	if r < 0.35:
 		var gain := 60 + int(noeuds[id]["niveau"]) * 20

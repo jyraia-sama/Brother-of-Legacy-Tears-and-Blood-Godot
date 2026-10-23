@@ -15,11 +15,18 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.79.2"
+const NUMERO := "0.80.0"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.80.0", "date": "2026-10-23", "titre": "Les Ruines Oubliées",
+	"changements": [
+		"SECRET : LES RUINES OUBLIÉES. Trois fragments du Sceau de l'Aube dorment dans l'histoire, sous des cases Mystère de trois Actes… Dès le premier trouvé, une vieille stèle se met à luire quelque part sur la carte du monde. Réunis les trois pour l'ouvrir.",
+		"TROIS ÉTAGES, TROIS RÈGLES : la Sève Rouge (endurance : 3 combats d'affilée, les PV ne remontent pas), le Serment de l'Aube (protéger : ton héros le plus en arrière porte la cloche d'Ombeline, s'il tombe c'est perdu) et les Oubliés de la Fosse (obscurité : moins de précision, et l'Armure Creuse tout au fond).",
+		"TROIS LÉGENDES CACHÉES, des cartes de groupe : la Compagnie de la Sève Rouge (Varn, Maëlis et Ysolde), le Serment de l'Aube (Ilan et Ombeline) et les Oubliés de la Fosse (le Petit Chevalier et Ronce). Chaque étage vaincu offre son groupe, avec son évolution à l'Autel.",
+		"Une fois délivrés, chaque étage rejouable donne une fois par jour des Cœurs pour les faire évoluer. La force des ennemis s'adapte à ton équipe, sans stamina.",
+	]},
 	{"version": "0.79.2", "date": "2026-10-23", "titre": "La galerie complète",
 	"changements": [
 		"ÉVOLUTIONS : TOUTES ONT LEUR IMAGE. 23 nouvelles évolutions ont leur propre portrait et leur propre figurine de combat, dont les 8 héros de légende (la Brute Primordiale, Barbe-Abysse, la Lance Solaire, la Dryade Éternelle, l'Archimage Cendré, la Dague Crépusculaire, le Shogun Écarlate, le Paladin Immaculé), le Chevalier du Néant, l'Axolotl Ancestral, Sam l'Oracle des Rayons, la Wyverne Ancestrale, l'Impératrice Arachnide, le Séraphin des Ténèbres, l'Hydre des Abysses, la Liche Majeure…",

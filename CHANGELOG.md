@@ -1,6 +1,13 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.79.2** (2026-10-23)
+Version actuelle : **0.80.0** (2026-10-23)
+
+## v0.80.0 — Les Ruines Oubliées  (2026-10-23)
+
+- SECRET : LES RUINES OUBLIÉES. Trois fragments du Sceau de l'Aube dorment dans l'histoire, sous des cases Mystère de trois Actes… Dès le premier trouvé, une vieille stèle se met à luire quelque part sur la carte du monde. Réunis les trois pour l'ouvrir.
+- TROIS ÉTAGES, TROIS RÈGLES : la Sève Rouge (endurance : 3 combats d'affilée, les PV ne remontent pas), le Serment de l'Aube (protéger : ton héros le plus en arrière porte la cloche d'Ombeline, s'il tombe c'est perdu) et les Oubliés de la Fosse (obscurité : moins de précision, et l'Armure Creuse tout au fond).
+- TROIS LÉGENDES CACHÉES, des cartes de groupe : la Compagnie de la Sève Rouge (Varn, Maëlis et Ysolde), le Serment de l'Aube (Ilan et Ombeline) et les Oubliés de la Fosse (le Petit Chevalier et Ronce). Chaque étage vaincu offre son groupe, avec son évolution à l'Autel.
+- Une fois délivrés, chaque étage rejouable donne une fois par jour des Cœurs pour les faire évoluer. La force des ennemis s'adapte à ton équipe, sans stamina.
 
 ## v0.79.2 — La galerie complète  (2026-10-23)
 

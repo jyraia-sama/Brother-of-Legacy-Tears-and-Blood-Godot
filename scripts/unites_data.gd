@@ -1302,6 +1302,47 @@ const UNITES := {
 			{"nom": "Larsen Assourdissant", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "silence", "chance": 0.35, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Pousse l'ampli à fond : inflige 120 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Silence (1 tour)."},
 		],
 	},
+	# ---- LÉGENDES CACHÉES des Ruines Oubliées (ruines.gd) : cartes de groupe, non invocables ----
+	"compagnie_seve": {
+		"nom": "La Compagnie de la Sève Rouge", "rarete": "SSR", "element": "nature", "role": "guerrier", "position": "avant",
+		"invocable": false, "categorie": "heros", "couleur": "7a2a20",
+		"legende": true, "forge": false, "race": "Humains", "dominantes": ["pv", "atk"], "phase2": {},
+		"stats": {"pv": 1500, "atk": 300, "def": 150, "agi": 90, "mag": 170},
+		"secondaires": {"crit": 12, "degats_crit": 180, "res": 26, "preci": 97},
+		"skills": [
+			{"nom": "Coup de Couperet", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.0}], "niveau": 1, "description": "(35 % de chance par tour) Varn abat sa lame-couperet : inflige 200 % de puissance de skill à un ennemi."},
+			{"nom": "Rafale de Poings", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 0.55, "coups": 4}, {"effet": "affliction", "nom": "etourdi", "chance": 0.15, "duree": 1}], "niveau": 10, "description": "(30 % de chance par tour) Maëlis enchaîne 4 coups de 55 % de puissance de skill sur des ennemis au hasard ; 15 % de chance d'infliger Étourdissement (1 tour)."},
+			{"nom": "Sève de Vie", "type": "actif", "chance": 0.3, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.7}], "niveau": 20, "description": "(30 % de chance par tour) Ysolde fait germer ses graines : soigne toute l'équipe de 70 % de puissance de skill."},
+			{"nom": "Serment des Trois", "type": "passif", "effets": [{"effet": "aura", "stat": "atk", "valeur": 0.08}, {"effet": "survie", "charges": 1}], "niveau": 30, "description": "Toute l'équipe : ATK +8 % ; la Compagnie survit à un coup fatal avec 1 PV (1 fois par combat)."},
+		],
+	},
+	"serment_aube": {
+		"nom": "Le Serment de l'Aube", "rarete": "SSR", "element": "sacre", "role": "tank", "position": "avant",
+		"invocable": false, "categorie": "heros", "couleur": "e8c060",
+		"legende": true, "forge": false, "race": "Humains", "dominantes": ["pv", "def"], "phase2": {},
+		"stats": {"pv": 1650, "atk": 210, "def": 240, "agi": 95, "mag": 220},
+		"secondaires": {"crit": 12, "degats_crit": 180, "res": 26, "preci": 97},
+		"skills": [
+			{"nom": "Coup de Bouclier", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.4}, {"effet": "provocation", "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Ilan frappe du bouclier : inflige 140 % de puissance de skill à un ennemi et attire sur lui les attaques (2 tours)."},
+			{"nom": "Glas Sacré", "type": "actif", "chance": 0.3, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.85}, {"effet": "affliction", "nom": "aveugle", "chance": 0.3, "duree": 2}], "niveau": 10, "description": "(30 % de chance par tour) Ombeline fait sonner ses cloches : inflige 85 % de puissance de skill à tous les ennemis ; 30 % de chance d'infliger Aveuglement (2 tours)."},
+			{"nom": "Lien d'Aube", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.15}, {"effet": "rage", "stat": "mag", "valeur": 0.3}], "niveau": 20, "description": "DEF +15 % ; sous 50 % de PV, Ombeline redouble de ferveur : MAG +30 %."},
+			{"nom": "Bénédiction des Cloches", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "soin", "mult": 0.45}, {"effet": "bouclier", "valeur": 0.1}], "niveau": 30, "description": "(25 % de chance par tour) Soigne toute l'équipe de 45 % de puissance de skill et lui donne un bouclier de 10 % de ses PV max."},
+		],
+	},
+	"oublies_fosse": {
+		"nom": "Les Oubliés de la Fosse", "rarete": "SSR", "element": "tenebres", "role": "assassin", "position": "avant",
+		"invocable": false, "categorie": "heros", "couleur": "4a5a3a",
+		"legende": true, "forge": false, "race": "Inconnue", "dominantes": ["atk", "agi"], "phase2": {},
+		"stats": {"pv": 1350, "atk": 330, "def": 160, "agi": 140, "mag": 120},
+		"secondaires": {"crit": 12, "degats_crit": 180, "res": 26, "preci": 97},
+		"skills": [
+			{"nom": "Taille Obstinée", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.8}], "niveau": 1, "description": "(35 % de chance par tour) Le Petit Chevalier frappe de son tronçon d'épée : inflige 180 % de puissance de skill à un ennemi."},
+			{"nom": "Chaîne-Faucille", "type": "actif", "chance": 0.3, "cible": "arriere", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "affliction", "nom": "saignement", "chance": 0.5, "duree": 2}], "niveau": 10, "description": "(30 % de chance par tour) Ronce lance sa faucille sur l'Arrière ennemi : inflige 130 % de puissance de skill ; 50 % de chance d'infliger Saignement (2 tours)."},
+			{"nom": "Coquille Vide", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "epines", "valeur": 0.1}], "niveau": 20, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) : l'armure s'ouvre un instant sur une ombre bleue ; renvoie 10 % des dégâts physiques reçus."},
+			{"nom": "Rancune de Fer", "type": "passif", "effets": [{"effet": "accumulation", "stat": "atk", "valeur": 0.05, "max": 6}], "niveau": 30, "description": "À chaque action, ATK +5 % (jusqu'à 6 fois) : plus le combat dure, plus il frappe fort."},
+		],
+	},
+
 	"stephane_buteur": {
 		"nom": "Stéphane, le Buteur d'Outre-Tombe", "rarete": "UR", "element": "tenebres", "role": "tireur", "position": "arriere",
 		"invocable": true, "categorie": "heros", "couleur": "2a7a3a",

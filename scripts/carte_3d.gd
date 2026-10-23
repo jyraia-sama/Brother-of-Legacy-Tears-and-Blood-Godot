@@ -45,6 +45,13 @@ var _temps := 0.0
 var _plongee := false
 var _marche := false
 var _nb := 12
+## Stèle du Sceau de l'Aube (Ruines Oubliées) : visible dès le premier fragment
+const STELE := 99
+var _stele: Node3D = null
+var _stele_pos := Vector3.ZERO
+var _mat_sceau: StandardMaterial3D = null
+var _lumiere_stele: OmniLight3D = null
+var _force_stele := 0
 ## Part de l'écran (à gauche) où l'Acte choisi doit apparaître : la fiche occupe la droite.
 var centre_ecran := 0.36
 
@@ -568,6 +575,11 @@ func _process(delta: float) -> void:
 	if _camera == null:
 		return
 	_temps += delta
+	if _mat_sceau:
+		var pulse := 0.5 + 0.5 * sin(_temps * (3.0 if _force_stele >= 3 else 1.6))
+		_mat_sceau.emission_energy_multiplier = (0.6 + 0.5 * _force_stele) * (0.6 + 0.4 * pulse)
+		if _lumiere_stele:
+			_lumiere_stele.light_energy = (0.4 + 0.6 * _force_stele) * (0.7 + 0.3 * pulse)
 	if _mat_brume:
 		_mat_brume.set_shader_parameter("temps", _temps)
 	for a in _routes:
@@ -646,6 +658,10 @@ func _ecran(p: Vector3) -> Vector2:
 func acte_a_ecran(p: Vector2) -> int:
 	var meilleur := -1
 	var dmin := 58.0 * clampf(size.y / 720.0, 0.8, 2.0)
+	if _stele:
+		for h in [0.3, 1.0]:
+			if p.distance_to(_ecran(_stele_pos + Vector3(0, h, 0))) < dmin:
+				return STELE
 	for a in _actes:
 		for h in [0.1, 0.9, 1.5]:
 			var d := p.distance_to(_ecran(pos(a) + Vector3(0, h, 0)))
@@ -653,3 +669,75 @@ func acte_a_ecran(p: Vector2) -> int:
 				dmin = d
 				meilleur = a
 	return meilleur
+
+
+# ---------------------------------------------------------------
+# Stèle du Sceau de l'Aube (Ruines Oubliées)
+# ---------------------------------------------------------------
+
+## uv : position sur la carte peinte (0..1) ; fragments : 1 à 3 (3 = Ruines ouvertes).
+func creer_stele(uv: Vector2, fragments: int) -> void:
+	_force_stele = fragments
+	_stele_pos = Vector3((uv.x - 0.5) * LARGEUR, 0.0, (uv.y - 0.5) * _hauteur)
+	_stele = Node3D.new()
+	_stele.position = _stele_pos
+	_monde.add_child(_stele)
+	var pierre := MeshInstance3D.new()
+	var b := BoxMesh.new()
+	b.size = Vector3(0.7, 1.4, 0.22)
+	pierre.mesh = b
+	pierre.position.y = 0.7
+	pierre.rotation.y = 0.35
+	var mp := StandardMaterial3D.new()
+	mp.albedo_color = Color(0.2, 0.19, 0.18)
+	mp.roughness = 0.95
+	pierre.material_override = mp
+	_stele.add_child(pierre)
+	var socle := MeshInstance3D.new()
+	var cyl := CylinderMesh.new()
+	cyl.top_radius = 0.5
+	cyl.bottom_radius = 0.58
+	cyl.height = 0.1
+	socle.mesh = cyl
+	socle.position.y = 0.05
+	socle.material_override = mp
+	_stele.add_child(socle)
+	# Le Sceau gravé : un soleil levant derrière une cloche, qui luit selon le nombre de fragments
+	var sceau := Label3D.new()
+	sceau.text = "☀"
+	sceau.font_size = 110
+	sceau.pixel_size = 0.0055
+	if ResourceLoader.exists("res://assets/polices/symboles.ttf"):
+		sceau.font = load("res://assets/polices/symboles.ttf")
+	sceau.outline_size = 0
+	sceau.billboard = BaseMaterial3D.BILLBOARD_DISABLED
+	sceau.position = Vector3(0, 0.95, 0.0) + Vector3(sin(0.35), 0, cos(0.35)) * 0.115
+	sceau.rotation.y = 0.35
+	sceau.shaded = false
+	sceau.modulate = Color(1.0, 0.85, 0.45)
+	_stele.add_child(sceau)
+	var halo := MeshInstance3D.new()
+	var t := TorusMesh.new()
+	t.inner_radius = 0.6
+	t.outer_radius = 0.7
+	halo.mesh = t
+	halo.scale = Vector3(1, 0.4, 1)
+	halo.position.y = 0.04
+	_mat_sceau = StandardMaterial3D.new()
+	_mat_sceau.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_mat_sceau.albedo_color = Color(1.0, 0.82, 0.4)
+	_mat_sceau.emission_enabled = true
+	_mat_sceau.emission = Color(1.0, 0.78, 0.35)
+	halo.material_override = _mat_sceau
+	halo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_stele.add_child(halo)
+	_lumiere_stele = OmniLight3D.new()
+	_lumiere_stele.light_color = Color(1.0, 0.8, 0.45)
+	_lumiere_stele.omni_range = 3.5
+	_lumiere_stele.position = Vector3(0.3, 1.3, 0.6)
+	_stele.add_child(_lumiere_stele)
+
+
+func viser_stele() -> void:
+	if _stele and not _marche:
+		_cible_voulue = _stele_pos

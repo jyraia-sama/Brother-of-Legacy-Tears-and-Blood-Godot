@@ -109,6 +109,10 @@ func _creer(e: Dictionary, camp: int, place: int) -> Dictionary:
 		"regen_temp": [], "survie": 0, "renaissance": 0.0, "accum": 0, "bonus_atk": float(e.get("bonus_atk", 0.0)),
 		"boss": bool(e.get("boss", false)), "elite": bool(e.get("elite", false)),
 		"phase2": u.get("phase2", {}) if e.get("boss", false) else {}, "phase_faite": false,
+		# Ruines Oubliées : unité à protéger (les ennemis la visent souvent, sa chute fait perdre)
+		# et obscurité (précision réduite)
+		"prioritaire": bool(e.get("prioritaire", false)), "vital": bool(e.get("vital", false)),
+		"malus_preci": float(e.get("malus_preci", 0.0)),
 	}
 	# Niveaux de sorts du joueur (sorts_niveaux.gd) : {"index du sort": niveau}, plafonnés en JcJ
 	var niv_sorts: Dictionary = e.get("sorts", {}) if e.get("sorts") is Dictionary else {}
@@ -237,6 +241,7 @@ func _modifier_base(c: Dictionary, st: String, v: float) -> void:
 
 func combattre() -> Dictionary:
 	_log({"t": "debut"})
+	_annoncer_cloche()
 	while tour < tours_max:
 		tour += 1
 		_log({"t": "tour", "n": tour})
@@ -266,11 +271,26 @@ func _ordre_du_tour() -> Array:
 
 
 func _fini() -> bool:
-	return _vivants(0).is_empty() or _vivants(1).is_empty()
+	return _vivants(0).is_empty() or _vivants(1).is_empty() or _vital_tombe()
+
+
+## Une unité « vitale » du joueur (Ruines Oubliées) est tombée : le combat est perdu.
+## Ruines Oubliées : on montre qui porte la cloche d'Ombeline.
+func _annoncer_cloche() -> void:
+	for c in _equipe(0):
+		if c["vital"]:
+			_log({"t": "info", "a": c["idx"], "texte": "Porte la cloche !"})
+
+
+func _vital_tombe() -> bool:
+	for c in _equipe(0):
+		if c["vital"] and not c["vivant"]:
+			return true
+	return false
 
 
 func _resultat() -> Dictionary:
-	var victoire := _vivants(1).is_empty() and not _vivants(0).is_empty()
+	var victoire := _vivants(1).is_empty() and not _vivants(0).is_empty() and not _vital_tombe()
 	_log({"t": "fin", "victoire": victoire})
 	var pv_final: Array = []
 	for c in _equipe(0):
@@ -388,7 +408,7 @@ func _attaque_normale(c: Dictionary, forcee: Dictionary = {}) -> void:
 	if cible.is_empty():
 		return
 	_log({"t": "attaque", "a": c["idx"], "c": cible["idx"]})
-	var preci: float = _stat(c, "preci") - (ESQUIVE_AVEUGLE if c["afflictions"].has("aveugle") else 0.0)
+	var preci: float = _stat(c, "preci") - (ESQUIVE_AVEUGLE if c["afflictions"].has("aveugle") else 0.0) - c["malus_preci"]
 	if _rng.randf() * 100.0 >= preci:
 		_log({"t": "rate", "a": c["idx"], "c": cible["idx"]})
 		return
@@ -409,6 +429,9 @@ func _cible_attaque(c: Dictionary) -> Dictionary:
 	var provoc := ennemis.filter(func(x): return x["provocation"] > 0)
 	if not provoc.is_empty():
 		return provoc[_rng.randi_range(0, provoc.size() - 1)]
+	var prio := ennemis.filter(func(x): return x["prioritaire"])
+	if not prio.is_empty() and _rng.randf() < 0.55:
+		return prio[0]
 	if c["meca"] == "frenesie":
 		return _plus_blesse(ennemis)
 	if c["melee"]:
@@ -565,6 +588,9 @@ func _cible_attaque_skill(c: Dictionary, ennemis: Array) -> Dictionary:
 	var provoc := ennemis.filter(func(x): return x["provocation"] > 0)
 	if not provoc.is_empty():
 		return provoc[_rng.randi_range(0, provoc.size() - 1)]
+	var prio := ennemis.filter(func(x): return x["prioritaire"])
+	if not prio.is_empty() and _rng.randf() < 0.55:
+		return prio[0]
 	if c["meca"] == "frenesie":
 		return _plus_blesse(ennemis)
 	return ennemis[_rng.randi_range(0, ennemis.size() - 1)]
@@ -1028,6 +1054,7 @@ var journal_lu := 0           # position de lecture du journal (pour l'écran)
 
 func demarrer_manuel() -> void:
 	_log({"t": "debut"})
+	_annoncer_cloche()
 
 
 ## Tours de recharge d'un sort selon sa chance d'origine (35 % -> 2 tours, 25 % -> 3, 20 % -> 4).
