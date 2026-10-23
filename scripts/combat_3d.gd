@@ -589,7 +589,7 @@ func _poser(idx: int) -> void:
 		_poussiere(pos, u["rayon"] * (1.8 if lourd else 1.1), 30 if lourd else 12)
 		if lourd:
 			_eclair_lumiere(pos + Vector3(0, 1.0, 0.8), Color(1.0, 0.45, 0.25), 6.0, 0.6)
-			_moment_fort(pos + Vector3(0, u["hauteur"] * 0.5, 0), 0.0))
+			_moment_fort(pos + Vector3(0, u["hauteur"] * 0.5, 0), 0.0, 0.45))
 
 
 func a(idx: int) -> bool:
@@ -685,6 +685,7 @@ func touche(idx: int, critique: bool) -> void:
 	_eclats(_centre(idx) + Vector3(0, 0.1, 0.2), Color(1.0, 0.85, 0.4) if critique else Color(1.0, 0.45, 0.3), 28 if critique else 14)
 	if critique:
 		_eclair_lumiere(_centre(idx) + Vector3(0, 0, 0.8), Color(1.0, 0.8, 0.5), 4.0, 0.25)
+		_moment_fort(_centre(idx), 0.0, 0.25)
 
 
 func soin(idx: int) -> void:
@@ -762,7 +763,7 @@ func ko(idx: int) -> void:
 		var bord := Vector3(u["pos"]) + Vector3(cote * (float(u["rayon"]) + float(u["hauteur"]) * 0.5), 0, 0)
 		_poussiere(bord, u["rayon"] * 1.4, 18))
 	if u["boss"] or _camp_vaincu(bool(u["gauche"])):
-		_moment_fort(_centre(idx), 0.5)
+		_moment_fort(_centre(idx), 0.7, 0.55)
 
 
 func _camp_vaincu(gauche: bool) -> bool:
@@ -1251,22 +1252,32 @@ func _jeter(n: Node, apres: float) -> void:
 # Caméra cinéma (option)
 # =====================================================================
 
-## Moment fort (arrivée d'un boss, coup fatal) : la caméra se rapproche doucement de l'action,
-## avec un ralenti si « ralenti » > 0. Sans l'option « Caméra cinéma », rien ne se passe.
-## Jamais de tremblement ni de mouvement brusque.
-func _moment_fort(cible: Vector3, ralenti: float) -> void:
+## Moment fort (arrivée d'un boss, coup critique, coup fatal) : la caméra glisse vers l'action
+## (force = part du chemin parcouru vers la cible) et la regarde, avec un ralenti si « ralenti » > 0.
+## Sans l'option « Caméra cinéma », rien ne se passe. Jamais de tremblement ni de mouvement brusque ;
+## les petits rapprochements (critiques) attendent 1,5 s entre deux pour ne pas donner le tournis.
+var _dernier_moment := -10.0
+
+func _moment_fort(cible: Vector3, ralenti: float, force := 0.45) -> void:
 	if not camera_cinema or _camera == null:
 		return
+	var maintenant := Time.get_ticks_msec() / 1000.0
+	if ralenti <= 0.0 and force < 0.4 and maintenant - _dernier_moment < 1.5:
+		return
+	_dernier_moment = maintenant
 	var depart := _cam_base
 	var vers := depart
-	vers.origin = depart.origin.lerp(cible + Vector3(0, 1.2, 4.5), 0.15)
+	vers.origin = depart.origin.lerp(cible + Vector3(0, 1.0, 3.2), force)
+	# Le regard se tourne à moitié vers la cible (on garde le décor dans le cadre)
+	var regard := Transform3D(Basis(), vers.origin).looking_at(cible, Vector3.UP)
+	vers.basis = depart.basis.slerp(regard.basis, 0.5 * force / 0.45)
 	if _tw_cam:
 		_tw_cam.kill()
 	_tw_cam = create_tween()
 	_tw_cam.set_ignore_time_scale(true)
-	_tw_cam.tween_property(_camera, "transform", vers, 0.45).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	_tw_cam.tween_interval(0.5)
-	_tw_cam.tween_property(_camera, "transform", depart, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tw_cam.tween_property(_camera, "transform", vers, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_tw_cam.tween_interval(0.55 if ralenti > 0.0 else 0.3)
+	_tw_cam.tween_property(_camera, "transform", depart, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	if ralenti > 0.0:
-		Engine.time_scale = 0.35
+		Engine.time_scale = 0.3
 		get_tree().create_timer(ralenti, true, false, true).timeout.connect(func(): Engine.time_scale = 1.0)

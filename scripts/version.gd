@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.81.1"
+const NUMERO := "0.81.2"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.81.2", "date": "2026-10-23", "titre": "Moteur, action !",
+	"changements": [
+		"CAMÉRA CINÉMA (option du Menu) : bien plus visible. Elle se rapproche nettement et se tourne vers l'action à l'arrivée d'un boss, sur les coups critiques (petit rapprochement, au plus une fois toutes les 1,5 s) et au coup fatal sur un boss ou le dernier ennemi (gros plan et ralenti).",
+	]},
 	{"version": "0.81.1", "date": "2026-10-23", "titre": "Le Menu bien rangé",
 	"changements": [
 		"Correction : dans le Menu, les boutons du bas (Journal, Signaler un bug, Espace créateur, Menu Admin) ne s'étirent plus en grands panneaux et la version ne s'écrit plus à la verticale ; ils sont rangés sur deux colonnes.",

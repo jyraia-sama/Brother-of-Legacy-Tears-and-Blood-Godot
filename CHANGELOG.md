@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.81.1** (2026-10-23)
+Version actuelle : **0.81.2** (2026-10-23)
+
+## v0.81.2 — Moteur, action !  (2026-10-23)
+
+- CAMÉRA CINÉMA (option du Menu) : bien plus visible. Elle se rapproche nettement et se tourne vers l'action à l'arrivée d'un boss, sur les coups critiques (petit rapprochement, au plus une fois toutes les 1,5 s) et au coup fatal sur un boss ou le dernier ennemi (gros plan et ralenti).
 
 ## v0.81.1 — Le Menu bien rangé  (2026-10-23)
 
