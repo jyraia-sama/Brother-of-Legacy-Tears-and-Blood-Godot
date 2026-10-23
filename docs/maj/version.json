@@ -12,6 +12,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"LES BANNIÈRES DES ÉVÉNEMENTS : les 18 événements d'invocation ont maintenant leur propre illustration peinte en bas de l'Autel d'Invocation (Lune de Sang, Aube Céleste, Nuit des Lanternes Noires, Nuit de Givre, Œufs de Dragon, Bal des Masques…).",
+				"Un voile sombre sur les côtés de la bannière garde le titre et le bouton INVOQUER bien lisibles, même sur les images claires."
+			],
+			"titre": "Les bannières des événements",
+			"version": "0.83.1"
+		},
+		{
+			"changements": [
 				"LA LIGNÉE DES DRAGONS : 4 nouveaux héros invocables, chacun avec son évolution. Pyrrhos le Dragonnet (R, Feu, soutien : soigne et accélère l'équipe), Seraphyr la Chevalière-Dragon (SR, Sacré, guerrière : contre-attaque et aveugle l'Avant), Drakkhar Dragon des Glaces (SSR, Eau, tireur : gèle toute l'équipe ennemie et fond sur l'Arrière) et Vörnagal le Dragon Millénaire (UR, Nature, tank : attire les coups, empoisonne et survit à un coup fatal).",
 				"SANG DE DRAGON : chacun de ces 4 héros gagne un bonus pour chaque AUTRE Dragon de l'équipe. Le Dragon d'Ombre, la Wyverne et la Jeune Hydre comptent aussi comme Dragons : une équipe de Dragons devient redoutable.",
 				"Ils arrivent dans les invocations, et sont mis en avant pendant Les Œufs de Dragon (Pâques) et Le Règne des Dragons (août)."
@@ -126,22 +134,13 @@
 			],
 			"titre": "La galerie complète",
 			"version": "0.79.2"
-		},
-		{
-			"changements": [
-				"CHEMINS PEINTS : sur le plateau 3D des chapitres, chaque Acte a maintenant son propre chemin : pavés de la cour en cendres du Domaine, allée de procession et cire de bougies de la Cité en Deuil, caillebotis de planches dans la boue des Camps, dalles funéraires dorées du Sépulcre, passerelle de rondins du Marais, plaques de fer rivetées de la Citadelle, marbre noir veiné d'or du Trône, cristal bleu et rouge du Sceau…",
-				"Le sentier est un peu plus large et mieux éclairé, pour qu'on le suive facilement de l'œil.",
-				"CARTE DU MONDE EN 3D : la carte est désormais posée sur une vieille table de cartographe en bois sombre."
-			],
-			"titre": "Les chemins de l'aîné",
-			"version": "0.79.1"
 		}
 	],
 	"pck": {
-		"sha256": "22341ebef48aa7932a545eeac36f922b5396ac5a3d4bf49a5b4c3900c909dac6",
-		"taille": 42180844,
+		"sha256": "d97339aea8831f71b254b568eb0a5261c16068d6591a247b88456fb25c64e2ab",
+		"taille": 56314824,
 		"url": "jeu.pck"
 	},
-	"version": "0.83.0",
+	"version": "0.83.1",
 	"version_minimum": "0.37.0"
 }

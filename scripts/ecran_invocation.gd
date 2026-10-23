@@ -348,7 +348,23 @@ func _creer_banniere() -> Button:
 		fond.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		fond.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(fond)
-		if not UiCommun.fond_image(fond, "res://assets/invocation/evenements/%s.png" % ev["id"], Color.WHITE):
+		if UiCommun.fond_image(fond, "res://assets/invocation/evenements/%s.png" % ev["id"], Color.WHITE):
+			# voile sombre à gauche (titre) et à droite (INVOQUER) pour que le texte reste lisible
+			var gv := Gradient.new()
+			gv.offsets = PackedFloat32Array([0.0, 0.45, 0.75, 1.0])
+			gv.colors = PackedColorArray([Color(0, 0, 0, 0.78), Color(0, 0, 0, 0.35), Color(0, 0, 0, 0.2), Color(0, 0, 0, 0.6)])
+			var tv := GradientTexture2D.new()
+			tv.gradient = gv
+			tv.width = 256
+			tv.height = 4
+			var voile := TextureRect.new()
+			voile.texture = tv
+			voile.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			voile.stretch_mode = TextureRect.STRETCH_SCALE
+			voile.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			voile.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			fond.add_child(voile)
+		else:
 			var g := Gradient.new()
 			g.set_color(0, couleur.darkened(0.3))
 			g.set_color(1, Color(0.05, 0.0, 0.02))
@@ -384,7 +400,10 @@ func _creer_banniere() -> Button:
 		_lbl_evenement = UiCommun.label("", 16, UiCommun.C_DOUX)
 		textes.add_child(_lbl_evenement)
 		return b
-	textes.add_child(UiCommun.label("ÉVÉNEMENT · INVOCATION SPÉCIALE", 15, couleur.lightened(0.4)))
+	var sur := UiCommun.label("ÉVÉNEMENT · INVOCATION SPÉCIALE", 15, couleur.lightened(0.4))
+	sur.add_theme_color_override("font_outline_color", Color.BLACK)
+	sur.add_theme_constant_override("outline_size", 4)
+	textes.add_child(sur)
 	var t := UiCommun.label(ev["titre"], 36, couleur.lightened(0.25))
 	t.add_theme_color_override("font_outline_color", Color.BLACK)
 	t.add_theme_constant_override("outline_size", 8)

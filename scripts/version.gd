@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.83.0"
+const NUMERO := "0.83.1"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.83.1", "date": "2026-10-23", "titre": "Les bannières des événements",
+	"changements": [
+		"LES BANNIÈRES DES ÉVÉNEMENTS : les 18 événements d'invocation ont maintenant leur propre illustration peinte en bas de l'Autel d'Invocation (Lune de Sang, Aube Céleste, Nuit des Lanternes Noires, Nuit de Givre, Œufs de Dragon, Bal des Masques…).",
+		"Un voile sombre sur les côtés de la bannière garde le titre et le bouton INVOQUER bien lisibles, même sur les images claires.",
+	]},
 	{"version": "0.83.0", "date": "2026-10-23", "titre": "La lignée des Dragons",
 	"changements": [
 		"LA LIGNÉE DES DRAGONS : 4 nouveaux héros invocables, chacun avec son évolution. Pyrrhos le Dragonnet (R, Feu, soutien : soigne et accélère l'équipe), Seraphyr la Chevalière-Dragon (SR, Sacré, guerrière : contre-attaque et aveugle l'Avant), Drakkhar Dragon des Glaces (SSR, Eau, tireur : gèle toute l'équipe ennemie et fond sur l'Arrière) et Vörnagal le Dragon Millénaire (UR, Nature, tank : attire les coups, empoisonne et survit à un coup fatal).",

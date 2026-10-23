@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.83.0** (2026-10-23)
+Version actuelle : **0.83.1** (2026-10-23)
+
+## v0.83.1 — Les bannières des événements  (2026-10-23)
+
+- LES BANNIÈRES DES ÉVÉNEMENTS : les 18 événements d'invocation ont maintenant leur propre illustration peinte en bas de l'Autel d'Invocation (Lune de Sang, Aube Céleste, Nuit des Lanternes Noires, Nuit de Givre, Œufs de Dragon, Bal des Masques…).
+- Un voile sombre sur les côtés de la bannière garde le titre et le bouton INVOQUER bien lisibles, même sur les images claires.
 
 ## v0.83.0 — La lignée des Dragons  (2026-10-23)
 
