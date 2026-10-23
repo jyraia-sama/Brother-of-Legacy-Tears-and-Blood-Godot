@@ -1,6 +1,6 @@
 # Prompts ChatGPT : bannières des invocations d'événement
 
-**18 bannières**, une par événement : les 2 qui existent déjà (Lune de Sang, Aube Céleste) et les 16 nouvelles du calendrier 2026-2027 (une par saison ou fête, et quelques-unes pour une famille de monstres). Chaque bannière s'affiche en bas de l'Autel d'Invocation pendant son événement.
+**18 bannières — toutes ✅ FAITES (v0.83.1)**, une par événement : les 2 qui existent déjà (Lune de Sang, Aube Céleste) et les 16 nouvelles du calendrier 2026-2027 (une par saison ou fête, et quelques-unes pour une famille de monstres). Chaque bannière s'affiche en bas de l'Autel d'Invocation pendant son événement.
 
 Une image par message. Joins une de tes images de fond de menu (par exemple `invocation.png`) pour garder le même style, puis colle la bulle. Rends-moi chaque image sous le nom indiqué : j'en garde la bande du milieu et je la range dans le jeu.
 
@@ -29,7 +29,7 @@ Tant qu'une bannière manque, l'événement s'affiche quand même, sur un dégra
 
 ---
 
-### LUNE DE SANG → `lune_de_sang.png`
+### LUNE DE SANG → `lune_de_sang.png` ✅ FAIT
 > Du 26/09/2026 au 10/10/2026.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -46,7 +46,7 @@ LA SCÈNE : une immense lune rouge sang basse sur l'horizon, au-dessus d'un cham
 
 ---
 
-### AUBE CÉLESTE → `aube_celeste.png`
+### AUBE CÉLESTE → `aube_celeste.png` ✅ FAIT
 > Du 11/10/2026 au 25/10/2026.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -63,7 +63,7 @@ LA SCÈNE : des nuages dorés percés par d'immenses rayons de lumière divine, 
 
 ---
 
-### LA NUIT DES LANTERNES NOIRES → `nuit_lanternes.png`
+### LA NUIT DES LANTERNES NOIRES → `nuit_lanternes.png` ✅ FAIT
 > Du 26/10/2026 au 08/11/2026.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -80,7 +80,7 @@ LA SCÈNE : un cimetière gothique la nuit d'Halloween : des centaines de lanter
 
 ---
 
-### LE CHANT DES BRUMES → `chant_brumes.png`
+### LE CHANT DES BRUMES → `chant_brumes.png` ✅ FAIT
 > Du 16/11/2026 au 29/11/2026.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -97,7 +97,7 @@ LA SCÈNE : une forêt d'automne noyée de brume au lever du jour : feuilles rou
 
 ---
 
-### LA NUIT DE GIVRE → `nuit_givre.png`
+### LA NUIT DE GIVRE → `nuit_givre.png` ✅ FAIT
 > Du 14/12/2026 au 31/12/2026.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -114,7 +114,7 @@ LA SCÈNE : une nuit de Noël sur une mer gelée : banquise bleutée, neige qui 
 
 ---
 
-### L'AUBE DE L'AN NEUF → `aube_an_neuf.png`
+### L'AUBE DE L'AN NEUF → `aube_an_neuf.png` ✅ FAIT
 > Du 01/01/2027 au 10/01/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -131,7 +131,7 @@ LA SCÈNE : le premier lever de soleil de l'année sur des montagnes enneigées 
 
 ---
 
-### CŒURS D'ÉPINES → `coeurs_epines.png`
+### CŒURS D'ÉPINES → `coeurs_epines.png` ✅ FAIT
 > Du 06/02/2027 au 19/02/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -148,7 +148,7 @@ LA SCÈNE : un jardin gothique de nuit envahi de rosiers noirs et rouge sang aux
 
 ---
 
-### LE BAL DES MASQUES → `bal_masques.png`
+### LE BAL DES MASQUES → `bal_masques.png` ✅ FAIT
 > Du 20/02/2027 au 05/03/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -165,7 +165,7 @@ LA SCÈNE : la grande salle de bal d'un palais gothique pendant un carnaval masq
 
 ---
 
-### L'ÉVEIL DE LA SÈVE → `eveil_seve.png`
+### L'ÉVEIL DE LA SÈVE → `eveil_seve.png` ✅ FAIT
 > Du 13/03/2027 au 27/03/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -182,7 +182,7 @@ LA SCÈNE : des ruines antiques au printemps envahies par la nature : arbres en 
 
 ---
 
-### LES ŒUFS DE DRAGON → `oeufs_dragon.png`
+### LES ŒUFS DE DRAGON → `oeufs_dragon.png` ✅ FAIT
 > Du 28/03/2027 au 10/04/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -199,7 +199,7 @@ LA SCÈNE : un nid de dragon creusé dans la roche volcanique : plusieurs gros �
 
 ---
 
-### LA COUR DES INSECTES → `cour_insectes.png`
+### LA COUR DES INSECTES → `cour_insectes.png` ✅ FAIT
 > Du 11/04/2027 au 23/04/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -216,7 +216,7 @@ LA SCÈNE : un royaume souterrain oublié : une immense caverne aux piliers de c
 
 ---
 
-### LA NUIT DE WALPURGIS → `nuit_walpurgis.png`
+### LA NUIT DE WALPURGIS → `nuit_walpurgis.png` ✅ FAIT
 > Du 24/04/2027 au 07/05/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -233,7 +233,7 @@ LA SCÈNE : le sabbat des sorciers sur une colline la nuit de Walpurgis : un gra
 
 ---
 
-### LES LÉGENDES DES VALCENDRE → `legendes_valcendre.png`
+### LES LÉGENDES DES VALCENDRE → `legendes_valcendre.png` ✅ FAIT
 > Du 22/05/2027 au 04/06/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -250,7 +250,7 @@ LA SCÈNE : une salle des héros dans la forteresse des Valcendre : statues géa
 
 ---
 
-### LE BRASIER DU SOLSTICE → `brasier_solstice.png`
+### LE BRASIER DU SOLSTICE → `brasier_solstice.png` ✅ FAIT
 > Du 19/06/2027 au 02/07/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -267,7 +267,7 @@ LA SCÈNE : la nuit du solstice d'été : d'immenses feux de joie sur des collin
 
 ---
 
-### LA MARÉE DES ABYSSES → `maree_abysses.png`
+### LA MARÉE DES ABYSSES → `maree_abysses.png` ✅ FAIT
 > Du 17/07/2027 au 30/07/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -284,7 +284,7 @@ LA SCÈNE : la mer qui s'est retirée d'un coup et découvre une cité engloutie
 
 ---
 
-### LE RÈGNE DES DRAGONS → `regne_dragons.png`
+### LE RÈGNE DES DRAGONS → `regne_dragons.png` ✅ FAIT
 > Du 14/08/2027 au 27/08/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -301,7 +301,7 @@ LA SCÈNE : un ciel d'orage zébré d'éclairs traversé par les silhouettes de 
 
 ---
 
-### LA MOISSON POURPRE → `moisson_pourpre.png`
+### LA MOISSON POURPRE → `moisson_pourpre.png` ✅ FAIT
 > Du 04/09/2027 au 17/09/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
@@ -318,7 +318,7 @@ LA SCÈNE : des champs de blé devenus rouge sang au crépuscule, des épouvanta
 
 ---
 
-### LUNE DE SANG — UN AN DÉJÀ → `lune_de_sang_an1.png`
+### LUNE DE SANG — UN AN DÉJÀ → `lune_de_sang_an1.png` ✅ FAIT
 > Du 26/09/2027 au 10/10/2027.
 ```
 Crée une illustration panoramique de fond pour une BANNIÈRE d'événement d'un jeu mobile dark fantasy, peinture numérique très détaillée, même style que l'image jointe, éclairage dramatique.
