@@ -12,6 +12,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"CALENDRIER DES INVOCATIONS : 16 nouvelles invocations d'événement jusqu'en octobre 2027, une par saison ou fête (Halloween, fin d'automne, Noël, Nouvel An, Saint-Valentin, Carnaval, printemps, Pâques, Walpurgis, solstice d'été, plein été, rentrée) et quelques-unes pour une famille de monstres (Cour des Insectes, Règne des Dragons, Légendes des Valcendre avec plus de chances de Légende).",
+				"Prochaine : LA NUIT DES LANTERNES NOIRES, pour Halloween, du 26 octobre au 8 novembre (Reine des Liches, Stéphane, Archange Noir).",
+				"Les bannières peintes s'afficheront dès qu'elles seront ajoutées (sinon, un dégradé de la couleur de l'événement)."
+			],
+			"titre": "Le calendrier des invocations",
+			"version": "0.82.0"
+		},
+		{
+			"changements": [
 				"CAMÉRA CINÉMA (option du Menu) : bien plus visible. Elle se rapproche nettement et se tourne vers l'action à l'arrivée d'un boss, sur les coups critiques (petit rapprochement, au plus une fois toutes les 1,5 s) et au coup fatal sur un boss ou le dernier ennemi (gros plan et ralenti)."
 			],
 			"titre": "Moteur, action !",
@@ -129,23 +138,13 @@
 			],
 			"titre": "La carte en relief",
 			"version": "0.79.0"
-		},
-		{
-			"changements": [
-				"Le héros marche plus vite entre deux cases, avec des pas moins nombreux et plus amples.",
-				"Mobile : sur le plateau 3D, les boutons « Carte » et « Recentrer » sont maintenant sous la barre du haut, toujours visibles (la Carte se referme avec « Retour »). Les titres trop longs sont raccourcis au lieu de déborder.",
-				"Le menu principal et la carte du monde occupent tout l'écran comme le plateau : plus de bandes noires sur les côtés des téléphones larges.",
-				"Carte du monde : tous ses boutons (← Menu, Journal, Continuer, Fermer, Jouer) ont le même style peint que les autres menus."
-			],
-			"titre": "Retouches du plateau",
-			"version": "0.78.1"
 		}
 	],
 	"pck": {
-		"sha256": "5d08ded558b7417b2b9dca74883bd4cf5f1e4541b06d41e31483d6c55b6c7475",
-		"taille": 42169756,
+		"sha256": "999d2d17e508864b7b36873131e4ca12f0db7ac03554babf5a7c41107873a3ed",
+		"taille": 42174492,
 		"url": "jeu.pck"
 	},
-	"version": "0.81.2",
+	"version": "0.82.0",
 	"version_minimum": "0.37.0"
 }

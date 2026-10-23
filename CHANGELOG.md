@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.81.2** (2026-10-23)
+Version actuelle : **0.82.0** (2026-10-23)
+
+## v0.82.0 — Le calendrier des invocations  (2026-10-23)
+
+- CALENDRIER DES INVOCATIONS : 16 nouvelles invocations d'événement jusqu'en octobre 2027, une par saison ou fête (Halloween, fin d'automne, Noël, Nouvel An, Saint-Valentin, Carnaval, printemps, Pâques, Walpurgis, solstice d'été, plein été, rentrée) et quelques-unes pour une famille de monstres (Cour des Insectes, Règne des Dragons, Légendes des Valcendre avec plus de chances de Légende).
+- Prochaine : LA NUIT DES LANTERNES NOIRES, pour Halloween, du 26 octobre au 8 novembre (Reine des Liches, Stéphane, Archange Noir).
+- Les bannières peintes s'afficheront dès qu'elles seront ajoutées (sinon, un dégradé de la couleur de l'événement).
 
 ## v0.81.2 — Moteur, action !  (2026-10-23)
 
