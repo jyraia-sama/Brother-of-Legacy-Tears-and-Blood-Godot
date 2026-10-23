@@ -201,10 +201,4 @@ func _creer_texte(texte: String, r: Rect2, taille: int) -> Label:
 
 
 func _message(texte: String) -> void:
-	var d := AcceptDialog.new()
-	d.title = "Aventure"
-	d.dialog_text = texte
-	add_child(d)
-	d.confirmed.connect(d.queue_free)
-	d.canceled.connect(d.queue_free)
-	d.popup_centered()
+	FenetreSimple.ouvrir(self, "Aventure", texte)

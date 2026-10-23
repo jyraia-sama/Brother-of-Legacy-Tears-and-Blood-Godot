@@ -36,10 +36,24 @@ def bandes(profil, seuil):
     return [b for b in res if b[1] - b[0] > len(profil) * 0.1]
 
 
+MAGENTA = False   # --magenta : fond MAGENTA (#FF00FF) au lieu de vert (objets verts : ressources de Sève)
+
+
 def detourer(case):
     """Fond vert -> transparent, avec adoucissement des bords et suppression du reflet vert."""
     a = np.asarray(case.convert("RGBA")).astype(float)
     r, g, b, al = a[..., 0], a[..., 1], a[..., 2], a[..., 3]
+    if MAGENTA:
+        exces = np.minimum(r, b) - g              # à quel point le pixel est « magenta »
+        garde = np.clip((90 - exces) / 50.0, 0, 1)
+        al = np.minimum(al, garde * 255)
+        m = np.minimum(r, b)
+        r = np.where(exces > 0, np.minimum(r, g + exces * 0.15 + (r - m)), r)
+        b = np.where(exces > 0, np.minimum(b, g + exces * 0.15 + (b - m)), b)
+        out = np.dstack([r, g, b, al]).clip(0, 255).astype(np.uint8)
+        img = Image.fromarray(out, "RGBA")
+        img.putalpha(img.getchannel("A").filter(ImageFilter.MinFilter(3)))
+        return img
     exces = g - np.maximum(r, b)                  # à quel point le pixel est « vert »
     # 0 = fond (très vert), 1 = objet ; transition douce entre 40 et 90
     garde = np.clip((90 - exces) / 50.0, 0, 1)
@@ -55,10 +69,12 @@ def detourer(case):
 
 
 def main():
-    global DOSSIER, HAUTEUR
+    global DOSSIER, HAUTEUR, MAGENTA
     args = []
     for a in sys.argv[1:]:
-        if a == "--figurines":
+        if a == "--magenta":
+            MAGENTA = True
+        elif a == "--figurines":
             DOSSIER, HAUTEUR = "assets/figurines", 420
         elif a.startswith("--dossier="):
             DOSSIER = a.split("=", 1)[1]
@@ -72,7 +88,7 @@ def main():
     os.makedirs(DOSSIER, exist_ok=True)
     img = Image.open(chemin).convert("RGBA")
     # Les traits de séparation sont noirs ; le fond transparent compte comme clair
-    fond = Image.new("RGBA", img.size, (0, 255, 0, 255))
+    fond = Image.new("RGBA", img.size, (255, 0, 255, 255) if MAGENTA else (0, 255, 0, 255))
     fond.alpha_composite(img)
     gris = np.asarray(fond.convert("L")).astype(float)
     cols = bandes(gris.mean(axis=0), SEUIL)

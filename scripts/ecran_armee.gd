@@ -25,7 +25,8 @@ func _ready() -> void:
 	noir.color = UiCommun.C_FOND
 	noir.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(noir)
-	UiCommun.fond_degrade(self, Color("1a0608"), Color("060203"))
+	if not UiCommun.fond_image(self, "res://assets/fonds/armee.png", UiCommun.TEINTE_FOND):
+		UiCommun.fond_degrade(self, Color("1a0608"), Color("060203"))
 
 	var marge := MarginContainer.new()
 	marge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

@@ -10,6 +10,10 @@ func _titre_ecran() -> String:
 	return "MON HÉROS"
 
 
+func _fond_ecran() -> String:
+	return "res://assets/fonds/profil.png"
+
+
 func _remplir() -> void:
 	var corps := HBoxContainer.new()
 	corps.add_theme_constant_override("separation", 18)

@@ -592,27 +592,12 @@ func _creer_fond() -> void:
 
 
 func _message(titre: String, texte: String) -> void:
-	var d := AcceptDialog.new()
-	d.title = titre
-	d.dialog_text = texte
-	d.confirmed.connect(d.queue_free)
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(460, 0))
+	FenetreSimple.ouvrir(self, titre, texte)
 
 
 func _confirmer(texte: String, action: Callable) -> void:
-	var d := ConfirmationDialog.new()
-	d.title = "Autel de Fusion"
-	d.dialog_text = texte
-	d.ok_button_text = "Fusionner"
-	d.cancel_button_text = "Annuler"
-	d.confirmed.connect(func():
-		d.queue_free()
-		action.call())
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(480, 0))
+	FenetreSimple.ouvrir(self, "Autel de Fusion", texte, [["Annuler", null], ["Fusionner", func():
+		action.call()]])
 
 
 func _retour() -> void:

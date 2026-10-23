@@ -336,16 +336,9 @@ func _importer() -> void:
 
 
 func _demander_reset() -> void:
-	var d := ConfirmationDialog.new()
-	d.title = "Nouvelle partie"
-	d.dialog_text = "Effacer TOUTE la progression et recommencer depuis l'Acte I ?\nTu pourras choisir à nouveau ton héros de départ.\n\nConseil : copie d'abord ton code de sauvegarde."
-	d.ok_button_text = "Tout effacer"
-	d.cancel_button_text = "Annuler"
-	d.confirmed.connect(func():
+	FenetreSimple.ouvrir(self, "Nouvelle partie", "Effacer TOUTE la progression et recommencer depuis l'Acte I ?\nTu pourras choisir à nouveau ton héros de départ.\n\nConseil : copie d'abord ton code de sauvegarde.", [["Annuler", null], ["Tout effacer", func():
 		Sauvegarde.reinitialiser()
-		get_tree().change_scene_to_file(EcranChoixHeros.SCENE))
-	add_child(d)
-	d.popup_centered(Vector2i(460, 0))
+		get_tree().change_scene_to_file(EcranChoixHeros.SCENE)]])
 
 
 func _label(texte: String, taille: int, couleur: Color, centre := false) -> Label:

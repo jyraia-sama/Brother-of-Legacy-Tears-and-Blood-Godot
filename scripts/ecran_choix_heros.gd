@@ -134,19 +134,11 @@ func _carte(id: String) -> Button:
 
 func _confirmer(id: String) -> void:
 	var u := UnitesData.get_unite(id)
-	var d := ConfirmationDialog.new()
-	d.title = "Héros de départ"
-	d.dialog_text = UiCommun.t("Partir à l'aventure avec %s ?\n\nCe choix est définitif (seule une Nouvelle partie permet de rechoisir).") % u["nom"]
-	d.ok_button_text = "Je le choisis"
-	d.cancel_button_text = "Revenir"
-	d.confirmed.connect(func():
+	FenetreSimple.ouvrir(self, "Héros de départ", UiCommun.t("Partir à l'aventure avec %s ?\n\nCe choix est définitif (seule une Nouvelle partie permet de rechoisir).") % u["nom"], [["Revenir", null], ["Je le choisis", func():
 		Sauvegarde.choisir_heros_depart(id)
 		var menu: String = ProjectSettings.get_setting("application/run/main_scene", "")
 		if menu != "":
-			get_tree().change_scene_to_file(menu))
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(460, 0))
+			get_tree().change_scene_to_file(menu)]])
 
 
 func _style(bord: Color, eclat: float) -> StyleBoxFlat:

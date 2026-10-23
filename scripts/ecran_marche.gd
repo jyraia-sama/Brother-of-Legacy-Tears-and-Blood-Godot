@@ -753,28 +753,13 @@ func _remplir_classement(zone: VBoxContainer, decalage: int) -> void:
 
 
 func _confirmer_abandon() -> void:
-	var d := ConfirmationDialog.new()
-	d.title = "Abandonner la marche"
-	d.dialog_text = "Abandonner la Marche du jour ?\nTon score actuel sera gardé, mais tu ne pourras pas recommencer avant demain."
-	d.ok_button_text = "Abandonner"
-	d.cancel_button_text = "Continuer la marche"
-	d.confirmed.connect(func():
-		d.queue_free()
+	FenetreSimple.ouvrir(self, "Abandonner la marche", "Abandonner la Marche du jour ?\nTon score actuel sera gardé, mais tu ne pourras pas recommencer avant demain.", [["Continuer la marche", null], ["Abandonner", func():
 		Marche.abandonner()
-		get_tree().reload_current_scene())
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(480, 0))
+		get_tree().reload_current_scene()]])
 
 
 func _message(titre: String, texte: String) -> void:
-	var d := AcceptDialog.new()
-	d.title = titre
-	d.dialog_text = texte
-	d.confirmed.connect(d.queue_free)
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(480, 0))
+	FenetreSimple.ouvrir(self, titre, texte)
 
 
 func _retour() -> void:

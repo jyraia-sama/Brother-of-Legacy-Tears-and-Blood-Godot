@@ -384,13 +384,7 @@ func _maj_haut() -> void:
 
 
 func _message(texte: String) -> void:
-	var d := AcceptDialog.new()
-	d.title = Tours.TOURS[_tour]["nom"]
-	d.dialog_text = texte
-	d.confirmed.connect(d.queue_free)
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(460, 0))
+	FenetreSimple.ouvrir(self, Tours.TOURS[_tour]["nom"], texte)
 
 
 func _retour() -> void:

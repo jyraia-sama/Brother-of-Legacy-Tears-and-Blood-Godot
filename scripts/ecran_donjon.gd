@@ -459,13 +459,7 @@ func _maj_stamina() -> void:
 
 
 func _message(texte: String) -> void:
-	var dlg := AcceptDialog.new()
-	dlg.title = "Donjons"
-	dlg.dialog_text = texte
-	dlg.confirmed.connect(dlg.queue_free)
-	dlg.canceled.connect(dlg.queue_free)
-	add_child(dlg)
-	dlg.popup_centered(Vector2i(460, 0))
+	FenetreSimple.ouvrir(self, "Donjons", texte)
 
 
 func _retour() -> void:

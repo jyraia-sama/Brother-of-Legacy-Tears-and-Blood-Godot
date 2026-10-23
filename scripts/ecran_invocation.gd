@@ -317,14 +317,11 @@ func _fiche_unite(id: String) -> void:
 		s["pv"], s["atk"], s["def"], s["agi"], s["mag"]]
 	for sk in u["skills"]:
 		txt += UiCommun.t("Niv. %d · %s : %s\n") % [sk["niveau"], sk["nom"], sk["description"]]
-	var d := AcceptDialog.new()
-	d.title = u["nom"]
-	d.dialog_text = txt
-	d.dialog_autowrap = true
-	d.confirmed.connect(d.queue_free)
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(560, 0))
+	var f_ := FenetreSimple.new()
+	f_.titre = u["nom"]
+	f_.texte = txt
+	f_.largeur = 640.0
+	add_child(f_)
 
 
 # =====================================================================

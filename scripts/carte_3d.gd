@@ -228,8 +228,11 @@ void fragment() {
 	float n = bruit(p) * 0.6 + bruit(p * 2.3 + 4.0) * 0.4;
 	float d = (limite - monde.z) + (n - 0.5) * 3.0;
 	float a = smoothstep(-1.0, 4.0, d);
+	// Uniquement sur la carte : les bords s'estompent, rien ne déborde sur la table
+	vec2 b = min(UV, 1.0 - UV);
+	float bord = smoothstep(0.0, 0.03, min(b.x * 1.5, b.y));
 	ALBEDO = mix(vec3(0.035, 0.028, 0.032), vec3(0.11, 0.09, 0.1), n);
-	ALPHA = a * (0.82 + n * 0.16);
+	ALPHA = a * bord * (0.82 + n * 0.16);
 }
 """
 	_limite = limite if limite != INF else -INF
@@ -238,9 +241,9 @@ void fragment() {
 	_mat_brume.set_shader_parameter("limite", limite if limite != INF else -1000.0)
 	_brume = MeshInstance3D.new()
 	var p := PlaneMesh.new()
-	p.size = Vector2(LARGEUR * 1.2, _hauteur * 1.2)
+	p.size = Vector2(LARGEUR, _hauteur)
 	_brume.mesh = p
-	_brume.position.y = 1.1
+	_brume.position.y = 0.09
 	_brume.material_override = _mat_brume
 	_brume.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	_brume.visible = limite != INF

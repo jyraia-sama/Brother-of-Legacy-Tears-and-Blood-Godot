@@ -373,18 +373,9 @@ func _confirmer_evolution() -> void:
 	var h := Sauvegarde.get_heros(_selection)
 	if h.is_empty():
 		return
-	var d := ConfirmationDialog.new()
-	d.title = "Évolution"
-	d.dialog_text = UiCommun.t("Faire évoluer %s en %s ?\n\nL'unité garde son niveau (Nv %d), ses étoiles, ses Échos et sa place dans l'équipe.\nLes ressources seront dépensées.") % [
-		UnitesData.get_unite(h["id"])["nom"], UnitesData.get_unite(UnitesData.id_evolution(h["id"]))["nom"], int(h["niveau"])]
-	d.ok_button_text = "Évoluer"
-	d.cancel_button_text = "Annuler"
-	d.confirmed.connect(func():
-		d.queue_free()
-		_evoluer())
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(520, 0))
+	FenetreSimple.ouvrir(self, "Évolution", UiCommun.t("Faire évoluer %s en %s ?\n\nL'unité garde son niveau (Nv %d), ses étoiles, ses Échos et sa place dans l'équipe.\nLes ressources seront dépensées.") % [
+		UnitesData.get_unite(h["id"])["nom"], UnitesData.get_unite(UnitesData.id_evolution(h["id"]))["nom"], int(h["niveau"])], [["Annuler", null], ["Évoluer", func():
+		_evoluer()]])
 
 
 func _evoluer() -> void:

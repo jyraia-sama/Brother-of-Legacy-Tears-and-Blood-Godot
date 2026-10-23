@@ -780,6 +780,19 @@ static func icone_objet(objet: String, taille := 44.0) -> Panel:
 	st.set_border_width_all(2)
 	st.set_corner_radius_all(int(taille / 4))
 	p.add_theme_stylebox_override("panel", st)
+	# Icône peinte (assets/objets/<id>.png) quand elle existe, sinon l'initiale
+	var img := "res://assets/objets/%s.png" % objet
+	if ResourceLoader.exists(img):
+		st.bg_color = Color(0, 0, 0, 0)
+		st.set_border_width_all(0)
+		var t := TextureRect.new()
+		t.texture = load(img)
+		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		t.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		p.add_child(t)
+		return p
 	var l := label(str(infos.get("nom", "?")).substr(0, 1), int(taille * 0.5), c.lightened(0.3))
 	l.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

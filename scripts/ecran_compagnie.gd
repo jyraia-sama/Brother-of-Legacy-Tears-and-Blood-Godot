@@ -176,18 +176,9 @@ func _recuperer(i: int) -> void:
 
 
 func _rappeler(i: int) -> void:
-	var d := ConfirmationDialog.new()
-	d.title = "Rappeler l'escouade"
-	d.dialog_text = "Rappeler cette escouade ?\nLes unités reviennent tout de suite, mais la mission est perdue (pas de butin)."
-	d.ok_button_text = "Rappeler"
-	d.cancel_button_text = "Annuler"
-	d.confirmed.connect(func():
+	FenetreSimple.ouvrir(self, "Rappeler l'escouade", "Rappeler cette escouade ?\nLes unités reviennent tout de suite, mais la mission est perdue (pas de butin).", [["Annuler", null], ["Rappeler", func():
 		Compagnie.rappeler(i)
-		d.queue_free()
-		_tout_rafraichir())
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(480, 0))
+		_tout_rafraichir()]])
 
 
 # =====================================================================
@@ -392,13 +383,7 @@ func _envoyer() -> void:
 
 
 func _message(titre: String, texte: String) -> void:
-	var d := AcceptDialog.new()
-	d.title = titre
-	d.dialog_text = texte
-	d.confirmed.connect(d.queue_free)
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(480, 0))
+	FenetreSimple.ouvrir(self, titre, texte)
 
 
 func _retour() -> void:

@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.80.2"
+const NUMERO := "0.80.3"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.80.3", "date": "2026-10-23", "titre": "Le grand coup de pinceau",
+	"changements": [
+		"CARTE DU MONDE 3D : la brume qui cache les terres pas encore atteintes reste posée sur la carte, elle ne déborde plus sur la table.",
+		"FENÊTRES PEINTES PARTOUT : les messages et les confirmations du Deck, de la Fusion, de l'Évolution, des Échos, du Reliquaire, des Donjons, des Tours, de la Marche, de la Compagnie, de l'Invocation, du choix du héros et des Paramètres utilisent maintenant le même cadre peint que le reste du jeu (plus aucune fenêtre grise).",
+		"Prêt pour les nouvelles images : icônes peintes des objets du Reliquaire, fonds des écrans Armée et Mon Héros (ils s'afficheront dès qu'ils seront ajoutés).",
+	]},
 	{"version": "0.80.2", "date": "2026-10-23", "titre": "Le plateau habillé",
 	"changements": [
 		"PLATEAU : les fenêtres (trésor, mystère, piège, soin…) ont maintenant le même cadre peint que le reste du jeu, comme la barre du haut, la bulle d'info des cases et le panneau d'équipe.",

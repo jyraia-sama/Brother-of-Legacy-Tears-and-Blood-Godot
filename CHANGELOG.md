@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.80.2** (2026-10-23)
+Version actuelle : **0.80.3** (2026-10-23)
+
+## v0.80.3 — Le grand coup de pinceau  (2026-10-23)
+
+- CARTE DU MONDE 3D : la brume qui cache les terres pas encore atteintes reste posée sur la carte, elle ne déborde plus sur la table.
+- FENÊTRES PEINTES PARTOUT : les messages et les confirmations du Deck, de la Fusion, de l'Évolution, des Échos, du Reliquaire, des Donjons, des Tours, de la Marche, de la Compagnie, de l'Invocation, du choix du héros et des Paramètres utilisent maintenant le même cadre peint que le reste du jeu (plus aucune fenêtre grise).
+- Prêt pour les nouvelles images : icônes peintes des objets du Reliquaire, fonds des écrans Armée et Mon Héros (ils s'afficheront dès qu'ils seront ajoutés).
 
 ## v0.80.2 — Le plateau habillé  (2026-10-23)
 

@@ -12,6 +12,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"CARTE DU MONDE 3D : la brume qui cache les terres pas encore atteintes reste posée sur la carte, elle ne déborde plus sur la table.",
+				"FENÊTRES PEINTES PARTOUT : les messages et les confirmations du Deck, de la Fusion, de l'Évolution, des Échos, du Reliquaire, des Donjons, des Tours, de la Marche, de la Compagnie, de l'Invocation, du choix du héros et des Paramètres utilisent maintenant le même cadre peint que le reste du jeu (plus aucune fenêtre grise).",
+				"Prêt pour les nouvelles images : icônes peintes des objets du Reliquaire, fonds des écrans Armée et Mon Héros (ils s'afficheront dès qu'ils seront ajoutés)."
+			],
+			"titre": "Le grand coup de pinceau",
+			"version": "0.80.3"
+		},
+		{
+			"changements": [
 				"PLATEAU : les fenêtres (trésor, mystère, piège, soin…) ont maintenant le même cadre peint que le reste du jeu, comme la barre du haut, la bulle d'info des cases et le panneau d'équipe.",
 				"PLATEAU 3D : les dalles des cases sont taillées dans la pierre peinte du chemin de l'Acte, au lieu d'un gris uni.",
 				"Les petites fenêtres à un seul bouton se ferment aussi avec Entrée, Espace ou Échap."
@@ -135,21 +144,13 @@
 			],
 			"titre": "Les géants en 3D",
 			"version": "0.77.0"
-		},
-		{
-			"changements": [
-				"DÉCORS 3D DES MODES : chaque mode a maintenant son propre décor peint, avec un sol net jusqu'aux pieds des figurines : la Tour de l'Enfer et son portail en gueule au-dessus de la lave, la Tour du Paradis et son escalier vers la lumière au-dessus des nuages, le Brasier Éternel et son enclume géante, la Sylve Putride et son arbre-mère suintant, les Fosses Englouties et leur temple turquoise, la Crypte sans Lune et sa sphère de ténèbres, le Sanctuaire Profané et son ange brisé, le Puits de Sang et ses cascades rouges, la Bibliothèque Interdite et son grimoire enchaîné, le Sanctuaire du Bélier et sa tête de bélier dorée, l'Arène sous la lune et la forteresse assiégée de la Guerre des Bannières.",
-				"Ces décors remplacent les emprunts aux Actes de la version précédente. La Marche Maudite garde les décors de ses régions."
-			],
-			"titre": "Douze nouveaux champs de bataille",
-			"version": "0.76.1"
 		}
 	],
 	"pck": {
-		"sha256": "b09a117b52d5bfa2ae429c70e40c3fa537a84f261c803930fc408c7c7b67817e",
-		"taille": 38080072,
+		"sha256": "90349880bbb79bac639e996312340a4af439cdf5f48209db815906c4a39987fa",
+		"taille": 38075752,
 		"url": "jeu.pck"
 	},
-	"version": "0.80.2",
+	"version": "0.80.3",
 	"version_minimum": "0.37.0"
 }

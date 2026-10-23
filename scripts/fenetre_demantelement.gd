@@ -251,21 +251,12 @@ func _demanteler() -> void:
 	var txt := UiCommun.t("Démanteler %d Échos pour %d Poussière d'Écho ?") % [uids.size(), gain]
 	if rares > 0:
 		txt += "\n\n" + UiCommun.t("⚠ Attention : %d d'entre eux sont Héroïques ou Légendaires. Un Écho démantelé est perdu pour toujours.") % rares
-	var d := ConfirmationDialog.new()
-	d.title = "Démantèlement"
-	d.dialog_text = txt
-	d.ok_button_text = "Démanteler"
-	d.cancel_button_text = "Annuler"
-	d.confirmed.connect(func():
-		d.queue_free()
+	FenetreSimple.ouvrir(self, "Démantèlement", txt, [["Annuler", null], ["Démanteler", func():
 		var g := Reliquaire.demanteler(uids)
 		_choisis.clear()
 		_remplir()
 		_total.text = UiCommun.t("Démantèlement : +%d Poussière d'Écho") % g
-		_total.add_theme_color_override("font_color", Color("8aff9a")))
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered()
+		_total.add_theme_color_override("font_color", Color("8aff9a"))]])
 
 
 func _fermer() -> void:

@@ -571,17 +571,8 @@ func _valider_essai() -> void:
 	if pris.is_empty():
 		_appliquer_essai()
 		return
-	var d := ConfirmationDialog.new()
-	d.title = "Équiper l'essai"
-	d.dialog_text = UiCommun.t("Ces Échos sont portés par un autre héros et lui seront retirés :\n\n• %s\n\nContinuer ?") % "\n• ".join(pris)
-	d.ok_button_text = "Équiper"
-	d.cancel_button_text = "Annuler"
-	d.confirmed.connect(func():
-		d.queue_free()
-		_appliquer_essai())
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(560, 0))
+	FenetreSimple.ouvrir(self, "Équiper l'essai", UiCommun.t("Ces Échos sont portés par un autre héros et lui seront retirés :\n\n• %s\n\nContinuer ?") % "\n• ".join(pris), [["Annuler", null], ["Équiper", func():
+		_appliquer_essai()]])
 
 
 func _appliquer_essai() -> void:
@@ -810,19 +801,10 @@ func _vente_rapide() -> void:
 	if cibles.is_empty():
 		_flash("Rien à vendre (Normaux/Magiques non équipés).", UiCommun.C_DOUX)
 		return
-	var d := ConfirmationDialog.new()
-	d.title = "Vente rapide"
-	d.dialog_text = UiCommun.t("Vendre %d Échos Normaux et Magiques non équipés pour %d or ?") % [cibles.size(), total]
-	d.ok_button_text = "Vendre"
-	d.cancel_button_text = "Annuler"
-	d.confirmed.connect(func():
-		d.queue_free()
+	FenetreSimple.ouvrir(self, "Vente rapide", UiCommun.t("Vendre %d Échos Normaux et Magiques non équipés pour %d or ?") % [cibles.size(), total], [["Annuler", null], ["Vendre", func():
 		Sauvegarde.vendre_echos(cibles)
 		_echo = -1
-		_tout())
-	d.canceled.connect(d.queue_free)
-	add_child(d)
-	d.popup_centered(Vector2i(440, 0))
+		_tout()]])
 
 
 func _flash(texte: String, couleur: Color) -> void:
