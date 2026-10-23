@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.81.0** (2026-10-23)
+Version actuelle : **0.81.1** (2026-10-23)
+
+## v0.81.1 — Le Menu bien rangé  (2026-10-23)
+
+- Correction : dans le Menu, les boutons du bas (Journal, Signaler un bug, Espace créateur, Menu Admin) ne s'étirent plus en grands panneaux et la version ne s'écrit plus à la verticale ; ils sont rangés sur deux colonnes.
 
 ## v0.81.0 — Une lettre au créateur  (2026-10-23)
 

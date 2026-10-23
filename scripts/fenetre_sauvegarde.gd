@@ -211,25 +211,30 @@ func _ready() -> void:
 	vb.add_child(_etat)
 
 	vb.add_child(HSeparator.new())
-	var lv := HBoxContainer.new()
-	lv.add_theme_constant_override("separation", 10)
+	var t_version := _label("Version %s  (%s)" % [Version.texte(), Version.DATE], 16, Color(0.85, 0.7, 0.6))
+	vb.add_child(t_version)
+	# Boutons sur 2 colonnes (une seule rangée était trop large : ils s'écrasaient et s'étiraient en hauteur)
+	var lv := GridContainer.new()
+	lv.columns = 2
+	lv.add_theme_constant_override("h_separation", 10)
+	lv.add_theme_constant_override("v_separation", 8)
 	vb.add_child(lv)
-	var t_version := _label("Version %s\n(%s)" % [Version.texte(), Version.DATE], 16, Color(0.85, 0.7, 0.6))
-	t_version.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	lv.add_child(t_version)
 	var journal := _bouton("Journal des mises à jour", func(): FenetreChangelog.ouvrir(get_parent()))
-	journal.size_flags_horizontal = Control.SIZE_SHRINK_END
+	journal.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	journal.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	journal.custom_minimum_size = Vector2(230, 40)
 	lv.add_child(journal)
 	# Signaler un bug / donner son avis : pour tout le monde
 	var avis := _bouton("✉ Signaler un bug / Donner mon avis", func(): FenetreSignalement.ouvrir(get_parent()))
-	avis.size_flags_horizontal = Control.SIZE_SHRINK_END
+	avis.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	avis.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	avis.custom_minimum_size = Vector2(300, 40)
 	lv.add_child(avis)
 	# Espace créateur (statistiques + messages des joueurs) : n'apparaît que si le serveur confirme
 	# que c'est le compte du créateur (et le serveur refuse les données à tout autre compte).
 	var createur := _bouton("✦ Espace créateur", func(): FenetreStatsJeu.ouvrir(get_parent()))
-	createur.size_flags_horizontal = Control.SIZE_SHRINK_END
+	createur.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	createur.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	createur.custom_minimum_size = Vector2(200, 40)
 	createur.add_theme_color_override("font_color", Color("ffd27a"))
 	createur.visible = false
@@ -238,7 +243,8 @@ func _ready() -> void:
 	# Menu Admin : toujours visible ; demande le code Admin hors de Godot
 	if Sauvegarde.admin_visible():
 		var adm := _bouton("Menu Admin" + ("  (actif)" if Sauvegarde.admin_actif() else ""), func(): FenetreAdmin.ouvrir(get_parent()))
-		adm.size_flags_horizontal = Control.SIZE_SHRINK_END
+		adm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		adm.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		adm.custom_minimum_size = Vector2(200, 40)
 		adm.add_theme_color_override("font_color", Color("ff7a6a"))
 		lv.add_child(adm)

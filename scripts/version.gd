@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.81.0"
+const NUMERO := "0.81.1"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.81.1", "date": "2026-10-23", "titre": "Le Menu bien rangé",
+	"changements": [
+		"Correction : dans le Menu, les boutons du bas (Journal, Signaler un bug, Espace créateur, Menu Admin) ne s'étirent plus en grands panneaux et la version ne s'écrit plus à la verticale ; ils sont rangés sur deux colonnes.",
+	]},
 	{"version": "0.81.0", "date": "2026-10-23", "titre": "Une lettre au créateur",
 	"changements": [
 		"ÉCRIRE AU CRÉATEUR : nouveau bouton « ✉ Signaler un bug / Donner mon avis » dans le Menu. Choisis Bug, Difficulté, Idée ou Autre et écris ton message : le jeu y joint tout seul la version, l'appareil, l'écran et ta progression. Sans connexion, le message attend et part au prochain lancement.",
