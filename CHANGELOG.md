@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.82.0** (2026-10-23)
+Version actuelle : **0.83.0** (2026-10-23)
+
+## v0.83.0 — La lignée des Dragons  (2026-10-23)
+
+- LA LIGNÉE DES DRAGONS : 4 nouveaux héros invocables, chacun avec son évolution. Pyrrhos le Dragonnet (R, Feu, soutien : soigne et accélère l'équipe), Seraphyr la Chevalière-Dragon (SR, Sacré, guerrière : contre-attaque et aveugle l'Avant), Drakkhar Dragon des Glaces (SSR, Eau, tireur : gèle toute l'équipe ennemie et fond sur l'Arrière) et Vörnagal le Dragon Millénaire (UR, Nature, tank : attire les coups, empoisonne et survit à un coup fatal).
+- SANG DE DRAGON : chacun de ces 4 héros gagne un bonus pour chaque AUTRE Dragon de l'équipe. Le Dragon d'Ombre, la Wyverne et la Jeune Hydre comptent aussi comme Dragons : une équipe de Dragons devient redoutable.
+- Ils arrivent dans les invocations, et sont mis en avant pendant Les Œufs de Dragon (Pâques) et Le Règne des Dragons (août).
 
 ## v0.82.0 — Le calendrier des invocations  (2026-10-23)
 

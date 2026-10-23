@@ -102,7 +102,7 @@ func _creer(e: Dictionary, camp: int, place: int) -> Dictionary:
 	var c := {
 		"idx": unites.size(), "camp": camp, "place": place, "id": e["id"],
 		"nom": e.get("nom", u["nom"]), "niveau": niveau, "role": u["role"], "element": u["element"],
-		"melee": u["role"] in ROLES_MELEE, "avant": (place % 5) < 2,
+		"melee": u["role"] in ROLES_MELEE, "avant": (place % 5) < 2, "race": str(u.get("race", "")),
 		"actions": maxi(1, int(e.get("actions", 1))), "geant": bool(e.get("geant", false)),
 		"base": s, "pv_max": float(s["pv"]), "pv": 0.0, "bouclier": 0.0, "vivant": true,
 		"actifs": [], "p": _passifs_vides(), "buffs": [], "afflictions": {}, "provocation": 0,
@@ -171,7 +171,8 @@ func _passifs_vides() -> Dictionary:
 	return {"stats": {}, "auras": [], "auras_ennemis": [], "vol_vie": 0.0, "epines": 0.0,
 		"contre_chance": 0.0, "contre_mult": 1.0, "regen": 0.0, "survie": 0, "renaissance": 0.0,
 		"immunites": [], "soin_bonus": 0.0, "double": 0.0, "bonus_arriere": 0.0, "execution": 0.0,
-		"premier": false, "accum_stat": "", "accum_val": 0.0, "accum_max": 0, "rage_stat": "", "rage_val": 0.0}
+		"premier": false, "accum_stat": "", "accum_val": 0.0, "accum_max": 0, "rage_stat": "", "rage_val": 0.0,
+		"synergies": []}
 
 
 func _ajouter_passif(c: Dictionary, sk: Dictionary) -> void:
@@ -202,6 +203,8 @@ func _ajouter_passif(c: Dictionary, sk: Dictionary) -> void:
 			"rage":
 				p["rage_stat"] = e["stat"]
 				p["rage_val"] = e["valeur"]
+			# Sang de Dragon & co : +valeur par AUTRE allié de cette race dans l'équipe
+			"synergie": p["synergies"].append(e)
 
 
 func _appliquer_passifs_depart() -> void:
@@ -225,6 +228,15 @@ func _appliquer_passifs_depart() -> void:
 		for a in c["p"]["auras_ennemis"]:
 			for ennemi in _equipe(1 - c["camp"]):
 				_modifier_base(ennemi, a["stat"], -a["valeur"])
+	# Synergies de race (ex. Sang de Dragon : chaque AUTRE Dragon de l'équipe renforce l'unité)
+	for c in unites:
+		for sy in c["p"]["synergies"]:
+			var n := 0
+			for allie in _equipe(c["camp"]):
+				if allie != c and str(allie["race"]) == str(sy["race"]):
+					n += 1
+			if n > 0:
+				_modifier_base(c, sy["stat"], float(sy["valeur"]) * n)
 
 
 func _modifier_base(c: Dictionary, st: String, v: float) -> void:

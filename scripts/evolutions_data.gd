@@ -791,7 +791,7 @@ const UNITES := {
 	},
 	"hydre_jeune_evo": {
 		"nom": "Hydre des Abysses", "rarete": "SR", "element": "eau", "role": "tank", "position": "avant", "invocable": false, "categorie": "heros", "couleur": "2a6a2a",
-		"legende": false, "forge": false, "race": "", "dominantes": ["pv", "atk"], "phase2": {}, "evolution_de": "hydre_jeune",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["pv", "atk"], "phase2": {}, "evolution_de": "hydre_jeune",
 		"stats": {"pv": 1550, "atk": 310, "def": 195, "agi": 145, "mag": 115},
 		"secondaires": {"crit": 9, "degats_crit": 170, "res": 26, "preci": 94},
 		"skills": [
@@ -828,7 +828,7 @@ const UNITES := {
 	},
 	"wyverne_evo": {
 		"nom": "Wyverne Ancestrale", "rarete": "SR", "element": "nature", "role": "tireur", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "3a6a8a",
-		"legende": false, "forge": false, "race": "", "dominantes": ["atk", "pv"], "phase2": {}, "evolution_de": "wyverne",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["atk", "pv"], "phase2": {}, "evolution_de": "wyverne",
 		"stats": {"pv": 1460, "atk": 345, "def": 190, "agi": 215, "mag": 125},
 		"secondaires": {"crit": 17, "degats_crit": 190, "res": 16, "preci": 100},
 		"skills": [
@@ -855,7 +855,7 @@ const UNITES := {
 	# ============================================================
 	"dragon_ombre_evo": {
 		"nom": "Dragon du Néant", "rarete": "SSR", "element": "tenebres", "role": "mage", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "1a0a2a",
-		"legende": false, "forge": false, "race": "", "dominantes": ["atk", "pv"], "phase2": {}, "evolution_de": "dragon_ombre",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["atk", "pv"], "phase2": {}, "evolution_de": "dragon_ombre",
 		"stats": {"pv": 1930, "atk": 400, "def": 245, "agi": 230, "mag": 205},
 		"secondaires": {"crit": 13, "degats_crit": 185, "res": 32, "preci": 99},
 		"skills": [
@@ -1083,6 +1083,58 @@ const UNITES := {
 			{"nom": "Solo Déchaîné", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "buff", "stat": "atk", "valeur": 0.2, "duree": 2}, {"effet": "buff", "stat": "agi", "valeur": 0.15, "duree": 2}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Un solo endiablé galvanise ses alliés : ATK +20 % et AGI +15 % pour toute l'équipe (2 tours) ; retire les afflictions."},
 			{"nom": "Larsen Assourdissant", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "silence", "chance": 0.35, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Pousse l'ampli à fond : inflige 120 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Silence (1 tour)."},
 			{"nom": "Rappel du Public", "type": "passif", "effets": [{"effet": "survie", "charges": 1}, {"effet": "aura", "stat": "agi", "valeur": 0.08}], "niveau": 40, "evolue": true, "description": "Survit à un coup fatal avec 1 PV (1 fois par combat) ; toute l'équipe : AGI +8 %."},
+		],
+	},
+	"dragonnet_braise_evo": {
+		"nom": "Pyrrhos, Dragon de Forge", "rarete": "R", "element": "feu", "role": "soutien", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "e0602a",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["mag", "agi"], "phase2": {}, "evolution_de": "dragonnet_braise",
+		"stats": {"pv": 945, "atk": 205, "def": 100, "agi": 170, "mag": 200},
+		"secondaires": {"crit": 9, "degats_crit": 165, "res": 30, "preci": 98},
+		"skills": [
+			{"nom": "Flamme de Forge", "type": "actif", "chance": 0.35, "cible": "allie_faible", "effets": [{"effet": "soin", "mult": 1.15}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Soigne l'allié le plus blessé de 115 % de puissance de skill."},
+			{"nom": "Souffle de Braise", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "affliction", "nom": "brulure", "chance": 0.3, "duree": 2}], "niveau": 10, "description": "(30 % de chance par tour) Inflige 130 % de puissance de skill à un ennemi ; 30 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Battements d'Ailes", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "buff", "stat": "agi", "valeur": 0.15, "duree": 2}, {"effet": "buff", "stat": "atk", "valeur": 0.08, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Toute l'équipe : AGI +15 % et ATK +8 % (2 tours)."},
+			{"nom": "Sang de Dragon", "type": "passif", "effets": [{"effet": "synergie", "race": "Dragon", "stat": "mag", "valeur": 0.08}, {"effet": "stat", "stat": "mag", "valeur": 0.1}], "niveau": 30, "description": "MAG +8 % pour chaque autre Dragon de l'équipe ; MAG +10 %."},
+			{"nom": "Cœur de Forge", "type": "passif", "effets": [{"effet": "aura", "stat": "atk", "valeur": 0.06}, {"effet": "regen", "valeur": 0.03}], "niveau": 40, "evolue": true, "description": "Toute l'équipe : ATK +6 % ; régénère 3 % de ses PV max à chaque tour."},
+		],
+	},
+	"dragon_givre_evo": {
+		"nom": "Drakkhar, Seigneur du Blizzard", "rarete": "SSR", "element": "eau", "role": "tireur", "position": "arriere", "invocable": false, "categorie": "heros", "couleur": "6ab8f0",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["atk", "agi"], "phase2": {}, "evolution_de": "dragon_givre",
+		"stats": {"pv": 1730, "atk": 425, "def": 220, "agi": 260, "mag": 190},
+		"secondaires": {"crit": 17, "degats_crit": 195, "res": 26, "preci": 100},
+		"skills": [
+			{"nom": "Souffle du Blizzard", "type": "actif", "chance": 0.35, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.1}, {"effet": "affliction", "nom": "gel", "chance": 0.3, "duree": 1}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Inflige 110 % de puissance de skill à tous les ennemis ; 30 % de chance d'infliger Gel (1 tour)."},
+			{"nom": "Écailles de Givre", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.12}, {"effet": "epines", "valeur": 0.08}], "niveau": 10, "description": "DEF +12 % ; renvoie 8 % des dégâts physiques reçus."},
+			{"nom": "Piqué du Prédateur", "type": "actif", "chance": 0.3, "cible": "arriere", "effets": [{"effet": "degats", "mult": 1.25}], "niveau": 20, "description": "(30 % de chance par tour) Fond sur l'Arrière ennemi : inflige 125 % de puissance de skill à chaque ennemi de l'Arrière."},
+			{"nom": "Sang de Dragon", "type": "passif", "effets": [{"effet": "synergie", "race": "Dragon", "stat": "atk", "valeur": 0.06}, {"effet": "stat", "stat": "crit", "valeur": 5}], "niveau": 30, "description": "ATK +6 % pour chaque autre Dragon de l'équipe ; Critique +5."},
+			{"nom": "Hiver Éternel", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "gel", "chance": 0.4, "duree": 1}, {"effet": "debuff", "stat": "agi", "valeur": 0.15, "duree": 2}], "niveau": 40, "evolue": true, "description": "(20 % de chance par tour) Inflige 120 % de puissance de skill à tous les ennemis ; 40 % de chance d'infliger Gel (1 tour) ; AGI ennemie -15 % (2 tours)."},
+		],
+	},
+	"dragon_millenaire_evo": {
+		"nom": "Vörnagal, l'Éveillé", "rarete": "UR", "element": "nature", "role": "tank", "position": "avant", "invocable": false, "categorie": "heros", "couleur": "4a8a3a",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["pv", "def"], "phase2": {}, "evolution_de": "dragon_millenaire",
+		"stats": {"pv": 2700, "atk": 440, "def": 370, "agi": 190, "mag": 290},
+		"secondaires": {"crit": 9, "degats_crit": 180, "res": 34, "preci": 95},
+		"skills": [
+			{"nom": "Rugissement du Monde", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.7}, {"effet": "provocation", "duree": 2}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Inflige 170 % de puissance de skill à un ennemi et attire sur lui les attaques (2 tours)."},
+			{"nom": "Écailles Millénaires", "type": "passif", "effets": [{"effet": "stat", "stat": "pv", "valeur": 0.15}, {"effet": "stat", "stat": "def", "valeur": 0.12}], "niveau": 10, "description": "PV +15 % ; DEF +12 %."},
+			{"nom": "Souffle de Sève Ancienne", "type": "actif", "chance": 0.3, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "poison", "chance": 0.35, "duree": 2}], "niveau": 20, "description": "(30 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Poison (2 tours)."},
+			{"nom": "Sang de Dragon", "type": "passif", "effets": [{"effet": "synergie", "race": "Dragon", "stat": "def", "valeur": 0.08}, {"effet": "survie", "charges": 1}], "niveau": 30, "description": "DEF +8 % pour chaque autre Dragon de l'équipe ; survit à un coup fatal avec 1 PV (1 fois par combat)."},
+			{"nom": "Racines du Monde", "type": "passif", "effets": [{"effet": "aura", "stat": "def", "valeur": 0.12}, {"effet": "regen", "valeur": 0.03}], "niveau": 40, "evolue": true, "description": "Toute l'équipe : DEF +12 % ; régénère 3 % de ses PV max à chaque tour."},
+		],
+	},
+	"chevaliere_dragon_evo": {
+		"nom": "Seraphyr, Paladine du Dragon Blanc", "rarete": "SR", "element": "sacre", "role": "guerrier", "position": "avant", "invocable": false, "categorie": "heros", "couleur": "e8d090",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["atk", "def"], "phase2": {}, "evolution_de": "chevaliere_dragon",
+		"stats": {"pv": 1410, "atk": 330, "def": 200, "agi": 190, "mag": 145},
+		"secondaires": {"crit": 14, "degats_crit": 182, "res": 22, "preci": 97},
+		"skills": [
+			{"nom": "Lance du Dragon Blanc", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 2.2}], "niveau": 1, "evolue": true, "description": "(35 % de chance par tour) Inflige 220 % de puissance de skill à un ennemi."},
+			{"nom": "Ailes Repliées", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.1}, {"effet": "contre", "chance": 0.15, "mult": 0.8}], "niveau": 10, "description": "DEF +10 % ; 15 % de chance de contre-attaquer (80 % des dégâts)."},
+			{"nom": "Souffle Sacré", "type": "actif", "chance": 0.3, "cible": "avant", "effets": [{"effet": "degats", "mult": 1.1}, {"effet": "affliction", "nom": "aveugle", "chance": 0.3, "duree": 1}], "niveau": 20, "description": "(30 % de chance par tour) Inflige 110 % de puissance de skill aux ennemis de l'Avant ; 30 % de chance d'infliger Aveuglement (1 tour)."},
+			{"nom": "Sang de Dragon", "type": "passif", "effets": [{"effet": "synergie", "race": "Dragon", "stat": "atk", "valeur": 0.07}], "niveau": 30, "description": "ATK +7 % pour chaque autre Dragon de l'équipe."},
+			{"nom": "Charge du Dragon Blanc", "type": "actif", "chance": 0.2, "cible": "avant", "effets": [{"effet": "degats", "mult": 1.5}, {"effet": "affliction", "nom": "etourdi", "chance": 0.25, "duree": 1}], "niveau": 40, "evolue": true, "description": "(20 % de chance par tour) Inflige 150 % de puissance de skill aux ennemis de l'Avant ; 25 % de chance d'infliger Étourdissement (1 tour)."},
 		],
 	},
 	"compagnie_seve_evo": {

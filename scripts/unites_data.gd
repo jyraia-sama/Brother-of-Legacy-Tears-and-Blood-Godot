@@ -991,7 +991,7 @@ const UNITES := {
 	"hydre_jeune": {
 		"nom": "Jeune Hydre", "rarete": "SR", "element": "eau", "role": "tank", "position": "avant",
 		"invocable": true, "categorie": "heros", "couleur": "2a6a2a",
-		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": [], "phase2": {},
 		"stats": {"pv": 1150, "atk": 230, "def": 150, "agi": 110, "mag": 90},
 		"secondaires": {"crit": 6, "degats_crit": 160, "res": 22, "preci": 92},
 		"skills": [
@@ -1030,7 +1030,7 @@ const UNITES := {
 	"wyverne": {
 		"nom": "Wyverne Sauvage", "rarete": "SR", "element": "nature", "role": "tireur", "position": "arriere",
 		"invocable": true, "categorie": "heros", "couleur": "3a6a8a",
-		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": [], "phase2": {},
 		"stats": {"pv": 1080, "atk": 255, "def": 145, "agi": 165, "mag": 95},
 		"secondaires": {"crit": 14, "degats_crit": 180, "res": 12, "preci": 99},
 		"skills": [
@@ -1056,7 +1056,7 @@ const UNITES := {
 	"dragon_ombre": {
 		"nom": "Dragon d'Ombre", "rarete": "SSR", "element": "tenebres", "role": "mage", "position": "arriere",
 		"invocable": true, "categorie": "heros", "couleur": "1a0a2a",
-		"legende": false, "forge": false, "race": "", "dominantes": [], "phase2": {},
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": [], "phase2": {},
 		"stats": {"pv": 1450, "atk": 300, "def": 190, "agi": 180, "mag": 160},
 		"secondaires": {"crit": 10, "degats_crit": 175, "res": 28, "preci": 97},
 		"skills": [
@@ -1300,6 +1300,59 @@ const UNITES := {
 			{"nom": "Crête de Défi", "type": "passif", "effets": [{"effet": "aura", "stat": "atk", "valeur": 0.1}, {"effet": "stat", "stat": "agi", "valeur": 0.12}], "niveau": 10, "description": "Toute l'équipe : ATK +10 % ; AGI +12 %."},
 			{"nom": "Solo Déchaîné", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "buff", "stat": "atk", "valeur": 0.2, "duree": 2}, {"effet": "buff", "stat": "agi", "valeur": 0.15, "duree": 2}, {"effet": "purification"}], "niveau": 20, "description": "(25 % de chance par tour) Un solo endiablé galvanise ses alliés : ATK +20 % et AGI +15 % pour toute l'équipe (2 tours) ; retire les afflictions."},
 			{"nom": "Larsen Assourdissant", "type": "actif", "chance": 0.2, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 1.2}, {"effet": "affliction", "nom": "silence", "chance": 0.35, "duree": 1}], "niveau": 30, "description": "(20 % de chance par tour) Pousse l'ampli à fond : inflige 120 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Silence (1 tour)."},
+		],
+	},
+	# ---- LA LIGNÉE DES DRAGONS (v0.83) : « Sang de Dragon » renforce chaque Dragon par Dragon allié ----
+	"dragonnet_braise": {
+		"nom": "Pyrrhos le Dragonnet", "rarete": "R", "element": "feu", "role": "soutien", "position": "arriere", 
+		"invocable": true, "categorie": "heros", "couleur": "e0602a",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["mag", "agi"], "phase2": {},
+		"stats": {"pv": 700, "atk": 150, "def": 75, "agi": 125, "mag": 145},
+		"secondaires": {"crit": 7, "degats_crit": 155, "res": 26, "preci": 96},
+		"skills": [
+			{"nom": "Petite Flamme Chaude", "type": "actif", "chance": 0.35, "cible": "allie_faible", "effets": [{"effet": "soin", "mult": 0.9}], "niveau": 1, "description": "(35 % de chance par tour) Souffle une flamme tiède sur l'allié le plus blessé : soigne 90 % de puissance de skill."},
+			{"nom": "Souffle de Braise", "type": "actif", "chance": 0.3, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.3}, {"effet": "affliction", "nom": "brulure", "chance": 0.3, "duree": 2}], "niveau": 10, "description": "(30 % de chance par tour) Inflige 130 % de puissance de skill à un ennemi ; 30 % de chance d'infliger Brûlure (2 tours)."},
+			{"nom": "Battements d'Ailes", "type": "actif", "chance": 0.25, "cible": "allies", "effets": [{"effet": "buff", "stat": "agi", "valeur": 0.15, "duree": 2}, {"effet": "buff", "stat": "atk", "valeur": 0.08, "duree": 2}], "niveau": 20, "description": "(25 % de chance par tour) Toute l'équipe : AGI +15 % et ATK +8 % (2 tours)."},
+			{"nom": "Sang de Dragon", "type": "passif", "effets": [{"effet": "synergie", "race": "Dragon", "stat": "mag", "valeur": 0.08}, {"effet": "stat", "stat": "mag", "valeur": 0.1}], "niveau": 30, "description": "MAG +8 % pour chaque autre Dragon de l'équipe ; MAG +10 %."},
+		],
+	},
+	"dragon_givre": {
+		"nom": "Drakkhar, Dragon des Glaces", "rarete": "SSR", "element": "eau", "role": "tireur", "position": "arriere", 
+		"invocable": true, "categorie": "heros", "couleur": "6ab8f0",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["atk", "agi"], "phase2": {},
+		"stats": {"pv": 1350, "atk": 330, "def": 170, "agi": 200, "mag": 150},
+		"secondaires": {"crit": 14, "degats_crit": 185, "res": 22, "preci": 99},
+		"skills": [
+			{"nom": "Souffle Glacial", "type": "actif", "chance": 0.35, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.95}, {"effet": "affliction", "nom": "gel", "chance": 0.25, "duree": 1}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 95 % de puissance de skill à tous les ennemis ; 25 % de chance d'infliger Gel (1 tour)."},
+			{"nom": "Écailles de Givre", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.12}, {"effet": "epines", "valeur": 0.08}], "niveau": 10, "description": "DEF +12 % ; renvoie 8 % des dégâts physiques reçus."},
+			{"nom": "Piqué du Prédateur", "type": "actif", "chance": 0.3, "cible": "arriere", "effets": [{"effet": "degats", "mult": 1.25}], "niveau": 20, "description": "(30 % de chance par tour) Fond sur l'Arrière ennemi : inflige 125 % de puissance de skill à chaque ennemi de l'Arrière."},
+			{"nom": "Sang de Dragon", "type": "passif", "effets": [{"effet": "synergie", "race": "Dragon", "stat": "atk", "valeur": 0.06}, {"effet": "stat", "stat": "crit", "valeur": 5}], "niveau": 30, "description": "ATK +6 % pour chaque autre Dragon de l'équipe ; Critique +5."},
+		],
+	},
+	"dragon_millenaire": {
+		"nom": "Vörnagal, le Dragon Millénaire", "rarete": "UR", "element": "nature", "role": "tank", "position": "avant", 
+		"invocable": true, "categorie": "heros", "couleur": "4a8a3a",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["pv", "def"], "phase2": {},
+		"stats": {"pv": 2150, "atk": 350, "def": 290, "agi": 150, "mag": 230},
+		"secondaires": {"crit": 7, "degats_crit": 170, "res": 30, "preci": 93},
+		"skills": [
+			{"nom": "Rugissement des Âges", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.4}, {"effet": "provocation", "duree": 2}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 140 % de puissance de skill à un ennemi et attire sur lui les attaques (2 tours)."},
+			{"nom": "Écailles Millénaires", "type": "passif", "effets": [{"effet": "stat", "stat": "pv", "valeur": 0.15}, {"effet": "stat", "stat": "def", "valeur": 0.12}], "niveau": 10, "description": "PV +15 % ; DEF +12 %."},
+			{"nom": "Souffle de Sève Ancienne", "type": "actif", "chance": 0.3, "cible": "ennemis", "effets": [{"effet": "degats", "mult": 0.9}, {"effet": "affliction", "nom": "poison", "chance": 0.35, "duree": 2}], "niveau": 20, "description": "(30 % de chance par tour) Inflige 90 % de puissance de skill à tous les ennemis ; 35 % de chance d'infliger Poison (2 tours)."},
+			{"nom": "Sang de Dragon", "type": "passif", "effets": [{"effet": "synergie", "race": "Dragon", "stat": "def", "valeur": 0.08}, {"effet": "survie", "charges": 1}], "niveau": 30, "description": "DEF +8 % pour chaque autre Dragon de l'équipe ; survit à un coup fatal avec 1 PV (1 fois par combat)."},
+		],
+	},
+	"chevaliere_dragon": {
+		"nom": "Seraphyr, la Chevalière-Dragon", "rarete": "SR", "element": "sacre", "role": "guerrier", "position": "avant", 
+		"invocable": true, "categorie": "heros", "couleur": "e8d090",
+		"legende": false, "forge": false, "race": "Dragon", "dominantes": ["atk", "def"], "phase2": {},
+		"stats": {"pv": 1080, "atk": 250, "def": 150, "agi": 145, "mag": 110},
+		"secondaires": {"crit": 11, "degats_crit": 172, "res": 18, "preci": 95},
+		"skills": [
+			{"nom": "Lance Écaille-d'Or", "type": "actif", "chance": 0.35, "cible": "ennemi", "effets": [{"effet": "degats", "mult": 1.8}], "niveau": 1, "description": "(35 % de chance par tour) Inflige 180 % de puissance de skill à un ennemi."},
+			{"nom": "Ailes Repliées", "type": "passif", "effets": [{"effet": "stat", "stat": "def", "valeur": 0.1}, {"effet": "contre", "chance": 0.15, "mult": 0.8}], "niveau": 10, "description": "DEF +10 % ; 15 % de chance de contre-attaquer (80 % des dégâts)."},
+			{"nom": "Souffle Sacré", "type": "actif", "chance": 0.3, "cible": "avant", "effets": [{"effet": "degats", "mult": 1.1}, {"effet": "affliction", "nom": "aveugle", "chance": 0.3, "duree": 1}], "niveau": 20, "description": "(30 % de chance par tour) Inflige 110 % de puissance de skill aux ennemis de l'Avant ; 30 % de chance d'infliger Aveuglement (1 tour)."},
+			{"nom": "Sang de Dragon", "type": "passif", "effets": [{"effet": "synergie", "race": "Dragon", "stat": "atk", "valeur": 0.07}], "niveau": 30, "description": "ATK +7 % pour chaque autre Dragon de l'équipe."},
 		],
 	},
 	# ---- LÉGENDES CACHÉES des Ruines Oubliées (ruines.gd) : cartes de groupe, non invocables ----

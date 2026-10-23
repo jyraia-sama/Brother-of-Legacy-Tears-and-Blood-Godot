@@ -17,13 +17,13 @@ Tant qu'une bannière manque, l'événement s'affiche quand même, sur un dégra
 | CŒURS D'ÉPINES | 06/02/2027 | 19/02/2027 | La Druidesse des Ronces, La Nymphe, L'Ondine des Récifs |
 | LE BAL DES MASQUES | 20/02/2027 | 05/03/2027 | Le Mercenaire Sans Nom, La Dague Violette, Lapin Pyromane |
 | L'ÉVEIL DE LA SÈVE | 13/03/2027 | 27/03/2027 | La Fleuriste des Ruines, Axolotl des Sources, Chien Sylvestre |
-| LES ŒUFS DE DRAGON | 28/03/2027 | 10/04/2027 | Phénix Immortel, Dragon d'Ombre, Wyverne Sauvage |
+| LES ŒUFS DE DRAGON | 28/03/2027 | 10/04/2027 | Vörnagal le Dragon Millénaire, Drakkhar Dragon des Glaces, Seraphyr la Chevalière-Dragon |
 | LA COUR DES INSECTES | 11/04/2027 | 23/04/2027 | La Chasseresse de Soie, L'Errant Silencieux, Reine Araignée |
 | LA NUIT DE WALPURGIS | 24/04/2027 | 07/05/2027 | Le Mage Gris, Sorcier Sombre, Liche Mineure |
 | LES LÉGENDES DES VALCENDRE | 22/05/2027 | 04/06/2027 | La Brute Noire, Le Samouraï Rouge, Le Chevalier Blanc |
 | LE BRASIER DU SOLSTICE | 19/06/2027 | 02/07/2027 | La Combattante Ardente, Phénix Immortel, La Forgeronne Écarlate |
 | LA MARÉE DES ABYSSES | 17/07/2027 | 30/07/2027 | Léviathan Abyssal, Barbe Bleue, Jeune Hydre |
-| LE RÈGNE DES DRAGONS | 14/08/2027 | 27/08/2027 | Dragon d'Ombre, Wyverne Sauvage, Jeune Hydre |
+| LE RÈGNE DES DRAGONS | 14/08/2027 | 27/08/2027 | Vörnagal le Dragon Millénaire, Drakkhar Dragon des Glaces, Dragon d'Ombre |
 | LA MOISSON POURPRE | 04/09/2027 | 17/09/2027 | Le Chasseur de Primes, Séraphin Déchu, Golem d'Obsidienne |
 | LUNE DE SANG — UN AN DÉJÀ | 26/09/2027 | 10/10/2027 | Empereur Déchu, Dragon d'Ombre, Archange Noir |
 

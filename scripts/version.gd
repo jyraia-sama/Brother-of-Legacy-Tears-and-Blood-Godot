@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.82.0"
+const NUMERO := "0.83.0"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.83.0", "date": "2026-10-23", "titre": "La lignée des Dragons",
+	"changements": [
+		"LA LIGNÉE DES DRAGONS : 4 nouveaux héros invocables, chacun avec son évolution. Pyrrhos le Dragonnet (R, Feu, soutien : soigne et accélère l'équipe), Seraphyr la Chevalière-Dragon (SR, Sacré, guerrière : contre-attaque et aveugle l'Avant), Drakkhar Dragon des Glaces (SSR, Eau, tireur : gèle toute l'équipe ennemie et fond sur l'Arrière) et Vörnagal le Dragon Millénaire (UR, Nature, tank : attire les coups, empoisonne et survit à un coup fatal).",
+		"SANG DE DRAGON : chacun de ces 4 héros gagne un bonus pour chaque AUTRE Dragon de l'équipe. Le Dragon d'Ombre, la Wyverne et la Jeune Hydre comptent aussi comme Dragons : une équipe de Dragons devient redoutable.",
+		"Ils arrivent dans les invocations, et sont mis en avant pendant Les Œufs de Dragon (Pâques) et Le Règne des Dragons (août).",
+	]},
 	{"version": "0.82.0", "date": "2026-10-23", "titre": "Le calendrier des invocations",
 	"changements": [
 		"CALENDRIER DES INVOCATIONS : 16 nouvelles invocations d'événement jusqu'en octobre 2027, une par saison ou fête (Halloween, fin d'automne, Noël, Nouvel An, Saint-Valentin, Carnaval, printemps, Pâques, Walpurgis, solstice d'été, plein été, rentrée) et quelques-unes pour une famille de monstres (Cour des Insectes, Règne des Dragons, Légendes des Valcendre avec plus de chances de Légende).",
