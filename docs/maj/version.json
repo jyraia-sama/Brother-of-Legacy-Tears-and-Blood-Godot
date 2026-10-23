@@ -12,6 +12,15 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"NOUVEAUX CADRES DE RARETÉ : des cadres plus épais, en vrai relief, une matière par rareté — fer noirci (N), bronze et turquoise (R), argent et améthyste (SR), or ancien et grenat (SSR), fer noir et rubis aux griffes de dragon (UR), or blanc aux ailes d'ange et pierres de lune (Légende).",
+				"ICÔNES PEINTES DES OBJETS : les 37 objets du Reliquaire (coffres, élixirs, tomes, Pierres d'Éveil, Éclats, Sceaux, Gouttes, Larmes et Cœurs des Donjons…) ont leur vraie icône au lieu d'une lettre, partout : Reliquaire, Boutique, Expéditions, butins, Évolution.",
+				"Nouveaux fonds peints pour l'Armée du Boss de Monde (la salle des cartes de guerre) et Mon Héros (la chambre de l'aîné)."
+			],
+			"titre": "Cadres et trésors",
+			"version": "0.80.5"
+		},
+		{
+			"changements": [
 				"Correction : Deck → fiche d'un héros → Évolution → Donjons, puis « Retour » ramenait à l'ancien menu Aventure. Le retour des Donjons revient maintenant à l'Autel d'Évolution (puis au Deck), et le bouton « Donjons » de l'Évolution ne fait plus d'aller-retour sans fin.",
 				"Plus aucun écran (Donjons, Arène, Expéditions) ne renvoie vers l'ancien menu Aventure : sans écran précédent, on revient au menu principal."
 			],
@@ -135,21 +144,13 @@
 			],
 			"titre": "Quatorze évolutions prennent forme",
 			"version": "0.77.2"
-		},
-		{
-			"changements": [
-				"BOSS DE MONDE — DÉCORS : chaque géant a maintenant son propre champ de bataille peint pour la 3D : la plaine volcanique en ruine du Béhémoth des Cendres, le port englouti sous la tempête du Léviathan, le royaume étouffé par les racines d'Yggdravor, le canyon de cristaux rouges de Golgoth, le désert vitrifié de Solgard, le sommet sous les étoiles brisées de Nidhögr et le lac rubis sous la lune rouge de l'Avatar du Sang Originel.",
-				"Ces décors remplacent les emprunts aux Actes de la version précédente, avec chacun son ambiance (cendres, pluie et éclairs, spores, poussière, étincelles…)."
-			],
-			"titre": "Sept terres pour sept géants",
-			"version": "0.77.1"
 		}
 	],
 	"pck": {
-		"sha256": "cfdb10a8061e0ab8cb37d3070ee8b2807ed9714eedec2930675fe43a9737f2fc",
-		"taille": 38075912,
+		"sha256": "baad32453397981b3b76d2e3d669a013079136818191701a5f8dbcbf66f29620",
+		"taille": 41945844,
 		"url": "jeu.pck"
 	},
-	"version": "0.80.4",
+	"version": "0.80.5",
 	"version_minimum": "0.37.0"
 }

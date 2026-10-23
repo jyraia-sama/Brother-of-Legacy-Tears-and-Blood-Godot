@@ -55,13 +55,13 @@
 			"taille": 16314968.0
 		},
 		{
-			"depuis": "0.60.7",
+			"depuis": "0.80.5",
 			"fichier": "fonds.pck",
-			"images": 24.0,
+			"images": 26,
 			"nom": "fonds",
-			"sha256": "70364543cbe4e3036e70b2b1d9bb96ddd5cbe7c9b798eb86e6ee99589ee4e3b7",
-			"signature": "f751cf382ca320ee6aaa4168a1a66a56c696d701162037b1d03eb9aa4e66b84d",
-			"taille": 9077940.0
+			"sha256": "e9683a733b0e981ea9d5551e8c6183029d20ae0ac0ad95a008feca90e5cb5915",
+			"signature": "518009cf4d1baf1da221c1d37b55123cd638fe1d94136ea1c85ab116aa9a626a",
+			"taille": 13369652
 		},
 		{
 			"depuis": "0.60.7",
@@ -100,5 +100,5 @@
 			"taille": 51762848.0
 		}
 	],
-	"version": "0.80.4"
+	"version": "0.80.5"
 }

@@ -1,5 +1,7 @@
 # Prompts ChatGPT : textures et images qui manquent encore
 
+> ✅ **Tout est fait** (v0.80.5, 2026-10-23).
+
 J'ai fait le tour des **34 écrans** du jeu (une capture de chacun). Voici tout ce qui manque encore. Tant qu'une image manque, le jeu garde ce qu'il affiche aujourd'hui : rien ne casse.
 
 | Partie | Quoi | Nombre | Où ça sert |
@@ -18,7 +20,7 @@ Les nouveaux cadres sont plus épais, en vrai relief (double moulure), avec des 
 
 > Le jeu étire les côtés selon la taille de chaque carte : c'est pour ça que les ornements doivent rester dans les coins.
 
-#### Commune (N) → `cadre_n.png`
+#### ✅ FAIT — Commune (N) → `cadre_n.png`
 ```
 Crée UN SEUL cadre de carte à jouer vide pour un jeu mobile dark fantasy (style cartes de collection gacha haut de gamme), peint de façon réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche.
 
@@ -36,7 +38,7 @@ FORME (très important, sinon le cadre se déforme dans le jeu) :
 LE CADRE — Rareté Commune (N) : fer noirci et cuir : baguette de fer sombre martelé bordée d'un fin filet de cuir brun cousu ; coins en équerres de fer forgé avec un gros rivet rond, quelques traces d'usure (pas de rouille orange). Sobre mais solide et soigné.
 ```
 
-#### Rare (R) → `cadre_r.png`
+#### ✅ FAIT — Rare (R) → `cadre_r.png`
 ```
 Crée UN SEUL cadre de carte à jouer vide pour un jeu mobile dark fantasy (style cartes de collection gacha haut de gamme), peint de façon réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche.
 
@@ -54,7 +56,7 @@ FORME (très important, sinon le cadre se déforme dans le jeu) :
 LE CADRE — Rareté Rare (R) : bronze bleui : baguette de bronze patiné aux reflets bleu-sarcelle profonds, gravée d'une fine frise continue ; coins en volutes de bronze enroulées autour d'une petite perle de turquoise. Élégant et sombre.
 ```
 
-#### Super Rare (SR) → `cadre_sr.png`
+#### ✅ FAIT — Super Rare (SR) → `cadre_sr.png`
 ```
 Crée UN SEUL cadre de carte à jouer vide pour un jeu mobile dark fantasy (style cartes de collection gacha haut de gamme), peint de façon réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche.
 
@@ -72,7 +74,7 @@ FORME (très important, sinon le cadre se déforme dans le jeu) :
 LE CADRE — Rareté Super Rare (SR) : argent noirci et améthyste : baguette d'argent ciselé noircie dans les creux ; coins en arabesques fines et pointues, chacun serti d'une améthyste violette taillée en losange qui accroche la lumière.
 ```
 
-#### Super Super Rare (SSR) → `cadre_ssr.png`
+#### ✅ FAIT — Super Super Rare (SSR) → `cadre_ssr.png`
 ```
 Crée UN SEUL cadre de carte à jouer vide pour un jeu mobile dark fantasy (style cartes de collection gacha haut de gamme), peint de façon réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche.
 
@@ -90,7 +92,7 @@ FORME (très important, sinon le cadre se déforme dans le jeu) :
 LE CADRE — Rareté Super Super Rare (SSR) : or ancien et grenat : baguette d'or vieilli au fini satiné (pas jaune vif), gravée d'un filet continu ; coins en feuilles d'acanthe sculptées en relief profond, chacun serti d'un grenat rouge sombre. Riche et noble, sans être clinquant.
 ```
 
-#### Ultime (UR) → `cadre_ur.png`
+#### ✅ FAIT — Ultime (UR) → `cadre_ur.png`
 ```
 Crée UN SEUL cadre de carte à jouer vide pour un jeu mobile dark fantasy (style cartes de collection gacha haut de gamme), peint de façon réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche.
 
@@ -108,7 +110,7 @@ FORME (très important, sinon le cadre se déforme dans le jeu) :
 LE CADRE — Rareté Ultime (UR) : fer noir et or sanglant : baguette de fer noir poli bordée d'un filet d'or rouge ; coins en griffes de dragon recourbées tenant chacune un rubis rouge sang qui luit faiblement de l'intérieur ; fines veines rougeoyantes dans le métal des coins seulement. Menaçant et précieux.
 ```
 
-#### Légende → `cadre_leg.png`
+#### ✅ FAIT — Légende → `cadre_leg.png`
 ```
 Crée UN SEUL cadre de carte à jouer vide pour un jeu mobile dark fantasy (style cartes de collection gacha haut de gamme), peint de façon réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche.
 
@@ -132,7 +134,7 @@ LE CADRE — Rareté Légende : or blanc et pierre de lune : baguette d'or blanc
 
 Une bulle = une planche de 9 objets (la 5e n'en a qu'un). La planche 4 a un fond **magenta** au lieu de vert, parce qu'elle contient les cristaux verts de la Sève. Rends-moi `objets_1.png` … `objets_5.png`.
 
-#### Planche 1 → `objets_1.png`
+#### ✅ FAIT — Planche 1 → `objets_1.png`
 ```
 Crée une planche d'ICÔNES D'OBJETS pour l'inventaire d'un jeu mobile dark fantasy, peintes de façon réaliste et très détaillée (style icônes de jeu de rôle haut de gamme), éclairage chaud venant du haut à gauche, même style pour toutes.
 
@@ -159,7 +161,7 @@ Contenu des cases, dans l'ordre :
 ```
 Fichiers : 1 = `braise_infernale` (Braise Infernale), 2 = `plume_celeste` (Plume Céleste), 3 = `fragment_colossal` (Fragment Colossal), 4 = `poussiere_echo` (Poussière d'Écho), 5 = `coffre_bronze` (Coffre de Bronze), 6 = `coffre_argent` (Coffre d'Argent), 7 = `coffre_or` (Coffre d'Or), 8 = `coffre_royal` (Coffre Royal), 9 = `sceau_marche` (Sceau de Marche)
 
-#### Planche 2 → `objets_2.png`
+#### ✅ FAIT — Planche 2 → `objets_2.png`
 ```
 Crée une planche d'ICÔNES D'OBJETS pour l'inventaire d'un jeu mobile dark fantasy, peintes de façon réaliste et très détaillée (style icônes de jeu de rôle haut de gamme), éclairage chaud venant du haut à gauche, même style pour toutes.
 
@@ -186,7 +188,7 @@ Contenu des cases, dans l'ordre :
 ```
 Fichiers : 1 = `elixir_petit` (Petit Élixir de Stamina), 2 = `elixir_grand` (Grand Élixir de Stamina), 3 = `tome_petit` (Tome d'Apprenti), 4 = `tome_grand` (Tome de Vétéran), 5 = `tome_ancien` (Tome Ancien), 6 = `pierre_eveil` (Pierre d'Éveil), 7 = `eclat_superieur` (Éclat de Pacte Supérieur), 8 = `sceau_sauvage` (Sceau Sauvage), 9 = `page_grimoire` (Page de Grimoire)
 
-#### Planche 3 → `objets_3.png`
+#### ✅ FAIT — Planche 3 → `objets_3.png`
 ```
 Crée une planche d'ICÔNES D'OBJETS pour l'inventaire d'un jeu mobile dark fantasy, peintes de façon réaliste et très détaillée (style icônes de jeu de rôle haut de gamme), éclairage chaud venant du haut à gauche, même style pour toutes.
 
@@ -213,7 +215,7 @@ Contenu des cases, dans l'ordre :
 ```
 Fichiers : 1 = `goutte_braise` (Goutte de Braise), 2 = `larme_braise` (Larme de Braise), 3 = `coeur_braise` (Cœur de Braise), 4 = `goutte_abysse` (Goutte d'Abysse), 5 = `larme_abysse` (Larme d'Abysse), 6 = `coeur_abysse` (Cœur d'Abysse), 7 = `goutte_ombre` (Goutte d'Ombre), 8 = `larme_ombre` (Larme d'Ombre), 9 = `coeur_ombre` (Cœur d'Ombre)
 
-#### Planche 4 → `objets_4.png`
+#### ✅ FAIT — Planche 4 → `objets_4.png`
 ```
 Crée une planche d'ICÔNES D'OBJETS pour l'inventaire d'un jeu mobile dark fantasy, peintes de façon réaliste et très détaillée (style icônes de jeu de rôle haut de gamme), éclairage chaud venant du haut à gauche, même style pour toutes.
 
@@ -240,7 +242,7 @@ Contenu des cases, dans l'ordre :
 ```
 Fichiers : 1 = `goutte_aube` (Goutte d'Aube), 2 = `larme_aube` (Larme d'Aube), 3 = `coeur_aube` (Cœur d'Aube), 4 = `goutte_sang` (Goutte de Sang), 5 = `larme_sang` (Larme de Sang), 6 = `coeur_sang` (Cœur de Sang), 7 = `goutte_seve` (Goutte de Sève), 8 = `larme_seve` (Larme de Sève), 9 = `coeur_seve` (Cœur de Sève)
 
-#### Planche 5 → `objets_5.png`
+#### ✅ FAIT — Planche 5 → `objets_5.png`
 ```
 Crée une planche d'ICÔNES D'OBJETS pour l'inventaire d'un jeu mobile dark fantasy, peintes de façon réaliste et très détaillée (style icônes de jeu de rôle haut de gamme), éclairage chaud venant du haut à gauche, même style pour toutes.
 
@@ -265,7 +267,7 @@ Fichiers : 1 = `grimoire_interdit` (Grimoire Interdit)
 
 Même style que les autres fonds de menu (groupe LE SANG : salles de la forteresse, rouge et or). Rends-moi `armee.png` et `profil.png`.
 
-#### Armée du Boss de Monde → `armee.png`
+#### ✅ FAIT — Armée du Boss de Monde → `armee.png`
 ```
 Illustration de fond pour un écran de menu de jeu vidéo dark fantasy, format paysage 3:2. Peinture numérique détaillée, style art de jeu de cartes gacha dark fantasy, ambiance gothique et mélancolique.
 
@@ -278,7 +280,7 @@ Règles importantes :
 Scène : la salle des cartes de guerre de la forteresse. Une immense table de stratégie couverte de figurines de soldats, de cartes et de bannières miniatures ; des râteliers d'armes et des étendards rouge sang brodés d'un phénix doré le long des murs ; au fond, quatre grands boucliers peints accrochés au mur, côte à côte. Lumière chaude de braseros, reflets dorés sur le métal. Le centre et le dessus de la table restent dégagés et calmes.
 ```
 
-#### Mon Héros → `profil.png`
+#### ✅ FAIT — Mon Héros → `profil.png`
 ```
 Illustration de fond pour un écran de menu de jeu vidéo dark fantasy, format paysage 3:2. Peinture numérique détaillée, style art de jeu de cartes gacha dark fantasy, ambiance gothique et mélancolique.
 

@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.80.4"
+const NUMERO := "0.80.5"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.80.5", "date": "2026-10-23", "titre": "Cadres et trésors",
+	"changements": [
+		"NOUVEAUX CADRES DE RARETÉ : des cadres plus épais, en vrai relief, une matière par rareté — fer noirci (N), bronze et turquoise (R), argent et améthyste (SR), or ancien et grenat (SSR), fer noir et rubis aux griffes de dragon (UR), or blanc aux ailes d'ange et pierres de lune (Légende).",
+		"ICÔNES PEINTES DES OBJETS : les 37 objets du Reliquaire (coffres, élixirs, tomes, Pierres d'Éveil, Éclats, Sceaux, Gouttes, Larmes et Cœurs des Donjons…) ont leur vraie icône au lieu d'une lettre, partout : Reliquaire, Boutique, Expéditions, butins, Évolution.",
+		"Nouveaux fonds peints pour l'Armée du Boss de Monde (la salle des cartes de guerre) et Mon Héros (la chambre de l'aîné).",
+	]},
 	{"version": "0.80.4", "date": "2026-10-23", "titre": "Le bon chemin du retour",
 	"changements": [
 		"Correction : Deck → fiche d'un héros → Évolution → Donjons, puis « Retour » ramenait à l'ancien menu Aventure. Le retour des Donjons revient maintenant à l'Autel d'Évolution (puis au Deck), et le bouton « Donjons » de l'Évolution ne fait plus d'aller-retour sans fin.",

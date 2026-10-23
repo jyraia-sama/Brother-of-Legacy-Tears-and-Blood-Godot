@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.80.4** (2026-10-23)
+Version actuelle : **0.80.5** (2026-10-23)
+
+## v0.80.5 — Cadres et trésors  (2026-10-23)
+
+- NOUVEAUX CADRES DE RARETÉ : des cadres plus épais, en vrai relief, une matière par rareté — fer noirci (N), bronze et turquoise (R), argent et améthyste (SR), or ancien et grenat (SSR), fer noir et rubis aux griffes de dragon (UR), or blanc aux ailes d'ange et pierres de lune (Légende).
+- ICÔNES PEINTES DES OBJETS : les 37 objets du Reliquaire (coffres, élixirs, tomes, Pierres d'Éveil, Éclats, Sceaux, Gouttes, Larmes et Cœurs des Donjons…) ont leur vraie icône au lieu d'une lettre, partout : Reliquaire, Boutique, Expéditions, butins, Évolution.
+- Nouveaux fonds peints pour l'Armée du Boss de Monde (la salle des cartes de guerre) et Mon Héros (la chambre de l'aîné).
 
 ## v0.80.4 — Le bon chemin du retour  (2026-10-23)
 
