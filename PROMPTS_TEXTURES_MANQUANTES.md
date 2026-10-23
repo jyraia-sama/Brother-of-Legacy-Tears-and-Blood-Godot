@@ -1,6 +1,6 @@
 # Prompts ChatGPT : textures et images qui manquent encore
 
-> ✅ Parties 1 à 3 faites (v0.80.5). **Partie 4 (icônes de la barre du haut) : à faire.**
+> ✅ **Tout est fait** (v0.80.7, 2026-10-23).
 
 J'ai fait le tour des **34 écrans** du jeu (une capture de chacun). Voici tout ce qui manque encore. Tant qu'une image manque, le jeu garde ce qu'il affiche aujourd'hui : rien ne casse.
 
@@ -263,11 +263,11 @@ Fichiers : 1 = `grimoire_interdit` (Grimoire Interdit)
 
 ---
 
-## Partie 4 — Les icônes de la barre du haut (1 planche) — à faire
+## Partie 4 — Les icônes de la barre du haut (1 planche) — ✅ faite
 
 La stamina, l'or, les gemmes et les boutons Chat / Aide / Nouveautés / Menu n'ont encore qu'un symbole. Les Éclats prennent déjà l'icône de l'Éclat de Pacte Supérieur. Rends-moi `icones_ui.png`.
 
-#### Planche → `icones_ui.png`
+#### ✅ FAIT — Planche → `icones_ui.png`
 ```
 Crée une planche d'ICÔNES D'INTERFACE pour la barre du haut d'un jeu mobile dark fantasy, peintes de façon réaliste et très détaillée (même style que des icônes d'objets de jeu de rôle haut de gamme), éclairage chaud venant du haut à gauche, même style pour toutes.
 

@@ -12,6 +12,13 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"ICÔNES PEINTES DE LA BARRE DU HAUT : stamina, or, gemmes, Chat, Aide, Nouveautés et Menu ont leur vraie icône (la stamina aussi sur la carte du monde et le plateau)."
+			],
+			"titre": "Les icônes du haut",
+			"version": "0.80.7"
+		},
+		{
+			"changements": [
 				"MENU PRINCIPAL : ton pseudo et ton titre (« Héritier des Valcendre ») ne se chevauchent plus.",
 				"Les Éclats de la barre du haut ont leur icône peinte ; la stamina, l'or, les gemmes et les boutons Chat, Aide, Nouveautés et Menu prendront les leurs dès que les images seront ajoutées (aussi sur la carte et le plateau pour la stamina)."
 			],
@@ -136,21 +143,13 @@
 			],
 			"titre": "La meute évolue",
 			"version": "0.77.4"
-		},
-		{
-			"changements": [
-				"ILLUSTRATIONS D'ÉVOLUTION : 12 nouvelles évolutions ont leur propre portrait et leur propre figurine : le Vautour Nécrophage, le Poltergeist Furieux, le Fracasseur d'Écailles, la Prêtresse de l'Aube Nouvelle, le Chevalier du Temple, l'Archère des Bois Anciens, le Chef de Guerre Orc, le Lycan de la Lune Rouge, le Spectre de l'Hiver Éternel, le Golem Sanctifié, la Harpie Reine des Vents et le Chevalier de Fer Maudit.",
-				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
-			],
-			"titre": "Douze évolutions de plus",
-			"version": "0.77.3"
 		}
 	],
 	"pck": {
-		"sha256": "da74447755f18f5bc041a65ded45f07c8c0ec7a1d3d272ca054888e794ed2176",
-		"taille": 41947796,
+		"sha256": "8f6961869a31e1c531a07f199c1340c031293beabf1ff1f23c0b86f12243ed85",
+		"taille": 42157256,
 		"url": "jeu.pck"
 	},
-	"version": "0.80.6",
+	"version": "0.80.7",
 	"version_minimum": "0.37.0"
 }

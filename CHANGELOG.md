@@ -1,6 +1,10 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.80.6** (2026-10-23)
+Version actuelle : **0.80.7** (2026-10-23)
+
+## v0.80.7 — Les icônes du haut  (2026-10-23)
+
+- ICÔNES PEINTES DE LA BARRE DU HAUT : stamina, or, gemmes, Chat, Aide, Nouveautés et Menu ont leur vraie icône (la stamina aussi sur la carte du monde et le plateau).
 
 ## v0.80.6 — La barre du haut  (2026-10-23)
 

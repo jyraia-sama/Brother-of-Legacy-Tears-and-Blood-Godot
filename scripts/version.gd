@@ -15,11 +15,15 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.80.6"
+const NUMERO := "0.80.7"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.80.7", "date": "2026-10-23", "titre": "Les icônes du haut",
+	"changements": [
+		"ICÔNES PEINTES DE LA BARRE DU HAUT : stamina, or, gemmes, Chat, Aide, Nouveautés et Menu ont leur vraie icône (la stamina aussi sur la carte du monde et le plateau).",
+	]},
 	{"version": "0.80.6", "date": "2026-10-23", "titre": "La barre du haut",
 	"changements": [
 		"MENU PRINCIPAL : ton pseudo et ton titre (« Héritier des Valcendre ») ne se chevauchent plus.",
