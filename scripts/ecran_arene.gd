@@ -730,7 +730,7 @@ func _vider(n: Node) -> void:
 
 func _retour() -> void:
 	onglet_memo = "combattre"
-	UiCommun.aller(get_tree(), scene_retour if scene_retour != "" else "res://scenes/aventure.tscn")
+	UiCommun.aller(get_tree(), scene_retour)
 
 
 func _unhandled_input(event: InputEvent) -> void:

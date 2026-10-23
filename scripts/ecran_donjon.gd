@@ -463,7 +463,7 @@ func _message(texte: String) -> void:
 
 
 func _retour() -> void:
-	UiCommun.aller(get_tree(), scene_retour if scene_retour != "" else "res://scenes/aventure.tscn")
+	UiCommun.aller(get_tree(), scene_retour)
 
 
 func _unhandled_input(event: InputEvent) -> void:

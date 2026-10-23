@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.80.3** (2026-10-23)
+Version actuelle : **0.80.4** (2026-10-23)
+
+## v0.80.4 — Le bon chemin du retour  (2026-10-23)
+
+- Correction : Deck → fiche d'un héros → Évolution → Donjons, puis « Retour » ramenait à l'ancien menu Aventure. Le retour des Donjons revient maintenant à l'Autel d'Évolution (puis au Deck), et le bouton « Donjons » de l'Évolution ne fait plus d'aller-retour sans fin.
+- Plus aucun écran (Donjons, Arène, Expéditions) ne renvoie vers l'ancien menu Aventure : sans écran précédent, on revient au menu principal.
 
 ## v0.80.3 — Le grand coup de pinceau  (2026-10-23)
 

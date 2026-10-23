@@ -68,7 +68,11 @@ func _ready() -> void:
 	tete.add_child(pousse)
 	var donjons := UiCommun.bouton("Donjons →", 16)
 	donjons.pressed.connect(func():
-		EcranDonjon.scene_retour = "res://scenes/aventure.tscn"
+		# Venu des Donjons : on y retourne simplement (sinon le retour des Donjons ramène ici)
+		if scene_retour == EcranDonjon.SCENE:
+			_retour()
+			return
+		EcranDonjon.scene_retour = SCENE
 		get_tree().change_scene_to_file(EcranDonjon.SCENE))
 	tete.add_child(donjons)
 

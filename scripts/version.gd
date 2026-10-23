@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.80.3"
+const NUMERO := "0.80.4"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.80.4", "date": "2026-10-23", "titre": "Le bon chemin du retour",
+	"changements": [
+		"Correction : Deck → fiche d'un héros → Évolution → Donjons, puis « Retour » ramenait à l'ancien menu Aventure. Le retour des Donjons revient maintenant à l'Autel d'Évolution (puis au Deck), et le bouton « Donjons » de l'Évolution ne fait plus d'aller-retour sans fin.",
+		"Plus aucun écran (Donjons, Arène, Expéditions) ne renvoie vers l'ancien menu Aventure : sans écran précédent, on revient au menu principal.",
+	]},
 	{"version": "0.80.3", "date": "2026-10-23", "titre": "Le grand coup de pinceau",
 	"changements": [
 		"CARTE DU MONDE 3D : la brume qui cache les terres pas encore atteintes reste posée sur la carte, elle ne déborde plus sur la table.",

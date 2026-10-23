@@ -12,6 +12,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"Correction : Deck → fiche d'un héros → Évolution → Donjons, puis « Retour » ramenait à l'ancien menu Aventure. Le retour des Donjons revient maintenant à l'Autel d'Évolution (puis au Deck), et le bouton « Donjons » de l'Évolution ne fait plus d'aller-retour sans fin.",
+				"Plus aucun écran (Donjons, Arène, Expéditions) ne renvoie vers l'ancien menu Aventure : sans écran précédent, on revient au menu principal."
+			],
+			"titre": "Le bon chemin du retour",
+			"version": "0.80.4"
+		},
+		{
+			"changements": [
 				"CARTE DU MONDE 3D : la brume qui cache les terres pas encore atteintes reste posée sur la carte, elle ne déborde plus sur la table.",
 				"FENÊTRES PEINTES PARTOUT : les messages et les confirmations du Deck, de la Fusion, de l'Évolution, des Échos, du Reliquaire, des Donjons, des Tours, de la Marche, de la Compagnie, de l'Invocation, du choix du héros et des Paramètres utilisent maintenant le même cadre peint que le reste du jeu (plus aucune fenêtre grise).",
 				"Prêt pour les nouvelles images : icônes peintes des objets du Reliquaire, fonds des écrans Armée et Mon Héros (ils s'afficheront dès qu'ils seront ajoutés)."
@@ -135,22 +143,13 @@
 			],
 			"titre": "Sept terres pour sept géants",
 			"version": "0.77.1"
-		},
-		{
-			"changements": [
-				"BOSS DE MONDE EN 3D : le géant se dresse au milieu du champ de bataille, face à tes 4 escouades rangées sur 4 rangs (escouade 1 au fond, escouade 4 devant). Chaque héros a sa figurine sur son socle, avec une petite barre de vie ; la grande barre du géant reste en haut de l'écran.",
-				"En attendant leurs propres décors, les géants combattent dans le décor le plus proche : le Béhémoth dans les Terres Brûlées, le Léviathan dans les Fosses Englouties, Yggdravor dans la Sylve Putride, Golgoth au Puits de Sang, Solgard au Paradis, Nidhögr dans le Sceau des Frères et l'Avatar du Sang dans le bastion de l'éclipse.",
-				"Si le combat ralentit sur ton téléphone, décoche « Combats en 3D » dans les Paramètres pour revenir au Boss de Monde en 2D."
-			],
-			"titre": "Les géants en 3D",
-			"version": "0.77.0"
 		}
 	],
 	"pck": {
-		"sha256": "90349880bbb79bac639e996312340a4af439cdf5f48209db815906c4a39987fa",
-		"taille": 38075752,
+		"sha256": "cfdb10a8061e0ab8cb37d3070ee8b2807ed9714eedec2930675fe43a9737f2fc",
+		"taille": 38075912,
 		"url": "jeu.pck"
 	},
-	"version": "0.80.3",
+	"version": "0.80.4",
 	"version_minimum": "0.37.0"
 }
