@@ -3,56 +3,56 @@
 		{
 			"depuis": "0.79.2",
 			"fichier": "figurines_0.pck",
-			"images": 78,
+			"images": 78.0,
 			"nom": "figurines_0",
 			"sha256": "d5a6ca585acb6b9de88803bcd8b48c4c0a20c546b3557e1bc99e3374452f3675",
 			"signature": "d797b8c3110b1698758a75f2bb2c571ed720cb13953c479036fcf2a29ca5e6ee",
-			"taille": 20237452
+			"taille": 20237452.0
 		},
 		{
 			"depuis": "0.79.2",
 			"fichier": "figurines_1.pck",
-			"images": 79,
+			"images": 79.0,
 			"nom": "figurines_1",
 			"sha256": "c4be4c813bf8d41977d9b0c7aaa752918e2504e4c6f3a8a533dbf7e67117a373",
 			"signature": "ec9edbba1c62157c4854459ff125bdd9d8a5aa6d45a42f79ad91d1e06bc03981",
-			"taille": 19703444
+			"taille": 19703444.0
 		},
 		{
 			"depuis": "0.79.2",
 			"fichier": "figurines_2.pck",
-			"images": 84,
+			"images": 84.0,
 			"nom": "figurines_2",
 			"sha256": "606f95722195672d884715bfa88cea73e8e812c815eff5dee9b073052bf2c217",
 			"signature": "0bf2cc08184208238ea945f12cefab552211c95bc476925ec355f51574985c1e",
-			"taille": 19918928
+			"taille": 19918928.0
 		},
 		{
 			"depuis": "0.79.2",
 			"fichier": "figurines_3.pck",
-			"images": 79,
+			"images": 79.0,
 			"nom": "figurines_3",
 			"sha256": "d4595625146bbfea50c08bc3e6f94d5cce10eca80ecff895e1451820e1102f36",
 			"signature": "d6aaa98eb5dceca3ebb3e4a710375eb92a5e0739292b7ca89515baab01041387",
-			"taille": 20185436
+			"taille": 20185436.0
 		},
 		{
 			"depuis": "0.79.2",
 			"fichier": "portraits_0.pck",
-			"images": 162,
+			"images": 162.0,
 			"nom": "portraits_0",
 			"sha256": "bd05469b113db840b439b9b0a59bbc76f97b199d471f2b21c21e29928ef8f048",
 			"signature": "4fd2c18dff0935fff78bb5c43ee6fa3673b94d7b789f210c21d89b8d07ac6956",
-			"taille": 16119612
+			"taille": 16119612.0
 		},
 		{
 			"depuis": "0.79.2",
 			"fichier": "portraits_1.pck",
-			"images": 159,
+			"images": 159.0,
 			"nom": "portraits_1",
 			"sha256": "1623a37856b9817bbb5b1a1f4af61c62b015f5994a22d9677b698edd8fe9c897",
 			"signature": "7b06f3929b0a7b2da9885aff02131290f7091bef31a87537c59126cf8d7c66c1",
-			"taille": 15527992
+			"taille": 15527992.0
 		},
 		{
 			"depuis": "0.60.7",
