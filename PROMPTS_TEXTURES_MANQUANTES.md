@@ -1,6 +1,6 @@
 # Prompts ChatGPT : textures et images qui manquent encore
 
-> ✅ **Tout est fait** (v0.80.5, 2026-10-23).
+> ✅ Parties 1 à 3 faites (v0.80.5). **Partie 4 (icônes de la barre du haut) : à faire.**
 
 J'ai fait le tour des **34 écrans** du jeu (une capture de chacun). Voici tout ce qui manque encore. Tant qu'une image manque, le jeu garde ce qu'il affiche aujourd'hui : rien ne casse.
 
@@ -260,6 +260,37 @@ Contenu des cases, dans l'ordre :
 1. un grimoire noir fermé par des chaînes et un cadenas, un œil violet sculpté sur la couverture, une fumée violette qui s'en échappe
 ```
 Fichiers : 1 = `grimoire_interdit` (Grimoire Interdit)
+
+---
+
+## Partie 4 — Les icônes de la barre du haut (1 planche) — à faire
+
+La stamina, l'or, les gemmes et les boutons Chat / Aide / Nouveautés / Menu n'ont encore qu'un symbole. Les Éclats prennent déjà l'icône de l'Éclat de Pacte Supérieur. Rends-moi `icones_ui.png`.
+
+#### Planche → `icones_ui.png`
+```
+Crée une planche d'ICÔNES D'INTERFACE pour la barre du haut d'un jeu mobile dark fantasy, peintes de façon réaliste et très détaillée (même style que des icônes d'objets de jeu de rôle haut de gamme), éclairage chaud venant du haut à gauche, même style pour toutes.
+
+FORMAT, À RESPECTER STRICTEMENT :
+- image carrée 1024x1024 ;
+- grille parfaitement régulière de 3 colonnes et 3 rangées : 9 cases carrées identiques, séparées par un fin trait NOIR droit ;
+- dans chaque case : UN SEUL objet, bien centré, vu de face ou très légèrement de trois quarts, entier, qui remplit environ les trois quarts de la case sans toucher ses bords ;
+- fond de chaque case : VERT UNI très vif (#00FF00), sans dégradé, sans ombre portée, sans décor ; aucune couleur verte sur les objets ;
+- aucun texte, aucun chiffre, aucune lettre, aucun cadre rond autour des objets ;
+- respecte l'ordre : case 1 en haut à gauche, lecture de gauche à droite, rangée par rangée ;
+- les cases 8 et 9 restent entièrement NOIRES ;
+- les icônes seront affichées TOUTES PETITES (environ 36 pixels) : silhouettes très simples et très lisibles, une couleur dominante forte, peu de petits détails.
+
+Contenu des cases, dans l'ordre :
+1. STAMINA : un éclair bleu électrique lumineux gravé dans un petit médaillon de fer sombre
+2. OR : une petite pile de trois pièces d'or épaisses frappées d'un phénix
+3. GEMMES : une gemme violette taillée en losange, brillante, avec un petit éclat de lumière
+4. CHAT : une bulle de parchemin enroulé avec un sceau de cire rouge, comme une lettre qu'on envoie
+5. AIDE : un vieux livre ouvert avec un point d'interrogation doré lumineux qui flotte au-dessus
+6. NOUVEAUTÉS : une plume d'écriture dorée posée sur un parchemin déroulé
+7. MENU : trois barres horizontales de fer forgé noir aux bouts dorés, superposées, comme une petite grille de forge
+```
+Fichiers : 1 = `stamina`, 2 = `or`, 3 = `gemmes`, 4 = `chat`, 5 = `aide`, 6 = `nouveautes`, 7 = `menu`
 
 ---
 

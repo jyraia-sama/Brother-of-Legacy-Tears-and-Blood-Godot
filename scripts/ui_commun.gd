@@ -766,6 +766,25 @@ static func particules(parent: Control, couleur: Color, vers_le_haut: bool, nomb
 	return p
 
 
+## ICÔNES D'INTERFACE peintes (assets/ui/icones/<nom>.png : stamina, or, gemmes, eclats, chat, aide,
+## nouveautes, menu). Renvoie l'image (TextureRect) ou null si elle n'existe pas encore
+## (l'appelant garde alors son symbole). Les Éclats prennent l'icône de l'objet du Reliquaire.
+static func icone_ui(nom: String, taille: Vector2) -> TextureRect:
+	var ch := "res://assets/ui/icones/%s.png" % nom
+	if not ResourceLoader.exists(ch) and nom == "eclats":
+		ch = "res://assets/objets/eclat_superieur.png"
+	if not ResourceLoader.exists(ch):
+		return null
+	var t := TextureRect.new()
+	t.texture = load(ch)
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	t.custom_minimum_size = taille
+	t.size = taille
+	return t
+
+
 ## Icône d'objet du Reliquaire : pastille de couleur avec l'initiale.
 static func icone_objet(objet: String, taille := 44.0) -> Panel:
 	var infos: Dictionary = Reliquaire.OBJETS.get(objet, {})

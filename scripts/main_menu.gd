@@ -533,20 +533,20 @@ func _creer_barre_haut() -> void:
 	_bouton_compte.add_theme_constant_override("outline_size", 4)
 	_bouton_compte.add_theme_color_override("font_outline_color", Color.BLACK)
 	_bouton_compte.pressed.connect(_ouvrir_compte)
-	_placer(_bouton_compte, Rect2(78, 4, 300, 24))
+	_placer(_bouton_compte, Rect2(78, 0, 300, 26))
 	_maj_bouton_compte()
 	var titre := Succes.titre_actuel()
 	var lt := _label(titre if titre != "" else "Héritier des Valcendre", 12, C_OR)
-	_placer(lt, Rect2(84, 27, 290, 16))
+	_placer(lt, Rect2(84, 30, 290, 16))
 	_barre_xp = _barre(C_OR, Color("3a2a2c"))
-	_placer(_barre_xp, Rect2(84, 48, 190, 8))
+	_placer(_barre_xp, Rect2(84, 52, 190, 8))
 	_lbl_xp = _label("", 11, C_DOUX)
-	_placer(_lbl_xp, Rect2(282, 43, 140, 16))
+	_placer(_lbl_xp, Rect2(282, 47, 140, 16))
 
 	# --- Ressources
 	var x := 430.0
 	# Stamina (avec barre et recharge)
-	var st := _case_ressource(Rect2(x, 14, 182, 44), "⚡", Color("7fc2e8"), Color("163248"), "boutique", "Recharger la stamina")
+	var st := _case_ressource(Rect2(x, 14, 182, 44), "stamina:⚡", Color("7fc2e8"), Color("163248"), "boutique", "Recharger la stamina")
 	_lbl_stamina = _label("", 15, C_TEXTE, true)
 	_placer(_lbl_stamina, Rect2(40, 3, 100, 18), st)
 	_barre_stamina = _barre(Color("7fc2e8"), Color("22303a"))
@@ -554,24 +554,24 @@ func _creer_barre_haut() -> void:
 	_lbl_recharge = _label("", 11, C_DOUX)
 	_placer(_lbl_recharge, Rect2(40, 26, 104, 15), st)
 	x += 190
-	var orr := _case_ressource(Rect2(x, 14, 150, 44), "●", Color("e2be6a"), Color("3a2e14"), "boutique", "Obtenir de l'or")
+	var orr := _case_ressource(Rect2(x, 14, 150, 44), "or:●", Color("e2be6a"), Color("3a2e14"), "boutique", "Obtenir de l'or")
 	_lbl_or = _label("", 15, C_TEXTE, true)
 	_placer(_lbl_or, Rect2(40, 4, 74, 18), orr)
 	_placer(_label("Or", 11, C_DOUX), Rect2(40, 23, 74, 15), orr)
 	x += 158
-	var gem := _case_ressource(Rect2(x, 14, 136, 44), "◆", Color("c78be8"), Color("2e1a3a"), "boutique", "Boutique de gemmes")
+	var gem := _case_ressource(Rect2(x, 14, 136, 44), "gemmes:◆", Color("c78be8"), Color("2e1a3a"), "boutique", "Boutique de gemmes")
 	_lbl_gemmes = _label("", 15, C_TEXTE, true)
 	_placer(_lbl_gemmes, Rect2(40, 4, 60, 18), gem)
 	_placer(_label("Gemmes", 11, C_DOUX), Rect2(40, 23, 60, 15), gem)
 	x += 144
-	var ecl := _case_ressource(Rect2(x, 14, 104, 44), "✦", Color("f07a7a"), Color("3a1418"), "", "Éclats de Pacte Supérieur (lâchés par les boss)")
+	var ecl := _case_ressource(Rect2(x, 14, 104, 44), "eclats:✦", Color("f07a7a"), Color("3a1418"), "", "Éclats de Pacte Supérieur (lâchés par les boss)")
 	_lbl_eclats = _label("", 15, C_TEXTE, true)
 	_placer(_lbl_eclats, Rect2(40, 4, 60, 18), ecl)
 	_placer(_label("Éclats", 11, C_DOUX), Rect2(40, 23, 60, 15), ecl)
 
 	# --- Chat global (pastille rouge quand il y a de nouveaux messages)
 	var rc := Rect2(1040, 6, 48, 46)
-	var bc := _bouton_icone("❝", rc, "Chat global : discuter avec tous les joueurs")
+	var bc := _bouton_icone("chat:❝", rc, "Chat global : discuter avec tous les joueurs")
 	bc.pressed.connect(_on_bouton.bind("chat"))
 	_boutons["chat"] = bc
 	var lc := _label("Chat", 11, C_DOUX)
@@ -579,7 +579,7 @@ func _creer_barre_haut() -> void:
 	_placer(lc, Rect2(rc.position.x - 10, 53, 68, 15))
 
 	# --- Aide, Nouveautés, Menu
-	var coins := [["aide", "?", "Aide"], ["nouveautes", "✎", "Nouveautés"], ["parametres", "☰", "Menu"]]
+	var coins := [["aide", "aide:?", "Aide"], ["nouveautes", "nouveautes:✎", "Nouveautés"], ["parametres", "menu:☰", "Menu"]]
 	for i in coins.size():
 		var c: Array = coins[i]
 		var r := Rect2(1100 + i * 58, 6, 48, 46)
@@ -602,11 +602,17 @@ func _case_ressource(r: Rect2, icone: String, couleur: Color, fond_icone: Color,
 	p.tooltip_text = aide
 	p.add_theme_stylebox_override("panel", _style(Color(0.03, 0.02, 0.024, 0.85), Color("4a3638"), 12, 1))
 	_placer(p, r)
-	var ic := _label(icone, 16, couleur)
-	ic.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	ic.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	ic.add_theme_stylebox_override("normal", _style(fond_icone, Color(0, 0, 0, 0), 15, 0))
-	_placer(ic, Rect2(6, 7, 30, 30), p)
+	# « nom:symbole » : icône peinte assets/ui/icones/<nom>.png si elle existe, sinon le symbole
+	var parts := icone.split(":")
+	var img := UiCommun.icone_ui(parts[0], Vector2(38, 38)) if parts.size() > 1 else null
+	if img:
+		_placer(img, Rect2(2, 3, 38, 38), p)
+	else:
+		var ic := _label(parts[-1], 16, couleur)
+		ic.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		ic.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		ic.add_theme_stylebox_override("normal", _style(fond_icone, Color(0, 0, 0, 0), 15, 0))
+		_placer(ic, Rect2(6, 7, 30, 30), p)
 	if cible != "":
 		var plus := Button.new()
 		plus.text = "+"
@@ -1173,7 +1179,12 @@ func _barre(couleur: Color, fond: Color) -> ProgressBar:
 
 func _bouton_icone(icone: String, r: Rect2, aide: String) -> Button:
 	var b := Button.new()
-	b.text = icone
+	var parts := icone.split(":")
+	var img := UiCommun.icone_ui(parts[0], Vector2(36, 36)) if parts.size() > 1 else null
+	b.text = "" if img else parts[-1]
+	if img:
+		img.position = Vector2((r.size.x - 36) / 2.0, (r.size.y - 36) / 2.0)
+		b.add_child(img)
 	b.tooltip_text = aide
 	b.focus_mode = Control.FOCUS_NONE
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND

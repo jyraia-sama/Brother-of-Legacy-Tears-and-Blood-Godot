@@ -44,6 +44,12 @@ func _init(largeur := 190.0) -> void:
 	sic.set_corner_radius_all(15)
 	ic.add_theme_stylebox_override("normal", sic)
 	h.add_child(ic)
+	var img := UiCommun.icone_ui("stamina", Vector2(34, 34))
+	if img:
+		img.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		h.remove_child(ic)
+		ic.queue_free()
+		h.add_child(img)
 
 	var v := VBoxContainer.new()
 	v.add_theme_constant_override("separation", 1)

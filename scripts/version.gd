@@ -15,11 +15,16 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.80.5"
+const NUMERO := "0.80.6"
 const DATE := "2026-10-23"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.80.6", "date": "2026-10-23", "titre": "La barre du haut",
+	"changements": [
+		"MENU PRINCIPAL : ton pseudo et ton titre (« Héritier des Valcendre ») ne se chevauchent plus.",
+		"Les Éclats de la barre du haut ont leur icône peinte ; la stamina, l'or, les gemmes et les boutons Chat, Aide, Nouveautés et Menu prendront les leurs dès que les images seront ajoutées (aussi sur la carte et le plateau pour la stamina).",
+	]},
 	{"version": "0.80.5", "date": "2026-10-23", "titre": "Cadres et trésors",
 	"changements": [
 		"NOUVEAUX CADRES DE RARETÉ : des cadres plus épais, en vrai relief, une matière par rareté — fer noirci (N), bronze et turquoise (R), argent et améthyste (SR), or ancien et grenat (SSR), fer noir et rubis aux griffes de dragon (UR), or blanc aux ailes d'ange et pierres de lune (Légende).",

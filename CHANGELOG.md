@@ -1,6 +1,11 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.80.5** (2026-10-23)
+Version actuelle : **0.80.6** (2026-10-23)
+
+## v0.80.6 — La barre du haut  (2026-10-23)
+
+- MENU PRINCIPAL : ton pseudo et ton titre (« Héritier des Valcendre ») ne se chevauchent plus.
+- Les Éclats de la barre du haut ont leur icône peinte ; la stamina, l'or, les gemmes et les boutons Chat, Aide, Nouveautés et Menu prendront les leurs dès que les images seront ajoutées (aussi sur la carte et le plateau pour la stamina).
 
 ## v0.80.5 — Cadres et trésors  (2026-10-23)
 

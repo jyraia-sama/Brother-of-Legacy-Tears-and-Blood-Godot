@@ -12,6 +12,14 @@
 	"nouveautes": [
 		{
 			"changements": [
+				"MENU PRINCIPAL : ton pseudo et ton titre (« Héritier des Valcendre ») ne se chevauchent plus.",
+				"Les Éclats de la barre du haut ont leur icône peinte ; la stamina, l'or, les gemmes et les boutons Chat, Aide, Nouveautés et Menu prendront les leurs dès que les images seront ajoutées (aussi sur la carte et le plateau pour la stamina)."
+			],
+			"titre": "La barre du haut",
+			"version": "0.80.6"
+		},
+		{
+			"changements": [
 				"NOUVEAUX CADRES DE RARETÉ : des cadres plus épais, en vrai relief, une matière par rareté — fer noirci (N), bronze et turquoise (R), argent et améthyste (SR), or ancien et grenat (SSR), fer noir et rubis aux griffes de dragon (UR), or blanc aux ailes d'ange et pierres de lune (Légende).",
 				"ICÔNES PEINTES DES OBJETS : les 37 objets du Reliquaire (coffres, élixirs, tomes, Pierres d'Éveil, Éclats, Sceaux, Gouttes, Larmes et Cœurs des Donjons…) ont leur vraie icône au lieu d'une lettre, partout : Reliquaire, Boutique, Expéditions, butins, Évolution.",
 				"Nouveaux fonds peints pour l'Armée du Boss de Monde (la salle des cartes de guerre) et Mon Héros (la chambre de l'aîné)."
@@ -136,21 +144,13 @@
 			],
 			"titre": "Douze évolutions de plus",
 			"version": "0.77.3"
-		},
-		{
-			"changements": [
-				"ILLUSTRATIONS D'ÉVOLUTION : 14 évolutions ont maintenant leur propre portrait et leur propre figurine : la Grande Druidesse des Bois, le Troll Ancestral des Marais, la Gargouille des Tempêtes, le Maître Assassin, le Cyclope Titan, le Seigneur Minotaure, la Reine des Lamentations, le Centaure Seigneur de Guerre, la Sirène du Grand Silence, la Sentinelle Céleste, l'Archisorcier des Ombres, le Hiérophante Sacré, l'Abbesse du Silence et le Grand Exorciste.",
-				"Elles apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire et dans la Galerie d'art."
-			],
-			"titre": "Quatorze évolutions prennent forme",
-			"version": "0.77.2"
 		}
 	],
 	"pck": {
-		"sha256": "4a8af114dd4a5b77104b213dd20d0efdba7ec244217e924562064e1695d3d7dc",
-		"taille": 41945844,
+		"sha256": "da74447755f18f5bc041a65ded45f07c8c0ec7a1d3d272ca054888e794ed2176",
+		"taille": 41947796,
 		"url": "jeu.pck"
 	},
-	"version": "0.80.5",
+	"version": "0.80.6",
 	"version_minimum": "0.37.0"
 }
