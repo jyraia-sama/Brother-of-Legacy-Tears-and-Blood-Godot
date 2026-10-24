@@ -53,7 +53,7 @@ func _ready() -> void:
 
 	var vue := str(Sauvegarde.donnees.get("version_vue", ""))
 	var liste: Array = Version.HISTORIQUE
-	var titre := "JOURNAL DES MISES À JOUR"
+	var titre := UiCommun.t("JOURNAL DES MISES À JOUR")
 	if nouveautes:
 		liste = Version.nouveautes_depuis(vue)
 		titre = UiCommun.t("NOUVEAUTÉS — VERSION %s") % Version.NUMERO
@@ -73,7 +73,7 @@ func _ready() -> void:
 	defil.add_child(contenu)
 	for v in liste:
 		var actuelle: bool = v["version"] == Version.NUMERO
-		var entete := _label("v%s — %s%s" % [v["version"], v["titre"], "   (actuelle)" if actuelle else ""], 21,
+		var entete := _label("v%s — %s%s" % [v["version"], UiCommun.t(str(v["titre"])), UiCommun.t("   (actuelle)") if actuelle else ""], 21,
 			Color("ffd27a") if actuelle else C_OR)
 		contenu.add_child(entete)
 		contenu.add_child(_label(_date_fr(v["date"]), 13, Color(0.66, 0.59, 0.55)))
@@ -88,10 +88,10 @@ func _ready() -> void:
 	bas.alignment = BoxContainer.ALIGNMENT_CENTER
 	vb.add_child(bas)
 	if nouveautes:
-		bas.add_child(_bouton("Voir tout le journal", func():
+		bas.add_child(_bouton(UiCommun.t("Voir tout le journal"), func():
 			FenetreChangelog.ouvrir(get_parent())
 			queue_free()))
-	bas.add_child(_bouton("Fermer", queue_free))
+	bas.add_child(_bouton(UiCommun.t("Fermer"), queue_free))
 	# La version actuelle est maintenant « vue »
 	Sauvegarde.donnees["version_vue"] = Version.NUMERO
 	Sauvegarde.sauvegarder()
@@ -101,7 +101,7 @@ func _date_fr(iso: String) -> String:
 	var p := iso.split("-")
 	if p.size() != 3:
 		return iso
-	var mois := ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+	var mois := ["janvier", UiCommun.t("février"), "mars", "avril", "mai", "juin", "juillet", UiCommun.t("août"), "septembre", "octobre", "novembre", UiCommun.t("décembre")]
 	return "%d %s %s" % [int(p[2]), mois[clampi(int(p[1]) - 1, 0, 11)], p[0]]
 
 

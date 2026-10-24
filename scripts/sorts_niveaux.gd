@@ -145,19 +145,19 @@ static func cout_or(n: int) -> int:
 static func raison_impossible(uid: int, index: int) -> String:
 	var h := Sauvegarde.get_heros(uid)
 	if h.is_empty():
-		return "Unité introuvable."
+		return UiCommun.t("Unité introuvable.")
 	var skills: Array = UnitesData.get_unite(h["id"]).get("skills", [])
 	if index < 0 or index >= skills.size():
-		return "Sort introuvable."
+		return UiCommun.t("Sort introuvable.")
 	if not est_appris(h, skills[index]):
 		return UiCommun.t("Sort pas encore appris (niveau %d du héros).") % int(skills[index]["niveau"])
 	var n := niveau(h, index)
 	if n >= NIVEAU_MAX:
-		return "Niveau maximum atteint."
+		return UiCommun.t("Niveau maximum atteint.")
 	if n >= niveau_max(h):
 		return UiCommun.t("Niveau %d maximum à %s : fais gagner une étoile au héros (Autel de Fusion).") % [n, Fusion.texte_etoiles(Fusion.etoiles(h))]
 	if not Reliquaire.peut_payer(cout(n), cout_or(n)):
-		return "Il manque des ressources : " + Reliquaire.texte_cout(cout(n), cout_or(n)) + "."
+		return UiCommun.t("Il manque des ressources : ") + Reliquaire.texte_cout(cout(n), cout_or(n)) + "."
 	return ""
 
 

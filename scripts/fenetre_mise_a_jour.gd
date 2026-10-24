@@ -42,17 +42,17 @@ func _ready() -> void:
 
 	match resultat:
 		"a_jour":
-			_titre("TON JEU EST À JOUR")
+			_titre(UiCommun.t("TON JEU EST À JOUR"))
 			_texte(UiCommun.t("Tu joues à la dernière version : v%s.") % MiseAJour.version_actuelle, UiCommun.C_TEXTE)
 			_ligne_boutons()
 			_ajouter_bouton("OK", queue_free)
 		"erreur":
-			_titre("MISE À JOUR")
-			_texte("Impossible de vérifier les mises à jour pour le moment. Vérifie ta connexion Internet et réessaie plus tard.", UiCommun.C_TEXTE)
+			_titre(UiCommun.t("MISE À JOUR"))
+			_texte(UiCommun.t("Impossible de vérifier les mises à jour pour le moment. Vérifie ta connexion Internet et réessaie plus tard."), UiCommun.C_TEXTE)
 			_ligne_boutons()
 			_ajouter_bouton("OK", queue_free)
 		"pret":
-			_titre("MISE À JOUR PRÊTE")
+			_titre(UiCommun.t("MISE À JOUR PRÊTE"))
 			if _peut_redemarrer():
 				_texte(UiCommun.t("La version v%s est téléchargée. Relance le jeu pour en profiter.") % str(MiseAJour.fiche.get("version", "")), UiCommun.C_TEXTE)
 			else:
@@ -60,17 +60,17 @@ func _ready() -> void:
 			_nouveautes()
 			_ligne_boutons()
 			if not _bloquee:
-				_ajouter_bouton("Plus tard" if _peut_redemarrer() else "Continuer à jouer", queue_free)
+				_ajouter_bouton(UiCommun.t("Plus tard") if _peut_redemarrer() else UiCommun.t("Continuer à jouer"), queue_free)
 			_ajouter_bouton(_texte_redemarrer(), MiseAJour.redemarrer, true)
 		"installation":
 			_titre(UiCommun.t("NOUVELLE VERSION : v%s") % str(MiseAJour.fiche.get("version", "")))
-			_texte("Cette version demande de réinstaller le jeu (le moteur ou les réglages ont changé).\nTa partie est conservée : elle est enregistrée sur ton appareil et sur ton compte.", UiCommun.C_TEXTE)
+			_texte(UiCommun.t("Cette version demande de réinstaller le jeu (le moteur ou les réglages ont changé).\nTa partie est conservée : elle est enregistrée sur ton appareil et sur ton compte."), UiCommun.C_TEXTE)
 			_nouveautes()
 			_texte(_aide_installation(), UiCommun.C_DOUX, 15)
 			_ligne_boutons()
 			if not _bloquee:
-				_ajouter_bouton("Plus tard", queue_free)
-			_ajouter_bouton("Télécharger l'installation", MiseAJour.ouvrir_installation, true)
+				_ajouter_bouton(UiCommun.t("Plus tard"), queue_free)
+			_ajouter_bouton(UiCommun.t("Télécharger l'installation"), MiseAJour.ouvrir_installation, true)
 		_:
 			_titre(UiCommun.t("MISE À JOUR DISPONIBLE : v%s") % str(MiseAJour.fiche.get("version", "")))
 			var taille := int((MiseAJour.fiche.get("pck", {}) as Dictionary).get("taille", 0))
@@ -78,7 +78,7 @@ func _ready() -> void:
 			if taille > 0:
 				t += UiCommun.t(" Téléchargement : %.0f Mo.") % (taille / 1048576.0)
 			if _bloquee:
-				t += "\nCette mise à jour est obligatoire pour continuer à jouer en ligne."
+				t += UiCommun.t("\nCette mise à jour est obligatoire pour continuer à jouer en ligne.")
 			_texte(t, UiCommun.C_TEXTE)
 			_nouveautes()
 			_barre = UiCommun.barre(UiCommun.C_OR, 620, 22)
@@ -90,8 +90,8 @@ func _ready() -> void:
 			_info.visible = false
 			_ligne_boutons()
 			if not _bloquee:
-				_ajouter_bouton("Plus tard", queue_free)
-			_ajouter_bouton("Mettre à jour", _lancer, true)
+				_ajouter_bouton(UiCommun.t("Plus tard"), queue_free)
+			_ajouter_bouton(UiCommun.t("Mettre à jour"), _lancer, true)
 
 
 func _process(_delta: float) -> void:
@@ -110,7 +110,7 @@ func _lancer() -> void:
 	_barre.visible = true
 	_barre.value = 0
 	_info.visible = true
-	_info.text = "Téléchargement…"
+	_info.text = UiCommun.t("Téléchargement…")
 	MiseAJour.telechargement_termine.connect(_fin, CONNECT_ONE_SHOT)
 	MiseAJour.telecharger()
 
@@ -125,21 +125,21 @@ func _fin(ok: bool, message: String) -> void:
 		if _peut_redemarrer():
 			_info.text = UiCommun.t("Mise à jour installée ! ") + UiCommun.t("Le jeu va redémarrer pour l'appliquer.")
 			if not _bloquee:
-				_ajouter_bouton("Plus tard", queue_free)
+				_ajouter_bouton(UiCommun.t("Plus tard"), queue_free)
 		else:
 			# Android interdit à une application de se relancer toute seule : on laisse le choix
 			# entre continuer la partie (la mise à jour sera prise au prochain lancement) et fermer tout de suite.
 			_info.text = UiCommun.t("Mise à jour installée ! ") + UiCommun.t("Elle sera active la prochaine fois que tu ouvriras le jeu. Android ne permet pas à un jeu de se relancer tout seul : ferme-le puis rouvre-le pour l'avoir tout de suite.")
 			if not _bloquee:
-				_ajouter_bouton("Continuer à jouer", queue_free)
+				_ajouter_bouton(UiCommun.t("Continuer à jouer"), queue_free)
 		_ajouter_bouton(_texte_redemarrer(), MiseAJour.redemarrer, true)
 	else:
 		_barre.visible = false
 		_info.text = message
 		_info.add_theme_color_override("font_color", Color(1.0, 0.5, 0.45))
 		if not _bloquee:
-			_ajouter_bouton("Plus tard", queue_free)
-		_ajouter_bouton("Réessayer", _lancer, true)
+			_ajouter_bouton(UiCommun.t("Plus tard"), queue_free)
+		_ajouter_bouton(UiCommun.t("Réessayer"), _lancer, true)
 
 
 # ---------------------------------------------------------------------
@@ -207,17 +207,17 @@ func _peut_redemarrer() -> bool:
 
 
 func _texte_redemarrer() -> String:
-	return "Redémarrer maintenant" if _peut_redemarrer() else "Fermer maintenant"
+	return UiCommun.t("Redémarrer maintenant") if _peut_redemarrer() else UiCommun.t("Fermer maintenant")
 
 
 func _aide_installation() -> String:
 	if MiseAJour.plateforme() == "android":
-		return "Sur Android : ouvre le fichier .apk téléchargé et choisis « Installer » (ou « Mettre à jour »). Si le téléphone le demande, autorise ton navigateur à installer des applications. Ta partie est conservée."
+		return UiCommun.t("Sur Android : ouvre le fichier .apk téléchargé et choisis « Installer » (ou « Mettre à jour »). Si le téléphone le demande, autorise ton navigateur à installer des applications. Ta partie est conservée.")
 	if MiseAJour.plateforme() == "linux":
-		return "Sur Linux : décompresse le fichier .tar.gz téléchargé et remplace l'ancien dossier du jeu par le nouveau, puis lance BrothersOfLegacy.x86_64."
+		return UiCommun.t("Sur Linux : décompresse le fichier .tar.gz téléchargé et remplace l'ancien dossier du jeu par le nouveau, puis lance BrothersOfLegacy.x86_64.")
 	if MiseAJour.plateforme() == "macos":
-		return "Sur Mac : ouvre le fichier .zip téléchargé, glisse l'application dans « Applications » à la place de l'ancienne, puis lance-la (si le Mac la bloque : Réglages Système → Confidentialité et sécurité → « Ouvrir quand même »)."
-	return "Sur Windows : décompresse le fichier .zip téléchargé et remplace l'ancien dossier du jeu par le nouveau, puis lance BrothersOfLegacy.exe."
+		return UiCommun.t("Sur Mac : ouvre le fichier .zip téléchargé, glisse l'application dans « Applications » à la place de l'ancienne, puis lance-la (si le Mac la bloque : Réglages Système → Confidentialité et sécurité → « Ouvrir quand même »).")
+	return UiCommun.t("Sur Windows : décompresse le fichier .zip téléchargé et remplace l'ancien dossier du jeu par le nouveau, puis lance BrothersOfLegacy.exe.")
 
 
 func _ligne_boutons() -> void:

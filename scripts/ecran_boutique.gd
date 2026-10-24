@@ -15,11 +15,11 @@ func _fond_ecran() -> String:
 
 
 func _titre_ecran() -> String:
-	return "BOUTIQUE"
+	return UiCommun.t("BOUTIQUE")
 
 
 func _preparer() -> void:
-	for o in [["marche", "Marché du jour (or)"], ["comptoir", "Comptoir des gemmes"], ["packs", "Gemmes"]]:
+	for o in [["marche", UiCommun.t("Marché du jour (or)")], ["comptoir", UiCommun.t("Comptoir des gemmes")], ["packs", UiCommun.t("Gemmes")]]:
 		var b := UiCommun.bouton(o[1], 16)
 		b.toggle_mode = true
 		b.custom_minimum_size = Vector2(210, 40)
@@ -86,9 +86,9 @@ func _marche() -> void:
 	var g := _grille()
 	for o in Boutique.marche_du_jour():
 		var deja := Boutique.deja_achete_marche(o)
-		var desc: String = Reliquaire.OBJETS.get(o["id"], {}).get("desc", "")
+		var desc: String = UiCommun.t(str(Reliquaire.OBJETS.get(o["id"], {}).get("desc", "")))
 		_case(g, o["id"], "%s x%d" % [Reliquaire.nom(o["id"]), int(o["quantite"])], desc,
-			"Acheté" if deja else "%s or" % _nombre(int(o["prix"])), "",
+			UiCommun.t("Acheté") if deja else UiCommun.t("%s or") % _nombre(int(o["prix"])), "",
 			not deja and Sauvegarde.get_or() >= int(o["prix"]), func():
 				var r := Boutique.acheter_marche(o)
 				if r != "":
@@ -99,14 +99,14 @@ func _marche() -> void:
 
 
 func _comptoir() -> void:
-	_texte("Les gemmes se gagnent avec les Quêtes, les Succès, la connexion quotidienne et les saisons d'Arène.")
+	_texte(UiCommun.t("Les gemmes se gagnent avec les Quêtes, les Succès, la connexion quotidienne et les saisons d'Arène."))
 	var g := _grille()
 	for o in Boutique.COMPTOIR:
 		var reste := Boutique.restants(o)
-		var desc: String = o.get("desc", Reliquaire.OBJETS.get(o["id"], {}).get("desc", ""))
+		var desc: String = o.get("desc", UiCommun.t(str(Reliquaire.OBJETS.get(o["id"], {}).get("desc", ""))))
 		_case(g, "" if o["id"] == "stamina_pleine" else o["id"], Boutique.nom_offre(o), desc,
 			UiCommun.t("%d gemmes") % int(o["prix"]),
-			UiCommun.t("Encore %d %s") % [reste, "aujourd'hui" if o["periode"] == "jour" else "cette semaine"],
+			UiCommun.t("Encore %d %s") % [reste, UiCommun.t("aujourd'hui") if o["periode"] == "jour" else UiCommun.t("cette semaine")],
 			reste > 0 and Sauvegarde.get_gemmes() >= int(o["prix"]), func():
 				var r := Boutique.acheter_comptoir(o)
 				if r != "":
@@ -117,11 +117,11 @@ func _comptoir() -> void:
 
 
 func _packs() -> void:
-	_titre("PACKS DE GEMMES", C_GEMME)
-	_texte("L'achat de gemmes avec de l'argent réel arrivera dans une prochaine version. Les prix ci-dessous sont indicatifs.", 15, Color("ffb070"))
+	_titre(UiCommun.t("PACKS DE GEMMES"), C_GEMME)
+	_texte(UiCommun.t("L'achat de gemmes avec de l'argent réel arrivera dans une prochaine version. Les prix ci-dessous sont indicatifs."), 15, Color("ffb070"))
 	var g := _grille()
 	for pk in Boutique.PACKS:
 		var titre := UiCommun.t("%s gemmes") % _nombre(int(pk["gemmes"]))
-		var desc := (UiCommun.t("+ %s gemmes offertes") % _nombre(int(pk["bonus"]))) if int(pk["bonus"]) > 0 else "Le petit pack pour démarrer."
-		_case(g, "", titre, desc, "Bientôt disponible" if not Boutique.PACKS_ACTIFS else str(pk["prix"]),
+		var desc := (UiCommun.t("+ %s gemmes offertes") % _nombre(int(pk["bonus"]))) if int(pk["bonus"]) > 0 else UiCommun.t("Le petit pack pour démarrer.")
+		_case(g, "", titre, desc, UiCommun.t("Bientôt disponible") if not Boutique.PACKS_ACTIFS else str(pk["prix"]),
 			UiCommun.t("Prix prévu : %s") % pk["prix"], Boutique.PACKS_ACTIFS, func(): pass, C_GEMME)

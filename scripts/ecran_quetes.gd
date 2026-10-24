@@ -13,17 +13,17 @@ func _fond_ecran() -> String:
 
 
 func _titre_ecran() -> String:
-	return "QUÊTES"
+	return UiCommun.t("QUÊTES")
 
 
 func _remplir() -> void:
 	_connexion()
-	_periode("jour", "QUÊTES DU JOUR", UiCommun.t("Nouvelles quêtes dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_demain()), C_JOUR)
-	_periode("semaine", "QUÊTES DE LA SEMAINE", UiCommun.t("Nouvelles quêtes dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_semaine()), C_SEMAINE)
+	_periode("jour", UiCommun.t("QUÊTES DU JOUR"), UiCommun.t("Nouvelles quêtes dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_demain()), C_JOUR)
+	_periode("semaine", UiCommun.t("QUÊTES DE LA SEMAINE"), UiCommun.t("Nouvelles quêtes dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_semaine()), C_SEMAINE)
 
 
 func _connexion() -> void:
-	_titre("RÉCOMPENSE DE CONNEXION")
+	_titre(UiCommun.t("RÉCOMPENSE DE CONNEXION"))
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 8)
 	_contenu.add_child(ligne)
@@ -53,7 +53,7 @@ func _connexion() -> void:
 		r.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		r.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(r)
-	var b := UiCommun.bouton(UiCommun.t("Réclamer la récompense du jour %d") % (suivant + 1) if dispo else "Déjà réclamée aujourd'hui — reviens demain !", 17)
+	var b := UiCommun.bouton(UiCommun.t("Réclamer la récompense du jour %d") % (suivant + 1) if dispo else UiCommun.t("Déjà réclamée aujourd'hui — reviens demain !"), 17)
 	b.disabled = not dispo
 	b.custom_minimum_size = Vector2(0, 52)
 	UiCommun.bouton_vif(b)
@@ -78,7 +78,7 @@ func _periode(periode: String, titre: String, reset: String, couleur: Color) -> 
 		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h.add_child(vb)
 		vb.add_child(UiCommun.label(("✔  " if q["reclame"] else "") + str(q["texte"]), 17, UiCommun.C_DOUX if q["reclame"] else UiCommun.C_TEXTE))
-		vb.add_child(UiCommun.label("Récompense : " + Quetes.texte_recompense(q["recompense"]), 14, UiCommun.C_OR))
+		vb.add_child(UiCommun.label(UiCommun.t("Récompense : ") + Quetes.texte_recompense(q["recompense"]), 14, UiCommun.C_OR))
 		var pb := VBoxContainer.new()
 		pb.alignment = BoxContainer.ALIGNMENT_CENTER
 		h.add_child(pb)
@@ -86,7 +86,7 @@ func _periode(periode: String, titre: String, reset: String, couleur: Color) -> 
 		var lp := UiCommun.label("%d / %d" % [int(q["progres"]), int(q["objectif"])], 14, UiCommun.C_TEXTE)
 		lp.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		pb.add_child(lp)
-		var b := UiCommun.bouton("Réclamer" if not q["reclame"] else "Réclamée", 16)
+		var b := UiCommun.bouton(UiCommun.t("Réclamer") if not q["reclame"] else UiCommun.t("Réclamée"), 16)
 		b.custom_minimum_size = Vector2(150, 44)
 		b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		b.disabled = q["reclame"] or not q["fait"]
@@ -105,9 +105,9 @@ func _periode(periode: String, titre: String, reset: String, couleur: Color) -> 
 	var vbb := VBoxContainer.new()
 	vbb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hb.add_child(vbb)
-	vbb.add_child(UiCommun.label(UiCommun.t("COFFRE BONUS  —  %s  (%d / %d)") % [bonus["texte"], faites, liste.size()], 17, Color("ffd060")))
-	vbb.add_child(UiCommun.label("Récompense : " + Quetes.texte_recompense(bonus["recompense"]), 14, UiCommun.C_OR))
-	var bb := UiCommun.bouton("Ouvrir le coffre" if not deja else "Ouvert", 16)
+	vbb.add_child(UiCommun.label(UiCommun.t("COFFRE BONUS  —  %s  (%d / %d)") % [UiCommun.t(str(bonus["texte"])), faites, liste.size()], 17, Color("ffd060")))
+	vbb.add_child(UiCommun.label(UiCommun.t("Récompense : ") + Quetes.texte_recompense(bonus["recompense"]), 14, UiCommun.C_OR))
+	var bb := UiCommun.bouton(UiCommun.t("Ouvrir le coffre") if not deja else UiCommun.t("Ouvert"), 16)
 	bb.custom_minimum_size = Vector2(170, 44)
 	bb.disabled = not dispo
 	UiCommun.bouton_vif(bb, Color("c8901e"))     # coffre bonus : doré

@@ -40,10 +40,10 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.plaque_titre(UiCommun.label("BOSS DE MONDE", 34, C_SANG)))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label(UiCommun.t("BOSS DE MONDE"), 34, C_SANG)))
 	_lbl_decompte = UiCommun.label("", 17, Color("ffb070"))
 	_lbl_decompte.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_lbl_decompte.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -108,7 +108,7 @@ func _remplir_cartes() -> void:
 		vb.add_theme_constant_override("separation", 6)
 		vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		carte.add_child(vb)
-		var jour := UiCommun.label(Calendrier.JOURS[i].to_upper(), 18, UiCommun.C_OR if dispo else UiCommun.C_DOUX)
+		var jour := UiCommun.label(UiCommun.t(str(Calendrier.JOURS[i])).to_upper(), 18, UiCommun.C_OR if dispo else UiCommun.C_DOUX)
 		jour.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		vb.add_child(jour)
 		# Vignette : le visage du boss (portrait recadré), sinon l'illustration entière
@@ -125,12 +125,12 @@ func _remplir_cartes() -> void:
 			vb.add_child(img)
 		else:
 			vb.add_child(UiCommun.portrait(b["id"], 120))
-		var nom := UiCommun.label(b["titre"], 15, Color.WHITE if dispo else UiCommun.C_DOUX)
+		var nom := UiCommun.label(UiCommun.t(str(b["titre"])), 15, Color.WHITE if dispo else UiCommun.C_DOUX)
 		nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		nom.custom_minimum_size = Vector2(200, 0)
 		vb.add_child(nom)
-		var etat := UiCommun.label("AUJOURD'HUI" if dispo else "Disponible le " + Calendrier.JOURS[i].to_lower(), 14,
+		var etat := UiCommun.label(UiCommun.t("AUJOURD'HUI") if dispo else UiCommun.t("Disponible le ") + UiCommun.t(str(Calendrier.JOURS[i])).to_lower(), 14,
 			C_SANG if dispo else UiCommun.C_DOUX)
 		etat.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		vb.add_child(etat)
@@ -163,19 +163,19 @@ func _maj_fiche() -> void:
 	gauche.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	gauche.add_theme_constant_override("separation", 6)
 	h.add_child(gauche)
-	gauche.add_child(UiCommun.label(str(b["titre"]).to_upper(), 26, C_SANG))
-	gauche.add_child(UiCommun.label(UiCommun.t("%s  ·  %s  ·  Niveau %d  ·  agit %d fois par tour") % [UnitesData.ELEMENTS[u["element"]],
-		UnitesData.ROLES[u["role"]], BossMonde.NIVEAU_BOSS, int(b["actions"])], 15, UiCommun.C_DOUX))
+	gauche.add_child(UiCommun.label(str(UiCommun.t(str(b["titre"]))).to_upper(), 26, C_SANG))
+	gauche.add_child(UiCommun.label(UiCommun.t("%s  ·  %s  ·  Niveau %d  ·  agit %d fois par tour") % [UnitesData.nom_element(u["element"]),
+		UnitesData.nom_role(u["role"]), BossMonde.NIVEAU_BOSS, int(b["actions"])], 15, UiCommun.C_DOUX))
 	var t := UiCommun.label(b["texte"], 16, UiCommun.C_TEXTE)
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	gauche.add_child(t)
-	var cons := UiCommun.label("Conseil : " + str(b["conseil"]) + "   Faiblesse : " + UnitesData.ELEMENTS[b["faiblesse"]], 15, UiCommun.C_OR)
+	var cons := UiCommun.label(UiCommun.t("Conseil : ") + str(UiCommun.t(str(b["conseil"]))) + UiCommun.t("   Faiblesse : ") + UnitesData.nom_element(b["faiblesse"]), 15, UiCommun.C_OR)
 	cons.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	gauche.add_child(cons)
 	var comp: Array = []
 	for sk in u["skills"]:
-		comp.append(sk["nom"])
-	var l_comp := UiCommun.label("Compétences : " + ", ".join(comp), 14, UiCommun.C_DOUX)
+		comp.append(UiCommun.t(str(sk["nom"])))
+	var l_comp := UiCommun.label(UiCommun.t("Compétences : ") + ", ".join(comp), 14, UiCommun.C_DOUX)
 	l_comp.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	gauche.add_child(l_comp)
 
@@ -189,7 +189,7 @@ func _maj_fiche() -> void:
 	droite.add_child(UiCommun.label(UiCommun.t("Durée de l'assaut : %d tours maximum") % BossMonde.TOURS_COMBAT, 15, UiCommun.C_DOUX))
 	droite.add_child(UiCommun.label(UiCommun.t("Record : %.1f %%   ·   Aujourd'hui : %.1f %%") % [BossMonde.record(b["id"]),
 		BossMonde.record_du_jour(b["id"])], 16, UiCommun.C_OR))
-	droite.add_child(UiCommun.label("Récompenses selon les dégâts : or, Fragments Colossaux,\nPoussière d'Écho, coffre (Royal si le boss est abattu).", 14, UiCommun.C_DOUX))
+	droite.add_child(UiCommun.label(UiCommun.t("Récompenses selon les dégâts : or, Fragments Colossaux,\nPoussière d'Écho, coffre (Royal si le boss est abattu)."), 14, UiCommun.C_DOUX))
 
 	_fiche.add_child(HSeparator.new())
 	var armee := BossMonde.armee()
@@ -211,23 +211,23 @@ func _maj_fiche() -> void:
 		armee.size(), niveau_moyen, avec_echos, int(puissance)], 17, UiCommun.C_TEXTE)
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ligne.add_child(info)
-	var prep := UiCommun.bouton("Préparer l'armée (4 escouades)", 17)
+	var prep := UiCommun.bouton(UiCommun.t("Préparer l'armée (4 escouades)"), 17)
 	prep.pressed.connect(func():
 		EcranArmee.scene_retour = SCENE
 		get_tree().change_scene_to_file(EcranArmee.SCENE))
 	ligne.add_child(prep)
-	var go := UiCommun.bouton("LANCER L'ASSAUT", 22)
+	var go := UiCommun.bouton(UiCommun.t("LANCER L'ASSAUT"), 22)
 	go.custom_minimum_size = Vector2(280, 56)
 	go.add_theme_color_override("font_color", Color("ff8a6a"))
 	var raison := ""
 	if not BossMonde.est_debloque():
 		raison = UiCommun.t("Termine l'Acte %s pour débloquer les Boss de Monde.") % ActesData.get_acte(BossMonde.DEBLOCAGE.x).get("romain", str(BossMonde.DEBLOCAGE.x))
 	elif not dispo:
-		raison = "Ce boss n'apparaît que le " + Calendrier.JOURS[_selection].to_lower() + "."
+		raison = UiCommun.t("Ce boss n'apparaît que le ") + UiCommun.t(str(Calendrier.JOURS[_selection])).to_lower() + "."
 	elif BossMonde.essais_restants() <= 0:
-		raison = "Plus d'essais aujourd'hui. Reviens demain !"
+		raison = UiCommun.t("Plus d'essais aujourd'hui. Reviens demain !")
 	elif armee.is_empty():
-		raison = "Ton armée est vide : prépare tes escouades."
+		raison = UiCommun.t("Ton armée est vide : prépare tes escouades.")
 	go.disabled = raison != ""
 	go.tooltip_text = raison
 	go.pressed.connect(_lancer)
@@ -235,7 +235,7 @@ func _maj_fiche() -> void:
 	if raison != "":
 		_fiche.add_child(UiCommun.label(raison, 15, Color("ff8a7a")))
 	elif niveau_moyen < 20 or avec_echos < 10:
-		_fiche.add_child(UiCommun.label("Attention : il faut des unités de haut niveau (20+) équipées d'Échos Sanguins pour infliger de gros dégâts.", 15, Color("ffb070")))
+		_fiche.add_child(UiCommun.label(UiCommun.t("Attention : il faut des unités de haut niveau (20+) équipées d'Échos Sanguins pour infliger de gros dégâts."), 15, Color("ffb070")))
 
 
 func _lancer() -> void:

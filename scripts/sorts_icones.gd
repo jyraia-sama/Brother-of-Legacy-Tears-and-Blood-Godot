@@ -64,7 +64,7 @@ static func famille(sk: Dictionary) -> String:
 		return "drain"
 	for e in effets:
 		if str(e.get("effet", "")) == "affliction" and FAMILLES.has(str(e.get("nom", ""))):
-			return str(e["nom"])
+			return str(UiCommun.t(str(e["nom"])))
 	if "degats" in types:
 		return "frappe" if cible == "ennemi" else "zone"
 	if "bouclier" in types:
@@ -160,23 +160,23 @@ static func detail(action: Dictionary, sk: Dictionary) -> Dictionary:
 	var pied := ""
 	var cibles: Array = action.get("cibles", [])
 	if cibles.size() > 1:
-		pied = "🎯 Tu choisis la cible"
+		pied = UiCommun.t("🎯 Tu choisis la cible")
 	elif est_sort:
-		pied = CIBLES.get(str(sk.get("cible", "")), "Cible automatique")
+		pied = UiCommun.t(str(CIBLES.get(str(sk.get("cible", "")), UiCommun.t("Cible automatique"))))
 	else:
-		pied = "Cible automatique"
+		pied = UiCommun.t("Cible automatique")
 	if est_sort:
 		if action.get("silence", false):
-			pied = "Réduit au silence : sort impossible"
+			pied = UiCommun.t("Réduit au silence : sort impossible")
 		elif int(action.get("recharge", 0)) > 0:
 			var r := int(action["recharge"])
 			pied = UiCommun.t("Prêt dans %d tour%s") % [r, "s" if r > 1 else ""]
 		elif not action.get("dispo", true):
-			pied = "Inutile pour l'instant"
+			pied = UiCommun.t("Inutile pour l'instant")
 		else:
 			var r := CombatMoteur.recharge_sort(sk)
 			pied += UiCommun.t("  ·  recharge %d tour%s") % [r, "s" if r > 1 else ""]
-	var sous: String = FAMILLES[fam]["nom"]
+	var sous: String = UiCommun.t(str(FAMILLES[fam]["nom"]))
 	if est_sort and int(sk.get("niveau_sort", 1)) > 1:
 		sous += UiCommun.t("  ·  niveau %d (effets +%d %%)") % [int(sk["niveau_sort"]),
 			int(round((SortsNiveaux.multiplicateur(int(sk["niveau_sort"])) - 1.0) * 100))]
@@ -196,10 +196,10 @@ static func bulle(d: Dictionary) -> PanelContainer:
 	vb.add_theme_constant_override("separation", 4)
 	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	p.add_child(vb)
-	var t := UiCommun.label(d["titre"], 21, UiCommun.C_OR)
+	var t := UiCommun.label(UiCommun.t(str(d["titre"])), 21, UiCommun.C_OR)
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(t)
-	vb.add_child(UiCommun.label(d["sous_titre"], 14, Color(0.75, 0.68, 0.6)))
+	vb.add_child(UiCommun.label(UiCommun.t(str(d["sous_titre"])), 14, Color(0.75, 0.68, 0.6)))
 	var eff := UiCommun.label("\n".join(d["lignes"].map(func(l): return "• " + l)), 16, Color(0.95, 0.92, 0.88))
 	eff.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(eff)

@@ -15,10 +15,10 @@ static func remplir(parent: Control, uid: int, apres_changement: Callable) -> vo
 	var tete_sorts := HBoxContainer.new()
 	tete_sorts.add_theme_constant_override("separation", 8)
 	parent.add_child(tete_sorts)
-	var titre_sorts := UiCommun.titre_section("SORTS", UiCommun.C_OR, 18)
+	var titre_sorts := UiCommun.titre_section(UiCommun.t("SORTS"), UiCommun.C_OR, 18)
 	titre_sorts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete_sorts.add_child(titre_sorts)
-	tete_sorts.add_child(FenetreGuide.bouton_aide("Guide des sorts : niveaux, coûts, étoiles, où trouver les Pages de Grimoire.",
+	tete_sorts.add_child(FenetreGuide.bouton_aide(UiCommun.t("Guide des sorts : niveaux, coûts, étoiles, où trouver les Pages de Grimoire."),
 		func(): GuideSorts.ouvrir(parent.get_tree().current_scene)))
 	var poss := UiCommun.label(UiCommun.t("Pages de Grimoire : %d   ·   Grimoires Interdits : %d   ·   niveau max des sorts : %d (%s)") % [
 		Sauvegarde.get_objet(SortsNiveaux.PAGE), Sauvegarde.get_objet(SortsNiveaux.GRIMOIRE), maxi,
@@ -36,7 +36,7 @@ static func remplir(parent: Control, uid: int, apres_changement: Callable) -> vo
 		var tete := HBoxContainer.new()
 		tete.add_theme_constant_override("separation", 10)
 		bloc.add_child(tete)
-		var titre := UiCommun.label("%s  (%s)" % [sk["nom"], "actif" if sk["type"] == "actif" else "passif"], 17,
+		var titre := UiCommun.label("%s  (%s)" % [UiCommun.t(str(sk["nom"])), UiCommun.t("actif" if sk["type"] == "actif" else "passif")], 17,
 			UiCommun.C_OR if appris else UiCommun.C_DOUX)
 		titre.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -75,7 +75,7 @@ static func remplir(parent: Control, uid: int, apres_changement: Callable) -> vo
 			14, Color("ffd060") if appris else UiCommun.C_DOUX)
 		ligne.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		bloc.add_child(ligne)
-		var d := UiCommun.label(str(sk["description"]), 14, UiCommun.C_TEXTE if appris else UiCommun.C_DOUX)
+		var d := UiCommun.label(str(UiCommun.t(str(sk["description"]))), 14, UiCommun.C_TEXTE if appris else UiCommun.C_DOUX)
 		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		bloc.add_child(d)
 		if appris and n > 1:

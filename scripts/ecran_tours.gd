@@ -48,10 +48,10 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	var titre := UiCommun.label("TOURS INFINIES", 34, UiCommun.C_OR)
+	var titre := UiCommun.label(UiCommun.t("TOURS INFINIES"), 34, UiCommun.C_OR)
 	tete.add_child(UiCommun.plaque_titre(titre))
 	var pousse_titre := Control.new()
 	pousse_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -70,7 +70,7 @@ func _ready() -> void:
 	ligne.add_child(_carte_tour("enfer", Color("ff4a2a"), Color("2a0503"), Color("080102")))
 	ligne.add_child(_carte_tour("paradis", Color("ffe08a"), Color("f0ecff"), Color("5a6a9a")))
 
-	var aide := UiCommun.label("Chaque étage = 1 combat (stamina). Élite tous les 5 étages, BOSS tous les 10, SUPER BOSS à l'étage 100.\nLe butin spécial de chaque étage se gagne une fois par semaine. Chaque lundi à 00:00, les tours se réinitialisent.", 15, UiCommun.C_DOUX)
+	var aide := UiCommun.label(UiCommun.t("Chaque étage = 1 combat (stamina). Élite tous les 5 étages, BOSS tous les 10, SUPER BOSS à l'étage 100.\nLe butin spécial de chaque étage se gagne une fois par semaine. Chaque lundi à 00:00, les tours se réinitialisent."), 15, UiCommun.C_DOUX)
 	aide.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	aide.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	col.add_child(aide)
@@ -120,12 +120,12 @@ func _carte_tour(tour: String, accent: Color, haut: Color, bas: Color) -> Button
 	b.add_child(vb)
 	var sombre := tour == "enfer" or avec_image
 	var c_txt := Color("ffe0d0") if sombre else Color("2a2440")
-	var nom := UiCommun.label(str(d["nom"]).to_upper(), 40, accent if sombre else Color("8a6a10"))
+	var nom := UiCommun.label(str(UiCommun.t(str(d["nom"]))).to_upper(), 40, accent if sombre else Color("8a6a10"))
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.add_theme_color_override("font_outline_color", Color.BLACK if sombre else Color.WHITE)
 	nom.add_theme_constant_override("outline_size", 8)
 	vb.add_child(nom)
-	var st := UiCommun.label(d["sous_titre"], 18, c_txt)
+	var st := UiCommun.label(UiCommun.t(str(d["sous_titre"])), 18, c_txt)
 	st.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(st)
 	vb.add_child(HSeparator.new())
@@ -134,12 +134,12 @@ func _carte_tour(tour: String, accent: Color, haut: Color, bas: Color) -> Button
 		atteint, Tours.ETAGES, Tours.record(tour), Reliquaire.nom(d["monnaie"]), Sauvegarde.get_objet(d["monnaie"])], 20, c_txt)
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(info)
-	var prochain := UiCommun.label("TOUR CONQUISE !" if Tours.tour_terminee(tour) else UiCommun.t("Prochain : étage %d — %s") % [
-		Tours.prochain_etage(tour), Tours.palier(tour, Tours.prochain_etage(tour))["nom"]], 17,
+	var prochain := UiCommun.label(UiCommun.t("TOUR CONQUISE !") if Tours.tour_terminee(tour) else UiCommun.t("Prochain : étage %d — %s") % [
+		Tours.prochain_etage(tour), UiCommun.t(str(Tours.palier(tour, Tours.prochain_etage(tour))["nom"]))], 17,
 		accent if sombre else Color("6a4a00"))
 	prochain.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(prochain)
-	var entrer := UiCommun.label("▶  ENTRER", 26, accent if sombre else Color("8a6a10"))
+	var entrer := UiCommun.label(UiCommun.t("▶  ENTRER"), 26, accent if sombre else Color("8a6a10"))
 	entrer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	entrer.add_theme_color_override("font_outline_color", Color.BLACK if sombre else Color.WHITE)
 	entrer.add_theme_constant_override("outline_size", 6)

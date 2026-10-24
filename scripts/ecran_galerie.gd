@@ -56,10 +56,10 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.plaque_titre(UiCommun.label("GALERIE D'ART", 32, UiCommun.C_OR)))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label(UiCommun.t("GALERIE D'ART"), 32, UiCommun.C_OR)))
 	_compteur = UiCommun.label("", 16, UiCommun.C_DOUX)
 	_compteur.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_compteur.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -132,9 +132,9 @@ func _lister(o: String) -> Array:
 				var b: Dictionary = BossMonde.BOSS[i]
 				var ch := "res://assets/boss_monde/%s.png" % b["id"]
 				if ResourceLoader.exists(ch):
-					l.append({"type": "image", "id": str(b["id"]), "titre": str(b["titre"]), "chemin": ch,
+					l.append({"type": "image", "id": str(b["id"]), "titre": str(UiCommun.t(str(b["titre"]))), "chemin": ch,
 						"ouvert": _unite_vue(str(b["id"])) or Sauvegarde.image_vue(ch),
-						"texte": "%s — %s" % [Calendrier.JOURS[i], b["texte"]]})
+						"texte": "%s — %s" % [UiCommun.t(str(Calendrier.JOURS[i])), b["texte"]]})
 		"histoire":
 			for a in range(1, 14):
 				var acte := ActesData.get_acte(a)
@@ -145,27 +145,27 @@ func _lister(o: String) -> Array:
 			for ch in _fichiers("res://assets/personnages"):
 				# Les personnages qui dévoileraient la suite de l'histoire attendent leur Acte
 				var a_req: int = SPOILERS.get(ch.get_file().get_basename(), 1)
-				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": "Personnage de l'histoire",
+				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": UiCommun.t("Personnage de l'histoire"),
 					"ouvert": TOUT_REVELER or ActesData.acte_debloque(a_req)})
 		"decors":
-			var noms := {"menu_freres": "La Crypte des Valcendre (menu principal)", "carte_monde": "Les Terres des Valcendre (carte du monde)"}
+			var noms := {"menu_freres": UiCommun.t("La Crypte des Valcendre (menu principal)"), "carte_monde": UiCommun.t("Les Terres des Valcendre (carte du monde)")}
 			for n in noms:
 				var ch := "res://assets/ui/%s.png" % n
 				if ResourceLoader.exists(ch):
-					l.append({"type": "image", "id": n, "titre": noms[n], "chemin": ch, "ouvert": true, "texte": "Décor"})
+					l.append({"type": "image", "id": n, "titre": noms[n], "chemin": ch, "ouvert": true, "texte": UiCommun.t("Décor")})
 			# Champs de bataille : découverts avec leur Acte
 			for ch in _fichiers("res://assets/plateaux"):
 				var num: String = str(ch).get_file().get_basename().trim_prefix("fond_")
 				if not num.is_valid_int():
 					continue
 				l.append({"type": "image", "id": ch, "titre": UiCommun.t("Champ de bataille de l'Acte %d") % int(num), "chemin": ch,
-					"texte": "Champ de bataille", "ouvert": TOUT_REVELER or ActesData.acte_debloque(int(num)) or Sauvegarde.image_vue(ch)})
+					"texte": UiCommun.t("Champ de bataille"), "ouvert": TOUT_REVELER or ActesData.acte_debloque(int(num)) or Sauvegarde.image_vue(ch)})
 			# Fonds de menus : découverts la première fois que le menu est ouvert
 			for ch in _fichiers("res://assets/fonds"):
-				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": "Fond de menu",
+				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": UiCommun.t("Fond de menu"),
 					"ouvert": _image_vue(ch)})
 			if ResourceLoader.exists(Sanctuaire.FOND):
-				l.append({"type": "image", "id": "sanctuaire", "titre": "Le Sanctuaire du Bélier", "chemin": Sanctuaire.FOND, "texte": "Lieu secret",
+				l.append({"type": "image", "id": "sanctuaire", "titre": UiCommun.t("Le Sanctuaire du Bélier"), "chemin": Sanctuaire.FOND, "texte": UiCommun.t("Lieu secret"),
 					"ouvert": TOUT_REVELER or not (Sanctuaire._etat()["vaincus"] as Array).is_empty()})
 		"divers":
 			var possedes := {}
@@ -176,22 +176,22 @@ func _lister(o: String) -> Array:
 				if ch == "":
 					continue
 				var f := FamiliersData.get_familier(fid)
-				l.append({"type": "familier", "id": fid, "titre": str(f["nom"]), "chemin": ch,
+				l.append({"type": "familier", "id": fid, "titre": str(UiCommun.t(str(f["nom"]))), "chemin": ch,
 					"ouvert": TOUT_REVELER or Sauvegarde.admin("bestiaire_complet") or possedes.has(fid)})
 			for ch in _fichiers("res://assets/plateaux"):
 				if not str(ch).get_file().begins_with("fond_"):
-					l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "ouvert": true, "texte": "Figurine du plateau"})
+					l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "ouvert": true, "texte": UiCommun.t("Figurine du plateau")})
 			for ch in _fichiers("res://assets/plateaux/cases"):
-				l.append({"type": "image", "id": ch, "titre": "Case : " + _joli_nom(ch), "chemin": ch, "texte": "Miniature du plateau",
+				l.append({"type": "image", "id": ch, "titre": UiCommun.t("Case : ") + _joli_nom(ch), "chemin": ch, "texte": UiCommun.t("Miniature du plateau"),
 					"ouvert": _image_vue(ch)})
 			for ch in _fichiers("res://assets/invocation"):
-				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": "Autel d'Invocation",
+				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": UiCommun.t("Autel d'Invocation"),
 					"ouvert": _image_vue(ch)})
 			# Bannières des événements : découvertes quand l'événement a commencé (ou la bannière vue)
 			for ev in Evenements.EVENEMENTS:
 				var ch := "res://assets/invocation/evenements/%s.png" % ev["id"]
 				if ResourceLoader.exists(ch):
-					l.append({"type": "image", "id": ch, "titre": str(ev["titre"]), "chemin": ch,
+					l.append({"type": "image", "id": ch, "titre": str(UiCommun.t(str(ev["titre"]))), "chemin": ch,
 						"texte": UiCommun.t("Bannière d'événement · du %s au %s") % [_date_fr(str(ev["debut"])), _date_fr(str(ev["fin"]))],
 						"ouvert": _admin_tout_voir() or _image_vue(ch) or Evenements.aujourdhui() >= str(ev["debut"])})
 	return l
@@ -209,7 +209,7 @@ func _ajouter_unites(l: Array, ids: Array, figurines: bool) -> void:
 		# Une évolution sans figurine à elle reprend celle de sa base : pas de doublon dans l'onglet
 		if figurines and UnitesData.est_evolue(sid) and chemin != UiCommun.DOSSIER_FIGURINES + sid + ".png":
 			continue
-		l.append({"type": "unite", "id": sid, "titre": str(UnitesData.get_unite(sid)["nom"]), "chemin": chemin,
+		l.append({"type": "unite", "id": sid, "titre": str(UiCommun.t(str(UnitesData.get_unite(sid)["nom"]))), "chemin": chemin,
 			"ouvert": _unite_vue(sid), "figurine": figurines})
 
 
@@ -309,8 +309,8 @@ func _vignette(el: Dictionary, i: int) -> Button:
 		q.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		q.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		v.add_child(q)
-		b.tooltip_text = "Pas encore découvert"
-	var nom := UiCommun.label(str(el["titre"]) if el["ouvert"] else "???", 12, Color.WHITE if el["ouvert"] else UiCommun.C_DOUX)
+		b.tooltip_text = UiCommun.t("Pas encore découvert")
+	var nom := UiCommun.label(str(UiCommun.t(str(el["titre"]))) if el["ouvert"] else "???", 12, Color.WHITE if el["ouvert"] else UiCommun.C_DOUX)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.clip_text = true
 	nom.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -374,13 +374,13 @@ func _ouvrir(i: int) -> void:
 	bas.add_theme_constant_override("separation", 12)
 	bas.alignment = BoxContainer.ALIGNMENT_CENTER
 	col.add_child(bas)
-	var prec := UiCommun.bouton("‹  Précédent", 16)
+	var prec := UiCommun.bouton(UiCommun.t("‹  Précédent"), 16)
 	prec.pressed.connect(_suivant.bind(-1))
 	bas.add_child(prec)
-	var fermer := UiCommun.bouton("Fermer", 16)
+	var fermer := UiCommun.bouton(UiCommun.t("Fermer"), 16)
 	fermer.pressed.connect(_fermer)
 	bas.add_child(fermer)
-	var suiv := UiCommun.bouton("Suivant  ›", 16)
+	var suiv := UiCommun.bouton(UiCommun.t("Suivant  ›"), 16)
 	suiv.pressed.connect(_suivant.bind(1))
 	bas.add_child(suiv)
 
@@ -418,7 +418,7 @@ func _fiche_image(corps: Control, el: Dictionary) -> void:
 	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	v.add_theme_constant_override("separation", 6)
 	corps.add_child(v)
-	var t := UiCommun.label(str(el["titre"]), 24, UiCommun.C_OR)
+	var t := UiCommun.label(str(UiCommun.t(str(el["titre"]))), 24, UiCommun.C_OR)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	v.add_child(t)
 	var img := _image_pleine(el["chemin"])
@@ -465,23 +465,23 @@ func _fiche_unite(corps: Control, el: Dictionary) -> void:
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	v.add_theme_constant_override("separation", 6)
 	d.add_child(v)
-	v.add_child(UiCommun.label(str(u["nom"]).to_upper(), 28, UiCommun.couleur_rarete(id)))
-	var infos := "%s  ·  %s  ·  %s" % [UiCommun.texte_rarete(id), UnitesData.ELEMENTS.get(u["element"], ""), UnitesData.ROLES.get(u["role"], "")]
+	v.add_child(UiCommun.label(str(UiCommun.t(str(u["nom"]))).to_upper(), 28, UiCommun.couleur_rarete(id)))
+	var infos := "%s  ·  %s  ·  %s" % [UiCommun.texte_rarete(id), UnitesData.nom_element(u["element"]), UnitesData.nom_role(u["role"])]
 	if str(u.get("race", "")) != "":
 		infos += "  ·  " + str(u["race"])
 	v.add_child(UiCommun.label(infos, 16, UiCommun.COULEURS_ELEMENT.get(u["element"], UiCommun.C_TEXTE)))
-	var cat: String = CATEGORIES.get(str(u.get("categorie", "")), "")
-	v.add_child(UiCommun.label(UiCommun.t("%s  ·  ligne %s") % [cat, "Avant" if str(u.get("position", "")) == "avant" else "Arrière"], 14, UiCommun.C_DOUX))
+	var cat: String = UiCommun.t(str(CATEGORIES.get(str(u.get("categorie", "")), "")))
+	v.add_child(UiCommun.label(UiCommun.t("%s  ·  ligne %s") % [cat, UiCommun.t("Avant" if str(u.get("position", "")) == "avant" else UiCommun.t("Arrière"))], 14, UiCommun.C_DOUX))
 	v.add_child(HSeparator.new())
-	v.add_child(UiCommun.label("OÙ LA TROUVER", 13, UiCommun.C_OR))
+	v.add_child(UiCommun.label(UiCommun.t("OÙ LA TROUVER"), 13, UiCommun.C_OR))
 	for ligne in _ou_trouver(id, u):
 		var l := UiCommun.label("•  " + ligne, 15, UiCommun.C_TEXTE)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		v.add_child(l)
 	v.add_child(HSeparator.new())
-	v.add_child(UiCommun.label("COMPÉTENCES", 13, UiCommun.C_OR))
+	v.add_child(UiCommun.label(UiCommun.t("COMPÉTENCES"), 13, UiCommun.C_OR))
 	for sk in u.get("skills", []):
-		var t := UiCommun.label(UiCommun.t("%s  (%s, niv. %d)") % [sk["nom"], "actif" if sk["type"] == "actif" else "passif", int(sk.get("niveau", 1))], 16, Color("ffd27a"))
+		var t := UiCommun.label(UiCommun.t("%s  (%s, niv. %d)") % [UiCommun.t(str(sk["nom"])), UiCommun.t("actif" if sk["type"] == "actif" else "passif"), int(sk.get("niveau", 1))], 16, Color("ffd27a"))
 		v.add_child(t)
 		var ds := UiCommun.label(str(sk.get("description", "")), 14, UiCommun.C_DOUX)
 		ds.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -492,18 +492,18 @@ func _fiche_unite(corps: Control, el: Dictionary) -> void:
 func _ou_trouver(id: String, u: Dictionary) -> Array:
 	var l: Array = []
 	if u.get("invocable", false):
-		l.append("Autel d'Invocation")
+		l.append(UiCommun.t("Autel d'Invocation"))
 	if u.get("forge", false):
-		l.append("Forge du Reliquaire")
+		l.append(UiCommun.t("Forge du Reliquaire"))
 	for et in Ruines.ETAGES:
 		if id == str(Ruines.ETAGES[et]["heros"]):
-			l.append(UiCommun.t("Ruines Oubliées : %s (lieu secret)") % Ruines.ETAGES[et]["titre"])
+			l.append(UiCommun.t("Ruines Oubliées : %s (lieu secret)") % UiCommun.t(str(Ruines.ETAGES[et]["titre"])))
 	var vedette: Array = []
 	for ev in Evenements.EVENEMENTS:
-		if id in ev.get("vedettes", []) and not str(ev["titre"]) in vedette:
-			vedette.append(str(ev["titre"]))
+		if id in ev.get("vedettes", []) and not str(UiCommun.t(str(ev["titre"]))) in vedette:
+			vedette.append(str(UiCommun.t(str(ev["titre"]))))
 	if not vedette.is_empty():
-		l.append("Mis en avant : " + ", ".join(vedette))
+		l.append(UiCommun.t("Mis en avant : ") + ", ".join(vedette))
 	var actes: Array = []
 	for a in Rencontres.POOLS:
 		var p: Dictionary = Rencontres.POOLS[a]
@@ -512,28 +512,28 @@ func _ou_trouver(id: String, u: Dictionary) -> Array:
 		elif id in p.get("monstres", []) or id in p.get("gardiens", []):
 			actes.append(str(ActesData.get_acte(int(a)).get("romain", str(a))))
 	if not actes.is_empty():
-		l.append("Aventure : Acte " + ", ".join(actes))
+		l.append(UiCommun.t("Aventure : Acte ") + ", ".join(actes))
 	for dk in Donjons.DONJONS:
 		var dj: Dictionary = Donjons.DONJONS[dk]
 		if id == str(dj["boss"]):
-			l.append(UiCommun.t("Boss du donjon « %s »") % dj["nom"])
+			l.append(UiCommun.t("Boss du donjon « %s »") % UiCommun.t(str(dj["nom"])))
 		elif id == str(dj["mini_boss"]):
-			l.append(UiCommun.t("Mini-boss du donjon « %s »") % dj["nom"])
+			l.append(UiCommun.t("Mini-boss du donjon « %s »") % UiCommun.t(str(dj["nom"])))
 		elif id in dj["monstres"]:
-			l.append(UiCommun.t("Donjon « %s »") % dj["nom"])
+			l.append(UiCommun.t("Donjon « %s »") % UiCommun.t(str(dj["nom"])))
 	for tk in Tours.TOURS:
 		var t: Dictionary = Tours.TOURS[tk]
 		for etage in t["boss"]:
 			if id == str(t["boss"][etage]):
-				l.append(UiCommun.t("%s, étage %d") % [t["nom"], int(etage)])
+				l.append(UiCommun.t("%s, étage %d") % [UiCommun.t(str(t["nom"])), int(etage)])
 		for pal in t["paliers"]:
 			if id in pal["monstres"]:
-				l.append("%s : %s" % [t["nom"], pal["nom"]])
+				l.append(UiCommun.t("%s : %s") % [UiCommun.t(str(t["nom"])), UiCommun.t(str(pal["nom"]))])
 	for i in BossMonde.BOSS.size():
 		if id == str(BossMonde.BOSS[i]["id"]):
-			l.append(UiCommun.t("Boss de Monde du %s") % Calendrier.JOURS[i].to_lower())
+			l.append(UiCommun.t("Boss de Monde du %s") % UiCommun.t(str(Calendrier.JOURS[i])).to_lower())
 	if l.is_empty():
-		l.append("Rencontre spéciale")
+		l.append(UiCommun.t("Rencontre spéciale"))
 	return l
 
 
@@ -551,15 +551,15 @@ func _fiche_familier(corps: Control, el: Dictionary) -> void:
 	v.alignment = BoxContainer.ALIGNMENT_CENTER
 	v.add_theme_constant_override("separation", 8)
 	h.add_child(v)
-	v.add_child(UiCommun.label(str(f["nom"]).to_upper(), 28, UiCommun.COULEURS_RARETE.get(f["rarete"], UiCommun.C_OR)))
-	v.add_child(UiCommun.label(UiCommun.t("Familier %s  ·  %s") % [f["rarete"], UnitesData.ELEMENTS.get(f["element"], "")], 16, UiCommun.C_DOUX))
-	var ds := UiCommun.label(str(f["description"]), 16, UiCommun.C_TEXTE)
+	v.add_child(UiCommun.label(str(UiCommun.t(str(f["nom"]))).to_upper(), 28, UiCommun.COULEURS_RARETE.get(f["rarete"], UiCommun.C_OR)))
+	v.add_child(UiCommun.label(UiCommun.t("Familier %s  ·  %s") % [f["rarete"], UnitesData.nom_element(f["element"])], 16, UiCommun.C_DOUX))
+	var ds := UiCommun.label(str(UiCommun.t(str(f["description"]))), 16, UiCommun.C_TEXTE)
 	ds.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(ds)
 	var tl := UiCommun.label(FamiliersData.texte_talent(el["id"]), 15, Color("ffd27a"))
 	tl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(tl)
-	v.add_child(UiCommun.label("Se trouve au Pacte Sauvage (Autel d'Invocation).", 14, UiCommun.C_DOUX))
+	v.add_child(UiCommun.label(UiCommun.t("Se trouve au Pacte Sauvage (Autel d'Invocation)."), 14, UiCommun.C_DOUX))
 
 
 # =====================================================================

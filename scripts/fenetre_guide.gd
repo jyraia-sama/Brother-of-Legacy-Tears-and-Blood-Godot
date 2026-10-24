@@ -71,7 +71,7 @@ func _ready() -> void:
 	var t := UiCommun.label(_titre, 28, _couleur)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
-	var fermer := UiCommun.bouton("Fermer", 16)
+	var fermer := UiCommun.bouton(UiCommun.t("Fermer"), 16)
 	fermer.pressed.connect(queue_free)
 	tete.add_child(fermer)
 
@@ -116,13 +116,13 @@ func _ready() -> void:
 	var nav := HBoxContainer.new()
 	nav.add_theme_constant_override("separation", 8)
 	droite.add_child(nav)
-	var prec := UiCommun.bouton("← Précédent", 15)
+	var prec := UiCommun.bouton(UiCommun.t("← Précédent"), 15)
 	prec.pressed.connect(func(): _afficher(maxi(_section - 1, 0)))
 	nav.add_child(prec)
 	var esp := Control.new()
 	esp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	nav.add_child(esp)
-	var suiv := UiCommun.bouton("Suivant →", 15)
+	var suiv := UiCommun.bouton(UiCommun.t("Suivant →"), 15)
 	suiv.pressed.connect(func(): _afficher(mini(_section + 1, _sections.size() - 1)))
 	nav.add_child(suiv)
 	_afficher(clampi(_section, 0, _sections.size() - 1))

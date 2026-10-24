@@ -52,7 +52,7 @@ static func toutes_ressources() -> Array:
 
 
 static func nom_ressource(element: String, taille: String) -> String:
-	return "%s %s" % [NOMS_TAILLE[taille], ESSENCES[element]["nom"]]
+	return UiCommun.t("%s %s") % [UiCommun.t(str(NOMS_TAILLE[taille])), UiCommun.t(str(ESSENCES[element]["nom"]))]
 
 
 ## Coût complet pour faire évoluer cette unité : {id_ressource: quantité}.
@@ -77,13 +77,13 @@ static func peut_evoluer(id_unite: String) -> bool:
 static func raison_impossible(uid: int) -> String:
 	var h := Sauvegarde.get_heros(uid)
 	if h.is_empty():
-		return "Choisis une unité."
+		return UiCommun.t("Choisis une unité.")
 	if UnitesData.est_evolue(h["id"]):
-		return "Cette unité a déjà évolué."
+		return UiCommun.t("Cette unité a déjà évolué.")
 	if not peut_evoluer(h["id"]):
-		return "Cette unité n'a pas d'évolution."
+		return UiCommun.t("Cette unité n'a pas d'évolution.")
 	if Sauvegarde.est_occupe(uid):
-		return "Cette unité est partie en mission (Compagnie)."
+		return UiCommun.t("Cette unité est partie en mission (Compagnie).")
 	if int(h["niveau"]) < NIVEAU_REQUIS:
 		return UiCommun.t("Niveau %d requis (actuellement Nv %d).") % [NIVEAU_REQUIS, int(h["niveau"])]
 	var c := cout(h["id"])

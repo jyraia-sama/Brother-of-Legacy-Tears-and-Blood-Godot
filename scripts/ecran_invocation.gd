@@ -56,10 +56,10 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 18)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	var titre := UiCommun.label("AUTEL D'INVOCATION", 32, UiCommun.C_OR)
+	var titre := UiCommun.label(UiCommun.t("AUTEL D'INVOCATION"), 32, UiCommun.C_OR)
 	tete.add_child(UiCommun.plaque_titre(titre))
 	var pousse_titre := Control.new()
 	pousse_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -76,11 +76,11 @@ func _ready() -> void:
 	pactes.add_theme_constant_override("separation", 24)
 	col.add_child(pactes)
 	pactes.add_child(_panneau_pacte("dore", Color("d9a93f"),
-		"Invocation avec de l'or.\nIdéal pour renforcer ta réserve et remplir ton équipe.",
-		"Or", "x10 : au moins un SR garanti."))
+		UiCommun.t("Invocation avec de l'or.\nIdéal pour renforcer ta réserve et remplir ton équipe."),
+		UiCommun.t("Or"), UiCommun.t("x10 : au moins un SR garanti.")))
 	pactes.add_child(_panneau_pacte("superieur", Color("b07ae0"),
-		"Invocation avec des Éclats de Pacte Supérieur,\nlâchés par les boss des chapitres.",
-		"Éclat", ""))
+		UiCommun.t("Invocation avec des Éclats de Pacte Supérieur,\nlâchés par les boss des chapitres."),
+		UiCommun.t("Éclat"), ""))
 	pactes.add_child(_panneau_sauvage())
 
 	col.add_child(_creer_banniere())
@@ -100,7 +100,7 @@ func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: Strin
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 12)
 	p.add_child(vb)
-	var t := UiCommun.label(info["nom"].to_upper(), 28, couleur)
+	var t := UiCommun.label(UiCommun.t(str(info["nom"])).to_upper(), 28, couleur)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(t)
 	var d := UiCommun.label(texte, 16, UiCommun.C_DOUX)
@@ -110,7 +110,7 @@ func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: Strin
 	vb.add_child(HSeparator.new())
 
 	# Taux de drop
-	vb.add_child(UiCommun.label("TAUX D'OBTENTION", 15, UiCommun.C_OR))
+	vb.add_child(UiCommun.label(UiCommun.t("TAUX D'OBTENTION"), 15, UiCommun.C_OR))
 	for tx in info["taux"]:
 		var ligne := HBoxContainer.new()
 		var nom := UiCommun.label(Invocation.NOMS_RARETE[tx[0]], 18, UiCommun.COULEURS_RARETE[tx[0]])
@@ -125,12 +125,12 @@ func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: Strin
 		var ev := Evenements.actif()
 		var noms: Array = []
 		for id in ev.get("vedettes", []):
-			noms.append("%s (%s)" % [UnitesData.get_unite(id)["nom"], UiCommun.texte_rarete(id)])
-		var v := UiCommun.label("VEDETTES : " + ", ".join(noms), 15, UiCommun.C_OR)
+			noms.append("%s (%s)" % [UiCommun.t(str(UnitesData.get_unite(id)["nom"])), UiCommun.texte_rarete(id)])
+		var v := UiCommun.label(UiCommun.t("VEDETTES : ") + ", ".join(noms), 15, UiCommun.C_OR)
 		v.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(v)
 		vb.add_child(UiCommun.label(UiCommun.t("Quand tu obtiens la rareté d'une vedette : %d %% de chance que ce soit elle.") % int(float(ev["chance_vedette"]) * 100), 14, UiCommun.C_DOUX))
-		vb.add_child(UiCommun.label("La garantie SSR est partagée avec le Pacte Supérieur.", 14, UiCommun.C_DOUX))
+		vb.add_child(UiCommun.label(UiCommun.t("La garantie SSR est partagée avec le Pacte Supérieur."), 14, UiCommun.C_DOUX))
 	if pacte == "superieur":
 		_lbl_garantie = UiCommun.label("", 15, Color("c8a0ff"))
 		_lbl_garantie.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -144,7 +144,7 @@ func _panneau_pacte(pacte: String, couleur: Color, texte: String, monnaie: Strin
 	vb.add_child(boutons)
 	for n in [1, 10]:
 		var cout := Invocation.prix(pacte, n)
-		var unite := "or" if monnaie == "Or" else ("Éclats" if cout > 1 else "Éclat")
+		var unite := UiCommun.t("or") if monnaie == UiCommun.t("Or") else (UiCommun.t("Éclats") if cout > 1 else UiCommun.t("Éclat"))
 		var b := UiCommun.bouton(UiCommun.t("Invoquer x%d\n%d %s") % [n, cout, unite], 18)
 		b.custom_minimum_size = Vector2(0, 70)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -188,15 +188,15 @@ func _panneau_sauvage() -> PanelContainer:
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 12)
 	p.add_child(vb)
-	var t := UiCommun.label(str(Menagerie.PACTE["nom"]).to_upper(), 28, couleur)
+	var t := UiCommun.label(str(UiCommun.t(str(Menagerie.PACTE["nom"]))).to_upper(), 28, couleur)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(t)
-	var d := UiCommun.label("Invocation de FAMILIERS avec des Sceaux Sauvages.\nIls partent en chasse avec tes héros N et R (Ménagerie).", 16, UiCommun.C_DOUX)
+	var d := UiCommun.label(UiCommun.t("Invocation de FAMILIERS avec des Sceaux Sauvages.\nIls partent en chasse avec tes héros N et R (Ménagerie)."), 16, UiCommun.C_DOUX)
 	d.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(d)
 	vb.add_child(HSeparator.new())
-	vb.add_child(UiCommun.label("TAUX D'OBTENTION", 15, UiCommun.C_OR))
+	vb.add_child(UiCommun.label(UiCommun.t("TAUX D'OBTENTION"), 15, UiCommun.C_OR))
 	for tx in Menagerie.PACTE["taux"]:
 		var ligne := HBoxContainer.new()
 		var nom := UiCommun.label(tx[0], 18, UiCommun.COULEURS_RARETE[tx[0]])
@@ -204,7 +204,7 @@ func _panneau_sauvage() -> PanelContainer:
 		ligne.add_child(nom)
 		ligne.add_child(UiCommun.label(UiCommun.t("%s %%   (%d familiers)") % [_pourcent(tx[1]), FamiliersData.ids(tx[0]).size()], 18))
 		vb.add_child(ligne)
-	vb.add_child(UiCommun.label("x10 : au moins un SR garanti.", 15, UiCommun.C_DOUX))
+	vb.add_child(UiCommun.label(UiCommun.t("x10 : au moins un SR garanti."), 15, UiCommun.C_DOUX))
 	_lbl_garantie_sauvage = UiCommun.label("", 15, couleur)
 	_lbl_garantie_sauvage.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(_lbl_garantie_sauvage)
@@ -250,22 +250,22 @@ func _invoquer_familiers(nombre: int) -> void:
 		var tw := m.create_tween()
 		tw.tween_interval(0.12 * i)
 		tw.tween_property(m, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		var n := UiCommun.label(d["nom"], 14, UiCommun.COULEURS_RARETE[d["rarete"]])
+		var n := UiCommun.label(UiCommun.t(str(d["nom"])), 14, UiCommun.COULEURS_RARETE[d["rarete"]])
 		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		v.add_child(n)
-		var ra := UiCommun.label(d["rarete"] + ("  · NOUVEAU" if r["nouveau"] else ""), 13, Color("ffd060") if r["nouveau"] else UiCommun.C_DOUX)
+		var ra := UiCommun.label(d["rarete"] + (UiCommun.t("  · NOUVEAU") if r["nouveau"] else ""), 13, Color("ffd060") if r["nouveau"] else UiCommun.C_DOUX)
 		ra.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(ra)
 		g.add_child(v)
 		i += 1
 	var f := FenetreSimple.new()
 	f.largeur = 780.0 if res.size() > 1 else 420.0
-	f.titre = "Pacte Sauvage"
+	f.titre = UiCommun.t("Pacte Sauvage")
 	f.contenu = g
 	# Le raccourci vers la Ménagerie n'existe que si elle est débloquée (fin de l'Acte IV)
 	if Deblocages.est_ouvert("menagerie"):
-		f.boutons = [["Fermer", null], ["Voir la Ménagerie", func():
+		f.boutons = [[UiCommun.t("Fermer"), null], [UiCommun.t("Voir la Ménagerie"), func():
 			EcranBase.scene_retour = SCENE
 			get_tree().change_scene_to_file(EcranMenagerie.SCENE)]]
 	else:
@@ -280,7 +280,7 @@ func _invoquer_familiers(nombre: int) -> void:
 		bloc.add_child(g)
 		bloc.add_child(info)
 		f.contenu = bloc
-		f.boutons = [["Fermer", null]]
+		f.boutons = [[UiCommun.t("Fermer"), null]]
 	add_child(f)
 
 
@@ -313,12 +313,12 @@ func _fiche_unite(id: String) -> void:
 	var u := UnitesData.get_unite(id)
 	var s := UnitesData.stats(id, 1)
 	var txt := UiCommun.t("%s · %s · %s\n\nPV %d  ATK %d  DEF %d  AGI %d  MAG %d\n\n") % [
-		UiCommun.texte_rarete(id), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]],
+		UiCommun.texte_rarete(id), UnitesData.nom_element(u["element"]), UnitesData.nom_role(u["role"]),
 		s["pv"], s["atk"], s["def"], s["agi"], s["mag"]]
 	for sk in u["skills"]:
-		txt += UiCommun.t("Niv. %d · %s : %s\n") % [sk["niveau"], sk["nom"], sk["description"]]
+		txt += UiCommun.t("Niv. %d · %s : %s\n") % [sk["niveau"], UiCommun.t(str(sk["nom"])), UiCommun.t(str(sk["description"]))]
 	var f_ := FenetreSimple.new()
-	f_.titre = u["nom"]
+	f_.titre = UiCommun.t(str(u["nom"]))
 	f_.texte = txt
 	f_.largeur = 640.0
 	add_child(f_)
@@ -395,20 +395,20 @@ func _creer_banniere() -> Button:
 	textes.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	h.add_child(textes)
 	if ev.is_empty():
-		textes.add_child(UiCommun.label("INVOCATION SPÉCIALE", 16, UiCommun.C_DOUX))
-		textes.add_child(UiCommun.label("Aucun événement en ce moment", 26, UiCommun.C_DOUX))
+		textes.add_child(UiCommun.label(UiCommun.t("INVOCATION SPÉCIALE"), 16, UiCommun.C_DOUX))
+		textes.add_child(UiCommun.label(UiCommun.t("Aucun événement en ce moment"), 26, UiCommun.C_DOUX))
 		_lbl_evenement = UiCommun.label("", 16, UiCommun.C_DOUX)
 		textes.add_child(_lbl_evenement)
 		return b
-	var sur := UiCommun.label("ÉVÉNEMENT · INVOCATION SPÉCIALE", 15, couleur.lightened(0.4))
+	var sur := UiCommun.label(UiCommun.t("ÉVÉNEMENT · INVOCATION SPÉCIALE"), 15, couleur.lightened(0.4))
 	sur.add_theme_color_override("font_outline_color", Color.BLACK)
 	sur.add_theme_constant_override("outline_size", 4)
 	textes.add_child(sur)
-	var t := UiCommun.label(ev["titre"], 36, couleur.lightened(0.25))
+	var t := UiCommun.label(UiCommun.t(str(ev["titre"])), 36, couleur.lightened(0.25))
 	t.add_theme_color_override("font_outline_color", Color.BLACK)
 	t.add_theme_constant_override("outline_size", 8)
 	textes.add_child(t)
-	var st2 := UiCommun.label(ev["sous_titre"], 15, UiCommun.C_TEXTE)
+	var st2 := UiCommun.label(UiCommun.t(str(ev["sous_titre"])), 15, UiCommun.C_TEXTE)
 	st2.add_theme_color_override("font_outline_color", Color.BLACK)
 	st2.add_theme_constant_override("outline_size", 4)
 	textes.add_child(st2)
@@ -421,13 +421,13 @@ func _creer_banniere() -> Button:
 		v.alignment = BoxContainer.ALIGNMENT_CENTER
 		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		v.add_child(UiCommun.portrait(id, 70))
-		var n := UiCommun.label(UnitesData.get_unite(id)["nom"], 13, UiCommun.couleur_rarete(id))
+		var n := UiCommun.label(UiCommun.t(str(UnitesData.get_unite(id)["nom"])), 13, UiCommun.couleur_rarete(id))
 		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		n.add_theme_color_override("font_outline_color", Color.BLACK)
 		n.add_theme_constant_override("outline_size", 4)
 		v.add_child(n)
 		h.add_child(v)
-	var go := UiCommun.label("▶  INVOQUER", 24, couleur.lightened(0.4))
+	var go := UiCommun.label(UiCommun.t("▶  INVOQUER"), 24, couleur.lightened(0.4))
 	go.add_theme_color_override("font_outline_color", Color.BLACK)
 	go.add_theme_constant_override("outline_size", 6)
 	go.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -449,7 +449,7 @@ func _maj_banniere() -> void:
 		_lbl_evenement.text = UiCommun.t("Se termine dans %s") % Calendrier.texte_duree(Evenements.secondes_restantes(ev))
 	else:
 		var pr := Evenements.prochain()
-		_lbl_evenement.text = "" if pr.is_empty() else UiCommun.t("Prochain : %s dans %s") % [pr["titre"], Calendrier.texte_duree(Evenements.secondes_avant_debut(pr))]
+		_lbl_evenement.text = "" if pr.is_empty() else UiCommun.t("Prochain : %s dans %s") % [UiCommun.t(str(pr["titre"])), Calendrier.texte_duree(Evenements.secondes_avant_debut(pr))]
 
 
 func _ouvrir_evenement() -> void:
@@ -467,10 +467,10 @@ func _ouvrir_evenement() -> void:
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 10)
 	centre.add_child(vb)
-	var panneau := _panneau_pacte("evenement", Color("#" + str(ev["couleur"])).lightened(0.2), ev["sous_titre"], "Éclat", "")
+	var panneau := _panneau_pacte("evenement", Color("#" + str(ev["couleur"])).lightened(0.2), UiCommun.t(str(ev["sous_titre"])), UiCommun.t("Éclat"), "")
 	panneau.custom_minimum_size = Vector2(760, 560)
 	vb.add_child(panneau)
-	var fermer := UiCommun.bouton("Fermer", 17)
+	var fermer := UiCommun.bouton(UiCommun.t("Fermer"), 17)
 	fermer.custom_minimum_size = Vector2(200, 44)
 	fermer.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	fermer.pressed.connect(func():

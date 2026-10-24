@@ -125,7 +125,7 @@ static func reclamer() -> Array:
 	_etat()["reclames"].append(ETAPES[i]["id"])
 	var l := Quetes.donner(ETAPES[i]["recompense"])
 	if termine():
-		l.append("Guide des premiers pas terminé. Bonne route, héros !")
+		l.append(UiCommun.t("Guide des premiers pas terminé. Bonne route, héros !"))
 	Sauvegarde.sauvegarder()
 	preparer_etape()
 	return l
@@ -163,7 +163,7 @@ static func astuce(ecran: String, parent: Node) -> void:
 	if bool(t["masque"]):
 		return
 	var a: Array = ASTUCES[ecran]
-	FenetreSimple.ouvrir.call_deferred(parent, "Astuce — " + str(a[0]), a[1], [["Compris !", null]])
+	FenetreSimple.ouvrir.call_deferred(parent, UiCommun.t("Astuce — ") + UiCommun.t(str(a[0])), a[1], [[UiCommun.t("Compris !"), null]])
 
 
 ## Guides complets ouverts tout seuls à la première visite (ex. guide des Échos).

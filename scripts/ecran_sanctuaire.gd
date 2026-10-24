@@ -42,16 +42,16 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/main_menu.tscn"))
 	tete.add_child(retour)
-	var titre := UiCommun.label("LE SANCTUAIRE DU BÉLIER", 34, C_OR)
+	var titre := UiCommun.label(UiCommun.t("LE SANCTUAIRE DU BÉLIER"), 34, C_OR)
 	tete.add_child(UiCommun.plaque_titre(titre))
 	var pousse_titre := Control.new()
 	pousse_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(pousse_titre)
 
-	var sous := UiCommun.label("Trois Béliers et leur gardien Gémeau veillent sur ce foyer caché. Bats-les un par un, puis réunis : chacun vaincu rejoint ton équipe.\nLeur force s'adapte à ton équipe · aucune stamina · rejouable.", 16, UiCommun.C_DOUX)
+	var sous := UiCommun.label(UiCommun.t("Trois Béliers et leur gardien Gémeau veillent sur ce foyer caché. Bats-les un par un, puis réunis : chacun vaincu rejoint ton équipe.\nLeur force s'adapte à ton équipe · aucune stamina · rejouable."), 16, UiCommun.C_DOUX)
 	sous.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sous.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	col.add_child(sous)
@@ -70,7 +70,7 @@ func _ready() -> void:
 		EcranCombat.resultat = {}
 		if r.get("victoire", false):
 			var info: Dictionary = Sanctuaire.EPREUVES[str(r["epreuve"])]
-			FenetreSimple.ouvrir.call_deferred(self, info["titre"], info["victoire"])
+			FenetreSimple.ouvrir.call_deferred(self, UiCommun.t(str(info["titre"])), info["victoire"])
 
 
 func _carte(ep: String) -> Control:
@@ -115,19 +115,19 @@ func _carte(ep: String) -> Control:
 	if not ouverte:
 		ill.modulate = Color(0.25, 0.22, 0.22)
 
-	var nom := UiCommun.label(info["titre"], 20, C_OR if ouverte else UiCommun.C_DOUX)
+	var nom := UiCommun.label(UiCommun.t(str(info["titre"])), 20, C_OR if ouverte else UiCommun.C_DOUX)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	nom.custom_minimum_size = Vector2(0, 58)
 	nom.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	v.add_child(nom)
-	var etat := "Vaincue ✓  (rejouable)" if vaincue else ("À affronter" if ouverte else "Verrouillée : bats d'abord l'épreuve précédente")
+	var etat := UiCommun.t("Vaincue ✓  (rejouable)") if vaincue else (UiCommun.t("À affronter") if ouverte else UiCommun.t("Verrouillée : bats d'abord l'épreuve précédente"))
 	var le := UiCommun.label(etat, 14, Color("8affa0") if vaincue else UiCommun.C_DOUX)
 	le.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	le.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	le.custom_minimum_size = Vector2(0, 44)
 	v.add_child(le)
-	var b := UiCommun.bouton("Affronter" if not vaincue else "Rejouer", 18)
+	var b := UiCommun.bouton(UiCommun.t("Affronter") if not vaincue else UiCommun.t("Rejouer"), 18)
 	b.disabled = not ouverte
 	b.pressed.connect(_presenter.bind(ep))
 	v.add_child(b)
@@ -136,13 +136,13 @@ func _carte(ep: String) -> Control:
 
 func _presenter(ep: String) -> void:
 	var info: Dictionary = Sanctuaire.EPREUVES[ep]
-	FenetreSimple.ouvrir(self, info["titre"], info["intro"], [["Combattre !", _combattre.bind(ep)], ["Plus tard", null]])
+	FenetreSimple.ouvrir(self, UiCommun.t(str(info["titre"])), info["intro"], [[UiCommun.t("Combattre !"), _combattre.bind(ep)], [UiCommun.t("Plus tard"), null]])
 
 
 func _combattre(ep: String) -> void:
 	var equipe := Sanctuaire.equipe_joueur()
 	if equipe.is_empty():
-		FenetreSimple.ouvrir(self, "Équipe vide", "Ajoute des héros à ton équipe dans le Deck avant de combattre.")
+		FenetreSimple.ouvrir(self, UiCommun.t("Équipe vide"), UiCommun.t("Ajoute des héros à ton équipe dans le Deck avant de combattre."))
 		return
 	EcranCombat.demande = {"mode": "sanctuaire", "epreuve": ep, "acte": 13, "type": "boss_acte",
 		"equipe": equipe, "ennemis": Sanctuaire.generer(ep, equipe), "retour": SCENE}

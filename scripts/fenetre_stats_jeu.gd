@@ -70,10 +70,10 @@ func _ready() -> void:
 	_etat.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_etat.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	tete.add_child(_etat)
-	var maj := UiCommun.bouton("↻ Actualiser", 15)
+	var maj := UiCommun.bouton(UiCommun.t("↻ Actualiser"), 15)
 	maj.pressed.connect(_charger)
 	tete.add_child(maj)
-	var fermer := UiCommun.bouton("Fermer", 15)
+	var fermer := UiCommun.bouton(UiCommun.t("Fermer"), 15)
 	fermer.pressed.connect(queue_free)
 	tete.add_child(fermer)
 
@@ -112,9 +112,9 @@ func _unhandled_input(event: InputEvent) -> void:
 # =====================================================================
 
 func _charger() -> void:
-	_etat.text = "Chargement…"
+	_etat.text = UiCommun.t("Chargement…")
 	_vider()
-	_contenu.add_child(UiCommun.label("Chargement des statistiques…", 18, UiCommun.C_DOUX))
+	_contenu.add_child(UiCommun.label(UiCommun.t("Chargement des statistiques…"), 18, UiCommun.C_DOUX))
 	var r: Dictionary = await EnLigne.appeler("stats_jeu")
 	if not is_instance_valid(self):
 		return
@@ -157,7 +157,7 @@ func _charger_releases() -> void:
 		entetes.append("User-Agent: BrothersOfLegacy")     # demandé par GitHub (le navigateur le met tout seul)
 	if h.request(URL_RELEASES, entetes) != OK:
 		h.queue_free()
-		_erreur_releases = "Requête impossible."
+		_erreur_releases = UiCommun.t("Requête impossible.")
 		return
 	var res: Array = await h.request_completed
 	h.queue_free()
@@ -205,7 +205,7 @@ func _vue_signalements() -> void:
 	var filtres := HBoxContainer.new()
 	filtres.add_theme_constant_override("separation", 6)
 	_contenu.add_child(filtres)
-	for f in [["nouveau", "Nouveaux"], ["lu", "Lus"], ["corrige", "Corrigés"], ["", "Tous"]]:
+	for f in [["nouveau", "Nouveaux"], ["lu", "Lus"], ["corrige", "Corrigés"], ["", UiCommun.t("Tous")]]:
 		var n: int = _signalements.size() if f[0] == "" else int(compte.get(f[0], 0))
 		var b := UiCommun.bouton("%s (%d)" % [f[1], n], 15)
 		b.add_theme_color_override("font_color", UiCommun.C_LEGENDE if _filtre_sig == f[0] else UiCommun.C_DOUX)
@@ -299,35 +299,35 @@ func _vue_ensemble() -> void:
 	var c: Dictionary = _stats.get("comptes", {})
 	var a: Dictionary = _stats.get("appareils", {})
 	var j: Dictionary = _stats.get("jeu", {})
-	_titre("Joueurs")
-	_tuiles([[int(c.get("total", 0)), "comptes créés"], [int(c.get("en_ligne", 0)), "en ligne maintenant", C_VERT],
-		[int(c.get("actifs_jour", 0)), "joueurs actifs (24 h)"], [int(c.get("actifs_semaine", 0)), "joueurs actifs (7 jours)"],
-		[int(c.get("actifs_mois", 0)), "joueurs actifs (30 jours)"],
+	_titre(UiCommun.t("Joueurs"))
+	_tuiles([[int(c.get("total", 0)), UiCommun.t("comptes créés")], [int(c.get("en_ligne", 0)), UiCommun.t("en ligne maintenant"), C_VERT],
+		[int(c.get("actifs_jour", 0)), UiCommun.t("joueurs actifs (24 h)")], [int(c.get("actifs_semaine", 0)), UiCommun.t("joueurs actifs (7 jours)")],
+		[int(c.get("actifs_mois", 0)), UiCommun.t("joueurs actifs (30 jours)")],
 		["+%d" % int(c.get("semaine", 0)), UiCommun.t("nouveaux comptes (7 jours)\n+%d aujourd'hui · +%d en 30 j") % [int(c.get("jour", 0)), int(c.get("mois", 0))]]])
-	_titre("Appareils et téléchargements")
+	_titre(UiCommun.t("Appareils et téléchargements"))
 	var dl := _totaux_telechargements()
-	_tuiles([[int(a.get("total", 0)), "appareils qui ont lancé le jeu", C_BLEU], [int(a.get("actifs_jour", 0)), "appareils actifs (24 h)", C_BLEU],
-		[int(a.get("actifs_mois", 0)), "appareils actifs (30 jours)", C_BLEU], [int(a.get("sans_compte", 0)), "appareils sans compte", C_BLEU],
-		[_n(int(a.get("lancements", 0))), "lancements du jeu", C_BLEU],
+	_tuiles([[int(a.get("total", 0)), UiCommun.t("appareils qui ont lancé le jeu"), C_BLEU], [int(a.get("actifs_jour", 0)), UiCommun.t("appareils actifs (24 h)"), C_BLEU],
+		[int(a.get("actifs_mois", 0)), UiCommun.t("appareils actifs (30 jours)"), C_BLEU], [int(a.get("sans_compte", 0)), UiCommun.t("appareils sans compte"), C_BLEU],
+		[_n(int(a.get("lancements", 0))), UiCommun.t("lancements du jeu"), C_BLEU],
 		[("…" if _releases.is_empty() and _erreur_releases == "" else str(dl["total"])), "téléchargements\n(Windows, Mac, Linux, Android)", C_BLEU]])
-	_titre("Activité des 30 derniers jours")
+	_titre(UiCommun.t("Activité des 30 derniers jours"))
 	var leg := HBoxContainer.new()
 	leg.add_theme_constant_override("separation", 18)
 	_contenu.add_child(leg)
-	leg.add_child(UiCommun.label("■ appareils actifs", 14, C_BLEU))
-	leg.add_child(UiCommun.label("■ comptes actifs", 14, UiCommun.C_OR))
-	leg.add_child(UiCommun.label("● nouveaux comptes", 14, C_VERT))
+	leg.add_child(UiCommun.label(UiCommun.t("■ appareils actifs"), 14, C_BLEU))
+	leg.add_child(UiCommun.label(UiCommun.t("■ comptes actifs"), 14, UiCommun.C_OR))
+	leg.add_child(UiCommun.label(UiCommun.t("● nouveaux comptes"), 14, C_VERT))
 	var graph := Graphique.new()
 	graph.jours = _stats.get("jours", []) if _stats.get("jours") is Array else []
 	graph.custom_minimum_size = Vector2(0, 260)
 	_contenu.add_child(graph)
-	_note("Les appareils et comptes actifs sont comptés à partir de cette version (v0.53) : la courbe se remplit jour après jour.")
-	_titre("Le jeu en ligne")
+	_note(UiCommun.t("Les appareils et comptes actifs sont comptés à partir de cette version (v0.53) : la courbe se remplit jour après jour."))
+	_titre(UiCommun.t("Le jeu en ligne"))
 	_tuiles([[int(j.get("guildes", 0)), UiCommun.t("guildes\n%d membres") % int(j.get("membres_guilde", 0))],
 		[int(j.get("arene_combats", 0)), UiCommun.t("combats d'Arène\n%d cette semaine · %d joueurs") % [int(j.get("arene_combats_semaine", 0)), int(j.get("arene_joueurs", 0))]],
 		[int(j.get("classee_matchs", 0)), UiCommun.t("matchs d'Arène classée\n%d joueurs") % int(j.get("classee_joueurs", 0))],
 		[int(j.get("marche_jour", 0)), UiCommun.t("Marches Maudites aujourd'hui\n%d au total") % int(j.get("marche_total", 0))],
-		[int(j.get("sauvegardes", 0)), "parties sauvegardées en ligne"]])
+		[int(j.get("sauvegardes", 0)), UiCommun.t("parties sauvegardées en ligne")]])
 
 
 func _vue_joueurs() -> void:
@@ -336,7 +336,7 @@ func _vue_joueurs() -> void:
 	barre.add_theme_constant_override("separation", 10)
 	_contenu.add_child(barre)
 	var champ := LineEdit.new()
-	champ.placeholder_text = "Chercher un pseudo…"
+	champ.placeholder_text = UiCommun.t("Chercher un pseudo…")
 	champ.text = _recherche
 	champ.custom_minimum_size = Vector2(300, 40)
 	champ.text_changed.connect(func(t: String):
@@ -345,7 +345,7 @@ func _vue_joueurs() -> void:
 	barre.add_child(champ)
 	var tri := OptionButton.new()
 	for i in TRIS.size():
-		tri.add_item("Tri : " + TRIS[i][1])
+		tri.add_item(UiCommun.t("Tri : ") + TRIS[i][1])
 		if TRIS[i][0] == _tri:
 			tri.select(i)
 	tri.item_selected.connect(func(i: int):
@@ -356,17 +356,17 @@ func _vue_joueurs() -> void:
 	nb.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	barre.add_child(nb)
 	var tableau := GridContainer.new()
-	tableau.name = "Tableau"
+	tableau.name = UiCommun.t("Tableau")
 	tableau.columns = 10
 	tableau.add_theme_constant_override("h_separation", 22)
 	tableau.add_theme_constant_override("v_separation", 6)
 	_contenu.add_child(tableau)
 	_remplir_tableau(joueurs)
-	_note("Seuls les pseudos sont affichés (aucune adresse e-mail). « Chapitres », « Puissance » et « Unités » viennent de la fiche publique du joueur, mise à jour quand il joue connecté.")
+	_note(UiCommun.t("Seuls les pseudos sont affichés (aucune adresse e-mail). « Chapitres », « Puissance » et « Unités » viennent de la fiche publique du joueur, mise à jour quand il joue connecté."))
 
 
 func _remplir_tableau(joueurs: Array) -> void:
-	var tableau: GridContainer = _contenu.get_node_or_null("Tableau")
+	var tableau: GridContainer = _contenu.get_node_or_null(UiCommun.t("Tableau"))
 	if tableau == null:
 		return
 	for x in tableau.get_children():
@@ -378,7 +378,7 @@ func _remplir_tableau(joueurs: Array) -> void:
 		if _tri in ["vu_le", "cree_le"]:
 			return str(x.get(_tri, "")) > str(y.get(_tri, ""))
 		return int(x.get(_tri, 0)) > int(y.get(_tri, 0)))
-	for e in ["Pseudo", "Statut", "Inscrit le", "Niveau", "Chapitres", "Puissance", "Unités", "Guilde", "Version", "Joue sur"]:
+	for e in [UiCommun.t("Pseudo"), UiCommun.t("Statut"), UiCommun.t("Inscrit le"), UiCommun.t("Niveau"), UiCommun.t("Chapitres"), UiCommun.t("Puissance"), UiCommun.t("Unités"), UiCommun.t("Guilde"), "Version", UiCommun.t("Joue sur")]:
 		tableau.add_child(UiCommun.label(e, 16, UiCommun.C_OR))
 	for j in liste:
 		var vu := str(j.get("vu_le", ""))
@@ -399,8 +399,8 @@ func _remplir_tableau(joueurs: Array) -> void:
 
 func _vue_appareils() -> void:
 	var a: Dictionary = _stats.get("appareils", {})
-	_titre("Par plateforme")
-	_note("Chaque appareil qui lance le jeu est compté une fois, avec ou sans compte (identifiant anonyme tiré au hasard). « Actifs » = lancé dans les 30 derniers jours.")
+	_titre(UiCommun.t("Par plateforme"))
+	_note(UiCommun.t("Chaque appareil qui lance le jeu est compté une fois, avec ou sans compte (identifiant anonyme tiré au hasard). « Actifs » = lancé dans les 30 derniers jours."))
 	var tous: Dictionary = a.get("par_plateforme", {})
 	var actifs: Dictionary = a.get("par_plateforme_actifs", {})
 	var maxi_ := 1
@@ -411,12 +411,12 @@ func _vue_appareils() -> void:
 	g.add_theme_constant_override("h_separation", 20)
 	g.add_theme_constant_override("v_separation", 8)
 	_contenu.add_child(g)
-	for e in ["Plateforme", "Appareils", "Actifs (30 j)", ""]:
+	for e in [UiCommun.t("Plateforme"), UiCommun.t("Appareils"), UiCommun.t("Actifs (30 j)"), ""]:
 		g.add_child(UiCommun.label(e, 14, UiCommun.C_OR))
 	var cles: Array = tous.keys()
 	cles.sort_custom(func(x, y): return int(tous[x]) > int(tous[y]))
 	for k in cles:
-		g.add_child(UiCommun.label(NOMS_PLATEFORMES.get(k, str(k)), 16))
+		g.add_child(UiCommun.label(UiCommun.t(str(NOMS_PLATEFORMES.get(k, str(k)))), 16))
 		g.add_child(UiCommun.label(str(int(tous[k])), 16, C_BLEU))
 		g.add_child(UiCommun.label(str(int(actifs.get(k, 0))), 16, C_VERT))
 		var b := UiCommun.barre(C_BLEU, 420.0 * int(tous[k]) / maxi_ + 4.0, 14)
@@ -426,34 +426,34 @@ func _vue_appareils() -> void:
 		b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		g.add_child(b)
 	if cles.is_empty():
-		_note("Aucun appareil enregistré pour l'instant : le compteur démarre avec cette version.")
-	_titre("Versions utilisées (appareils actifs sur 30 jours)")
+		_note(UiCommun.t("Aucun appareil enregistré pour l'instant : le compteur démarre avec cette version."))
+	_titre(UiCommun.t("Versions utilisées (appareils actifs sur 30 jours)"))
 	var gv := GridContainer.new()
 	gv.columns = 2
 	gv.add_theme_constant_override("h_separation", 30)
 	_contenu.add_child(gv)
 	for v in a.get("par_version", []):
 		var num := str(v.get("version", ""))
-		gv.add_child(UiCommun.label("v" + num + ("  (actuelle)" if num == Version.NUMERO else ""), 16, UiCommun.C_TEXTE if num == Version.NUMERO else Color("ffb070")))
+		gv.add_child(UiCommun.label("v" + num + (UiCommun.t("  (actuelle)") if num == Version.NUMERO else ""), 16, UiCommun.C_TEXTE if num == Version.NUMERO else Color("ffb070")))
 		gv.add_child(UiCommun.label(UiCommun.t("%d appareil%s") % [int(v.get("n", 0)), "s" if int(v.get("n", 0)) > 1 else ""], 16))
-	_note("En orange : les appareils qui n'ont pas encore la dernière version.")
+	_note(UiCommun.t("En orange : les appareils qui n'ont pas encore la dernière version."))
 
 
 func _vue_telechargements() -> void:
-	_titre("Téléchargements des applications (GitHub Releases)")
+	_titre(UiCommun.t("Téléchargements des applications (GitHub Releases)"))
 	if _releases.is_empty():
-		_note(_erreur_releases if _erreur_releases != "" else "Chargement…")
+		_note(_erreur_releases if _erreur_releases != "" else UiCommun.t("Chargement…"))
 		return
 	var d := _totaux_telechargements()
-	_tuiles([[d["total"], "téléchargements au total", C_BLEU], [d["windows"], "Windows"], [d["mac"], "Mac"], [d["linux"], "Linux"], [d["android"], "Android"]])
-	_note("Le jeu web (ordinateur, Android, iPhone) ne se télécharge pas : ses joueurs sont comptés dans l'onglet Appareils.")
-	_titre("Détail par version")
+	_tuiles([[d["total"], UiCommun.t("téléchargements au total"), C_BLEU], [d["windows"], "Windows"], [d["mac"], "Mac"], [d["linux"], "Linux"], [d["android"], "Android"]])
+	_note(UiCommun.t("Le jeu web (ordinateur, Android, iPhone) ne se télécharge pas : ses joueurs sont comptés dans l'onglet Appareils."))
+	_titre(UiCommun.t("Détail par version"))
 	var g := GridContainer.new()
 	g.columns = 6
 	g.add_theme_constant_override("h_separation", 26)
 	g.add_theme_constant_override("v_separation", 4)
 	_contenu.add_child(g)
-	for e in ["Version", "Publiée le", "Windows", "Mac", "Linux", "Android"]:
+	for e in ["Version", UiCommun.t("Publiée le"), "Windows", "Mac", "Linux", "Android"]:
 		g.add_child(UiCommun.label(e, 14, UiCommun.C_OR))
 	for r in _releases:
 		var par := {"windows": 0, "mac": 0, "linux": 0, "android": 0}

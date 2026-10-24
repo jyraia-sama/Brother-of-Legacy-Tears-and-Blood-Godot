@@ -29,16 +29,16 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Carte")
+	var retour := UiCommun.bouton(UiCommun.t("← Carte"))
 	retour.pressed.connect(func(): get_tree().change_scene_to_file(EcranCarte.SCENE))
 	tete.add_child(retour)
-	var titre := UiCommun.label("LES RUINES OUBLIÉES", 34, C_OR)
+	var titre := UiCommun.label(UiCommun.t("LES RUINES OUBLIÉES"), 34, C_OR)
 	tete.add_child(UiCommun.plaque_titre(titre))
 	var pousse := Control.new()
 	pousse.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(pousse)
 
-	var sous := UiCommun.label("Le Sceau de l'Aube a ouvert la stèle. Sous la terre, trois étages gardent trois Légendes oubliées.\nLeur force s'adapte à ton équipe · aucune stamina · une récompense d'évolution par jour une fois vaincus.", 16, UiCommun.C_DOUX)
+	var sous := UiCommun.label(UiCommun.t("Le Sceau de l'Aube a ouvert la stèle. Sous la terre, trois étages gardent trois Légendes oubliées.\nLeur force s'adapte à ton équipe · aucune stamina · une récompense d'évolution par jour une fois vaincus."), 16, UiCommun.C_DOUX)
 	sous.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sous.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	col.add_child(sous)
@@ -58,7 +58,7 @@ func _ready() -> void:
 		var et: String = str(r.get("etage", ""))
 		if r.get("victoire", false) and r.get("fini", false) and Ruines.ETAGES.has(et):
 			var info: Dictionary = Ruines.ETAGES[et]
-			FenetreSimple.ouvrir.call_deferred(self, info["titre"], info["victoire"])
+			FenetreSimple.ouvrir.call_deferred(self, UiCommun.t(str(info["titre"])), info["victoire"])
 		elif r.get("victoire", false) and not Ruines.en_cours().is_empty():
 			_proposer_suite.call_deferred()
 
@@ -97,11 +97,11 @@ func _carte(et: String) -> Control:
 		ill.add_child(ferme)
 
 	var n := Ruines.ORDRE.find(et) + 1
-	var nom := UiCommun.label(UiCommun.t("Étage %d · %s") % [n, info["titre"]], 20, C_OR if ouvert else UiCommun.C_DOUX)
+	var nom := UiCommun.label(UiCommun.t("Étage %d · %s") % [n, UiCommun.t(str(info["titre"]))], 20, C_OR if ouvert else UiCommun.C_DOUX)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(nom)
-	var regle := UiCommun.label(info["regle"], 13, UiCommun.C_DOUX)
+	var regle := UiCommun.label(UiCommun.t(str(info["regle"])), 13, UiCommun.C_DOUX)
 	regle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	regle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	regle.custom_minimum_size = Vector2(300, 54)
@@ -111,11 +111,11 @@ func _carte(et: String) -> Control:
 	if str(c.get("etage", "")) == et:
 		etat = UiCommun.t("En cours : vague %d / %d") % [int(c["vague"]) + 1, Ruines.nb_vagues(et)]
 	elif vaincu:
-		etat = "Délivrés ✓ · récompense du jour disponible" if Ruines.recompense_du_jour_dispo(et) else "Délivrés ✓ · récompense du jour prise"
+		etat = UiCommun.t("Délivrés ✓ · récompense du jour disponible") if Ruines.recompense_du_jour_dispo(et) else UiCommun.t("Délivrés ✓ · récompense du jour prise")
 	elif ouvert:
 		etat = UiCommun.t("%d combats · à explorer") % Ruines.nb_vagues(et)
 	else:
-		etat = "Fermé : termine d'abord l'étage précédent"
+		etat = UiCommun.t("Fermé : termine d'abord l'étage précédent")
 	var le := UiCommun.label(etat, 14, Color("8affa0") if vaincu else C_AUBE)
 	le.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	le.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -126,16 +126,16 @@ func _carte(et: String) -> Control:
 		h.alignment = BoxContainer.ALIGNMENT_CENTER
 		h.add_theme_constant_override("separation", 10)
 		v.add_child(h)
-		var suite := UiCommun.bouton("Continuer", 18)
+		var suite := UiCommun.bouton(UiCommun.t("Continuer"), 18)
 		suite.pressed.connect(_combattre.bind(et))
 		h.add_child(suite)
-		var ab := UiCommun.bouton("Abandonner", 15)
+		var ab := UiCommun.bouton(UiCommun.t("Abandonner"), 15)
 		ab.pressed.connect(func():
 			Ruines.abandonner()
 			get_tree().reload_current_scene())
 		h.add_child(ab)
 	else:
-		var b := UiCommun.bouton("Rejouer" if vaincu else "Descendre", 18)
+		var b := UiCommun.bouton(UiCommun.t("Rejouer") if vaincu else UiCommun.t("Descendre"), 18)
 		b.disabled = not ouvert or autre_en_cours
 		b.pressed.connect(_presenter.bind(et))
 		v.add_child(b)
@@ -144,16 +144,16 @@ func _carte(et: String) -> Control:
 
 func _presenter(et: String) -> void:
 	var info: Dictionary = Ruines.ETAGES[et]
-	var txt: String = info["intro"] + "\n\n" + UiCommun.t("Règle de l'étage — %s") % info["regle"]
-	FenetreSimple.ouvrir(self, info["titre"], txt, [["Descendre !", func():
+	var txt: String = info["intro"] + "\n\n" + UiCommun.t("Règle de l'étage — %s") % UiCommun.t(str(info["regle"]))
+	FenetreSimple.ouvrir(self, UiCommun.t(str(info["titre"])), txt, [["Descendre !", func():
 		Ruines.commencer(et)
-		_combattre(et)], ["Plus tard", null]])
+		_combattre(et)], [UiCommun.t("Plus tard"), null]])
 
 
 func _proposer_suite() -> void:
 	var c := Ruines.en_cours()
 	var et: String = c["etage"]
-	FenetreSimple.ouvrir(self, Ruines.ETAGES[et]["titre"],
+	FenetreSimple.ouvrir(self, UiCommun.t(str(Ruines.ETAGES[et]["titre"])),
 		UiCommun.t("Vague %d / %d repoussée. Les PV de ton équipe ne remontent pas…\nLa suivante arrive !") % [int(c["vague"]), Ruines.nb_vagues(et)],
 		[["Continuer !", _combattre.bind(et)], ["Souffler un peu", null]])
 
@@ -161,7 +161,7 @@ func _proposer_suite() -> void:
 func _combattre(et: String) -> void:
 	var eq := Ruines.equipe(et)
 	if eq.is_empty():
-		FenetreSimple.ouvrir(self, "Équipe vide", "Ajoute des héros à ton équipe dans le Deck avant de descendre.\n(Si tous tes héros sont tombés, abandonne l'étage pour recommencer.)")
+		FenetreSimple.ouvrir(self, UiCommun.t("Équipe vide"), UiCommun.t("Ajoute des héros à ton équipe dans le Deck avant de descendre.\n(Si tous tes héros sont tombés, abandonne l'étage pour recommencer.)"))
 		return
 	var vague := int(Ruines.en_cours().get("vague", 0))
 	EcranCombat.demande = {"mode": "ruines", "etage": et, "vague": vague, "acte": 6,

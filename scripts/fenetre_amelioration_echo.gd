@@ -70,9 +70,9 @@ func _ready() -> void:
 	tete.add_child(_titre)
 	var rapide := CheckBox.new()
 	UiCommun.habiller_case(rapide)
-	rapide.text = "Rapide"
+	rapide.text = UiCommun.t("Rapide")
 	rapide.focus_mode = Control.FOCUS_NONE
-	rapide.tooltip_text = "Barre de chargement plus courte."
+	rapide.tooltip_text = UiCommun.t("Barre de chargement plus courte.")
 	rapide.toggled.connect(func(v: bool): _rapide = v)
 	tete.add_child(rapide)
 
@@ -81,7 +81,7 @@ func _ready() -> void:
 	vb.add_child(_infos)
 
 	vb.add_child(HSeparator.new())
-	_lbl_barre = UiCommun.label("Prêt.", 16, UiCommun.C_DOUX)
+	_lbl_barre = UiCommun.label(UiCommun.t("Prêt."), 16, UiCommun.C_DOUX)
 	_lbl_barre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(_lbl_barre)
 	_barre = UiCommun.barre(Color("d0453a"), 800, 22)
@@ -120,17 +120,17 @@ func _ready() -> void:
 	var bas := HBoxContainer.new()
 	bas.add_theme_constant_override("separation", 8)
 	vb.add_child(bas)
-	_btn_arret = UiCommun.bouton("Arrêter", 16)
+	_btn_arret = UiCommun.bouton(UiCommun.t("Arrêter"), 16)
 	_btn_arret.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_btn_arret.disabled = true
 	_btn_arret.pressed.connect(func(): _arret = true)
 	bas.add_child(_btn_arret)
-	_btn_fermer = UiCommun.bouton("Fermer", 16)
+	_btn_fermer = UiCommun.bouton(UiCommun.t("Fermer"), 16)
 	_btn_fermer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_btn_fermer.pressed.connect(_fermer)
 	bas.add_child(_btn_fermer)
 
-	vb.add_child(UiCommun.label("Tentatives", 14, UiCommun.C_DOUX))
+	vb.add_child(UiCommun.label(UiCommun.t("Tentatives"), 14, UiCommun.C_DOUX))
 	var defil := ScrollContainer.new()
 	defil.custom_minimum_size = Vector2(0, 130)
 	defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -167,9 +167,9 @@ func _maj() -> void:
 	_titre.add_theme_color_override("font_color", coul)
 	for x in _infos.get_children():
 		x.queue_free()
-	_infos.add_child(UiCommun.label(UiCommun.t("%s   ·   %s   ·   Or : %d") % ["★".repeat(int(e["etoiles"])), Echos.RARETES[int(e["rarete"])]["nom"], Sauvegarde.get_or()], 15, Color("ffd060")))
+	_infos.add_child(UiCommun.label(UiCommun.t("%s   ·   %s   ·   Or : %d") % ["★".repeat(int(e["etoiles"])), UiCommun.t(str(Echos.RARETES[int(e["rarete"])]["nom"])), Sauvegarde.get_or()], 15, Color("ffd060")))
 	if niv >= Echos.NIVEAU_MAX:
-		_infos.add_child(UiCommun.label("Principale : " + Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 17))
+		_infos.add_child(UiCommun.label(UiCommun.t("Principale : ") + Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 17))
 		_infos.add_child(UiCommun.label(UiCommun.t("Niveau maximum atteint (+%d).") % Echos.NIVEAU_MAX, 17, C_OK))
 	else:
 		var suivant := e.duplicate()
@@ -184,7 +184,7 @@ func _maj() -> void:
 			palier = p
 			break
 	if palier > 0:
-		var quoi := "nouvelle stat secondaire" if e["secondaires"].size() < 4 else "une stat secondaire renforcée"
+		var quoi := UiCommun.t("nouvelle stat secondaire") if e["secondaires"].size() < 4 else UiCommun.t("une stat secondaire renforcée")
 		_infos.add_child(UiCommun.label(UiCommun.t("Prochain palier : +%d → %s") % [palier, quoi], 14, Color("ffb08a")))
 	if niv < Echos.NIVEAU_MAX:
 		var cout := Echos.cout_amelioration(e)
@@ -252,7 +252,7 @@ func _lancer(cible: int) -> void:
 		(_barre.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = C_OK if r["reussi"] else C_ECHEC
 		_annoncer(r["texte"], C_OK if r["reussi"] else C_ECHEC)
 		Audio.son("niveau" if r["reussi"] else "erreur")
-		_noter(UiCommun.t("+%d : %s   (−%d or)") % [niv + 1, "RÉUSSITE" if r["reussi"] else "échec", cout], C_OK if r["reussi"] else C_ECHEC)
+		_noter(UiCommun.t("+%d : %s   (−%d or)") % [niv + 1, UiCommun.t("RÉUSSITE") if r["reussi"] else UiCommun.t("échec"), cout], C_OK if r["reussi"] else C_ECHEC)
 		_maj()
 		if cible < 0 or _arret:
 			break
@@ -277,7 +277,7 @@ func _afficher_recap(avant: Dictionary, apres: Dictionary, tentatives: int, depe
 		"s" if tentatives > 1 else "", depense], 16, UiCommun.C_OR)
 	_recap.add_child(titre)
 	if n1 == n0:
-		_recap.add_child(UiCommun.label("Aucun niveau gagné : les stats ne changent pas.", 15, UiCommun.C_DOUX))
+		_recap.add_child(UiCommun.label(UiCommun.t("Aucun niveau gagné : les stats ne changent pas."), 15, UiCommun.C_DOUX))
 		return
 	var st: String = apres["principale"]
 	var v0 := Echos.valeur_principale(avant)
@@ -291,7 +291,7 @@ func _afficher_recap(avant: Dictionary, apres: Dictionary, tentatives: int, depe
 		var nom: String = s1["stat"]
 		var v := float(s1["valeur"])
 		if not anciennes.has(nom):
-			_recap.add_child(UiCommun.label("Nouvelle stat : " + Echos.texte_stat(nom, v), 15, Color("8ad8ff")))
+			_recap.add_child(UiCommun.label(UiCommun.t("Nouvelle stat : ") + Echos.texte_stat(nom, v), 15, Color("8ad8ff")))
 		elif v > float(anciennes[nom]):
 			_recap.add_child(UiCommun.label(UiCommun.t("Renforcée : %s  →  %s   (%s)") % [Echos.texte_stat(nom, anciennes[nom]),
 				Echos.texte_stat(nom, v), _ecart(nom, v - float(anciennes[nom]))], 15, Color("8ad8ff")))

@@ -40,10 +40,10 @@ func _ready() -> void:
 	col.add_theme_constant_override("separation", 14)
 	marge.add_child(col)
 
-	var titre := _label("CHOISIS TON HÉROS", 36, C_OR)
+	var titre := _label(UiCommun.t("CHOISIS TON HÉROS"), 36, C_OR)
 	titre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(titre)
-	var sous := _label("Huit Héros de Légende. Un seul t'accompagnera dès le début de ton voyage.", 18, C_DOUX)
+	var sous := _label(UiCommun.t("Huit Héros de Légende. Un seul t'accompagnera dès le début de ton voyage."), 18, C_DOUX)
 	sous.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(sous)
 
@@ -97,7 +97,7 @@ func _carte(id: String) -> Button:
 	sp.set_border_width_all(3)
 	portrait.add_theme_stylebox_override("panel", sp)
 	vb.add_child(portrait)
-	var ini := _label(u["nom"].trim_prefix("La ").trim_prefix("Le ").substr(0, 1), 34, Color.WHITE)
+	var ini := _label(UiCommun.t(str(u["nom"])).trim_prefix("La ").trim_prefix("Le ").substr(0, 1), 34, Color.WHITE)
 	ini.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ini.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	ini.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -106,8 +106,8 @@ func _carte(id: String) -> Button:
 	portrait.add_child(ini)
 	UiCommun.habiller_portrait(portrait, id, ini)
 
-	vb.add_child(_centre(_label(u["nom"], 21, C_OR)))
-	vb.add_child(_centre(_label("%s · %s · %s" % [u["race"], UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]]], 14, C_DOUX)))
+	vb.add_child(_centre(_label(UiCommun.t(str(u["nom"])), 21, C_OR)))
+	vb.add_child(_centre(_label("%s · %s · %s" % [u["race"], UnitesData.nom_element(u["element"]), UnitesData.nom_role(u["role"])], 14, C_DOUX)))
 
 	# Les 2 stats dominantes en avant
 	var dom := HBoxContainer.new()
@@ -115,18 +115,18 @@ func _carte(id: String) -> Button:
 	dom.add_theme_constant_override("separation", 14)
 	dom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for cle in u["dominantes"]:
-		dom.add_child(_label("%s %d" % [NOMS_STATS[cle], s[cle]], 18, Color("ffd27a")))
+		dom.add_child(_label("%s %d" % [UiCommun.t(str(NOMS_STATS[cle])), s[cle]], 18, Color("ffd27a")))
 	vb.add_child(dom)
 	var autres: Array = []
 	for cle in ["pv", "atk", "def", "agi", "mag"]:
 		if not cle in u["dominantes"]:
-			autres.append("%s %d" % [NOMS_STATS[cle], s[cle]])
+			autres.append("%s %d" % [UiCommun.t(str(NOMS_STATS[cle])), s[cle]])
 	vb.add_child(_centre(_label("  ·  ".join(autres), 13, C_DOUX)))
 
 	var sk: Dictionary = u["skills"][0]
-	var t := _label(sk["nom"], 16, C_TEXTE)
+	var t := _label(UiCommun.t(str(sk["nom"])), 16, C_TEXTE)
 	vb.add_child(t)
-	var d := _label(sk["description"], 13, C_DOUX)
+	var d := _label(UiCommun.t(str(sk["description"])), 13, C_DOUX)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(d)
 	return b
@@ -134,7 +134,7 @@ func _carte(id: String) -> Button:
 
 func _confirmer(id: String) -> void:
 	var u := UnitesData.get_unite(id)
-	FenetreSimple.ouvrir(self, "Héros de départ", UiCommun.t("Partir à l'aventure avec %s ?\n\nCe choix est définitif (seule une Nouvelle partie permet de rechoisir).") % u["nom"], [["Revenir", null], ["Je le choisis", func():
+	FenetreSimple.ouvrir(self, UiCommun.t("Héros de départ"), UiCommun.t("Partir à l'aventure avec %s ?\n\nCe choix est définitif (seule une Nouvelle partie permet de rechoisir).") % UiCommun.t(str(u["nom"])), [[UiCommun.t("Revenir"), null], [UiCommun.t("Je le choisis"), func():
 		Sauvegarde.choisir_heros_depart(id)
 		var menu: String = ProjectSettings.get_setting("application/run/main_scene", "")
 		if menu != "":

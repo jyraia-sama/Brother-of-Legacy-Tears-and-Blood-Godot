@@ -213,7 +213,7 @@ func _fin_verification(resultat: String, manuel: bool) -> void:
 	verification_terminee.emit(resultat)
 	# Test automatique (variable d'environnement BOL_MAJ_TEST=auto) : met à jour et redémarre sans fenêtre.
 	if OS.get_environment("BOL_MAJ_TEST") == "auto":
-		print("Test mise à jour : ", resultat, " (jouée v%s, en ligne v%s)" % [version_actuelle, fiche.get("version", "?")])
+		print("Test mise à jour : ", resultat, UiCommun.t(" (jouée v%s, en ligne v%s)") % [version_actuelle, fiche.get("version", "?")])
 		if resultat == "maj":
 			telechargement_termine.connect(_fin_test, CONNECT_ONE_SHOT)
 			telecharger()
@@ -264,7 +264,7 @@ func telecharger() -> void:
 	_requete_dl.download_file = FICHIER_TEMP
 	add_child(_requete_dl)
 	if _requete_dl.request(url) != OK:
-		_fin_telechargement(false, "Impossible de lancer le téléchargement.")
+		_fin_telechargement(false, UiCommun.t("Impossible de lancer le téléchargement."))
 		return
 	var rep: Array = await _requete_dl.request_completed
 	if rep[0] != HTTPRequest.RESULT_SUCCESS or rep[1] != 200:
@@ -277,17 +277,17 @@ func telecharger() -> void:
 		taille = f.get_length()
 		f.close()
 	if _taille_attendue > 0 and taille != _taille_attendue:
-		_fin_telechargement(false, "Le fichier reçu est incomplet. Réessaie dans quelques minutes.")
+		_fin_telechargement(false, UiCommun.t("Le fichier reçu est incomplet. Réessaie dans quelques minutes."))
 		return
 	var empreinte := str(infos.get("sha256", ""))
 	if empreinte != "" and FileAccess.get_sha256(FICHIER_TEMP) != empreinte:
-		_fin_telechargement(false, "Le fichier reçu ne correspond pas à la version annoncée (le site vient peut-être d'être mis à jour). Réessaie dans quelques minutes.")
+		_fin_telechargement(false, UiCommun.t("Le fichier reçu ne correspond pas à la version annoncée (le site vient peut-être d'être mis à jour). Réessaie dans quelques minutes."))
 		return
 	var final := DOSSIER.path_join("jeu_%s.pck" % str(fiche.version))
 	if FileAccess.file_exists(final):
 		DirAccess.remove_absolute(final)
 	if DirAccess.rename_absolute(FICHIER_TEMP, final) != OK:
-		_fin_telechargement(false, "Impossible d'enregistrer la mise à jour sur cet ordinateur.")
+		_fin_telechargement(false, UiCommun.t("Impossible d'enregistrer la mise à jour sur cet ordinateur."))
 		return
 	_etat = {
 		"version": str(fiche.version),

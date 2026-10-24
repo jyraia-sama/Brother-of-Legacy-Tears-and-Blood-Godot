@@ -57,7 +57,7 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
 	var titre := UiCommun.label("DECK", 32, UiCommun.C_OR)
@@ -111,7 +111,7 @@ func _creer_panneau_equipe() -> PanelContainer:
 	p.add_child(vb)
 	var h := HBoxContainer.new()
 	vb.add_child(h)
-	var t := UiCommun.label("ÉQUIPE", 18, UiCommun.C_OR)
+	var t := UiCommun.label(UiCommun.t("ÉQUIPE"), 18, UiCommun.C_OR)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(t)
 	_lbl_aide = UiCommun.label("", 14, UiCommun.C_DOUX)
@@ -121,7 +121,7 @@ func _creer_panneau_equipe() -> PanelContainer:
 	ligne.add_theme_constant_override("separation", 10)
 	ligne.alignment = BoxContainer.ALIGNMENT_CENTER
 	vb.add_child(ligne)
-	for groupe in [["AVANT  (corps à corps)", [0, 1]], ["ARRIÈRE  (distance)", [2, 3, 4]]]:
+	for groupe in [[UiCommun.t("AVANT  (corps à corps)"), [0, 1]], [UiCommun.t("ARRIÈRE  (distance)"), [2, 3, 4]]]:
 		var g := VBoxContainer.new()
 		g.add_theme_constant_override("separation", 4)
 		var lg := UiCommun.label(groupe[0], 13, Color(1, 1, 1, 0.5))
@@ -158,13 +158,13 @@ func _creer_panneau_reserve() -> PanelContainer:
 	_lbl_collection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h1.add_child(_lbl_collection)
 	# Filtre par classe (Tank, Guerrier, Assassin, Tireur, Mage, Soutien)
-	h1.add_child(UiCommun.label("Classe :", 14, UiCommun.C_DOUX))
+	h1.add_child(UiCommun.label(UiCommun.t("Classe :"), 14, UiCommun.C_DOUX))
 	var o_classe := OptionButton.new()
 	o_classe.focus_mode = Control.FOCUS_NONE
 	o_classe.add_theme_font_size_override("font_size", 14)
-	o_classe.add_item("Toutes", 0)
+	o_classe.add_item(UiCommun.t("Toutes"), 0)
 	for i in ORDRE_CLASSES.size():
-		o_classe.add_item("%s %s" % [ICONES_CLASSES[ORDRE_CLASSES[i]], UnitesData.ROLES[ORDRE_CLASSES[i]]], i + 1)
+		o_classe.add_item("%s %s" % [ICONES_CLASSES[ORDRE_CLASSES[i]], UnitesData.nom_role(ORDRE_CLASSES[i])], i + 1)
 	o_classe.item_selected.connect(func(i: int):
 		_filtre_classe = "" if i == 0 else str(ORDRE_CLASSES[i - 1])
 		_remplir_reserve())
@@ -173,7 +173,7 @@ func _creer_panneau_reserve() -> PanelContainer:
 	h.add_theme_constant_override("h_separation", 8)
 	h.add_theme_constant_override("v_separation", 6)
 	vb.add_child(h)
-	h.add_child(UiCommun.label("Trier :", 14, UiCommun.C_DOUX))
+	h.add_child(UiCommun.label(UiCommun.t("Trier :"), 14, UiCommun.C_DOUX))
 	for t in TRIS:
 		var b := UiCommun.bouton(t[1], 14)
 		b.custom_minimum_size = Vector2(0, 32)
@@ -183,7 +183,7 @@ func _creer_panneau_reserve() -> PanelContainer:
 			_remplir_reserve())
 		h.add_child(b)
 		_boutons_tri[t[0]] = b
-	_btn_vente_multiple = UiCommun.bouton("Vente multiple", 14)
+	_btn_vente_multiple = UiCommun.bouton(UiCommun.t("Vente multiple"), 14)
 	_btn_vente_multiple.custom_minimum_size = Vector2(0, 32)
 	_btn_vente_multiple.toggle_mode = true
 	_btn_vente_multiple.pressed.connect(_basculer_vente_multiple)
@@ -206,7 +206,7 @@ func _creer_panneau_reserve() -> PanelContainer:
 	_lbl_vente = UiCommun.label("", 16, Color("ffd060"))
 	_lbl_vente.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_barre_vente.add_child(_lbl_vente)
-	var vendre := UiCommun.bouton("Vendre la sélection")
+	var vendre := UiCommun.bouton(UiCommun.t("Vendre la sélection"))
 	vendre.pressed.connect(_vendre_selection_multiple)
 	_barre_vente.add_child(vendre)
 	return p
@@ -258,7 +258,7 @@ func _remplir_equipe() -> void:
 			var sv := UiCommun.style_carte(Color(1, 1, 1, 0.06))
 			sv.bg_color = Color(0.04, 0.03, 0.03, 0.85)
 			carte.add_theme_stylebox_override("disabled", sv)
-			carte.text = "🔒\n" + Deblocages.condition_place(i).replace("Se débloque ", "").replace("à la fin", "Fin").replace("au chapitre", "Chapitre")
+			carte.text = "🔒\n" + Deblocages.condition_place(i).replace(UiCommun.t("Se débloque "), "").replace(UiCommun.t("à la fin"), UiCommun.t("Fin")).replace(UiCommun.t("au chapitre"), UiCommun.t("Chapitre"))
 			carte.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			carte.add_theme_font_size_override("font_size", 13)
 			carte.add_theme_color_override("font_disabled_color", Color("8a7f78"))
@@ -273,8 +273,8 @@ func _remplir_equipe() -> void:
 			carte.add_theme_color_override("font_color", UiCommun.C_DOUX)
 		carte.pressed.connect(_clic_place.bind(i))
 		boite.add_child(carte)
-	_lbl_aide.text = "Clique une unité puis une place pour l'y mettre" if _selection < 0 \
-		else "Clique une place pour y mettre l'unité choisie"
+	_lbl_aide.text = UiCommun.t("Clique une unité puis une place pour l'y mettre") if _selection < 0 \
+		else UiCommun.t("Clique une place pour y mettre l'unité choisie")
 
 
 func _remplir_reserve() -> void:
@@ -287,7 +287,7 @@ func _remplir_reserve() -> void:
 	liste.sort_custom(_comparer)
 	var equipe := Sauvegarde.get_equipe()
 	_lbl_collection.text = UiCommun.t("COLLECTION  (%d unités)") % nb_total if _filtre_classe == "" \
-		else UiCommun.t("COLLECTION  (%d %s sur %d)") % [liste.size(), UnitesData.ROLES[_filtre_classe], nb_total]
+		else UiCommun.t("COLLECTION  (%d %s sur %d)") % [liste.size(), UnitesData.nom_role(_filtre_classe), nb_total]
 	for h in liste:
 		var uid := int(h["uid"])
 		var carte := UiCommun.carte_heros(h, TAILLE_CARTE.x, TAILLE_CARTE.y)
@@ -296,11 +296,11 @@ func _remplir_reserve() -> void:
 		if _a_vendre.has(uid):
 			carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color("ff6a5a"), 0.1, 3))
 		if uid in equipe:
-			UiCommun.badge(carte, "Équipe", UiCommun.C_OR)
+			UiCommun.badge(carte, UiCommun.t("Équipe"), UiCommun.C_OR)
 		elif h.get("verrou", false) or h.get("depart", false):
-			UiCommun.badge(carte, "Protégé" if h.get("depart", false) else "Verrouillé", Color("8ab0d0"))
+			UiCommun.badge(carte, UiCommun.t("Protégé") if h.get("depart", false) else UiCommun.t("Verrouillé"), Color("8ab0d0"))
 		if _a_vendre.has(uid):
-			UiCommun.badge(carte, "À vendre", Color("ff8a7a"), false)
+			UiCommun.badge(carte, UiCommun.t("À vendre"), Color("ff8a7a"), false)
 		carte.pressed.connect(_clic_reserve.bind(uid))
 		_grille.add_child(carte)
 
@@ -313,8 +313,8 @@ func _comparer(a: Dictionary, b: Dictionary) -> bool:
 			if int(a["niveau"]) != int(b["niveau"]):
 				return int(a["niveau"]) > int(b["niveau"])
 		"nom":
-			if ua["nom"] != ub["nom"]:
-				return ua["nom"] < ub["nom"]
+			if UiCommun.t(str(ua["nom"])) != UiCommun.t(str(ub["nom"])):
+				return UiCommun.t(str(ua["nom"])) < UiCommun.t(str(ub["nom"]))
 		"element":
 			if ua["element"] != ub["element"]:
 				return ua["element"] < ub["element"]
@@ -340,7 +340,7 @@ func _clic_reserve(uid: int) -> void:
 	if _vente_multiple:
 		var raison := Sauvegarde.raison_invendable(uid)
 		if raison != "":
-			_message("Impossible de vendre", raison)
+			_message(UiCommun.t("Impossible de vendre"), raison)
 			return
 		if _a_vendre.has(uid):
 			_a_vendre.erase(uid)
@@ -359,9 +359,9 @@ func _clic_place(place: int) -> void:
 	var slots := Sauvegarde.get_slots()
 	if _selection >= 0 and Sauvegarde.est_occupe(_selection):
 		if Menagerie.heros_en_chasse(_selection):
-			_message("En chasse", "Cette unité est partie en chasse à la Ménagerie : rappelle-la depuis la Ménagerie (Aventure).")
+			_message(UiCommun.t("En chasse"), UiCommun.t("Cette unité est partie en chasse à la Ménagerie : rappelle-la depuis la Ménagerie (Aventure)."))
 		else:
-			_message("En mission", "Cette unité est partie en mission avec la Compagnie : elle reviendra à la fin de la mission.")
+			_message(UiCommun.t("En mission"), UiCommun.t("Cette unité est partie en mission avec la Compagnie : elle reviendra à la fin de la mission."))
 		return
 	if _selection >= 0 and slots[place] != _selection:
 		Sauvegarde.placer(_selection, place)
@@ -377,7 +377,7 @@ func _clic_place(place: int) -> void:
 
 func _retirer() -> void:
 	if not Sauvegarde.retirer_de_equipe(_selection):
-		_message("Impossible", "L'équipe doit garder au moins une unité.")
+		_message("Impossible", UiCommun.t("L'équipe doit garder au moins une unité."))
 		return
 	_tout_rafraichir()
 
@@ -386,10 +386,10 @@ func _vendre_une() -> void:
 	var uid := _selection
 	var raison := Sauvegarde.raison_invendable(uid)
 	if raison != "":
-		_message("Impossible de vendre", raison)
+		_message(UiCommun.t("Impossible de vendre"), raison)
 		return
 	var h := Sauvegarde.get_heros(uid)
-	_confirmer(UiCommun.t("Vendre %s (Nv %d) pour %d or ?") % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"]), Sauvegarde.prix_vente(uid)],
+	_confirmer(UiCommun.t("Vendre %s (Nv %d) pour %d or ?") % [UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])), int(h["niveau"]), Sauvegarde.prix_vente(uid)],
 		func():
 			Sauvegarde.vendre([uid])
 			_selection = -1
@@ -414,7 +414,7 @@ func _maj_barre_vente() -> void:
 	for uid in _a_vendre:
 		total += Sauvegarde.prix_vente(uid)
 	_lbl_vente.text = UiCommun.t("%d unité(s) sélectionnée(s)  ·  Total : %d or") % [_a_vendre.size(), total] if not _a_vendre.is_empty() \
-		else "Clique les unités à vendre (l'équipe et les unités protégées ne peuvent pas être vendues)."
+		else UiCommun.t("Clique les unités à vendre (l'équipe et les unités protégées ne peuvent pas être vendues).")
 
 
 func _vendre_selection_multiple() -> void:
@@ -438,7 +438,7 @@ func _maj_fiche() -> void:
 		e.queue_free()
 	var h := Sauvegarde.get_heros(_selection)
 	if h.is_empty():
-		var vide := UiCommun.label("Choisis une unité pour voir sa fiche.\n\nPlaces 1-2 : AVANT (corps à corps : Guerrier, Tank, Assassin).\nPlaces 3-5 : ARRIÈRE (Tireur, Mage, Soutien).\n\nLe corps à corps fait plus de dégâts à l'Avant, mais l'Avant reçoit aussi plus de coups.", 16, UiCommun.C_DOUX)
+		var vide := UiCommun.label(UiCommun.t("Choisis une unité pour voir sa fiche.\n\nPlaces 1-2 : AVANT (corps à corps : Guerrier, Tank, Assassin).\nPlaces 3-5 : ARRIÈRE (Tireur, Mage, Soutien).\n\nLe corps à corps fait plus de dégâts à l'Avant, mais l'Avant reçoit aussi plus de coups."), 16, UiCommun.C_DOUX)
 		vide.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(vide)
 		return
@@ -459,14 +459,14 @@ func _maj_fiche() -> void:
 		tete.add_child(UiCommun.portrait(id, 72))
 	var infos := VBoxContainer.new()
 	infos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var nom := UiCommun.label(u["nom"], 24, UiCommun.couleur_rarete(id))
+	var nom := UiCommun.label(UiCommun.t(str(u["nom"])), 24, UiCommun.couleur_rarete(id))
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	infos.add_child(nom)
 	var nb_et := Fusion.etoiles(h)
-	infos.add_child(UiCommun.label(Fusion.texte_etoiles(nb_et) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else "") \
+	infos.add_child(UiCommun.label(Fusion.texte_etoiles(nb_et) + (UiCommun.t("  ÉVEILLÉ") if nb_et >= Fusion.ETOILES_MAX else "") \
 		+ (UiCommun.t("   (+%d %% stats)") % int(round((Fusion.multiplicateur(nb_et) - 1.0) * 100)) if nb_et > 1 else ""), 16, Color("ffd060")))
-	var desc := UiCommun.label("%s · %s · %s · %s" % [UiCommun.texte_rarete(id), UnitesData.ELEMENTS[u["element"]],
-		UnitesData.ROLES[u["role"]], "Avant conseillé" if u["position"] == "avant" else "Arrière conseillé"], 14, UiCommun.C_DOUX)
+	var desc := UiCommun.label("%s · %s · %s · %s" % [UiCommun.texte_rarete(id), UnitesData.nom_element(u["element"]),
+		UnitesData.nom_role(u["role"]), UiCommun.t("Avant conseillé" if u["position"] == "avant" else UiCommun.t("Arrière conseillé"))], 14, UiCommun.C_DOUX)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	infos.add_child(desc)
 	tete.add_child(infos)
@@ -485,7 +485,7 @@ func _maj_fiche() -> void:
 	var grille := GridContainer.new()
 	grille.columns = 5
 	grille.add_theme_constant_override("h_separation", 6)
-	for paire in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"]]:
+	for paire in [["pv", UiCommun.t("PV")], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"]]:
 		var c := VBoxContainer.new()
 		c.custom_minimum_size = Vector2(76, 0)
 		var dom: bool = paire[0] in u.get("dominantes", [])
@@ -508,7 +508,7 @@ func _maj_fiche() -> void:
 	_fiche.add_child(actions)
 	var place := Sauvegarde.place_de(_selection)
 	if place >= 0:
-		var r := UiCommun.bouton("Retirer de l'équipe", 15)
+		var r := UiCommun.bouton(UiCommun.t("Retirer de l'équipe"), 15)
 		r.pressed.connect(_retirer)
 		actions.add_child(r)
 	var raison := Sauvegarde.raison_invendable(_selection)
@@ -518,22 +518,22 @@ func _maj_fiche() -> void:
 	v.pressed.connect(_vendre_une)
 	actions.add_child(v)
 	if not h.get("depart", false):
-		var ver := UiCommun.bouton("Déverrouiller" if h.get("verrou", false) else "Verrouiller", 15)
+		var ver := UiCommun.bouton(UiCommun.t("Déverrouiller") if h.get("verrou", false) else UiCommun.t("Verrouiller"), 15)
 		ver.pressed.connect(_basculer_verrou)
 		actions.add_child(ver)
 	if Evolution.peut_evoluer(h["id"]) or UnitesData.est_evolue(h["id"]):
-		var ev := UiCommun.bouton("✦ Évolution", 15)
-		ev.tooltip_text = "Voir l'évolution de cette unité à l'Autel d'Évolution."
+		var ev := UiCommun.bouton(UiCommun.t("✦ Évolution"), 15)
+		ev.tooltip_text = UiCommun.t("Voir l'évolution de cette unité à l'Autel d'Évolution.")
 		ev.pressed.connect(func():
 			EcranEvolution.scene_retour = SCENE
 			EcranEvolution.selection_initiale = _selection
 			get_tree().change_scene_to_file(EcranEvolution.SCENE))
 		actions.add_child(ev)
 	if place >= 0:
-		_fiche.add_child(UiCommun.label(UiCommun.t("Dans l'équipe : place %d (%s)") % [place + 1, "Avant" if place < 2 else "Arrière"], 14, UiCommun.C_OR))
+		_fiche.add_child(UiCommun.label(UiCommun.t("Dans l'équipe : place %d (%s)") % [place + 1, UiCommun.t("Avant" if place < 2 else UiCommun.t("Arrière"))], 14, UiCommun.C_OR))
 	# Raccourci bien visible vers la section SORTS (niveaux de sorts, plus bas dans la fiche)
-	var btn_sorts := UiCommun.bouton("✦ Améliorer les sorts", 15)
-	btn_sorts.tooltip_text = "Monter le niveau des sorts de ce héros (Pages de Grimoire de la Bibliothèque Interdite)."
+	var btn_sorts := UiCommun.bouton(UiCommun.t("✦ Améliorer les sorts"), 15)
+	btn_sorts.tooltip_text = UiCommun.t("Monter le niveau des sorts de ce héros (Pages de Grimoire de la Bibliothèque Interdite).")
 	UiCommun.bouton_vif(btn_sorts, Color("8a5a1e"))
 	_fiche.add_child(btn_sorts)
 
@@ -577,7 +577,7 @@ func _message(titre: String, texte: String) -> void:
 
 
 func _confirmer(texte: String, action: Callable) -> void:
-	FenetreSimple.ouvrir(self, "Confirmation", texte, [["Annuler", null], ["Oui", func():
+	FenetreSimple.ouvrir(self, "Confirmation", texte, [[UiCommun.t("Annuler"), null], [UiCommun.t("Oui"), func():
 		action.call()]])
 
 

@@ -55,7 +55,7 @@ static func ouvrir(parent: Node, id_joueur: String) -> void:
 	if not is_instance_valid(parent) or not parent.is_inside_tree():
 		return
 	if not r.ok or not (r.data is Dictionary):
-		FenetreSimple.ouvrir(parent, "Profil", r.erreur if not r.ok else "Joueur introuvable.")
+		FenetreSimple.ouvrir(parent, UiCommun.t("Profil"), r.erreur if not r.ok else UiCommun.t("Joueur introuvable."))
 		return
 	afficher(parent, r.data)
 
@@ -86,19 +86,19 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 	tete.add_child(id_col)
 	id_col.add_child(UiCommun.label(EnLigne.nom_complet(str(p.get("pseudo", "?"))), 24, UiCommun.C_LEGENDE))
 	if str(vit.get("titre", "")) != "":
-		id_col.add_child(UiCommun.label("« %s »" % vit["titre"], 16, Color("ffb070")))
+		id_col.add_child(UiCommun.label("« %s »" % UiCommun.t(str(vit["titre"])), 16, Color("ffb070")))
 	id_col.add_child(UiCommun.label(UiCommun.t("Niveau de compte %d") % int(p.get("niveau", 1)), 17))
 	var pres := EnLigne.texte_presence(str(p.get("vu_le", "")))
-	id_col.add_child(UiCommun.label(pres, 15, C_EN_LIGNE if pres == "En ligne" else UiCommun.C_DOUX))
+	id_col.add_child(UiCommun.label(pres, 15, C_EN_LIGNE if pres == UiCommun.t("En ligne") else UiCommun.C_DOUX))
 	var guilde := str(p.get("guilde", ""))
-	g.add_child(UiCommun.label("Guilde : " + (guilde + " (" + EcranSocial._nom_role(str(p.get("role", ""))) + ")" if guilde != "" else "aucune"), 16, UiCommun.C_OR))
-	g.add_child(UiCommun.label("Joueur depuis le " + _date(str(p.get("cree_le", ""))), 14, UiCommun.C_DOUX))
+	g.add_child(UiCommun.label(UiCommun.t("Guilde : ") + (guilde + " (" + EcranSocial._nom_role(str(p.get("role", ""))) + ")" if guilde != "" else "aucune"), 16, UiCommun.C_OR))
+	g.add_child(UiCommun.label(UiCommun.t("Joueur depuis le ") + _date(str(p.get("cree_le", ""))), 14, UiCommun.C_DOUX))
 
 	var h: Dictionary = vit.get("heros", {}) if vit.get("heros", {}) is Dictionary else {}
 	var id_h := str(h.get("id", p.get("heros_vitrine", "")))
 	if id_h != "" and UnitesData.existe(id_h):
 		g.add_child(HSeparator.new())
-		g.add_child(UiCommun.label("HÉROS PRINCIPAL", 16, UiCommun.C_OR))
+		g.add_child(UiCommun.label(UiCommun.t("HÉROS PRINCIPAL"), 16, UiCommun.C_OR))
 		var hh := HBoxContainer.new()
 		hh.add_theme_constant_override("separation", 12)
 		g.add_child(hh)
@@ -109,17 +109,17 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 		hv.add_theme_constant_override("separation", 2)
 		hh.add_child(hv)
 		var u := UnitesData.get_unite(id_h)
-		var nom := UiCommun.label(str(u["nom"]), 17, UiCommun.couleur_rarete(id_h))
+		var nom := UiCommun.label(str(UiCommun.t(str(u["nom"]))), 17, UiCommun.couleur_rarete(id_h))
 		nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		nom.custom_minimum_size = Vector2(180, 0)
 		hv.add_child(nom)
 		if not h.is_empty():
 			hv.add_child(UiCommun.label(UiCommun.t("Niv. %d  ·  %s") % [int(h.get("niveau", 1)), Fusion.texte_etoiles(int(h.get("etoiles", 0)), false)], 14, Color("ffd060")))
 			var st: Dictionary = h.get("stats", {}) if h.get("stats", {}) is Dictionary else {}
-			for k in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"]]:
+			for k in [["pv", UiCommun.t("PV")], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"]]:
 				if st.has(k[0]):
-					hv.add_child(UiCommun.label("%s : %s" % [k[1], _nombre(int(st[k[0]]))], 14))
-			hv.add_child(UiCommun.label("Échos : %d / 6" % int(h.get("echos", 0)), 14, Color("d0453a")))
+					hv.add_child(UiCommun.label(UiCommun.t("%s : %s") % [k[1], _nombre(int(st[k[0]]))], 14))
+			hv.add_child(UiCommun.label(UiCommun.t("Échos : %d / 6") % int(h.get("echos", 0)), 14, Color("d0453a")))
 
 	# ---------- Colonne droite : équipe, compétitions, statistiques, collection ----------
 	var d := VBoxContainer.new()
@@ -133,7 +133,7 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 		equipe = arene.get("equipe", [])
 	if not equipe.is_empty():
 		var puiss := int(vit.get("puissance", arene.get("puissance", 0)))
-		d.add_child(UiCommun.label("ÉQUIPE" + (UiCommun.t("   ·   Puissance %s") % _nombre(puiss) if puiss > 0 else ""), 16, UiCommun.C_OR))
+		d.add_child(UiCommun.label(UiCommun.t("ÉQUIPE") + (UiCommun.t("   ·   Puissance %s") % _nombre(puiss) if puiss > 0 else ""), 16, UiCommun.C_OR))
 		var le := HBoxContainer.new()
 		le.add_theme_constant_override("separation", 10)
 		d.add_child(le)
@@ -146,32 +146,32 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 	var classee: Dictionary = p.get("classee", {}) if p.get("classee", {}) is Dictionary else {}
 	var lignes_comp: Array = []
 	if not arene.is_empty():
-		lignes_comp.append(["Arène", "%d pts  ·  %d V / %d D" % [int(arene.get("points", 0)), int(arene.get("victoires", 0)), int(arene.get("defaites", 0))]])
+		lignes_comp.append([UiCommun.t("Arène"), UiCommun.t("%d pts  ·  %d V / %d D") % [int(arene.get("points", 0)), int(arene.get("victoires", 0)), int(arene.get("defaites", 0))]])
 	if not classee.is_empty():
-		lignes_comp.append(["Arène classée", "%d pts  ·  %d V / %d D / %d N" % [int(classee.get("points", 0)), int(classee.get("victoires", 0)),
+		lignes_comp.append([UiCommun.t("Arène classée"), UiCommun.t("%d pts  ·  %d V / %d D / %d N") % [int(classee.get("points", 0)), int(classee.get("victoires", 0)),
 			int(classee.get("defaites", 0)), int(classee.get("egalites", 0))]])
 	if int(p.get("marche_record", 0)) > 0:
-		lignes_comp.append(["Marche Maudite", UiCommun.t("record %s pts") % _nombre(int(p["marche_record"]))])
+		lignes_comp.append([UiCommun.t("Marche Maudite"), UiCommun.t("record %s pts") % _nombre(int(p["marche_record"]))])
 	if not lignes_comp.is_empty():
 		d.add_child(HSeparator.new())
-		d.add_child(UiCommun.label("COMPÉTITIONS", 16, UiCommun.C_OR))
+		d.add_child(UiCommun.label(UiCommun.t("COMPÉTITIONS"), 16, UiCommun.C_OR))
 		d.add_child(_grille(lignes_comp))
 
 	var st2: Dictionary = vit.get("stats", {}) if vit.get("stats", {}) is Dictionary else {}
 	if not st2.is_empty():
 		d.add_child(HSeparator.new())
-		d.add_child(UiCommun.label("STATISTIQUES", 16, UiCommun.C_OR))
+		d.add_child(UiCommun.label(UiCommun.t("STATISTIQUES"), 16, UiCommun.C_OR))
 		d.add_child(_grille([
-			["Chapitres terminés", _nombre(int(st2.get("chapitres", 0)))],
-			["Combats gagnés", _nombre(int(st2.get("combats_gagnes", 0)))],
-			["Bestiaire", "%d unités découvertes" % int(st2.get("bestiaire", 0))],
-			["Invocations", _nombre(int(st2.get("invocations", 0)))],
-			["Tour de l'Enfer", UiCommun.t("étage %d") % int(st2.get("tour_enfer", 0))],
-			["Tour du Paradis", UiCommun.t("étage %d") % int(st2.get("tour_paradis", 0))],
-			["Donjons terminés", _nombre(int(st2.get("donjons", 0)))],
-			["Boss de Monde abattus", _nombre(int(st2.get("boss_monde", 0)))],
-			["Évolutions", _nombre(int(st2.get("evolutions", 0)))],
-			["Succès", "%d paliers" % int(st2.get("succes", 0))],
+			[UiCommun.t("Chapitres terminés"), _nombre(int(st2.get("chapitres", 0)))],
+			[UiCommun.t("Combats gagnés"), _nombre(int(st2.get("combats_gagnes", 0)))],
+			[UiCommun.t("Bestiaire"), UiCommun.t("%d unités découvertes") % int(st2.get("bestiaire", 0))],
+			[UiCommun.t("Invocations"), _nombre(int(st2.get("invocations", 0)))],
+			[UiCommun.t("Tour de l'Enfer"), UiCommun.t("étage %d") % int(st2.get("tour_enfer", 0))],
+			[UiCommun.t("Tour du Paradis"), UiCommun.t("étage %d") % int(st2.get("tour_paradis", 0))],
+			[UiCommun.t("Donjons terminés"), _nombre(int(st2.get("donjons", 0)))],
+			[UiCommun.t("Boss de Monde abattus"), _nombre(int(st2.get("boss_monde", 0)))],
+			[UiCommun.t("Évolutions"), _nombre(int(st2.get("evolutions", 0)))],
+			[UiCommun.t("Succès"), UiCommun.t("%d paliers") % int(st2.get("succes", 0))],
 		], 2))
 
 	var col: Dictionary = vit.get("collection", {}) if vit.get("collection", {}) is Dictionary else {}
@@ -182,15 +182,15 @@ static func afficher(parent: Node, p: Dictionary) -> void:
 		lc.add_theme_constant_override("separation", 18)
 		d.add_child(lc)
 		for rr in ["N", "R", "SR", "SSR", "UR", "LEG"]:
-			lc.add_child(UiCommun.label("%s : %d" % ["Légende" if rr == "LEG" else rr, int(col.get(rr, 0))], 15, UiCommun.COULEURS_RARETE[rr]))
+			lc.add_child(UiCommun.label("%s : %d" % [UiCommun.t("Légende") if rr == "LEG" else rr, int(col.get(rr, 0))], 15, UiCommun.COULEURS_RARETE[rr]))
 
 	if vit.is_empty():
-		d.add_child(UiCommun.label("Ce joueur n'a pas encore partagé sa fiche détaillée\n(elle apparaîtra à sa prochaine connexion avec une version récente du jeu).", 14, UiCommun.C_DOUX))
+		d.add_child(UiCommun.label(UiCommun.t("Ce joueur n'a pas encore partagé sa fiche détaillée\n(elle apparaîtra à sa prochaine connexion avec une version récente du jeu)."), 14, UiCommun.C_DOUX))
 
 	var f := FenetreSimple.new()
 	f.largeur = 1040.0
-	f.titre = "PROFIL"
-	f.boutons = [["Fermer", null]]
+	f.titre = UiCommun.t("PROFIL")
+	f.boutons = [[UiCommun.t("Fermer"), null]]
 	f.contenu = defil
 	parent.add_child(f)
 

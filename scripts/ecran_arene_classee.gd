@@ -45,7 +45,7 @@ func _fond_ecran() -> String:
 	return "res://assets/fonds/arene.png"
 
 func _titre_ecran() -> String:
-	return "ARÈNE CLASSÉE"
+	return UiCommun.t("ARÈNE CLASSÉE")
 
 
 func _couleur() -> Color:
@@ -100,7 +100,7 @@ func _charger_etat() -> void:
 			_signature = sig
 			rafraichir()
 	elif _etat.is_empty():
-		_etat = {"erreur": r.erreur if not r.ok else "Réponse inattendue du serveur (as-tu lancé supabase/04_arene_classee.sql ?)."}
+		_etat = {"erreur": r.erreur if not r.ok else UiCommun.t("Réponse inattendue du serveur (as-tu lancé supabase/04_arene_classee.sql ?).")}
 		rafraichir()
 
 
@@ -124,10 +124,10 @@ func _seconde() -> void:
 func _remplir() -> void:
 	_lbl_recherche = null
 	if not EnLigne.est_connecte():
-		_texte("L'Arène classée se joue en ligne contre d'autres joueurs : connecte-toi à ton compte (Paramètres → Gérer le compte).", 18, UiCommun.C_TEXTE)
+		_texte(UiCommun.t("L'Arène classée se joue en ligne contre d'autres joueurs : connecte-toi à ton compte (Paramètres → Gérer le compte)."), 18, UiCommun.C_TEXTE)
 		return
 	if _etat.is_empty():
-		_texte("Chargement…", 18)
+		_texte(UiCommun.t("Chargement…"), 18)
 		return
 	if _etat.has("erreur"):
 		_texte(str(_etat["erreur"]), 17, Color("ff7a6a"))
@@ -137,11 +137,11 @@ func _remplir() -> void:
 	var rec: Array = _etat.get("recompenses", [])
 	if not rec.is_empty():
 		var h := _ligne(Color("ffd060"))
-		var t := UiCommun.label("Récompenses de saison à réclamer : " + ", ".join(rec.map(func(x): return UiCommun.t("saison %d (%s)") % [int(x["saison"]), _nom_palier(str(x["palier"]))])), 17, Color("ffd060"))
+		var t := UiCommun.label(UiCommun.t("Récompenses de saison à réclamer : ") + ", ".join(rec.map(func(x): return UiCommun.t("saison %d (%s)") % [int(x["saison"]), _nom_palier(str(x["palier"]))])), 17, Color("ffd060"))
 		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		h.add_child(t)
-		var b := UiCommun.bouton("Réclamer", 17)
+		var b := UiCommun.bouton(UiCommun.t("Réclamer"), 17)
 		UiCommun.bouton_vif(b)
 		b.pressed.connect(_reclamer)
 		h.add_child(b)
@@ -153,7 +153,7 @@ func _remplir() -> void:
 		var t2 := UiCommun.label(UiCommun.t("Combat en cours contre %s !") % EnLigne.nom_complet(str(adv.get("pseudo", "?"))), 18, Color("ffb070"))
 		t2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h2.add_child(t2)
-		var b2 := UiCommun.bouton("Reprendre le combat", 17)
+		var b2 := UiCommun.bouton(UiCommun.t("Reprendre le combat"), 17)
 		b2.pressed.connect(_lancer_combat.bind(m))
 		h2.add_child(b2)
 	_zone_recherche()
@@ -180,7 +180,7 @@ func _bandeau() -> void:
 		int(_etat.get("victoires", 0)), int(_etat.get("defaites", 0)), int(_etat.get("egalites", 0)), suivant], 16, UiCommun.C_TEXTE))
 	var fin := EnLigne.date_vers_unix(str(_etat.get("fin_saison", ""))) - int(Time.get_unix_time_from_system())
 	vb.add_child(UiCommun.label(UiCommun.t("Saison %d — se termine dans %s. Récompense actuelle : %s") % [int(_etat.get("saison", 1)),
-		Calendrier.texte_duree(maxi(0, fin)), RECOMPENSES.get(pal, "")], 15, UiCommun.C_DOUX))
+		Calendrier.texte_duree(maxi(0, fin)), UiCommun.t(str(RECOMPENSES.get(pal, "")))], 15, UiCommun.C_DOUX))
 
 
 func _zone_recherche() -> void:
@@ -196,28 +196,28 @@ func _zone_recherche() -> void:
 	vb.add_child(portraits)
 	for u in equipe:
 		portraits.add_child(UiCommun.portrait(u["id"], 58))
-	var prep := UiCommun.bouton("✎ Préparer mon équipe", 17)
+	var prep := UiCommun.bouton(UiCommun.t("✎ Préparer mon équipe"), 17)
 	prep.custom_minimum_size = Vector2(0, 52)
 	prep.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	prep.tooltip_text = "Ouvre le Deck pour choisir tes héros et leurs places ; tu reviens ensuite ici."
+	prep.tooltip_text = UiCommun.t("Ouvre le Deck pour choisir tes héros et leurs places ; tu reviens ensuite ici.")
 	prep.disabled = _recherche
 	prep.pressed.connect(_preparer_equipe)
 	portraits.add_child(prep)
 	if equipe.is_empty():
-		vb.add_child(UiCommun.label("Ton équipe est vide : prépare-la dans le Deck.", 15, Color("ff7a6a")))
+		vb.add_child(UiCommun.label(UiCommun.t("Ton équipe est vide : prépare-la dans le Deck."), 15, Color("ff7a6a")))
 	var droite := VBoxContainer.new()
 	droite.add_theme_constant_override("separation", 6)
 	h.add_child(droite)
 	if _recherche:
-		_lbl_recherche = UiCommun.label("Recherche d'un adversaire…", 17, Color("ffd060"))
+		_lbl_recherche = UiCommun.label(UiCommun.t("Recherche d'un adversaire…"), 17, Color("ffd060"))
 		droite.add_child(_lbl_recherche)
-		var an := UiCommun.bouton("Annuler la recherche", 17)
+		var an := UiCommun.bouton(UiCommun.t("Annuler la recherche"), 17)
 		an.pressed.connect(func():
 			_quitter_file()
 			rafraichir())
 		droite.add_child(an)
 	else:
-		var b := UiCommun.bouton("RECHERCHER UN ADVERSAIRE", 20)
+		var b := UiCommun.bouton(UiCommun.t("RECHERCHER UN ADVERSAIRE"), 20)
 		b.custom_minimum_size = Vector2(360, 60)
 		b.disabled = equipe.is_empty() or _etat.get("match") is Dictionary
 		b.pressed.connect(_demarrer_recherche)
@@ -231,10 +231,10 @@ func _zone_defis() -> void:
 		var t := UiCommun.label(UiCommun.t("%s (%s, %d points) te défie !") % [EnLigne.nom_complet(str(d["de"].get("pseudo", "?"))), _nom_palier(str(d["de"].get("palier", "bronze"))), int(d["de"].get("points", 0))], 18, Color("ffb070"))
 		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h.add_child(t)
-		var ok := UiCommun.bouton("Accepter", 17)
+		var ok := UiCommun.bouton(UiCommun.t("Accepter"), 17)
 		ok.pressed.connect(_repondre.bind(str(d["id"]), true))
 		h.add_child(ok)
-		var non := UiCommun.bouton("Refuser", 15)
+		var non := UiCommun.bouton(UiCommun.t("Refuser"), 15)
 		non.pressed.connect(_repondre.bind(str(d["id"]), false))
 		h.add_child(non)
 	var env = _etat.get("defi_envoye")
@@ -243,7 +243,7 @@ func _zone_defis() -> void:
 		var t2 := UiCommun.label(UiCommun.t("Défi envoyé à %s… en attente de sa réponse (2 min).") % EnLigne.nom_complet(str(env["a"].get("pseudo", "?"))), 17, Color("ffd060"))
 		t2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h2.add_child(t2)
-		var an := UiCommun.bouton("Annuler", 15)
+		var an := UiCommun.bouton(UiCommun.t("Annuler"), 15)
 		an.pressed.connect(func():
 			await EnLigne.appeler("ac_annuler_defi")
 			_charger_etat())
@@ -251,9 +251,9 @@ func _zone_defis() -> void:
 	elif env is Dictionary and str(env.get("etat", "")) == "refusee":
 		_texte(UiCommun.t("%s a refusé ton défi.") % EnLigne.nom_complet(str(env["a"].get("pseudo", "?"))), 15, Color("ff7a6a"))
 	# Amis
-	_titre("DÉFIER UN AMI (compte pour le classement)", UiCommun.C_OR)
+	_titre(UiCommun.t("DÉFIER UN AMI (compte pour le classement)"), UiCommun.C_OR)
 	if _amis.is_empty():
-		_texte("Ajoute des amis dans l'écran Social pour les défier.")
+		_texte(UiCommun.t("Ajoute des amis dans l'écran Social pour les défier."))
 		return
 	var g := GridContainer.new()
 	g.columns = 3
@@ -277,9 +277,9 @@ func _zone_defis() -> void:
 			Color("8fe07a") if en_ligne else UiCommun.C_DOUX)
 		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		hh.add_child(t)
-		var b := UiCommun.bouton("Défier", 15)
+		var b := UiCommun.bouton(UiCommun.t("Défier"), 15)
 		b.disabled = not en_ligne or _recherche or _equipe().is_empty()
-		b.tooltip_text = "" if en_ligne else "Ton ami doit être connecté au jeu."
+		b.tooltip_text = "" if en_ligne else UiCommun.t("Ton ami doit être connecté au jeu.")
 		b.pressed.connect(_defier.bind(str(a["id"]), str(a.get("pseudo", ""))))
 		hh.add_child(b)
 
@@ -288,9 +288,9 @@ func _zone_classement() -> Control:
 	var vb := VBoxContainer.new()
 	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vb.add_theme_constant_override("separation", 3)
-	vb.add_child(UiCommun.label("CLASSEMENT DE LA SAISON", 18, UiCommun.C_OR))
+	vb.add_child(UiCommun.label(UiCommun.t("CLASSEMENT DE LA SAISON"), 18, UiCommun.C_OR))
 	if _classement.is_empty():
-		vb.add_child(UiCommun.label("Personne n'a encore combattu cette saison.", 14, UiCommun.C_DOUX))
+		vb.add_child(UiCommun.label(UiCommun.t("Personne n'a encore combattu cette saison."), 14, UiCommun.C_DOUX))
 	for i in _classement.size():
 		var x: Dictionary = _classement[i]
 		var moi := str(x.get("pseudo", "")) == EnLigne.pseudo()
@@ -299,13 +299,13 @@ func _zone_classement() -> Control:
 			Color("ffd060") if moi else PALIERS.get(str(x.get("palier", "bronze")), PALIERS["bronze"])["couleur"]))
 	if not _historique.is_empty():
 		vb.add_child(HSeparator.new())
-		vb.add_child(UiCommun.label("TES DERNIERS COMBATS", 18, UiCommun.C_OR))
+		vb.add_child(UiCommun.label(UiCommun.t("TES DERNIERS COMBATS"), 18, UiCommun.C_OR))
 		for x in _historique.slice(0, 8):
 			var res := str(x.get("resultat", ""))
 			var dl = x.get("delta")
-			vb.add_child(UiCommun.label(UiCommun.t("%s contre %s  (%s)%s") % [{"victoire": "Victoire", "defaite": "Défaite", "egalite": "Égalité"}.get(res, res),
+			vb.add_child(UiCommun.label(UiCommun.t("%s contre %s  (%s)%s") % [{"victoire": UiCommun.t("Victoire"), "defaite": UiCommun.t("Défaite"), "egalite": UiCommun.t("Égalité")}.get(res, res),
 				EnLigne.nom_complet(str(x.get("adversaire", "?"))), ("+" if dl != null and int(dl) >= 0 else "") + str(dl if dl != null else "?"),
-				"  · forfait" if x.get("forfait", false) else ""], 14,
+				UiCommun.t("  · forfait") if x.get("forfait", false) else ""], 14,
 				Color("8fe07a") if res == "victoire" else (Color("ff7a6a") if res == "defaite" else UiCommun.C_DOUX)))
 	return vb
 
@@ -330,7 +330,7 @@ func _zone_regles() -> Control:
 
 
 func _nom_palier(p: String) -> String:
-	return PALIERS.get(p, PALIERS["bronze"])["nom"]
+	return UiCommun.t(str(PALIERS.get(p, PALIERS["bronze"])["nom"]))
 
 
 # =====================================================================
@@ -375,7 +375,7 @@ func _chercher() -> void:
 		var d: Dictionary = r.data
 		if not d.get("ok", false):
 			_recherche = false
-			_erreur(ERREURS.get(str(d.get("erreur", "")), str(d.get("erreur", ""))))
+			_erreur(UiCommun.t(str(ERREURS.get(str(d.get("erreur", "")), str(d.get("erreur", ""))))))
 			rafraichir()
 			return
 		if d.get("match") is Dictionary:
@@ -383,7 +383,7 @@ func _chercher() -> void:
 			_lancer_combat(d["match"])
 			return
 		var n := int(d.get("dans_la_file", 1)) - 1
-		_info_file = UiCommun.t("  ·  %d autre(s) joueur(s) cherche(nt)") % n if n > 0 else "  ·  personne d'autre pour l'instant"
+		_info_file = UiCommun.t("  ·  %d autre(s) joueur(s) cherche(nt)") % n if n > 0 else UiCommun.t("  ·  personne d'autre pour l'instant")
 
 
 func _quitter_file() -> void:
@@ -398,7 +398,7 @@ func _defier(id_ami: String, pseudo: String) -> void:
 		_annoncer([UiCommun.t("Défi envoyé à %s !") % EnLigne.nom_complet(pseudo)])
 		_charger_etat()
 	else:
-		_erreur(ERREURS.get(str(r.data), r.erreur if not r.ok else str(r.data)))
+		_erreur(UiCommun.t(str(ERREURS.get(str(r.data), r.erreur if not r.ok else str(r.data)))))
 
 
 func _repondre(id_defi: String, accepter: bool) -> void:
@@ -410,7 +410,7 @@ func _repondre(id_defi: String, accepter: bool) -> void:
 			return
 		_charger_etat()
 	else:
-		_erreur(ERREURS.get(str(r.data.get("erreur", "")) if r.data is Dictionary else "", r.erreur if not r.ok else "Défi impossible."))
+		_erreur(UiCommun.t(str(ERREURS.get(str(r.data.get("erreur", "")) if r.data is Dictionary else "", r.erreur if not r.ok else UiCommun.t("Défi impossible.")))))
 		_charger_etat()
 
 
@@ -424,7 +424,7 @@ func _reclamer() -> void:
 			l.append(UiCommun.t("Saison %d (%s) : +%d gemmes") % [int(x["saison"]), _nom_palier(str(x["palier"])), g])
 			if str(x.get("titre", "")) != "":
 				Succes.ajouter_titre(str(x["titre"]))
-				l.append(UiCommun.t("Nouveau titre : « %s »") % x["titre"])
+				l.append(UiCommun.t("Nouveau titre : « %s »") % UiCommun.t(str(x["titre"])))
 		Sauvegarde.sauvegarder()
 		_annoncer(l)
 	_signature = ""
@@ -435,7 +435,7 @@ func _lancer_combat(m: Dictionary) -> void:
 	if _lance:
 		return
 	if str(m.get("version", Version.NUMERO)) != Version.NUMERO:
-		_erreur(ERREURS["version"])
+		_erreur(UiCommun.t(str(ERREURS["version"])))
 		return
 	_lance = true
 	EcranCombat.demande = {

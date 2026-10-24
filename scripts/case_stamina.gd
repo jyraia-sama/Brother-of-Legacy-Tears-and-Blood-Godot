@@ -14,7 +14,7 @@ var _recharge: Label
 func _init(largeur := 190.0) -> void:
 	custom_minimum_size = Vector2(largeur, 46)
 	size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	tooltip_text = "Stamina : +1 point toutes les 5 minutes.\nLes Élixirs du Reliquaire et la Boutique la rechargent."
+	tooltip_text = UiCommun.t("Stamina : +1 point toutes les 5 minutes.\nLes Élixirs du Reliquaire et la Boutique la rechargent.")
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	var st := StyleBoxFlat.new()
 	st.bg_color = Color(0.03, 0.02, 0.024, 0.88)
@@ -89,7 +89,7 @@ func maj() -> void:
 	_lbl.text = "%d / %d" % [st, mx]
 	_barre.max_value = maxi(1, mx)
 	_barre.value = mini(st, mx)
-	_recharge.text = "Pleine" if st >= mx else UiCommun.t("+1 dans %s") % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
+	_recharge.text = UiCommun.t("Pleine") if st >= mx else UiCommun.t("+1 dans %s") % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
 
 
 func _texte(taille: int, couleur: Color) -> Label:

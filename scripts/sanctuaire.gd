@@ -159,7 +159,7 @@ static func valider_victoire(ep: String) -> Array:
 		Succes.ajouter_titre(TITRE_FINAL)
 		l.append(UiCommun.t("Nouveau titre : « %s »") % TITRE_FINAL)
 		Sauvegarde.ajouter_objet("coffre_royal", 1)
-		l.append("Coffre Royal x1")
+		l.append(UiCommun.t("Coffre Royal x1"))
 	else:
 		var id: String = info["boss"][0]
 		Sauvegarde.ajouter_heros(id)

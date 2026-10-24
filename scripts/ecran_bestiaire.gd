@@ -73,10 +73,10 @@ func _ready() -> void:
 	var entete := HBoxContainer.new()
 	entete.add_theme_constant_override("separation", 16)
 	colonne.add_child(entete)
-	var retour := _bouton("← Retour")
+	var retour := _bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(_retour)
 	entete.add_child(retour)
-	var titre := _label("BESTIAIRE", 34, C_OR)
+	var titre := _label(UiCommun.t("BESTIAIRE"), 34, C_OR)
 	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	entete.add_child(titre)
 	_compteur = _label("", 18, C_DOUX)
@@ -181,7 +181,7 @@ func _carte(id: String, u: Dictionary) -> Button:
 	# Unité découverte avec illustration : carte illustrée (comme dans le Deck)
 	if connu and UiCommun.chemin_portrait(id) != "":
 		var bas := UiCommun.habiller_carte(b, id, TAILLE_CARTE.x)
-		var n := _label(u["nom"], 14, C_TEXTE)
+		var n := _label(UiCommun.t(str(u["nom"])), 14, C_TEXTE)
 		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		n.custom_minimum_size = Vector2(TAILLE_CARTE.x - 12, 0)
@@ -220,7 +220,7 @@ func _carte(id: String, u: Dictionary) -> Button:
 	sp.set_border_width_all(3)
 	portrait.add_theme_stylebox_override("panel", sp)
 	vb.add_child(portrait)
-	var nom_court: String = u["nom"].trim_prefix("La ").trim_prefix("Le ").trim_prefix("L'")
+	var nom_court: String = UiCommun.t(str(u["nom"])).trim_prefix("La ").trim_prefix("Le ").trim_prefix("L'")
 	var initiale := _label(nom_court.substr(0, 1) if connu else "?", 30, Color.WHITE if connu else C_DOUX)
 	initiale.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initiale.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -231,7 +231,7 @@ func _carte(id: String, u: Dictionary) -> Button:
 	if connu:
 		UiCommun.habiller_portrait(portrait, id, initiale)
 
-	var nom := _label(u["nom"] if connu else "???", 15, C_TEXTE if connu else C_DOUX)
+	var nom := _label(UiCommun.t(str(u["nom"])) if connu else "???", 15, C_TEXTE if connu else C_DOUX)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	nom.custom_minimum_size = Vector2(130, 0)
@@ -258,14 +258,14 @@ func _carte_familier(fid: String) -> Button:
 	# Familier découvert avec illustration : carte illustrée, comme les héros
 	if connu and FamiliersData.chemin_image(fid) != "":
 		var bas := UiCommun.habiller_carte(b, fid, TAILLE_CARTE.x)
-		var n := _label(d["nom"], 14, C_TEXTE)
+		var n := _label(UiCommun.t(str(d["nom"])), 14, C_TEXTE)
 		n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		n.custom_minimum_size = Vector2(TAILLE_CARTE.x - 12, 0)
 		n.add_theme_color_override("font_outline_color", Color.BLACK)
 		n.add_theme_constant_override("outline_size", 5)
 		bas.add_child(n)
-		var r := _label(d["rarete"] + " · Familier", 12, bord)
+		var r := _label(d["rarete"] + UiCommun.t(" · Familier"), 12, bord)
 		r.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		r.add_theme_color_override("font_outline_color", Color.BLACK)
 		r.add_theme_constant_override("outline_size", 4)
@@ -280,7 +280,7 @@ func _carte_familier(fid: String) -> Button:
 	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(vb)
 	vb.add_child(EcranMenagerie.medaillon(fid, 76, connu))
-	var nom := _label(d["nom"] if connu else "???", 15, C_TEXTE if connu else C_DOUX)
+	var nom := _label(UiCommun.t(str(d["nom"])) if connu else "???", 15, C_TEXTE if connu else C_DOUX)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	nom.custom_minimum_size = Vector2(130, 0)
@@ -303,7 +303,7 @@ func _selectionner_familier(fid: String) -> void:
 	_f_vide.visible = not connu
 	_fiche.visible = connu
 	if not connu:
-		_f_vide.text = "???\n\nFamilier encore inconnu.\nObtiens-le au Pacte Sauvage de l'Autel d'Invocation (avec des Sceaux Sauvages) pour le découvrir."
+		_f_vide.text = UiCommun.t("???\n\nFamilier encore inconnu.\nObtiens-le au Pacte Sauvage de l'Autel d'Invocation (avec des Sceaux Sauvages) pour le découvrir.")
 		return
 	for e in _f_image.get_children():
 		e.queue_free()
@@ -318,17 +318,17 @@ func _selectionner_familier(fid: String) -> void:
 		centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		centre.add_child(EcranMenagerie.medaillon(fid, 260))
 		_f_image.add_child(centre)
-	_f_nom.text = d["nom"]
+	_f_nom.text = UiCommun.t(str(d["nom"]))
 	_f_nom.add_theme_color_override("font_color", COULEURS_RARETE[d["rarete"]])
-	_f_infos.text = UiCommun.t("%s  ·  %s  ·  Familier (Ménagerie)\nNon combattant · s'obtient au Pacte Sauvage de l'Autel d'Invocation") % [d["rarete"], UnitesData.ELEMENTS[d["element"]]]
+	_f_infos.text = UiCommun.t("%s  ·  %s  ·  Familier (Ménagerie)\nNon combattant · s'obtient au Pacte Sauvage de l'Autel d'Invocation") % [d["rarete"], UnitesData.nom_element(d["element"])]
 	_f_niveau.get_parent().visible = false
 	_f_stats.visible = false
 	var base := {"id": fid, "niveau": 1, "etoiles": 1}
-	_f_secondaires.text = "STATS DE CHASSE (niveau 1, 1 étoile)\n" + "\n".join(EcranMenagerie._lignes_stats(base)) \
+	_f_secondaires.text = UiCommun.t("STATS DE CHASSE (niveau 1, 1 étoile)\n") + "\n".join(EcranMenagerie._lignes_stats(base)) \
 		+ UiCommun.t("\nNiveau maximum : %d  ·  Éveil jusqu'à %d étoiles avec des doublons") % [int(d["niveau_max"]), FamiliersData.ETOILES_MAX]
 	for enfant in _f_skills.get_children():
 		enfant.queue_free()
-	var desc := _label(d["description"], 15, C_TEXTE)
+	var desc := _label(UiCommun.t(str(d["description"])), 15, C_TEXTE)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_f_skills.add_child(desc)
 
@@ -363,7 +363,7 @@ func _creer_fiche() -> PanelContainer:
 	vb.add_theme_constant_override("separation", 10)
 	defil.add_child(vb)
 
-	_f_vide = _label("Choisis une unité pour voir sa fiche.", 17, C_DOUX)
+	_f_vide = _label(UiCommun.t("Choisis une unité pour voir sa fiche."), 17, C_DOUX)
 	_f_vide.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(_f_vide)
 
@@ -385,7 +385,7 @@ func _creer_fiche() -> PanelContainer:
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 10)
 	_fiche.add_child(ligne)
-	_f_niveau = _label("Niveau 1", 17, C_TEXTE)
+	_f_niveau = _label(UiCommun.t("Niveau 1"), 17, C_TEXTE)
 	_f_niveau.custom_minimum_size = Vector2(100, 0)
 	ligne.add_child(_f_niveau)
 	_f_curseur = HSlider.new()
@@ -434,7 +434,7 @@ func _maj_fiche() -> void:
 	_f_vide.visible = not connu
 	_fiche.visible = connu
 	if not connu:
-		_f_vide.text = "???\n\nUnité encore inconnue.\nRencontre-la en combat, obtiens-la à l'Autel d'Invocation ou forge-la au Reliquaire pour la découvrir."
+		_f_vide.text = UiCommun.t("???\n\nUnité encore inconnue.\nRencontre-la en combat, obtiens-la à l'Autel d'Invocation ou forge-la au Reliquaire pour la découvrir.")
 		return
 
 	# Grande illustration en haut de la fiche (si l'image existe)
@@ -447,26 +447,27 @@ func _maj_fiche() -> void:
 		ill.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		_f_image.add_child(ill)
 
-	var cat := {"heros": "Héros invocable", "ennemi": "Ennemi", "boss": "Boss", "boss_monde": "Boss de Monde"}
-	_f_nom.text = u["nom"]
+	var cat := {"heros": UiCommun.t("Héros invocable"), "ennemi": UiCommun.t("Ennemi"), "boss": UiCommun.t("Boss"), "boss_monde": UiCommun.t("Boss de Monde")}
+	_f_nom.text = UiCommun.t(str(u["nom"]))
 	_f_nom.add_theme_color_override("font_color", COULEURS_RARETE[u["rarete"]])
-	var type_txt: String = "Héros de Légende" if u.get("legende", false) else ("Héros de Forge (Reliquaire)" if u.get("forge", false) else cat[u["categorie"]])
+	var type_txt: String = UiCommun.t("Héros de Légende") if u.get("legende", false) else (UiCommun.t("Héros de Forge (Reliquaire)") if u.get("forge", false) else cat[u["categorie"]])
 	for et in Ruines.ETAGES:
 		if _selection == str(Ruines.ETAGES[et]["heros"]):
-			type_txt = UiCommun.t("Légende cachée · Ruines Oubliées : %s") % Ruines.ETAGES[et]["titre"]
+			type_txt = UiCommun.t("Légende cachée · Ruines Oubliées : %s") % UiCommun.t(str(Ruines.ETAGES[et]["titre"]))
 	if UnitesData.est_evolue(_selection):
-		type_txt = UiCommun.t("Évolution de « %s » (Autel d'Évolution, non invocable)") % UnitesData.get_unite(UnitesData.lignee(_selection))["nom"]
+		type_txt = UiCommun.t("Évolution de « %s » (Autel d'Évolution, non invocable)") % UiCommun.t(str(UnitesData.get_unite(UnitesData.lignee(_selection))["nom"]))
+	type_txt = UiCommun.t(type_txt)
 	if u.get("race", "") != "":
-		type_txt += "  ·  Race : " + u["race"]
+		type_txt += UiCommun.t("  ·  Race : ") + str(u["race"])
 	_f_infos.text = "%s  ·  %s  ·  %s  ·  %s\n%s" % [
-		u["rarete"], UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]],
-		"Avant" if u["position"] == "avant" else "Arrière", type_txt]
+		u["rarete"], UnitesData.nom_element(u["element"]), UnitesData.nom_role(u["role"]),
+		UiCommun.t("Avant" if u["position"] == "avant" else UiCommun.t("Arrière")), type_txt]
 	_f_niveau.text = UiCommun.t("Niveau %d") % _niveau
 
 	var s := UnitesData.stats(_selection, _niveau)
 	for enfant in _f_stats.get_children():
 		enfant.queue_free()
-	for paire in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"]]:
+	for paire in [["pv", UiCommun.t("PV")], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"]]:
 		var case := VBoxContainer.new()
 		case.custom_minimum_size = Vector2(76, 0)
 		var dominante: bool = paire[0] in u.get("dominantes", [])
@@ -486,10 +487,10 @@ func _maj_fiche() -> void:
 		var debloque: bool = sk["niveau"] <= _niveau
 		var bloc := VBoxContainer.new()
 		bloc.add_theme_constant_override("separation", 2)
-		var entete := _label(UiCommun.t("Niv. %d  ·  %s  (%s)%s") % [sk["niveau"], sk["nom"], sk["type"], "   ✦ Évolution" if sk.get("evolue", false) else ""], 17,
+		var entete := _label(UiCommun.t("Niv. %d  ·  %s  (%s)%s") % [sk["niveau"], UiCommun.t(str(sk["nom"])), UiCommun.t(str(sk["type"])), UiCommun.t("   ✦ Évolution") if sk.get("evolue", false) else ""], 17,
 			C_OR if debloque else C_DOUX)
 		bloc.add_child(entete)
-		var d := _label(sk["description"], 15, C_TEXTE if debloque else C_DOUX)
+		var d := _label(UiCommun.t(str(sk["description"])), 15, C_TEXTE if debloque else C_DOUX)
 		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		bloc.add_child(d)
 		_f_skills.add_child(bloc)

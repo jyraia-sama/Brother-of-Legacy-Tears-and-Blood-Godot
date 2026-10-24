@@ -107,7 +107,14 @@ static func _construire() -> void:
 
 static func get_familier(id: String) -> Dictionary:
 	_construire()
-	return _index.get(id, {})
+	var f: Dictionary = _index.get(id, {})
+	if f.is_empty() or TranslationServer.get_locale().begins_with("fr"):
+		return f
+	# Anglais : nom et description traduits (langues/en.po)
+	var c := f.duplicate()
+	c["nom"] = str(TranslationServer.translate(str(f["nom"])))
+	c["description"] = str(TranslationServer.translate(str(f["description"])))
+	return c
 
 
 static func existe(id: String) -> bool:
@@ -126,7 +133,7 @@ static func ids(rarete := "") -> Array:
 static func texte_talent(id: String, etoiles := 1) -> String:
 	var f := get_familier(id)
 	var t: Dictionary = TALENTS[f["talent"]]
-	return "%s : %s" % [t["nom"], str(t["texte"]) % _n(valeur_talent(id, etoiles))]
+	return UiCommun.t("%s : %s") % [UiCommun.t(str(t["nom"])), UiCommun.t(str(t["texte"])) % _n(valeur_talent(id, etoiles))]
 
 
 static func valeur_talent(id: String, etoiles := 1) -> float:

@@ -48,10 +48,10 @@ func _ready() -> void:
 	vb.add_theme_constant_override("separation", 12)
 	p.add_child(vb)
 
-	var t := UiCommun.label("Écrire au créateur du jeu", 26, Color(1.0, 0.85, 0.55))
+	var t := UiCommun.label(UiCommun.t("Écrire au créateur du jeu"), 26, Color(1.0, 0.85, 0.55))
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(t)
-	var intro := UiCommun.label("Un bug, un passage trop dur, une idée ? Ton message arrive directement chez moi. Merci de m'aider à améliorer le jeu !", 15, UiCommun.C_DOUX)
+	var intro := UiCommun.label(UiCommun.t("Un bug, un passage trop dur, une idée ? Ton message arrive directement chez moi. Merci de m'aider à améliorer le jeu !"), 15, UiCommun.C_DOUX)
 	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	intro.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(intro)
@@ -73,12 +73,12 @@ func _ready() -> void:
 	_texte = TextEdit.new()
 	_texte.custom_minimum_size = Vector2(0, 190)
 	_texte.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
-	_texte.placeholder_text = "Écris ton message ici…"
+	_texte.placeholder_text = UiCommun.t("Écris ton message ici…")
 	_texte.add_theme_font_size_override("font_size", 16)
 	_texte.text_changed.connect(_maj_compteur)
 	vb.add_child(_texte)
 	var joint := UiCommun.label(UiCommun.t("Joint automatiquement : version %s · %s · écran actuel · ta progression%s.") % [
-		Version.NUMERO, EnLigne.plateforme(), " · ton pseudo" if EnLigne.est_connecte() else ""], 12, UiCommun.C_DOUX)
+		Version.NUMERO, EnLigne.plateforme(), UiCommun.t(" · ton pseudo") if EnLigne.est_connecte() else ""], 12, UiCommun.C_DOUX)
 	joint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(joint)
 	_etat = UiCommun.label("", 15, Color("8aff9a"))
@@ -90,11 +90,11 @@ func _ready() -> void:
 	bas.alignment = BoxContainer.ALIGNMENT_CENTER
 	bas.add_theme_constant_override("separation", 14)
 	vb.add_child(bas)
-	var annuler := UiCommun.bouton("Fermer", 17)
+	var annuler := UiCommun.bouton(UiCommun.t("Fermer"), 17)
 	annuler.custom_minimum_size = Vector2(170, 44)
 	annuler.pressed.connect(queue_free)
 	bas.add_child(annuler)
-	_envoyer = UiCommun.bouton("Envoyer", 17)
+	_envoyer = UiCommun.bouton(UiCommun.t("Envoyer"), 17)
 	_envoyer.custom_minimum_size = Vector2(170, 44)
 	UiCommun.bouton_vif(_envoyer)
 	_envoyer.pressed.connect(_envoyer_message)
@@ -105,7 +105,7 @@ func _ready() -> void:
 
 func _choisir(c: String) -> void:
 	_categorie = c
-	_aide.text = AIDES[c]
+	_aide.text = UiCommun.t(str(AIDES[c]))
 	for k in _boutons:
 		(_boutons[k] as Button).add_theme_color_override("font_color", Color("ffd27a") if k == c else UiCommun.C_DOUX)
 	_maj_compteur()
@@ -141,24 +141,24 @@ func _envoyer_message() -> void:
 		"p_version": Version.NUMERO, "p_plateforme": EnLigne.plateforme(), "p_ecran": c["ecran"], "p_details": c["details"]}
 	_envoyer.disabled = true
 	_etat.add_theme_color_override("font_color", UiCommun.C_DOUX)
-	_etat.text = "Envoi…"
+	_etat.text = UiCommun.t("Envoi…")
 	var r := await FenetreSignalement.envoyer(params)
 	if not is_instance_valid(self):
 		return
 	if r.get("ok", false):
 		_etat.add_theme_color_override("font_color", Color("8aff9a"))
-		_etat.text = "Merci ! Ton message est bien arrivé."
+		_etat.text = UiCommun.t("Merci ! Ton message est bien arrivé.")
 		_texte.text = ""
 		get_tree().create_timer(1.6).timeout.connect(func():
 			if is_instance_valid(self):
 				queue_free())
 	elif r.get("attente", false):
 		_etat.add_theme_color_override("font_color", Color("ffd27a"))
-		_etat.text = "Pas de connexion pour l'instant : ton message est gardé et partira tout seul au prochain lancement du jeu."
+		_etat.text = UiCommun.t("Pas de connexion pour l'instant : ton message est gardé et partira tout seul au prochain lancement du jeu.")
 		_texte.text = ""
 	else:
 		_etat.add_theme_color_override("font_color", Color("ff7a6a"))
-		_etat.text = str(r.get("erreur", "Le message n'a pas pu partir."))
+		_etat.text = str(r.get("erreur", UiCommun.t("Le message n'a pas pu partir.")))
 		_envoyer.disabled = false
 
 
@@ -178,7 +178,7 @@ static func envoyer(params: Dictionary) -> Dictionary:
 	if int(r.get("code", 0)) == 0:
 		_mettre_de_cote(params)
 		return {"ok": false, "attente": true}
-	return {"ok": false, "erreur": "Le serveur n'a pas accepté le message. Réessaie plus tard."}
+	return {"ok": false, "erreur": UiCommun.t("Le serveur n'a pas accepté le message. Réessaie plus tard.")}
 
 
 static func _mettre_de_cote(params: Dictionary) -> void:

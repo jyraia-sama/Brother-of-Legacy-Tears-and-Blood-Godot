@@ -7,7 +7,7 @@ const SCENE := "res://scenes/heros.tscn"
 
 
 func _titre_ecran() -> String:
-	return "MON HÉROS"
+	return UiCommun.t("MON HÉROS")
 
 
 func _fond_ecran() -> String:
@@ -33,7 +33,7 @@ func _remplir() -> void:
 func _fiche_heros(g: VBoxContainer) -> void:
 	var h := Sauvegarde.get_heros_depart()
 	if h.is_empty():
-		g.add_child(UiCommun.label("Aucun héros de départ.", 16))
+		g.add_child(UiCommun.label(UiCommun.t("Aucun héros de départ."), 16))
 		return
 	var id: String = h["id"]
 	var uid := int(h["uid"])
@@ -48,10 +48,10 @@ func _fiche_heros(g: VBoxContainer) -> void:
 	vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vb.add_theme_constant_override("separation", 4)
 	haut.add_child(vb)
-	var nom := UiCommun.label(u["nom"], 26, UiCommun.couleur_rarete(id))
+	var nom := UiCommun.label(UiCommun.t(str(u["nom"])), 26, UiCommun.couleur_rarete(id))
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(nom)
-	vb.add_child(UiCommun.label("%s · %s · %s%s" % [UiCommun.texte_rarete(id), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]],
+	vb.add_child(UiCommun.label("%s · %s · %s%s" % [UiCommun.texte_rarete(id), UnitesData.nom_element(u["element"]), UnitesData.nom_role(u["role"]),
 		(" · " + str(u["race"])) if str(u.get("race", "")) != "" else ""], 14, UiCommun.C_DOUX))
 	var niv := int(h["niveau"])
 	var nmax := Fusion.niveau_max(h)
@@ -65,15 +65,15 @@ func _fiche_heros(g: VBoxContainer) -> void:
 	grille.columns = 2
 	grille.add_theme_constant_override("h_separation", 26)
 	vb.add_child(grille)
-	for p in [["pv", "PV"], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"], ["crit", "Crit %"], ["degats_crit", "Dégâts crit %"], ["res", "RES"]]:
+	for p in [["pv", UiCommun.t("PV")], ["atk", "ATK"], ["def", "DEF"], ["agi", "AGI"], ["mag", "MAG"], ["crit", "Crit %"], ["degats_crit", UiCommun.t("Dégâts crit %")], ["res", "RES"]]:
 		var dom: bool = p[0] in u.get("dominantes", [])
-		grille.add_child(UiCommun.label("%s : %s" % [p[1], str(int(s[p[0]]))], 16, UiCommun.C_LEGENDE if dom else UiCommun.C_TEXTE))
+		grille.add_child(UiCommun.label(UiCommun.t("%s : %s") % [p[1], str(int(s[p[0]]))], 16, UiCommun.C_LEGENDE if dom else UiCommun.C_TEXTE))
 	vb.add_child(UiCommun.label(UiCommun.t("Échos Sanguins équipés : %d / 6   ·   Puissance %s") % [Sauvegarde.echos_de(uid).size(),
 		_nombre(int(s["pv"] * 0.25 + s["atk"] + s["def"] * 0.8 + s["agi"] * 0.5 + s["mag"] * 0.7))], 14, Color("d0453a")))
 	var boutons := HBoxContainer.new()
 	boutons.add_theme_constant_override("separation", 8)
 	vb.add_child(boutons)
-	for b in [["Deck", EcranDeck.SCENE, "deck"], ["Échos Sanguins", EcranEchos.SCENE, "echos"], ["Évolution", EcranEvolution.SCENE, "evo"]]:
+	for b in [["Deck", EcranDeck.SCENE, "deck"], [UiCommun.t("Échos Sanguins"), EcranEchos.SCENE, "echos"], [UiCommun.t("Évolution"), EcranEvolution.SCENE, "evo"]]:
 		var bt := UiCommun.bouton(b[0], 15)
 		bt.pressed.connect(_aller.bind(b[2], uid))
 		boutons.add_child(bt)
@@ -95,7 +95,7 @@ func _aller(ou: String, uid: int) -> void:
 
 
 func _profil(d: VBoxContainer) -> void:
-	var pseudo := EnLigne.nom_complet() if EnLigne.est_connecte() else "L'aîné des Valcendre (hors ligne)"
+	var pseudo := EnLigne.nom_complet() if EnLigne.est_connecte() else UiCommun.t("L'aîné des Valcendre (hors ligne)")
 	var titre := Succes.titre_actuel()
 	d.add_child(UiCommun.label(pseudo, 28, UiCommun.C_LEGENDE))
 	if titre != "":
@@ -113,11 +113,11 @@ func _profil(d: VBoxContainer) -> void:
 	var lt := HBoxContainer.new()
 	lt.add_theme_constant_override("separation", 10)
 	d.add_child(lt)
-	lt.add_child(UiCommun.label("Titre affiché :", 16, UiCommun.C_OR))
+	lt.add_child(UiCommun.label(UiCommun.t("Titre affiché :"), 16, UiCommun.C_OR))
 	var opt := OptionButton.new()
 	opt.focus_mode = Control.FOCUS_NONE
 	opt.custom_minimum_size = Vector2(280, 38)
-	opt.add_item("Aucun")
+	opt.add_item(UiCommun.t("Aucun"))
 	var titres := Succes.titres()
 	for t in titres:
 		opt.add_item(t)
@@ -127,11 +127,11 @@ func _profil(d: VBoxContainer) -> void:
 		rafraichir())
 	lt.add_child(opt)
 	if titres.is_empty():
-		lt.add_child(UiCommun.label("(termine un Succès pour gagner un titre)", 13, UiCommun.C_DOUX))
+		lt.add_child(UiCommun.label(UiCommun.t("(termine un Succès pour gagner un titre)"), 13, UiCommun.C_DOUX))
 	d.add_child(HSeparator.new())
 
 	# Statistiques
-	d.add_child(UiCommun.label("STATISTIQUES", 18, UiCommun.C_OR))
+	d.add_child(UiCommun.label(UiCommun.t("STATISTIQUES"), 18, UiCommun.C_OR))
 	var g := GridContainer.new()
 	g.columns = 2
 	g.add_theme_constant_override("h_separation", 30)
@@ -139,20 +139,20 @@ func _profil(d: VBoxContainer) -> void:
 	d.add_child(g)
 	var total_bestiaire := UnitesData.toutes().size()
 	var lignes := [
-		["Chapitres terminés", "%d / %d" % [Sauvegarde.nombre_chapitres_termines(), ActesData.nb_chapitres_visibles()]],
-		["Combats gagnés / perdus", "%s / %s" % [_nombre(Sauvegarde.get_stat("combats_gagnes")), _nombre(Sauvegarde.get_stat("combats_perdus"))]],
-		["Bestiaire", "%d / %d" % [Sauvegarde.donnees["bestiaire"].size(), total_bestiaire]],
-		["Invocations", _nombre(Succes.valeur("invocations"))],
-		["Record Tour de l'Enfer", UiCommun.t("étage %d") % Tours.record("enfer")],
-		["Record Tour du Paradis", UiCommun.t("étage %d") % Tours.record("paradis")],
-		["Donjons terminés", _nombre(Sauvegarde.get_stat("donjons_termines"))],
-		["Boss de Monde abattus", _nombre(Sauvegarde.get_stat("boss_monde_abattus"))],
-		["Marches Maudites (record)", "%d  (%d pts)" % [Sauvegarde.get_stat("marches"), Marche.record()]],
-		["Missions de la Compagnie", _nombre(Sauvegarde.get_stat("missions_compagnie"))],
-		["Évolutions", _nombre(Sauvegarde.get_stat("evolutions"))],
-		["Or gagné (total)", _nombre(Sauvegarde.get_stat("or_total_gagne"))],
-		["Stamina dépensée", _nombre(Sauvegarde.get_stat("stamina_depensee"))],
-		["Succès obtenus", "%d paliers" % _paliers()],
+		[UiCommun.t("Chapitres terminés"), "%d / %d" % [Sauvegarde.nombre_chapitres_termines(), ActesData.nb_chapitres_visibles()]],
+		[UiCommun.t("Combats gagnés / perdus"), "%s / %s" % [_nombre(Sauvegarde.get_stat("combats_gagnes")), _nombre(Sauvegarde.get_stat("combats_perdus"))]],
+		[UiCommun.t("Bestiaire"), "%d / %d" % [Sauvegarde.donnees["bestiaire"].size(), total_bestiaire]],
+		[UiCommun.t("Invocations"), _nombre(Succes.valeur("invocations"))],
+		[UiCommun.t("Record Tour de l'Enfer"), UiCommun.t("étage %d") % Tours.record("enfer")],
+		[UiCommun.t("Record Tour du Paradis"), UiCommun.t("étage %d") % Tours.record("paradis")],
+		[UiCommun.t("Donjons terminés"), _nombre(Sauvegarde.get_stat("donjons_termines"))],
+		[UiCommun.t("Boss de Monde abattus"), _nombre(Sauvegarde.get_stat("boss_monde_abattus"))],
+		[UiCommun.t("Marches Maudites (record)"), "%d  (%d pts)" % [Sauvegarde.get_stat("marches"), Marche.record()]],
+		[UiCommun.t("Missions de la Compagnie"), _nombre(Sauvegarde.get_stat("missions_compagnie"))],
+		[UiCommun.t("Évolutions"), _nombre(Sauvegarde.get_stat("evolutions"))],
+		[UiCommun.t("Or gagné (total)"), _nombre(Sauvegarde.get_stat("or_total_gagne"))],
+		[UiCommun.t("Stamina dépensée"), _nombre(Sauvegarde.get_stat("stamina_depensee"))],
+		[UiCommun.t("Succès obtenus"), UiCommun.t("%d paliers") % _paliers()],
 	]
 	for l in lignes:
 		g.add_child(UiCommun.label(l[0], 15, UiCommun.C_DOUX))
@@ -169,7 +169,7 @@ func _profil(d: VBoxContainer) -> void:
 	lc.add_theme_constant_override("separation", 18)
 	d.add_child(lc)
 	for r in ["N", "R", "SR", "SSR", "UR", "LEG"]:
-		lc.add_child(UiCommun.label("%s : %d" % ["Légende" if r == "LEG" else r, int(par.get(r, 0))], 16, UiCommun.COULEURS_RARETE[r]))
+		lc.add_child(UiCommun.label("%s : %d" % [UiCommun.t("Légende") if r == "LEG" else r, int(par.get(r, 0))], 16, UiCommun.COULEURS_RARETE[r]))
 
 
 func _paliers() -> int:

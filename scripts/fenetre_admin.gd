@@ -48,13 +48,13 @@ static func _demander_code(parent: Node) -> void:
 	panneau.add_child(vb)
 
 	var titre := Label.new()
-	titre.text = "MENU ADMIN"
+	titre.text = UiCommun.t("MENU ADMIN")
 	titre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	titre.add_theme_font_size_override("font_size", 26)
 	titre.add_theme_color_override("font_color", C_ADMIN)
 	vb.add_child(titre)
 	var info := Label.new()
-	info.text = "Entre le code Admin :"
+	info.text = UiCommun.t("Entre le code Admin :")
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	info.add_theme_font_size_override("font_size", 17)
 	info.add_theme_color_override("font_color", Color(0.85, 0.7, 0.6))
@@ -79,7 +79,7 @@ static func _demander_code(parent: Node) -> void:
 			calque.queue_free()
 			parent.add_child(FenetreAdmin.new())
 		else:
-			erreur.text = "Code incorrect."
+			erreur.text = UiCommun.t("Code incorrect.")
 			champ.text = ""
 			champ.grab_focus()
 
@@ -87,7 +87,7 @@ static func _demander_code(parent: Node) -> void:
 	bas.alignment = BoxContainer.ALIGNMENT_CENTER
 	bas.add_theme_constant_override("separation", 10)
 	vb.add_child(bas)
-	for t in [["Valider", valider], ["Annuler", calque.queue_free]]:
+	for t in [[UiCommun.t("Valider"), valider], [UiCommun.t("Annuler"), calque.queue_free]]:
 		var b := Button.new()
 		b.text = t[0]
 		b.focus_mode = Control.FOCUS_NONE
@@ -123,8 +123,8 @@ func _ready() -> void:
 	vb.add_theme_constant_override("separation", 8)
 	panneau.add_child(vb)
 
-	vb.add_child(_label("MENU ADMIN  —  OPTIONS DE TEST", 26, C_ADMIN, true))
-	vb.add_child(_label("Coche une option pour l'activer. Décoche-la pour revenir exactement comme avant :\nta vraie progression (or, objets, stamina, Bestiaire…) n'est jamais modifiée par ces options.", 15, Color(0.8, 0.7, 0.65), true))
+	vb.add_child(_label(UiCommun.t("MENU ADMIN  —  OPTIONS DE TEST"), 26, C_ADMIN, true))
+	vb.add_child(_label(UiCommun.t("Coche une option pour l'activer. Décoche-la pour revenir exactement comme avant :\nta vraie progression (or, objets, stamina, Bestiaire…) n'est jamais modifiée par ces options."), 15, Color(0.8, 0.7, 0.65), true))
 	vb.add_child(HSeparator.new())
 
 	var defil := ScrollContainer.new()
@@ -159,12 +159,12 @@ func _ready() -> void:
 	bas.add_theme_constant_override("separation", 10)
 	bas.alignment = BoxContainer.ALIGNMENT_CENTER
 	vb.add_child(bas)
-	bas.add_child(_bouton("Tout cocher", func(): _tout(true)))
-	bas.add_child(_bouton("Tout décocher", func(): _tout(false)))
-	bas.add_child(_bouton("Fermer", _fermer))
-	var enr := _bouton("🎥 Enregistreur de partie", func(): FenetreEnregistreur.ouvrir(get_parent()))
+	bas.add_child(_bouton(UiCommun.t("Tout cocher"), func(): _tout(true)))
+	bas.add_child(_bouton(UiCommun.t("Tout décocher"), func(): _tout(false)))
+	bas.add_child(_bouton(UiCommun.t("Fermer"), _fermer))
+	var enr := _bouton(UiCommun.t("🎥 Enregistreur de partie"), func(): FenetreEnregistreur.ouvrir(get_parent()))
 	enr.custom_minimum_size = Vector2(260, 42)
-	enr.tooltip_text = "Enregistre les écrans, les clics, les combats et les erreurs pour retrouver un bug."
+	enr.tooltip_text = UiCommun.t("Enregistre les écrans, les clics, les combats et les erreurs pour retrouver un bug.")
 	UiCommun.bouton_vif(enr, Color("8a3a2a"))
 	bas.add_child(enr)
 

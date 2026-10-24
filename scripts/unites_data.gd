@@ -60,22 +60,76 @@ const AFFLICTIONS := {
 }
 
 
+## Nom affiché d'un élément / d'un rôle (traduit dans la langue du jeu).
+static func nom_element(e) -> String:
+	return str(TranslationServer.translate(str(ELEMENTS.get(str(e), str(e)))))
+
+
+static func nom_role(r) -> String:
+	return str(TranslationServer.translate(str(ROLES.get(str(r), str(r)))))
+
+
+static func texte_affliction(a) -> String:
+	return str(TranslationServer.translate(str(AFFLICTIONS.get(str(a), ""))))
+
+
 static func get_unite(id: String) -> Dictionary:
+	var u: Dictionary
 	if UNITES.has(id):
-		return UNITES[id]
-	if EvolutionsData.UNITES.has(id):
-		return EvolutionsData.UNITES[id]
-	push_warning("Unité inconnue : " + id)
-	return {}
+		u = UNITES[id]
+	elif EvolutionsData.UNITES.has(id):
+		u = EvolutionsData.UNITES[id]
+	else:
+		push_warning("Unité inconnue : " + id)
+		return {}
+	return _traduite(id, u)
+
+
+## LANGUE : en anglais, les textes d'une unité (nom, race, sorts, phase 2) sont traduits une fois
+## (langues/en.po) puis gardés en mémoire. En français, l'unité d'origine est renvoyée telle quelle.
+static var _trad: Dictionary = {}
+static var _trad_langue := ""
+
+static func _traduite(id: String, u: Dictionary) -> Dictionary:
+	var langue := TranslationServer.get_locale()
+	if langue.begins_with("fr"):
+		return u
+	if langue != _trad_langue:
+		_trad.clear()
+		_trad_langue = langue
+	if _trad.has(id):
+		return _trad[id]
+	var c: Dictionary = u.duplicate(true)
+	for k in ["nom", "race"]:
+		if str(c.get(k, "")) != "":
+			c[k] = TranslationServer.translate(str(c[k]))
+	for sk in c.get("skills", []):
+		for k in ["nom", "description"]:
+			if str(sk.get(k, "")) != "":
+				sk[k] = TranslationServer.translate(str(sk[k]))
+	var p2 = c.get("phase2", {})
+	if p2 is Dictionary:
+		for k in ["nom", "texte"]:
+			if str(p2.get(k, "")) != "":
+				p2[k] = TranslationServer.translate(str(p2[k]))
+	c.make_read_only()
+	_trad[id] = c
+	return c
 
 
 static var _toutes: Dictionary = {}
+static var _toutes_langue := ""
 
 ## TOUTES les unités du jeu : celles de ce fichier + les évolutions (evolutions_data.gd).
 static func toutes() -> Dictionary:
-	if _toutes.is_empty():
-		_toutes = UNITES.duplicate()
-		_toutes.merge(EvolutionsData.UNITES)
+	var langue := TranslationServer.get_locale()
+	if _toutes.is_empty() or langue != _toutes_langue:
+		_toutes_langue = langue
+		_toutes = {}
+		for id in UNITES:
+			_toutes[id] = _traduite(id, UNITES[id])
+		for id in EvolutionsData.UNITES:
+			_toutes[id] = _traduite(id, EvolutionsData.UNITES[id])
 	return _toutes
 
 

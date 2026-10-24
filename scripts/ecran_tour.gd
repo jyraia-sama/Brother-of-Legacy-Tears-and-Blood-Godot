@@ -50,11 +50,11 @@ func _ready() -> void:
 	var h := HBoxContainer.new()
 	h.add_theme_constant_override("separation", 18)
 	tete.add_child(h)
-	var retour := UiCommun.bouton("← Tours")
+	var retour := UiCommun.bouton(UiCommun.t("← Tours"))
 	_styler(retour, false)
 	retour.pressed.connect(_retour)
 	h.add_child(retour)
-	var titre := UiCommun.label(str(Tours.TOURS[_tour]["nom"]).to_upper(), 30, _accent)
+	var titre := UiCommun.label(str(UiCommun.t(str(Tours.TOURS[_tour]["nom"]))).to_upper(), 30, _accent)
 	h.add_child(UiCommun.plaque_titre(titre))
 	_lbl_decompte = UiCommun.label("", 17, Color("ffb070") if _enfer else Color("7a5a10"))
 	_lbl_decompte.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -139,19 +139,19 @@ func _construire_etages() -> void:
 	var palier_prec := ""
 	for n: int in ordre:
 		var p: Dictionary = Tours.palier(_tour, n)
-		if p["nom"] != palier_prec and _enfer:
+		if UiCommun.t(str(p["nom"])) != palier_prec and _enfer:
 			_liste.add_child(_titre_palier(p))
-		palier_prec = p["nom"]
+		palier_prec = UiCommun.t(str(p["nom"]))
 		_liste.add_child(_ligne_etage(n, atteint))
 		# Paradis : le titre du palier se place au-dessus de son premier étage (vu du bas)
 		if not _enfer:
 			var suivant := n - 1
-			if suivant < 1 or Tours.palier(_tour, suivant)["nom"] != p["nom"]:
+			if suivant < 1 or UiCommun.t(str(Tours.palier(_tour, suivant)["nom"])) != UiCommun.t(str(p["nom"])):
 				_liste.add_child(_titre_palier(p))
 
 
 func _titre_palier(p: Dictionary) -> Label:
-	var l := UiCommun.label("—  %s  —" % str(p["nom"]).to_upper(), 20, _accent)
+	var l := UiCommun.label("—  %s  —" % str(UiCommun.t(str(p["nom"]))).to_upper(), 20, _accent)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.add_theme_color_override("font_outline_color", Color.BLACK if _enfer else Color.WHITE)
 	l.add_theme_constant_override("outline_size", 6)
@@ -172,10 +172,10 @@ func _ligne_etage(n: int, atteint: int) -> Control:
 	b.custom_minimum_size = Vector2(480 if grand else 360, 64 if grand else 44)
 	var fait := n <= atteint
 	var prochain := n == atteint + 1
-	var nom_type: String = {"combat": "", "elite": "  ·  Élite", "boss": "  ·  BOSS", "super": "  ·  SUPER BOSS"}[type]
+	var nom_type: String = {"combat": "", "elite": UiCommun.t("  ·  Élite"), "boss": "  ·  BOSS", "super": "  ·  SUPER BOSS"}[type]
 	var txt := UiCommun.t("Étage %d%s") % [n, nom_type]
 	if grand:
-		txt += "\n" + UnitesData.get_unite(Tours.TOURS[_tour]["boss"][n])["nom"]
+		txt += "\n" + UiCommun.t(str(UnitesData.get_unite(Tours.TOURS[_tour]["boss"][n])["nom"]))
 	if fait:
 		txt = "✔  " + txt
 	b.text = txt
@@ -240,7 +240,7 @@ func _maj_fiche() -> void:
 	var atteint := Tours.etage_atteint(_tour)
 	var p: Dictionary = Tours.palier(_tour, n)
 	_fiche.add_child(UiCommun.label(UiCommun.t("ÉTAGE %d") % n, 30, _accent))
-	_fiche.add_child(UiCommun.label("%s  ·  %s" % [p["nom"], {"combat": "Combat", "elite": "Combat d'Élite",
+	_fiche.add_child(UiCommun.label("%s  ·  %s" % [UiCommun.t(str(p["nom"])), {"combat": UiCommun.t("Combat"), "elite": UiCommun.t("Combat d'Élite"),
 		"boss": "BOSS", "super": "SUPER BOSS"}[type]], 17, _c_texte))
 
 	if type in ["boss", "super"]:
@@ -251,11 +251,11 @@ func _maj_fiche() -> void:
 		hb.add_child(UiCommun.portrait(id_boss, 84))
 		var vb := VBoxContainer.new()
 		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		var nb := UiCommun.label(ub["nom"], 22, Color("ff6a4a") if _enfer else Color("a07a00"))
+		var nb := UiCommun.label(UiCommun.t(str(ub["nom"])), 22, Color("ff6a4a") if _enfer else Color("a07a00"))
 		nb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(nb)
 		if not ub["phase2"].is_empty():
-			var ph := UiCommun.label("Phase 2 : " + str(ub["phase2"]["nom"]), 14, _c_texte)
+			var ph := UiCommun.label(UiCommun.t("Phase 2 : ") + str(UiCommun.t(str(ub["phase2"]["nom"]))), 14, _c_texte)
 			vb.add_child(ph)
 		hb.add_child(vb)
 		_fiche.add_child(hb)
@@ -267,22 +267,22 @@ func _maj_fiche() -> void:
 	for e in ennemis:
 		var u := UnitesData.get_unite(e["id"])
 		var connu := Sauvegarde.est_decouvert(e["id"])
-		var nom: String = e.get("nom", u["nom"]) if (connu or n <= atteint + 1) else "???"
-		var l := UiCommun.label("•  %s  —  %s, %s" % [nom, UnitesData.ROLES[u["role"]], UnitesData.ELEMENTS[u["element"]]], 15,
+		var nom: String = e.get("nom", UiCommun.t(str(u["nom"]))) if (connu or n <= atteint + 1) else "???"
+		var l := UiCommun.label("•  %s  —  %s, %s" % [nom, UnitesData.nom_role(u["role"]), UnitesData.nom_element(u["element"])], 15,
 			Color("ffb0a0") if e.get("boss", false) else _c_texte)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(l)
 		puissance_ennemis += UnitesData.puissance(e["id"], int(e["niveau"])) * float(e["mult"])
 	var puissance_equipe := _puissance_equipe()
 	var rapport := puissance_equipe / maxf(1.0, puissance_ennemis)
-	var diff := "Très difficile" if rapport < 0.85 else ("Difficile" if rapport < 1.05 else ("Équilibré" if rapport < 1.3 else "Facile"))
+	var diff := UiCommun.t("Très difficile") if rapport < 0.85 else (UiCommun.t("Difficile") if rapport < 1.05 else (UiCommun.t("Équilibré") if rapport < 1.3 else UiCommun.t("Facile")))
 	var couleur_diff := Color("ff5a4a") if rapport < 0.85 else (Color("ffa040") if rapport < 1.05 else (Color("e0d060") if rapport < 1.3 else Color("6ad06a")))
 	_fiche.add_child(UiCommun.label(UiCommun.t("Puissance ennemie : %d   ·   Ton équipe : %d") % [int(puissance_ennemis), int(puissance_equipe)], 15, _c_texte))
-	_fiche.add_child(UiCommun.label("Estimation : " + diff, 17, couleur_diff))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Estimation : ") + diff, 17, couleur_diff))
 
 	_fiche.add_child(HSeparator.new())
 	var deja := n <= atteint
-	_fiche.add_child(UiCommun.label("BUTIN" + ("  (déjà obtenu cette semaine)" if deja else "  (1re victoire de la semaine)"), 16, _accent))
+	_fiche.add_child(UiCommun.label(UiCommun.t("BUTIN") + (UiCommun.t("  (déjà obtenu cette semaine)") if deja else UiCommun.t("  (1re victoire de la semaine)")), 16, _accent))
 	var butin := Tours.butin(_tour, n)
 	var grille := GridContainer.new()
 	grille.columns = 2
@@ -301,14 +301,14 @@ func _maj_fiche() -> void:
 	var equipe_txt: Array = []
 	for uid in Sauvegarde.get_equipe():
 		var h := Sauvegarde.get_heros(uid)
-		equipe_txt.append(UiCommun.t("%s Nv %d") % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])])
-	var eq := UiCommun.label("Équipe : " + ", ".join(equipe_txt), 14, _c_texte)
+		equipe_txt.append(UiCommun.t("%s Nv %d") % [UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])), int(h["niveau"])])
+	var eq := UiCommun.label(UiCommun.t("Équipe : ") + ", ".join(equipe_txt), 14, _c_texte)
 	eq.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_fiche.add_child(eq)
 	var actions := HBoxContainer.new()
 	actions.add_theme_constant_override("separation", 10)
 	_fiche.add_child(actions)
-	var deck := UiCommun.bouton("Modifier l'équipe", 15)
+	var deck := UiCommun.bouton(UiCommun.t("Modifier l'équipe"), 15)
 	_styler(deck, false)
 	deck.pressed.connect(func():
 		EcranDeck.scene_retour = SCENE
@@ -320,7 +320,7 @@ func _maj_fiche() -> void:
 	go.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	if deja:
 		go.disabled = true
-		go.text = "Étage déjà vaincu cette semaine"
+		go.text = UiCommun.t("Étage déjà vaincu cette semaine")
 	elif n > atteint + 1 and not Sauvegarde.admin("tours_libres"):
 		go.disabled = true
 		go.text = UiCommun.t("Termine d'abord l'étage %d") % (atteint + 1)
@@ -363,7 +363,7 @@ func _combattre(n: int) -> void:
 		equipe.append({"id": h["id"], "niveau": int(h["niveau"]), "uid": uid, "place": Sauvegarde.place_de(uid),
 			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "sorts": SortsNiveaux.niveaux(uid)})
 	if equipe.is_empty():
-		_message("Ton équipe est vide : ajoute des héros dans le Deck.")
+		_message(UiCommun.t("Ton équipe est vide : ajoute des héros dans le Deck."))
 		return
 	var cout: int = Tours.COUT_STAMINA[Tours.type_etage(n)]
 	if not Sauvegarde.depenser_stamina(cout):
@@ -384,7 +384,7 @@ func _maj_haut() -> void:
 
 
 func _message(texte: String) -> void:
-	FenetreSimple.ouvrir(self, Tours.TOURS[_tour]["nom"], texte)
+	FenetreSimple.ouvrir(self, UiCommun.t(str(Tours.TOURS[_tour]["nom"])), texte)
 
 
 func _retour() -> void:

@@ -45,17 +45,17 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Aventure")
+	var retour := UiCommun.bouton(UiCommun.t("← Aventure"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.plaque_titre(UiCommun.label("DONJONS", 32, UiCommun.C_OR)))
-	tete.add_child(FenetreGuide.bouton_aide("Guide des Donjons : mécaniques des boss, contres et héros conseillés.",
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label(UiCommun.t("DONJONS"), 32, UiCommun.C_OR)))
+	tete.add_child(FenetreGuide.bouton_aide(UiCommun.t("Guide des Donjons : mécaniques des boss, contres et héros conseillés."),
 		func(): GuideDonjons.ouvrir(self, donjon_courant)))
-	var info := UiCommun.label("4 combats d'affilée, sans soin entre deux : vague, mini-boss, vague, boss.", 15, UiCommun.C_DOUX)
+	var info := UiCommun.label(UiCommun.t("4 combats d'affilée, sans soin entre deux : vague, mini-boss, vague, boss."), 15, UiCommun.C_DOUX)
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	info.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	tete.add_child(info)
-	var evo := UiCommun.bouton("✦ Autel d'Évolution", 17)
+	var evo := UiCommun.bouton(UiCommun.t("✦ Autel d'Évolution"), 17)
 	evo.pressed.connect(func():
 		EcranEvolution.scene_retour = SCENE
 		get_tree().change_scene_to_file(EcranEvolution.SCENE))
@@ -178,11 +178,11 @@ func _remplir_donjons() -> void:
 		vb.alignment = BoxContainer.ALIGNMENT_CENTER
 		vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		h.add_child(vb)
-		vb.add_child(UiCommun.label(infos["nom"], 20, c.lightened(0.25)))
+		vb.add_child(UiCommun.label(UiCommun.t(str(infos["nom"])), 20, c.lightened(0.25)))
 		if Donjons.est_special(d):
-			vb.add_child(UiCommun.label("Pages de Grimoire  ·  niveaux de sorts", 14, UiCommun.C_DOUX))
+			vb.add_child(UiCommun.label(UiCommun.t("Pages de Grimoire  ·  niveaux de sorts"), 14, UiCommun.C_DOUX))
 		else:
-			vb.add_child(UiCommun.label(UiCommun.t("%s  ·  ressources %s") % [UnitesData.ELEMENTS[d], Evolution.ESSENCES[d]["nom"]], 14, UiCommun.C_DOUX))
+			vb.add_child(UiCommun.label(UiCommun.t("%s  ·  ressources %s") % [UnitesData.nom_element(d), UiCommun.t(str(Evolution.ESSENCES[d]["nom"]))], 14, UiCommun.C_DOUX))
 		var fait := Donjons.niveau_termine(d)
 		vb.add_child(UiCommun.label(UiCommun.t("Niveau %d / %d terminé%s") % [fait, Donjons.NIVEAUX, "  ✔" if fait >= Donjons.NIVEAUX else ""], 14,
 			UiCommun.C_OR if fait > 0 else UiCommun.C_DOUX))
@@ -199,7 +199,7 @@ func _remplir_niveaux() -> void:
 	var d := donjon_courant
 	var c := _couleur(d)
 	var choisi := _niveau_choisi()
-	var titre := UiCommun.label("NIVEAUX", 18, UiCommun.C_OR)
+	var titre := UiCommun.label(UiCommun.t("NIVEAUX"), 18, UiCommun.C_OR)
 	titre.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_col_niveaux.add_child(titre)
 	var fait := Donjons.niveau_termine(d)
@@ -208,7 +208,7 @@ func _remplir_niveaux() -> void:
 		var b := UiCommun.bouton("", 17)
 		b.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		var taille: String = Evolution.TAILLES[[0, 0, 0, 1, 1, 1, 1, 2, 2, 2][n - 1]]
-		var texte := UiCommun.t("Niveau %d   ·   %s") % [n, Evolution.NOMS_TAILLE[taille] + "s"]
+		var texte := UiCommun.t("Niveau %d   ·   %s") % [n, UiCommun.t(str(Evolution.NOMS_TAILLE[taille])) + "s"]
 		if Donjons.est_special(d):
 			texte = UiCommun.t("Niveau %d   ·   %s") % [n, "Grimoires" if int(Donjons.BUTIN_SPECIAL[n - 1][1]) > 0 else "Pages"]
 		if n <= fait:
@@ -250,14 +250,14 @@ func _remplir_fiche() -> void:
 	var n := _niveau_choisi()
 	var infos: Dictionary = Donjons.DONJONS[d]
 	var c := _couleur(d)
-	_fiche.add_child(UiCommun.label(UiCommun.t("%s  —  NIVEAU %d") % [str(infos["nom"]).to_upper(), n], 26, c.lightened(0.3)))
-	var st := UiCommun.label(infos["sous_titre"], 15, UiCommun.C_DOUX)
+	_fiche.add_child(UiCommun.label(UiCommun.t("%s  —  NIVEAU %d") % [str(UiCommun.t(str(infos["nom"]))).to_upper(), n], 26, c.lightened(0.3)))
+	var st := UiCommun.label(UiCommun.t(str(infos["sous_titre"])), 15, UiCommun.C_DOUX)
 	st.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_fiche.add_child(st)
 	_fiche.add_child(HSeparator.new())
 
 	# Les 4 combats
-	_fiche.add_child(UiCommun.label("L'EXPÉDITION", 17, UiCommun.C_OR))
+	_fiche.add_child(UiCommun.label(UiCommun.t("L'EXPÉDITION"), 17, UiCommun.C_OR))
 	for v in Donjons.VAGUES.size():
 		var type: String = Donjons.VAGUES[v]
 		var ennemis := Donjons.generer(d, n, v)
@@ -272,37 +272,37 @@ func _remplir_fiche() -> void:
 		var vb := VBoxContainer.new()
 		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ligne.add_child(vb)
-		vb.add_child(UiCommun.label(UiCommun.t("%d.  %s   (niveau %d)") % [v + 1, Donjons.NOMS_VAGUE[type], int(ennemis[0]["niveau"])], 16,
+		vb.add_child(UiCommun.label(UiCommun.t("%d.  %s   (niveau %d)") % [v + 1, UiCommun.t(str(Donjons.NOMS_VAGUE[type])), int(ennemis[0]["niveau"])], 16,
 			Color("ff9a7a") if type == "boss" else (Color("ffd060") if type == "mini_boss" else UiCommun.C_TEXTE)))
 		var noms: Array = []
 		for e in ennemis:
 			var u := UnitesData.get_unite(e["id"])
-			var nom: String = e.get("nom", u["nom"]) if Sauvegarde.est_decouvert(e["id"]) or type != "vague" else "???"
+			var nom: String = e.get("nom", UiCommun.t(str(u["nom"]))) if Sauvegarde.est_decouvert(e["id"]) or type != "vague" else "???"
 			noms.append(nom)
 		var l := UiCommun.label(", ".join(noms), 13, UiCommun.C_DOUX)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(l)
 		var ub := UnitesData.get_unite(chef)
 		if type == "boss" and not ub["phase2"].is_empty():
-			vb.add_child(UiCommun.label("Phase 2 : " + str(ub["phase2"]["nom"]), 13, Color("ff9a7a")))
+			vb.add_child(UiCommun.label(UiCommun.t("Phase 2 : ") + str(UiCommun.t(str(ub["phase2"]["nom"]))), 13, Color("ff9a7a")))
 		for e in ennemis:
 			if str(e.get("meca", "")) != "":
 				var inf := Mecaniques.infos(str(e["meca"]))
-				vb.add_child(UiCommun.label(UiCommun.t("⚙ Mécanique : %s%s") % [inf["nom"], "  (renforcée)" if int(e.get("meca_force", 1)) >= 2 else ""], 13, Color("ffb070")))
+				vb.add_child(UiCommun.label(UiCommun.t("⚙ Mécanique : %s%s") % [UiCommun.t(str(inf["nom"])), UiCommun.t("  (renforcée)") if int(e.get("meca_force", 1)) >= 2 else ""], 13, Color("ffb070")))
 
 	_remplir_mecaniques(d, n)
 
 	# Estimation : ta puissance comparée à celle de l'équipe conseillée pour ce niveau
 	var equipe := _puissance_equipe()
 	var rapport := equipe / maxf(1.0, Donjons.puissance_conseillee(n))
-	var diff := "Très difficile" if rapport < 0.85 else ("Difficile" if rapport < 1.05 else ("Équilibré" if rapport < 1.3 else "Facile"))
+	var diff := UiCommun.t("Très difficile") if rapport < 0.85 else (UiCommun.t("Difficile") if rapport < 1.05 else (UiCommun.t("Équilibré") if rapport < 1.3 else UiCommun.t("Facile")))
 	var coul := Color("ff5a4a") if rapport < 0.85 else (Color("ffa040") if rapport < 1.05 else (Color("e0d060") if rapport < 1.3 else Color("6ad06a")))
 	_fiche.add_child(UiCommun.label(UiCommun.t("Puissance conseillée : %d   ·   Ton équipe : %d") % [int(Donjons.puissance_conseillee(n)), int(equipe)], 15, UiCommun.C_TEXTE))
-	_fiche.add_child(UiCommun.label("Estimation : " + diff, 17, coul))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Estimation : ") + diff, 17, coul))
 
 	# Butin
 	_fiche.add_child(HSeparator.new())
-	_fiche.add_child(UiCommun.label("BUTIN À LA VICTOIRE FINALE", 17, UiCommun.C_OR))
+	_fiche.add_child(UiCommun.label(UiCommun.t("BUTIN À LA VICTOIRE FINALE"), 17, UiCommun.C_OR))
 	var grille := HFlowContainer.new()
 	grille.add_theme_constant_override("h_separation", 22)
 	grille.add_theme_constant_override("v_separation", 6)
@@ -314,20 +314,20 @@ func _remplir_fiche() -> void:
 	if Donjons.est_special(d):
 		var rp := Donjons.ressource_principale(d, n)
 		_fiche.add_child(UiCommun.label(UiCommun.t("%d %% de chance de %s en bonus.") % [int(Donjons.CHANCE_BONUS * 100),
-			("3 Pages de Grimoire" if rp == SortsNiveaux.PAGE else "1 Grimoire Interdit")], 13, UiCommun.C_DOUX))
+			(UiCommun.t("3 Pages de Grimoire") if rp == SortsNiveaux.PAGE else UiCommun.t("1 Grimoire Interdit"))], 13, UiCommun.C_DOUX))
 	else:
 		_fiche.add_child(UiCommun.label(UiCommun.t("%d %% de chance d'une %s en bonus.") % [int(Donjons.CHANCE_BONUS * 100),
 			Reliquaire.nom(Donjons.ressource_principale(d, n))], 13, UiCommun.C_DOUX))
 
 	# Ressources possédées
 	if Donjons.est_special(d):
-		_fiche.add_child(UiCommun.label("TES GRIMOIRES", 15, UiCommun.C_OR))
+		_fiche.add_child(UiCommun.label(UiCommun.t("TES GRIMOIRES"), 15, UiCommun.C_OR))
 		var pg := HBoxContainer.new()
 		pg.add_theme_constant_override("separation", 22)
 		_fiche.add_child(pg)
 		for r in [SortsNiveaux.PAGE, SortsNiveaux.GRIMOIRE]:
 			pg.add_child(_ligne_objet(r, "%d" % Sauvegarde.get_objet(r)))
-		_fiche.add_child(UiCommun.label("Sert à faire monter le niveau des sorts des héros (fiche du héros, dans le Deck).", 13, UiCommun.C_DOUX))
+		_fiche.add_child(UiCommun.label(UiCommun.t("Sert à faire monter le niveau des sorts des héros (fiche du héros, dans le Deck)."), 13, UiCommun.C_DOUX))
 	else:
 		_remplir_ressources_element(d)
 	_remplir_depart(n)
@@ -336,31 +336,31 @@ func _remplir_fiche() -> void:
 ## Mécaniques du mini-boss et du boss + les héros du joueur qui les contrent.
 func _remplir_mecaniques(d: String, n: int) -> void:
 	_fiche.add_child(HSeparator.new())
-	_fiche.add_child(UiCommun.label("MÉCANIQUES", 17, UiCommun.C_OR))
+	_fiche.add_child(UiCommun.label(UiCommun.t("MÉCANIQUES"), 17, UiCommun.C_OR))
 	if Mecaniques.force(n) <= 0:
 		var l0 := UiCommun.label(UiCommun.t("Niveaux 1 à %d : pas encore de mécanique. À partir du niveau %d, le mini-boss et le boss en ont une (renforcée à partir du niveau %d).") \
 			% [Mecaniques.NIVEAU_DEBUT - 1, Mecaniques.NIVEAU_DEBUT, Mecaniques.NIVEAU_RENFORCE], 13, UiCommun.C_DOUX)
 		l0.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(l0)
 	var element: String = str(UnitesData.get_unite(Donjons.DONJONS[d]["boss"]).get("element", ""))
-	for paire in [["Mini-boss", Mecaniques.mini(d)], ["Boss", Mecaniques.boss(d)]]:
+	for paire in [["Mini-boss", Mecaniques.mini(d)], [UiCommun.t("Boss"), Mecaniques.boss(d)]]:
 		var inf := Mecaniques.infos(paire[1])
 		if inf.is_empty():
 			continue
-		var t := UiCommun.label(UiCommun.t("%s — %s") % [paire[0], inf["nom"]], 15, Color("ffb070"))
+		var t := UiCommun.label(UiCommun.t("%s — %s") % [paire[0], UiCommun.t(str(inf["nom"]))], 15, Color("ffb070"))
 		_fiche.add_child(t)
 		var l := UiCommun.label(str(inf["texte"]), 13, UiCommun.C_TEXTE)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(l)
-		var cs := UiCommun.label("Conseil : " + str(inf["conseil"]), 13, Color("8affa0"))
+		var cs := UiCommun.label(UiCommun.t("Conseil : ") + str(UiCommun.t(str(inf["conseil"]))), 13, Color("8affa0"))
 		cs.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(cs)
 	# Héros utiles contre le boss
 	var utiles := Mecaniques.utiles(Mecaniques.boss(d), element)
-	_fiche.add_child(UiCommun.label("TES HÉROS UTILES CONTRE LE BOSS", 15, UiCommun.C_OR))
+	_fiche.add_child(UiCommun.label(UiCommun.t("TES HÉROS UTILES CONTRE LE BOSS"), 15, UiCommun.C_OR))
 	if utiles.is_empty():
-		var v := UiCommun.label("Aucun de tes héros ne contre encore cette mécanique. Cherche : " + ", ".join(
-			(Mecaniques.infos(Mecaniques.boss(d)).get("contres", []) as Array).map(func(x): return Mecaniques.NOMS_CONTRES.get(x, x))) + ".", 13, UiCommun.C_DOUX)
+		var v := UiCommun.label(UiCommun.t("Aucun de tes héros ne contre encore cette mécanique. Cherche : ") + ", ".join(
+			(Mecaniques.infos(Mecaniques.boss(d)).get("contres", []) as Array).map(func(x): return UiCommun.t(str(Mecaniques.NOMS_CONTRES.get(x, x))))) + ".", 13, UiCommun.C_DOUX)
 		v.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(v)
 		return
@@ -374,8 +374,8 @@ func _remplir_mecaniques(d: String, n: int) -> void:
 		b.add_theme_constant_override("separation", 6)
 		b.add_child(UiCommun.portrait(u["id"], 34))
 		var place := Sauvegarde.place_de(int(u["uid"]))
-		var txt := UiCommun.t("%s Nv %d%s\n%s") % [u["nom"], u["niveau"], "  (équipe)" if place >= 0 else "",
-			", ".join(u["raisons"]) + ("  · fort contre l'élément" if u["element"] else "")]
+		var txt := UiCommun.t("%s Nv %d%s\n%s") % [UiCommun.t(str(u["nom"])), u["niveau"], UiCommun.t("  (équipe)") if place >= 0 else "",
+			", ".join(u["raisons"]) + (UiCommun.t("  · fort contre l'élément") if u["element"] else "")]
 		b.add_child(UiCommun.label(txt, 12, Color("ffe6a0") if place >= 0 else UiCommun.C_TEXTE))
 		flux.add_child(b)
 	if utiles.size() > 8:
@@ -383,16 +383,16 @@ func _remplir_mecaniques(d: String, n: int) -> void:
 
 
 func _remplir_ressources_element(d: String) -> void:
-	_fiche.add_child(UiCommun.label("TES RESSOURCES " + str(Evolution.ESSENCES[d]["nom"]).to_upper(), 15, UiCommun.C_OR))
+	_fiche.add_child(UiCommun.label(UiCommun.t("TES RESSOURCES ") + str(UiCommun.t(str(Evolution.ESSENCES[d]["nom"]))).to_upper(), 15, UiCommun.C_OR))
 	var poss := HBoxContainer.new()
 	poss.add_theme_constant_override("separation", 22)
 	_fiche.add_child(poss)
 	for t in Evolution.TAILLES:
 		var r := Evolution.ressource(d, t)
 		poss.add_child(_ligne_objet(r, "%d" % Sauvegarde.get_objet(r)))
-	var usage := "toutes les évolutions (en plus de la ressource de l'élément)" if d == "neutre" \
-		else UiCommun.t("faire évoluer les unités %s") % ("de " + UnitesData.ELEMENTS[d] if d != "eau" else "d'Eau")
-	_fiche.add_child(UiCommun.label("Sert à " + usage + ".", 13, UiCommun.C_DOUX))
+	var usage := UiCommun.t("toutes les évolutions (en plus de la ressource de l'élément)") if d == "neutre" \
+		else UiCommun.t("faire évoluer les unités %s") % ("de " + UnitesData.nom_element(d) if d != "eau" else UiCommun.t("d'Eau"))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Sert à ") + usage + ".", 13, UiCommun.C_DOUX))
 
 
 func _remplir_depart(n: int) -> void:
@@ -402,14 +402,14 @@ func _remplir_depart(n: int) -> void:
 	var noms: Array = []
 	for uid in Sauvegarde.get_equipe():
 		var h := Sauvegarde.get_heros(uid)
-		noms.append(UiCommun.t("%s Nv %d") % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])])
-	var eq := UiCommun.label("Équipe : " + (", ".join(noms) if not noms.is_empty() else "aucune unité"), 14, UiCommun.C_TEXTE)
+		noms.append(UiCommun.t("%s Nv %d") % [UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])), int(h["niveau"])])
+	var eq := UiCommun.label(UiCommun.t("Équipe : ") + (", ".join(noms) if not noms.is_empty() else UiCommun.t("aucune unité")), 14, UiCommun.C_TEXTE)
 	eq.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_fiche.add_child(eq)
 	var actions := HBoxContainer.new()
 	actions.add_theme_constant_override("separation", 10)
 	_fiche.add_child(actions)
-	var deck := UiCommun.bouton("Modifier l'équipe", 15)
+	var deck := UiCommun.bouton(UiCommun.t("Modifier l'équipe"), 15)
 	deck.pressed.connect(func():
 		EcranDeck.scene_retour = SCENE
 		get_tree().change_scene_to_file(EcranDeck.SCENE))
@@ -459,7 +459,7 @@ func _maj_stamina() -> void:
 
 
 func _message(texte: String) -> void:
-	FenetreSimple.ouvrir(self, "Donjons", texte)
+	FenetreSimple.ouvrir(self, UiCommun.t("Donjons"), texte)
 
 
 func _retour() -> void:

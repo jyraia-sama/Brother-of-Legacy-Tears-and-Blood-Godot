@@ -40,9 +40,9 @@ func _ready() -> void:
 	_barre = BarreActions.new(ecran)
 	_barre.minuteur = MINUTEUR
 	ecran.add_child(_barre)
-	var ab := ecran._bouton("Abandonner")
+	var ab := ecran._bouton(UiCommun.t("Abandonner"))
 	ab.pressed.connect(func():
-		FenetreSimple.confirmer(ecran, "Abandonner le combat ?", "Le combat compte comme une défaite.", "Abandonner", _abandonner))
+		FenetreSimple.confirmer(ecran, UiCommun.t("Abandonner le combat ?"), UiCommun.t("Le combat compte comme une défaite."), UiCommun.t("Abandonner"), _abandonner))
 	ecran.barre_haut.add_child(ab)
 	moteur.demarrer_manuel()
 	# Reprise (jeu relancé pendant le combat) : on récupère les actions déjà jouées
@@ -108,7 +108,7 @@ func _mon_action(c: Dictionary) -> Dictionary:
 		if r.ok and r.data is Dictionary and r.data.get("erreur", "") == "termine":
 			await _verifier_fin_serveur()
 			return {}
-		_info("Connexion difficile… nouvel essai.")
+		_info(UiCommun.t("Connexion difficile… nouvel essai."))
 		await get_tree().create_timer(1.5).timeout
 	return {}
 
@@ -122,21 +122,23 @@ func _choisir(c: Dictionary) -> Dictionary:
 ## sans « (30 % de chance par tour) » (ici on choisit soi-même), sans la petite phrase d'ambiance.
 static func texte_court(desc: String) -> Array:
 	var re := RegEx.new()
-	re.compile("^\\(\\d+ ?% de chance par tour\\)\\s*")
+	re.compile("^\\(\\d+ ?% (de chance par tour|chance per turn)\\)\\s*")
 	var t := re.sub(desc.strip_edges(), "")
 	# « Tourne sur lui-même, lame tendue : inflige ... » -> « Inflige ... »
-	var i := t.find(" : ")
+	var sep := " : " if t.contains(" : ") else ": "
+	var i := t.find(sep)
 	if i > 0 and not t.substr(0, i).contains("%"):
-		t = t.substr(i + 3)
+		t = t.substr(i + sep.length())
 	t = t.replace(" de puissance de skill", " de puissance").replace("puissance de skill", "puissance")
 	t = t.replace("de chance d'infliger", "de chance :").replace("toute l'équipe", "l'équipe")
 	var l: Array = []
-	for morceau in t.split(" ; ", false):
+	t = t.replace(" skill power", "").replace("the whole team", "the team")
+	for morceau in t.replace("; ", " ; ").replace(" ;  ; ", " ; ").split(" ; ", false):
 		var m := morceau.strip_edges().trim_suffix(".")
 		if m != "":
 			l.append(m.substr(0, 1).to_upper() + m.substr(1))
 	if l.is_empty():
-		l.append("Attaque normale")
+		l.append(UiCommun.t("Attaque normale"))
 	return l
 
 
@@ -148,7 +150,7 @@ func _fermer_choix() -> void:
 # ---------- Unités adverses ----------
 
 func _action_adverse(c: Dictionary) -> Dictionary:
-	_barre.attente(UiCommun.t("Tour adverse : %s") % c["nom"], int(c["idx"]))
+	_barre.attente(UiCommun.t("Tour adverse : %s") % UiCommun.t(str(c["nom"])), int(c["idx"]))
 	var debut := Time.get_ticks_msec()
 	while not _fin:
 		if _cache.has(_n):
@@ -166,7 +168,7 @@ func _action_adverse(c: Dictionary) -> Dictionary:
 			var absent := int(d.get("adversaire_absent", 0))
 			var attente := int(d.get("depuis_derniere", 0))
 			if absent >= ATTENTE_FORFAIT:
-				_info("L'adversaire a quitté le combat…")
+				_info(UiCommun.t("L'adversaire a quitté le combat…"))
 				var f: Dictionary = await reseau.appeler("ac_forfait", {"p_match": _match["id"]})
 				if f.ok and f.data is Dictionary and f.data.get("ok", false):
 					_afficher_bilan(f.data)
@@ -180,7 +182,7 @@ func _action_adverse(c: Dictionary) -> Dictionary:
 			var s := int((Time.get_ticks_msec() - debut) / 1000.0)
 			_info(UiCommun.t("L'adversaire réfléchit… %d s") % s if absent < 10 else UiCommun.t("L'adversaire ne répond plus (%d s)…") % absent)
 		else:
-			_info("Connexion difficile…")
+			_info(UiCommun.t("Connexion difficile…"))
 		await get_tree().create_timer(1.0).timeout
 	_fermer_choix()
 	return _cache.get(_n, {"type": "auto"})
@@ -201,7 +203,7 @@ func _terminer(gagnant: int) -> void:
 			break
 		await get_tree().create_timer(2.0).timeout
 	if r.is_empty():
-		r = {"gagnant": gagnant, "delta": null, "erreur": "Le résultat n'a pas pu être envoyé."}
+		r = {"gagnant": gagnant, "delta": null, "erreur": UiCommun.t("Le résultat n'a pas pu être envoyé.")}
 	_afficher_bilan(r)
 
 
@@ -228,9 +230,9 @@ func _afficher_bilan(d: Dictionary) -> void:
 	var victoire := gagnant == _camp
 	var lignes: Array = []
 	if d.get("forfait", false):
-		lignes.append("Victoire par forfait : l'adversaire a quitté le combat." if victoire else "Défaite par abandon.")
+		lignes.append(UiCommun.t("Victoire par forfait : l'adversaire a quitté le combat.") if victoire else UiCommun.t("Défaite par abandon."))
 	if gagnant == -1:
-		lignes.append("Égalité : le temps est écoulé avec autant de PV de chaque côté.")
+		lignes.append(UiCommun.t("Égalité : le temps est écoulé avec autant de PV de chaque côté."))
 	var delta = d.get("delta")
 	if delta != null:
 		lignes.append(UiCommun.t("Points de classement : %s%d  (total %s)") % ["+" if int(delta) >= 0 else "", int(delta), str(d.get("points", "?"))])
@@ -242,7 +244,7 @@ func _afficher_bilan(d: Dictionary) -> void:
 		Sauvegarde.ajouter_stat("combats_gagnes")
 		Sauvegarde._stat("victoires_classees")
 	EcranCombat.resultat = {"mode": "classee", "victoire": victoire}
-	ecran._afficher_resultat(victoire, lignes, "ÉGALITÉ" if gagnant == -1 else "")
+	ecran._afficher_resultat(victoire, lignes, UiCommun.t("ÉGALITÉ") if gagnant == -1 else "")
 
 
 # =====================================================================

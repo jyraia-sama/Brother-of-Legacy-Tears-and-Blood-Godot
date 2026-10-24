@@ -51,17 +51,17 @@ func _ready() -> void:
 	vb.add_theme_constant_override("separation", 12)
 	defil.add_child(vb)
 
-	vb.add_child(_label("SAUVEGARDE", 28, Color(1.0, 0.85, 0.55), true))
+	vb.add_child(_label(UiCommun.t("SAUVEGARDE"), 28, Color(1.0, 0.85, 0.55), true))
 	vb.add_child(_label(_resume(), 18, Color(0.92, 0.88, 0.85)))
 	vb.add_child(HSeparator.new())
 
 	# Volumes (enregistrés dans la sauvegarde)
-	vb.add_child(_label("SON", 20, Color(1.0, 0.85, 0.55)))
-	vb.add_child(_curseur_volume("Musique", "musique"))
-	vb.add_child(_curseur_volume("Bruitages", "sons"))
+	vb.add_child(_label(UiCommun.t("SON"), 20, Color(1.0, 0.85, 0.55)))
+	vb.add_child(_curseur_volume(UiCommun.t("Musique"), "musique"))
+	vb.add_child(_curseur_volume(UiCommun.t("Bruitages"), "sons"))
 	var muet := CheckBox.new()
 	UiCommun.habiller_case(muet)
-	muet.text = "Muet (coupe la musique et les bruitages)"
+	muet.text = UiCommun.t("Muet (coupe la musique et les bruitages)")
 	muet.focus_mode = Control.FOCUS_NONE
 	muet.add_theme_font_size_override("font_size", 17)
 	muet.button_pressed = Audio.est_muet()
@@ -86,35 +86,35 @@ func _ready() -> void:
 	vb.add_child(HSeparator.new())
 
 	# Affichage : taille de l'interface (grande sur téléphone) et plein écran
-	vb.add_child(_label("AFFICHAGE", 20, Color(1.0, 0.85, 0.55)))
-	vb.add_child(_label("Taille de l'interface (« Très grande » ou « Géante » conseillée sur téléphone) :", 16, Color(0.85, 0.7, 0.6)))
+	vb.add_child(_label(UiCommun.t("AFFICHAGE"), 20, Color(1.0, 0.85, 0.55)))
+	vb.add_child(_label(UiCommun.t("Taille de l'interface (« Très grande » ou « Géante » conseillée sur téléphone) :"), 16, Color(0.85, 0.7, 0.6)))
 	var tailles := HBoxContainer.new()
 	tailles.add_theme_constant_override("separation", 8)
 	vb.add_child(tailles)
 	var groupe := ButtonGroup.new()
 	for t in ["auto", "normale", "grande", "tres_grande", "geante"]:
-		var b := _bouton(Ecran.NOMS_TAILLES[t], func(): Ecran.changer_taille(t))
+		var b := _bouton(UiCommun.t(str(Ecran.NOMS_TAILLES[t])), func(): Ecran.changer_taille(t))
 		b.toggle_mode = true
 		b.button_group = groupe
 		b.button_pressed = Ecran.reglage_taille() == t
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		tailles.add_child(b)
-	vb.add_child(_label("Taille du texte (s'applique en changeant d'écran) :", 16, Color(0.85, 0.7, 0.6)))
+	vb.add_child(_label(UiCommun.t("Taille du texte (s'applique en changeant d'écran) :"), 16, Color(0.85, 0.7, 0.6)))
 	var textes := HBoxContainer.new()
 	textes.add_theme_constant_override("separation", 8)
 	vb.add_child(textes)
 	var groupe_t := ButtonGroup.new()
 	for t in ["auto", "normal", "grand", "tres_grand"]:
-		var bt := _bouton(Ecran.NOMS_TEXTES[t], func(): Ecran.changer_texte(t))
+		var bt := _bouton(UiCommun.t(str(Ecran.NOMS_TEXTES[t])), func(): Ecran.changer_texte(t))
 		bt.toggle_mode = true
 		bt.button_group = groupe_t
 		bt.button_pressed = Ecran.reglage_texte() == t
 		bt.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		textes.add_child(bt)
-	vb.add_child(_label("Astuce : sur téléphone, un appui long sur une image l'affiche en grand.", 15, Color(0.75, 0.68, 0.6)))
+	vb.add_child(_label(UiCommun.t("Astuce : sur téléphone, un appui long sur une image l'affiche en grand."), 15, Color(0.75, 0.68, 0.6)))
 	var c3 := CheckBox.new()
 	UiCommun.habiller_case(c3)
-	c3.text = "Combats et plateaux en 3D (décoche si ton téléphone chauffe ou ralentit)"
+	c3.text = UiCommun.t("Combats et plateaux en 3D (décoche si ton téléphone chauffe ou ralentit)")
 	c3.focus_mode = Control.FOCUS_NONE
 	c3.add_theme_font_size_override("font_size", 17)
 	c3.button_pressed = bool(Sauvegarde.get_parametre("combats_3d", true))
@@ -122,7 +122,7 @@ func _ready() -> void:
 	vb.add_child(c3)
 	var cc := CheckBox.new()
 	UiCommun.habiller_case(cc)
-	cc.text = "Caméra cinéma en 3D (ralenti et léger rapprochement sur les moments forts)"
+	cc.text = UiCommun.t("Caméra cinéma en 3D (ralenti et léger rapprochement sur les moments forts)")
 	cc.focus_mode = Control.FOCUS_NONE
 	cc.add_theme_font_size_override("font_size", 17)
 	cc.button_pressed = bool(Sauvegarde.get_parametre("camera_cinema", false))
@@ -131,7 +131,7 @@ func _ready() -> void:
 	if OS.has_feature("web"):
 		var pe := CheckBox.new()
 		UiCommun.habiller_case(pe)
-		pe.text = "Plein écran automatique au premier appui" if Ecran.est_mobile() else "Plein écran automatique au premier clic"
+		pe.text = UiCommun.t("Plein écran automatique au premier appui") if Ecran.est_mobile() else UiCommun.t("Plein écran automatique au premier clic")
 		pe.focus_mode = Control.FOCUS_NONE
 		pe.add_theme_font_size_override("font_size", 17)
 		pe.button_pressed = bool(Sauvegarde.get_parametre("plein_ecran_auto", true))
@@ -140,7 +140,7 @@ func _ready() -> void:
 	if Ecran.est_application_pc():
 		var pc := CheckBox.new()
 		UiCommun.habiller_case(pc)
-		pc.text = "Plein écran (touche F11)"
+		pc.text = UiCommun.t("Plein écran (touche F11)")
 		pc.focus_mode = Control.FOCUS_NONE
 		pc.add_theme_font_size_override("font_size", 17)
 		pc.button_pressed = Ecran.plein_ecran_pc()
@@ -156,7 +156,7 @@ func _ready() -> void:
 		var t_version := _label(UiCommun.t("Version du jeu : v%s") % MiseAJour.version_actuelle, 17, Color(0.85, 0.7, 0.6))
 		t_version.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		lm.add_child(t_version)
-		var chercher := _bouton("Rechercher une mise à jour", func(): MiseAJour.verifier(true))
+		var chercher := _bouton(UiCommun.t("Rechercher une mise à jour"), func(): MiseAJour.verifier(true))
 		chercher.size_flags_horizontal = Control.SIZE_SHRINK_END
 		chercher.custom_minimum_size = Vector2(280, 40)
 		lm.add_child(chercher)
@@ -167,10 +167,10 @@ func _ready() -> void:
 		var lc := HBoxContainer.new()
 		lc.add_theme_constant_override("separation", 10)
 		vb.add_child(lc)
-		var t_compte := _label("Compte : " + (EnLigne.pseudo() + " (sauvegarde en ligne active)" if EnLigne.est_connecte() else "hors ligne"), 17, Color(0.85, 0.7, 0.6))
+		var t_compte := _label(UiCommun.t("Compte : ") + (EnLigne.pseudo() + UiCommun.t(" (sauvegarde en ligne active)") if EnLigne.est_connecte() else UiCommun.t("hors ligne")), 17, Color(0.85, 0.7, 0.6))
 		t_compte.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		lc.add_child(t_compte)
-		var gerer := _bouton("Gérer le compte" if EnLigne.est_connecte() else "Se connecter", func():
+		var gerer := _bouton(UiCommun.t("Gérer le compte") if EnLigne.est_connecte() else UiCommun.t("Se connecter"), func():
 			var parent := get_parent()
 			queue_free()
 			FenetreCompte.ouvrir(parent))
@@ -182,30 +182,30 @@ func _ready() -> void:
 	var ltu := HBoxContainer.new()
 	ltu.add_theme_constant_override("separation", 10)
 	vb.add_child(ltu)
-	var t_tuto := _label("Guide des premiers pas et astuces des écrans", 16, Color(0.85, 0.7, 0.6))
+	var t_tuto := _label(UiCommun.t("Guide des premiers pas et astuces des écrans"), 16, Color(0.85, 0.7, 0.6))
 	t_tuto.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ltu.add_child(t_tuto)
-	var b_tuto := _bouton("Réafficher", func():
+	var b_tuto := _bouton(UiCommun.t("Réafficher"), func():
 		Tutoriel.reinitialiser_astuces()
-		_etat.text = "Le guide et les astuces s'afficheront à nouveau.")
+		_etat.text = UiCommun.t("Le guide et les astuces s'afficheront à nouveau."))
 	b_tuto.size_flags_horizontal = Control.SIZE_SHRINK_END
 	b_tuto.custom_minimum_size = Vector2(200, 40)
 	ltu.add_child(b_tuto)
 	vb.add_child(HSeparator.new())
 
-	vb.add_child(_label("Code de sauvegarde (pour transférer ta partie ou la garder de côté) :", 16, Color(0.85, 0.7, 0.6)))
+	vb.add_child(_label(UiCommun.t("Code de sauvegarde (pour transférer ta partie ou la garder de côté) :"), 16, Color(0.85, 0.7, 0.6)))
 	_zone_code = TextEdit.new()
 	_zone_code.custom_minimum_size = Vector2(0, 90)
 	_zone_code.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
-	_zone_code.placeholder_text = "Colle ici un code pour l'importer…"
+	_zone_code.placeholder_text = UiCommun.t("Colle ici un code pour l'importer…")
 	vb.add_child(_zone_code)
 
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 10)
 	vb.add_child(ligne)
-	ligne.add_child(_bouton("Copier mon code", _copier))
-	ligne.add_child(_bouton("Importer ce code", _importer))
-	ligne.add_child(_bouton("Nouvelle partie", _demander_reset))
+	ligne.add_child(_bouton(UiCommun.t("Copier mon code"), _copier))
+	ligne.add_child(_bouton(UiCommun.t("Importer ce code"), _importer))
+	ligne.add_child(_bouton(UiCommun.t("Nouvelle partie"), _demander_reset))
 
 	_etat = _label("", 16, Color(1.0, 0.8, 0.5))
 	vb.add_child(_etat)
@@ -219,20 +219,20 @@ func _ready() -> void:
 	lv.add_theme_constant_override("h_separation", 10)
 	lv.add_theme_constant_override("v_separation", 8)
 	vb.add_child(lv)
-	var journal := _bouton("Journal des mises à jour", func(): FenetreChangelog.ouvrir(get_parent()))
+	var journal := _bouton(UiCommun.t("Journal des mises à jour"), func(): FenetreChangelog.ouvrir(get_parent()))
 	journal.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	journal.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	journal.custom_minimum_size = Vector2(230, 40)
 	lv.add_child(journal)
 	# Signaler un bug / donner son avis : pour tout le monde
-	var avis := _bouton("✉ Signaler un bug / Donner mon avis", func(): FenetreSignalement.ouvrir(get_parent()))
+	var avis := _bouton(UiCommun.t("✉ Signaler un bug / Donner mon avis"), func(): FenetreSignalement.ouvrir(get_parent()))
 	avis.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	avis.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	avis.custom_minimum_size = Vector2(300, 40)
 	lv.add_child(avis)
 	# Espace créateur (statistiques + messages des joueurs) : n'apparaît que si le serveur confirme
 	# que c'est le compte du créateur (et le serveur refuse les données à tout autre compte).
-	var createur := _bouton("✦ Espace créateur", func(): FenetreStatsJeu.ouvrir(get_parent()))
+	var createur := _bouton(UiCommun.t("✦ Espace créateur"), func(): FenetreStatsJeu.ouvrir(get_parent()))
 	createur.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	createur.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	createur.custom_minimum_size = Vector2(200, 40)
@@ -242,7 +242,7 @@ func _ready() -> void:
 	_montrer_createur(createur)
 	# Menu Admin : toujours visible ; demande le code Admin hors de Godot
 	if Sauvegarde.admin_visible():
-		var adm := _bouton("Menu Admin" + ("  (actif)" if Sauvegarde.admin_actif() else ""), func(): FenetreAdmin.ouvrir(get_parent()))
+		var adm := _bouton(UiCommun.t("Menu Admin") + (UiCommun.t("  (actif)") if Sauvegarde.admin_actif() else ""), func(): FenetreAdmin.ouvrir(get_parent()))
 		adm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		adm.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		adm.custom_minimum_size = Vector2(200, 40)
@@ -254,16 +254,16 @@ func _ready() -> void:
 	bas.alignment = BoxContainer.ALIGNMENT_CENTER
 	bas.add_theme_constant_override("separation", 14)
 	cadre.add_child(bas)
-	var fermer := _bouton("Fermer", queue_free)
+	var fermer := _bouton(UiCommun.t("Fermer"), queue_free)
 	fermer.custom_minimum_size = Vector2(200, 46)
 	bas.add_child(fermer)
-	var redem := _bouton("Redémarrer le jeu", func():
-		FenetreSimple.confirmer(get_parent(), "Redémarrer le jeu ?", "Ta partie est sauvegardée avant de redémarrer.", "Redémarrer", Ecran.redemarrer))
+	var redem := _bouton(UiCommun.t("Redémarrer le jeu"), func():
+		FenetreSimple.confirmer(get_parent(), UiCommun.t("Redémarrer le jeu ?"), UiCommun.t("Ta partie est sauvegardée avant de redémarrer."), UiCommun.t("Redémarrer"), Ecran.redemarrer))
 	redem.custom_minimum_size = Vector2(200, 46)
 	bas.add_child(redem)
 	# Quitter : applications (ordinateur, Android). Dans un navigateur, on ferme simplement l'onglet.
 	if not OS.has_feature("web") and not OS.has_feature("ios"):
-		var quitter := _bouton("Quitter le jeu", _demander_quitter)
+		var quitter := _bouton(UiCommun.t("Quitter le jeu"), _demander_quitter)
 		quitter.custom_minimum_size = Vector2(200, 46)
 		quitter.add_theme_color_override("font_color", Color("ff7a6a"))
 		bas.add_child(quitter)
@@ -276,13 +276,13 @@ func _montrer_createur(b: Button) -> void:
 
 
 func _demander_quitter() -> void:
-	FenetreSimple.confirmer(get_parent(), "Quitter le jeu ?", "Ta partie est sauvegardée automatiquement.", "Quitter", _quitter)
+	FenetreSimple.confirmer(get_parent(), UiCommun.t("Quitter le jeu ?"), UiCommun.t("Ta partie est sauvegardée automatiquement."), UiCommun.t("Quitter"), _quitter)
 
 
 ## Sauvegarde (sur l'appareil, puis sur le compte si possible, 4 s au plus) et ferme le jeu.
 func _quitter() -> void:
 	Sauvegarde.ecrire_maintenant()
-	_etat.text = "Sauvegarde en cours…"
+	_etat.text = UiCommun.t("Sauvegarde en cours…")
 	var arbre := get_tree()
 	arbre.create_timer(4.0).timeout.connect(arbre.quit)
 	if EnLigne.est_connecte():
@@ -321,12 +321,12 @@ func _curseur_volume(titre: String, type: String) -> HBoxContainer:
 	pct.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	ligne.add_child(pct)
 	c.value_changed.connect(func(v: float):
-		pct.text = "Muet" if v <= 0.001 else "%d %%" % roundi(v * 100)
+		pct.text = UiCommun.t("Muet") if v <= 0.001 else "%d %%" % roundi(v * 100)
 		Audio.regler_volume(type, v))
 	if type == "sons":
 		c.drag_ended.connect(func(_change: bool): Audio.son("or"))   # pour entendre le nouveau volume
 	if c.value <= 0.001:
-		pct.text = "Muet"
+		pct.text = UiCommun.t("Muet")
 	return ligne
 
 
@@ -347,22 +347,22 @@ func _copier() -> void:
 	var code := Sauvegarde.exporter_code()
 	_zone_code.text = code
 	DisplayServer.clipboard_set(code)
-	_etat.text = "Code copié ! Garde-le précieusement (dans un fichier texte par exemple)."
+	_etat.text = UiCommun.t("Code copié ! Garde-le précieusement (dans un fichier texte par exemple).")
 
 
 func _importer() -> void:
 	if _zone_code.text.strip_edges() == "":
-		_etat.text = "Colle d'abord un code dans la zone ci-dessus."
+		_etat.text = UiCommun.t("Colle d'abord un code dans la zone ci-dessus.")
 		return
 	if Sauvegarde.importer_code(_zone_code.text):
-		_etat.text = "Partie importée !"
+		_etat.text = UiCommun.t("Partie importée !")
 		get_tree().reload_current_scene()
 	else:
-		_etat.text = "Ce code n'est pas valide."
+		_etat.text = UiCommun.t("Ce code n'est pas valide.")
 
 
 func _demander_reset() -> void:
-	FenetreSimple.ouvrir(self, "Nouvelle partie", "Effacer TOUTE la progression et recommencer depuis l'Acte I ?\nTu pourras choisir à nouveau ton héros de départ.\n\nConseil : copie d'abord ton code de sauvegarde.", [["Annuler", null], ["Tout effacer", func():
+	FenetreSimple.ouvrir(self, UiCommun.t("Nouvelle partie"), UiCommun.t("Effacer TOUTE la progression et recommencer depuis l'Acte I ?\nTu pourras choisir à nouveau ton héros de départ.\n\nConseil : copie d'abord ton code de sauvegarde."), [[UiCommun.t("Annuler"), null], [UiCommun.t("Tout effacer"), func():
 		Sauvegarde.reinitialiser()
 		get_tree().change_scene_to_file(EcranChoixHeros.SCENE)]])
 

@@ -333,14 +333,14 @@ static func puissance_unite(m: Dictionary) -> float:
 ## Commence la marche avec ces unités (uids). Renvoie "" ou la raison.
 static func commencer(uids: Array, classee: bool) -> String:
 	if deja_jouee():
-		return "Tu as déjà fait la Marche du jour. Reviens demain !"
+		return UiCommun.t("Tu as déjà fait la Marche du jour. Reviens demain !")
 	if uids.is_empty() or uids.size() > TAILLE_EQUIPE:
 		return UiCommun.t("Choisis de 1 à %d unités.") % TAILLE_EQUIPE
 	for uid in uids:
 		if Sauvegarde.get_heros(int(uid)).is_empty():
-			return "Unité introuvable."
+			return UiCommun.t("Unité introuvable.")
 		if Sauvegarde.est_occupe(int(uid)):
-			return "Une des unités est partie en mission avec la Compagnie."
+			return UiCommun.t("Une des unités est partie en mission avec la Compagnie.")
 	var equipe: Array = []
 	for uid in uids:
 		var h := Sauvegarde.get_heros(int(uid))
@@ -454,14 +454,14 @@ static func ennemis(type: String) -> Array:
 				membres.append([pool["monstres"][r.randi_range(0, pool["monstres"].size() - 1)], 1.0, "", false, false])
 		"elite":
 			var chef: String = pool["gardiens"][r.randi_range(0, pool["gardiens"].size() - 1)]
-			membres.append([chef, 1.5, "Élite : " + UnitesData.get_unite(chef)["nom"], false, true])
+			membres.append([chef, 1.5, UiCommun.t("Élite : ") + UnitesData.get_unite(chef)["nom"], false, true])
 			for i in 2:
 				membres.append([pool["monstres"][r.randi_range(0, pool["monstres"].size() - 1)], 1.0, "", false, false])
 		"boss":
 			membres.append([pool["boss"], 2.2, "", true, false])
 			for i in 2:
 				var g: String = pool["gardiens"][r.randi_range(0, pool["gardiens"].size() - 1)]
-				membres.append([g, 1.0, "Garde : " + UnitesData.get_unite(g)["nom"], false, false])
+				membres.append([g, 1.0, UiCommun.t("Garde : ") + UnitesData.get_unite(g)["nom"], false, false])
 	# Les jeunes équipes (peu de sorts débloqués) affrontent des ennemis un peu plus doux
 	var ajust_niveau := 0.62 + 0.38 * clampf((int(p["niveau"]) - 5) / 24.0, 0.0, 1.0)
 	var cible: float = float(p["puissance"]) * DIFFICULTE * ajust_niveau * float(force_test.get(type, FORCE[type])) \
@@ -553,7 +553,7 @@ static func apres_combat(res: Dictionary) -> Array:
 	p["attente"] = {}
 	if not res["victoire"]:
 		journal(UiCommun.t("Défaite face au %s.") % TYPES[type]["nom"].to_lower())
-		lignes.append("Ton équipe est tombée. La Marche s'arrête ici.")
+		lignes.append(UiCommun.t("Ton équipe est tombée. La Marche s'arrête ici."))
 		lignes.append_array(terminer(false))
 		return lignes
 	var region := int(p["region"])
@@ -572,7 +572,7 @@ static func apres_combat(res: Dictionary) -> Array:
 	journal(UiCommun.t("%s gagné (+%d points).") % [TYPES[type]["nom"], pts])
 	if type == "boss":
 		if region >= REGIONS - 1:
-			lignes.append("Le dernier boss est tombé : la Marche est accomplie !")
+			lignes.append(UiCommun.t("Le dernier boss est tombé : la Marche est accomplie !"))
 			lignes.append_array(terminer(true))
 			return lignes
 		# Région suivante : un peu de repos
@@ -728,7 +728,7 @@ static func choisir_evenement(index: int) -> Array:
 	var evt: Dictionary = EVENEMENTS[a["id"]]
 	var c: Dictionary = evt["choix"][index]
 	if int(c.get("cout_or", 0)) > int(p["or"]):
-		return ["Pas assez d'or de marche."]
+		return [UiCommun.t("Pas assez d'or de marche.")]
 	p["or"] = int(p["or"]) - int(c.get("cout_or", 0))
 	p["attente"] = {}
 	var effets: Dictionary = c.get("effets", {})
@@ -737,12 +737,12 @@ static func choisir_evenement(index: int) -> Array:
 		var r := _rng("evt-choix-%d-%d-%d" % [int(p["region"]), int(p["ligne"]), index])
 		if r.randf() < float(c["chance"]):
 			effets = c["succes"]
-			lignes.append("Réussite !")
+			lignes.append(UiCommun.t("Réussite !"))
 		else:
 			effets = c["echec"]
-			lignes.append("Échec…")
+			lignes.append(UiCommun.t("Échec…"))
 	lignes.append_array(_appliquer_effets(effets))
-	journal("%s : %s" % [evt["titre"], c["texte"]])
+	journal(UiCommun.t("%s : %s") % [evt["titre"], c["texte"]])
 	Sauvegarde.sauvegarder()
 	return lignes
 
@@ -782,7 +782,7 @@ static func _appliquer_effets(e: Dictionary) -> Array:
 		p["attente"] = {"type": "recrue", "unite": _mercenaire()}
 	if e.has("combat"):
 		p["attente"] = {"type": "combat", "combat": e["combat"], "bonus": true}
-		l.append("Le combat s'engage !")
+		l.append(UiCommun.t("Le combat s'engage !"))
 	return l
 
 
@@ -814,8 +814,8 @@ static func feu_de_camp(choix: String) -> Array:
 		"rite":
 			_blesser(0.2)
 			_proposer_benedictions("rare", "rite")
-			l.append("Le rite coûte 20 % des PV de l'équipe.")
-	journal("Feu de camp : " + {"repos": "repos", "entrainement": "entraînement", "rite": "rite de sang"}[choix] + ".")
+			l.append(UiCommun.t("Le rite coûte 20 % des PV de l'équipe."))
+	journal(UiCommun.t("Feu de camp : ") + {"repos": "repos", "entrainement": UiCommun.t("entraînement"), "rite": UiCommun.t("rite de sang")}[choix] + ".")
 	Sauvegarde.sauvegarder()
 	return l
 
@@ -846,11 +846,11 @@ static func texte_offre(o: Dictionary) -> String:
 			var b: Dictionary = BENEDICTIONS[o["id"]]
 			return "%s — %s" % [b["nom"], b["desc"]]
 		"soin":
-			return "Soins — l'équipe récupère 35 % de ses PV."
+			return UiCommun.t("Soins — l'équipe récupère 35 % de ses PV.")
 		"ranimer":
-			return "Résurrection — ranime les unités K.O. avec 40 % de leurs PV."
+			return UiCommun.t("Résurrection — ranime les unités K.O. avec 40 % de leurs PV.")
 		"purifier":
-			return "Purification — retire ta dernière malédiction."
+			return UiCommun.t("Purification — retire ta dernière malédiction.")
 	return ""
 
 
@@ -859,14 +859,14 @@ static func acheter(index: int) -> String:
 	var p := partie()
 	var a: Dictionary = p["attente"]
 	if a.get("type", "") != "marchand" or index in a["achetes"]:
-		return "Déjà acheté."
+		return UiCommun.t("Déjà acheté.")
 	var o: Dictionary = a["offres"][index]
 	if int(p["or"]) < int(o["prix"]):
-		return "Pas assez d'or de marche."
+		return UiCommun.t("Pas assez d'or de marche.")
 	if o["type"] == "purifier" and p["maledictions"].is_empty():
-		return "Tu n'as aucune malédiction."
+		return UiCommun.t("Tu n'as aucune malédiction.")
 	if o["type"] == "ranimer" and not p["equipe"].any(func(m): return float(m["pv"]) <= 0.0):
-		return "Aucune unité K.O."
+		return UiCommun.t("Aucune unité K.O.")
 	p["or"] = int(p["or"]) - int(o["prix"])
 	a["achetes"].append(index)
 	match str(o["type"]):
@@ -915,9 +915,9 @@ static func pacte(index: int) -> Array:
 		return []
 	p["attente"] = {}
 	if index < 0 or index >= a["pactes"].size():
-		journal("Autel de Sang : pacte refusé.")
+		journal(UiCommun.t("Autel de Sang : pacte refusé."))
 		Sauvegarde.sauvegarder()
-		return ["Tu refuses le pacte. L'autel se tait."]
+		return [UiCommun.t("Tu refuses le pacte. L'autel se tait.")]
 	var pa: Dictionary = a["pactes"][index]
 	var l: Array = []
 	p["maledictions"].append(pa["malediction"])
@@ -935,10 +935,10 @@ static func pacte(index: int) -> Array:
 			for m in p["equipe"]:
 				if float(m["pv"]) > 0.0:
 					m["pv"] = 1.0
-			l.append("+180 or de marche, équipe soignée.")
+			l.append(UiCommun.t("+180 or de marche, équipe soignée."))
 		"gloire":
 			p["gloire"] = float(p["gloire"]) + 0.3
-			l.append("Gloire +30 %.")
+			l.append(UiCommun.t("Gloire +30 %."))
 	journal(UiCommun.t("Pacte de Sang : %s.") % MALEDICTIONS[pa["malediction"]]["nom"])
 	Sauvegarde.sauvegarder()
 	return l
@@ -975,7 +975,7 @@ static func terminer(complete: bool) -> Array:
 	var l: Array = []
 	if score > int(d["record"]):
 		d["record"] = score
-		l.append("Nouveau record personnel !")
+		l.append(UiCommun.t("Nouveau record personnel !"))
 	l.append(UiCommun.t("SCORE FINAL : %d%s") % [score, (UiCommun.t("   (gloire +%d %%)") % int(float(p["gloire"]) * 100)) if float(p["gloire"]) > 0 else ""])
 	l.append_array(Reliquaire.donner({"sceau_marche": s}))
 	# XP pour les unités du joueur : selon les combats gagnés
@@ -995,7 +995,7 @@ static func terminer(complete: bool) -> Array:
 static func abandonner() -> Array:
 	if not en_cours():
 		return []
-	journal("La Marche est abandonnée.")
+	journal(UiCommun.t("La Marche est abandonnée."))
 	return terminer(false)
 
 
@@ -1030,9 +1030,9 @@ static func achats_restants(article: Dictionary) -> int:
 static func acheter_boutique(index: int) -> String:
 	var a: Dictionary = BOUTIQUE[index]
 	if achats_restants(a) <= 0:
-		return "Limite de la semaine atteinte."
+		return UiCommun.t("Limite de la semaine atteinte.")
 	if not Sauvegarde.retirer_objet("sceau_marche", int(a["prix"])):
-		return "Pas assez de Sceaux de Marche."
+		return UiCommun.t("Pas assez de Sceaux de Marche.")
 	var ach := _achats_semaine()
 	ach[a["id"]] = int(ach.get(a["id"], 0)) + 1
 	Sauvegarde.ajouter_objet(a["id"], int(a["quantite"]))

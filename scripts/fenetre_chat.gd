@@ -77,7 +77,7 @@ func _ready() -> void:
 
 	var tete := HBoxContainer.new()
 	vb.add_child(tete)
-	var t := UiCommun.label("CHAT GLOBAL", 26, Color(1.0, 0.85, 0.55))
+	var t := UiCommun.label(UiCommun.t("CHAT GLOBAL"), 26, Color(1.0, 0.85, 0.55))
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
 	var x := UiCommun.bouton("✕", 18)
@@ -102,19 +102,19 @@ func _ready() -> void:
 	vb.add_child(ligne)
 	_champ = LineEdit.new()
 	_champ.max_length = LONGUEUR_MAX
-	_champ.placeholder_text = "Ton message à tous les joueurs (Entrée pour envoyer)"
+	_champ.placeholder_text = UiCommun.t("Ton message à tous les joueurs (Entrée pour envoyer)")
 	_champ.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_champ.custom_minimum_size = Vector2(0, 44)
 	_champ.text_submitted.connect(func(_t): _envoyer())
 	ligne.add_child(_champ)
-	var envoyer := UiCommun.bouton("Envoyer", 16)
+	var envoyer := UiCommun.bouton(UiCommun.t("Envoyer"), 16)
 	envoyer.pressed.connect(_envoyer)
 	ligne.add_child(envoyer)
 
 	if not EnLigne.est_connecte():
 		_champ.editable = false
 		envoyer.disabled = true
-		_liste.add_child(_texte_info("Connecte-toi à ton compte (en haut à gauche du menu principal) pour lire et écrire dans le chat global."))
+		_liste.add_child(_texte_info(UiCommun.t("Connecte-toi à ton compte (en haut à gauche du menu principal) pour lire et écrire dans le chat global.")))
 		return
 
 	_moderateur = await EnLigne.est_admin_stats()
@@ -147,10 +147,10 @@ func _envoyer() -> void:
 		"ok":
 			_etat.text = ""
 		"trop_vite":
-			_etat.text = "Doucement ! Attends quelques secondes entre deux messages."
+			_etat.text = UiCommun.t("Doucement ! Attends quelques secondes entre deux messages.")
 			_champ.text = t
 		"":
-			_etat.text = UiCommun.t("Message non envoyé : %s") % str(r.get("erreur", "serveur injoignable"))
+			_etat.text = UiCommun.t("Message non envoyé : %s") % str(r.get("erreur", UiCommun.t("serveur injoignable")))
 			_champ.text = t
 		_:
 			_etat.text = UiCommun.t("Message non envoyé (%s).") % code
@@ -165,10 +165,10 @@ func _lire() -> void:
 		return
 	if not r.ok or not r.data is Array:
 		if _dernier == 0 and _liste.get_child_count() == 0:
-			_liste.add_child(_texte_info("Le chat global n'est pas encore installé sur le serveur (fichier supabase/09_chat_global.sql)."))
+			_liste.add_child(_texte_info(UiCommun.t("Le chat global n'est pas encore installé sur le serveur (fichier supabase/09_chat_global.sql).")))
 		return
 	if _dernier == 0 and (r.data as Array).is_empty() and _liste.get_child_count() == 0:
-		_liste.add_child(_texte_info("Aucun message pour l'instant. Lance la conversation !"))
+		_liste.add_child(_texte_info(UiCommun.t("Aucun message pour l'instant. Lance la conversation !")))
 	for m in r.data:
 		_dernier = maxi(_dernier, int(m.id))
 		_liste.add_child(_ligne(m))
@@ -194,13 +194,13 @@ func _ligne(m: Dictionary) -> Control:
 	var texte := str(m.texte).replace("[", "(").replace("]", ")")
 	var couleur := "#ffd27a" if moi else ("#ff7a6a" if m.get("admin", false) else "#9fc4e8")
 	var couronne := "♛ " if m.get("admin", false) else ""
-	l.text = "[color=#8e7f72]%s[/color]  [b][color=%s]%s%s[/color][/b] : %s" % [
+	l.text = UiCommun.t("[color=#8e7f72]%s[/color]  [b][color=%s]%s%s[/color][/b] : %s") % [
 		_date_courte(str(m.cree_le)), couleur, couronne, nom, texte]
 	h.add_child(l)
 	if _moderateur:
 		var sup := UiCommun.bouton("✕", 12)
 		sup.custom_minimum_size = Vector2(30, 26)
-		sup.tooltip_text = "Supprimer ce message (modération)"
+		sup.tooltip_text = UiCommun.t("Supprimer ce message (modération)")
 		var id := int(m.id)
 		sup.pressed.connect(func():
 			var r: Dictionary = await EnLigne.appeler("chat_global_supprimer", {"p_id": id})

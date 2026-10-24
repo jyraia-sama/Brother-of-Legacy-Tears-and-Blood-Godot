@@ -190,14 +190,14 @@ static func generer(donjon: String, niveau: int, index_vague: int) -> Array:
 			membres.append([d["mini_boss"], POIDS_MINI_BOSS, "", false, true, Mecaniques.mini(donjon) if force_meca > 0 else ""])
 			for i in 2:
 				var g: String = pool[rng.randi_range(0, pool.size() - 1)]
-				membres.append([g, 1.0, "Garde : " + UnitesData.get_unite(g)["nom"], false, false])
+				membres.append([g, 1.0, UiCommun.t("Garde : ") + UnitesData.get_unite(g)["nom"], false, false])
 		"boss":
 			if force_meca > 0:
 				# Avec sa mécanique, le boss arrive avec 2 gardes (le monstre du Donjon)
 				membres.append([d["boss"], POIDS_BOSS_MECA, "", true, false, Mecaniques.boss(donjon)])
 				var g2 := Mecaniques.garde(donjon)
 				for i in 2:
-					membres.append([g2, POIDS_GARDE_BOSS, "Garde : " + UnitesData.get_unite(g2)["nom"], false, false])
+					membres.append([g2, POIDS_GARDE_BOSS, UiCommun.t("Garde : ") + UnitesData.get_unite(g2)["nom"], false, false])
 			else:
 				membres.append([d["boss"], POIDS_BOSS, "", true, false])
 	var eq := point(niveau)
@@ -319,7 +319,7 @@ static func xp(niveau: int, niveau_heros: int) -> int:
 static func demarrer(donjon: String, niveau: int) -> String:
 	var equipe := Sauvegarde.get_equipe()
 	if equipe.is_empty():
-		return "Ton équipe est vide : ajoute des héros dans le Deck."
+		return UiCommun.t("Ton équipe est vide : ajoute des héros dans le Deck.")
 	if not est_ouvert(donjon, niveau):
 		return UiCommun.t("Termine d'abord le niveau %d.") % (niveau - 1)
 	var cout: int = COUT_STAMINA[niveau - 1]

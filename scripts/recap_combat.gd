@@ -31,7 +31,7 @@ func preparer(equipe: Array, journal: Array, pv_final: Array, decalage: int, xp_
 
 	# --- Héros ---
 	var titre := HBoxContainer.new()
-	var t := _label("TON ÉQUIPE", 18, C_OR)
+	var t := _label(UiCommun.t("TON ÉQUIPE"), 18, C_OR)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	titre.add_child(t)
 	if tours > 0:
@@ -67,11 +67,11 @@ func preparer(equipe: Array, journal: Array, pv_final: Array, decalage: int, xp_
 			var cols := HBoxContainer.new()
 			cols.add_theme_constant_override("separation", 24)
 			add_child(cols)
-			cols.add_child(_colonne("RÉSULTATS", resultats))
+			cols.add_child(_colonne(UiCommun.t("RÉSULTATS"), resultats))
 			cols.add_child(VSeparator.new())
-			cols.add_child(_colonne("BUTIN", objets))
+			cols.add_child(_colonne(UiCommun.t("BUTIN"), objets))
 		else:
-			add_child(_colonne("BUTIN ET RÉSULTATS", butin))
+			add_child(_colonne(UiCommun.t("BUTIN ET RÉSULTATS"), butin))
 
 	_lancer_animations.call_deferred()
 
@@ -94,11 +94,11 @@ func _colonne(titre: String, lignes: Array) -> VBoxContainer:
 ## Ligne de « résultat » (dégâts, XP, record, classement…) plutôt que d'objet gagné ?
 func _est_resultat(l: String) -> bool:
 	var b := l.to_lower()
-	for objet in ["tome", "élixir", "elixir", "coffre", "pierre", "écho obtenu"]:
+	for objet in ["tome", UiCommun.t("élixir"), "elixir", "coffre", "pierre", UiCommun.t("écho obtenu")]:
 		if objet in b:
 			return false
-	for mot in ["dégâts", "degats", "xp", "record", "points", "rang", "étage", "etage", "vaincu", "abattu",
-			"classement", "victoire", "défaite", "repli", "repouss", "étoile", "score", "niveau", "%"]:
+	for mot in ["dégâts", "degats", "xp", "record", "points", "rang", UiCommun.t("étage"), "etage", "vaincu", "abattu",
+			"classement", "victoire", UiCommun.t("défaite"), "repli", "repouss", UiCommun.t("étoile"), "score", "niveau", "%"]:
 		if mot in b:
 			return true
 	return false
@@ -189,7 +189,7 @@ func _bandeau_mvp(e: Dictionary, st: Dictionary) -> PanelContainer:
 	var vb := VBoxContainer.new()
 	vb.alignment = BoxContainer.ALIGNMENT_CENTER
 	h.add_child(vb)
-	vb.add_child(_label("★ MVP DU COMBAT ★", 16, C_OR))
+	vb.add_child(_label(UiCommun.t("★ MVP DU COMBAT ★"), 16, C_OR))
 	vb.add_child(_label(_nom(e), 24, UiCommun.couleur_rarete(str(e.get("id", "")))))
 	vb.add_child(_label(_raison_mvp(st), 15, C_TEXTE))
 	p.pivot_offset = Vector2(300, 45)
@@ -250,7 +250,7 @@ func _carte_heros(e: Dictionary, st: Dictionary, xp_avant: Dictionary, est_mvp: 
 		var total := 0
 		for et in etapes:
 			total += int(et["gain"])
-		var lbl_xp := _label(UiCommun.t("+%d XP") % total if total > 0 else ("Niveau max" if int(h["niveau"]) >= Fusion.niveau_max(h) else "+0 XP"), 14, C_XP)
+		var lbl_xp := _label(UiCommun.t("+%d XP") % total if total > 0 else (UiCommun.t("Niveau max") if int(h["niveau"]) >= Fusion.niveau_max(h) else "+0 XP"), 14, C_XP)
 		lbl_xp.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		vb.add_child(lbl_xp)
 		_cartes_xp.append({"barre": barre, "niv": lbl_niv, "etapes": etapes, "carte": p})
@@ -409,7 +409,7 @@ func _nom(e: Dictionary) -> String:
 
 func _icone_ligne(l: String) -> String:
 	var b := l.to_lower()
-	if b.begins_with("or ") or b.begins_with("or:") or b.begins_with("gold"):
+	if b.begins_with(UiCommun.t("or ")) or b.begins_with("or:") or b.begins_with("gold"):
 		return "💰 "
 	if "écho" in b or "echo" in b:
 		return "🩸 "

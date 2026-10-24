@@ -41,10 +41,10 @@ func _ready() -> void:
 	vb.add_theme_constant_override("separation", 16)
 	panneau.add_child(vb)
 
-	var t := UiCommun.label("QUELLE PARTIE GARDER ?", 28, Color(1.0, 0.85, 0.55))
+	var t := UiCommun.label(UiCommun.t("QUELLE PARTIE GARDER ?"), 28, Color(1.0, 0.85, 0.55))
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(t)
-	var info := UiCommun.label("Ton compte contient une partie différente de celle de cet appareil.\nCelle que tu ne gardes pas sera remplacée.", 17, UiCommun.C_DOUX)
+	var info := UiCommun.label(UiCommun.t("Ton compte contient une partie différente de celle de cet appareil.\nCelle que tu ne gardes pas sera remplacée."), 17, UiCommun.C_DOUX)
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(info)
 
@@ -53,10 +53,10 @@ func _ready() -> void:
 	vb.add_child(colonnes)
 	var date_cloud := _date(EnLigne.date_vers_unix(_maj))
 	var date_locale := _date(int(_locale.get("sauvegarde_le", 0)))
-	colonnes.add_child(_colonne("PARTIE DU COMPTE", "Dernière sauvegarde : " + date_cloud, _cloud, "Garder la partie du compte", true))
-	colonnes.add_child(_colonne("PARTIE DE CET APPAREIL", "Dernière sauvegarde : " + date_locale, _locale, "Garder celle de cet appareil", false))
+	colonnes.add_child(_colonne(UiCommun.t("PARTIE DU COMPTE"), UiCommun.t("Dernière sauvegarde : ") + date_cloud, _cloud, UiCommun.t("Garder la partie du compte"), true))
+	colonnes.add_child(_colonne(UiCommun.t("PARTIE DE CET APPAREIL"), UiCommun.t("Dernière sauvegarde : ") + date_locale, _locale, UiCommun.t("Garder celle de cet appareil"), false))
 
-	var astuce := UiCommun.label("Astuce : avant de choisir, tu peux copier le code de sauvegarde de cet appareil dans les Paramètres.", 14, UiCommun.C_DOUX)
+	var astuce := UiCommun.label(UiCommun.t("Astuce : avant de choisir, tu peux copier le code de sauvegarde de cet appareil dans les Paramètres."), 14, UiCommun.C_DOUX)
 	astuce.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(astuce)
 

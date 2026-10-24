@@ -123,17 +123,17 @@ static func cout_eveil(h: Dictionary) -> int:
 static func raison_non_sacrifiable(uid: int, uid_principal: int) -> String:
 	var h := Sauvegarde.get_heros(uid)
 	if h.is_empty():
-		return "Introuvable."
+		return UiCommun.t("Introuvable.")
 	if uid == uid_principal:
-		return "C'est le héros principal."
+		return UiCommun.t("C'est le héros principal.")
 	if h.get("depart", false):
-		return "Ton héros de départ ne peut pas être sacrifié."
+		return UiCommun.t("Ton héros de départ ne peut pas être sacrifié.")
 	if h.get("verrou", false):
-		return "Cette unité est verrouillée."
+		return UiCommun.t("Cette unité est verrouillée.")
 	if Sauvegarde.place_de(uid) >= 0:
-		return "Une unité de l'équipe ne peut pas être sacrifiée."
+		return UiCommun.t("Une unité de l'équipe ne peut pas être sacrifiée.")
 	if Sauvegarde.est_occupe(uid):
-		return "Cette unité est partie en mission."
+		return UiCommun.t("Cette unité est partie en mission.")
 	return ""
 
 
@@ -142,20 +142,20 @@ static func raison_non_sacrifiable(uid: int, uid_principal: int) -> String:
 static func raison_eveil_impossible(uid_principal: int, sacrifices: Array, pierres := 0) -> String:
 	var h := Sauvegarde.get_heros(uid_principal)
 	if h.is_empty():
-		return "Choisis d'abord un héros principal."
+		return UiCommun.t("Choisis d'abord un héros principal.")
 	if est_eveille(h):
-		return "Ce héros est déjà Éveillé (★6) : étoiles au maximum."
+		return UiCommun.t("Ce héros est déjà Éveillé (★6) : étoiles au maximum.")
 	if int(h["niveau"]) < niveau_requis(h):
 		return UiCommun.t("Le héros doit être à son niveau maximum (%d) pour passer ★%d (actuellement Nv %d).") % [niveau_requis(h), etoiles(h) + 1, int(h["niveau"])]
 	var besoin := doublons_requis(h)
 	if pierres > Sauvegarde.get_objet(PIERRE):
-		return "Pas assez de Pierres d'Éveil."
+		return UiCommun.t("Pas assez de Pierres d'Éveil.")
 	if sacrifices.size() + pierres < besoin:
 		return UiCommun.t("Il faut %d doublon(s) de %s ou Pierre(s) d'Éveil (sélectionnés : %d).") % [besoin, UnitesData.get_unite(h["id"])["nom"], sacrifices.size() + pierres]
 	for uid in sacrifices:
 		var s := Sauvegarde.get_heros(int(uid))
 		if s.is_empty() or UnitesData.lignee(s["id"]) != UnitesData.lignee(h["id"]):
-			return "Seuls des doublons de la même unité peuvent servir à l'Éveil."
+			return UiCommun.t("Seuls des doublons de la même unité peuvent servir à l'Éveil.")
 		var r := raison_non_sacrifiable(int(uid), uid_principal)
 		if r != "":
 			return r
@@ -246,11 +246,11 @@ static func calcul_xp(h: Dictionary, xp_gagnee: int) -> Dictionary:
 static func raison_absorption_impossible(uid_principal: int, sacrifices: Array) -> String:
 	var h := Sauvegarde.get_heros(uid_principal)
 	if h.is_empty():
-		return "Choisis d'abord un héros principal."
+		return UiCommun.t("Choisis d'abord un héros principal.")
 	if int(h["niveau"]) >= niveau_max(h):
 		return UiCommun.t("Ce héros est déjà au niveau maximum (%d) : fais-lui gagner une étoile (Éveil).") % niveau_max(h)
 	if sacrifices.is_empty():
-		return "Choisis au moins une unité à sacrifier."
+		return UiCommun.t("Choisis au moins une unité à sacrifier.")
 	if sacrifices.size() > MAX_SACRIFICES:
 		return UiCommun.t("%d sacrifices maximum à la fois.") % MAX_SACRIFICES
 	for uid in sacrifices:

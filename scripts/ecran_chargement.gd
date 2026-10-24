@@ -115,7 +115,7 @@ func _ready() -> void:
 	_titre.modulate.a = 0.0
 	_racine.add_child(_titre)
 	var sous := _label("TEARS  AND  BLOOD", 26, Color("f4e6d0"))
-	sous.name = "Sous"
+	sous.name = UiCommun.t("Sous")
 	_titre.add_child(sous)
 
 	_phrase = _label(PHRASES[randi() % PHRASES.size()], 20, Color(0.85, 0.78, 0.72))
@@ -166,7 +166,7 @@ func _afficher_erreur() -> void:
 	var s := get_viewport().get_visible_rect().size
 	_boutons.size = Vector2(s.x, 44)
 	_boutons.position = Vector2(0, s.y * 0.87 - 56)
-	for t in [["Réessayer", true], ["Jouer quand même", false]]:
+	for t in [[UiCommun.t("Réessayer"), true], ["Jouer quand même", false]]:
 		var b := Button.new()
 		b.text = t[0]
 		b.custom_minimum_size = Vector2(200, 40)
@@ -232,7 +232,7 @@ func _process(delta: float) -> void:
 					_progres = 0.0          # (web : la page avait déjà rempli le Sceau) on repart de zéro
 				_progres = move_toward(_progres, _paquets.avancement(), delta * 1.5)
 				if _boutons == null:
-					_pourcent.text = "Téléchargement des illustrations… %.0f / %.0f Mo" % [
+					_pourcent.text = UiCommun.t("Téléchargement des illustrations… %.0f / %.0f Mo") % [
 						_paquets.octets_recus() / 1048576.0, _paquets.octets_total / 1048576.0]
 			if _paquets_fini:
 				if not _paquets_ok:

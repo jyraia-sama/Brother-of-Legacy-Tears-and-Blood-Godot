@@ -249,9 +249,9 @@ func _creer_fond() -> void:
 	# Lueur rouge du Trône de Cendres
 	for i in 4:
 		_ellipse(_pos(12), Vector2.ONE * (90 - i * 20), Color(0.7, 0.14, 0.17, 0.09), Color(0, 0, 0, 0))
-	_texte_partie("L'Aube et les Cendres", Vector2(565, 700), Color("8a6a4a"))
-	_texte_partie("La Descente et le Sang", Vector2(600, 448), Color("8a4a50"))
-	_texte_partie("Le Crépuscule et l'Héritage", Vector2(400, 196), Color("7a6a6c"))
+	_texte_partie(UiCommun.t("L'Aube et les Cendres"), Vector2(565, 700), Color("8a6a4a"))
+	_texte_partie(UiCommun.t("La Descente et le Sang"), Vector2(600, 448), Color("8a4a50"))
+	_texte_partie(UiCommun.t("Le Crépuscule et l'Héritage"), Vector2(400, 196), Color("7a6a6c"))
 
 
 ## Brume sur les terres pas encore atteintes (elle recule au fil des Actes).
@@ -349,7 +349,7 @@ func _creer_noeuds() -> void:
 		var st := Button.new()
 		st.text = "☀"
 		st.focus_mode = Control.FOCUS_NONE
-		st.tooltip_text = "Une vieille stèle"
+		st.tooltip_text = UiCommun.t("Une vieille stèle")
 		st.add_theme_font_size_override("font_size", 18)
 		var lueur := 0.35 + 0.2 * Ruines.nb_fragments()
 		st.add_theme_stylebox_override("normal", _style(Color(0.2, 0.17, 0.12, 0.9), Color(1.0, 0.8, 0.4, lueur), 18, 2))
@@ -458,11 +458,11 @@ func _stele() -> void:
 	Audio.son("clic")
 	var n := Ruines.nb_fragments()
 	if Ruines.ouvertes():
-		FenetreSimple.ouvrir(self, "La stèle du Sceau de l'Aube",
-			"Les trois fragments ont repris leur place. Le soleil gravé brille, et la pierre a glissé de côté : un escalier descend sous la terre.",
-			[["Descendre dans les Ruines", func(): get_tree().change_scene_to_file(Ruines.SCENE)], ["Plus tard", null]])
+		FenetreSimple.ouvrir(self, UiCommun.t("La stèle du Sceau de l'Aube"),
+			UiCommun.t("Les trois fragments ont repris leur place. Le soleil gravé brille, et la pierre a glissé de côté : un escalier descend sous la terre."),
+			[["Descendre dans les Ruines", func(): get_tree().change_scene_to_file(Ruines.SCENE)], [UiCommun.t("Plus tard"), null]])
 	else:
-		FenetreSimple.ouvrir(self, "Une vieille stèle",
+		FenetreSimple.ouvrir(self, UiCommun.t("Une vieille stèle"),
 			UiCommun.t("Une stèle couverte de mousse, au bord de la mer. On y devine un soleil levant derrière une cloche, et trois creux en forme d'éclats de pierre.\n\nFragments du Sceau de l'Aube : %d / 3.\nIls dorment quelque part dans l'histoire, sous des cases Mystère…") % n)
 
 
@@ -548,7 +548,7 @@ func _afficher_acte(a: int) -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 10)
 	vb.add_child(tete)
-	tete.add_child(_label("Acte " + ROMAINS[a], 28, C_OR, true))
+	tete.add_child(_label(UiCommun.t("Acte ") + ROMAINS[a], 28, C_OR, true))
 	var lieu := _label(LIEUX[a - 1].lieu, 13, C_DOUX)
 	lieu.size_flags_vertical = Control.SIZE_SHRINK_END
 	tete.add_child(lieu)
@@ -580,9 +580,9 @@ func _afficher_acte(a: int) -> void:
 	grille.add_theme_constant_override("h_separation", 8)
 	vb.add_child(grille)
 	var set_id: String = Echos.SET_PAR_ACTE.get(a, "")
-	var nom_set := str(Echos.SETS[set_id]["nom"]) if Echos.SETS.has(set_id) else "?"
+	var nom_set := str(UiCommun.t(str(Echos.SETS[set_id]["nom"]))) if Echos.SETS.has(set_id) else "?"
 	grille.add_child(_case_info("BOSS", LIEUX[a - 1].boss))
-	grille.add_child(_case_info("ÉCHOS", "Set " + nom_set))
+	grille.add_child(_case_info(UiCommun.t("ÉCHOS"), "Set " + nom_set))
 
 	# Les 6 chapitres
 	var n_faits := 0
@@ -591,7 +591,7 @@ func _afficher_acte(a: int) -> void:
 			n_faits += 1
 	var entete := HBoxContainer.new()
 	vb.add_child(entete)
-	var lc := _label("Chapitres", 12, C_DOUX)
+	var lc := _label(UiCommun.t("Chapitres"), 12, C_DOUX)
 	lc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	entete.add_child(lc)
 	entete.add_child(_label("%d / 6" % n_faits, 12, C_DOUX))
@@ -611,7 +611,7 @@ func _afficher_acte(a: int) -> void:
 		principal.pressed.connect(_ouvrir_chapitre.bind(a, en_cours))
 		vb.add_child(principal)
 	elif ouvert:
-		var fini := _label("Acte terminé : touche un chapitre pour le revoir ou le rejouer.", 13, C_OR)
+		var fini := _label(UiCommun.t("Acte terminé : touche un chapitre pour le revoir ou le rejouer."), 13, C_OR)
 		fini.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		fini.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(fini)
@@ -670,7 +670,7 @@ func _ligne_chapitre(a: int, c: int, titre: String, courant: bool) -> Button:
 	b.add_theme_stylebox_override("pressed", survol)
 	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	b.tooltip_text = "Voir le chapitre"
+	b.tooltip_text = UiCommun.t("Voir le chapitre")
 	b.pressed.connect(_ouvrir_chapitre.bind(a, c))
 	return b
 
@@ -690,12 +690,12 @@ func _creer_hud() -> void:
 	retour.add_theme_font_size_override("font_size", 15)
 	_placer(retour, Rect2(10, 8, 128, 44))
 	retour.pressed.connect(_retour)
-	var t := _label("LES TERRES DES VALCENDRE", 20, C_OR, true)
+	var t := _label(UiCommun.t("LES TERRES DES VALCENDRE"), 20, C_OR, true)
 	_placer(t, Rect2(132, 6, 420, 26))
 	var p := _label(UiCommun.t("Histoire principale · %d / %d chapitres") % [_chapitres_termines(), ActesData.nb_chapitres_visibles()], 12, C_DOUX)
 	_placer(p, Rect2(132, 32, 420, 18))
 	var journal := _bouton("✎  Journal", 15, false)
-	journal.tooltip_text = "Revoir les scènes de l'histoire déjà vues"
+	journal.tooltip_text = UiCommun.t("Revoir les scènes de l'histoire déjà vues")
 	_placer(journal, Rect2(820, 10, 120, 40))
 	journal.pressed.connect(func(): FenetreJournal.ouvrir(self))
 	var st := _style(Color(0.03, 0.02, 0.024, 0.85), Color("4a3638"), 18, 1)
@@ -721,7 +721,7 @@ func _creer_legende() -> void:
 	p.add_theme_stylebox_override("panel", st)
 	p.add_child(h)
 	_placer(p, Rect2(96, 72, 0, 0))
-	for e in [["Terminé", Color("5e1a20"), C_OR], ["En cours", C_ROUGE, Color("ffd27a")], ["À découvrir", Color("241c1d"), Color("4a3e3c")]]:
+	for e in [[UiCommun.t("Terminé"), Color("5e1a20"), C_OR], [UiCommun.t("En cours"), C_ROUGE, Color("ffd27a")], [UiCommun.t("À découvrir"), Color("241c1d"), Color("4a3e3c")]]:
 		var pastille := Panel.new()
 		pastille.custom_minimum_size = Vector2(12, 12)
 		pastille.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -864,7 +864,7 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 	var titre := _label(str(chap.get("titre", UiCommun.t("Chapitre %d") % c)), 26, C_TEXTE, true)
 	titre.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	g.add_child(titre)
-	var statut := "✔  Terminé : tu peux le rejouer" if fait else ("▶  Disponible" if ouvert else "✕  Verrouillé")
+	var statut := UiCommun.t("✔  Terminé : tu peux le rejouer") if fait else (UiCommun.t("▶  Disponible") if ouvert else UiCommun.t("✕  Verrouillé"))
 	g.add_child(_label(statut, 13, C_OR if fait else (Color("ffd27a") if ouvert else Color("a08a84")), true))
 	var desc := _label(str(chap.get("description", "")), 14, C_DOUX)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -881,13 +881,13 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 	grille.add_theme_constant_override("h_separation", 8)
 	grille.add_theme_constant_override("v_separation", 8)
 	g.add_child(grille)
-	grille.add_child(_case_fenetre("NIVEAU CONSEILLÉ", UiCommun.t("Niv. %d") % niv))
+	grille.add_child(_case_fenetre(UiCommun.t("NIVEAU CONSEILLÉ"), UiCommun.t("Niv. %d") % niv))
 	var niv_max := mini(niv + max_bonus, UnitesData.NIVEAU_MAX)
-	grille.add_child(_case_fenetre("ENNEMIS", UiCommun.t("Niv. %d") % niv if niv_max <= niv else UiCommun.t("Niv. %d à %d") % [niv, niv_max]))
+	grille.add_child(_case_fenetre(UiCommun.t("ENNEMIS"), UiCommun.t("Niv. %d") % niv if niv_max <= niv else UiCommun.t("Niv. %d à %d") % [niv, niv_max]))
 	grille.add_child(_case_fenetre("STAMINA", UiCommun.t("⚡ %d minimum") % int(infos["stamina"])))
-	grille.add_child(_case_fenetre("PLATEAU", "%d cases" % int(infos["cases"])))
+	grille.add_child(_case_fenetre(UiCommun.t("PLATEAU"), UiCommun.t("%d cases") % int(infos["cases"])))
 
-	g.add_child(_label("Créatures de la région", 12, C_DOUX, true))
+	g.add_child(_label(UiCommun.t("Créatures de la région"), 12, C_DOUX, true))
 	var pool: Dictionary = Rencontres.POOLS.get(a, {})
 	var ligne := HFlowContainer.new()
 	ligne.add_theme_constant_override("h_separation", 8)
@@ -913,12 +913,12 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 	var boutons := HBoxContainer.new()
 	boutons.add_theme_constant_override("separation", 12)
 	g.add_child(boutons)
-	var fermer := _bouton("Fermer", 16, false)
+	var fermer := _bouton(UiCommun.t("Fermer"), 16, false)
 	fermer.custom_minimum_size = Vector2(130, 46)
 	fermer.pressed.connect(_fermer_chapitre)
 	boutons.add_child(fermer)
 	if ouvert:
-		var jouer := _bouton("▶  Rejouer" if fait else "▶  Jouer", 18, true)
+		var jouer := _bouton(UiCommun.t("▶  Rejouer") if fait else UiCommun.t("▶  Jouer"), 18, true)
 		jouer.custom_minimum_size = Vector2(220, 46)
 		jouer.pressed.connect(_lancer.bind(a, c))
 		boutons.add_child(jouer)
@@ -942,30 +942,30 @@ func _ouvrir_chapitre(a: int, c: int) -> void:
 		boss_id = str(gs[(c - 1) % gs.size()])
 	d.add_child(_bloc_boss(boss_id, c == 6, LIEUX[a - 1].boss if c == 6 else ""))
 
-	var bp := _bloc_fenetre("SUR LE PLATEAU")
+	var bp := _bloc_fenetre(UiCommun.t("SUR LE PLATEAU"))
 	d.add_child(bp)
 	var vp: VBoxContainer = bp.get_child(0)
 	var types: Dictionary = infos["types"]
 	for t in [PlateauGenerateur.Type.COMBAT, PlateauGenerateur.Type.ELITE, PlateauGenerateur.Type.GARDIEN,
 			PlateauGenerateur.Type.COFFRE, PlateauGenerateur.Type.SOIN, PlateauGenerateur.Type.MYSTERE, PlateauGenerateur.Type.PIEGE]:
 		if int(types.get(t, 0)) > 0:
-			vp.add_child(_ligne_info(str(PlateauGenerateur.NOMS[t]), "× %d" % int(types[t])))
-	vp.add_child(_ligne_info("Boss", "× 1"))
+			vp.add_child(_ligne_info(str(UiCommun.t(str(PlateauGenerateur.NOMS[t]))), "× %d" % int(types[t])))
+	vp.add_child(_ligne_info(UiCommun.t("Boss"), "× 1"))
 
-	var bl := _bloc_fenetre("BUTIN")
+	var bl := _bloc_fenetre(UiCommun.t("BUTIN"))
 	d.add_child(bl)
 	var vl: VBoxContainer = bl.get_child(0)
 	var set_id: String = Echos.SET_PAR_ACTE.get(a, "")
 	if Echos.SETS.has(set_id):
 		var emp := clampi(c, 1, 6)
-		vl.add_child(_ligne_info("Set d'Échos", str(Echos.SETS[set_id]["nom"])))
-		vl.add_child(_ligne_info("Emplacement", str(Echos.EMPLACEMENTS[emp]["nom"])))
-	vl.add_child(_ligne_info("Or et expérience", "à chaque combat"))
+		vl.add_child(_ligne_info(UiCommun.t("Set d'Échos"), str(UiCommun.t(str(Echos.SETS[set_id]["nom"])))))
+		vl.add_child(_ligne_info(UiCommun.t("Emplacement"), str(UiCommun.t(str(Echos.EMPLACEMENTS[emp]["nom"])))))
+	vl.add_child(_ligne_info(UiCommun.t("Or et expérience"), UiCommun.t("à chaque combat")))
 
 	if c in FinHistoire.CHAPITRES_INVITE.get(a, []):
-		var bk := _bloc_fenetre("RENFORT")
+		var bk := _bloc_fenetre(UiCommun.t("RENFORT"))
 		d.add_child(bk)
-		var lk := _label("Kaël combat à tes côtés dans ce chapitre (invité).", 13, Color("ff9a9a"))
+		var lk := _label(UiCommun.t("Kaël combat à tes côtés dans ce chapitre (invité)."), 13, Color("ff9a9a"))
 		lk.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		(bk.get_child(0) as VBoxContainer).add_child(lk)
 
@@ -1064,7 +1064,7 @@ func _vignette_ennemi(id: String, d: float) -> Control:
 	var inconnu := Panel.new()
 	inconnu.custom_minimum_size = Vector2(d, d)
 	inconnu.mouse_filter = Control.MOUSE_FILTER_PASS
-	inconnu.tooltip_text = "Créature inconnue"
+	inconnu.tooltip_text = UiCommun.t("Créature inconnue")
 	inconnu.add_theme_stylebox_override("panel", _style(Color("1a1213"), Color("4a3e3c"), int(d / 2), 2))
 	var q := _label("?", int(d * 0.45), Color("7a6e68"), true)
 	q.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -1075,7 +1075,7 @@ func _vignette_ennemi(id: String, d: float) -> Control:
 
 
 func _bloc_boss(id: String, boss_acte: bool, nom_scenario := "") -> PanelContainer:
-	var p := _bloc_fenetre("BOSS DE L'ACTE" if boss_acte else "CHEF DU CHAPITRE")
+	var p := _bloc_fenetre(UiCommun.t("BOSS DE L'ACTE") if boss_acte else UiCommun.t("CHEF DU CHAPITRE"))
 	var v: VBoxContainer = p.get_child(0)
 	var h := HBoxContainer.new()
 	h.add_theme_constant_override("separation", 12)
@@ -1089,11 +1089,11 @@ func _bloc_boss(id: String, boss_acte: bool, nom_scenario := "") -> PanelContain
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	t.alignment = BoxContainer.ALIGNMENT_CENTER
 	h.add_child(t)
-	var nom := _label(str(UnitesData.get_unite(id).get("nom", id)) if connu else (nom_scenario if nom_scenario != "" else "Inconnu"), 16, Color("ff9a9a") if boss_acte else C_TEXTE, true)
+	var nom := _label(str(UnitesData.get_unite(id).get("nom", id)) if connu else (nom_scenario if nom_scenario != "" else UiCommun.t("Inconnu")), 16, Color("ff9a9a") if boss_acte else C_TEXTE, true)
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	nom.custom_minimum_size = Vector2(180, 0)
 	t.add_child(nom)
-	var sous := "Le vaincre achève l'Acte." if boss_acte else "Attend au bout du plateau."
+	var sous := UiCommun.t("Le vaincre achève l'Acte.") if boss_acte else UiCommun.t("Attend au bout du plateau.")
 	t.add_child(_label(sous, 12, C_DOUX))
 	return p
 

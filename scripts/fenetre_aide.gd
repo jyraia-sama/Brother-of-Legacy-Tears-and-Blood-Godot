@@ -79,10 +79,10 @@ func _ready() -> void:
 	p.add_child(vb)
 	var tete := HBoxContainer.new()
 	vb.add_child(tete)
-	var t := UiCommun.label("AIDE — COMMENT JOUER", 28, UiCommun.C_OR)
+	var t := UiCommun.label(UiCommun.t("AIDE — COMMENT JOUER"), 28, UiCommun.C_OR)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
-	var fermer := UiCommun.bouton("Fermer", 16)
+	var fermer := UiCommun.bouton(UiCommun.t("Fermer"), 16)
 	fermer.pressed.connect(queue_free)
 	tete.add_child(fermer)
 	var corps := HBoxContainer.new()

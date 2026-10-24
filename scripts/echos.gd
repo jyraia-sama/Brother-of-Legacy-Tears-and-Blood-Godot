@@ -76,13 +76,13 @@ static func description_set(set_id: String) -> String:
 		"blade": UiCommun.t("Taux critique +%s par set actif.") % _n(12 * f),
 		"focus": UiCommun.t("Précision +%s par set actif.") % _n(20 * f),
 		"endure": UiCommun.t("Résistance +%s par set actif.") % _n(20 * f),
-		"revenge": "%s %% de chance de contre-attaquer (75 %% des dégâts) quand touché, par set actif." % _n(15 * f),
-		"will": "Immunité aux afflictions pendant le 1er tour du combat.",
+		"revenge": UiCommun.t("%s %% de chance de contre-attaquer (75 %% des dégâts) quand touché, par set actif.") % _n(15 * f),
+		"will": UiCommun.t("Immunité aux afflictions pendant le 1er tour du combat."),
 		"swift": UiCommun.t("Vitesse +%s %%.") % _n(25 * f),
-		"vampire": "%s %% des dégâts infligés récupérés en PV." % _n(35 * f),
+		"vampire": UiCommun.t("%s %% des dégâts infligés récupérés en PV.") % _n(35 * f),
 		"fatal": UiCommun.t("ATK +%s %%.") % _n(35 * f),
 		"rage": UiCommun.t("Dégâts critiques +%s %%.") % _n(40 * f),
-		"despair": "%s %% de chance d'étourdir la cible quand un skill inflige des dégâts." % _n(25 * f),
+		"despair": UiCommun.t("%s %% de chance d'étourdir la cible quand un skill inflige des dégâts.") % _n(25 * f),
 		"freres": UiCommun.t("La Larme et le Sang réunis : ATK +%s %% et PV max +%s %%.") % [_n(30 * f), _n(30 * f)],
 	}
 	return UiCommun.t("%s (%d pièces) : %s") % [SETS[set_id]["nom"], SETS[set_id]["pieces"], t[set_id]]
@@ -142,13 +142,13 @@ static func valeur_principale(e: Dictionary) -> float:
 static func nom(e: Dictionary) -> String:
 	if e.has("unique"):
 		return UiCommun.t("%s — Sceau des Frères") % e["unique"]
-	return "%s %s" % [EMPLACEMENTS[int(e["emplacement"])]["nom"], SETS[e["set"]]["nom"]]
+	return UiCommun.t("%s %s") % [UiCommun.t(str(EMPLACEMENTS[int(e["emplacement"])]["nom"])), UiCommun.t(str(SETS[e["set"]]["nom"]))]
 
 
 static func texte_stat(stat: String, valeur: float) -> String:
 	var v := str(int(round(valeur))) if not stat in STATS_EN_POURCENT else str(snappedf(valeur, 0.1))
 	var suffixe := " %" if stat.ends_with("%") or stat in ["degats_crit"] else ""
-	return "%s +%s%s" % [NOMS_STATS[stat].trim_suffix(" %"), v, suffixe]
+	return "%s +%s%s" % [UiCommun.t(str(NOMS_STATS[stat])).trim_suffix(" %"), v, suffixe]
 
 
 # ---------------------------------------------------------------------
@@ -156,7 +156,7 @@ static func texte_stat(stat: String, valeur: float) -> String:
 # ---------------------------------------------------------------------
 
 static func creer(set_id: String, emplacement: int, rarete: int, etoiles: int, principale: String, rng: RandomNumberGenerator) -> Dictionary:
-	assert(principale in EMPLACEMENTS[emplacement]["principales"], "Stat principale invalide pour cet emplacement")
+	assert(principale in EMPLACEMENTS[emplacement]["principales"], UiCommun.t("Stat principale invalide pour cet emplacement"))
 	var e := {"uid": 0, "set": set_id, "emplacement": emplacement, "rarete": rarete, "etoiles": etoiles,
 		"niveau": 0, "principale": principale, "secondaires": [], "porteur": -1, "verrou": false}
 	var pool := SECONDAIRES_POSSIBLES.filter(func(s): return s != principale)
@@ -198,9 +198,9 @@ static func chance_amelioration(e: Dictionary) -> float:
 ## Tente +1. Renvoie {"reussi": bool, "texte": ...}. Ne gère pas le paiement.
 static func ameliorer(e: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
 	if int(e["niveau"]) >= NIVEAU_MAX:
-		return {"reussi": false, "texte": "Niveau maximum atteint."}
+		return {"reussi": false, "texte": UiCommun.t("Niveau maximum atteint.")}
 	if rng.randf() >= chance_amelioration(e):
-		return {"reussi": false, "texte": "Échec de l'amélioration… l'Écho reste intact."}
+		return {"reussi": false, "texte": UiCommun.t("Échec de l'amélioration… l'Écho reste intact.")}
 	e["niveau"] = int(e["niveau"]) + 1
 	var texte := UiCommun.t("Réussite : +%d !") % int(e["niveau"])
 	if int(e["niveau"]) in PALIERS:
@@ -211,13 +211,13 @@ static func ameliorer(e: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
 			if not pool.is_empty():
 				var st: String = pool[rng.randi_range(0, pool.size() - 1)]
 				secs.append({"stat": st, "valeur": _tirage(st, int(e["etoiles"]), rng)})
-				texte += "\nNouvelle stat : " + texte_stat(st, secs[-1]["valeur"])
+				texte += UiCommun.t("\nNouvelle stat : ") + texte_stat(st, secs[-1]["valeur"])
 				return {"reussi": true, "texte": texte}
 		if not secs.is_empty():
 			# 4 stats déjà présentes : l'une d'elles est renforcée d'un nouveau tirage
 			var s: Dictionary = secs[rng.randi_range(0, secs.size() - 1)]
 			s["valeur"] = s["valeur"] + _tirage(s["stat"], int(e["etoiles"]), rng)
-			texte += "\nRenforcée : " + texte_stat(s["stat"], s["valeur"])
+			texte += UiCommun.t("\nRenforcée : ") + texte_stat(s["stat"], s["valeur"])
 	return {"reussi": true, "texte": texte}
 
 

@@ -1,11 +1,11 @@
 """Liste les textes français du jeu qui n'ont pas encore de traduction dans langues/en.po.
 
 Usage (depuis la racine du projet) :  python3 outils/traduction/textes_a_traduire.py
-Les fichiers de données (unités, histoire, dialogues…) sont ignorés pour l'instant (étape 2).
+Seul le journal des mises à jour (version.gd) est ignoré.
 """
 import glob, re
 
-DATA = {'unites_data', 'evolutions_data', 'dialogues_data', 'actes_data', 'familiers_data', 'rencontres', 'histoire_data', 'version'}
+DATA = {'version', 'traduction_en'}
 lit = re.compile(r'"((?:[^"\\]|\\.)*)"')
 
 connus = set()

@@ -25,7 +25,7 @@ static func couleur_rarete(id: String) -> Color:
 static func texte_rarete(id: String) -> String:
 	var u := UnitesData.get_unite(id)
 	var t: String = UiCommun.t("%s · Légende") % u["rarete"] if u.get("legende", false) else u["rarete"]
-	return t + (" · Évolué" if UnitesData.est_evolue(id) else "")
+	return t + (UiCommun.t(" · Évolué") if UnitesData.est_evolue(id) else "")
 
 
 ## Opacité des grands panneaux : un peu transparents pour laisser voir le décor peint derrière.
@@ -382,7 +382,7 @@ static func encadrer(c: Control, id: String, retrait := 0.0) -> bool:
 	var tex: Texture2D = info["tex"]
 	var deb: Rect2 = info["debord"]
 	var zone := Control.new()
-	zone.name = "Cadre"
+	zone.name = UiCommun.t("Cadre")
 	zone.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	zone.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	c.add_child(zone)
@@ -460,7 +460,7 @@ static func portrait(id: String, diametre: float) -> Panel:
 	sp.border_color = COULEURS_ELEMENT[u["element"]]
 	sp.set_border_width_all(3)
 	p.add_theme_stylebox_override("panel", sp)
-	var nom_court: String = u["nom"].trim_prefix("La ").trim_prefix("Le ").trim_prefix("L'")
+	var nom_court: String = UiCommun.t(str(u["nom"])).trim_prefix("La ").trim_prefix("Le ").trim_prefix("L'")
 	var ini := label(nom_court.substr(0, 1), int(diametre * 0.4), Color.WHITE)
 	ini.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ini.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -480,9 +480,9 @@ static func carte_heros(h: Dictionary, largeur := 132.0, hauteur := 168.0) -> Bu
 	if Sauvegarde.est_occupe(int(h.get("uid", -1))):
 		b.modulate = Color(0.75, 0.75, 0.8, 0.8)
 		if Menagerie.heros_en_chasse(int(h.get("uid", -1))):
-			badge(b, "En chasse", Color("8ad05a"), false)
+			badge(b, UiCommun.t("En chasse"), Color("8ad05a"), false)
 		else:
-			badge(b, "En mission", Color("7ab8ff"), false)
+			badge(b, UiCommun.t("En mission"), Color("7ab8ff"), false)
 	return b
 
 
@@ -502,7 +502,7 @@ static func _carte_heros(h: Dictionary, largeur: float, hauteur: float) -> Butto
 
 	var vb := habiller_carte(b, id, largeur)
 	var petit := largeur < 120
-	var nom := label(u["nom"], 12 if petit else 14)
+	var nom := label(UiCommun.t(str(u["nom"])), 12 if petit else 14)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	nom.custom_minimum_size = Vector2(largeur - 12 - 2 * bord_cadre(id, largeur), 0)
@@ -510,13 +510,13 @@ static func _carte_heros(h: Dictionary, largeur: float, hauteur: float) -> Butto
 	nom.add_theme_constant_override("outline_size", 5)
 	vb.add_child(nom)
 	var niv := int(h["niveau"])
-	var ligne := label(UiCommun.t("Nv %d  ·  %s") % [niv, "Légende" if u.get("legende", false) else u["rarete"]], 11 if petit else 12, bord)
+	var ligne := label(UiCommun.t("Nv %d  ·  %s") % [niv, UiCommun.t("Légende") if u.get("legende", false) else u["rarete"]], 11 if petit else 12, bord)
 	ligne.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	ligne.add_theme_color_override("font_outline_color", Color.BLACK)
 	ligne.add_theme_constant_override("outline_size", 4)
 	vb.add_child(ligne)
 	var nb_et := Fusion.etoiles(h)
-	var et := label(("✦ " if UnitesData.est_evolue(id) else "") + Fusion.texte_etoiles(nb_et, false) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else ""), 11,
+	var et := label(("✦ " if UnitesData.est_evolue(id) else "") + Fusion.texte_etoiles(nb_et, false) + (UiCommun.t("  ÉVEILLÉ") if nb_et >= Fusion.ETOILES_MAX else ""), 11,
 		Color("ff9a5a") if nb_et >= Fusion.ETOILES_MAX else Color("ffd060"))
 	et.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	et.add_theme_color_override("font_outline_color", Color.BLACK)
@@ -561,7 +561,7 @@ static func habiller_carte(b: Button, id: String, largeur: float) -> VBoxContain
 	sp.border_color = Color.BLACK
 	sp.set_border_width_all(2)
 	pastille.add_theme_stylebox_override("panel", sp)
-	pastille.tooltip_text = UnitesData.ELEMENTS[u["element"]]
+	pastille.tooltip_text = UnitesData.nom_element(u["element"])
 	b.add_child(pastille)
 
 	var vb := VBoxContainer.new()
@@ -664,17 +664,17 @@ static func _carte_heros_simple(h: Dictionary, largeur: float, hauteur: float) -
 	b.add_child(vb)
 	encadrer(b, id, 2.0)
 	vb.add_child(portrait(id, hauteur * 0.34))
-	var nom := label(u["nom"], 13)
+	var nom := label(UiCommun.t(str(u["nom"])), 13)
 	nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	nom.custom_minimum_size = Vector2(largeur - 12, 0)
 	vb.add_child(nom)
 	var niv := int(h["niveau"])
-	var ligne := label(UiCommun.t("Nv %d  ·  %s") % [niv, "Légende" if u.get("legende", false) else u["rarete"]], 12, bord)
+	var ligne := label(UiCommun.t("Nv %d  ·  %s") % [niv, UiCommun.t("Légende") if u.get("legende", false) else u["rarete"]], 12, bord)
 	ligne.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(ligne)
 	var nb_et := Fusion.etoiles(h)
-	var et := label(("✦ " if UnitesData.est_evolue(id) else "") + Fusion.texte_etoiles(nb_et, false) + ("  ÉVEILLÉ" if nb_et >= Fusion.ETOILES_MAX else ""), 11,
+	var et := label(("✦ " if UnitesData.est_evolue(id) else "") + Fusion.texte_etoiles(nb_et, false) + (UiCommun.t("  ÉVEILLÉ") if nb_et >= Fusion.ETOILES_MAX else ""), 11,
 		Color("ff9a5a") if nb_et >= Fusion.ETOILES_MAX else Color("ffd060"))
 	et.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(et)

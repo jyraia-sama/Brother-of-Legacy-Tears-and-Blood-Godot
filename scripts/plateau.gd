@@ -165,7 +165,7 @@ func _ready() -> void:
 		await FenetreDialogue.jouer(self, acte, chapitre, "debut")
 		bloque = false
 	if reprise:
-		_message("Reprise", "Tu reprends l'exploration là où tu l'avais laissée.", _reprendre_case)
+		_message(UiCommun.t("Reprise"), UiCommun.t("Tu reprends l'exploration là où tu l'avais laissée."), _reprendre_case)
 	else:
 		_enregistrer_etat()
 
@@ -407,7 +407,7 @@ func _verifier_impasse() -> void:
 		i -= 1
 	if retour.is_empty():
 		return
-	_message("Cul-de-sac", "Le chemin s'arrête ici.
+	_message(UiCommun.t("Cul-de-sac"), "Le chemin s'arrête ici.
 L'équipe rebrousse chemin jusqu'au sentier.", _rebrousser.bind(retour))
 
 
@@ -534,7 +534,7 @@ func _evenement(id: int) -> void:
 				_enregistrer_etat()
 			if n["mimic"]:
 				Audio.son("coffre")
-				_message("C'est un MIMIC !", "Le coffre s'ouvre... sur une gueule pleine de crocs !\nUn Mimic, bien plus coriace qu'un monstre ordinaire, t'attaque.\n\nBats-le pour récupérer son trésor. (Ce combat ne coûte pas de stamina.)",
+				_message(UiCommun.t("C'est un MIMIC !"), UiCommun.t("Le coffre s'ouvre... sur une gueule pleine de crocs !\nUn Mimic, bien plus coriace qu'un monstre ordinaire, t'attaque.\n\nBats-le pour récupérer son trésor. (Ce combat ne coûte pas de stamina.)"),
 					_lancer_combat.bind(id, true))
 				return
 			var gain := _or_coffre(n)
@@ -545,20 +545,20 @@ func _evenement(id: int) -> void:
 			var txt := UiCommun.t("Tu ouvres le coffre : +%d or.") % gain
 			if randf() < CHANCE_SCEAU_COFFRE:
 				Sauvegarde.ajouter_objet(Menagerie.SCEAU, 1)
-				txt += "\nTu trouves aussi un Sceau Sauvage !"
-			_message("Coffre d'or", txt, _verifier_impasse)
+				txt += UiCommun.t("\nTu trouves aussi un Sceau Sauvage !")
+			_message(UiCommun.t("Coffre d'or"), txt, _verifier_impasse)
 		T.SOIN:
 			Audio.son("soin")
 			pv_equipe.clear()
 			_terminer(id)
 			_maj_equipe_hud()
-			_message("Autel de soin", "Une lumière chaude enveloppe l'équipe.\nToute l'équipe récupère tous ses PV.", _verifier_impasse)
+			_message(UiCommun.t("Autel de soin"), UiCommun.t("Une lumière chaude enveloppe l'équipe.\nToute l'équipe récupère tous ses PV."), _verifier_impasse)
 		T.PIEGE:
 			for uid in Sauvegarde.get_equipe():
 				pv_equipe[str(uid)] = maxf(0.05, _pv_ratio(uid) - 0.15)
 			_terminer(id)
 			_maj_equipe_hud()
-			_message("Piège !", "Des lames jaillissent du sol !\nToute l'équipe perd 15 % de ses PV.", _verifier_impasse)
+			_message(UiCommun.t("Piège !"), UiCommun.t("Des lames jaillissent du sol !\nToute l'équipe perd 15 % de ses PV."), _verifier_impasse)
 		T.MYSTERE:
 			_mystere(id)
 
@@ -570,29 +570,29 @@ func _mystere(id: int) -> void:
 		_terminer(id)
 		Audio.son("coffre")
 		var n := Ruines.nb_fragments()
-		var txt := "Sous une dalle fendue, un éclat de pierre tiède, gravé d'un soleil levant derrière une cloche.\nC'est un FRAGMENT DU SCEAU DE L'AUBE (%d / 3)." % n
+		var txt := UiCommun.t("Sous une dalle fendue, un éclat de pierre tiède, gravé d'un soleil levant derrière une cloche.\nC'est un FRAGMENT DU SCEAU DE L'AUBE (%d / 3).") % n
 		if n == 1:
-			txt += "\n\nAu même instant, loin à l'ouest, au bord de la mer, une vieille stèle se met à luire faiblement sur la carte du monde…"
+			txt += UiCommun.t("\n\nAu même instant, loin à l'ouest, au bord de la mer, une vieille stèle se met à luire faiblement sur la carte du monde…")
 		elif n < 3:
-			txt += "\n\nLa stèle de la carte du monde brille un peu plus fort. Il manque encore un fragment."
+			txt += UiCommun.t("\n\nLa stèle de la carte du monde brille un peu plus fort. Il manque encore un fragment.")
 		else:
-			txt += "\n\nLes trois fragments vibrent ensemble. Sur la carte du monde, la stèle s'illumine : les RUINES OUBLIÉES sont ouvertes."
-		_message("Mystère : un fragment !", txt, _verifier_impasse)
+			txt += UiCommun.t("\n\nLes trois fragments vibrent ensemble. Sur la carte du monde, la stèle s'illumine : les RUINES OUBLIÉES sont ouvertes.")
+		_message(UiCommun.t("Mystère : un fragment !"), txt, _verifier_impasse)
 		return
 	var r := randf()
 	if r < 0.35:
 		var gain := 60 + int(noeuds[id]["niveau"]) * 20
 		_gagner_or(gain)
 		_terminer(id)
-		_message("Mystère : trésor caché", UiCommun.t("Sous une dalle, une bourse oubliée : +%d or.") % gain, _verifier_impasse)
+		_message(UiCommun.t("Mystère : trésor caché"), UiCommun.t("Sous une dalle, une bourse oubliée : +%d or.") % gain, _verifier_impasse)
 	elif r < 0.6:
 		benediction = true
 		_terminer(id)
-		_message("Mystère : bénédiction", "Un esprit bienveillant bénit l'équipe.\n+10 % d'ATK pendant le prochain combat.", _verifier_impasse)
+		_message(UiCommun.t("Mystère : bénédiction"), UiCommun.t("Un esprit bienveillant bénit l'équipe.\n+10 % d'ATK pendant le prochain combat."), _verifier_impasse)
 	else:
 		noeuds[id]["type"] = T.COMBAT
 		_enregistrer_etat()
-		_message("Mystère : embuscade !", "C'était un piège ! Des ennemis surgissent de l'ombre.\n(Ce combat ne coûte pas de stamina.)", _lancer_combat.bind(id, true))
+		_message(UiCommun.t("Mystère : embuscade !"), UiCommun.t("C'était un piège ! Des ennemis surgissent de l'ombre.\n(Ce combat ne coûte pas de stamina.)"), _lancer_combat.bind(id, true))
 
 
 func _cout_stamina(id: int) -> int:
@@ -604,7 +604,7 @@ func _assez_de_stamina(id: int) -> bool:
 	var cout := _cout_stamina(id)
 	if Sauvegarde.get_stamina() >= cout:
 		return true
-	_message("Stamina insuffisante", UiCommun.t("Ce combat coûte %d stamina, tu en as %d.\n\n+1 stamina toutes les 5 minutes (prochain point dans %s).\nTu peux aussi boire un Élixir au Reliquaire.") % [
+	_message(UiCommun.t("Stamina insuffisante"), UiCommun.t("Ce combat coûte %d stamina, tu en as %d.\n\n+1 stamina toutes les 5 minutes (prochain point dans %s).\nTu peux aussi boire un Élixir au Reliquaire.") % [
 		cout, Sauvegarde.get_stamina(), Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())])
 	return false
 
@@ -622,7 +622,7 @@ func _lancer_combat(id: int, gratuit := false) -> void:
 			"etoiles": Fusion.etoiles(h), "echos": Sauvegarde.bonus_echos(uid), "sorts": SortsNiveaux.niveaux(uid),
 			"pv_ratio": _pv_ratio(uid), "bonus_atk": 0.10 if benediction else 0.0})
 	if equipe.is_empty():
-		_message("Aucune équipe", "Ton équipe est vide : ajoute des héros dans le Deck avant de combattre.")
+		_message(UiCommun.t("Aucune équipe"), UiCommun.t("Ton équipe est vide : ajoute des héros dans le Deck avant de combattre."))
 		return
 	# Kaël combat à tes côtés dans certains chapitres de l'histoire (unité invitée, 6e place)
 	var invite := FinHistoire.invite(acte, chapitre)
@@ -701,7 +701,7 @@ func _victoire(id: int) -> void:
 			texte += UiCommun.t("\nBonus de premier passage : +%d XP de compte") % xp
 		if niveaux > 0:
 			texte += UiCommun.t("\n\nNIVEAU DE COMPTE %d ! Stamina max : %d — stamina rechargée !") % [Sauvegarde.get_niveau_compte(), Sauvegarde.get_stamina_max()]
-		_message("Chapitre terminé !", texte, _retour)
+		_message(UiCommun.t("Chapitre terminé !"), texte, _retour)
 	elif n.get("mimic", false):
 		# Le trésor du Mimic : le double d'un coffre normal
 		var gain := _or_coffre(n) * 2
@@ -709,7 +709,7 @@ func _victoire(id: int) -> void:
 		Sauvegarde.ajouter_stat("coffres_ouverts")
 		Sauvegarde.ajouter_stat("mimics_vaincus")
 		Sauvegarde.ajouter_objet(Menagerie.SCEAU, 2)
-		_message("Mimic vaincu !", UiCommun.t("Dans la carcasse du Mimic, tu trouves son trésor : +%d or et 2 Sceaux Sauvages.") % gain, _verifier_impasse)
+		_message(UiCommun.t("Mimic vaincu !"), UiCommun.t("Dans la carcasse du Mimic, tu trouves son trésor : +%d or et 2 Sceaux Sauvages.") % gain, _verifier_impasse)
 	else:
 		_verifier_impasse()
 
@@ -726,11 +726,11 @@ func _defaite(id: int) -> void:
 	pv_equipe.clear()
 	_maj_equipe_hud()
 	defaites_case[id] = int(defaites_case.get(id, 0)) + 1
-	var texte := "L'équipe est repoussée et recule d'une case.\nElle reprend des forces : tu peux retenter ce combat."
+	var texte := UiCommun.t("L'équipe est repoussée et recule d'une case.\nElle reprend des forces : tu peux retenter ce combat.")
 	var astuce := _astuce_defaite(int(defaites_case[id]))
 	if astuce != "":
 		texte += "\n\n" + astuce
-	_message("Défaite", texte, _deplacer.bind(precedent, true))
+	_message(UiCommun.t("Défaite"), texte, _deplacer.bind(precedent, true))
 
 
 ## Conseil après des défaites répétées : les Échos Sanguins font une grosse différence
@@ -745,7 +745,7 @@ func _astuce_defaite(nb: int) -> String:
 	if portes < equipe.size() * 3:
 		return UiCommun.t("Astuce : ton équipe porte peu d'Échos Sanguins (%d sur %d emplacements). Équipe ceux que tu as gagnés (menu Échos Sanguins) : c'est le moyen le plus rapide de devenir plus fort.") % [portes, equipe.size() * 6]
 	if nb >= 3:
-		return "Astuce : améliore tes meilleurs Échos (+3, +6…), monte le niveau de tes nouvelles unités à l'Autel de Fusion (Absorption), ou retente : chaque combat a sa part de hasard."
+		return UiCommun.t("Astuce : améliore tes meilleurs Échos (+3, +6…), monte le niveau de tes nouvelles unités à l'Autel de Fusion (Absorption), ou retente : chaque combat a sa part de hasard.")
 	return ""
 
 
@@ -771,7 +771,7 @@ func _message(titre: String, texte: String, ensuite := Callable()) -> void:
 	var f := FenetreSimple.new()
 	f.titre = titre
 	f.texte = texte
-	f.boutons = [["Continuer", fermer]]
+	f.boutons = [[UiCommun.t("Continuer"), fermer]]
 	if texte.length() > 300:
 		f.largeur = 760.0
 	hud.add_child(f)
@@ -816,21 +816,21 @@ func _maj_survol_id(id: int) -> void:
 		return
 	var n: Dictionary = noeuds[id]
 	var type: int = n["type"]
-	info_titre.text = PlateauGenerateur.NOMS[type]
+	info_titre.text = UiCommun.t(str(PlateauGenerateur.NOMS[type]))
 	var sous := ""
 	if PlateauGenerateur.est_combat(type):
 		sous = UiCommun.t("Niveau %d") % Rencontres.niveau_ennemis(acte, chapitre, n)
 	if n["voie_risquee"]:
-		sous += ("  ·  " if sous != "" else "") + "Voie risquée"
+		sous += ("  ·  " if sous != "" else "") + UiCommun.t("Voie risquée")
 	if n["cul_de_sac"]:
-		sous += ("  ·  " if sous != "" else "") + "Cul-de-sac"
+		sous += ("  ·  " if sous != "" else "") + UiCommun.t("Cul-de-sac")
 	if n.get("mimic", false) and not termines.has(id):
 		sous += ("  ·  " if sous != "" else "") + UiCommun.t("MIMIC ! (niveau %d)") % Rencontres.niveau_ennemis(acte, chapitre, n)
 	if termines.has(id) and type != T.DEPART:
-		sous += ("  ·  " if sous != "" else "") + "Terminé"
+		sous += ("  ·  " if sous != "" else "") + UiCommun.t("Terminé")
 	info_sous.text = sous
 	info_sous.visible = sous != ""
-	info_texte.text = PlateauGenerateur.DESCRIPTIONS[type]
+	info_texte.text = UiCommun.t(str(PlateauGenerateur.DESCRIPTIONS[type]))
 	info.visible = true
 
 
@@ -1258,7 +1258,7 @@ func _creer_hud() -> void:
 	barre.add_child(ligne)
 
 	var btn := Button.new()
-	btn.text = "← Chapitres"
+	btn.text = UiCommun.t("← Chapitres")
 	btn.focus_mode = Control.FOCUS_NONE
 	btn.pressed.connect(_retour)
 	ligne.add_child(btn)
@@ -1305,7 +1305,7 @@ func _creer_hud() -> void:
 	ligne.add_child(lbl_or)
 
 	var centrer := Button.new()
-	centrer.text = "Recentrer"
+	centrer.text = UiCommun.t("Recentrer")
 	centrer.focus_mode = Control.FOCUS_NONE
 	centrer.pressed.connect(func():
 		camera_libre = false
@@ -1323,17 +1323,17 @@ func _creer_hud() -> void:
 		cote.offset_top = 104
 		hud.add_child(cote)
 		_btn_carte = Button.new()
-		_btn_carte.text = "Carte"
+		_btn_carte.text = UiCommun.t("Carte")
 		_btn_carte.focus_mode = Control.FOCUS_NONE
 		_btn_carte.custom_minimum_size = Vector2(170, 0)
-		_btn_carte.tooltip_text = "Voir tout le chapitre d'en haut"
-		_btn_carte.pressed.connect(func(): _btn_carte.text = "Retour" if _p3d.basculer_carte() else "Carte")
+		_btn_carte.tooltip_text = UiCommun.t("Voir tout le chapitre d'en haut")
+		_btn_carte.pressed.connect(func(): _btn_carte.text = UiCommun.t("Retour") if _p3d.basculer_carte() else UiCommun.t("Carte"))
 		cote.add_child(_btn_carte)
 		centrer.custom_minimum_size = Vector2(170, 0)
 		cote.add_child(centrer)
 		# Gros bouton « Avancer » en bas au centre (une seule route) ; flèches au sol aux embranchements
 		_btn_avancer = Button.new()
-		_btn_avancer.text = "Avancer  ▶"
+		_btn_avancer.text = UiCommun.t("Avancer  ▶")
 		_btn_avancer.focus_mode = Control.FOCUS_NONE
 		_btn_avancer.add_theme_font_size_override("font_size", 26)
 		_btn_avancer.custom_minimum_size = Vector2(230, 64)
@@ -1347,9 +1347,9 @@ func _creer_hud() -> void:
 
 	# Aide en bas
 	var aide := Label.new()
-	aide.text = "Clique sur une case qui brille pour avancer  ·  Glisse pour regarder  ·  Molette : zoom  ·  Espace : recentrer"
+	aide.text = UiCommun.t("Clique sur une case qui brille pour avancer  ·  Glisse pour regarder  ·  Molette : zoom  ·  Espace : recentrer")
 	if _p3d != null:
-		aide.text = "Touche une flèche dorée (ou « Avancer ») pour marcher  ·  Glisse pour regarder  ·  Molette : zoom"
+		aide.text = UiCommun.t("Touche une flèche dorée (ou « Avancer ») pour marcher  ·  Glisse pour regarder  ·  Molette : zoom")
 	aide.add_theme_color_override("font_color", Color(1, 0.9, 0.8, 0.7))
 	aide.add_theme_color_override("font_outline_color", Color.BLACK)
 	aide.add_theme_constant_override("outline_size", 5)
@@ -1406,7 +1406,7 @@ func _maj_equipe_hud() -> void:
 	for enfant in boite_equipe.get_children():
 		enfant.queue_free()
 	var titre := _label(15, Color(1.0, 0.85, 0.55))
-	titre.text = "ÉQUIPE" + ("   (bénie : ATK +10 %)" if benediction else "")
+	titre.text = UiCommun.t("ÉQUIPE") + (UiCommun.t("   (bénie : ATK +10 %)") if benediction else "")
 	boite_equipe.add_child(titre)
 	for uid in Sauvegarde.get_equipe():
 		var h := Sauvegarde.get_heros(uid)
@@ -1416,7 +1416,7 @@ func _maj_equipe_hud() -> void:
 		ligne.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var nom := _label(14, Color(0.92, 0.88, 0.85))
 		nom.autowrap_mode = TextServer.AUTOWRAP_OFF
-		nom.text = UiCommun.t("%s Nv %d") % [UnitesData.get_unite(h["id"])["nom"], int(h["niveau"])]
+		nom.text = UiCommun.t("%s Nv %d") % [UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])), int(h["niveau"])]
 		nom.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		nom.clip_text = true
 		ligne.add_child(nom)
@@ -1476,7 +1476,7 @@ func _maj_3d() -> void:
 		var combat_en_attente: bool = PlateauGenerateur.est_combat(int(noeuds[courant]["type"])) and not termines.has(courant) \
 			and courant != plateau.get("depart", -1)
 		_btn_avancer.visible = not en_mouvement and not bloque and (acc.size() == 1 or (acc.is_empty() and combat_en_attente))
-		_btn_avancer.text = "Combattre  ⚔" if acc.is_empty() else "Avancer  ▶"
+		_btn_avancer.text = UiCommun.t("Combattre  ⚔") if acc.is_empty() else UiCommun.t("Avancer  ▶")
 
 
 func _entree_3d(event: InputEvent) -> void:

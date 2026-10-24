@@ -127,7 +127,7 @@ static func liste(periode: String) -> Array:
 		var d: Dictionary = POOL[id]
 		var obj: int = d["objectif"][i]
 		var prog := mini(obj, int(q["progres_" + periode].get(id, 0)))
-		l.append({"id": id, "texte": str(d["texte"]) % obj, "objectif": obj, "progres": prog,
+		l.append({"id": id, "texte": UiCommun.t(str(d["texte"])) % obj, "objectif": obj, "progres": prog,
 			"recompense": d["recompense"][i], "fait": prog >= obj, "reclame": id in q["reclames_" + periode]})
 	return l
 
@@ -218,8 +218,8 @@ static func texte_recompense(r: Dictionary) -> String:
 	var t: Array = []
 	for o in r:
 		match o:
-			"or": t.append("%d or" % int(r[o]))
-			"gemmes": t.append("%d gemmes" % int(r[o]))
+			"or": t.append(UiCommun.t("%d or") % int(r[o]))
+			"gemmes": t.append(UiCommun.t("%d gemmes") % int(r[o]))
 			_: t.append("%s x%d" % [Reliquaire.nom(o), int(r[o])])
 	return " · ".join(t)
 

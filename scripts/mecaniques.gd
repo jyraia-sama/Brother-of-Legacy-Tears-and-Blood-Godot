@@ -197,7 +197,7 @@ static func utiles(meca: String, element_donjon := "") -> Array:
 		var raisons: Array = []
 		for c in contres:
 			if t.has(c):
-				raisons.append(NOMS_CONTRES.get(c, c))
+				raisons.append(UiCommun.t(str(NOMS_CONTRES.get(c, c))))
 		var u := UnitesData.get_unite(h["id"])
 		var fort: bool = element_donjon != "" and CombatMoteur.FORT_CONTRE.get(str(u.get("element", "")), "") == element_donjon
 		if raisons.is_empty():

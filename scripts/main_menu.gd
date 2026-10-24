@@ -222,8 +222,8 @@ func _ready() -> void:
 	Tutoriel.preparer_etape()
 
 	_creer_barre_haut()
-	_creer_colonne(LARME, "LA LARME", "Combattre", C_LARME, true)
-	_creer_colonne(SANG, "LE SANG", "L'armée", C_SANG, false)
+	_creer_colonne(LARME, UiCommun.t("LA LARME"), UiCommun.t("Combattre"), C_LARME, true)
+	_creer_colonne(SANG, UiCommun.t("LE SANG"), UiCommun.t("L'armée"), C_SANG, false)
 	_creer_embleme()
 	_creer_barre_bas()
 	_creer_secrets()
@@ -242,7 +242,7 @@ func _ready() -> void:
 	FenetreChangelog.verifier_mise_a_jour(self)
 	# Modes et places d'équipe qui viennent de s'ouvrir grâce à l'histoire
 	for n in Deblocages.nouveautes():
-		FenetreSimple.ouvrir.call_deferred(self, n["titre"], n["texte"], [["Super !", null]])
+		FenetreSimple.ouvrir.call_deferred(self, UiCommun.t(str(n["titre"])), n["texte"], [[UiCommun.t("Super !"), null]])
 	EnLigne.etat_change.connect(_sur_etat_compte)
 	_sur_etat_compte()
 	# Chat global : on regarde toutes les 30 secondes s'il y a de nouveaux messages
@@ -496,7 +496,7 @@ func _creer_barre_haut() -> void:
 	var heros := Button.new()
 	heros.focus_mode = Control.FOCUS_NONE
 	heros.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	heros.tooltip_text = "Mon héros"
+	heros.tooltip_text = UiCommun.t("Mon héros")
 	var sh := _style(Color("2a1c1e"), C_OR, 28, 2)
 	heros.add_theme_stylebox_override("normal", sh)
 	var shh := _style(Color("3a2426"), Color("ffd27a"), 28, 2)
@@ -536,7 +536,7 @@ func _creer_barre_haut() -> void:
 	_placer(_bouton_compte, Rect2(78, 0, 300, 26))
 	_maj_bouton_compte()
 	var titre := Succes.titre_actuel()
-	var lt := _label(titre if titre != "" else "Héritier des Valcendre", 12, C_OR)
+	var lt := _label(titre if titre != "" else UiCommun.t("Héritier des Valcendre"), 12, C_OR)
 	_placer(lt, Rect2(84, 30, 290, 16))
 	_barre_xp = _barre(C_OR, Color("3a2a2c"))
 	_placer(_barre_xp, Rect2(84, 52, 190, 8))
@@ -546,7 +546,7 @@ func _creer_barre_haut() -> void:
 	# --- Ressources
 	var x := 430.0
 	# Stamina (avec barre et recharge)
-	var st := _case_ressource(Rect2(x, 14, 182, 44), "stamina:⚡", Color("7fc2e8"), Color("163248"), "boutique", "Recharger la stamina")
+	var st := _case_ressource(Rect2(x, 14, 182, 44), "stamina:⚡", Color("7fc2e8"), Color("163248"), "boutique", UiCommun.t("Recharger la stamina"))
 	_lbl_stamina = _label("", 15, C_TEXTE, true)
 	_placer(_lbl_stamina, Rect2(40, 3, 100, 18), st)
 	_barre_stamina = _barre(Color("7fc2e8"), Color("22303a"))
@@ -554,24 +554,24 @@ func _creer_barre_haut() -> void:
 	_lbl_recharge = _label("", 11, C_DOUX)
 	_placer(_lbl_recharge, Rect2(40, 26, 104, 15), st)
 	x += 190
-	var orr := _case_ressource(Rect2(x, 14, 150, 44), "or:●", Color("e2be6a"), Color("3a2e14"), "boutique", "Obtenir de l'or")
+	var orr := _case_ressource(Rect2(x, 14, 150, 44), "or:●", Color("e2be6a"), Color("3a2e14"), "boutique", UiCommun.t("Obtenir de l'or"))
 	_lbl_or = _label("", 15, C_TEXTE, true)
 	_placer(_lbl_or, Rect2(40, 4, 74, 18), orr)
-	_placer(_label("Or", 11, C_DOUX), Rect2(40, 23, 74, 15), orr)
+	_placer(_label(UiCommun.t("Or"), 11, C_DOUX), Rect2(40, 23, 74, 15), orr)
 	x += 158
-	var gem := _case_ressource(Rect2(x, 14, 136, 44), "gemmes:◆", Color("c78be8"), Color("2e1a3a"), "boutique", "Boutique de gemmes")
+	var gem := _case_ressource(Rect2(x, 14, 136, 44), "gemmes:◆", Color("c78be8"), Color("2e1a3a"), "boutique", UiCommun.t("Boutique de gemmes"))
 	_lbl_gemmes = _label("", 15, C_TEXTE, true)
 	_placer(_lbl_gemmes, Rect2(40, 4, 60, 18), gem)
-	_placer(_label("Gemmes", 11, C_DOUX), Rect2(40, 23, 60, 15), gem)
+	_placer(_label(UiCommun.t("Gemmes"), 11, C_DOUX), Rect2(40, 23, 60, 15), gem)
 	x += 144
-	var ecl := _case_ressource(Rect2(x, 14, 104, 44), "eclats:✦", Color("f07a7a"), Color("3a1418"), "", "Éclats de Pacte Supérieur (lâchés par les boss)")
+	var ecl := _case_ressource(Rect2(x, 14, 104, 44), "eclats:✦", Color("f07a7a"), Color("3a1418"), "", UiCommun.t("Éclats de Pacte Supérieur (lâchés par les boss)"))
 	_lbl_eclats = _label("", 15, C_TEXTE, true)
 	_placer(_lbl_eclats, Rect2(40, 4, 60, 18), ecl)
-	_placer(_label("Éclats", 11, C_DOUX), Rect2(40, 23, 60, 15), ecl)
+	_placer(_label(UiCommun.t("Éclats"), 11, C_DOUX), Rect2(40, 23, 60, 15), ecl)
 
 	# --- Chat global (pastille rouge quand il y a de nouveaux messages)
 	var rc := Rect2(1040, 6, 48, 46)
-	var bc := _bouton_icone("chat:❝", rc, "Chat global : discuter avec tous les joueurs")
+	var bc := _bouton_icone("chat:❝", rc, UiCommun.t("Chat global : discuter avec tous les joueurs"))
 	bc.pressed.connect(_on_bouton.bind("chat"))
 	_boutons["chat"] = bc
 	var lc := _label("Chat", 11, C_DOUX)
@@ -579,7 +579,7 @@ func _creer_barre_haut() -> void:
 	_placer(lc, Rect2(rc.position.x - 10, 53, 68, 15))
 
 	# --- Aide, Nouveautés, Menu
-	var coins := [["aide", "aide:?", "Aide"], ["nouveautes", "nouveautes:✎", "Nouveautés"], ["parametres", "menu:☰", "Menu"]]
+	var coins := [["aide", "aide:?", UiCommun.t("Aide")], ["nouveautes", "nouveautes:✎", UiCommun.t("Nouveautés")], ["parametres", "menu:☰", "Menu"]]
 	for i in coins.size():
 		var c: Array = coins[i]
 		var r := Rect2(1100 + i * 58, 6, 48, 46)
@@ -591,7 +591,7 @@ func _creer_barre_haut() -> void:
 		_placer(l, Rect2(r.position.x - 10, 53, 68, 15))
 
 	if Sauvegarde.admin_actif():
-		var adm := _label("MODE ADMIN ACTIF", 12, Color("ff5a4a"), true)
+		var adm := _label(UiCommun.t("MODE ADMIN ACTIF"), 12, Color("ff5a4a"), true)
 		adm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_placer(adm, Rect2(540, 612, 200, 16))
 
@@ -649,7 +649,7 @@ func _creer_colonne(liste: Array, titre: String, sous_titre: String, couleur: Co
 	for c in liste:
 		var grand: bool = c["id"] == "aventure"
 		var h := 64.0 if grand else 52.0
-		_bouton_menu(c["id"], c["titre"], Rect2(x, y, largeur, h), a_gauche, grand)
+		_bouton_menu(c["id"], UiCommun.t(str(c["titre"])), Rect2(x, y, largeur, h), a_gauche, grand)
 		y += h + 8
 
 
@@ -695,35 +695,35 @@ func _sous_titre(id: String) -> String:
 		"aventure":
 			return _prochain_chapitre()
 		"arene":
-			return "Combats JcJ et Arène classée"
+			return UiCommun.t("Combats JcJ et Arène classée")
 		"boss_monde":
 			if not BossMonde.est_debloque():
 				return UiCommun.t("Débloqué après l'Acte %s") % ROMAINS[BossMonde.DEBLOCAGE.x]
 			var boss: Dictionary = BossMonde.BOSS[BossMonde.boss_du_jour()]
-			return UiCommun.t("%s · %d essai%s") % [boss["titre"], BossMonde.essais_restants(),
+			return UiCommun.t("%s · %d essai%s") % [UiCommun.t(str(boss["titre"])), BossMonde.essais_restants(),
 				"s" if BossMonde.essais_restants() > 1 else ""]
 		"tours":
 			return UiCommun.t("Enfer et Paradis · reset %s") % _duree_courte(Calendrier.secondes_avant_semaine())
 		"donjon":
-			return "6 donjons · ressources d'évolution"
+			return UiCommun.t("6 donjons · ressources d'évolution")
 		"expedition":
-			return "Marche Maudite et Compagnie"
+			return UiCommun.t("Marche Maudite et Compagnie")
 		"menagerie":
-			return "Familiers et terrains de chasse"
+			return UiCommun.t("Familiers et terrains de chasse")
 		"deck":
 			return UiCommun.t("Équipe %d / %d · Avant et Arrière") % [Sauvegarde.get_equipe().size(), Deblocages.places_equipe()]
 		"invocation":
-			return "Pactes Doré, Supérieur et Sauvage"
+			return UiCommun.t("Pactes Doré, Supérieur et Sauvage")
 		"fusion":
-			return "Éveil, Absorption, Évolution"
+			return UiCommun.t("Éveil, Absorption, Évolution")
 		"echos":
-			return "Équiper et améliorer"
+			return UiCommun.t("Équiper et améliorer")
 		"reliquaire":
-			return "Forge, coffres et Atelier"
+			return UiCommun.t("Forge, coffres et Atelier")
 		"bestiaire":
 			return UiCommun.t("%d unités découvertes") % Sauvegarde.nombre_decouverts()
 		"galerie":
-			return "Illustrations, figurines et décors"
+			return UiCommun.t("Illustrations, figurines et décors")
 	return ""
 
 
@@ -750,7 +750,7 @@ func _prochain_chapitre() -> String:
 		for c in range(1, 7):
 			if not ActesData.est_termine(a, c):
 				return UiCommun.t("Acte %s · Chapitre %d — Continuer") % [ROMAINS[a], c]
-	return "Histoire terminée · tous les modes"
+	return UiCommun.t("Histoire terminée · tous les modes")
 
 
 # =====================================================================
@@ -802,11 +802,11 @@ func _creer_guide() -> void:
 	x.text = "×"
 	x.flat = true
 	x.focus_mode = Control.FOCUS_NONE
-	x.tooltip_text = "Masquer le guide (réaffichable dans les Paramètres)"
+	x.tooltip_text = UiCommun.t("Masquer le guide (réaffichable dans les Paramètres)")
 	x.add_theme_font_size_override("font_size", 18)
 	x.custom_minimum_size = Vector2(28, 22)
 	x.pressed.connect(func():
-		FenetreSimple.confirmer(self, "Masquer le guide ?", "Tu pourras le réafficher dans les Paramètres.", "Masquer", func():
+		FenetreSimple.confirmer(self, UiCommun.t("Masquer le guide ?"), UiCommun.t("Tu pourras le réafficher dans les Paramètres."), UiCommun.t("Masquer"), func():
 			Tutoriel.masquer(true)
 			get_tree().reload_current_scene()))
 	tete.add_child(x)
@@ -815,7 +815,7 @@ func _creer_guide() -> void:
 	progres.max_value = Tutoriel.ETAPES.size()
 	progres.value = i + (1 if fait else 0)
 	vb.add_child(progres)
-	vb.add_child(_label(str(e["titre"]) + ("  — fait !" if fait else ""), 15, Color("ffd27a"), true))
+	vb.add_child(_label(str(UiCommun.t(str(e["titre"]))) + (UiCommun.t("  — fait !") if fait else ""), 15, Color("ffd27a"), true))
 	var d := _label(e["texte"], 12, C_TEXTE)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	d.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -828,7 +828,7 @@ func _creer_guide() -> void:
 	r.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	bas.add_child(r)
 	var b := Button.new()
-	b.text = "Réclamer" if fait else "Y aller"
+	b.text = UiCommun.t("Réclamer") if fait else UiCommun.t("Y aller")
 	b.focus_mode = Control.FOCUS_NONE
 	b.custom_minimum_size = Vector2(96, 32)
 	b.add_theme_font_size_override("font_size", 14)
@@ -848,9 +848,9 @@ func _creer_guide() -> void:
 	if i == 0 and not Tutoriel.faite("deck") and not "bienvenue" in Tutoriel._etat()["vus"]:
 		Tutoriel._etat()["vus"].append("bienvenue")
 		Sauvegarde.sauvegarder()
-		FenetreSimple.ouvrir.call_deferred(self, "Bienvenue, héros !",
-			"Le guide PREMIERS PAS (au centre) t'accompagne pour tes débuts : suis ses étapes, le bouton concerné brille dans le menu, et chaque étape rapporte une récompense.\n\nÀ gauche, LA LARME pour combattre ; à droite, LE SANG pour ton armée. Le bouton « ? » en haut à droite explique tout le jeu. N'oublie pas ta récompense de connexion dans les Quêtes !",
-			[["C'est parti !", null]])
+		FenetreSimple.ouvrir.call_deferred(self, UiCommun.t("Bienvenue, héros !"),
+			UiCommun.t("Le guide PREMIERS PAS (au centre) t'accompagne pour tes débuts : suis ses étapes, le bouton concerné brille dans le menu, et chaque étape rapporte une récompense.\n\nÀ gauche, LA LARME pour combattre ; à droite, LE SANG pour ton armée. Le bouton « ? » en haut à droite explique tout le jeu. N'oublie pas ta récompense de connexion dans les Quêtes !"),
+			[[UiCommun.t("C'est parti !"), null]])
 
 
 ## Fait briller (contour doré pulsé) le bouton du menu vers lequel le guide envoie.
@@ -882,7 +882,7 @@ func _reclamer_guide() -> void:
 	if l.is_empty():
 		return
 	Audio.son("coffre")
-	FenetreSimple.ouvrir(self, "Étape réussie !", "\n".join(l), [["Suite", get_tree().reload_current_scene]])
+	FenetreSimple.ouvrir(self, UiCommun.t("Étape réussie !"), "\n".join(l), [[UiCommun.t("Suite"), get_tree().reload_current_scene]])
 
 
 # =====================================================================
@@ -908,7 +908,7 @@ func _creer_barre_bas() -> void:
 	v.flat = true
 	v.focus_mode = Control.FOCUS_NONE
 	v.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	v.tooltip_text = "Journal des mises à jour"
+	v.tooltip_text = UiCommun.t("Journal des mises à jour")
 	v.add_theme_font_size_override("font_size", 13)
 	v.add_theme_color_override("font_color", C_DOUX)
 	v.pressed.connect(_on_bouton.bind("nouveautes"))
@@ -920,7 +920,7 @@ func _bouton_royaume(c: Dictionary, x: float, depuis_gauche: bool) -> float:
 	var largeur := 132.0
 	var r := Rect2(x if depuis_gauche else x - largeur, 662, largeur, 44)
 	var b := Button.new()
-	b.text = "%s  %s" % ["🔒" if not Deblocages.est_ouvert(c["id"]) else c["icone"], UiCommun.t(c["titre"])]
+	b.text = "%s  %s" % ["🔒" if not Deblocages.est_ouvert(c["id"]) else c["icone"], UiCommun.t(UiCommun.t(str(c["titre"])))]
 	if not Deblocages.est_ouvert(c["id"]):
 		b.tooltip_text = Deblocages.texte_condition(c["id"])
 		b.modulate = Color(0.6, 0.6, 0.6)
@@ -1060,14 +1060,14 @@ func _maj_bouton_compte() -> void:
 		return
 	if EnLigne.est_connecte():
 		_bouton_compte.text = "● " + EnLigne.nom_complet()
-		_bouton_compte.tooltip_text = "Mon compte"
+		_bouton_compte.tooltip_text = UiCommun.t("Mon compte")
 		_bouton_compte.add_theme_color_override("font_color", Color("8fe07a") if EnLigne.reseau_ok else Color("e0b35a"))
 	elif EnLigne.connexion_en_cours():
-		_bouton_compte.text = "Connexion…"
+		_bouton_compte.text = UiCommun.t("Connexion…")
 		_bouton_compte.add_theme_color_override("font_color", Color(1.0, 0.9, 0.7, 0.7))
 	else:
-		_bouton_compte.text = "Se connecter"
-		_bouton_compte.tooltip_text = "Hors ligne : clique pour te connecter"
+		_bouton_compte.text = UiCommun.t("Se connecter")
+		_bouton_compte.tooltip_text = UiCommun.t("Hors ligne : clique pour te connecter")
 		_bouton_compte.add_theme_color_override("font_color", Color(1.0, 0.9, 0.7))
 	_bouton_compte.add_theme_color_override("font_hover_color", Color("ffd27a"))
 
@@ -1097,14 +1097,14 @@ func _maj_ressources() -> void:
 	_lbl_stamina.text = "%d / %d" % [st, mx]
 	_barre_stamina.max_value = maxi(1, mx)
 	_barre_stamina.value = mini(st, mx)
-	_lbl_recharge.text = "Pleine" if st >= mx else UiCommun.t("+1 dans %s") % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
+	_lbl_recharge.text = UiCommun.t("Pleine") if st >= mx else UiCommun.t("+1 dans %s") % Calendrier.texte_duree(Sauvegarde.secondes_avant_stamina())
 	_lbl_or.text = _nombre(Sauvegarde.get_or())
 	_lbl_gemmes.text = _nombre(Sauvegarde.get_gemmes())
 	_lbl_eclats.text = _nombre(Sauvegarde.get_objet(Sauvegarde.ECLAT))
 	var niv := Sauvegarde.get_niveau_compte()
 	_lbl_niveau.text = str(niv)
 	if Sauvegarde.niveau_compte_max_atteint():
-		_lbl_xp.text = "Niveau MAX"
+		_lbl_xp.text = UiCommun.t("Niveau MAX")
 		_barre_xp.max_value = 1
 		_barre_xp.value = 1
 	else:
@@ -1206,7 +1206,7 @@ func _bouton_icone(icone: String, r: Rect2, aide: String) -> Button:
 func _on_bouton(id: String) -> void:
 	if not Deblocages.est_ouvert(id):
 		var pres: Array = Deblocages.PRESENTATIONS.get(id, [id, ""])
-		FenetreSimple.ouvrir(self, "🔒 " + str(pres[0]), "%s.\n\n%s" % [Deblocages.texte_condition(id), pres[1]], [["Compris", null]])
+		FenetreSimple.ouvrir(self, "🔒 " + str(pres[0]), "%s.\n\n%s" % [Deblocages.texte_condition(id), pres[1]], [[UiCommun.t("Compris"), null]])
 		return
 	var ici := scene_file_path
 	match id:

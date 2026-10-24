@@ -239,7 +239,7 @@ static func apres_combat(victoire: bool, eq: Array, pv_final: Array) -> Dictiona
 	r["fini"] = true
 	var premiere := not est_vaincu(et)
 	r["lignes"].append_array(valider(et))
-	r["titre"] = info["titre_victoire"] if premiere else "ÉTAGE TERMINÉ !"
+	r["titre"] = info["titre_victoire"] if premiere else UiCommun.t("ÉTAGE TERMINÉ !")
 	abandonner()
 	return r
 

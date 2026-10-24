@@ -18,14 +18,14 @@ static func ouvrir(parent: Node, p_titre: String, p_texte: String, p_boutons: Ar
 	var f := FenetreSimple.new()
 	f.titre = p_titre
 	f.texte = p_texte
-	f.boutons = p_boutons if not p_boutons.is_empty() else [["Fermer", null]]
+	f.boutons = p_boutons if not p_boutons.is_empty() else [[UiCommun.t("Fermer"), null]]
 	f.contenu = p_contenu
 	parent.add_child(f)
 	return f
 
 
 static func confirmer(parent: Node, p_titre: String, p_texte: String, texte_ok: String, action: Callable) -> FenetreSimple:
-	return ouvrir(parent, p_titre, p_texte, [["Annuler", null], [texte_ok, action]])
+	return ouvrir(parent, p_titre, p_texte, [[UiCommun.t("Annuler"), null], [texte_ok, action]])
 
 
 func _ready() -> void:

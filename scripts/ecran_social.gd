@@ -53,7 +53,7 @@ func _ready() -> void:
 	var entete := HBoxContainer.new()
 	entete.add_theme_constant_override("separation", 16)
 	colonne.add_child(entete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.custom_minimum_size = Vector2(140, 44)
 	retour.pressed.connect(_retour)
 	entete.add_child(retour)
@@ -64,7 +64,7 @@ func _ready() -> void:
 	entete.add_child(pousse_titre)
 	if EnLigne.est_connecte():
 		entete.add_child(UiCommun.label(UiCommun.t("%s  (pseudo : %s)") % [EnLigne.nom_complet(), EnLigne.pseudo()], 20, UiCommun.C_LEGENDE))
-		var rafraichir := UiCommun.bouton("↻ Actualiser")
+		var rafraichir := UiCommun.bouton(UiCommun.t("↻ Actualiser"))
 		rafraichir.pressed.connect(_charger)
 		entete.add_child(rafraichir)
 
@@ -114,11 +114,11 @@ func _ecran_non_connecte(colonne: VBoxContainer) -> void:
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 14)
 	p.add_child(vb)
-	var texte := "Connecte-toi à ton compte pour ajouter des amis." if EnLigne.configure() \
-		else "Le jeu en ligne n'est pas encore configuré (voir SUPABASE.md)."
+	var texte := UiCommun.t("Connecte-toi à ton compte pour ajouter des amis.") if EnLigne.configure() \
+		else UiCommun.t("Le jeu en ligne n'est pas encore configuré (voir SUPABASE.md).")
 	vb.add_child(UiCommun.label(texte, 20))
 	if EnLigne.configure():
-		var b := UiCommun.bouton("Se connecter")
+		var b := UiCommun.bouton(UiCommun.t("Se connecter"))
 		b.pressed.connect(func(): FenetreCompte.ouvrir(self, false, func(): get_tree().reload_current_scene()))
 		vb.add_child(b)
 
@@ -128,7 +128,7 @@ func _ecran_non_connecte(colonne: VBoxContainer) -> void:
 # ---------------------------------------------------------------
 
 func _charger() -> void:
-	_etat.text = "Chargement…"
+	_etat.text = UiCommun.t("Chargement…")
 	var r := await EnLigne.appeler("mes_amis")
 	if not is_inside_tree():
 		return
@@ -150,7 +150,7 @@ func _maj_titres_onglets() -> void:
 	var nb_amis := _lignes("ami").size()
 	var nb_recues := _lignes("recue").size()
 	_boutons_onglet["amis"].text = UiCommun.t("Amis (%d/100)") % nb_amis
-	_boutons_onglet["demandes"].text = "Demandes" + (" (%d)" % nb_recues if nb_recues > 0 else "")
+	_boutons_onglet["demandes"].text = UiCommun.t("Demandes") + (" (%d)" % nb_recues if nb_recues > 0 else "")
 
 
 func _changer_onglet(id: String) -> void:
@@ -171,40 +171,40 @@ func _afficher() -> void:
 			# Ceux qui sont en ligne d'abord
 			amis.sort_custom(func(a, b): return EnLigne.date_vers_unix(str(a.vu_le)) > EnLigne.date_vers_unix(str(b.vu_le)))
 			if amis.is_empty():
-				_vide("Pas encore d'amis. Va dans « Ajouter un ami » et entre le pseudo d'un joueur.")
+				_vide(UiCommun.t("Pas encore d'amis. Va dans « Ajouter un ami » et entre le pseudo d'un joueur."))
 			for d in amis:
-				_liste.add_child(_ligne_joueur(d, [["Profil", _voir_profil.bind(d)], ["Retirer", _retirer.bind(d)]]))
+				_liste.add_child(_ligne_joueur(d, [[UiCommun.t("Profil"), _voir_profil.bind(d)], [UiCommun.t("Retirer"), _retirer.bind(d)]]))
 		"demandes":
 			if not _charge:
 				return
 			var recues := _lignes("recue")
 			var envoyees := _lignes("envoyee")
-			_sous_titre("Demandes reçues")
+			_sous_titre(UiCommun.t("Demandes reçues"))
 			if recues.is_empty():
-				_vide("Aucune demande reçue.")
+				_vide(UiCommun.t("Aucune demande reçue."))
 			for d in recues:
-				_liste.add_child(_ligne_joueur(d, [["Accepter", _repondre.bind(d, true)], ["Refuser", _repondre.bind(d, false)]]))
-			_sous_titre("Demandes envoyées")
+				_liste.add_child(_ligne_joueur(d, [[UiCommun.t("Accepter"), _repondre.bind(d, true)], [UiCommun.t("Refuser"), _repondre.bind(d, false)]]))
+			_sous_titre(UiCommun.t("Demandes envoyées"))
 			if envoyees.is_empty():
-				_vide("Aucune demande en attente.")
+				_vide(UiCommun.t("Aucune demande en attente."))
 			for d in envoyees:
-				_liste.add_child(_ligne_joueur(d, [["Annuler", _annuler.bind(d)]]))
+				_liste.add_child(_ligne_joueur(d, [[UiCommun.t("Annuler"), _annuler.bind(d)]]))
 		"ajouter":
 			_afficher_ajout()
 
 
 func _afficher_ajout() -> void:
-	_sous_titre("Ajouter un ami")
+	_sous_titre(UiCommun.t("Ajouter un ami"))
 	_vide(UiCommun.t("Entre le pseudo exact du joueur (majuscules sans importance). Donne aussi ton pseudo à tes amis : %s") % EnLigne.pseudo())
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 10)
 	_liste.add_child(ligne)
 	var champ := LineEdit.new()
-	champ.placeholder_text = "Pseudo du joueur"
+	champ.placeholder_text = UiCommun.t("Pseudo du joueur")
 	champ.max_length = 16
 	champ.custom_minimum_size = Vector2(360, 46)
 	ligne.add_child(champ)
-	var envoyer := UiCommun.bouton("Envoyer la demande")
+	var envoyer := UiCommun.bouton(UiCommun.t("Envoyer la demande"))
 	envoyer.custom_minimum_size = Vector2(240, 46)
 	ligne.add_child(envoyer)
 	var action := func():
@@ -238,12 +238,12 @@ func _repondre(d: Dictionary, accepter: bool) -> void:
 func _annuler(d: Dictionary) -> void:
 	var r := await EnLigne.appeler("retirer_ami", {"p_joueur": d.id})
 	if is_inside_tree():
-		_etat.text = "Demande annulée." if r.ok else r.erreur
+		_etat.text = UiCommun.t("Demande annulée.") if r.ok else r.erreur
 		_charger()
 
 
 func _retirer(d: Dictionary) -> void:
-	FenetreSimple.confirmer(self, "Retirer un ami", UiCommun.t("Retirer %s de ta liste d'amis ?") % EnLigne.nom_complet(str(d.pseudo)), "Retirer", func():
+	FenetreSimple.confirmer(self, UiCommun.t("Retirer un ami"), UiCommun.t("Retirer %s de ta liste d'amis ?") % EnLigne.nom_complet(str(d.pseudo)), UiCommun.t("Retirer"), func():
 		var r := await EnLigne.appeler("retirer_ami", {"p_joueur": d.id})
 		if is_inside_tree():
 			_etat.text = UiCommun.t("%s a été retiré de tes amis.") % EnLigne.nom_complet(str(d.pseudo)) if r.ok else r.erreur
@@ -260,7 +260,7 @@ static func ouvrir_profil(parent: Node, id_joueur: String) -> void:
 
 
 static func _nom_role(role: String) -> String:
-	return {"chef": "Chef", "officier": "Officier", "membre": "Membre"}.get(role, role)
+	return {"chef": UiCommun.t("Chef"), "officier": UiCommun.t("Officier"), "membre": UiCommun.t("Membre")}.get(role, role)
 
 
 # ---------------------------------------------------------------
@@ -284,10 +284,10 @@ func _ligne_joueur(d: Dictionary, actions: Array) -> Control:
 	infos.add_child(UiCommun.label(EnLigne.nom_complet(str(d.pseudo)), 22, UiCommun.C_TEXTE))
 	var details := UiCommun.t("Niv. %d") % int(d.niveau)
 	if str(d.get("guilde", "")) != "":
-		details += "  ·  Guilde : " + str(d.guilde)
+		details += UiCommun.t("  ·  Guilde : ") + str(d.guilde)
 	infos.add_child(UiCommun.label(details, 16, UiCommun.C_DOUX))
 	var pres := EnLigne.texte_presence(str(d.vu_le))
-	infos.add_child(UiCommun.label(pres, 15, Color("8fe07a") if pres == "En ligne" else UiCommun.C_DOUX))
+	infos.add_child(UiCommun.label(pres, 15, Color("8fe07a") if pres == UiCommun.t("En ligne") else UiCommun.C_DOUX))
 	for a in actions:
 		var b := UiCommun.bouton(a[0])
 		b.custom_minimum_size = Vector2(130, 42)
@@ -310,7 +310,7 @@ func _vide(texte: String) -> void:
 func _message(r: Dictionary) -> String:
 	if not r.ok:
 		return r.erreur
-	return MESSAGES.get(str(r.data), str(r.data))
+	return UiCommun.t(str(MESSAGES.get(str(r.data), str(r.data))))
 
 
 func _retour() -> void:

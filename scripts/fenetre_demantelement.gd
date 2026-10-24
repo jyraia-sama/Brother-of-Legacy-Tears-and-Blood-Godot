@@ -48,13 +48,13 @@ func _ready() -> void:
 
 	var tete := HBoxContainer.new()
 	vb.add_child(tete)
-	var t := UiCommun.label("DÉMANTELER AU CHOIX", 26, C_VIOLET)
+	var t := UiCommun.label(UiCommun.t("DÉMANTELER AU CHOIX"), 26, C_VIOLET)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
-	var fermer := UiCommun.bouton("Fermer", 16)
+	var fermer := UiCommun.bouton(UiCommun.t("Fermer"), 16)
 	fermer.pressed.connect(_fermer)
 	tete.add_child(fermer)
-	var aide := UiCommun.label("Clique les Échos à démanteler (ils passent en rouge). Les Échos équipés ou verrouillés n'apparaissent pas.", 14, UiCommun.C_DOUX)
+	var aide := UiCommun.label(UiCommun.t("Clique les Échos à démanteler (ils passent en rouge). Les Échos équipés ou verrouillés n'apparaissent pas."), 14, UiCommun.C_DOUX)
 	aide.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(aide)
 
@@ -63,41 +63,41 @@ func _ready() -> void:
 	filtres.add_theme_constant_override("h_separation", 10)
 	filtres.add_theme_constant_override("v_separation", 6)
 	vb.add_child(filtres)
-	filtres.add_child(UiCommun.label("Rareté :", 15, UiCommun.C_TEXTE))
+	filtres.add_child(UiCommun.label(UiCommun.t("Rareté :"), 15, UiCommun.C_TEXTE))
 	var o_r := OptionButton.new()
-	o_r.add_item("Toutes", 0)
+	o_r.add_item(UiCommun.t("Toutes"), 0)
 	for i in Echos.RARETES.size():
-		o_r.add_item(Echos.RARETES[i]["nom"], i + 1)
+		o_r.add_item(UiCommun.t(str(Echos.RARETES[i]["nom"])), i + 1)
 	o_r.item_selected.connect(func(i: int):
 		_f_rarete = i - 1
 		_remplir())
 	filtres.add_child(o_r)
-	filtres.add_child(UiCommun.label("Set :", 15, UiCommun.C_TEXTE))
+	filtres.add_child(UiCommun.label(UiCommun.t("Set :"), 15, UiCommun.C_TEXTE))
 	var o_s := OptionButton.new()
 	var ids_sets: Array = Echos.SETS.keys()
-	o_s.add_item("Tous", 0)
+	o_s.add_item(UiCommun.t("Tous"), 0)
 	for i in ids_sets.size():
-		o_s.add_item(Echos.SETS[ids_sets[i]]["nom"], i + 1)
+		o_s.add_item(UiCommun.t(str(Echos.SETS[ids_sets[i]]["nom"])), i + 1)
 	o_s.item_selected.connect(func(i: int):
 		_f_set = "" if i == 0 else str(ids_sets[i - 1])
 		_remplir())
 	filtres.add_child(o_s)
-	filtres.add_child(UiCommun.label("Emplacement :", 15, UiCommun.C_TEXTE))
+	filtres.add_child(UiCommun.label(UiCommun.t("Emplacement :"), 15, UiCommun.C_TEXTE))
 	var o_e := OptionButton.new()
-	o_e.add_item("Tous", 0)
+	o_e.add_item(UiCommun.t("Tous"), 0)
 	for e in range(1, 7):
-		o_e.add_item("%d · %s" % [e, Echos.EMPLACEMENTS[e]["nom"]], e)
+		o_e.add_item("%d · %s" % [e, UiCommun.t(str(Echos.EMPLACEMENTS[e]["nom"]))], e)
 	o_e.item_selected.connect(func(i: int):
 		_f_emp = i
 		_remplir())
 	filtres.add_child(o_e)
-	var b_tout := UiCommun.bouton("Tout cocher (filtre)", 14)
+	var b_tout := UiCommun.bouton(UiCommun.t("Tout cocher (filtre)"), 14)
 	b_tout.pressed.connect(func():
 		for e in _visibles():
 			_choisis[int(e["uid"])] = true
 		_remplir())
 	filtres.add_child(b_tout)
-	var b_rien := UiCommun.bouton("Tout décocher", 14)
+	var b_rien := UiCommun.bouton(UiCommun.t("Tout décocher"), 14)
 	b_rien.pressed.connect(func():
 		_choisis.clear()
 		_remplir())
@@ -110,7 +110,7 @@ func _ready() -> void:
 	var cont := VBoxContainer.new()
 	cont.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	defil.add_child(cont)
-	_vide = UiCommun.label("Aucun Écho ne correspond (les Échos équipés ou verrouillés ne peuvent pas être démantelés).", 16, UiCommun.C_DOUX)
+	_vide = UiCommun.label(UiCommun.t("Aucun Écho ne correspond (les Échos équipés ou verrouillés ne peuvent pas être démantelés)."), 16, UiCommun.C_DOUX)
 	_vide.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	cont.add_child(_vide)
 	_grille = GridContainer.new()
@@ -126,7 +126,7 @@ func _ready() -> void:
 	_total.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_total.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	bas.add_child(_total)
-	_btn = UiCommun.bouton("Démanteler la sélection", 17)
+	_btn = UiCommun.bouton(UiCommun.t("Démanteler la sélection"), 17)
 	UiCommun.bouton_vif(_btn, Color("8a2a3a"))
 	_btn.pressed.connect(_demanteler)
 	bas.add_child(_btn)
@@ -185,10 +185,10 @@ func _carte(e: Dictionary) -> Button:
 	vb.add_theme_constant_override("separation", 0)
 	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(vb)
-	var titre := UiCommun.label("%d · %s" % [int(e["emplacement"]), Echos.SETS[e["set"]]["nom"]], 14, coul)
+	var titre := UiCommun.label("%d · %s" % [int(e["emplacement"]), UiCommun.t(str(Echos.SETS[e["set"]]["nom"]))], 14, coul)
 	titre.clip_text = true
 	vb.add_child(titre)
-	vb.add_child(UiCommun.label("%s  ·  %s  +%d" % [Echos.RARETES[int(e["rarete"])]["nom"], "★".repeat(int(e["etoiles"])), int(e.get("niveau", 0))], 13, Color("ffd060")))
+	vb.add_child(UiCommun.label("%s  ·  %s  +%d" % [UiCommun.t(str(Echos.RARETES[int(e["rarete"])]["nom"])), "★".repeat(int(e["etoiles"])), int(e.get("niveau", 0))], 13, Color("ffd060")))
 	vb.add_child(UiCommun.label(Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 13))
 	var subs: Array = []
 	for s in e.get("secondaires", []):
@@ -198,7 +198,7 @@ func _carte(e: Dictionary) -> Button:
 		ls.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		ls.max_lines_visible = 2
 		vb.add_child(ls)
-	vb.add_child(UiCommun.label(("✕ À DÉMANTELER  " if choisi else "") + UiCommun.t("+%d Poussière") % Reliquaire.poussiere_demantelement(e),
+	vb.add_child(UiCommun.label((UiCommun.t("✕ À DÉMANTELER  ") if choisi else "") + UiCommun.t("+%d Poussière") % Reliquaire.poussiere_demantelement(e),
 		12, C_SEL if choisi else Color("c8a8ff")))
 	b.pressed.connect(func():
 		if _choisis.has(uid):
@@ -228,7 +228,7 @@ func _maj_total() -> void:
 			rares += 1
 	_total.add_theme_color_override("font_color", Color("ffd060"))
 	_total.text = UiCommun.t("%d Écho(s) sélectionné(s)   →   +%d Poussière d'Écho") % [nb, gain] if nb > 0 \
-		else "Aucun Écho sélectionné."
+		else UiCommun.t("Aucun Écho sélectionné.")
 	if rares > 0:
 		_total.text += UiCommun.t("   (dont %d Héroïque(s) ou Légendaire(s))") % rares
 	_btn.disabled = nb == 0
@@ -251,7 +251,7 @@ func _demanteler() -> void:
 	var txt := UiCommun.t("Démanteler %d Échos pour %d Poussière d'Écho ?") % [uids.size(), gain]
 	if rares > 0:
 		txt += "\n\n" + UiCommun.t("⚠ Attention : %d d'entre eux sont Héroïques ou Légendaires. Un Écho démantelé est perdu pour toujours.") % rares
-	FenetreSimple.ouvrir(self, "Démantèlement", txt, [["Annuler", null], ["Démanteler", func():
+	FenetreSimple.ouvrir(self, UiCommun.t("Démantèlement"), txt, [[UiCommun.t("Annuler"), null], ["Démanteler", func():
 		var g := Reliquaire.demanteler(uids)
 		_choisis.clear()
 		_remplir()

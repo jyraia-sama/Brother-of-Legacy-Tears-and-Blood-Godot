@@ -59,7 +59,7 @@ static func fin_acte_13() -> Array:
 	# Kaël rejoint la collection
 	Sauvegarde.ajouter_heros(HEROS_KAEL)
 	Sauvegarde.decouvrir(HEROS_KAEL)
-	l.append("Kaël Valcendre rejoint ta collection (Héros de Légende) !")
+	l.append(UiCommun.t("Kaël Valcendre rejoint ta collection (Héros de Légende) !"))
 	# Titre
 	Succes.ajouter_titre(TITRE_ACTE_13)
 	l.append(UiCommun.t("Nouveau titre : « %s »") % TITRE_ACTE_13)
@@ -67,12 +67,12 @@ static func fin_acte_13() -> Array:
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 	var larme := Echos.creer("freres", 5, 4, 6, "pv%", rng)
-	larme["unique"] = "La Larme"
+	larme["unique"] = UiCommun.t("La Larme")
 	var sang := Echos.creer("freres", 1, 4, 6, "atk%", rng)
-	sang["unique"] = "Le Sang"
+	sang["unique"] = UiCommun.t("Le Sang")
 	Sauvegarde.ajouter_echo(larme)
 	Sauvegarde.ajouter_echo(sang)
-	l.append("Échos uniques : la Larme et le Sang (set des Frères, Légendaires 6★)")
+	l.append(UiCommun.t("Échos uniques : la Larme et le Sang (set des Frères, Légendaires 6★)"))
 	# Gemmes et coffres
 	Sauvegarde.ajouter_gemmes(GEMMES_VRAIE_FIN)
 	Sauvegarde.ajouter_objet("coffre_royal", COFFRES_VRAIE_FIN)
@@ -93,7 +93,7 @@ static func invite(acte: int, chapitre: int) -> Dictionary:
 	var id := "kael_jeune" if acte == 1 else HEROS_KAEL
 	Sauvegarde.decouvrir(id)
 	var niveau := Rencontres.niveau_attendu(acte, chapitre)
-	return {"id": id, "niveau": niveau, "place": 5, "nom": "Kaël (invité)", "etoiles": 1 if acte == 1 else 3,
+	return {"id": id, "niveau": niveau, "place": 5, "nom": UiCommun.t("Kaël (invité)"), "etoiles": 1 if acte == 1 else 3,
 		"invite": true}
 
 

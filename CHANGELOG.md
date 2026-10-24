@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.83.2** (2026-10-24)
+Version actuelle : **0.84.0** (2026-10-24)
+
+## v0.84.0 — Le jeu en anglais  (2026-10-24)
+
+- ENGLISH VERSION COMPLETE: the whole game can now be played in English (Settings → LANGUE · LANGUAGE). Heroes, spells, evolutions, familiars, Acts, chapters, story dialogues, events, items, Dungeons, Towers, quests and achievements are all translated.
+- VERSION ANGLAISE COMPLÈTE : en plus des menus, toutes les données du jeu sont traduites (environ 3 000 textes de plus) : noms et sorts des héros et des monstres, évolutions, familiers, Actes et chapitres, dialogues de l'histoire, épilogues, événements, objets, quêtes et succès.
+- Les textes assemblés morceau par morceau (titres de donjons, ressources, récompenses, fenêtre « Signaler un bug »…) s'affichent aussi en anglais. Le jeu en français ne change pas.
 
 ## v0.83.2 — Les Dragons prennent forme  (2026-10-24)
 

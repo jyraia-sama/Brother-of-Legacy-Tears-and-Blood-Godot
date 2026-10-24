@@ -261,7 +261,30 @@ static func get_acte(numero: int) -> Dictionary:
 	if numero < 1 or numero > ACTES.size():
 		push_warning("Acte inexistant : %d" % numero)
 		return {}
-	return ACTES[numero - 1]
+	return _traduit(numero - 1)
+
+
+## LANGUE : en anglais, titres et descriptions de l'Acte et de ses chapitres sont traduits (langues/en.po).
+static var _trad: Dictionary = {}
+static var _trad_langue := ""
+
+static func _traduit(i: int) -> Dictionary:
+	var a: Dictionary = ACTES[i]
+	var langue := TranslationServer.get_locale()
+	if langue.begins_with("fr"):
+		return a
+	if langue != _trad_langue:
+		_trad.clear()
+		_trad_langue = langue
+	if not _trad.has(i):
+		var c: Dictionary = a.duplicate(true)
+		for k in ["titre", "partie"]:
+			c[k] = str(TranslationServer.translate(str(c.get(k, ""))))
+		for ch in c["chapitres"]:
+			for k in ["titre", "description"]:
+				ch[k] = str(TranslationServer.translate(str(ch.get(k, ""))))
+		_trad[i] = c
+	return _trad[i]
 
 ## Renvoie le chapitre (1 à 6) d'un Acte (1 à 12).
 static func get_chapitre(acte: int, chapitre: int) -> Dictionary:

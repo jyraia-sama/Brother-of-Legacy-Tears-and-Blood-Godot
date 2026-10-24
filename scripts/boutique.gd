@@ -94,9 +94,9 @@ static func deja_achete_marche(o: Dictionary) -> bool:
 
 static func acheter_marche(o: Dictionary) -> String:
 	if deja_achete_marche(o):
-		return "Déjà acheté aujourd'hui."
+		return UiCommun.t("Déjà acheté aujourd'hui.")
 	if not Sauvegarde.depenser_or(int(o["prix"])):
-		return "Pas assez d'or."
+		return UiCommun.t("Pas assez d'or.")
 	_etat()["achats_jour"][o["cle"]] = 1
 	Sauvegarde.ajouter_objet(o["id"], int(o["quantite"]))
 	Sauvegarde.ajouter_stat("achats_boutique")
@@ -125,11 +125,11 @@ static func nom_offre(o: Dictionary) -> String:
 
 static func acheter_comptoir(o: Dictionary) -> String:
 	if restants(o) <= 0:
-		return UiCommun.t("Limite atteinte (%s).") % ("aujourd'hui" if o["periode"] == "jour" else "cette semaine")
+		return UiCommun.t("Limite atteinte (%s).") % (UiCommun.t("aujourd'hui") if o["periode"] == "jour" else UiCommun.t("cette semaine"))
 	if o["id"] == "stamina_pleine" and Sauvegarde.get_stamina() >= Sauvegarde.get_stamina_max():
-		return "Ta stamina est déjà pleine."
+		return UiCommun.t("Ta stamina est déjà pleine.")
 	if not Sauvegarde.depenser_gemmes(int(o["prix"])):
-		return "Pas assez de gemmes."
+		return UiCommun.t("Pas assez de gemmes.")
 	var achats: Dictionary = _etat()["achats_" + str(o["periode"])]
 	achats[cle(o)] = int(achats.get(cle(o), 0)) + 1
 	if o["id"] == "stamina_pleine":

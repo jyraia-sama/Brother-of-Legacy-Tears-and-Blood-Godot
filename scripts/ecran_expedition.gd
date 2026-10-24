@@ -38,10 +38,10 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Aventure")
+	var retour := UiCommun.bouton(UiCommun.t("← Aventure"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.plaque_titre(UiCommun.label("EXPÉDITIONS", 34, UiCommun.C_OR)))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label(UiCommun.t("EXPÉDITIONS"), 34, UiCommun.C_OR)))
 	var pousse := Control.new()
 	pousse.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(pousse)
@@ -58,14 +58,14 @@ func _ready() -> void:
 	cartes.add_theme_constant_override("separation", 18)
 	corps.add_child(cartes)
 	_lbl_marche = UiCommun.label("", 16, UiCommun.C_TEXTE)
-	cartes.add_child(_grande_carte("LA MARCHE MAUDITE", "Traverse trois régions maudites sur une carte à embranchements.\n"
-		+ "Bénédictions, Pactes de Sang, recrues et événements : chaque choix compte.\nUne marche par jour, la même pour tous : vise le meilleur score !",
+	cartes.add_child(_grande_carte(UiCommun.t("LA MARCHE MAUDITE"), UiCommun.t("Traverse trois régions maudites sur une carte à embranchements.\n")
+		+ UiCommun.t("Bénédictions, Pactes de Sang, recrues et événements : chaque choix compte.\nUne marche par jour, la même pour tous : vise le meilleur score !"),
 		C_SANG, "marche_bg", _lbl_marche, func():
 			EcranMarche.scene_retour = SCENE
 			get_tree().change_scene_to_file(Marche.SCENE)))
 	_lbl_compagnie = UiCommun.label("", 16, UiCommun.C_TEXTE)
-	cartes.add_child(_grande_carte("LA COMPAGNIE", "Envoie les unités qui ne combattent pas en missions de 1 h à 12 h.\n"
-		+ "Remplis les conditions, vise l'objectif bonus, et récupère le butin à leur retour — même jeu fermé.",
+	cartes.add_child(_grande_carte(UiCommun.t("LA COMPAGNIE"), UiCommun.t("Envoie les unités qui ne combattent pas en missions de 1 h à 12 h.\n")
+		+ UiCommun.t("Remplis les conditions, vise l'objectif bonus, et récupère le butin à leur retour — même jeu fermé."),
 		C_BLEU, "compagnie_bg", _lbl_compagnie, func():
 			EcranCompagnie.scene_retour = SCENE
 			get_tree().change_scene_to_file(Compagnie.SCENE)))
@@ -170,8 +170,8 @@ func _maj_etats() -> void:
 func _remplir_boutique() -> void:
 	for e in _boutique.get_children():
 		e.queue_free()
-	_boutique.add_child(UiCommun.label("BOUTIQUE DES EXPÉDITIONS", 20, UiCommun.C_OR))
-	var s := UiCommun.label("Les Sceaux de Marche se gagnent dans la Marche Maudite (selon le score) et dans les missions épiques de la Compagnie. Les limites d'achat reviennent chaque lundi.", 13, UiCommun.C_DOUX)
+	_boutique.add_child(UiCommun.label(UiCommun.t("BOUTIQUE DES EXPÉDITIONS"), 20, UiCommun.C_OR))
+	var s := UiCommun.label(UiCommun.t("Les Sceaux de Marche se gagnent dans la Marche Maudite (selon le score) et dans les missions épiques de la Compagnie. Les limites d'achat reviennent chaque lundi."), 13, UiCommun.C_DOUX)
 	s.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_boutique.add_child(s)
 	_boutique.add_child(HSeparator.new())

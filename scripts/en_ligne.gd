@@ -149,16 +149,16 @@ func inscrire(p: String, email: String, mot_de_passe: String) -> Dictionary:
 	p = p.strip_edges()
 	email = email.strip_edges().to_lower()
 	if not configure():
-		return _echec("Le jeu en ligne n'est pas configuré.")
+		return _echec(UiCommun.t("Le jeu en ligne n'est pas configuré."))
 	if not pseudo_valide(p):
-		return _echec("Pseudo : 3 à 16 caractères, lettres sans accent, chiffres, _ ou -.")
+		return _echec(UiCommun.t("Pseudo : 3 à 16 caractères, lettres sans accent, chiffres, _ ou -."))
 	if not email_valide(email):
-		return _echec("Adresse e-mail invalide.")
+		return _echec(UiCommun.t("Adresse e-mail invalide."))
 	if mot_de_passe.length() < 6:
-		return _echec("Le mot de passe doit faire au moins 6 caractères.")
+		return _echec(UiCommun.t("Le mot de passe doit faire au moins 6 caractères."))
 	var dispo := await _http(HTTPClient.METHOD_POST, "/rest/v1/rpc/pseudo_disponible", {"p_pseudo": p}, false)
 	if dispo.ok and dispo.data == false:
-		return _echec("Ce pseudo est déjà pris.")
+		return _echec(UiCommun.t("Ce pseudo est déjà pris."))
 	var r := await _http(HTTPClient.METHOD_POST, "/auth/v1/signup" + _redirection(),
 		{"email": email, "password": mot_de_passe, "data": {"pseudo": p}}, false)
 	if not r.ok:
@@ -176,11 +176,11 @@ func inscrire(p: String, email: String, mot_de_passe: String) -> Dictionary:
 func connecter(email: String, mot_de_passe: String) -> Dictionary:
 	email = email.strip_edges().to_lower()
 	if not configure():
-		return _echec("Le jeu en ligne n'est pas configuré.")
+		return _echec(UiCommun.t("Le jeu en ligne n'est pas configuré."))
 	if email == "" or mot_de_passe == "":
-		return _echec("Entre ton adresse e-mail et ton mot de passe.")
+		return _echec(UiCommun.t("Entre ton adresse e-mail et ton mot de passe."))
 	if not email_valide(email):
-		return _echec("Connecte-toi avec ton adresse e-mail (pas ton pseudo).")
+		return _echec(UiCommun.t("Connecte-toi avec ton adresse e-mail (pas ton pseudo)."))
 	var r := await _http(HTTPClient.METHOD_POST, "/auth/v1/token?grant_type=password",
 		{"email": email, "password": mot_de_passe}, false)
 	if not r.ok:
@@ -195,7 +195,7 @@ func connecter(email: String, mot_de_passe: String) -> Dictionary:
 func mot_de_passe_oublie(email: String) -> Dictionary:
 	email = email.strip_edges().to_lower()
 	if not email_valide(email):
-		return _echec("Entre d'abord ton adresse e-mail.")
+		return _echec(UiCommun.t("Entre d'abord ton adresse e-mail."))
 	var r := await _http(HTTPClient.METHOD_POST, "/auth/v1/recover" + _redirection(), {"email": email}, false)
 	return {"ok": r.ok, "erreur": "" if r.ok else _erreur_auth(r)}
 
@@ -203,7 +203,7 @@ func mot_de_passe_oublie(email: String) -> Dictionary:
 ## Change le mot de passe du compte connecté. Renvoie {ok, erreur}.
 func changer_mot_de_passe(mot_de_passe: String) -> Dictionary:
 	if mot_de_passe.length() < 6:
-		return _echec("Le mot de passe doit faire au moins 6 caractères.")
+		return _echec(UiCommun.t("Le mot de passe doit faire au moins 6 caractères."))
 	var r := await api(HTTPClient.METHOD_PUT, "/auth/v1/user", {"password": mot_de_passe})
 	return {"ok": r.ok, "erreur": "" if r.ok else _erreur_auth(r)}
 
@@ -323,10 +323,10 @@ func appeler(fonction: String, params: Dictionary = {}) -> Dictionary:
 ## Requête authentifiée (le jeton est renouvelé si besoin). Renvoie {ok, code, data, erreur}.
 func api(methode: int, chemin: String, corps = null, entetes: PackedStringArray = PackedStringArray()) -> Dictionary:
 	if not configure():
-		return {"ok": false, "code": 0, "data": null, "erreur": "Le jeu en ligne n'est pas configuré."}
+		return {"ok": false, "code": 0, "data": null, "erreur": UiCommun.t("Le jeu en ligne n'est pas configuré.")}
 	if not await _jeton_valide():
 		return {"ok": false, "code": 401, "data": null,
-			"erreur": "Connexion au serveur impossible." if est_connecte() else "Tu n'es pas connecté."}
+			"erreur": UiCommun.t("Connexion au serveur impossible.") if est_connecte() else UiCommun.t("Tu n'es pas connecté.")}
 	var r := await _http(methode, chemin, corps, true, entetes)
 	if r.code == 401 and await _rafraichir():
 		r = await _http(methode, chemin, corps, true, entetes)
@@ -361,7 +361,7 @@ func _http(methode: int, chemin: String, corps = null, avec_jeton := true, entet
 	if h.request(url, entetes, methode, texte) != OK:
 		h.queue_free()
 		reseau_ok = false
-		return {"ok": false, "code": 0, "data": null, "erreur": "Connexion au serveur impossible."}
+		return {"ok": false, "code": 0, "data": null, "erreur": UiCommun.t("Connexion au serveur impossible.")}
 	var res: Array = await h.request_completed
 	h.queue_free()
 	var code: int = res[1]
@@ -392,23 +392,23 @@ func _erreur_auth(r: Dictionary) -> String:
 	var code := str(d.get("error_code", d.get("code", ""))).to_lower()
 	var msg := str(d.get("msg", d.get("message", d.get("error_description", "")))).to_lower()
 	if code == "invalid_credentials" or msg.contains("invalid login"):
-		return "E-mail ou mot de passe incorrect."
+		return UiCommun.t("E-mail ou mot de passe incorrect.")
 	if code == "email_not_confirmed" or msg.contains("not confirmed"):
-		return "Adresse e-mail pas encore confirmée : clique sur le lien reçu par e-mail (regarde aussi les spams)."
+		return UiCommun.t("Adresse e-mail pas encore confirmée : clique sur le lien reçu par e-mail (regarde aussi les spams).")
 	if code in ["user_already_exists", "email_exists"] or msg.contains("already registered"):
-		return "Un compte existe déjà avec cette adresse e-mail."
+		return UiCommun.t("Un compte existe déjà avec cette adresse e-mail.")
 	if msg.contains("database error saving new user"):
-		return "Ce pseudo est déjà pris."
+		return UiCommun.t("Ce pseudo est déjà pris.")
 	if code == "weak_password" or msg.contains("password should"):
-		return "Mot de passe trop faible (au moins 6 caractères)."
+		return UiCommun.t("Mot de passe trop faible (au moins 6 caractères).")
 	if code == "email_address_invalid" or msg.contains("email address") and msg.contains("invalid"):
-		return "Adresse e-mail refusée par le serveur. Vérifie-la."
+		return UiCommun.t("Adresse e-mail refusée par le serveur. Vérifie-la.")
 	if code == "over_email_send_rate_limit":
-		return "Le serveur a envoyé trop d'e-mails pour l'instant. Réessaie dans une heure."
+		return UiCommun.t("Le serveur a envoyé trop d'e-mails pour l'instant. Réessaie dans une heure.")
 	if code == "over_request_rate_limit" or r.code == 429:
-		return "Trop de tentatives. Réessaie dans quelques minutes."
+		return UiCommun.t("Trop de tentatives. Réessaie dans quelques minutes.")
 	if code == "signup_disabled":
-		return "Les inscriptions sont désactivées sur le serveur."
+		return UiCommun.t("Les inscriptions sont désactivées sur le serveur.")
 	return r.erreur
 
 
@@ -630,7 +630,7 @@ func est_en_ligne(vu_le: String) -> bool:
 func texte_presence(vu_le: String) -> String:
 	var s := int(Time.get_unix_time_from_system()) - date_vers_unix(vu_le)
 	if s < EN_LIGNE_SI_VU_DEPUIS:
-		return "En ligne"
+		return UiCommun.t("En ligne")
 	if s < 3600:
 		return UiCommun.t("Vu il y a %d min") % int(s / 60.0)
 	if s < 86400:

@@ -27,7 +27,7 @@ const ERREURS := {
 
 
 static func texte_erreur(code: String) -> String:
-	return ERREURS.get(code, code)
+	return UiCommun.t(str(ERREURS.get(code, code)))
 
 
 ## Étoiles d'une attaque : 1 = victoire, 2 = victoire avec 3 unités debout ou plus, 3 = sans perte.

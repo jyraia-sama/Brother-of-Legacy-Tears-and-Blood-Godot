@@ -87,7 +87,7 @@ static func accueil() -> Array:
 	var f := ajouter_familier("chien_galeux")
 	Sauvegarde.ajouter_objet(SCEAU, 5)
 	Sauvegarde.sauvegarder()
-	return [UiCommun.t("Familier offert : %s") % FamiliersData.get_familier(f["id"])["nom"], "Sceaux Sauvages : +5"]
+	return [UiCommun.t("Familier offert : %s") % FamiliersData.get_familier(f["id"])["nom"], UiCommun.t("Sceaux Sauvages : +5")]
 
 
 # ---------------------------------------------------------------------
@@ -157,13 +157,13 @@ static func eveiller(uid: int, sacrifie: int) -> String:
 	var f := get_fam(uid)
 	var s := get_fam(sacrifie)
 	if f.is_empty() or s.is_empty() or uid == sacrifie:
-		return "Choisis un doublon."
+		return UiCommun.t("Choisis un doublon.")
 	if f["id"] != s["id"]:
-		return "Il faut un doublon du même familier."
+		return UiCommun.t("Il faut un doublon du même familier.")
 	if int(f["etoiles"]) >= FamiliersData.ETOILES_MAX:
 		return UiCommun.t("Ce familier a déjà %d étoiles.") % FamiliersData.ETOILES_MAX
 	if occupe_fam(sacrifie):
-		return "Le doublon est parti en chasse."
+		return UiCommun.t("Le doublon est parti en chasse.")
 	f["etoiles"] = int(f["etoiles"]) + 1
 	# Le doublon transmet une partie de son expérience
 	f["xp"] = int(f["xp"]) + int(s["xp"])
@@ -289,14 +289,14 @@ static func heros_en_chasse(uid: int) -> bool:
 static func raison_heros(uid: int) -> String:
 	var h := Sauvegarde.get_heros(uid)
 	if h.is_empty():
-		return "Introuvable."
+		return UiCommun.t("Introuvable.")
 	if not UnitesData.get_unite(h["id"])["rarete"] in RARETES_HEROS or h.get("depart", false) \
 			or UnitesData.get_unite(h["id"]).get("legende", false):
-		return "Seuls les héros N et R partent en chasse."
+		return UiCommun.t("Seuls les héros N et R partent en chasse.")
 	if Sauvegarde.place_de(uid) >= 0:
-		return "Ce héros est dans l'équipe de combat."
+		return UiCommun.t("Ce héros est dans l'équipe de combat.")
 	if Sauvegarde.est_occupe(uid):
-		return "Ce héros est déjà occupé."
+		return UiCommun.t("Ce héros est déjà occupé.")
 	return ""
 
 
@@ -328,16 +328,16 @@ static func multiplicateur(heros_uid: int, fam: Dictionary, zone: String) -> flo
 ## Envoie une équipe. Renvoie "" si OK, sinon la raison.
 static func partir(heros_uid: int, fam_uid: int, zone: String) -> String:
 	if equipes().size() >= places():
-		return "Toutes les places de chasse sont prises."
+		return UiCommun.t("Toutes les places de chasse sont prises.")
 	if not ZONES.has(zone) or not zone_ouverte(zone):
-		return "Zone pas encore débloquée."
+		return UiCommun.t("Zone pas encore débloquée.")
 	var r := raison_heros(heros_uid)
 	if r != "":
 		return r
 	if get_fam(fam_uid).is_empty():
-		return "Choisis un familier."
+		return UiCommun.t("Choisis un familier.")
 	if occupe_fam(fam_uid):
-		return "Ce familier est déjà en chasse."
+		return UiCommun.t("Ce familier est déjà en chasse.")
 	var t := maintenant()
 	equipes().append({"heros": heros_uid, "familier": fam_uid, "zone": zone, "debut": t, "dernier": t,
 		"butins": 0, "stock": {}, "graine": randi()})

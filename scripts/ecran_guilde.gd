@@ -71,17 +71,17 @@ func _ready() -> void:
 	var entete := HBoxContainer.new()
 	entete.add_theme_constant_override("separation", 16)
 	colonne.add_child(entete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.custom_minimum_size = Vector2(140, 44)
 	retour.pressed.connect(_retour)
 	entete.add_child(retour)
-	var titre := UiCommun.label("GUILDE", 36, UiCommun.C_OR)
+	var titre := UiCommun.label(UiCommun.t("GUILDE"), 36, UiCommun.C_OR)
 	entete.add_child(UiCommun.plaque_titre(titre))
 	var pousse_titre := Control.new()
 	pousse_titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	entete.add_child(pousse_titre)
 	if EnLigne.est_connecte():
-		var rafraichir := UiCommun.bouton("↻ Actualiser")
+		var rafraichir := UiCommun.bouton(UiCommun.t("↻ Actualiser"))
 		rafraichir.pressed.connect(_charger)
 		entete.add_child(rafraichir)
 
@@ -110,10 +110,10 @@ func _ecran_non_connecte() -> void:
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 14)
 	p.add_child(vb)
-	vb.add_child(UiCommun.label("Connecte-toi à ton compte pour créer ou rejoindre une guilde." if EnLigne.configure()
-		else "Le jeu en ligne n'est pas encore configuré (voir SUPABASE.md).", 20))
+	vb.add_child(UiCommun.label(UiCommun.t("Connecte-toi à ton compte pour créer ou rejoindre une guilde.") if EnLigne.configure()
+		else UiCommun.t("Le jeu en ligne n'est pas encore configuré (voir SUPABASE.md)."), 20))
 	if EnLigne.configure():
-		var b := UiCommun.bouton("Se connecter")
+		var b := UiCommun.bouton(UiCommun.t("Se connecter"))
 		b.pressed.connect(func(): FenetreCompte.ouvrir(self, false, func(): get_tree().reload_current_scene()))
 		vb.add_child(b)
 
@@ -123,7 +123,7 @@ func _ecran_non_connecte() -> void:
 # ---------------------------------------------------------------
 
 func _charger() -> void:
-	_etat.text = "Chargement…"
+	_etat.text = UiCommun.t("Chargement…")
 	var r := await EnLigne.appeler("ma_guilde")
 	if not is_inside_tree():
 		return
@@ -141,7 +141,7 @@ func _charger() -> void:
 			_vie = rv.data
 			Guilde.memoriser(_vie.get("benedictions", {}))
 		else:
-			_etat.text = "La vie de guilde n'est pas encore installée sur le serveur (fichier supabase/05_guildes_vie.sql)."
+			_etat.text = UiCommun.t("La vie de guilde n'est pas encore installée sur le serveur (fichier supabase/05_guildes_vie.sql).")
 	else:
 		Guilde.memoriser({})
 	_vider(_corps)
@@ -154,7 +154,7 @@ func _charger() -> void:
 func _message(r: Dictionary) -> String:
 	if not r.ok:
 		return r.erreur
-	return MESSAGES.get(str(r.data), str(r.data))
+	return UiCommun.t(str(MESSAGES.get(str(r.data), str(r.data))))
 
 
 ## Lance une action serveur, affiche le résultat et recharge l'écran.
@@ -179,25 +179,25 @@ func _construire_sans_guilde() -> void:
 
 	# --- Créer ---
 	var gauche := _panneau(colonnes, 480)
-	gauche.add_child(UiCommun.label("CRÉER UNE GUILDE", 24, UiCommun.C_OR))
-	gauche.add_child(UiCommun.label("Nom", 16, UiCommun.C_DOUX))
+	gauche.add_child(UiCommun.label(UiCommun.t("CRÉER UNE GUILDE"), 24, UiCommun.C_OR))
+	gauche.add_child(UiCommun.label(UiCommun.t("Nom"), 16, UiCommun.C_DOUX))
 	var nom := LineEdit.new()
 	nom.max_length = 20
-	nom.placeholder_text = "3 à 20 caractères"
+	nom.placeholder_text = UiCommun.t("3 à 20 caractères")
 	nom.custom_minimum_size = Vector2(0, 42)
 	gauche.add_child(nom)
 	gauche.add_child(UiCommun.label("Description", 16, UiCommun.C_DOUX))
 	var desc := TextEdit.new()
 	desc.custom_minimum_size = Vector2(0, 110)
 	desc.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
-	desc.placeholder_text = "Présente ta guilde (200 caractères max)"
+	desc.placeholder_text = UiCommun.t("Présente ta guilde (200 caractères max)")
 	gauche.add_child(desc)
-	gauche.add_child(UiCommun.label("Recrutement", 16, UiCommun.C_DOUX))
+	gauche.add_child(UiCommun.label(UiCommun.t("Recrutement"), 16, UiCommun.C_DOUX))
 	var recrut := _choix_recrutement("ouvert")
 	gauche.add_child(recrut)
 	var cout := UiCommun.label(UiCommun.t("Coût : %s or  (tu as %s or)") % [_nombre(COUT_CREATION), _nombre(Sauvegarde.get_or())], 17, UiCommun.C_LEGENDE)
 	gauche.add_child(cout)
-	var creer := UiCommun.bouton("Fonder la guilde")
+	var creer := UiCommun.bouton(UiCommun.t("Fonder la guilde"))
 	creer.custom_minimum_size = Vector2(0, 48)
 	gauche.add_child(creer)
 	creer.pressed.connect(func():
@@ -220,16 +220,16 @@ func _construire_sans_guilde() -> void:
 	# --- Rechercher ---
 	var droite := _panneau(colonnes, 0)
 	droite.get_parent().get_parent().size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	droite.add_child(UiCommun.label("REJOINDRE UNE GUILDE", 24, UiCommun.C_OR))
+	droite.add_child(UiCommun.label(UiCommun.t("REJOINDRE UNE GUILDE"), 24, UiCommun.C_OR))
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 8)
 	droite.add_child(ligne)
 	var recherche := LineEdit.new()
-	recherche.placeholder_text = "Nom de guilde (vide = les plus peuplées)"
+	recherche.placeholder_text = UiCommun.t("Nom de guilde (vide = les plus peuplées)")
 	recherche.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	recherche.custom_minimum_size = Vector2(0, 42)
 	ligne.add_child(recherche)
-	var chercher := UiCommun.bouton("Rechercher")
+	var chercher := UiCommun.bouton(UiCommun.t("Rechercher"))
 	ligne.add_child(chercher)
 	var defil := ScrollContainer.new()
 	defil.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -247,7 +247,7 @@ func _construire_sans_guilde() -> void:
 
 func _rechercher(texte: String, resultats: VBoxContainer) -> void:
 	_vider(resultats)
-	resultats.add_child(UiCommun.label("Recherche…", 16, UiCommun.C_DOUX))
+	resultats.add_child(UiCommun.label(UiCommun.t("Recherche…"), 16, UiCommun.C_DOUX))
 	var r := await EnLigne.appeler("chercher_guildes", {"p_texte": texte})
 	if not is_instance_valid(resultats):
 		return
@@ -256,7 +256,7 @@ func _rechercher(texte: String, resultats: VBoxContainer) -> void:
 		resultats.add_child(UiCommun.label(r.erreur, 16, Color(1.0, 0.7, 0.5)))
 		return
 	if (r.data as Array).is_empty():
-		resultats.add_child(UiCommun.label("Aucune guilde trouvée. Fonde la première !", 17, UiCommun.C_DOUX))
+		resultats.add_child(UiCommun.label(UiCommun.t("Aucune guilde trouvée. Fonde la première !"), 17, UiCommun.C_DOUX))
 	for g in r.data:
 		resultats.add_child(_carte_guilde(g))
 
@@ -284,16 +284,16 @@ func _carte_guilde(g: Dictionary) -> Control:
 	b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	ligne.add_child(b)
 	if bool(g.demande_envoyee):
-		b.text = "Annuler ma demande"
+		b.text = UiCommun.t("Annuler ma demande")
 		b.pressed.connect(func(): _action("annuler_demande_guilde", {"p_guilde": g.id}))
 	elif str(g.recrutement) == "ferme":
-		b.text = "Fermée"
+		b.text = UiCommun.t("Fermée")
 		b.disabled = true
 	elif int(g.membres) >= 30:
-		b.text = "Pleine"
+		b.text = UiCommun.t("Pleine")
 		b.disabled = true
 	else:
-		b.text = "Rejoindre" if str(g.recrutement) == "ouvert" else "Postuler"
+		b.text = UiCommun.t("Rejoindre") if str(g.recrutement) == "ouvert" else UiCommun.t("Postuler")
 		b.pressed.connect(func(): _action("postuler_guilde", {"p_guilde": g.id}))
 	return p
 
@@ -349,14 +349,14 @@ func _construire_avec_guilde() -> void:
 	var liste := []
 	if _vie != null:
 		var don := "" if bool(_vie.don_fait) else "  •"
-		liste.append_array([["accueil", "Accueil" + don], ["discussion", "Discussion"], ["boss", "Boss de guilde"],
-			["benedictions", "Bénédictions"], ["boutique", "Boutique"]])
-	liste.append(["membres", "Membres"])
+		liste.append_array([["accueil", UiCommun.t("Accueil") + don], ["discussion", UiCommun.t("Discussion")], ["boss", UiCommun.t("Boss de guilde")],
+			["benedictions", UiCommun.t("Bénédictions")], ["boutique", UiCommun.t("Boutique")]])
+	liste.append(["membres", UiCommun.t("Membres")])
 	if role in ["chef", "officier"]:
 		var nb := (g.demandes as Array).size()
-		liste.append(["candidatures", "Candidatures" + (" (%d)" % nb if nb > 0 else "")])
-	liste.append(["guerre", "Guerre"])
-	liste.append(["reglages", "Réglages"])
+		liste.append(["candidatures", UiCommun.t("Candidatures") + (" (%d)" % nb if nb > 0 else "")])
+	liste.append(["guerre", UiCommun.t("Guerre")])
+	liste.append(["reglages", UiCommun.t("Réglages")])
 	for o in liste:
 		var b := UiCommun.bouton(o[1], 17)
 		b.toggle_mode = true
@@ -432,8 +432,8 @@ const MESSAGES_VIE := {
 
 func _afficher_accueil() -> void:
 	var v: Dictionary = _vie
-	_titre("MOT DU CHEF")
-	_texte(str(v.annonce) if str(v.annonce) != "" else "Le chef n'a encore rien écrit.", 17,
+	_titre(UiCommun.t("MOT DU CHEF"))
+	_texte(str(v.annonce) if str(v.annonce) != "" else UiCommun.t("Le chef n'a encore rien écrit."), 17,
 		UiCommun.C_TEXTE if str(v.annonce) != "" else UiCommun.C_DOUX)
 	if _peut_gerer():
 		var ligne := HBoxContainer.new()
@@ -442,35 +442,35 @@ func _afficher_accueil() -> void:
 		var champ := LineEdit.new()
 		champ.max_length = 200
 		champ.text = str(v.annonce)
-		champ.placeholder_text = "Écris un message pour toute la guilde (200 caractères)"
+		champ.placeholder_text = UiCommun.t("Écris un message pour toute la guilde (200 caractères)")
 		champ.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		champ.custom_minimum_size = Vector2(0, 40)
 		ligne.add_child(champ)
-		var b := UiCommun.bouton("Publier", 16)
+		var b := UiCommun.bouton(UiCommun.t("Publier"), 16)
 		b.pressed.connect(func(): _action_vie("guilde_annonce", {"p_texte": champ.text}))
 		ligne.add_child(b)
 	_contenu.add_child(HSeparator.new())
 
-	_titre("DON DU JOUR")
-	_texte("Un don par jour. Il fait grandir la guilde (XP et trésor) et te rapporte des Sceaux de guilde, à dépenser à la Boutique.", 15, UiCommun.C_DOUX)
+	_titre(UiCommun.t("DON DU JOUR"))
+	_texte(UiCommun.t("Un don par jour. Il fait grandir la guilde (XP et trésor) et te rapporte des Sceaux de guilde, à dépenser à la Boutique."), 15, UiCommun.C_DOUX)
 	var dons := HBoxContainer.new()
 	dons.add_theme_constant_override("separation", 12)
 	_contenu.add_child(dons)
 	var regl: Dictionary = (v.reglages as Dictionary).get("dons", {})
 	for d in Guilde.DONS:
 		var info: Dictionary = regl.get(d["id"], {})
-		var b := UiCommun.bouton(UiCommun.t("%s\n%s  →  +%d XP · +%d Sceaux") % [d["nom"], d["texte"], int(info.get("xp", 0)), int(info.get("sceaux", 0))], 15)
+		var b := UiCommun.bouton(UiCommun.t("%s\n%s  →  +%d XP · +%d Sceaux") % [UiCommun.t(str(d["nom"])), d["texte"], int(info.get("xp", 0)), int(info.get("sceaux", 0))], 15)
 		b.custom_minimum_size = Vector2(300, 64)
 		b.disabled = bool(v.don_fait)
 		b.pressed.connect(_donner.bind(d["id"], info))
 		dons.add_child(b)
 	if bool(v.don_fait):
-		_texte("Merci pour ton don ! Reviens demain.", 15, Color("8fe07a"))
+		_texte(UiCommun.t("Merci pour ton don ! Reviens demain."), 15, Color("8fe07a"))
 	_contenu.add_child(HSeparator.new())
 
-	_titre("JOURNAL DE LA GUILDE")
+	_titre(UiCommun.t("JOURNAL DE LA GUILDE"))
 	if (v.journal as Array).is_empty():
-		_texte("Rien pour l'instant.", 15, UiCommun.C_DOUX)
+		_texte(UiCommun.t("Rien pour l'instant."), 15, UiCommun.C_DOUX)
 	for j in v.journal:
 		_texte("%s   %s" % [_date_courte(str(j.cree_le)), j.texte], 15)
 
@@ -500,7 +500,7 @@ func _message_vie(r: Dictionary) -> String:
 	if not r.ok:
 		return r.erreur
 	var code := str(r.data.get("code", "")) if r.data is Dictionary else str(r.data)
-	return MESSAGES_VIE.get(code, MESSAGES.get(code, code))
+	return UiCommun.t(str(MESSAGES_VIE.get(code, MESSAGES.get(code, code))))
 
 
 func _action_vie(fonction: String, params: Dictionary) -> void:
@@ -523,7 +523,7 @@ func _date_courte(t: String) -> String:
 # --- Discussion ---------------------------------------------------
 
 func _afficher_discussion() -> void:
-	_titre("DISCUSSION DE GUILDE")
+	_titre(UiCommun.t("DISCUSSION DE GUILDE"))
 	_chat_defile = ScrollContainer.new()
 	_chat_defile.custom_minimum_size = Vector2(0, 330)
 	_chat_defile.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -538,11 +538,11 @@ func _afficher_discussion() -> void:
 	_contenu.add_child(ligne)
 	var champ := LineEdit.new()
 	champ.max_length = 200
-	champ.placeholder_text = "Ton message (Entrée pour envoyer)"
+	champ.placeholder_text = UiCommun.t("Ton message (Entrée pour envoyer)")
 	champ.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	champ.custom_minimum_size = Vector2(0, 42)
 	ligne.add_child(champ)
-	var envoyer := UiCommun.bouton("Envoyer", 16)
+	var envoyer := UiCommun.bouton(UiCommun.t("Envoyer"), 16)
 	ligne.add_child(envoyer)
 	var envoi := func():
 		var t := champ.text.strip_edges()
@@ -574,7 +574,7 @@ func _lire_chat() -> void:
 	if not is_instance_valid(_chat_liste) or not r.ok or not r.data is Array:
 		return
 	if _chat_dernier == 0 and (r.data as Array).is_empty():
-		_chat_liste.add_child(UiCommun.label("Aucun message. Lance la conversation !", 15, UiCommun.C_DOUX))
+		_chat_liste.add_child(UiCommun.label(UiCommun.t("Aucun message. Lance la conversation !"), 15, UiCommun.C_DOUX))
 	for m in r.data:
 		_chat_dernier = maxi(_chat_dernier, int(m.id))
 		var moi := str(m.joueur) == EnLigne.id_joueur()
@@ -587,7 +587,7 @@ func _lire_chat() -> void:
 		l.add_theme_font_size_override("bold_font_size", 16)
 		var nom := EnLigne.nom_complet(str(m.pseudo)).replace("[", "(").replace("]", ")")
 		var texte := str(m.texte).replace("[", "(").replace("]", ")")
-		l.text = "[color=#8e7f72]%s[/color]  [b][color=%s]%s[/color][/b] : %s" % [
+		l.text = UiCommun.t("[color=#8e7f72]%s[/color]  [b][color=%s]%s[/color][/b] : %s") % [
 			_date_courte(str(m.cree_le)), "#ffd27a" if moi else "#b58ce6", nom, texte]
 		_chat_liste.add_child(l)
 	if not (r.data as Array).is_empty():
@@ -616,10 +616,10 @@ func _afficher_boss() -> void:
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	col.add_theme_constant_override("separation", 8)
 	haut.add_child(col)
-	col.add_child(UiCommun.label("TITAN DE LA SEMAINE : " + str(info["titre"]).to_upper(), 22, UiCommun.C_OR))
-	var t := UiCommun.label("Toute la guilde affronte le même titan. Chaque assaut de ton armée (comme au Boss de Monde) "
-		+ "ajoute ses dégâts à ceux des autres. Paliers à 25, 50, 75 et 100 % : chaque membre qui a frappé "
-		+ "au moins une fois cette semaine reçoit les récompenses.", 15, UiCommun.C_DOUX)
+	col.add_child(UiCommun.label(UiCommun.t("TITAN DE LA SEMAINE : ") + str(UiCommun.t(str(info["titre"]))).to_upper(), 22, UiCommun.C_OR))
+	var t := UiCommun.label(UiCommun.t("Toute la guilde affronte le même titan. Chaque assaut de ton armée (comme au Boss de Monde) ")
+		+ UiCommun.t("ajoute ses dégâts à ceux des autres. Paliers à 25, 50, 75 et 100 % : chaque membre qui a frappé ")
+		+ UiCommun.t("au moins une fois cette semaine reçoit les récompenses."), 15, UiCommun.C_DOUX)
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	col.add_child(t)
 	var pct := 100.0 * float(b.degats) / maxf(1.0, float(b.pv_max))
@@ -628,23 +628,23 @@ func _afficher_boss() -> void:
 	barre.value = pct
 	col.add_child(barre)
 	col.add_child(UiCommun.label(UiCommun.t("%s / %s PV arrachés  (%.1f %%)%s") % [_nombre(int(b.degats)), _nombre(int(b.pv_max)), pct,
-		"   —   ABATTU !" if b.abattu else ""], 17, Color("ff8a6a")))
+		UiCommun.t("   —   ABATTU !") if b.abattu else ""], 17, Color("ff8a6a")))
 	col.add_child(UiCommun.label(UiCommun.t("Mes dégâts cette semaine : %s en %d assaut(s)   ·   Assauts restants aujourd'hui : %d") % [
 		_nombre(int(b.mes_degats)), int(b.mes_coups), maxi(0, int(b.essais_restants))], 15, UiCommun.C_TEXTE))
 	var ligne := HBoxContainer.new()
 	ligne.add_theme_constant_override("separation", 12)
 	col.add_child(ligne)
-	var go := UiCommun.bouton("⚔ LANCER L'ASSAUT", 18)
+	var go := UiCommun.bouton(UiCommun.t("⚔ LANCER L'ASSAUT"), 18)
 	go.custom_minimum_size = Vector2(240, 48)
 	go.disabled = int(b.essais_restants) <= 0 or bool(b.abattu)
 	go.pressed.connect(_assaut_boss)
 	ligne.add_child(go)
-	var prep := UiCommun.bouton("Préparer l'armée", 16)
+	var prep := UiCommun.bouton(UiCommun.t("Préparer l'armée"), 16)
 	prep.pressed.connect(func():
 		EcranArmee.scene_retour = SCENE
 		get_tree().change_scene_to_file(EcranArmee.SCENE))
 	ligne.add_child(prep)
-	var rec := UiCommun.bouton("Réclamer les paliers", 16)
+	var rec := UiCommun.bouton(UiCommun.t("Réclamer les paliers"), 16)
 	rec.pressed.connect(_reclamer_boss)
 	ligne.add_child(rec)
 
@@ -669,9 +669,9 @@ func _afficher_boss() -> void:
 		v.add_child(l)
 		lp.add_child(p)
 
-	_titre("CLASSEMENT DE LA SEMAINE")
+	_titre(UiCommun.t("CLASSEMENT DE LA SEMAINE"))
 	if (b.classement as Array).is_empty():
-		_texte("Personne n'a encore frappé le titan.", 15, UiCommun.C_DOUX)
+		_texte(UiCommun.t("Personne n'a encore frappé le titan."), 15, UiCommun.C_DOUX)
 	var rang := 1
 	for c in b.classement:
 		_texte(UiCommun.t("%d.  %s  —  %s dégâts (%d assauts)") % [rang, EnLigne.nom_complet(str(c.pseudo)), _nombre(int(c.degats)), int(c.coups)], 16)
@@ -681,7 +681,7 @@ func _afficher_boss() -> void:
 func _assaut_boss() -> void:
 	var armee := BossMonde.armee()
 	if armee.is_empty():
-		_etat.text = "Ton armée est vide : prépare tes escouades (bouton « Préparer l'armée »)."
+		_etat.text = UiCommun.t("Ton armée est vide : prépare tes escouades (bouton « Préparer l'armée »).")
 		return
 	var i := Guilde.index_boss()
 	EcranCombat.demande = {"mode": "boss_monde", "guilde": true, "boss_index": i, "type": "boss_monde",
@@ -698,7 +698,7 @@ func _reclamer_boss() -> void:
 		lignes.push_front(UiCommun.t("Sceaux de guilde : +%d") % int(r.data.sceaux))
 		Sauvegarde.sauvegarder()
 		await _charger()
-		_etat.text = "Paliers réclamés !  " + "  ·  ".join(lignes)
+		_etat.text = UiCommun.t("Paliers réclamés !  ") + "  ·  ".join(lignes)
 	else:
 		_etat.text = _message_vie(r)
 
@@ -706,8 +706,8 @@ func _reclamer_boss() -> void:
 # --- Bénédictions -------------------------------------------------
 
 func _afficher_benedictions() -> void:
-	_titre("BÉNÉDICTIONS DE LA GUILDE")
-	_texte("Des bonus permanents pour TOUS les membres, achetés avec le trésor de guilde (alimenté par les dons). "
+	_titre(UiCommun.t("BÉNÉDICTIONS DE LA GUILDE"))
+	_texte(UiCommun.t("Des bonus permanents pour TOUS les membres, achetés avec le trésor de guilde (alimenté par les dons). ")
 		+ UiCommun.t("Seuls le chef et les officiers peuvent les acheter. Rang n : coûte %d x n en trésor et demande le niveau de guilde 2n-1.") % int((_vie.reglages as Dictionary).get("benediction_cout", 300)), 15, UiCommun.C_DOUX)
 	_texte(UiCommun.t("Trésor de guilde : %s") % _nombre(int(_vie.tresor)), 18, UiCommun.C_OR)
 	var niveau_g := int(_vie.niveau)
@@ -724,7 +724,7 @@ func _afficher_benedictions() -> void:
 		var v := VBoxContainer.new()
 		v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h.add_child(v)
-		v.add_child(UiCommun.label("%s   %s" % [info["nom"], "★".repeat(rang) + "☆".repeat(Guilde.RANG_MAX - rang)], 19))
+		v.add_child(UiCommun.label("%s   %s" % [UiCommun.t(str(info["nom"])), "★".repeat(rang) + "☆".repeat(Guilde.RANG_MAX - rang)], 19))
 		v.add_child(UiCommun.label((info["texte"] % (rang * int(info["par_rang"]))) + (UiCommun.t("   (prochain rang : +%d %%)") % ((rang + 1) * int(info["par_rang"])) if rang < Guilde.RANG_MAX else "   (maximum)"), 15, UiCommun.C_DOUX))
 		if rang < Guilde.RANG_MAX:
 			var suivant := rang + 1
@@ -733,7 +733,7 @@ func _afficher_benedictions() -> void:
 			b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 			var bloque := niveau_g < 2 * suivant - 1
 			b.disabled = not _peut_gerer() or bloque
-			b.tooltip_text = (UiCommun.t("Guilde niveau %d requis") % (2 * suivant - 1)) if bloque else ("" if _peut_gerer() else "Réservé au chef et aux officiers")
+			b.tooltip_text = (UiCommun.t("Guilde niveau %d requis") % (2 * suivant - 1)) if bloque else ("" if _peut_gerer() else UiCommun.t("Réservé au chef et aux officiers"))
 			b.pressed.connect(func(): _action_vie("guilde_benir", {"p_benediction": id}))
 			h.add_child(b)
 		_contenu.add_child(p)
@@ -742,7 +742,7 @@ func _afficher_benedictions() -> void:
 # --- Boutique ------------------------------------------------------
 
 func _afficher_boutique() -> void:
-	_titre("BOUTIQUE DE GUILDE")
+	_titre(UiCommun.t("BOUTIQUE DE GUILDE"))
 	_texte(UiCommun.t("Mes Sceaux de guilde : %s   ·   Les limites se réinitialisent chaque lundi.") % _nombre(int(_vie.mes_sceaux)), 17, UiCommun.C_OR)
 	var grille := HFlowContainer.new()
 	grille.add_theme_constant_override("h_separation", 10)
@@ -773,7 +773,7 @@ func _acheter(id: String) -> void:
 		var lignes := Quetes.donner(r.data.get("recompense", {}))
 		Sauvegarde.sauvegarder()
 		await _charger()
-		_etat.text = "Acheté : " + "  ·  ".join(lignes)
+		_etat.text = UiCommun.t("Acheté : ") + "  ·  ".join(lignes)
 	else:
 		_etat.text = _message_vie(r)
 
@@ -782,46 +782,46 @@ func _afficher_membres() -> void:
 	var mon_role := str(_guilde.mon_role)
 	for m in _guilde.membres:
 		var role := str(m.role)
-		var actions := [["Profil", func(): EcranSocial.ouvrir_profil(self, str(m.id))]]
+		var actions := [[UiCommun.t("Profil"), func(): EcranSocial.ouvrir_profil(self, str(m.id))]]
 		if str(m.id) != EnLigne.id_joueur():
 			if mon_role == "chef":
 				if role == "membre":
-					actions.append(["Promouvoir", func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "promouvoir"})])
+					actions.append([UiCommun.t("Promouvoir"), func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "promouvoir"})])
 				elif role == "officier":
-					actions.append(["Rétrograder", func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "retrograder"})])
-				actions.append(["Nommer chef", func(): FenetreSimple.confirmer(self, "Nommer chef",
-					UiCommun.t("Donner la direction de la guilde à %s ?\nTu deviendras officier.") % EnLigne.nom_complet(str(m.pseudo)), "Nommer chef",
+					actions.append([UiCommun.t("Rétrograder"), func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "retrograder"})])
+				actions.append([UiCommun.t("Nommer chef"), func(): FenetreSimple.confirmer(self, UiCommun.t("Nommer chef"),
+					UiCommun.t("Donner la direction de la guilde à %s ?\nTu deviendras officier.") % EnLigne.nom_complet(str(m.pseudo)), UiCommun.t("Nommer chef"),
 					func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "nommer_chef"}))])
 			if mon_role == "chef" or (mon_role == "officier" and role == "membre"):
-				actions.append(["Exclure", func(): FenetreSimple.confirmer(self, "Exclure",
-					UiCommun.t("Exclure %s de la guilde ?") % EnLigne.nom_complet(str(m.pseudo)), "Exclure",
+				actions.append([UiCommun.t("Exclure"), func(): FenetreSimple.confirmer(self, UiCommun.t("Exclure"),
+					UiCommun.t("Exclure %s de la guilde ?") % EnLigne.nom_complet(str(m.pseudo)), UiCommun.t("Exclure"),
 					func(): _action("gerer_membre", {"p_joueur": m.id, "p_action": "exclure"}))])
 		_contenu.add_child(_ligne_membre(m, EcranSocial._nom_role(role), COULEURS_ROLE.get(role, UiCommun.C_DOUX), actions))
 
 
 func _afficher_candidatures() -> void:
 	if (_guilde.demandes as Array).is_empty():
-		_contenu.add_child(UiCommun.label("Aucune candidature en attente.", 17, UiCommun.C_DOUX))
+		_contenu.add_child(UiCommun.label(UiCommun.t("Aucune candidature en attente."), 17, UiCommun.C_DOUX))
 	for d in _guilde.demandes:
-		_contenu.add_child(_ligne_membre(d, "Candidat", UiCommun.C_DOUX, [
-			["Profil", func(): EcranSocial.ouvrir_profil(self, str(d.id))],
-			["Accepter", func(): _action("repondre_demande_guilde", {"p_joueur": d.id, "p_accepter": true})],
-			["Refuser", func(): _action("repondre_demande_guilde", {"p_joueur": d.id, "p_accepter": false})],
+		_contenu.add_child(_ligne_membre(d, UiCommun.t("Candidat"), UiCommun.C_DOUX, [
+			[UiCommun.t("Profil"), func(): EcranSocial.ouvrir_profil(self, str(d.id))],
+			[UiCommun.t("Accepter"), func(): _action("repondre_demande_guilde", {"p_joueur": d.id, "p_accepter": true})],
+			[UiCommun.t("Refuser"), func(): _action("repondre_demande_guilde", {"p_joueur": d.id, "p_accepter": false})],
 		]))
 
 
 ## Guerre des Bannières : résumé et accès à l'écran de guerre (ecran_guerre.gd).
 func _afficher_guerre() -> void:
-	_contenu.add_child(UiCommun.label("LA GUERRE DES BANNIÈRES", 26, UiCommun.C_OR))
-	var texte := UiCommun.label("Une guerre de guildes chaque semaine, chacun joue quand il veut :\n"
-		+ "  • lundi-mardi : préparation (inscription de la guilde, défenses de guerre) ;\n"
-		+ "  • mercredi-samedi : 2 assauts par jour contre la forteresse ennemie (Remparts, Tours, Donjon) ;\n"
-		+ "  • dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne, et chacun réclame son butin.\n"
-		+ "Fatigue des unités, éclaireur, rediffusions… et s'il n'y a pas d'autre guilde à votre mesure,\n"
-		+ "c'est la Légion de la Soif qui vous attaque.", 17)
+	_contenu.add_child(UiCommun.label(UiCommun.t("LA GUERRE DES BANNIÈRES"), 26, UiCommun.C_OR))
+	var texte := UiCommun.label(UiCommun.t("Une guerre de guildes chaque semaine, chacun joue quand il veut :\n")
+		+ UiCommun.t("  • lundi-mardi : préparation (inscription de la guilde, défenses de guerre) ;\n")
+		+ UiCommun.t("  • mercredi-samedi : 2 assauts par jour contre la forteresse ennemie (Remparts, Tours, Donjon) ;\n")
+		+ UiCommun.t("  • dimanche : bilan, la guilde qui a pris le plus d'étoiles gagne, et chacun réclame son butin.\n")
+		+ UiCommun.t("Fatigue des unités, éclaireur, rediffusions… et s'il n'y a pas d'autre guilde à votre mesure,\n")
+		+ UiCommun.t("c'est la Légion de la Soif qui vous attaque."), 17)
 	texte.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_contenu.add_child(texte)
-	var b := UiCommun.bouton("⚔ Ouvrir la Guerre des Bannières", 20)
+	var b := UiCommun.bouton(UiCommun.t("⚔ Ouvrir la Guerre des Bannières"), 20)
 	b.custom_minimum_size = Vector2(420, 54)
 	UiCommun.bouton_vif(b, Color("b8402f"))
 	b.pressed.connect(func(): get_tree().change_scene_to_file(EcranGuerre.SCENE))
@@ -832,7 +832,7 @@ func _afficher_reglages() -> void:
 	var g: Dictionary = _guilde
 	var peut_modifier := str(g.mon_role) in ["chef", "officier"]
 	if peut_modifier:
-		_contenu.add_child(UiCommun.label("RÉGLAGES DE LA GUILDE", 22, UiCommun.C_OR))
+		_contenu.add_child(UiCommun.label(UiCommun.t("RÉGLAGES DE LA GUILDE"), 22, UiCommun.C_OR))
 		_contenu.add_child(UiCommun.label("Description", 16, UiCommun.C_DOUX))
 		var desc := TextEdit.new()
 		desc.text = str(g.description)
@@ -842,16 +842,16 @@ func _afficher_reglages() -> void:
 		var ligne := HBoxContainer.new()
 		ligne.add_theme_constant_override("separation", 14)
 		_contenu.add_child(ligne)
-		ligne.add_child(UiCommun.label("Recrutement", 16, UiCommun.C_DOUX))
+		ligne.add_child(UiCommun.label(UiCommun.t("Recrutement"), 16, UiCommun.C_DOUX))
 		var recrut := _choix_recrutement(str(g.recrutement))
 		ligne.add_child(recrut)
-		ligne.add_child(UiCommun.label("Niveau de compte minimum", 16, UiCommun.C_DOUX))
+		ligne.add_child(UiCommun.label(UiCommun.t("Niveau de compte minimum"), 16, UiCommun.C_DOUX))
 		var niv := SpinBox.new()
 		niv.min_value = 1
 		niv.max_value = Sauvegarde.NIVEAU_COMPTE_MAX
 		niv.value = int(g.niveau_min)
 		ligne.add_child(niv)
-		var enregistrer := UiCommun.bouton("Enregistrer")
+		var enregistrer := UiCommun.bouton(UiCommun.t("Enregistrer"))
 		enregistrer.custom_minimum_size = Vector2(200, 44)
 		enregistrer.pressed.connect(func(): _action("modifier_guilde", {"p_description": desc.text.left(200),
 			"p_recrutement": RECRUTEMENTS[recrut.selected][0], "p_niveau_min": int(niv.value)}))
@@ -859,15 +859,15 @@ func _afficher_reglages() -> void:
 		_contenu.add_child(HSeparator.new())
 
 	var seul := (g.membres as Array).size() <= 1
-	var texte := "Tu es le dernier membre : quitter dissoudra la guilde." if seul else \
-		("Tu es le chef : si tu pars, le plus ancien officier (sinon le plus ancien membre) deviendra chef." if str(g.mon_role) == "chef" else "")
+	var texte := UiCommun.t("Tu es le dernier membre : quitter dissoudra la guilde.") if seul else \
+		(UiCommun.t("Tu es le chef : si tu pars, le plus ancien officier (sinon le plus ancien membre) deviendra chef.") if str(g.mon_role) == "chef" else "")
 	if texte != "":
 		_contenu.add_child(UiCommun.label(texte, 16, UiCommun.C_DOUX))
-	var quitter := UiCommun.bouton("Quitter la guilde")
+	var quitter := UiCommun.bouton(UiCommun.t("Quitter la guilde"))
 	quitter.custom_minimum_size = Vector2(220, 44)
 	quitter.add_theme_color_override("font_color", Color("ff7a6a"))
-	quitter.pressed.connect(func(): FenetreSimple.confirmer(self, "Quitter la guilde",
-		UiCommun.t("Quitter « %s » ?%s") % [g.nom, "\nLa guilde sera dissoute." if seul else ""], "Quitter",
+	quitter.pressed.connect(func(): FenetreSimple.confirmer(self, UiCommun.t("Quitter la guilde"),
+		UiCommun.t("Quitter « %s » ?%s") % [g.nom, UiCommun.t("\nLa guilde sera dissoute.") if seul else ""], UiCommun.t("Quitter"),
 		func(): _action("quitter_guilde", {})))
 	_contenu.add_child(quitter)
 
@@ -887,7 +887,7 @@ func _ligne_membre(m: Dictionary, texte_role: String, couleur_role: Color, actio
 	var infos := VBoxContainer.new()
 	infos.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ligne.add_child(infos)
-	var nom := EnLigne.nom_complet(str(m.pseudo)) + ("  (toi)" if str(m.id) == EnLigne.id_joueur() else "")
+	var nom := EnLigne.nom_complet(str(m.pseudo)) + (UiCommun.t("  (toi)") if str(m.id) == EnLigne.id_joueur() else "")
 	infos.add_child(UiCommun.label(nom, 20))
 	var bas := HBoxContainer.new()
 	bas.add_theme_constant_override("separation", 12)
@@ -896,7 +896,7 @@ func _ligne_membre(m: Dictionary, texte_role: String, couleur_role: Color, actio
 	bas.add_child(UiCommun.label(UiCommun.t("Niv. %d") % int(m.niveau), 15, UiCommun.C_DOUX))
 	if m.has("vu_le"):
 		var pres := EnLigne.texte_presence(str(m.vu_le))
-		bas.add_child(UiCommun.label(pres, 15, Color("8fe07a") if pres == "En ligne" else UiCommun.C_DOUX))
+		bas.add_child(UiCommun.label(pres, 15, Color("8fe07a") if pres == UiCommun.t("En ligne") else UiCommun.C_DOUX))
 	for a in actions:
 		var b := UiCommun.bouton(a[0], 15)
 		b.custom_minimum_size = Vector2(120, 40)

@@ -13,12 +13,19 @@ chaque texte français (`msgid`) y a sa traduction anglaise (`msgstr`).
   du projet obligerait tous les joueurs PC/Android à réinstaller le jeu.
 - Changer de langue redémarre le jeu (bouton « Redémarrer le jeu » aussi dans les Paramètres).
 
-## Ce qui est traduit (étape 1)
-Les menus, boutons, fenêtres, messages, guides et aides (environ 2 600 textes).
+## Ce qui est traduit
+- Étape 1 : les menus, boutons, fenêtres, messages, guides et aides.
+- Étape 2 (v0.84) : toutes les données du jeu : noms, races et sorts des 334 unités et évolutions, familiers,
+  Actes et chapitres, dialogues de l'histoire, épilogues, événements, objets, Donjons, Tours, quêtes, succès,
+  ainsi que les textes assemblés morceau par morceau (environ 5 600 textes au total).
+- Seul le journal des mises à jour (Nouveautés) reste en français.
 
-## Ce qui reste en français (étape 2, à venir)
-Les données du jeu : noms et compétences des unités, évolutions, familiers, Actes et chapitres,
-dialogues de l'histoire, journal des mises à jour, ainsi que quelques textes assemblés morceau par morceau.
+## Comment les données sont traduites
+- `UnitesData.get_unite()`, `ActesData.get_acte()`, `DialoguesData.lignes()` et `FamiliersData.get_familier()`
+  renvoient une copie traduite quand le jeu est en anglais (en français, la donnée d'origine, sans rien changer).
+- Éléments et rôles : `UnitesData.nom_element(e)` et `UnitesData.nom_role(r)`.
+- Les textes du code passent par `UiCommun.t("…")` au moment de l'affichage. Ne jamais traduire un texte
+  qui sert de clé, d'identifiant ou qui est comparé (`== "…"`) : la traduction ne sert qu'à afficher.
 
 ## Ajouter ou corriger une traduction
 1. Ouvre `langues/en.po` (avec un éditeur de texte ou Poedit).

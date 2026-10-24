@@ -40,15 +40,15 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 12)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.plaque_titre(UiCommun.label("ARMÉE — 4 ESCOUADES", 28, C_SANG)))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label(UiCommun.t("ARMÉE — 4 ESCOUADES"), 28, C_SANG)))
 	_lbl_info = UiCommun.label("", 16, UiCommun.C_DOUX)
 	_lbl_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_lbl_info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tete.add_child(_lbl_info)
-	for a in [["Remplir auto", _remplir_auto], ["Équipe du Deck → Escouade 1", _copier_deck], ["Tout vider", _vider]]:
+	for a in [[UiCommun.t("Remplir auto"), _remplir_auto], [UiCommun.t("Équipe du Deck → Escouade 1"), _copier_deck], [UiCommun.t("Tout vider"), _vider]]:
 		var b := UiCommun.bouton(a[0], 15)
 		b.pressed.connect(a[1])
 		tete.add_child(b)
@@ -81,7 +81,7 @@ func _ready() -> void:
 			ligne.add_child(boite)
 			_boites.append(boite)
 		vb.add_child(ligne)
-	vb.add_child(UiCommun.label("Dans chaque escouade : 2 places AVANT (gauche), 3 places ARRIÈRE (droite).", 13, UiCommun.C_DOUX))
+	vb.add_child(UiCommun.label(UiCommun.t("Dans chaque escouade : 2 places AVANT (gauche), 3 places ARRIÈRE (droite)."), 13, UiCommun.C_DOUX))
 
 	var droite := PanelContainer.new()
 	droite.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -89,7 +89,7 @@ func _ready() -> void:
 	corps.add_child(droite)
 	var v2 := VBoxContainer.new()
 	droite.add_child(v2)
-	v2.add_child(UiCommun.label("COLLECTION  (clique une unité puis une place)", 16, UiCommun.C_OR))
+	v2.add_child(UiCommun.label(UiCommun.t("COLLECTION  (clique une unité puis une place)"), 16, UiCommun.C_OR))
 	var defil := ScrollContainer.new()
 	defil.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -111,12 +111,12 @@ func _rafraichir() -> void:
 		var carte: Button
 		if uid >= 0:
 			carte = UiCommun.carte_heros(Sauvegarde.get_heros(uid), 98, 136)
-			carte.tooltip_text = "Clique pour retirer (ou pour échanger avec l'unité choisie)"
+			carte.tooltip_text = UiCommun.t("Clique pour retirer (ou pour échanger avec l'unité choisie)")
 		else:
 			carte = Button.new()
 			carte.custom_minimum_size = Vector2(98, 136)
 			carte.focus_mode = Control.FOCUS_NONE
-			carte.text = "+\n%s" % ("Avant" if i % 5 < 2 else "Arrière")
+			carte.text = "+\n%s" % (UiCommun.t("Avant" if i % 5 < 2 else UiCommun.t("Arrière")))
 			carte.add_theme_stylebox_override("normal", UiCommun.style_carte(Color(1, 1, 1, 0.15)))
 			carte.add_theme_stylebox_override("hover", UiCommun.style_carte(UiCommun.C_OR, 0.05))
 			carte.add_theme_color_override("font_color", UiCommun.C_DOUX)
@@ -145,7 +145,7 @@ func _rafraichir() -> void:
 			n += 1
 			p += _force(uid)
 	_lbl_info.text = UiCommun.t("%d / 20 unités  ·  puissance %d%s") % [n, int(p),
-		"  ·  choisis une place" if _selection >= 0 else ""]
+		UiCommun.t("  ·  choisis une place") if _selection >= 0 else ""]
 
 
 func _force(uid: int) -> float:

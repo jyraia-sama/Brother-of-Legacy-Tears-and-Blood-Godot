@@ -69,7 +69,7 @@ func preparer() -> bool:
 	if liste.is_empty():
 		# Hors connexion : on charge ce qu'on a (même ancien)
 		if _etat.is_empty():
-			erreur = "Impossible de télécharger les illustrations du jeu. Vérifie ta connexion Internet."
+			erreur = UiCommun.t("Impossible de télécharger les illustrations du jeu. Vérifie ta connexion Internet.")
 			ok = false
 	else:
 		var a_telecharger: Array = []
@@ -146,9 +146,9 @@ func _telecharger(p: Dictionary) -> bool:
 				fw.store_buffer(rep[3])
 				fw.close()
 		if not ok:
-			erreur = "Le téléchargement des illustrations a échoué (code %s). Vérifie ta connexion et réessaie." % str(rep[1])
+			erreur = UiCommun.t("Le téléchargement des illustrations a échoué (code %s). Vérifie ta connexion et réessaie.") % str(rep[1])
 	else:
-		erreur = "Impossible de lancer le téléchargement des illustrations."
+		erreur = UiCommun.t("Impossible de lancer le téléchargement des illustrations.")
 	_requete.queue_free()
 	_requete = null
 	if ok:
@@ -158,10 +158,10 @@ func _telecharger(p: Dictionary) -> bool:
 			f.close()
 		if taille > 0 and recu != taille:
 			ok = false
-			erreur = "Les illustrations reçues sont incomplètes. Réessaie dans quelques minutes."
+			erreur = UiCommun.t("Les illustrations reçues sont incomplètes. Réessaie dans quelques minutes.")
 		elif sha != "" and FileAccess.get_sha256(FICHIER_TEMP) != sha:
 			ok = false
-			erreur = "Les illustrations reçues ne correspondent pas (le site vient peut-être d'être mis à jour). Réessaie dans quelques minutes."
+			erreur = UiCommun.t("Les illustrations reçues ne correspondent pas (le site vient peut-être d'être mis à jour). Réessaie dans quelques minutes.")
 	if not ok:
 		if FileAccess.file_exists(FICHIER_TEMP):
 			DirAccess.remove_absolute(FICHIER_TEMP)
@@ -171,7 +171,7 @@ func _telecharger(p: Dictionary) -> bool:
 	if FileAccess.file_exists(final):
 		DirAccess.remove_absolute(final)
 	if DirAccess.rename_absolute(FICHIER_TEMP, final) != OK:
-		erreur = "Impossible d'enregistrer les illustrations sur cet appareil (place disque ?)."
+		erreur = UiCommun.t("Impossible d'enregistrer les illustrations sur cet appareil (place disque ?).")
 		return false
 	_etat[nom] = {"fichier": final, "sha256": sha, "taille": taille}
 	_ecrire_json(FICHIER_ETAT, _etat)

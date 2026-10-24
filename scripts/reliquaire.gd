@@ -138,7 +138,7 @@ const ATELIER := {
 
 
 static func nom(objet: String) -> String:
-	return OBJETS.get(objet, {}).get("nom", objet)
+	return UiCommun.t(str(OBJETS.get(objet, {}).get("nom", objet)))
 
 
 static func texte_cout(cout: Dictionary, or_requis := 0) -> String:
@@ -228,7 +228,7 @@ static func utiliser_tome(tome: String, uid: int) -> int:
 
 ## Crée le héros d'une recette. Renvoie son uid (-1 si impossible).
 static func forger(recette: Dictionary) -> int:
-	if not payer(recette["cout"], int(recette["or"])):
+	if not payer(recette["cout"], int(recette[UiCommun.t("or")])):
 		return -1
 	Sauvegarde.ajouter_stat("heros_forges")
 	return Sauvegarde.ajouter_heros(recette["id"])
@@ -249,7 +249,7 @@ static func fabriquer_echo(type: String, set_id: String, emplacement: int, princ
 	if set_id in Echos.SETS_UNIQUES:
 		return {}
 	var a: Dictionary = ATELIER[type]
-	if not payer({"poussiere_echo": int(a["poussiere"])}, int(a["or"])):
+	if not payer({"poussiere_echo": int(a["poussiere"])}, int(a[UiCommun.t("or")])):
 		return {}
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()

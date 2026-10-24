@@ -42,12 +42,12 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Expéditions")
+	var retour := UiCommun.bouton(UiCommun.t("← Expéditions"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	tete.add_child(UiCommun.plaque_titre(UiCommun.label("LA COMPAGNIE", 32, C_BLEU)))
+	tete.add_child(UiCommun.plaque_titre(UiCommun.label(UiCommun.t("LA COMPAGNIE"), 32, C_BLEU)))
 	var info := UiCommun.label(UiCommun.t("Nouveau tableau dans %s") % Calendrier.texte_duree(Calendrier.secondes_avant_demain()), 15, UiCommun.C_DOUX)
-	info.name = "Renouvellement"
+	info.name = UiCommun.t("Renouvellement")
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	tete.add_child(info)
@@ -143,7 +143,7 @@ func _remplir_haut() -> void:
 		var vb := VBoxContainer.new()
 		vb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h.add_child(vb)
-		vb.add_child(UiCommun.label(m["mission"]["nom"], 16, UiCommun.C_TEXTE))
+		vb.add_child(UiCommun.label(UiCommun.t(str(m["mission"]["nom"])), 16, UiCommun.C_TEXTE))
 		var reste := Compagnie.secondes_restantes(m)
 		var total := int(m["mission"]["heures"]) * 3600
 		var barre := UiCommun.barre(C_OK if fini else C_BLEU, 200, 8)
@@ -151,16 +151,16 @@ func _remplir_haut() -> void:
 		barre.max_value = total
 		barre.value = total if fini else total - reste
 		vb.add_child(barre)
-		vb.add_child(UiCommun.label("Terminée !" if fini else UiCommun.t("Retour dans %s") % Calendrier.texte_duree(reste), 14, C_OK if fini else UiCommun.C_DOUX))
+		vb.add_child(UiCommun.label(UiCommun.t("Terminée !") if fini else UiCommun.t("Retour dans %s") % Calendrier.texte_duree(reste), 14, C_OK if fini else UiCommun.C_DOUX))
 		if m.get("bonus", false):
-			vb.add_child(UiCommun.label("Objectif bonus rempli : butin +50 %", 12, UiCommun.C_OR))
+			vb.add_child(UiCommun.label(UiCommun.t("Objectif bonus rempli : butin +50 %"), 12, UiCommun.C_OR))
 		var b: Button
 		if fini:
-			b = UiCommun.bouton("Récupérer", 16)
+			b = UiCommun.bouton(UiCommun.t("Récupérer"), 16)
 			b.pressed.connect(_recuperer.bind(i))
 		else:
-			b = UiCommun.bouton("Rappeler", 14)
-			b.tooltip_text = "Les unités reviennent tout de suite, sans butin."
+			b = UiCommun.bouton(UiCommun.t("Rappeler"), 14)
+			b.tooltip_text = UiCommun.t("Les unités reviennent tout de suite, sans butin.")
 			b.pressed.connect(_rappeler.bind(i))
 		b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		h.add_child(b)
@@ -171,12 +171,12 @@ func _recuperer(i: int) -> void:
 	if lignes.is_empty():
 		return
 	Audio.son("coffre")
-	_message("Mission accomplie", "Butin rapporté par l'escouade :\n\n" + "\n".join(lignes))
+	_message(UiCommun.t("Mission accomplie"), UiCommun.t("Butin rapporté par l'escouade :\n\n") + "\n".join(lignes))
 	_tout_rafraichir()
 
 
 func _rappeler(i: int) -> void:
-	FenetreSimple.ouvrir(self, "Rappeler l'escouade", "Rappeler cette escouade ?\nLes unités reviennent tout de suite, mais la mission est perdue (pas de butin).", [["Annuler", null], ["Rappeler", func():
+	FenetreSimple.ouvrir(self, UiCommun.t("Rappeler l'escouade"), UiCommun.t("Rappeler cette escouade ?\nLes unités reviennent tout de suite, mais la mission est perdue (pas de butin)."), [[UiCommun.t("Annuler"), null], [UiCommun.t("Rappeler"), func():
 		Compagnie.rappeler(i)
 		_tout_rafraichir()]])
 
@@ -188,7 +188,7 @@ func _rappeler(i: int) -> void:
 func _remplir_tableau() -> void:
 	for e in _tableau.get_children():
 		e.queue_free()
-	_tableau.add_child(UiCommun.label("TABLEAU DES MISSIONS DU JOUR", 18, UiCommun.C_OR))
+	_tableau.add_child(UiCommun.label(UiCommun.t("TABLEAU DES MISSIONS DU JOUR"), 18, UiCommun.C_OR))
 	var lancees: Array = Compagnie._etat()["lancees"].map(func(x): return int(x))
 	for m in _missions:
 		var i: int = m["index"]
@@ -221,16 +221,16 @@ func _remplir_tableau() -> void:
 		vb.add_theme_constant_override("separation", 2)
 		vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(vb)
-		var titre := UiCommun.t("%s%s   ·   %d h   ·   %d unité%s") % ["✦ ÉPIQUE — " if m["epique"] else "", m["nom"], int(m["heures"]),
+		var titre := UiCommun.t("%s%s   ·   %d h   ·   %d unité%s") % [UiCommun.t("✦ ÉPIQUE — ") if m["epique"] else "", UiCommun.t(str(m["nom"])), int(m["heures"]),
 			int(m["taille"]), "s" if int(m["taille"]) > 1 else ""]
-		vb.add_child(UiCommun.label(titre + ("   ·   lancée ✔" if deja else ""), 17, c.lightened(0.35)))
+		vb.add_child(UiCommun.label(titre + (UiCommun.t("   ·   lancée ✔") if deja else ""), 17, c.lightened(0.35)))
 		var d := UiCommun.label(m["texte"], 13, UiCommun.C_DOUX)
 		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(d)
 		var conds: Array = []
 		for cd in m["conditions"]:
 			conds.append(Compagnie.texte_condition(cd))
-		var lc := UiCommun.label("Conditions : " + " · ".join(conds), 13, UiCommun.C_TEXTE)
+		var lc := UiCommun.label(UiCommun.t("Conditions : ") + " · ".join(conds), 13, UiCommun.C_TEXTE)
 		lc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(lc)
 		_tableau.add_child(b)
@@ -244,34 +244,34 @@ func _remplir_fiche() -> void:
 	for e in _fiche.get_children():
 		e.queue_free()
 	if _mission < 0:
-		_fiche.add_child(UiCommun.label("COMMENT ÇA MARCHE", 18, UiCommun.C_OR))
-		for t in ["Choisis une mission dans le tableau du jour, puis forme l'escouade avec tes unités.",
-			"Toutes les conditions doivent être remplies pour partir. L'objectif bonus (facultatif) donne +50 % de butin.",
-			"Pendant la mission, les unités sont occupées : elles quittent l'équipe et ne peuvent pas combattre.",
-			"Le temps passe même jeu fermé. Reviens récupérer le butin quand la mission est terminée.",
+		_fiche.add_child(UiCommun.label(UiCommun.t("COMMENT ÇA MARCHE"), 18, UiCommun.C_OR))
+		for t in [UiCommun.t("Choisis une mission dans le tableau du jour, puis forme l'escouade avec tes unités."),
+			UiCommun.t("Toutes les conditions doivent être remplies pour partir. L'objectif bonus (facultatif) donne +50 % de butin."),
+			UiCommun.t("Pendant la mission, les unités sont occupées : elles quittent l'équipe et ne peuvent pas combattre."),
+			UiCommun.t("Le temps passe même jeu fermé. Reviens récupérer le butin quand la mission est terminée."),
 			UiCommun.t("%d escouades peuvent partir en même temps. Le tableau change chaque jour à minuit.") % Compagnie.ESCOUADES_MAX]:
 			var l := UiCommun.label("•  " + t, 15, UiCommun.C_TEXTE)
 			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			_fiche.add_child(l)
 		return
 	var m: Dictionary = _missions[_mission]
-	_fiche.add_child(UiCommun.label(("✦ " if m["epique"] else "") + str(m["nom"]).to_upper(), 24, C_BLEU.lightened(0.3)))
+	_fiche.add_child(UiCommun.label(("✦ " if m["epique"] else "") + str(UiCommun.t(str(m["nom"]))).to_upper(), 24, C_BLEU.lightened(0.3)))
 	_fiche.add_child(UiCommun.label(UiCommun.t("Durée : %d h   ·   Escouade de %d unité%s") % [int(m["heures"]), int(m["taille"]), "s" if int(m["taille"]) > 1 else ""], 15, UiCommun.C_DOUX))
 
 	# Conditions
-	_fiche.add_child(UiCommun.label("CONDITIONS", 16, UiCommun.C_OR))
+	_fiche.add_child(UiCommun.label(UiCommun.t("CONDITIONS"), 16, UiCommun.C_OR))
 	for cd in m["conditions"]:
 		var ok := Compagnie.condition_remplie(cd, _escouade)
 		_fiche.add_child(UiCommun.label(("✔ " if ok else "✘ ") + Compagnie.texte_condition(cd), 15, C_OK if ok else C_NON))
 	if not m["bonus"].is_empty():
 		var okb := Compagnie.condition_remplie(m["bonus"], _escouade)
-		_fiche.add_child(UiCommun.label(("★ " if okb else "☆ ") + "Bonus (+50 % de butin) : " + Compagnie.texte_condition(m["bonus"]), 15,
+		_fiche.add_child(UiCommun.label(("★ " if okb else "☆ ") + UiCommun.t("Bonus (+50 % de butin) : ") + Compagnie.texte_condition(m["bonus"]), 15,
 			UiCommun.C_OR if okb else UiCommun.C_DOUX))
 
 	# Butin
 	var bonus_ok: bool = not m["bonus"].is_empty() and Compagnie.condition_remplie(m["bonus"], _escouade)
 	var butin := Compagnie.butin_final(m, bonus_ok)
-	_fiche.add_child(UiCommun.label("BUTIN" + ("  (avec bonus)" if bonus_ok else ""), 16, UiCommun.C_OR))
+	_fiche.add_child(UiCommun.label(UiCommun.t("BUTIN") + (UiCommun.t("  (avec bonus)") if bonus_ok else ""), 16, UiCommun.C_OR))
 	var flux := HFlowContainer.new()
 	flux.add_theme_constant_override("h_separation", 18)
 	flux.add_theme_constant_override("v_separation", 4)
@@ -313,13 +313,13 @@ func _remplir_fiche() -> void:
 	if raison != "" and not _escouade.is_empty():
 		_fiche.add_child(UiCommun.label(raison, 14, Color("ffb070")))
 	if Sauvegarde.get_equipe().any(func(u): return u in _escouade):
-		var av := UiCommun.label("Attention : des unités de ton équipe partent en mission, elles la quitteront.", 13, Color("ffb070"))
+		var av := UiCommun.label(UiCommun.t("Attention : des unités de ton équipe partent en mission, elles la quitteront."), 13, Color("ffb070"))
 		av.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(av)
 
 	# Collection
 	_fiche.add_child(HSeparator.new())
-	_fiche.add_child(UiCommun.label("TES UNITÉS DISPONIBLES", 15, UiCommun.C_OR))
+	_fiche.add_child(UiCommun.label(UiCommun.t("TES UNITÉS DISPONIBLES"), 15, UiCommun.C_OR))
 	var grille := GridContainer.new()
 	grille.columns = 7
 	grille.add_theme_constant_override("h_separation", 8)
@@ -336,9 +336,9 @@ func _remplir_fiche() -> void:
 		var carte := UiCommun.carte_heros(h, 104, 138)
 		if uid in _escouade:
 			carte.add_theme_stylebox_override("normal", UiCommun.style_carte(C_BLEU, 0.08, 4))
-			UiCommun.badge(carte, "Choisie", C_BLEU)
+			UiCommun.badge(carte, UiCommun.t("Choisie"), C_BLEU)
 		elif Sauvegarde.place_de(uid) >= 0:
-			UiCommun.badge(carte, "Équipe", UiCommun.C_OR)
+			UiCommun.badge(carte, UiCommun.t("Équipe"), UiCommun.C_OR)
 		carte.pressed.connect(_basculer.bind(uid))
 		grille.add_child(carte)
 
@@ -374,7 +374,7 @@ func _envoyer() -> void:
 	var r := Compagnie.partir(m, _escouade)
 	if r != "":
 		Audio.son("erreur")
-		_message("Impossible de partir", r)
+		_message(UiCommun.t("Impossible de partir"), r)
 		return
 	Audio.son("carte")
 	_mission = -1

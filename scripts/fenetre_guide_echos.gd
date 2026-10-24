@@ -50,10 +50,10 @@ func _ready() -> void:
 
 	var tete := HBoxContainer.new()
 	vb.add_child(tete)
-	var t := UiCommun.label("GUIDE DES ÉCHOS SANGUINS", 28, Color("d0453a"))
+	var t := UiCommun.label(UiCommun.t("GUIDE DES ÉCHOS SANGUINS"), 28, Color("d0453a"))
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
-	var fermer := UiCommun.bouton("Fermer", 16)
+	var fermer := UiCommun.bouton(UiCommun.t("Fermer"), 16)
 	fermer.pressed.connect(queue_free)
 	tete.add_child(fermer)
 
@@ -70,7 +70,7 @@ func _ready() -> void:
 	menu.add_theme_constant_override("separation", 6)
 	dm.add_child(menu)
 	for i in NOMS_SECTIONS.size():
-		var b := UiCommun.bouton("%d. %s" % [i + 1, NOMS_SECTIONS[i]], 16)
+		var b := UiCommun.bouton("%d. %s" % [i + 1, UiCommun.t(str(NOMS_SECTIONS[i]))], 16)
 		b.toggle_mode = true
 		b.focus_mode = Control.FOCUS_NONE
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -99,13 +99,13 @@ func _ready() -> void:
 	var nav := HBoxContainer.new()
 	nav.add_theme_constant_override("separation", 8)
 	droite.add_child(nav)
-	var prec := UiCommun.bouton("← Précédent", 15)
+	var prec := UiCommun.bouton(UiCommun.t("← Précédent"), 15)
 	prec.pressed.connect(func(): _afficher(maxi(_section - 1, 0)))
 	nav.add_child(prec)
 	var esp := Control.new()
 	esp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	nav.add_child(esp)
-	var suiv := UiCommun.bouton("Suivant →", 15)
+	var suiv := UiCommun.bouton(UiCommun.t("Suivant →"), 15)
 	suiv.pressed.connect(func(): _afficher(mini(_section + 1, NOMS_SECTIONS.size() - 1)))
 	nav.add_child(suiv)
 	_afficher(clampi(_section, 0, NOMS_SECTIONS.size() - 1))
@@ -165,66 +165,66 @@ static func _ligne_tableau(cellules: Array, entete := false) -> String:
 
 
 static func _pas_a_pas() -> String:
-	var s := _titre("Les Échos Sanguins, pas à pas")
-	s += "Les Échos sont l'équipement de tes héros. Bien choisis, ils peuvent presque doubler la puissance d'une unité. Voici comment s'y prendre, dans l'ordre.\n"
-	s += _sous_titre("1. Récupère des Échos")
-	s += "Ils tombent surtout dans l'[b]Aventure[/b]. Chaque Acte donne toujours le même set, et le chapitre N donne toujours l'emplacement N (chapitre 1 = Crâne, chapitre 3 = Plaie…). Les boss en donnent plus souvent et de meilleure qualité. (Détails : section 6.)\n"
-	s += _sous_titre("2. Choisis un héros")
-	s += "Dans la colonne de gauche. Commence par les héros de ton équipe : ce sont eux qui combattent.\n"
-	s += _sous_titre("3. Remplis les 6 emplacements")
-	s += "Clique un emplacement du héros : l'inventaire n'affiche plus que les Échos qui vont à cette place. Choisis-en un puis « Équiper ». Regarde d'abord la [b]stat principale[/b] : c'est elle qui pèse le plus.\n"
-	s += _sous_titre("4. Vise un set")
-	s += "2 ou 4 Échos du même set donnent un bonus en plus. Les combinaisons possibles sur 6 emplacements : [b]2 + 2 + 2[/b] (trois petits sets, éventuellement le même trois fois) ou [b]4 + 2[/b] (un grand set et un petit). (Détails : section 4.)\n"
-	s += _sous_titre("5. Améliore tes meilleurs Échos")
+	var s := _titre(UiCommun.t("Les Échos Sanguins, pas à pas"))
+	s += UiCommun.t("Les Échos sont l'équipement de tes héros. Bien choisis, ils peuvent presque doubler la puissance d'une unité. Voici comment s'y prendre, dans l'ordre.\n")
+	s += _sous_titre(UiCommun.t("1. Récupère des Échos"))
+	s += UiCommun.t("Ils tombent surtout dans l'[b]Aventure[/b]. Chaque Acte donne toujours le même set, et le chapitre N donne toujours l'emplacement N (chapitre 1 = Crâne, chapitre 3 = Plaie…). Les boss en donnent plus souvent et de meilleure qualité. (Détails : section 6.)\n")
+	s += _sous_titre(UiCommun.t("2. Choisis un héros"))
+	s += UiCommun.t("Dans la colonne de gauche. Commence par les héros de ton équipe : ce sont eux qui combattent.\n")
+	s += _sous_titre(UiCommun.t("3. Remplis les 6 emplacements"))
+	s += UiCommun.t("Clique un emplacement du héros : l'inventaire n'affiche plus que les Échos qui vont à cette place. Choisis-en un puis « Équiper ». Regarde d'abord la [b]stat principale[/b] : c'est elle qui pèse le plus.\n")
+	s += _sous_titre(UiCommun.t("4. Vise un set"))
+	s += UiCommun.t("2 ou 4 Échos du même set donnent un bonus en plus. Les combinaisons possibles sur 6 emplacements : [b]2 + 2 + 2[/b] (trois petits sets, éventuellement le même trois fois) ou [b]4 + 2[/b] (un grand set et un petit). (Détails : section 4.)\n")
+	s += _sous_titre(UiCommun.t("5. Améliore tes meilleurs Échos"))
 	s += UiCommun.t("« Améliorer » monte un Écho de +1 à +%d avec de l'or. Garde ton or pour les Échos qui vont rester : bonne rareté, beaucoup d'étoiles, bonne stat principale. (Détails : section 3.)\n") % Echos.NIVEAU_MAX
-	s += _sous_titre("6. Fixe ou pourcentage ?")
-	s += "En début de partie, les stats [b]fixes[/b] (ATK +, PV +…) rapportent le plus. Dès que les stats de tes héros grandissent (niveau, étoiles, raretés SSR/UR), les [b]%[/b] prennent le dessus. (Détails et chiffres : section 5.)\n"
-	s += _sous_titre("7. Teste avant d'équiper")
-	s += "Le bouton [b]Mode Essai[/b] permet d'essayer plusieurs Échos sur un héros et de comparer ses stats avant et après, sans rien changer tant que tu ne valides pas. (Section 7.)\n"
-	s += _sous_titre("8. Fais le ménage")
-	s += "« Vente rapide » vend d'un coup les Échos Normaux et Magiques libres. Au [b]Reliquaire[/b], l'Atelier démantèle les Échos en Poussière d'Écho pour en fabriquer de meilleurs. Verrouille les Échos que tu veux garder : ils ne seront jamais vendus par erreur.\n"
+	s += _sous_titre(UiCommun.t("6. Fixe ou pourcentage ?"))
+	s += UiCommun.t("En début de partie, les stats [b]fixes[/b] (ATK +, PV +…) rapportent le plus. Dès que les stats de tes héros grandissent (niveau, étoiles, raretés SSR/UR), les [b]%[/b] prennent le dessus. (Détails et chiffres : section 5.)\n")
+	s += _sous_titre(UiCommun.t("7. Teste avant d'équiper"))
+	s += UiCommun.t("Le bouton [b]Mode Essai[/b] permet d'essayer plusieurs Échos sur un héros et de comparer ses stats avant et après, sans rien changer tant que tu ne valides pas. (Section 7.)\n")
+	s += _sous_titre(UiCommun.t("8. Fais le ménage"))
+	s += UiCommun.t("« Vente rapide » vend d'un coup les Échos Normaux et Magiques libres. Au [b]Reliquaire[/b], l'Atelier démantèle les Échos en Poussière d'Écho pour en fabriquer de meilleurs. Verrouille les Échos que tu veux garder : ils ne seront jamais vendus par erreur.\n")
 	return s
 
 
 static func _emplacements() -> String:
-	var s := _titre("Emplacements, raretés et étoiles")
-	s += "Chaque héros a [b]6 emplacements[/b]. Certains ont toujours la même stat principale, d'autres peuvent en avoir plusieurs (on dit « variables »).\n\n"
-	s += "[table=3]" + _ligne_tableau(["Emplacement", "Type", "Stats principales possibles"], true)
+	var s := _titre(UiCommun.t("Emplacements, raretés et étoiles"))
+	s += UiCommun.t("Chaque héros a [b]6 emplacements[/b]. Certains ont toujours la même stat principale, d'autres peuvent en avoir plusieurs (on dit « variables »).\n\n")
+	s += "[table=3]" + _ligne_tableau([UiCommun.t("Emplacement"), "Type", UiCommun.t("Stats principales possibles")], true)
 	for i in range(1, 7):
 		var em: Dictionary = Echos.EMPLACEMENTS[i]
-		var noms: Array = (em["principales"] as Array).map(func(st): return Echos.NOMS_STATS[st])
+		var noms: Array = (em["principales"] as Array).map(func(st): return UiCommun.t(str(Echos.NOMS_STATS[st])))
 		var fixe := "fixe" if (em["principales"] as Array).size() <= 2 else "variable"
-		s += _ligne_tableau(["%d · %s" % [i, em["nom"]], fixe, ", ".join(noms)])
+		s += _ligne_tableau(["%d · %s" % [i, UiCommun.t(str(em["nom"]))], fixe, ", ".join(noms)])
 	s += "[/table]\n"
 	s += UiCommun.t("\n[color=%s]La MAG n'existe qu'en stat secondaire. La Vitesse principale n'existe que sur l'Artère, les critiques sur le Sacrifice, la Précision et la Résistance sur le Serment.[/color]\n") % C_DOUX
 
-	s += _sous_titre("La rareté (la couleur)")
-	s += "Elle donne le nombre de [b]stats secondaires[/b] au départ. Les autres apparaissent en améliorant l'Écho (jusqu'à 4).\n\n"
-	s += "[table=2]" + _ligne_tableau(["Rareté", "Stats secondaires au départ"], true)
+	s += _sous_titre(UiCommun.t("La rareté (la couleur)"))
+	s += UiCommun.t("Elle donne le nombre de [b]stats secondaires[/b] au départ. Les autres apparaissent en améliorant l'Écho (jusqu'à 4).\n\n")
+	s += "[table=2]" + _ligne_tableau([UiCommun.t("Rareté"), UiCommun.t("Stats secondaires au départ")], true)
 	for r in Echos.RARETES:
-		s += _cellule(r["nom"], "#" + (r["couleur"] as Color).to_html(false)) + _cellule(str(r["secondaires"]))
+		s += _cellule(UiCommun.t(str(r["nom"])), "#" + (r["couleur"] as Color).to_html(false)) + _cellule(str(r["secondaires"]))
 	s += "[/table]\n"
 
-	s += _sous_titre("Les étoiles (★1 à ★6)")
-	s += "Elles fixent la [b]force[/b] de l'Écho : sa stat principale et ses tirages de stats secondaires. Exemple avec un Écho du Crâne à ATK fixe :\n\n"
-	s += "[table=3]" + _ligne_tableau(["Étoiles", "ATK à +0", UiCommun.t("ATK à +%d") % Echos.NIVEAU_MAX], true)
+	s += _sous_titre(UiCommun.t("Les étoiles (★1 à ★6)"))
+	s += UiCommun.t("Elles fixent la [b]force[/b] de l'Écho : sa stat principale et ses tirages de stats secondaires. Exemple avec un Écho du Crâne à ATK fixe :\n\n")
+	s += "[table=3]" + _ligne_tableau([UiCommun.t("Étoiles"), UiCommun.t("ATK à +0"), UiCommun.t("ATK à +%d") % Echos.NIVEAU_MAX], true)
 	for et in range(1, 7):
 		var e0 := {"principale": "atk", "etoiles": et, "niveau": 0}
 		var e15 := {"principale": "atk", "etoiles": et, "niveau": Echos.NIVEAU_MAX}
 		s += _ligne_tableau(["★".repeat(et), "+%d" % int(Echos.valeur_principale(e0)), "+%d" % int(Echos.valeur_principale(e15))])
 	s += "[/table]\n"
-	s += "\n[b]À retenir :[/b] un ★5 Héroïque bien amélioré vaut bien mieux qu'un ★2 Légendaire. Les étoiles comptent plus que la couleur pour la stat principale ; la couleur, elle, apporte les stats secondaires.\n"
+	s += UiCommun.t("\n[b]À retenir :[/b] un ★5 Héroïque bien amélioré vaut bien mieux qu'un ★2 Légendaire. Les étoiles comptent plus que la couleur pour la stat principale ; la couleur, elle, apporte les stats secondaires.\n")
 	return s
 
 
 static func _ameliorer() -> String:
 	var s := _titre(UiCommun.t("Améliorer un Écho (+1 à +%d)") % Echos.NIVEAU_MAX)
-	s += "Chaque niveau renforce la stat principale. Chaque tentative coûte de l'or. [b]En cas d'échec, seul l'or est perdu[/b] : l'Écho reste intact, il ne perd jamais de niveau.\n"
-	s += _sous_titre("Les paliers")
+	s += UiCommun.t("Chaque niveau renforce la stat principale. Chaque tentative coûte de l'or. [b]En cas d'échec, seul l'or est perdu[/b] : l'Écho reste intact, il ne perd jamais de niveau.\n")
+	s += _sous_titre(UiCommun.t("Les paliers"))
 	s += UiCommun.t("Aux niveaux [b]%s[/b], l'Écho gagne une nouvelle stat secondaire. S'il en a déjà 4, l'une d'elles est renforcée au hasard. C'est pour ça qu'un Écho Légendaire (4 stats dès le départ) gagne 5 renforcements en montant à +%d.\n") % [", ".join(Echos.PALIERS.map(func(x): return "+%d" % x)), Echos.NIVEAU_MAX]
-	s += _sous_titre("Chances de réussite et coût")
-	s += "Le coût dépend des étoiles et du niveau actuel. Exemple pour un Écho ★4 :\n\n"
-	s += "[table=3]" + _ligne_tableau(["Passage", "Chance", "Coût (★4)"], true)
+	s += _sous_titre(UiCommun.t("Chances de réussite et coût"))
+	s += UiCommun.t("Le coût dépend des étoiles et du niveau actuel. Exemple pour un Écho ★4 :\n\n")
+	s += "[table=3]" + _ligne_tableau([UiCommun.t("Passage"), "Chance", UiCommun.t("Coût (★4)")], true)
 	for n in range(1, Echos.NIVEAU_MAX + 1):
 		var c: float = Echos.CHANCES_AMELIORATION[mini(n, Echos.CHANCES_AMELIORATION.size() - 1)]
 		var cout := Echos.cout_amelioration({"etoiles": 4, "niveau": n - 1})
@@ -233,54 +233,54 @@ static func _ameliorer() -> String:
 		s += _cellule("+%d → +%d%s" % [n - 1, n, pal]) + _cellule("%d %%" % int(round(c * 100)), couleur) + _cellule(UiCommun.t("%d or") % cout)
 	s += "[/table]\n"
 	s += UiCommun.t("\n[color=%s]◆ = palier (nouvelle stat secondaire ou renforcement).[/color]\n") % C_DOUX
-	s += _sous_titre("Conseils")
-	s += "• Les premiers niveaux sont garantis : monte tous tes Échos équipés à +3 sans hésiter.\n"
-	s += "• Au-delà de +9, chaque tentative est un pari : réserve-les aux Échos ★5-★6 de bonne rareté que tu garderas longtemps.\n"
-	s += "• Dans la fenêtre d'amélioration, « Jusqu'à +X » enchaîne les tentatives à ta place, et « Arrêter » la coupe à tout moment.\n"
-	s += "• Un Écho amélioré se revend et se démantèle un peu mieux, mais jamais au prix de l'or investi.\n"
+	s += _sous_titre(UiCommun.t("Conseils"))
+	s += UiCommun.t("• Les premiers niveaux sont garantis : monte tous tes Échos équipés à +3 sans hésiter.\n")
+	s += UiCommun.t("• Au-delà de +9, chaque tentative est un pari : réserve-les aux Échos ★5-★6 de bonne rareté que tu garderas longtemps.\n")
+	s += UiCommun.t("• Dans la fenêtre d'amélioration, « Jusqu'à +X » enchaîne les tentatives à ta place, et « Arrêter » la coupe à tout moment.\n")
+	s += UiCommun.t("• Un Écho amélioré se revend et se démantèle un peu mieux, mais jamais au prix de l'or investi.\n")
 	return s
 
 
 static func _sets() -> String:
-	var s := _titre("Les Sets")
-	s += "Équipe plusieurs Échos du même set pour activer son bonus.\n"
-	s += "• Set à [b]2 pièces[/b] : le bonus compte [b]une fois par paire[/b]. 4 pièces = 2 fois, 6 pièces = 3 fois.\n"
-	s += "• Set à [b]4 pièces[/b] : le bonus ne compte qu'une fois. Il reste 2 places pour un set à 2 pièces.\n\n"
+	var s := _titre(UiCommun.t("Les Sets"))
+	s += UiCommun.t("Équipe plusieurs Échos du même set pour activer son bonus.\n")
+	s += UiCommun.t("• Set à [b]2 pièces[/b] : le bonus compte [b]une fois par paire[/b]. 4 pièces = 2 fois, 6 pièces = 3 fois.\n")
+	s += UiCommun.t("• Set à [b]4 pièces[/b] : le bonus ne compte qu'une fois. Il reste 2 places pour un set à 2 pièces.\n\n")
 	var acte_du_set := {}
 	for a in Echos.SET_PAR_ACTE:
 		var sid: String = Echos.SET_PAR_ACTE[a]
 		if not acte_du_set.has(sid):
 			acte_du_set[sid] = []
 		acte_du_set[sid].append(_romain(int(a)))
-	s += "[table=4]" + _ligne_tableau(["Set", "Pièces", "Bonus (par activation)", "Où le trouver"], true)
+	s += "[table=4]" + _ligne_tableau(["Set", UiCommun.t("Pièces"), UiCommun.t("Bonus (par activation)"), UiCommun.t("Où le trouver")], true)
 	for sid in Echos.SETS:
 		var desc := Echos.description_set(sid)
 		desc = desc.substr(desc.find(":") + 2)
-		var ou := "Vraie fin de l'histoire (unique)" if sid in Echos.SETS_UNIQUES else \
-			("Acte " + ", ".join(acte_du_set.get(sid, ["?"])))
-		s += _cellule(Echos.SETS[sid]["nom"], C_SET) + _cellule(str(Echos.SETS[sid]["pieces"])) + _cellule(desc) + _cellule(ou)
+		var ou := UiCommun.t("Vraie fin de l'histoire (unique)") if sid in Echos.SETS_UNIQUES else \
+			(UiCommun.t("Acte ") + ", ".join(acte_du_set.get(sid, ["?"])))
+		s += _cellule(UiCommun.t(str(Echos.SETS[sid]["nom"])), C_SET) + _cellule(str(Echos.SETS[sid]["pieces"])) + _cellule(desc) + _cellule(ou)
 	s += "[/table]\n"
 	s += UiCommun.t("\n[color=%s]Tous les sets (sauf le set unique des Frères) peuvent aussi être fabriqués à l'Atelier du Reliquaire.[/color]\n") % C_DOUX
-	s += _sous_titre("Quel set pour quel héros ?")
-	s += "• [b]Avant qui encaisse[/b] (Tank, Guerrier) : Guard ou Energy, à cumuler (2 + 2 + 2), avec Endure ou Will contre les afflictions.\n"
-	s += "• [b]Frappeur physique[/b] (Assassin, Guerrier, Tireur) : Fatal (4) + Blade, ou Rage (4) + Blade quand son taux critique est déjà élevé.\n"
-	s += "• [b]Lanceur de sorts[/b] (Mage) : les dégâts des sorts = 0,6 × ATK + MAG ; Fatal reste bon, Despair (4) ajoute des étourdissements.\n"
-	s += "• [b]Soutien[/b] : Swift (4) pour agir en premier, + Focus ou Endure.\n"
-	s += "• [b]Durée de vie[/b] : Vampire (4) soigne à chaque coup, très fort sur un frappeur de l'Avant. Revenge punit ceux qui tapent le porteur.\n"
-	s += "\n[b]Astuce :[/b] un set complet ne sauve pas de mauvaises stats principales. Mieux vaut une bonne stat principale sans set qu'un set avec des stats inutiles pour le héros.\n"
+	s += _sous_titre(UiCommun.t("Quel set pour quel héros ?"))
+	s += UiCommun.t("• [b]Avant qui encaisse[/b] (Tank, Guerrier) : Guard ou Energy, à cumuler (2 + 2 + 2), avec Endure ou Will contre les afflictions.\n")
+	s += UiCommun.t("• [b]Frappeur physique[/b] (Assassin, Guerrier, Tireur) : Fatal (4) + Blade, ou Rage (4) + Blade quand son taux critique est déjà élevé.\n")
+	s += UiCommun.t("• [b]Lanceur de sorts[/b] (Mage) : les dégâts des sorts = 0,6 × ATK + MAG ; Fatal reste bon, Despair (4) ajoute des étourdissements.\n")
+	s += UiCommun.t("• [b]Soutien[/b] : Swift (4) pour agir en premier, + Focus ou Endure.\n")
+	s += UiCommun.t("• [b]Durée de vie[/b] : Vampire (4) soigne à chaque coup, très fort sur un frappeur de l'Avant. Revenge punit ceux qui tapent le porteur.\n")
+	s += UiCommun.t("\n[b]Astuce :[/b] un set complet ne sauve pas de mauvaises stats principales. Mieux vaut une bonne stat principale sans set qu'un set avec des stats inutiles pour le héros.\n")
 	return s
 
 
 static func _optimiser(uid_heros: int) -> String:
-	var s := _titre("Optimiser ses Échos : fixe ou % ?")
+	var s := _titre(UiCommun.t("Optimiser ses Échos : fixe ou % ?"))
 	s += UiCommun.t("Une stat [b]fixe[/b] ajoute toujours la même valeur (ATK +%d sur un ★6 +%d). Un [b]%%[/b] ajoute un pourcentage des stats de base du héros (niveau et étoiles compris, sans les Échos). Plus le héros est fort, plus le %% rapporte.\n") % [int(Echos.valeur_principale({"principale": "atk", "etoiles": 6, "niveau": Echos.NIVEAU_MAX})), Echos.NIVEAU_MAX]
-	s += _sous_titre("Le point de bascule")
-	s += "Avec deux Échos de mêmes étoiles et même niveau, le % devient meilleur que le fixe quand la stat de base du héros dépasse :\n\n"
-	s += "[table=4]" + _ligne_tableau(["Stat", UiCommun.t("Fixe (★6 +%d)") % Echos.NIVEAU_MAX, "%% (★6 +%d)" % Echos.NIVEAU_MAX, "Le % gagne au-delà de"], true)
+	s += _sous_titre(UiCommun.t("Le point de bascule"))
+	s += UiCommun.t("Avec deux Échos de mêmes étoiles et même niveau, le % devient meilleur que le fixe quand la stat de base du héros dépasse :\n\n")
+	s += "[table=4]" + _ligne_tableau(["Stat", UiCommun.t("Fixe (★6 +%d)") % Echos.NIVEAU_MAX, "%% (★6 +%d)" % Echos.NIVEAU_MAX, UiCommun.t("Le % gagne au-delà de")], true)
 	for st in ["atk", "def", "pv"]:
 		var fixe := Echos.valeur_principale({"principale": st, "etoiles": 6, "niveau": Echos.NIVEAU_MAX})
 		var pct := Echos.valeur_principale({"principale": st + "%", "etoiles": 6, "niveau": Echos.NIVEAU_MAX})
-		s += _ligne_tableau([Echos.NOMS_STATS[st], "+%d" % int(fixe), "+%s %%" % _n(pct), UiCommun.t("[b]%d[/b] %s de base") % [seuil(st), Echos.NOMS_STATS[st]]])
+		s += _ligne_tableau([UiCommun.t(str(Echos.NOMS_STATS[st])), "+%d" % int(fixe), "+%s %%" % _n(pct), UiCommun.t("[b]%d[/b] %s de base") % [seuil(st), UiCommun.t(str(Echos.NOMS_STATS[st]))]])
 	s += "[/table]\n"
 	s += UiCommun.t("\n[color=%s]Le seuil ne dépend ni des étoiles ni du niveau de l'Écho : il est le même pour un ★2 +0 que pour un ★6 +15. Pour les stats secondaires, la logique est la même (seuils proches).[/color]\n") % C_DOUX
 
@@ -288,39 +288,39 @@ static func _optimiser(uid_heros: int) -> String:
 		var h := Sauvegarde.get_heros(uid_heros)
 		if not h.is_empty():
 			var base := Sauvegarde.stats_base_heros(uid_heros)
-			var nom: String = UnitesData.get_unite(h["id"])["nom"]
+			var nom: String = UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"]))
 			s += _sous_titre(UiCommun.t("Et pour %s (Nv %d) ?") % [nom, int(h["niveau"])])
 			for st in ["atk", "def", "pv"]:
 				var b := int(base[st])
 				var mieux := b >= seuil(st)
-				s += UiCommun.t("• %s de base [b]%d[/b] → %s\n") % [Echos.NOMS_STATS[st], b,
-					(UiCommun.t("[color=%s]le %% est meilleur (%s %%)[/color]") % [C_BON, Echos.NOMS_STATS[st]]) if mieux else \
+				s += UiCommun.t("• %s de base [b]%d[/b] → %s\n") % [UiCommun.t(str(Echos.NOMS_STATS[st])), b,
+					(UiCommun.t("[color=%s]le %% est meilleur (%s %%)[/color]") % [C_BON, UiCommun.t(str(Echos.NOMS_STATS[st]))]) if mieux else \
 					(UiCommun.t("le [b]fixe[/b] est meilleur (le %% gagnera vers %d)") % seuil(st))]
 
-	s += _sous_titre("Selon ton avancée")
-	s += "• [b]Début de partie[/b] (héros N et R, bas niveau) : les stats de base sont faibles, prends les [b]fixes[/b] (ATK, DEF, PV). Ne dépense pas trop d'or en améliorations : tes Échos seront vite remplacés.\n"
-	s += "• [b]Milieu de partie[/b] (SR/SSR, niveau 10 à 20, premières étoiles) : passe à [b]ATK %[/b] et [b]DEF %[/b] sur les emplacements variables. Les PV % ne battent les PV fixes que sur les héros très costauds.\n"
-	s += "• [b]Fin de partie[/b] (SSR/UR niveau 30, ★5-★6, évolutions) : [b]%[/b] partout, puis [b]Taux crit / Dégâts crit[/b] sur le Sacrifice pour les frappeurs.\n"
+	s += _sous_titre(UiCommun.t("Selon ton avancée"))
+	s += UiCommun.t("• [b]Début de partie[/b] (héros N et R, bas niveau) : les stats de base sont faibles, prends les [b]fixes[/b] (ATK, DEF, PV). Ne dépense pas trop d'or en améliorations : tes Échos seront vite remplacés.\n")
+	s += UiCommun.t("• [b]Milieu de partie[/b] (SR/SSR, niveau 10 à 20, premières étoiles) : passe à [b]ATK %[/b] et [b]DEF %[/b] sur les emplacements variables. Les PV % ne battent les PV fixes que sur les héros très costauds.\n")
+	s += UiCommun.t("• [b]Fin de partie[/b] (SSR/UR niveau 30, ★5-★6, évolutions) : [b]%[/b] partout, puis [b]Taux crit / Dégâts crit[/b] sur le Sacrifice pour les frappeurs.\n")
 	s += UiCommun.t("\n[color=%s]Les SSR et UR ont de grosses stats dès le niveau 1 : pour eux, le %% d'ATK gagne souvent tout de suite. Le Mode Essai te le montre en chiffres.[/color]\n") % C_DOUX
 
-	s += _sous_titre("Les stats secondaires utiles")
-	s += "• [b]Taux crit[/b] : au-delà de 100, il ne sert plus à rien. Associe-le aux [b]Dégâts crit[/b].\n"
-	s += "• [b]Précision[/b] : les attaques ne ratent plus à 100. Les héros en ont déjà 90 à 100 : inutile d'en empiler.\n"
-	s += "• [b]Résistance[/b] : réduit les dégâts des sorts reçus et la chance de subir une affliction. Excellente pour l'Avant.\n"
-	s += "• [b]Vitesse[/b] : décide qui agit en premier. Précieuse pour les soutiens et les assassins.\n"
-	s += "• [b]MAG[/b] : seulement en stat secondaire, utile pour les héros qui comptent sur leurs sorts.\n"
-	s += _sous_titre("La méthode en 4 étapes")
-	s += "1. Choisis le rôle du héros (encaisser, frapper, soigner…).\n2. Mets la bonne stat principale sur les emplacements variables (Artère, Sacrifice, Serment).\n3. Complète un set adapté.\n4. Améliore d'abord les Échos qui apportent le plus, et vérifie dans le Mode Essai.\n"
+	s += _sous_titre(UiCommun.t("Les stats secondaires utiles"))
+	s += UiCommun.t("• [b]Taux crit[/b] : au-delà de 100, il ne sert plus à rien. Associe-le aux [b]Dégâts crit[/b].\n")
+	s += UiCommun.t("• [b]Précision[/b] : les attaques ne ratent plus à 100. Les héros en ont déjà 90 à 100 : inutile d'en empiler.\n")
+	s += UiCommun.t("• [b]Résistance[/b] : réduit les dégâts des sorts reçus et la chance de subir une affliction. Excellente pour l'Avant.\n")
+	s += UiCommun.t("• [b]Vitesse[/b] : décide qui agit en premier. Précieuse pour les soutiens et les assassins.\n")
+	s += UiCommun.t("• [b]MAG[/b] : seulement en stat secondaire, utile pour les héros qui comptent sur leurs sorts.\n")
+	s += _sous_titre(UiCommun.t("La méthode en 4 étapes"))
+	s += UiCommun.t("1. Choisis le rôle du héros (encaisser, frapper, soigner…).\n2. Mets la bonne stat principale sur les emplacements variables (Artère, Sacrifice, Serment).\n3. Complète un set adapté.\n4. Améliore d'abord les Échos qui apportent le plus, et vérifie dans le Mode Essai.\n")
 	return s
 
 
 static func _ou_trouver() -> String:
-	var s := _titre("Où trouver des Échos (et des rares)")
-	s += _sous_titre("Dans l'Aventure")
-	s += "Après chaque victoire, un Écho peut tomber. Son [b]set dépend de l'Acte[/b], son [b]emplacement du numéro du chapitre[/b]. Pour un emplacement précis, rejoue le bon chapitre !\n\n"
-	var noms_types := {"combat": "Combat", "elite": "Élite", "gardien": "Gardien", "mimic": "Mimic",
-		"boss_chapitre": "Boss de chapitre", "boss_acte": "Boss d'Acte"}
-	s += "[table=8]" + _ligne_tableau(["Combat", "Chance"] + Echos.RARETES.map(func(r): return r["nom"]) + ["Bonus ★"], true)
+	var s := _titre(UiCommun.t("Où trouver des Échos (et des rares)"))
+	s += _sous_titre(UiCommun.t("Dans l'Aventure"))
+	s += UiCommun.t("Après chaque victoire, un Écho peut tomber. Son [b]set dépend de l'Acte[/b], son [b]emplacement du numéro du chapitre[/b]. Pour un emplacement précis, rejoue le bon chapitre !\n\n")
+	var noms_types := {"combat": UiCommun.t("Combat"), "elite": UiCommun.t("Élite"), "gardien": UiCommun.t("Gardien"), "mimic": "Mimic",
+		"boss_chapitre": UiCommun.t("Boss de chapitre"), "boss_acte": UiCommun.t("Boss d'Acte")}
+	s += "[table=8]" + _ligne_tableau([UiCommun.t("Combat"), "Chance"] + Echos.RARETES.map(func(r): return UiCommun.t(str(r["nom"]))) + ["Bonus ★"], true)
 	for type in ["combat", "elite", "gardien", "mimic", "boss_chapitre", "boss_acte"]:
 		var poids: Array = Echos.POIDS_RARETE[type]
 		var total := 0
@@ -333,8 +333,8 @@ static func _ou_trouver() -> String:
 		cellules.append("+1" if be > 0 else ("-1" if be < 0 else "0"))
 		s += _ligne_tableau(cellules)
 	s += "[/table]\n"
-	s += "\n[b]Les étoiles augmentent au fil de l'histoire[/b] : plus l'Acte est avancé, plus les Échos sont forts. Les boss ajoutent une étoile, les combats simples en retirent une.\n\n"
-	s += "[table=2]" + _ligne_tableau(["Actes", "Étoiles des Échos (combat simple → boss)"], true)
+	s += UiCommun.t("\n[b]Les étoiles augmentent au fil de l'histoire[/b] : plus l'Acte est avancé, plus les Échos sont forts. Les boss ajoutent une étoile, les combats simples en retirent une.\n\n")
+	s += "[table=2]" + _ligne_tableau([UiCommun.t("Actes"), UiCommun.t("Étoiles des Échos (combat simple → boss)")], true)
 	var groupes := [[1, 3], [4, 5], [6, 7], [8, 10], [11, 13]]
 	for g in groupes:
 		var mini_ := 99
@@ -346,9 +346,9 @@ static func _ou_trouver() -> String:
 				maxi_ = maxi(maxi_, clampi(base + 2, 1, 6))
 		s += _ligne_tableau(["%s à %s" % [_romain(g[0]), _romain(g[1])], "★%d à ★%d" % [mini_, maxi_]])
 	s += "[/table]\n"
-	s += _sous_titre("À l'Atelier du Reliquaire")
-	s += "Tu choisis le [b]set[/b] et l'[b]emplacement[/b] (et même la stat principale) : c'est le meilleur moyen de compléter un set.\n\n"
-	s += "[table=4]" + _ligne_tableau(["Fabrication", "Coût", "Étoiles", "Raretés possibles"], true)
+	s += _sous_titre(UiCommun.t("À l'Atelier du Reliquaire"))
+	s += UiCommun.t("Tu choisis le [b]set[/b] et l'[b]emplacement[/b] (et même la stat principale) : c'est le meilleur moyen de compléter un set.\n\n")
+	s += "[table=4]" + _ligne_tableau([UiCommun.t("Fabrication"), UiCommun.t("Coût"), UiCommun.t("Étoiles"), UiCommun.t("Raretés possibles")], true)
 	for type in Reliquaire.ATELIER:
 		var a: Dictionary = Reliquaire.ATELIER[type]
 		var r: Array = []
@@ -358,33 +358,33 @@ static func _ou_trouver() -> String:
 			total += int(w)
 		for i in poids.size():
 			if int(poids[i]) > 0:
-				r.append("%s %d %%" % [Echos.RARETES[i]["nom"], int(round(100.0 * int(poids[i]) / total))])
-		s += _ligne_tableau([a["nom"], "%d Poussière + %d or" % [int(a["poussiere"]), int(a["or"])],
+				r.append("%s %d %%" % [UiCommun.t(str(Echos.RARETES[i]["nom"])), int(round(100.0 * int(poids[i]) / total))])
+		s += _ligne_tableau([UiCommun.t(str(a["nom"])), UiCommun.t("%d Poussière + %d or") % [int(a["poussiere"]), int(a["or"])],
 			"★%d à ★%d" % [int(a["etoiles"][0]), int(a["etoiles"][1])], ", ".join(r)])
 	s += "[/table]\n"
-	s += "\n[b]Poussière d'Écho[/b] : en démantelant tes Échos inutiles à l'Atelier, et dans les Tours, le Boss de Monde, la Compagnie, la Ménagerie, les Quêtes, la Boutique et le Marché du jour.\n"
-	s += _sous_titre("Pour obtenir des Échos plus rares")
-	s += "• Farme les [b]boss de chapitre et d'Acte[/b] : drop garanti et rareté bien meilleure.\n"
-	s += "• Les [b]Mimics[/b] sont aussi généreux : ne les laisse pas filer.\n"
-	s += "• Avance dans l'histoire : les Actes lointains donnent plus d'étoiles.\n"
-	s += "• Démantèle tout ce qui ne sert pas, et utilise la [b]Fabrication supérieure[/b] pour viser Héroïque et Légendaire en ★4 à ★6.\n"
-	s += "• Le [b]set des Frères[/b], unique, ne s'obtient qu'à la vraie fin de l'histoire.\n"
+	s += UiCommun.t("\n[b]Poussière d'Écho[/b] : en démantelant tes Échos inutiles à l'Atelier, et dans les Tours, le Boss de Monde, la Compagnie, la Ménagerie, les Quêtes, la Boutique et le Marché du jour.\n")
+	s += _sous_titre(UiCommun.t("Pour obtenir des Échos plus rares"))
+	s += UiCommun.t("• Farme les [b]boss de chapitre et d'Acte[/b] : drop garanti et rareté bien meilleure.\n")
+	s += UiCommun.t("• Les [b]Mimics[/b] sont aussi généreux : ne les laisse pas filer.\n")
+	s += UiCommun.t("• Avance dans l'histoire : les Actes lointains donnent plus d'étoiles.\n")
+	s += UiCommun.t("• Démantèle tout ce qui ne sert pas, et utilise la [b]Fabrication supérieure[/b] pour viser Héroïque et Légendaire en ★4 à ★6.\n")
+	s += UiCommun.t("• Le [b]set des Frères[/b], unique, ne s'obtient qu'à la vraie fin de l'histoire.\n")
 	return s
 
 
 static func _mode_essai() -> String:
-	var s := _titre("Le Mode Essai")
-	s += "Pour comparer avant d'équiper, sans rien risquer.\n"
-	s += _sous_titre("Comment l'utiliser")
-	s += "1. Choisis un héros, puis appuie sur [b]Mode Essai[/b] (au-dessus de ses emplacements).\n"
-	s += "2. Clique des Échos dans l'inventaire : chacun se place [b]en essai[/b] sur son emplacement. Tu peux en essayer plusieurs à la fois, jusqu'à un set complet.\n"
-	s += "3. Les emplacements modifiés sont entourés en bleu. Clique un emplacement pour filtrer l'inventaire ; « Retirer de l'essai » vide un emplacement.\n"
-	s += "4. Le tableau compare les stats [b]actuelles[/b] et [b]en essai[/b] : en vert ce qui monte, en rouge ce qui baisse. Les sets gagnés ou perdus sont indiqués aussi.\n"
-	s += "5. [b]Équiper l'essai[/b] applique tout d'un coup. « Annuler l'essai » remet comme avant.\n"
-	s += _sous_titre("Bon à savoir")
-	s += "• Seuls les Échos que tu possèdes peuvent être essayés, y compris ceux portés par un autre héros : si tu valides, ils lui seront retirés (le jeu te prévient).\n"
-	s += "• Rien n'est modifié tant que tu ne valides pas : quitte le Mode Essai et tout reste comme avant.\n"
-	s += "• Les bénédictions de guilde sont comptées, comme en combat.\n"
+	var s := _titre(UiCommun.t("Le Mode Essai"))
+	s += UiCommun.t("Pour comparer avant d'équiper, sans rien risquer.\n")
+	s += _sous_titre(UiCommun.t("Comment l'utiliser"))
+	s += UiCommun.t("1. Choisis un héros, puis appuie sur [b]Mode Essai[/b] (au-dessus de ses emplacements).\n")
+	s += UiCommun.t("2. Clique des Échos dans l'inventaire : chacun se place [b]en essai[/b] sur son emplacement. Tu peux en essayer plusieurs à la fois, jusqu'à un set complet.\n")
+	s += UiCommun.t("3. Les emplacements modifiés sont entourés en bleu. Clique un emplacement pour filtrer l'inventaire ; « Retirer de l'essai » vide un emplacement.\n")
+	s += UiCommun.t("4. Le tableau compare les stats [b]actuelles[/b] et [b]en essai[/b] : en vert ce qui monte, en rouge ce qui baisse. Les sets gagnés ou perdus sont indiqués aussi.\n")
+	s += UiCommun.t("5. [b]Équiper l'essai[/b] applique tout d'un coup. « Annuler l'essai » remet comme avant.\n")
+	s += _sous_titre(UiCommun.t("Bon à savoir"))
+	s += UiCommun.t("• Seuls les Échos que tu possèdes peuvent être essayés, y compris ceux portés par un autre héros : si tu valides, ils lui seront retirés (le jeu te prévient).\n")
+	s += UiCommun.t("• Rien n'est modifié tant que tu ne valides pas : quitte le Mode Essai et tout reste comme avant.\n")
+	s += UiCommun.t("• Les bénédictions de guilde sont comptées, comme en combat.\n")
 	return s
 
 

@@ -69,7 +69,7 @@ func _ready() -> void:
 	_nom = UiCommun.label("", 24, UiCommun.C_OR)
 	_nom.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(_nom)
-	var passer := UiCommun.bouton("Passer ▶▶", 15)
+	var passer := UiCommun.bouton(UiCommun.t("Passer ▶▶"), 15)
 	passer.pressed.connect(_terminer)
 	tete.add_child(passer)
 	_texte = RichTextLabel.new()
@@ -81,7 +81,7 @@ func _ready() -> void:
 	_texte.add_theme_font_size_override("italics_font_size", 21)
 	_texte.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	vb.add_child(_texte)
-	var suite := UiCommun.label("Clique pour continuer", 13, UiCommun.C_DOUX)
+	var suite := UiCommun.label(UiCommun.t("Clique pour continuer"), 13, UiCommun.C_DOUX)
 	suite.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	vb.add_child(suite)
 	_suivante()

@@ -120,7 +120,7 @@ func _ready() -> void:
 				_xp_avant[int(e["uid"])] = {"niveau": int(hx["niveau"]), "xp": int(hx["xp"])}
 	if Enregistreur.actif():
 		Enregistreur.note("Combat « %s » · graine %s · équipe : %s · ennemis : %s" % [_mode, str(demande.get("graine", 0)),
-			_resume_camp(demande.get("equipe", [])), _resume_camp(demande.get("ennemis", []))], "COMBAT")
+			_resume_camp(demande.get("equipe", [])), _resume_camp(demande.get("ennemis", []))], UiCommun.t("COMBAT"))
 	_mon_camp = int(demande.get("mon_camp", 0)) if _mode == "classee" else 0
 	_manuel = _mode in MODES_MANUEL and bool(Sauvegarde.get_parametre("combat_manuel", false))
 	Audio.musique(_musique_combat())
@@ -249,12 +249,12 @@ func _creer_fond() -> void:
 		if _decor.has("fond"):
 			_c3d.construire(_decor["fond"], noir.color, _decor["sol"], float(_decor["coupe"]))
 			Enregistreur.note("Affichage 3D · décor 3D : %s%s" % [str(_decor["fond"]).get_file().trim_suffix("_fond.png"),
-				" (emprunté pour « %s »)" % _decor["cle"] if _decor["emprunte"] else ""], "COMBAT")
+				" (emprunté pour « %s »)" % _decor["cle"] if _decor["emprunte"] else ""], UiCommun.t("COMBAT"))
 		else:
 			_c3d.construire(chemin, noir.color)
-			Enregistreur.note("Affichage 3D · décor de secours : %s" % chemin.get_file(), "COMBAT")
+			Enregistreur.note("Affichage 3D · décor de secours : %s" % chemin.get_file(), UiCommun.t("COMBAT"))
 		return
-	Enregistreur.note("Affichage 2D (%s) · fond : %s" % ["combats en 3D décochés" if _mode in MODES_3D else "mode sans 3D", chemin.get_file()], "COMBAT")
+	Enregistreur.note("Affichage 2D (%s) · fond : %s" % ["combats en 3D décochés" if _mode in MODES_3D else "mode sans 3D", chemin.get_file()], UiCommun.t("COMBAT"))
 	if ResourceLoader.exists(chemin):
 		var img := TextureRect.new()
 		img.texture = load(chemin)
@@ -279,7 +279,7 @@ func _creer_interface() -> void:
 	add_child(_arene)
 
 	for camp in ([] if _mode == "boss_monde" or _c3d != null else [0, 1]):
-		for ligne in [["AVANT", 0.36 if camp == 0 else 0.64], ["ARRIÈRE", 0.14 if camp == 0 else 0.86]]:
+		for ligne in [[UiCommun.t("AVANT"), 0.36 if camp == 0 else 0.64], [UiCommun.t("ARRIÈRE"), 0.14 if camp == 0 else 0.86]]:
 			var l := _label(ligne[0], 14, Color(1, 1, 1, 0.35))
 			l.anchor_left = ligne[1]
 			l.anchor_right = ligne[1]
@@ -297,7 +297,7 @@ func _creer_interface() -> void:
 			le.anchor_top = 0.235 + k * 0.185
 			le.anchor_bottom = le.anchor_top
 			_arene.add_child(le)
-		for ligne in [["ARRIÈRE", 0.13], ["AVANT", 0.36]]:
+		for ligne in [[UiCommun.t("ARRIÈRE"), 0.13], [UiCommun.t("AVANT"), 0.36]]:
 			var la := _label(ligne[0], 13, Color(1, 1, 1, 0.35))
 			la.anchor_left = ligne[1]
 			la.anchor_right = ligne[1]
@@ -320,16 +320,16 @@ func _creer_interface() -> void:
 	var type: String = demande.get("type", "combat")
 	var texte_titre := UiCommun.t("ACTE %s · CHAPITRE %d — %s") % [
 		ActesData.get_acte(int(demande.get("acte", 1))).get("romain", ""), int(demande.get("chapitre", 1)),
-		NOMS_TYPE.get(type, "Combat")]
+		UiCommun.t(str(NOMS_TYPE.get(type, UiCommun.t("Combat"))))]
 	if _mode == "tour":
 		var n := int(demande.get("etage", 1))
-		texte_titre = UiCommun.t("%s · ÉTAGE %d — %s") % [str(Tours.TOURS[demande["tour"]]["nom"]).to_upper(), n,
-			{"combat": "Combat", "elite": "Élite", "boss": "BOSS", "super": "SUPER BOSS"}[Tours.type_etage(n)]]
+		texte_titre = UiCommun.t("%s · ÉTAGE %d — %s") % [str(UiCommun.t(str(Tours.TOURS[demande["tour"]]["nom"]))).to_upper(), n,
+			{"combat": UiCommun.t("Combat"), "elite": UiCommun.t("Élite"), "boss": "BOSS", "super": "SUPER BOSS"}[Tours.type_etage(n)]]
 	elif _mode == "boss_monde":
-		texte_titre = "BOSS DE MONDE — " + str(BossMonde.BOSS[int(demande.get("boss_index", 0))]["titre"]).to_upper()
+		texte_titre = UiCommun.t("BOSS DE MONDE — ") + str(UiCommun.t(str(BossMonde.BOSS[int(demande.get("boss_index", 0))]["titre"]))).to_upper()
 	elif _mode == "marche":
 		texte_titre = UiCommun.t("LA MARCHE MAUDITE · %s — %s") % [Marche.nom_region(int(demande.get("region", 0))).to_upper(),
-			Marche.TYPES[demande.get("type", "combat")]["nom"].to_upper()]
+			UiCommun.t(str(Marche.TYPES[demande.get("type", "combat")]["nom"])).to_upper()]
 	elif _mode == "classee":
 		var m: Dictionary = demande["match"]
 		var moi: Dictionary = m["j1"] if mon_camp() == 0 else m["j2"]
@@ -337,22 +337,22 @@ func _creer_interface() -> void:
 		texte_titre = UiCommun.t("ARÈNE CLASSÉE — %s (%d)  contre  %s (%d)") % [EnLigne.nom_complet(str(moi.get("pseudo", "?"))), int(moi.get("points", 0)),
 			EnLigne.nom_complet(str(lui.get("pseudo", "?"))), int(lui.get("points", 0))]
 	elif _mode in ["guerre", "guerre_revoir"]:
-		texte_titre = UiCommun.t("%sGUERRE DES BANNIÈRES — %s : %s") % ["REDIFFUSION · " if _mode == "guerre_revoir" else "",
-			str(Guerre.COUCHES[int(demande.get("couche", 0))]).to_upper(), str(demande.get("adversaire", "?"))]
+		texte_titre = UiCommun.t("%sGUERRE DES BANNIÈRES — %s : %s") % [UiCommun.t("REDIFFUSION · ") if _mode == "guerre_revoir" else "",
+			str(UiCommun.t(str(Guerre.COUCHES[int(demande.get("couche", 0))]))).to_upper(), str(demande.get("adversaire", "?"))]
 	elif _mode == "sanctuaire":
-		texte_titre = "LE SANCTUAIRE DU BÉLIER — " + str(Sanctuaire.EPREUVES[demande["epreuve"]]["titre"]).to_upper()
+		texte_titre = UiCommun.t("LE SANCTUAIRE DU BÉLIER — ") + str(UiCommun.t(str(Sanctuaire.EPREUVES[demande["epreuve"]]["titre"]))).to_upper()
 	elif _mode == "ruines":
 		var et_r := str(demande.get("etage", "seve"))
-		texte_titre = UiCommun.t("RUINES OUBLIÉES — %s — VAGUE %d / %d") % [str(Ruines.ETAGES[et_r]["titre"]).to_upper(),
+		texte_titre = UiCommun.t("RUINES OUBLIÉES — %s — VAGUE %d / %d") % [str(UiCommun.t(str(Ruines.ETAGES[et_r]["titre"]))).to_upper(),
 			int(demande.get("vague", 0)) + 1, Ruines.nb_vagues(et_r)]
 	elif _mode == "donjon":
 		var v := int(demande.get("vague", 0))
-		texte_titre = UiCommun.t("%s · NIVEAU %d — COMBAT %d / %d : %s") % [str(Donjons.DONJONS[demande["donjon"]]["nom"]).to_upper(),
-			int(demande.get("niveau", 1)), v + 1, Donjons.VAGUES.size(), Donjons.NOMS_VAGUE[Donjons.VAGUES[v]]]
+		texte_titre = UiCommun.t("%s · NIVEAU %d — COMBAT %d / %d : %s") % [str(UiCommun.t(str(Donjons.DONJONS[demande["donjon"]]["nom"]))).to_upper(),
+			int(demande.get("niveau", 1)), v + 1, Donjons.VAGUES.size(), UiCommun.t(str(Donjons.NOMS_VAGUE[Donjons.VAGUES[v]]))]
 	var titre := _label(texte_titre, 22, C_OR)
 	titre.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(titre)
-	_lbl_tour = _label("Tour 1", 20, C_TEXTE)
+	_lbl_tour = _label(UiCommun.t("Tour 1"), 20, C_TEXTE)
 	h.add_child(_lbl_tour)
 	_bouton_manuel = _bouton("")
 	_bouton_manuel.pressed.connect(_basculer_manuel)
@@ -365,7 +365,7 @@ func _creer_interface() -> void:
 		b.pressed.connect(_changer_vitesse.bind(v))
 		h.add_child(b)
 		_boutons_vitesse[v] = b
-	var passer := _bouton("Passer ▶▶")
+	var passer := _bouton(UiCommun.t("Passer ▶▶"))
 	passer.pressed.connect(func():
 		_passer = true
 		if _cm != null:
@@ -391,15 +391,15 @@ func _basculer_manuel() -> void:
 		if not _manuel:
 			_cm.auto_maintenant()
 	elif _manuel and not _fini:
-		_texte_centre("Mode manuel : actif dès le prochain combat", Color("ffd060"))
+		_texte_centre(UiCommun.t("Mode manuel : actif dès le prochain combat"), Color("ffd060"))
 
 
 func _maj_bouton_manuel() -> void:
 	if _bouton_manuel == null:
 		return
-	_bouton_manuel.text = "✋ Manuel" if _manuel else "⟳ Auto"
-	_bouton_manuel.tooltip_text = "Tu choisis les actions de tes unités. Clique pour repasser en automatique." if _manuel \
-		else "Les unités jouent seules. Clique pour choisir toi-même leurs actions."
+	_bouton_manuel.text = UiCommun.t("✋ Manuel") if _manuel else "⟳ Auto"
+	_bouton_manuel.tooltip_text = UiCommun.t("Tu choisis les actions de tes unités. Clique pour repasser en automatique.") if _manuel \
+		else UiCommun.t("Les unités jouent seules. Clique pour choisir toi-même leurs actions.")
 
 
 func _cle_vitesse() -> String:
@@ -549,7 +549,7 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 	racine.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var couleur_nom := Color("ff8a6a") if info["boss"] else (Color("ffd27a") if info["elite"] else C_TEXTE)
-	var nom := _label(("%s" % info["nom"]) if petit else "%s  Nv %d" % [info["nom"], info["niveau"]], 11 if petit else (26 if geant else 14), couleur_nom)
+	var nom := _label(("%s" % UiCommun.t(str(info["nom"]))) if petit else UiCommun.t("%s  Nv %d") % [UiCommun.t(str(info["nom"])), info["niveau"]], 11 if petit else (26 if geant else 14), couleur_nom)
 	if petit:
 		nom.clip_text = true
 		nom.custom_minimum_size = Vector2(largeur, 0)
@@ -609,7 +609,7 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 	sp.set_border_width_all(4 if grand else 3)
 	portrait.add_theme_stylebox_override("panel", sp)
 	racine.add_child(portrait)
-	var nom_court: String = u["nom"].trim_prefix("La ").trim_prefix("Le ").trim_prefix("L'")
+	var nom_court: String = UiCommun.t(str(u["nom"])).trim_prefix("La ").trim_prefix("Le ").trim_prefix("L'")
 	var ini := _label(nom_court.substr(0, 1), 150 if geant else (18 if petit else (40 if grand else 30)), Color.WHITE)
 	ini.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ini.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -653,7 +653,7 @@ func _creer_carte(info: Dictionary) -> Dictionary:
 ## Au repos, un boss / mini-boss affiche le nom de sa mécanique.
 func _label_meca(racine: Control, info: Dictionary) -> Label:
 	var inf := Mecaniques.infos(str(info.get("meca", "")))
-	var l := _label("⚙ " + str(inf["nom"]) if not inf.is_empty() and inf["type"] != "monstre" else "", 13, Color("ffb070"))
+	var l := _label("⚙ " + str(UiCommun.t(str(inf["nom"]))) if not inf.is_empty() and inf["type"] != "monstre" else "", 13, Color("ffb070"))
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.add_theme_color_override("font_outline_color", Color.BLACK)
 	l.add_theme_constant_override("outline_size", 5)
@@ -668,7 +668,7 @@ func _maj_meca(idx: int, texte: String) -> void:
 	var c: Dictionary = _cartes[idx]
 	var l: Label = c["meca"]
 	l.text = texte if texte != "" else str(c.get("meca_base", ""))
-	l.add_theme_color_override("font_color", Color("ff5a3a") if texte in ["INCANTATION"] or texte.begins_with("Marqué") else Color("ffb070"))
+	l.add_theme_color_override("font_color", Color("ff5a3a") if texte in ["INCANTATION"] or texte.begins_with(UiCommun.t("Marqué")) else Color("ffb070"))
 	l.visible = l.text != ""
 
 
@@ -814,9 +814,9 @@ func _jouer(ev: Dictionary) -> void:
 			await _elan(ev["a"], ev["c"])
 		"skill":
 			if ev["a"] == _idx_geant:
-				_texte_centre(ev["nom"], Color("ff7a5a"))
+				_texte_centre(UiCommun.t(str(ev["nom"])), Color("ff7a5a"))
 				_trembler(14.0)
-			_texte_flottant(ev["a"], ev["nom"], Color("ffd27a"), 22, -70)
+			_texte_flottant(ev["a"], UiCommun.t(str(ev["nom"])), Color("ffd27a"), 22, -70)
 			if _c3d != null and _c3d.a(ev["a"]):
 				_c3d.sort(ev["a"], _couleur_unite(ev["a"]), _element_unite(ev["a"]), ev.get("cibles", []))
 			else:
@@ -842,14 +842,14 @@ func _jouer(ev: Dictionary) -> void:
 			_texte_flottant(ev["c"], "+%d" % ev["v"], Color("6aff8a"), 22, -40)
 			await _attendre(0.2)
 		"rate":
-			_texte_flottant(ev["c"], "Raté", Color(0.8, 0.8, 0.8), 20, -40)
+			_texte_flottant(ev["c"], UiCommun.t("Raté"), Color(0.8, 0.8, 0.8), 20, -40)
 			await _attendre(0.2)
 		"bouclier":
 			_cartes[ev["c"]]["bouclier"].value = ev["v"]
-			_texte_flottant(ev["c"], "Bouclier", Color("6ab0ff"), 18, -55)
+			_texte_flottant(ev["c"], UiCommun.t("Bouclier"), Color("6ab0ff"), 18, -55)
 			await _attendre(0.15)
 		"affliction":
-			_texte_flottant(ev["c"], NOMS_AFFL.get(ev["nom"], ev["nom"]), Color("ffa040"), 18, -60)
+			_texte_flottant(ev["c"], UiCommun.t(str(NOMS_AFFL.get(UiCommun.t(str(ev["nom"])), UiCommun.t(str(ev["nom"]))))), Color("ffa040"), 18, -60)
 			await _attendre(0.15)
 		"buff":
 			var nom_stat: String = {"atk": "ATK", "def": "DEF", "agi": "AGI", "mag": "MAG", "res": "RES"}.get(ev["stat"], ev["stat"])
@@ -864,7 +864,7 @@ func _jouer(ev: Dictionary) -> void:
 			_texte_flottant(ev["a"], ev["texte"], Color("ffe6a0"), 17, -80)
 			await _attendre(0.2)
 		"purification":
-			_texte_flottant(ev["c"], "Purifié", Color("ffffff"), 16, -60)
+			_texte_flottant(ev["c"], UiCommun.t("Purifié"), Color("ffffff"), 16, -60)
 		"meca":
 			_maj_meca(int(ev["c"]), str(ev["texte"]))
 		"ko":
@@ -872,16 +872,16 @@ func _jouer(ev: Dictionary) -> void:
 			await _attendre(0.35)
 		"reanimation", "renaissance":
 			_revivre(ev["c"], ev["pv"])
-			_texte_flottant(ev["c"], "Renaissance !" if ev["t"] == "renaissance" else "Ranimé !", Color("fff0a0"), 22, -60)
+			_texte_flottant(ev["c"], UiCommun.t("Renaissance !") if ev["t"] == "renaissance" else UiCommun.t("Ranimé !"), Color("fff0a0"), 22, -60)
 			await _attendre(0.5)
 		"survie":
-			_texte_flottant(ev["c"], "Tient bon !", Color("fff0a0"), 20, -60)
+			_texte_flottant(ev["c"], UiCommun.t("Tient bon !"), Color("fff0a0"), 20, -60)
 			_maj_pv(ev["c"], 1, -1)
 			await _attendre(0.3)
 		"phase":
 			await _banniere_phase(ev)
 		"temps_ecoule":
-			_texte_centre("Le temps est écoulé…", Color("ffb070"))
+			_texte_centre(UiCommun.t("Le temps est écoulé…"), Color("ffb070"))
 			await _attendre(1.0)
 
 
@@ -1065,7 +1065,7 @@ func _banniere_phase(ev: Dictionary) -> void:
 	panneau.grow_vertical = Control.GROW_DIRECTION_BOTH
 	var vb := VBoxContainer.new()
 	panneau.add_child(vb)
-	var t1 := _label("PHASE 2 — " + str(ev["nom"]).to_upper(), 30, Color("ff6a4a"))
+	var t1 := _label("PHASE 2 — " + str(UiCommun.t(str(ev["nom"]))).to_upper(), 30, Color("ff6a4a"))
 	t1.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(t1)
 	var t2 := _label(ev["texte"], 18, C_TEXTE)
@@ -1101,7 +1101,7 @@ func _fin() -> void:
 	if _mode == "guerre_revoir":
 		var e := Guerre.etoiles(_res)
 		_afficher_resultat(e > 0, [UiCommun.t("Rediffusion de l'assaut de %s contre %s : %s") % [str(demande.get("attaquant", "?")),
-			str(demande.get("adversaire", "?")), Guerre.texte_etoiles(e)]], "REDIFFUSION")
+			str(demande.get("adversaire", "?")), Guerre.texte_etoiles(e)]], UiCommun.t("REDIFFUSION"))
 		return
 	if _mode == "sanctuaire":
 		_fin_sanctuaire()
@@ -1139,7 +1139,7 @@ func _fin() -> void:
 		if not echo.is_empty():
 			Sauvegarde.ajouter_echo(echo)
 			lignes.append(UiCommun.t("Écho obtenu : %s  %s  (%s)") % [Echos.nom(echo), "★".repeat(int(echo["etoiles"])),
-				Echos.RARETES[int(echo["rarete"])]["nom"]])
+				UiCommun.t(str(Echos.RARETES[int(echo["rarete"])]["nom"]))])
 		# Éclats de Pacte Supérieur : lâchés par les boss (garantis la première fois)
 		var eclats := _eclats_boss(type, acte, chapitre)
 		if eclats > 0:
@@ -1157,21 +1157,21 @@ func _fin() -> void:
 			if _res["pv_final"][i] <= 0.0:
 				xp = int(xp * 0.5)       # un héros K.O. gagne moitié moins
 			var niveaux := Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp)
-			var txt := UiCommun.t("%s : +%d XP") % [UnitesData.get_unite(h["id"])["nom"], xp]
+			var txt := UiCommun.t("%s : +%d XP") % [UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])), xp]
 			if niveaux > 0:
 				txt += UiCommun.t("   NIVEAU %d !") % int(h["niveau"])
 			lignes.append(txt)
 			_lignes_xp.append(txt)
 	else:
 		Sauvegarde.ajouter_stat("combats_perdus")
-		lignes.append("L'équipe se replie pour reprendre des forces.")
+		lignes.append(UiCommun.t("L'équipe se replie pour reprendre des forces."))
 
 	# Bestiaire : les ennemis affrontés sont découverts
 	for e in demande["ennemis"]:
 		if Sauvegarde.decouvrir(e["id"]):
-			nouveaux.append(UnitesData.get_unite(e["id"])["nom"])
+			nouveaux.append(UiCommun.t(str(UnitesData.get_unite(e["id"])["nom"])))
 	if not nouveaux.is_empty():
-		lignes.append("Nouveau dans le Bestiaire : " + ", ".join(nouveaux))
+		lignes.append(UiCommun.t("Nouveau dans le Bestiaire : ") + ", ".join(nouveaux))
 
 	resultat = {
 		"acte": acte, "chapitre": chapitre, "noeud": demande.get("noeud", -1),
@@ -1224,7 +1224,7 @@ func _fin_ruines() -> void:
 		lignes.push_front("Le porteur de la cloche est tombé : Ombeline est emmenée…")
 	_decouvrir(lignes)
 	resultat = {"mode": "ruines", "victoire": victoire, "fini": r["fini"], "etage": demande.get("etage", "")}
-	_afficher_resultat(victoire, lignes, str(r["titre"]))
+	_afficher_resultat(victoire, lignes, str(UiCommun.t(str(r["titre"]))))
 
 
 func _fin_boss_monde() -> void:
@@ -1243,7 +1243,7 @@ func _fin_boss_monde() -> void:
 	_xp_compte(lignes, "boss_monde")
 	_decouvrir(lignes)
 	resultat = {"mode": "boss_monde", "victoire": tue, "pct": pct}
-	_afficher_resultat(true, lignes, "BOSS ABATTU !" if tue else "FIN DE L'ASSAUT")
+	_afficher_resultat(true, lignes, UiCommun.t("BOSS ABATTU !") if tue else UiCommun.t("FIN DE L'ASSAUT"))
 
 
 ## Boss de guilde : les dégâts infligés sont ajoutés à ceux de toute la guilde (serveur).
@@ -1255,32 +1255,32 @@ func _fin_boss_guilde() -> void:
 		var d: Dictionary = r.data
 		lignes.append(UiCommun.t("Dégâts comptés pour la guilde : %d") % int(d["coup"]))
 		lignes.append(UiCommun.t("Le titan de la guilde : %.1f %% de ses PV perdus%s") % [
-			100.0 * float(d["degats"]) / maxf(1.0, float(d["pv_max"])), "  —  ABATTU !" if d["abattu"] else ""])
+			100.0 * float(d["degats"]) / maxf(1.0, float(d["pv_max"])), UiCommun.t("  —  ABATTU !") if d["abattu"] else ""])
 	elif r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "essais":
-		lignes.append("Plus d'assaut disponible aujourd'hui : ces dégâts ne comptent pas.")
+		lignes.append(UiCommun.t("Plus d'assaut disponible aujourd'hui : ces dégâts ne comptent pas."))
 	else:
-		lignes.append("Le serveur n'a pas pu enregistrer les dégâts : " + (str(r.erreur) if not r.ok else str(r.data)))
+		lignes.append(UiCommun.t("Le serveur n'a pas pu enregistrer les dégâts : ") + (str(r.erreur) if not r.ok else str(r.data)))
 	var xp_armee := int(150 + 100.0 * degats / maxf(1.0, float(_res["pv_max_ennemis"])) * 6)
 	for e in demande["equipe"]:
 		if e.has("uid"):
 			Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp_armee)
 	lignes.append(UiCommun.t("Toute l'armée : +%d XP") % xp_armee)
-	lignes.append("Va dans l'onglet Boss de guilde pour réclamer les paliers atteints.")
+	lignes.append(UiCommun.t("Va dans l'onglet Boss de guilde pour réclamer les paliers atteints."))
 	_xp_compte(lignes, "boss_monde")
 	_decouvrir(lignes)
 	resultat = {"mode": "boss_guilde", "degats": degats}
-	_afficher_resultat(true, lignes, "FIN DE L'ASSAUT")
+	_afficher_resultat(true, lignes, UiCommun.t("FIN DE L'ASSAUT"))
 
 
 ## Arène : le résultat est envoyé au serveur, qui calcule les points et les Insignes.
 func _fin_arene() -> void:
 	var victoire: bool = _res["victoire"]
-	var lignes: Array = ["Envoi du résultat…"]
+	var lignes: Array = [UiCommun.t("Envoi du résultat…")]
 	var r := await EnLigne.appeler("arene_terminer", {"p_combat": demande["combat"], "p_victoire": victoire})
 	lignes.clear()
 	var adv: String = demande.get("adversaire", "")
 	if adv != "":
-		lignes.append(("Tu as vaincu la défense de %s." if victoire else "La défense de %s t'a repoussé.") % adv)
+		lignes.append((UiCommun.t("Tu as vaincu la défense de %s.") if victoire else UiCommun.t("La défense de %s t'a repoussé.")) % adv)
 	if r.ok and r.data is Dictionary and r.data.get("ok", false):
 		var d: Dictionary = r.data
 		var pts := int(d["points"])
@@ -1300,28 +1300,28 @@ func _fin_arene() -> void:
 func _fin_guerre() -> void:
 	var victoire: bool = _res["victoire"]
 	var e := Guerre.etoiles(_res)
-	var lignes: Array = ["Envoi du résultat…"]
+	var lignes: Array = [UiCommun.t("Envoi du résultat…")]
 	var r := await EnLigne.appeler("guerre_terminer", {"p_attaque": demande["attaque"], "p_etoiles": e})
 	lignes.clear()
 	var adv: String = str(demande.get("adversaire", "?"))
 	lignes.append((UiCommun.t("Tu as pris le poste de %s : %s") % [adv, Guerre.texte_etoiles(e)]) if victoire
 		else (UiCommun.t("%s a repoussé ton assaut.") % adv))
 	if victoire:
-		lignes.append("★ victoire   ★★ 3 unités debout ou plus   ★★★ aucune perte")
+		lignes.append(UiCommun.t("★ victoire   ★★ 3 unités debout ou plus   ★★★ aucune perte"))
 	if r.ok and r.data is Dictionary and str(r.data.get("code", "")) == "ok":
 		var gain := int(r.data["gain"])
 		if gain > 0:
 			lignes.append(UiCommun.t("+%d étoile%s pour ta guilde (total %d).") % [gain, "s" if gain > 1 else "", int(r.data["total"])])
 		else:
-			lignes.append("Pas d'étoile nouvelle : ce poste avait déjà été pris aussi bien.")
+			lignes.append(UiCommun.t("Pas d'étoile nouvelle : ce poste avait déjà été pris aussi bien."))
 		if victoire:
 			Sauvegarde.ajouter_stat("combats_gagnes")
 			_xp_compte(lignes, "arene")
 	else:
 		lignes.append(UiCommun.t("Le résultat n'a pas pu être envoyé : %s") % (r.erreur if not r.ok else Guerre.texte_erreur(str(r.data.get("code", "?")))))
-	lignes.append("Les unités de cet assaut sont épuisées jusqu'à demain.")
+	lignes.append(UiCommun.t("Les unités de cet assaut sont épuisées jusqu'à demain."))
 	resultat = {"mode": "guerre", "victoire": victoire, "etoiles": e}
-	_afficher_resultat(victoire, lignes, ("VICTOIRE  " + Guerre.texte_etoiles(e)) if victoire else "")
+	_afficher_resultat(victoire, lignes, (UiCommun.t("VICTOIRE  ") + Guerre.texte_etoiles(e)) if victoire else "")
 
 
 ## Marche Maudite : le résultat est appliqué à la marche, puis retour à la carte.
@@ -1336,7 +1336,7 @@ func _fin_marche() -> void:
 		_xp_compte(lignes, "combat" if demande.get("type", "combat") == "combat" else "elite")
 	resultat = {"mode": "marche", "victoire": victoire}
 	var fin := not Marche.en_cours()
-	_afficher_resultat(victoire, lignes, ("MARCHE ACCOMPLIE !" if victoire else "LA MARCHE S'ACHÈVE") if fin else "")
+	_afficher_resultat(victoire, lignes, (UiCommun.t("MARCHE ACCOMPLIE !") if victoire else UiCommun.t("LA MARCHE S'ACHÈVE")) if fin else "")
 
 
 ## Donjon : 4 combats d'affilée, les PV restants passent au combat suivant.
@@ -1352,13 +1352,13 @@ func _fin_donjon() -> void:
 			int(demande.get("vague", 0)) + 1, Donjons.VAGUES.size()])
 		Donjons.terminer()
 		resultat = {"mode": "donjon", "victoire": false}
-		_afficher_resultat(false, lignes, "EXPÉDITION ÉCHOUÉE")
+		_afficher_resultat(false, lignes, UiCommun.t("EXPÉDITION ÉCHOUÉE"))
 		return
 	Sauvegarde.ajouter_stat("combats_gagnes")
 	if not Donjons.derniere_vague():
 		Donjons.vague_suivante(_res["pv_final"])
 		# Enchaînement automatique : pas de fenêtre entre les vagues, le combat suivant démarre seul
-		var suivant: String = Donjons.NOMS_VAGUE[Donjons.VAGUES[int(Donjons.expedition["vague"])]]
+		var suivant: String = UiCommun.t(str(Donjons.NOMS_VAGUE[Donjons.VAGUES[int(Donjons.expedition["vague"])]]))
 		resultat = {"mode": "donjon", "victoire": true}
 		Audio.son("or")
 		_texte_centre(UiCommun.t("Combat %d / %d gagné !  Prochain : %s") % [int(demande["vague"]) + 1, Donjons.VAGUES.size(), suivant], Color("ffd27a"))
@@ -1366,13 +1366,13 @@ func _fin_donjon() -> void:
 		EcranCombat.demande = Donjons.demande_combat()
 		get_tree().change_scene_to_file(SCENE)
 		return
-	lignes.push_front(UiCommun.t("%s — niveau %d terminé !") % [Donjons.DONJONS[d]["nom"], n])
+	lignes.push_front(UiCommun.t("%s — niveau %d terminé !") % [UiCommun.t(str(Donjons.DONJONS[d]["nom"])), n])
 	lignes.append_array(Donjons.valider_victoire(d, n))
 	_xp_compte(lignes, "donjon")
 	_donner_xp(lignes, func(niv: int) -> int: return Donjons.xp(n, niv))
 	Donjons.terminer()
 	resultat = {"mode": "donjon", "victoire": true}
-	_afficher_resultat(true, lignes, "DONJON TERMINÉ !")
+	_afficher_resultat(true, lignes, UiCommun.t("DONJON TERMINÉ !"))
 
 
 ## XP de compte d'un combat gagné (+ message si le niveau monte).
@@ -1401,7 +1401,7 @@ func _donner_xp(lignes: Array, calcul: Callable) -> void:
 		if _res["pv_final"][i] <= 0.0:
 			xp = int(xp * 0.5)
 		var niveaux := Sauvegarde.ajouter_xp_heros(int(e["uid"]), xp)
-		var txt := UiCommun.t("%s : +%d XP") % [UnitesData.get_unite(h["id"])["nom"], xp]
+		var txt := UiCommun.t("%s : +%d XP") % [UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])), xp]
 		if niveaux > 0:
 			txt += UiCommun.t("   NIVEAU %d !") % int(h["niveau"])
 		lignes.append(txt)
@@ -1412,9 +1412,9 @@ func _decouvrir(lignes: Array) -> void:
 	var nouveaux: Array = []
 	for e in demande["ennemis"]:
 		if Sauvegarde.decouvrir(e["id"]):
-			nouveaux.append(UnitesData.get_unite(e["id"])["nom"])
+			nouveaux.append(UiCommun.t(str(UnitesData.get_unite(e["id"])["nom"])))
 	if not nouveaux.is_empty():
-		lignes.append("Nouveau dans le Bestiaire : " + ", ".join(nouveaux))
+		lignes.append(UiCommun.t("Nouveau dans le Bestiaire : ") + ", ".join(nouveaux))
 
 
 ## Éclats lâchés par un boss. Premier passage : garanti ; ensuite : chance.
@@ -1437,7 +1437,7 @@ func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "", texte_
 		var detail := ""
 		for l in lignes:
 			detail += str(l).replace("\n", " ") + " / "
-		Enregistreur.note("Fin du combat « %s » : %s · %s" % [_mode, "VICTOIRE" if victoire else "DÉFAITE", detail.left(300)], "COMBAT")
+		Enregistreur.note("Fin du combat « %s » : %s · %s" % [_mode, UiCommun.t("VICTOIRE") if victoire else UiCommun.t("DÉFAITE"), detail.left(300)], UiCommun.t("COMBAT"))
 	if action.is_valid():
 		Audio.son("or")
 	else:
@@ -1456,7 +1456,7 @@ func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "", texte_
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 10)
 	panneau.add_child(vb)
-	var t := _label(titre_force if titre_force != "" else ("VICTOIRE" if victoire else "DÉFAITE"), 44, C_OR if victoire else Color("d0453a"))
+	var t := _label(titre_force if titre_force != "" else (UiCommun.t("VICTOIRE") if victoire else UiCommun.t("DÉFAITE")), 44, C_OR if victoire else Color("d0453a"))
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(t)
 	vb.add_child(HSeparator.new())
@@ -1496,7 +1496,7 @@ func _afficher_resultat(victoire: bool, lignes: Array, titre_force := "", texte_
 	vb.add_child(b)
 	# Donjon : on peut abandonner l'expédition entre deux combats (la stamina est perdue)
 	if action.is_valid() and _mode == "donjon":
-		var abandon := _bouton("Abandonner l'expédition")
+		var abandon := _bouton(UiCommun.t("Abandonner l'expédition"))
 		abandon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		abandon.pressed.connect(func():
 			Donjons.terminer()

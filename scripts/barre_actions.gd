@@ -70,8 +70,8 @@ func choisir(c: Dictionary, actions: Array) -> Dictionary:
 	_ouvert = true
 	_selection = ""
 	montrer_halo(int(c["idx"]))
-	_lbl_titre.text = UiCommun.t("À toi : %s") % c["nom"]
-	info("Choisis une action." if not SortsIcones.tactile() else "Touche une icône pour voir le sort, touche-la encore pour la lancer.")
+	_lbl_titre.text = UiCommun.t("À toi : %s") % UiCommun.t(str(c["nom"]))
+	info(UiCommun.t("Choisis une action.") if not SortsIcones.tactile() else UiCommun.t("Touche une icône pour voir le sort, touche-la encore pour la lancer."))
 	_vider()
 	for a in actions:
 		var sk := _sort(c, str(a.get("nom", ""))) if a["type"] == "skill" else {}
@@ -91,7 +91,7 @@ func choisir(c: Dictionary, actions: Array) -> Dictionary:
 			_barre_temps.value = maxf(0.0, reste)
 			if reste <= 0.0:
 				_choix = {"type": "auto"}
-				info("Temps écoulé : action automatique.")
+				info(UiCommun.t("Temps écoulé : action automatique."))
 	var r := _choix
 	fermer()
 	return r
@@ -135,7 +135,7 @@ func _vider() -> void:
 
 func _sort(c: Dictionary, nom: String) -> Dictionary:
 	for sk in c.get("actifs", []):
-		if sk["nom"] == nom:
+		if UiCommun.t(str(sk["nom"])) == nom:
 			return sk
 	return {}
 
@@ -162,9 +162,9 @@ func _choisir_action(a: Dictionary) -> void:
 	_effacer_cibles()
 	var cibles: Array = a["cibles"]
 	if cibles.size() <= 1:
-		_choix = {"type": a["type"], "skill": a["nom"], "cible": int(cibles[0]) if cibles.size() == 1 else -1}
+		_choix = {"type": a["type"], "skill": UiCommun.t(str(a["nom"])), "cible": int(cibles[0]) if cibles.size() == 1 else -1}
 		return
-	info(UiCommun.t("%s : choisis une cible.") % a["nom"])
+	info(UiCommun.t("%s : choisis une cible.") % UiCommun.t(str(a["nom"])))
 	for idx in cibles:
 		if not ecran._cartes.has(int(idx)):
 			continue
@@ -185,7 +185,7 @@ func _choisir_action(a: Dictionary) -> void:
 		bt.position = racine.position - Vector2(6, 6)
 		bt.size = racine.size + Vector2(12, 12)
 		var i := int(idx)
-		bt.pressed.connect(func(): _choix = {"type": a["type"], "skill": a["nom"], "cible": i})
+		bt.pressed.connect(func(): _choix = {"type": a["type"], "skill": UiCommun.t(str(a["nom"])), "cible": i})
 		ecran._arene.add_child(bt)
 		_boutons_cibles.append(bt)
 

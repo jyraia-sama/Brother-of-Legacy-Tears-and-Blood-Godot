@@ -164,7 +164,7 @@ static func generer(tour: String, n: int) -> Array:
 				membres.append([pool[rng.randi_range(0, pool.size() - 1)], 1.0, "", false, false])
 		"elite":
 			var chef: String = pool[rng.randi_range(0, pool.size() - 1)]
-			membres.append([chef, POIDS["elite"], "Élite : " + UnitesData.get_unite(chef)["nom"], false, true])
+			membres.append([chef, POIDS["elite"], UiCommun.t("Élite : ") + UnitesData.get_unite(chef)["nom"], false, true])
 			for i in maxi(2, nb - 1):
 				membres.append([pool[rng.randi_range(0, pool.size() - 1)], 1.0, "", false, false])
 		"boss":
@@ -175,7 +175,7 @@ static func generer(tour: String, n: int) -> Array:
 			membres.append([TOURS[tour]["boss"][100], POIDS["super"], "", true, false])
 			for etage in [80, 90]:
 				var b: String = TOURS[tour]["boss"][etage]
-				membres.append([b, 1.2, "Garde : " + UnitesData.get_unite(b)["nom"], false, true])
+				membres.append([b, 1.2, UiCommun.t("Garde : ") + UnitesData.get_unite(b)["nom"], false, true])
 			membres.append([pool[rng.randi_range(0, pool.size() - 1)], 1.0, "", false, false])
 
 	var famille := "boss" if t == "super" else t

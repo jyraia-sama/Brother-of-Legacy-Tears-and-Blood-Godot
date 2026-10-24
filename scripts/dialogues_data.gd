@@ -507,7 +507,14 @@ static func a_dialogue(acte: int, chapitre: int, moment: String) -> bool:
 
 
 static func lignes(acte: int, chapitre: int, moment: String) -> Array:
-	return (DIALOGUES.get("%d-%d" % [acte, chapitre], {}) as Dictionary).get(moment, [])
+	var l: Array = (DIALOGUES.get("%d-%d" % [acte, chapitre], {}) as Dictionary).get(moment, [])
+	if TranslationServer.get_locale().begins_with("fr"):
+		return l
+	# Anglais : chaque réplique est traduite (langues/en.po)
+	var t: Array = []
+	for r in l:
+		t.append([r[0], str(TranslationServer.translate(str(r[1])))])
+	return t
 
 
 ## Déjà vu ? (le dialogue ne s'affiche automatiquement qu'une fois)
@@ -527,5 +534,5 @@ static func marquer_vu(acte: int, chapitre: int, moment: String) -> void:
 ## Nom affiché d'un personnage ("toi" = prénom du joueur + Valcendre s'il est connecté).
 static func nom(perso: String) -> String:
 	if perso == "toi":
-		return EnLigne.nom_complet() if EnLigne.est_connecte() else "Toi"
-	return str(PERSONNAGES.get(perso, {}).get("nom", perso))
+		return EnLigne.nom_complet() if EnLigne.est_connecte() else str(TranslationServer.translate("Toi"))
+	return str(TranslationServer.translate(str(PERSONNAGES.get(perso, {}).get("nom", perso))))

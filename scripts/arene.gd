@@ -39,7 +39,7 @@ static func couleur_palier(id: String) -> Color:
 
 
 static func texte_erreur(code: String) -> String:
-	return ERREURS.get(code, code)
+	return UiCommun.t(str(ERREURS.get(code, code)))
 
 
 # ------------------------------------------------------------------
@@ -128,7 +128,7 @@ static func equipe_gardien() -> Array:
 # ------------------------------------------------------------------
 
 static func nom_objet(id: String) -> String:
-	return str(Reliquaire.OBJETS.get(id, {}).get("nom", id))
+	return UiCommun.t(str(Reliquaire.OBJETS.get(id, {}).get("nom", id)))
 
 
 static func couleur_objet(id: String) -> Color:

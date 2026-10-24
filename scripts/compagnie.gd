@@ -164,10 +164,10 @@ static func texte_condition(c: Dictionary) -> String:
 		"niveau":
 			return UiCommun.t("Toutes les unités niveau %d ou plus") % int(c["valeur"])
 		"role":
-			return UiCommun.t("%d %s ou plus") % [int(c["nombre"]), UnitesData.ROLES[c["valeur"]]]
+			return UiCommun.t("%d %s ou plus") % [int(c["nombre"]), UnitesData.nom_role(c["valeur"])]
 		"element":
 			return UiCommun.t("%d unité%s %s ou plus") % [int(c["nombre"]), "s" if int(c["nombre"]) > 1 else "",
-				"d'" + UnitesData.ELEMENTS[c["valeur"]] if c["valeur"] == "eau" else "de " + UnitesData.ELEMENTS[c["valeur"]]]
+				"d'" + UnitesData.nom_element(c["valeur"]) if c["valeur"] == "eau" else "de " + UnitesData.nom_element(c["valeur"])]
 		"rarete":
 			return UiCommun.t("1 unité %s ou plus rare") % str(c["valeur"])
 	return ""
@@ -253,17 +253,17 @@ static func butin_final(m: Dictionary, bonus_ok: bool) -> Dictionary:
 ## Ce qui empêche le départ ("" = possible).
 static func raison_depart(m: Dictionary, uids: Array) -> String:
 	if int(m["index"]) in _etat()["lancees"].map(func(x): return int(x)):
-		return "Cette mission a déjà été lancée aujourd'hui."
+		return UiCommun.t("Cette mission a déjà été lancée aujourd'hui.")
 	if escouades_libres() <= 0:
 		return UiCommun.t("Les %d escouades sont déjà en mission.") % ESCOUADES_MAX
 	if uids.size() != int(m["taille"]):
 		return UiCommun.t("Il faut exactement %d unité%s.") % [int(m["taille"]), "s" if int(m["taille"]) > 1 else ""]
 	for uid in uids:
 		if unite_en_mission(int(uid)):
-			return "Une des unités est déjà en mission."
+			return UiCommun.t("Une des unités est déjà en mission.")
 	for c in m["conditions"]:
 		if not condition_remplie(c, uids):
-			return "Condition non remplie : " + texte_condition(c)
+			return UiCommun.t("Condition non remplie : ") + texte_condition(c)
 	return ""
 
 

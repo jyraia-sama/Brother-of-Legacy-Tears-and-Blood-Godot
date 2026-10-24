@@ -54,7 +54,7 @@ func _ready() -> void:
 	_scene.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_scene.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_scene)
-	_btn_passer = UiCommun.bouton("Tout révéler ▶▶", 16)
+	_btn_passer = UiCommun.bouton(UiCommun.t("Tout révéler ▶▶"), 16)
 	_btn_passer.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	_btn_passer.position = Vector2(-220, 20)
 	_btn_passer.custom_minimum_size = Vector2(190, 42)
@@ -126,10 +126,10 @@ func _lancer() -> void:
 	bas.position.y -= 30
 	bas.add_theme_constant_override("separation", 8)
 	add_child(bas)
-	var aide := UiCommun.label("Clique une carte pour voir sa fiche", 15, UiCommun.C_DOUX)
+	var aide := UiCommun.label(UiCommun.t("Clique une carte pour voir sa fiche"), 15, UiCommun.C_DOUX)
 	aide.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	bas.add_child(aide)
-	var ok := UiCommun.bouton("Continuer", 18)
+	var ok := UiCommun.bouton(UiCommun.t("Continuer"), 18)
 	ok.custom_minimum_size = Vector2(240, 48)
 	ok.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	ok.pressed.connect(func():
@@ -244,7 +244,7 @@ func _reveler(r: Dictionary, dos: Control, pos: Vector2, taille: Vector2, solo: 
 	face.pivot_offset = taille / 2.0
 	face.scale = Vector2(0.0, 1.05)
 	if r.get("nouveau", false):
-		UiCommun.badge(face, "NOUVEAU", Color("8aff9a"))
+		UiCommun.badge(face, UiCommun.t("NOUVEAU"), Color("8aff9a"))
 	face.pressed.connect(func(): voir_fiche.emit(r["id"]))
 	_scene.add_child(face)
 	dos.queue_free()
@@ -254,17 +254,17 @@ func _reveler(r: Dictionary, dos: Control, pos: Vector2, taille: Vector2, solo: 
 	if n >= 3:
 		face.modulate = Color(2.0, 1.9, 1.6)
 		create_tween().tween_property(face, "modulate", Color.WHITE, 0.6)
-		_cri(CRI[rarete], pos + Vector2(0, -taille.y * 0.5 - (70 if n >= 5 else 30)), c, solo)
+		_cri(UiCommun.t(str(CRI[rarete])), pos + Vector2(0, -taille.y * 0.5 - (70 if n >= 5 else 30)), c, solo)
 	if solo:
 		var u := UnitesData.get_unite(r["id"])
-		var nom := UiCommun.label(u["nom"], 30, c.lightened(0.25))
+		var nom := UiCommun.label(UiCommun.t(str(u["nom"])), 30, c.lightened(0.25))
 		nom.add_theme_color_override("font_outline_color", Color.BLACK)
 		nom.add_theme_constant_override("outline_size", 8)
 		nom.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		nom.custom_minimum_size = Vector2(700, 0)
 		nom.position = pos + Vector2(-350, taille.y * 0.5 + 16)
 		_scene.add_child(nom)
-		var sous := UiCommun.label("%s · %s · %s" % [UiCommun.texte_rarete(r["id"]), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]]], 17, UiCommun.C_TEXTE)
+		var sous := UiCommun.label("%s · %s · %s" % [UiCommun.texte_rarete(r["id"]), UnitesData.nom_element(u["element"]), UnitesData.nom_role(u["role"])], 17, UiCommun.C_TEXTE)
 		sous.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		sous.custom_minimum_size = Vector2(700, 0)
 		sous.position = pos + Vector2(-350, taille.y * 0.5 + 56)

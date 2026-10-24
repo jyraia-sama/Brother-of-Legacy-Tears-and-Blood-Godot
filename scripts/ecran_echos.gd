@@ -75,19 +75,19 @@ func _ready() -> void:
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 16)
 	col.add_child(tete)
-	var retour := UiCommun.bouton("← Retour")
+	var retour := UiCommun.bouton(UiCommun.t("← Retour"))
 	retour.pressed.connect(_retour)
 	tete.add_child(retour)
-	var titre := UiCommun.label("ÉCHOS SANGUINS", 30, Color("d0453a"))
+	var titre := UiCommun.label(UiCommun.t("ÉCHOS SANGUINS"), 30, Color("d0453a"))
 	tete.add_child(UiCommun.plaque_titre(titre))
 	# Bouton d'aide « ? » bien en vue : doré, lumineux et qui pulse
 	_btn_aide = UiCommun.bouton("?", 26)
 	_btn_aide.custom_minimum_size = Vector2(52, 46)
-	_btn_aide.tooltip_text = "Guide des Échos Sanguins : sets, optimisation, où les trouver, Mode Essai."
+	_btn_aide.tooltip_text = UiCommun.t("Guide des Échos Sanguins : sets, optimisation, où les trouver, Mode Essai.")
 	UiCommun.bouton_vif(_btn_aide, Color("c8871e"))
 	_btn_aide.pressed.connect(_ouvrir_guide)
 	tete.add_child(_btn_aide)
-	var lbl_aide := UiCommun.label("← Comment ça marche ?", 15, UiCommun.C_LEGENDE)
+	var lbl_aide := UiCommun.label(UiCommun.t("← Comment ça marche ?"), 15, UiCommun.C_LEGENDE)
 	lbl_aide.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	lbl_aide.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(lbl_aide)
@@ -104,7 +104,7 @@ func _ready() -> void:
 	corps.add_child(ph)
 	var vh := VBoxContainer.new()
 	ph.add_child(vh)
-	vh.add_child(UiCommun.label("HÉROS", 17, UiCommun.C_OR))
+	vh.add_child(UiCommun.label(UiCommun.t("HÉROS"), 17, UiCommun.C_OR))
 	var dh := ScrollContainer.new()
 	dh.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	dh.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -135,12 +135,12 @@ func _ready() -> void:
 	var hi := HBoxContainer.new()
 	hi.add_theme_constant_override("separation", 6)
 	vi.add_child(hi)
-	_lbl_inventaire = UiCommun.label("INVENTAIRE", 17, UiCommun.C_OR)
+	_lbl_inventaire = UiCommun.label(UiCommun.t("INVENTAIRE"), 17, UiCommun.C_OR)
 	_lbl_inventaire.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hi.add_child(_lbl_inventaire)
-	var rapide := UiCommun.bouton("Vente rapide", 13)
+	var rapide := UiCommun.bouton(UiCommun.t("Vente rapide"), 13)
 	rapide.custom_minimum_size = Vector2(0, 30)
-	rapide.tooltip_text = "Vend tous les Échos Normaux et Magiques non équipés et non verrouillés."
+	rapide.tooltip_text = UiCommun.t("Vend tous les Échos Normaux et Magiques non équipés et non verrouillés.")
 	rapide.pressed.connect(_vente_rapide)
 	hi.add_child(rapide)
 
@@ -148,7 +148,7 @@ func _ready() -> void:
 	var onglets := HBoxContainer.new()
 	onglets.add_theme_constant_override("separation", 6)
 	vi.add_child(onglets)
-	for o in [["sac", "Sac"], ["portes", "Équipés sur les héros"]]:
+	for o in [["sac", UiCommun.t("Sac")], ["portes", UiCommun.t("Équipés sur les héros")]]:
 		var bo := UiCommun.bouton(o[1], 15)
 		bo.custom_minimum_size = Vector2(0, 36)
 		bo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -162,24 +162,24 @@ func _ready() -> void:
 	filtres.add_theme_constant_override("separation", 6)
 	vi.add_child(filtres)
 	_opt_emplacement = OptionButton.new()
-	_opt_emplacement.add_item("Tous les emplacements", 0)
+	_opt_emplacement.add_item(UiCommun.t("Tous les emplacements"), 0)
 	for i in range(1, 7):
-		_opt_emplacement.add_item("%d · %s" % [i, Echos.EMPLACEMENTS[i]["nom"].trim_prefix("Écho ")], i)
+		_opt_emplacement.add_item("%d · %s" % [i, UiCommun.t(str(Echos.EMPLACEMENTS[i]["nom"])).trim_prefix(UiCommun.t("Écho "))], i)
 	_opt_emplacement.item_selected.connect(func(idx):
 		_filtre_emplacement = _opt_emplacement.get_item_id(idx)
 		_remplir_inventaire())
 	filtres.add_child(_opt_emplacement)
 	_opt_set = OptionButton.new()
-	_opt_set.add_item("Tous les sets")
+	_opt_set.add_item(UiCommun.t("Tous les sets"))
 	for sid in Echos.SETS:
-		_opt_set.add_item(Echos.SETS[sid]["nom"])
+		_opt_set.add_item(UiCommun.t(str(Echos.SETS[sid]["nom"])))
 		_opt_set.set_item_metadata(_opt_set.item_count - 1, sid)
 	_opt_set.item_selected.connect(func(idx):
 		_filtre_set = "" if idx == 0 else str(_opt_set.get_item_metadata(idx))
 		_remplir_inventaire())
 	filtres.add_child(_opt_set)
 	_opt_tri = OptionButton.new()
-	for t in [["etoiles", "Tri : étoiles"], ["niveau", "Tri : niveau"], ["rarete", "Tri : rareté"]]:
+	for t in [["etoiles", UiCommun.t("Tri : étoiles")], ["niveau", UiCommun.t("Tri : niveau")], ["rarete", UiCommun.t("Tri : rareté")]]:
 		_opt_tri.add_item(t[1])
 		_opt_tri.set_item_metadata(_opt_tri.item_count - 1, t[0])
 	_opt_tri.item_selected.connect(func(idx):
@@ -277,8 +277,8 @@ func _remplir_heros() -> void:
 		var por := UiCommun.portrait(h["id"], 38)
 		por.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		hb.add_child(por)
-		var t := UiCommun.label(UiCommun.t("%s\nNv %d  ·  %d/6 Échos%s") % [u["nom"], int(h["niveau"]), Sauvegarde.echos_de(uid).size(),
-			"  ·  Équipe" if uid in equipe else ""], 13)
+		var t := UiCommun.label(UiCommun.t("%s\nNv %d  ·  %d/6 Échos%s") % [UiCommun.t(str(u["nom"])), int(h["niveau"]), Sauvegarde.echos_de(uid).size(),
+			UiCommun.t("  ·  Équipe") if uid in equipe else ""], 13)
 		t.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		hb.add_child(t)
 		b.pressed.connect(func():
@@ -294,13 +294,13 @@ func _remplir_centre() -> void:
 		e.queue_free()
 	var h := Sauvegarde.get_heros(_heros)
 	if h.is_empty():
-		_centre.add_child(UiCommun.label("Choisis un héros.", 16, UiCommun.C_DOUX))
+		_centre.add_child(UiCommun.label(UiCommun.t("Choisis un héros."), 16, UiCommun.C_DOUX))
 		return
 	var u := UnitesData.get_unite(h["id"])
 	var tete := HBoxContainer.new()
 	tete.add_theme_constant_override("separation", 12)
 	tete.add_child(UiCommun.portrait(h["id"], 64))
-	var t := UiCommun.label(UiCommun.t("%s\nNv %d  ·  %s  ·  %s") % [u["nom"], int(h["niveau"]), UnitesData.ELEMENTS[u["element"]], UnitesData.ROLES[u["role"]]], 20, UiCommun.couleur_rarete(h["id"]))
+	var t := UiCommun.label(UiCommun.t("%s\nNv %d  ·  %s  ·  %s") % [UiCommun.t(str(u["nom"])), int(h["niveau"]), UnitesData.nom_element(u["element"]), UnitesData.nom_role(u["role"])], 20, UiCommun.couleur_rarete(h["id"]))
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
 	_centre.add_child(tete)
@@ -310,15 +310,15 @@ func _remplir_centre() -> void:
 	barre.add_theme_constant_override("separation", 6)
 	_centre.add_child(barre)
 	if not _essai_actif:
-		var be := UiCommun.bouton("🧪 Mode Essai", 15)
-		be.tooltip_text = "Essaie des Échos sur ce héros et compare ses stats avant d'équiper."
+		var be := UiCommun.bouton(UiCommun.t("🧪 Mode Essai"), 15)
+		be.tooltip_text = UiCommun.t("Essaie des Échos sur ce héros et compare ses stats avant d'équiper.")
 		be.pressed.connect(_entrer_essai)
 		barre.add_child(be)
-		var aide := UiCommun.label("Compare plusieurs Échos avant de les équiper.", 13, UiCommun.C_DOUX)
+		var aide := UiCommun.label(UiCommun.t("Compare plusieurs Échos avant de les équiper."), 13, UiCommun.C_DOUX)
 		aide.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		barre.add_child(aide)
 	else:
-		var lbl := UiCommun.label("MODE ESSAI", 16, C_ESSAI)
+		var lbl := UiCommun.label(UiCommun.t("MODE ESSAI"), 16, C_ESSAI)
 		lbl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		barre.add_child(lbl)
 		var nb := _nb_changements()
@@ -328,16 +328,16 @@ func _remplir_centre() -> void:
 			UiCommun.bouton_vif(ok)
 		ok.pressed.connect(_valider_essai)
 		barre.add_child(ok)
-		var annuler := UiCommun.bouton("Annuler l'essai", 14)
+		var annuler := UiCommun.bouton(UiCommun.t("Annuler l'essai"), 14)
 		annuler.disabled = nb == 0
 		annuler.pressed.connect(func():
 			_essai = _equipement_actuel()
 			_tout())
 		barre.add_child(annuler)
-		var quitter := UiCommun.bouton("Quitter", 14)
+		var quitter := UiCommun.bouton(UiCommun.t("Quitter"), 14)
 		quitter.pressed.connect(_quitter_essai)
 		barre.add_child(quitter)
-		var info := UiCommun.label("Clique des Échos dans l'inventaire pour les essayer (plusieurs à la fois). Rien ne change tant que tu ne valides pas.", 13, UiCommun.C_DOUX)
+		var info := UiCommun.label(UiCommun.t("Clique des Échos dans l'inventaire pour les essayer (plusieurs à la fois). Rien ne change tant que tu ne valides pas."), 13, UiCommun.C_DOUX)
 		info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_centre.add_child(info)
 
@@ -363,17 +363,17 @@ func _remplir_centre() -> void:
 		vb.offset_top = 6
 		vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(vb)
-		vb.add_child(UiCommun.label("%d · %s%s" % [i, Echos.EMPLACEMENTS[i]["nom"], "  · ESSAI" if change else ""], 13,
+		vb.add_child(UiCommun.label("%d · %s%s" % [i, UiCommun.t(str(Echos.EMPLACEMENTS[i]["nom"])), UiCommun.t("  · ESSAI") if change else ""], 13,
 			C_ESSAI if change else UiCommun.C_DOUX))
 		if not e.is_empty():
 			var coul: Color = Echos.RARETES[int(e["rarete"])]["couleur"]
 			var bord := C_ESSAI if change else coul
 			b.add_theme_stylebox_override("normal", UiCommun.style_carte(bord, 0.1 if (int(e["uid"]) == _echo or change) else 0.02, 3 if change else 2))
-			vb.add_child(UiCommun.label("%s  %s  +%d" % [Echos.SETS[e["set"]]["nom"], _etoiles(e), int(e["niveau"])], 15, coul))
+			vb.add_child(UiCommun.label("%s  %s  +%d" % [UiCommun.t(str(Echos.SETS[e["set"]]["nom"])), _etoiles(e), int(e["niveau"])], 15, coul))
 			vb.add_child(UiCommun.label(Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 14))
 		else:
 			b.add_theme_stylebox_override("normal", UiCommun.style_carte(C_ESSAI if change else Color(1, 1, 1, 0.15), 0.06 if change else 0.0, 3 if change else 2))
-			vb.add_child(UiCommun.label("Vide" + (" (retiré)" if change else ""), 15, C_ESSAI if change else UiCommun.C_DOUX))
+			vb.add_child(UiCommun.label(UiCommun.t("Vide") + (UiCommun.t(" (retiré)") if change else ""), 15, C_ESSAI if change else UiCommun.C_DOUX))
 		b.add_theme_stylebox_override("hover", UiCommun.style_carte(UiCommun.C_OR, 0.06))
 		b.pressed.connect(_clic_emplacement.bind(i, uid_e))
 		grille.add_child(b)
@@ -382,16 +382,16 @@ func _remplir_centre() -> void:
 	var bonus_actuel := Sauvegarde.bonus_echos(_heros)
 	if not _essai_actif:
 		# Sets actifs
-		_centre.add_child(UiCommun.label("SETS ACTIFS", 15, UiCommun.C_OR))
+		_centre.add_child(UiCommun.label(UiCommun.t("SETS ACTIFS"), 15, UiCommun.C_OR))
 		if bonus_actuel["sets"].is_empty():
-			_centre.add_child(UiCommun.label("Aucun (2 ou 4 Échos du même set sont nécessaires).", 14, UiCommun.C_DOUX))
+			_centre.add_child(UiCommun.label(UiCommun.t("Aucun (2 ou 4 Échos du même set sont nécessaires)."), 14, UiCommun.C_DOUX))
 		var vus := _compter_sets(bonus_actuel)
 		for sid in vus:
 			var l := UiCommun.label(("x%d  " % vus[sid] if vus[sid] > 1 else "") + Echos.description_set(sid), 14, Color("ffb08a"))
 			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			_centre.add_child(l)
 		# Stats base -> avec Échos
-		_centre.add_child(UiCommun.label("STATS  (base → avec Échos)", 15, UiCommun.C_OR))
+		_centre.add_child(UiCommun.label(UiCommun.t("STATS  (base → avec Échos)"), 15, UiCommun.C_OR))
 		var base := Sauvegarde.stats_base_heros(_heros)
 		var fin := Sauvegarde.stats_heros(_heros)
 		var gs := GridContainer.new()
@@ -400,7 +400,7 @@ func _remplir_centre() -> void:
 		_centre.add_child(gs)
 		for p in STATS_AFFICHEES:
 			var diff: int = int(fin[p[0]]) - int(base[p[0]])
-			var l := UiCommun.label("%s : %d%s" % [p[1], int(fin[p[0]]), ("  (+%d)" % diff) if diff > 0 else ""], 14,
+			var l := UiCommun.label(UiCommun.t("%s : %d%s") % [UiCommun.t(str(p[1])), int(fin[p[0]]), ("  (+%d)" % diff) if diff > 0 else ""], 14,
 				Color("8aff9a") if diff > 0 else UiCommun.C_TEXTE)
 			gs.add_child(l)
 		return
@@ -408,11 +408,11 @@ func _remplir_centre() -> void:
 	# ----- Mode Essai : comparaison actuel / essai -----
 	var liste_essai := _echos_essai()
 	var bonus_essai := Guilde.appliquer_aux_stats(Echos.bonus(liste_essai))
-	_centre.add_child(UiCommun.label("SETS  (actuels → en essai)", 15, UiCommun.C_OR))
+	_centre.add_child(UiCommun.label(UiCommun.t("SETS  (actuels → en essai)"), 15, UiCommun.C_OR))
 	var sa := _compter_sets(bonus_actuel)
 	var se := _compter_sets(bonus_essai)
 	if sa.is_empty() and se.is_empty():
-		_centre.add_child(UiCommun.label("Aucun set actif, ni maintenant ni avec l'essai.", 14, UiCommun.C_DOUX))
+		_centre.add_child(UiCommun.label(UiCommun.t("Aucun set actif, ni maintenant ni avec l'essai."), 14, UiCommun.C_DOUX))
 	var tous_sets: Array = sa.keys()
 	for k in se:
 		if not k in tous_sets:
@@ -420,14 +420,14 @@ func _remplir_centre() -> void:
 	for sid in tous_sets:
 		var na := int(sa.get(sid, 0))
 		var ne := int(se.get(sid, 0))
-		var etat := "" if na == ne else ("  ▲ gagné" if ne > na else "  ▼ perdu")
+		var etat := "" if na == ne else (UiCommun.t("  ▲ gagné") if ne > na else UiCommun.t("  ▼ perdu"))
 		var coul := Color("ffb08a") if na == ne else (C_HAUSSE if ne > na else C_BAISSE)
 		var txt := ("x%d → x%d  " % [na, ne]) if na != ne else (("x%d  " % ne) if ne > 1 else "")
 		var l := UiCommun.label(txt + Echos.description_set(sid) + etat, 14, coul)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_centre.add_child(l)
 	# Effets spéciaux des sets
-	for eff in [["vol_vie", "Vol de vie", true], ["contre_chance", "Contre-attaque", true], ["etourdir_skill", "Étourdir (sorts)", true]]:
+	for eff in [["vol_vie", UiCommun.t("Vol de vie"), true], ["contre_chance", UiCommun.t("Contre-attaque"), true], ["etourdir_skill", UiCommun.t("Étourdir (sorts)"), true]]:
 		var va := float(bonus_actuel[eff[0]]) * 100.0
 		var ve := float(bonus_essai[eff[0]]) * 100.0
 		if va > 0.0 or ve > 0.0:
@@ -437,7 +437,7 @@ func _remplir_centre() -> void:
 		var ie := bool(bonus_essai["immunite_debut"])
 		_centre.add_child(_ligne_effet("Immunité 1er tour", "oui" if ia else "non", "oui" if ie else "non", float(int(ie) - int(ia))))
 
-	_centre.add_child(UiCommun.label("STATS  (actuelles → en essai)", 15, UiCommun.C_OR))
+	_centre.add_child(UiCommun.label(UiCommun.t("STATS  (actuelles → en essai)"), 15, UiCommun.C_OR))
 	var base_h := Sauvegarde.stats_base_heros(_heros)
 	var avant := Echos.appliquer(base_h, bonus_actuel)
 	var apres := Echos.appliquer(base_h, bonus_essai)
@@ -448,9 +448,9 @@ func _remplir_centre() -> void:
 	gt.add_theme_constant_override("h_separation", 28)
 	gt.add_theme_constant_override("v_separation", 2)
 	_centre.add_child(gt)
-	for x in ["Stat", "Actuel", "Essai", "Écart"]:
+	for x in ["Stat", UiCommun.t("Actuel"), UiCommun.t("Essai"), UiCommun.t("Écart")]:
 		gt.add_child(UiCommun.label(x, 13, UiCommun.C_DOUX))
-	for p in STATS_AFFICHEES + [["puissance", "Puissance des sorts"]]:
+	for p in STATS_AFFICHEES + [["puissance", UiCommun.t("Puissance des sorts")]]:
 		var a := int(avant[p[0]])
 		var e := int(apres[p[0]])
 		var d := e - a
@@ -462,7 +462,7 @@ func _remplir_centre() -> void:
 	if liste_actuelle.size() != liste_essai.size() or _nb_changements() > 0:
 		var pris := _pris_a_d_autres()
 		if not pris.is_empty():
-			var l := UiCommun.label("⚠ Pris à un autre héros si tu valides : " + ", ".join(pris), 13, Color("ffd060"))
+			var l := UiCommun.label(UiCommun.t("⚠ Pris à un autre héros si tu valides : ") + ", ".join(pris), 13, Color("ffd060"))
 			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			_centre.add_child(l)
 
@@ -534,7 +534,7 @@ func _pris_a_d_autres() -> Array:
 		var p := int(e["porteur"])
 		if p >= 0 and p != _heros:
 			var h := Sauvegarde.get_heros(p)
-			r.append("%s (%s)" % [Echos.nom(e), UnitesData.get_unite(h["id"])["nom"] if not h.is_empty() else "?"])
+			r.append("%s (%s)" % [Echos.nom(e), UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])) if not h.is_empty() else "?"])
 	return r
 
 
@@ -571,7 +571,7 @@ func _valider_essai() -> void:
 	if pris.is_empty():
 		_appliquer_essai()
 		return
-	FenetreSimple.ouvrir(self, "Équiper l'essai", UiCommun.t("Ces Échos sont portés par un autre héros et lui seront retirés :\n\n• %s\n\nContinuer ?") % "\n• ".join(pris), [["Annuler", null], ["Équiper", func():
+	FenetreSimple.ouvrir(self, UiCommun.t("Équiper l'essai"), UiCommun.t("Ces Échos sont portés par un autre héros et lui seront retirés :\n\n• %s\n\nContinuer ?") % "\n• ".join(pris), [[UiCommun.t("Annuler"), null], [UiCommun.t("Équiper"), func():
 		_appliquer_essai()]])
 
 
@@ -589,7 +589,7 @@ func _appliquer_essai() -> void:
 	_essai_actif = false
 	_essai = {}
 	_tout()
-	_flash("Essai équipé !", C_HAUSSE)
+	_flash(UiCommun.t("Essai équipé !"), C_HAUSSE)
 
 
 func _remplir_inventaire() -> void:
@@ -625,7 +625,7 @@ func _remplir_inventaire() -> void:
 		for e in liste:
 			g.add_child(_carte_echo(e))
 		if liste.is_empty():
-			var vide := UiCommun.label("Aucun Écho libre ici.\nLes Échos tombent en combat : le set dépend\nde l'Acte, l'emplacement du numéro de chapitre.", 14, UiCommun.C_DOUX)
+			var vide := UiCommun.label(UiCommun.t("Aucun Écho libre ici.\nLes Échos tombent en combat : le set dépend\nde l'Acte, l'emplacement du numéro de chapitre."), 14, UiCommun.C_DOUX)
 			_zone_inv.add_child(vide)
 		return
 	# Échos portés : un bloc par héros (le héros choisi en premier, puis l'équipe)
@@ -648,7 +648,7 @@ func _remplir_inventaire() -> void:
 		_zone_inv.add_child(tete)
 		if not h.is_empty():
 			tete.add_child(UiCommun.portrait(h["id"], 30))
-		var nom: String = UnitesData.get_unite(h["id"])["nom"] if not h.is_empty() else "?"
+		var nom: String = UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])) if not h.is_empty() else "?"
 		var lt := UiCommun.label("%s  ·  %d / 6" % [nom, Sauvegarde.echos_de(int(p)).size()], 15,
 			UiCommun.C_LEGENDE if int(p) == _heros else UiCommun.C_OR)
 		lt.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -657,7 +657,7 @@ func _remplir_inventaire() -> void:
 		for e in par_heros[p]:
 			g.add_child(_carte_echo(e))
 	if liste.is_empty():
-		_zone_inv.add_child(UiCommun.label("Aucun Écho équipé ici.", 14, UiCommun.C_DOUX))
+		_zone_inv.add_child(UiCommun.label(UiCommun.t("Aucun Écho équipé ici."), 14, UiCommun.C_DOUX))
 
 
 func _nouvelle_grille() -> GridContainer:
@@ -684,20 +684,20 @@ func _carte_echo(e: Dictionary) -> Button:
 	vb.add_theme_constant_override("separation", 0)
 	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(vb)
-	vb.add_child(UiCommun.label("%d · %s" % [int(e["emplacement"]), Echos.SETS[e["set"]]["nom"]], 14, coul))
+	vb.add_child(UiCommun.label("%d · %s" % [int(e["emplacement"]), UiCommun.t(str(Echos.SETS[e["set"]]["nom"]))], 14, coul))
 	vb.add_child(UiCommun.label("%s  +%d" % [_etoiles(e), int(e["niveau"])], 13, Color("ffd060")))
 	vb.add_child(UiCommun.label(Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 13))
 	var porteur := int(e["porteur"])
 	if porteur >= 0 and _vue_inv != "portes":      # dans l'onglet Équipés, le porteur est déjà en titre
 		var h := Sauvegarde.get_heros(porteur)
-		var nom_p: String = UnitesData.get_unite(h["id"])["nom"] if not h.is_empty() else "?"
-		vb.add_child(UiCommun.label("Porté : " + nom_p, 11, UiCommun.C_DOUX))
+		var nom_p: String = UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])) if not h.is_empty() else "?"
+		vb.add_child(UiCommun.label(UiCommun.t("Porté : ") + nom_p, 11, UiCommun.C_DOUX))
 	elif e.get("verrou", false):
-		vb.add_child(UiCommun.label("Verrouillé", 11, Color("8ab0d0")))
+		vb.add_child(UiCommun.label(UiCommun.t("Verrouillé"), 11, Color("8ab0d0")))
 	var en_essai: bool = _essai_actif and int(_essai.get(int(e["emplacement"]), -1)) == int(e["uid"])
 	if en_essai:
 		b.add_theme_stylebox_override("normal", UiCommun.style_carte(C_ESSAI, 0.12, 3))
-		vb.add_child(UiCommun.label("▶ EN ESSAI", 11, C_ESSAI))
+		vb.add_child(UiCommun.label(UiCommun.t("▶ EN ESSAI"), 11, C_ESSAI))
 	b.pressed.connect(func():
 		_echo = int(e["uid"])
 		if _essai_actif:
@@ -713,14 +713,14 @@ func _remplir_fiche() -> void:
 		x.queue_free()
 	var e := Sauvegarde.get_echo(_echo)
 	if e.is_empty():
-		var l := UiCommun.label("Choisis un Écho dans l'inventaire (ou un emplacement du héros).\n\nChaque chapitre donne l'emplacement de même numéro ; chaque Acte a son set. Les boss en lâchent plus souvent et de meilleure qualité.", 14, UiCommun.C_DOUX)
+		var l := UiCommun.label(UiCommun.t("Choisis un Écho dans l'inventaire (ou un emplacement du héros).\n\nChaque chapitre donne l'emplacement de même numéro ; chaque Acte a son set. Les boss en lâchent plus souvent et de meilleure qualité."), 14, UiCommun.C_DOUX)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_fiche.add_child(l)
 		return
 	var coul: Color = Echos.RARETES[int(e["rarete"])]["couleur"]
 	_fiche.add_child(UiCommun.label("%s  +%d" % [Echos.nom(e), int(e["niveau"])], 18, coul))
-	_fiche.add_child(UiCommun.label("%s   ·   %s" % [_etoiles(e), Echos.RARETES[int(e["rarete"])]["nom"]], 14, Color("ffd060")))
-	_fiche.add_child(UiCommun.label("Principale : " + Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 15))
+	_fiche.add_child(UiCommun.label("%s   ·   %s" % [_etoiles(e), UiCommun.t(str(Echos.RARETES[int(e["rarete"])]["nom"]))], 14, Color("ffd060")))
+	_fiche.add_child(UiCommun.label(UiCommun.t("Principale : ") + Echos.texte_stat(e["principale"], Echos.valeur_principale(e)), 15))
 	for s in e["secondaires"]:
 		_fiche.add_child(UiCommun.label("   " + Echos.texte_stat(s["stat"], s["valeur"]), 14, Color("b8d8ff")))
 	var d := UiCommun.label(Echos.description_set(e["set"]), 13, Color("ffb08a"))
@@ -734,27 +734,27 @@ func _remplir_fiche() -> void:
 	if _essai_actif:
 		var emp := int(e["emplacement"])
 		var dedans: bool = int(_essai.get(emp, -1)) == _echo
-		var be := UiCommun.bouton("Retirer de l'essai" if dedans else "Essayer", 14)
+		var be := UiCommun.bouton(UiCommun.t("Retirer de l'essai") if dedans else UiCommun.t("Essayer"), 14)
 		be.add_theme_color_override("font_color", C_ESSAI)
 		be.pressed.connect(func():
 			_essayer(_echo)
 			_tout())
 		boutons.add_child(be)
 	elif porteur == _heros:
-		var r := UiCommun.bouton("Retirer", 14)
+		var r := UiCommun.bouton(UiCommun.t("Retirer"), 14)
 		r.pressed.connect(func():
 			Sauvegarde.retirer_echo(_echo)
 			_tout())
 		boutons.add_child(r)
 	elif _heros >= 0:
 		var h := Sauvegarde.get_heros(_heros)
-		var eq := UiCommun.bouton("Équiper sur " + UnitesData.get_unite(h["id"])["nom"].trim_prefix("Le ").trim_prefix("La "), 14)
+		var eq := UiCommun.bouton(UiCommun.t("Équiper sur ") + UiCommun.t(str(UnitesData.get_unite(h["id"])["nom"])).trim_prefix("Le ").trim_prefix("La "), 14)
 		eq.pressed.connect(func():
 			Sauvegarde.equiper_echo(_echo, _heros)
 			_tout())
 		boutons.add_child(eq)
 	if int(e["niveau"]) < Echos.NIVEAU_MAX:
-		var am := UiCommun.bouton("Améliorer", 14)
+		var am := UiCommun.bouton(UiCommun.t("Améliorer"), 14)
 		am.pressed.connect(_ameliorer)
 		boutons.add_child(am)
 	var b2 := HBoxContainer.new()
@@ -762,13 +762,13 @@ func _remplir_fiche() -> void:
 	_fiche.add_child(b2)
 	var v := UiCommun.bouton(UiCommun.t("Vendre (%d or)") % Echos.prix_vente(e), 14)
 	v.disabled = porteur >= 0 or e.get("verrou", false)
-	v.tooltip_text = "Retire-le d'abord du héros." if porteur >= 0 else ("Écho verrouillé." if e.get("verrou", false) else "")
+	v.tooltip_text = UiCommun.t("Retire-le d'abord du héros.") if porteur >= 0 else (UiCommun.t("Écho verrouillé.") if e.get("verrou", false) else "")
 	v.pressed.connect(func():
 		Sauvegarde.vendre_echos([_echo])
 		_echo = -1
 		_tout())
 	b2.add_child(v)
-	var ver := UiCommun.bouton("Déverrouiller" if e.get("verrou", false) else "Verrouiller", 14)
+	var ver := UiCommun.bouton(UiCommun.t("Déverrouiller") if e.get("verrou", false) else UiCommun.t("Verrouiller"), 14)
 	ver.pressed.connect(func():
 		Sauvegarde.basculer_verrou_echo(_echo)
 		_tout())
@@ -799,9 +799,9 @@ func _vente_rapide() -> void:
 			cibles.append(int(e["uid"]))
 			total += Echos.prix_vente(e)
 	if cibles.is_empty():
-		_flash("Rien à vendre (Normaux/Magiques non équipés).", UiCommun.C_DOUX)
+		_flash(UiCommun.t("Rien à vendre (Normaux/Magiques non équipés)."), UiCommun.C_DOUX)
 		return
-	FenetreSimple.ouvrir(self, "Vente rapide", UiCommun.t("Vendre %d Échos Normaux et Magiques non équipés pour %d or ?") % [cibles.size(), total], [["Annuler", null], ["Vendre", func():
+	FenetreSimple.ouvrir(self, UiCommun.t("Vente rapide"), UiCommun.t("Vendre %d Échos Normaux et Magiques non équipés pour %d or ?") % [cibles.size(), total], [[UiCommun.t("Annuler"), null], [UiCommun.t("Vendre"), func():
 		Sauvegarde.vendre_echos(cibles)
 		_echo = -1
 		_tout()]])

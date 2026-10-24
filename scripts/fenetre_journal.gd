@@ -30,13 +30,13 @@ func _ready() -> void:
 	p.add_child(vb)
 	var tete := HBoxContainer.new()
 	vb.add_child(tete)
-	var t := UiCommun.label("JOURNAL DE L'HISTOIRE", 28, UiCommun.C_OR)
+	var t := UiCommun.label(UiCommun.t("JOURNAL DE L'HISTOIRE"), 28, UiCommun.C_OR)
 	t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tete.add_child(t)
-	var fermer := UiCommun.bouton("Fermer", 16)
+	var fermer := UiCommun.bouton(UiCommun.t("Fermer"), 16)
 	fermer.pressed.connect(queue_free)
 	tete.add_child(fermer)
-	vb.add_child(UiCommun.label("Les scènes déjà vues peuvent être revues ici. Les autres se débloquent en avançant dans l'histoire.", 14, UiCommun.C_DOUX))
+	vb.add_child(UiCommun.label(UiCommun.t("Les scènes déjà vues peuvent être revues ici. Les autres se débloquent en avançant dans l'histoire."), 14, UiCommun.C_DOUX))
 	var defil := ScrollContainer.new()
 	defil.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	defil.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -50,8 +50,9 @@ func _ready() -> void:
 
 func _remplir() -> void:
 	var rien := true
-	for a in ActesData.ACTES:
-		var n := int(a["numero"])
+	for a0 in ActesData.ACTES:
+		var n := int(a0["numero"])
+		var a := ActesData.get_acte(n)
 		var lignes: Array = []
 		for c in range(1, 7):
 			for moment in ["debut", "fin"]:
@@ -60,7 +61,7 @@ func _remplir() -> void:
 		if lignes.is_empty():
 			continue
 		rien = false
-		_liste.add_child(UiCommun.label(UiCommun.t("ACTE %s — %s") % [a["romain"], a["titre"]], 19, UiCommun.C_OR))
+		_liste.add_child(UiCommun.label(UiCommun.t("ACTE %s — %s") % [a["romain"], UiCommun.t(str(a["titre"]))], 19, UiCommun.C_OR))
 		var g := GridContainer.new()
 		g.columns = 2
 		g.add_theme_constant_override("h_separation", 10)
@@ -68,13 +69,13 @@ func _remplir() -> void:
 		_liste.add_child(g)
 		for l in lignes:
 			var chap := ActesData.get_chapitre(n, int(l[0]))
-			var b := UiCommun.bouton("%d. %s  (%s)" % [int(l[0]), chap.get("titre", ""), "début" if l[1] == "debut" else "fin"], 15)
+			var b := UiCommun.bouton("%d. %s  (%s)" % [int(l[0]), chap.get("titre", ""), UiCommun.t("début") if l[1] == "debut" else "fin"], 15)
 			b.custom_minimum_size = Vector2(500, 38)
 			b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 			b.pressed.connect(func(): FenetreDialogue.jouer(get_parent(), n, int(l[0]), l[1], true))
 			g.add_child(b)
 	if rien:
-		_liste.add_child(UiCommun.label("Aucune scène vue pour l'instant : commence l'Acte I !", 17, UiCommun.C_TEXTE))
+		_liste.add_child(UiCommun.label(UiCommun.t("Aucune scène vue pour l'instant : commence l'Acte I !"), 17, UiCommun.C_TEXTE))
 
 
 func _unhandled_input(e: InputEvent) -> void:
