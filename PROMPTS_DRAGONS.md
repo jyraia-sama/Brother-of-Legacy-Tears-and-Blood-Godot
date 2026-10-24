@@ -18,7 +18,7 @@ Rends-moi `<nom>.png` et `<nom>_evo.png`. Tant qu'une image manque, le jeu affic
 
 ## Pyrrhos le Dragonnet (R)
 
-### Base → `dragonnet_braise.png`
+### Base → `dragonnet_braise.png` ✅ FAIT
 > Joins une de tes images récentes de héros.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -44,7 +44,7 @@ PORTRAIT : assis sur ses pattes arrière, il crache une toute petite flamme vers
 FIGURINE : en plein vol maladroit au-dessus du socle, ailes battantes, la gueule ouverte sur une petite flamme collée à sa gueule, la queue enroulée.
 ```
 
-### Évolution → `dragonnet_braise_evo.png`
+### Évolution → `dragonnet_braise_evo.png` ✅ FAIT
 > Joins l'image de base que ChatGPT vient de faire (`dragonnet_braise.png`).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -74,7 +74,7 @@ FIGURINE : debout sur une petite enclume du socle, ailes ouvertes, la tête lev�
 
 ## Drakkhar, Dragon des Glaces (SSR)
 
-### Base → `dragon_givre.png`
+### Base → `dragon_givre.png` ✅ FAIT
 > Joins une de tes images récentes de héros.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -100,7 +100,7 @@ PORTRAIT : la tête de trois quarts, gueule entrouverte d'où s'échappe une bru
 FIGURINE : posé sur un éperon de glace du socle, ailes à demi ouvertes, il souffle un jet de givre vers l'avant (le jet reste court et collé à sa gueule).
 ```
 
-### Évolution → `dragon_givre_evo.png`
+### Évolution → `dragon_givre_evo.png` ✅ FAIT
 > Joins l'image de base que ChatGPT vient de faire (`dragon_givre.png`).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -130,7 +130,7 @@ FIGURINE : dressé sur un rocher gelé du socle, il replie une aile devant lui c
 
 ## Vörnagal, le Dragon Millénaire (UR)
 
-### Base → `dragon_millenaire.png`
+### Base → `dragon_millenaire.png` ✅ FAIT
 > Joins une de tes images récentes de héros.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -156,7 +156,7 @@ PORTRAIT : en gros plan, la tête immense posée au sol, un œil ambré ouvert q
 FIGURINE : allongé sur le socle comme une colline vivante, la tête levée et la gueule ouverte sur un rugissement sourd, la queue enroulée autour du socle.
 ```
 
-### Évolution → `dragon_millenaire_evo.png`
+### Évolution → `dragon_millenaire_evo.png` ✅ FAIT
 > Joins l'image de base que ChatGPT vient de faire (`dragon_millenaire.png`).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -186,7 +186,7 @@ FIGURINE : debout sur ses quatre pattes, ailes de feuilles grandes ouvertes, l'a
 
 ## Seraphyr, la Chevalière-Dragon (SR)
 
-### Base → `chevaliere_dragon.png`
+### Base → `chevaliere_dragon.png` ✅ FAIT
 > Joins une de tes images récentes de héros.
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.
@@ -212,7 +212,7 @@ PORTRAIT : à mi-corps, la lance tenue droite contre l'épaule, le menton levé,
 FIGURINE : en garde basse, la lance pointée vers l'avant, les ailes ouvertes pour l'équilibre, la queue tendue derrière elle.
 ```
 
-### Évolution → `chevaliere_dragon_evo.png`
+### Évolution → `chevaliere_dragon_evo.png` ✅ FAIT
 > Joins l'image de base que ChatGPT vient de faire (`chevaliere_dragon.png`).
 ```
 Crée une image pour un jeu mobile dark fantasy, EXACTEMENT dans le même style que l'image jointe : peinture numérique réaliste et très détaillée, éclairage chaud et dramatique venant du haut à gauche, personnages expressifs, avec du caractère.

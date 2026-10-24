@@ -15,11 +15,17 @@ extends RefCounted
 ##   MINEUR    +1 : nouvelle fonctionnalité (nouveau mode, nouvel écran...)
 ##   CORRECTIF +1 : corrections de bugs / équilibrage, sans nouveauté
 
-const NUMERO := "0.83.1"
-const DATE := "2026-10-23"
+const NUMERO := "0.83.2"
+const DATE := "2026-10-24"
 const NOM_JEU := "Brothers of Legacy : Tears and Blood"
 
 const HISTORIQUE := [
+	{"version": "0.83.2", "date": "2026-10-24", "titre": "Les Dragons prennent forme",
+	"changements": [
+		"LES DRAGONS EN IMAGES : Pyrrhos, Seraphyr, Drakkhar et Vörnagal ont leur portrait et leur figurine 3D, ainsi que leurs évolutions.",
+		"GALERIE D'ART : l'onglet Divers montre les 18 bannières d'événement (débloquées quand l'événement commence), et chaque héros indique aussi s'il s'obtient dans les Ruines Oubliées ou s'il est mis en avant pendant un événement.",
+		"BESTIAIRE : les Légendes cachées indiquent l'étage des Ruines Oubliées où les gagner.",
+	]},
 	{"version": "0.83.1", "date": "2026-10-23", "titre": "Les bannières des événements",
 	"changements": [
 		"LES BANNIÈRES DES ÉVÉNEMENTS : les 18 événements d'invocation ont maintenant leur propre illustration peinte en bas de l'Autel d'Invocation (Lune de Sang, Aube Céleste, Nuit des Lanternes Noires, Nuit de Givre, Œufs de Dragon, Bal des Masques…).",

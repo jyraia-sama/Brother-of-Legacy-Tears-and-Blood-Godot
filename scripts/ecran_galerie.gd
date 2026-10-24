@@ -187,6 +187,13 @@ func _lister(o: String) -> Array:
 			for ch in _fichiers("res://assets/invocation"):
 				l.append({"type": "image", "id": ch, "titre": _joli_nom(ch), "chemin": ch, "texte": "Autel d'Invocation",
 					"ouvert": _image_vue(ch)})
+			# Bannières des événements : découvertes quand l'événement a commencé (ou la bannière vue)
+			for ev in Evenements.EVENEMENTS:
+				var ch := "res://assets/invocation/evenements/%s.png" % ev["id"]
+				if ResourceLoader.exists(ch):
+					l.append({"type": "image", "id": ch, "titre": str(ev["titre"]), "chemin": ch,
+						"texte": UiCommun.t("Bannière d'événement · du %s au %s") % [_date_fr(str(ev["debut"])), _date_fr(str(ev["fin"]))],
+						"ouvert": _admin_tout_voir() or _image_vue(ch) or Evenements.aujourdhui() >= str(ev["debut"])})
 	return l
 
 
@@ -242,6 +249,11 @@ func _fichiers(dossier: String) -> Array:
 			l.append(dossier + "/" + n)
 	l.sort()
 	return l
+
+
+func _date_fr(d: String) -> String:
+	var p := d.split("-")
+	return d if p.size() != 3 else "%s/%s/%s" % [p[2], p[1], p[0]]
 
 
 func _joli_nom(chemin: String) -> String:
@@ -483,6 +495,15 @@ func _ou_trouver(id: String, u: Dictionary) -> Array:
 		l.append("Autel d'Invocation")
 	if u.get("forge", false):
 		l.append("Forge du Reliquaire")
+	for et in Ruines.ETAGES:
+		if id == str(Ruines.ETAGES[et]["heros"]):
+			l.append(UiCommun.t("Ruines Oubliées : %s (lieu secret)") % Ruines.ETAGES[et]["titre"])
+	var vedette: Array = []
+	for ev in Evenements.EVENEMENTS:
+		if id in ev.get("vedettes", []) and not str(ev["titre"]) in vedette:
+			vedette.append(str(ev["titre"]))
+	if not vedette.is_empty():
+		l.append("Mis en avant : " + ", ".join(vedette))
 	var actes: Array = []
 	for a in Rencontres.POOLS:
 		var p: Dictionary = Rencontres.POOLS[a]

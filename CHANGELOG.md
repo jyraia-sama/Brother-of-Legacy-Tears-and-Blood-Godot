@@ -1,6 +1,12 @@
 # Journal des mises à jour — Brothers of Legacy : Tears and Blood
 
-Version actuelle : **0.83.1** (2026-10-23)
+Version actuelle : **0.83.2** (2026-10-24)
+
+## v0.83.2 — Les Dragons prennent forme  (2026-10-24)
+
+- LES DRAGONS EN IMAGES : Pyrrhos, Seraphyr, Drakkhar et Vörnagal ont leur portrait et leur figurine 3D, ainsi que leurs évolutions.
+- GALERIE D'ART : l'onglet Divers montre les 18 bannières d'événement (débloquées quand l'événement commence), et chaque héros indique aussi s'il s'obtient dans les Ruines Oubliées ou s'il est mis en avant pendant un événement.
+- BESTIAIRE : les Légendes cachées indiquent l'étage des Ruines Oubliées où les gagner.
 
 ## v0.83.1 — Les bannières des événements  (2026-10-23)
 

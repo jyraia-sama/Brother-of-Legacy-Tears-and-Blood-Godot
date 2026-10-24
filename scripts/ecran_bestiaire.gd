@@ -451,6 +451,9 @@ func _maj_fiche() -> void:
 	_f_nom.text = u["nom"]
 	_f_nom.add_theme_color_override("font_color", COULEURS_RARETE[u["rarete"]])
 	var type_txt: String = "Héros de Légende" if u.get("legende", false) else ("Héros de Forge (Reliquaire)" if u.get("forge", false) else cat[u["categorie"]])
+	for et in Ruines.ETAGES:
+		if _selection == str(Ruines.ETAGES[et]["heros"]):
+			type_txt = UiCommun.t("Légende cachée · Ruines Oubliées : %s") % Ruines.ETAGES[et]["titre"]
 	if UnitesData.est_evolue(_selection):
 		type_txt = UiCommun.t("Évolution de « %s » (Autel d'Évolution, non invocable)") % UnitesData.get_unite(UnitesData.lignee(_selection))["nom"]
 	if u.get("race", "") != "":

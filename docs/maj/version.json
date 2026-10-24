@@ -1,5 +1,5 @@
 {
-	"date": "2026-10-23",
+	"date": "2026-10-24",
 	"empreinte_installation": "67acc17d2372a78b69148e49f88ff4a2070eaceeb4b916345240bca6f29bf72d",
 	"godot": "4.7",
 	"installation_minimum": "0.35.0",
@@ -10,6 +10,15 @@
 		"windows": "https://github.com/jyraia-sama/Brother-of-Legacy-Tears-and-Blood-Godot/releases/download/v0.35.0/BrothersOfLegacy-Windows.zip"
 	},
 	"nouveautes": [
+		{
+			"changements": [
+				"LES DRAGONS EN IMAGES : Pyrrhos, Seraphyr, Drakkhar et Vörnagal ont leur portrait et leur figurine 3D, ainsi que leurs évolutions.",
+				"GALERIE D'ART : l'onglet Divers montre les 18 bannières d'événement (débloquées quand l'événement commence), et chaque héros indique aussi s'il s'obtient dans les Ruines Oubliées ou s'il est mis en avant pendant un événement.",
+				"BESTIAIRE : les Légendes cachées indiquent l'étage des Ruines Oubliées où les gagner."
+			],
+			"titre": "Les Dragons prennent forme",
+			"version": "0.83.2"
+		},
 		{
 			"changements": [
 				"LES BANNIÈRES DES ÉVÉNEMENTS : les 18 événements d'invocation ont maintenant leur propre illustration peinte en bas de l'Autel d'Invocation (Lune de Sang, Aube Céleste, Nuit des Lanternes Noires, Nuit de Givre, Œufs de Dragon, Bal des Masques…).",
@@ -125,22 +134,13 @@
 			],
 			"titre": "Les Ruines Oubliées",
 			"version": "0.80.0"
-		},
-		{
-			"changements": [
-				"ÉVOLUTIONS : TOUTES ONT LEUR IMAGE. 23 nouvelles évolutions ont leur propre portrait et leur propre figurine de combat, dont les 8 héros de légende (la Brute Primordiale, Barbe-Abysse, la Lance Solaire, la Dryade Éternelle, l'Archimage Cendré, la Dague Crépusculaire, le Shogun Écarlate, le Paladin Immaculé), le Chevalier du Néant, l'Axolotl Ancestral, Sam l'Oracle des Rayons, la Wyverne Ancestrale, l'Impératrice Arachnide, le Séraphin des Ténèbres, l'Hydre des Abysses, la Liche Majeure…",
-				"MÉNAGERIE : les 40 familiers ont leur portrait. Les 22 qui n'en avaient pas (du Lynx des Neiges Noires à l'Ombre de Léviathan) en ont un, et les 18 premiers ont été repeints dans le même style, plus détaillé.",
-				"Les nouvelles images apparaissent dans le Deck, en combat (en 3D), dans le Bestiaire, la Ménagerie et la Galerie d'art."
-			],
-			"titre": "La galerie complète",
-			"version": "0.79.2"
 		}
 	],
 	"pck": {
-		"sha256": "d97339aea8831f71b254b568eb0a5261c16068d6591a247b88456fb25c64e2ab",
-		"taille": 56314824,
+		"sha256": "930489abf5c6c176112f1ff644af02dc67fb6ceedecbabcdf3271d97fe68bed1",
+		"taille": 56316440,
 		"url": "jeu.pck"
 	},
-	"version": "0.83.1",
+	"version": "0.83.2",
 	"version_minimum": "0.37.0"
 }
